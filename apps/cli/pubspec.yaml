@@ -1,0 +1,28 @@
+name: teo_cli
+description: The command-line interface for Teo.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.2.0-0
+
+dependencies:
+  args: ^2.4.2
+  async: ^2.11.0
+  aws_common: ^0.6.1
+  mason_logger: ^0.2.10
+  path: ^1.8.3
+  pubspec_parse: ^1.2.3
+  shelf: ^1.4.1
+  shelf_static: ^1.1.2
+  shelf_web_socket: ^1.0.4
+  teo:
+    path: ../../packages/teo
+
+dev_dependencies:
+  teo_lints:
+    path: ../../packages/teo_lints
+  test: ^1.24.0
+
+executables:
+  teo:
