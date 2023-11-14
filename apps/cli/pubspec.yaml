@@ -1,10 +1,10 @@
-name: teo_cli
-description: The command-line interface for Teo.
+name: celest_cli
+description: The command-line interface for Celest.
 version: 0.1.0
 publish_to: none
 
 environment:
-  sdk: ^3.2.0-0
+  sdk: ^3.1.0
 
 dependencies:
   args: ^2.4.2
@@ -16,13 +16,13 @@ dependencies:
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ^1.0.4
-  teo:
-    path: ../../packages/teo
+  celest:
+    path: ../../packages/celest
 
 dev_dependencies:
-  teo_lints:
-    path: ../../packages/teo_lints
+  celest_lints:
+    path: ../../packages/celest_lints
   test: ^1.24.0
 
 executables:
-  teo:
+  celest:

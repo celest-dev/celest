@@ -6,6 +6,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest/celest.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -13,19 +14,18 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_static/shelf_static.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
-import 'package:teo/teo.dart';
 
 final logger = Logger(
   theme: LogTheme(info: (message) => lightCyan.wrap(message)),
 );
 
 void printUsage(ArgParser argParser) {
-  print('Usage: dart teo_cli.dart <flags> [arguments]');
+  print('Usage: dart celest_cli.dart <flags> [arguments]');
   print(argParser.usage);
 }
 
 void main(List<String> args) async {
-  final commandRunner = CommandRunner<int>('teo', 'Teo cloud services')
+  final commandRunner = CommandRunner<int>('celest', 'Celest cloud services')
     ..addCommand(InitCommand())
     ..addCommand(DeployCommand());
   try {
@@ -39,7 +39,7 @@ final class InitCommand extends Command<int> {
   InitCommand();
 
   @override
-  String get description => 'Initializes a new Teo project';
+  String get description => 'Initializes a new Celest project';
 
   @override
   String get name => 'init';
@@ -61,35 +61,37 @@ final class InitCommand extends Command<int> {
       defaultValue: appName,
     );
 
-    final teoDir = Directory('${currentDir.path}/teo');
-    if (teoDir.existsSync()) {
-      print('Error: A teo directory already exists in the current directory.');
+    final celestDir = Directory('${currentDir.path}/celest');
+    if (celestDir.existsSync()) {
+      print(
+        'Error: A celest directory already exists in the current directory.',
+      );
       return 1;
     }
-    teoDir.createSync();
+    celestDir.createSync();
 
-    final teoPubspecFile = File('${teoDir.path}/pubspec.yaml');
-    teoPubspecFile.writeAsStringSync('''
-name: ${appName}_teo
+    final celestPubspecFile = File('${celestDir.path}/pubspec.yaml');
+    celestPubspecFile.writeAsStringSync('''
+name: ${appName}_celest
 
 environment:
   sdk: ^3.0.0
 
 dependencies:
   aws_lambda_dart_runtime: ^1.1.0
-  teo:
-    path: ../../teo
+  celest:
+    path: ../../celest
 ''');
 
-    final projectFile = File('${teoDir.path}/project.dart');
+    final projectFile = File('${celestDir.path}/project.dart');
     projectFile.createSync(recursive: true);
 
     final projectClassName = '${appName.pascalCase}Project';
     projectFile.writeAsStringSync('''
-import 'package:teo/teo.dart';
+import 'package:celest/celest.dart';
 
 void main() {
-  teo.deploy($projectClassName());
+  celest.deploy($projectClassName());
 }
 
 class $projectClassName extends Project {
@@ -124,10 +126,10 @@ class $projectClassName extends Project {
 }
 ''');
 
-    final lambdaFile = File('${teoDir.path}/functions/say_hello.dart');
+    final lambdaFile = File('${celestDir.path}/functions/say_hello.dart');
     lambdaFile.createSync(recursive: true);
     lambdaFile.writeAsStringSync(r'''
-import 'package:teo/teo.dart';
+import 'package:celest/celest.dart';
 
 class SayHello extends Handler<String, String> {
   @override
@@ -137,7 +139,7 @@ class SayHello extends Handler<String, String> {
 }
 ''');
 
-    final contentFolder = Directory('${teoDir.path}/content');
+    final contentFolder = Directory('${celestDir.path}/content');
     contentFolder.createSync(recursive: true);
 
     final home = Platform.environment['HOME']!;
@@ -147,7 +149,7 @@ class SayHello extends Handler<String, String> {
     final pubGet = Process.runSync(
       'dart',
       ['pub', 'get'],
-      workingDirectory: teoDir.path,
+      workingDirectory: celestDir.path,
     );
     return pubGet.exitCode;
   }
@@ -171,7 +173,7 @@ final class DeployCommand extends Command<int> {
   }
 
   @override
-  String get description => 'Deploys a Teo project';
+  String get description => 'Deploys a Celest project';
 
   @override
   String get name => 'deploy';
@@ -182,7 +184,7 @@ final class DeployCommand extends Command<int> {
   final exitSignal = Completer<void>();
 
   final appDir = Directory.current;
-  late final clientDir = Directory('${appDir.path}/lib/teo');
+  late final clientDir = Directory('${appDir.path}/lib/celest');
   final lambdaServer = LambdaServer();
 
   @override
@@ -190,9 +192,9 @@ final class DeployCommand extends Command<int> {
     ProcessSignal.sigint.watch().listen(exitSignal.complete);
 
     final currentDir = Directory.current;
-    final rootDir = Directory('${currentDir.path}/teo');
+    final rootDir = Directory('${currentDir.path}/celest');
     if (!rootDir.existsSync()) {
-      print('Error: No teo directory found in the current directory.');
+      print('Error: No celest directory found in the current directory.');
       return 1;
     }
 
@@ -203,7 +205,7 @@ final class DeployCommand extends Command<int> {
       workingDirectory: rootDir.path,
     );
 
-    final buildDir = Directory('${rootDir.path}/.dart_tool/teo');
+    final buildDir = Directory('${rootDir.path}/.dart_tool/celest');
     if (!buildDir.existsSync()) {
       buildDir.createSync(recursive: true);
     }
@@ -215,8 +217,8 @@ final class DeployCommand extends Command<int> {
         workingDirectory: rootDir.path,
         environment: {
           'AWS_REGION': 'us-west-2',
-          'TEO_ROOT_DIR': rootDir.path,
-          'TEO_BUILD_DIR': buildDir.path,
+          'CELEST_ROOT_DIR': rootDir.path,
+          'CELEST_BUILD_DIR': buildDir.path,
         },
         mode: ProcessStartMode.inheritStdio,
       );
@@ -258,7 +260,7 @@ final class DeployCommand extends Command<int> {
       ..info('')
       ..info('Invoke "say_hello": $functionUrl')
       ..info(
-        'Content bucket: https://s3.console.aws.amazon.com/s3/buckets/teo-demo-yc',
+        'Content bucket: https://s3.console.aws.amazon.com/s3/buckets/celest-demo-yc',
       )
       ..info('');
 
@@ -292,7 +294,7 @@ final class DeployCommand extends Command<int> {
     String eventsUrl,
   ) async {
     final clientSrc = '''
-// Generated by `teo deploy`. Do not modify by hand.
+// Generated by `celest deploy`. Do not modify by hand.
 
 import 'dart:convert';
 
@@ -300,31 +302,31 @@ import 'package:aws_common/aws_common.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_client/web_socket_client.dart';
 
-final TeoClient teo = TeoClient();
+final CelestClient celest = CelestClient();
 
-class TeoClient {
-  final TeoContent content = TeoContent();
-  final TeoFunctions functions = TeoFunctions();
+class CelestClient {
+  final CelestContent content = CelestContent();
+  final CelestFunctions functions = CelestFunctions();
 }
 
-final class TeoContent {
+final class CelestContent {
   static const _baseUrl = '$cloudfrontDistro';
 
-  TeoFile file(String key) => TeoFile('\$_baseUrl/\$key');
+  CelestFile file(String key) => CelestFile('\$_baseUrl/\$key');
 
-  final TeoContentEvents events = const TeoContentEvents();
+  final CelestContentEvents events = const CelestContentEvents();
 }
 
-final class TeoContentEvents {
-  const TeoContentEvents();
+final class CelestContentEvents {
+  const CelestContentEvents();
 
   static final _eventsUrl = Uri.parse('$eventsUrl');
 
-  Stream<TeoFile> get onCreate {
+  Stream<CelestFile> get onCreate {
     final websocket = WebSocket(_eventsUrl);
     return websocket.messages
         .cast<String>()
-        .map(teo.content.file)
+        .map(celest.content.file)
         .asBroadcastStream(
       onCancel: (sub) {
         sub.cancel();
@@ -334,8 +336,8 @@ final class TeoContentEvents {
   }
 }
 
-final class TeoFile {
-  const TeoFile(this.url);
+final class CelestFile {
+  const CelestFile(this.url);
 
   final String url;
 
@@ -346,7 +348,7 @@ final class TeoFile {
       Image.network(url, width: width, height: height);
 }
 
-final class TeoFunctions {
+final class CelestFunctions {
   static final _jsonUtf8 = JsonUtf8Encoder();
   static final _http = AWSHttpClient();
   static final _sayHelloUrl = Uri.parse('$functionUrl');
@@ -419,7 +421,7 @@ extension When<T> on AsyncSnapshot<T> {
     );
 
     const cloudfrontDistro = 'https://d1lsmfviaqs7y3.cloudfront.net';
-    final functionUrl = outputs.get('Teo::CloudFunction');
+    final functionUrl = outputs.get('Celest::CloudFunction');
     const eventsUrl =
         'wss://hh8jei1or5.execute-api.us-west-2.amazonaws.com/prod/';
 

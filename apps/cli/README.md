@@ -1,3 +1,3 @@
-## Teo CLI
+## Celest CLI
 
-The command line interface for Teo.
+The command line interface for Celest.
