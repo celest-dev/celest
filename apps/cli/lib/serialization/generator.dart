@@ -84,10 +84,11 @@ extension ToFromJson on Reference {
         type.isDartCoreInt ||
         type.isDartCoreString ||
         type.isDartCoreNull) {
-      return ref.asA(this);
+      return ref.asA(nonNullable);
     }
     if (type.isEnum) {
-      return property('values')
+      return nonNullable
+          .property('values')
           .property('byName')
           .call([ref.asA(refer('String', 'dart:core'))]);
     }
@@ -101,7 +102,7 @@ extension ToFromJson on Reference {
             ..symbol = 'Iterable'
             ..url = 'dart:core'
             ..types.add(refer('Object?', 'dart:core'))
-            ..isNullable = type.toTypeReference.isNullable,
+            ..isNullable = false, // already null-checked
         ),
       );
       final element = refer('el');
@@ -184,7 +185,7 @@ extension ToFromJson on Reference {
 
   Expression fromJson(Expression ref) {
     final fromJson = _fromJson(ref);
-    if (!toTypeReference.nullable) {
+    if (!toTypeReference.isNullableOrFalse) {
       return fromJson;
     }
     return ref.equalTo(literalNull).conditional(literalNull, fromJson);

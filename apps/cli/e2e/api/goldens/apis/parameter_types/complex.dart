@@ -22,11 +22,11 @@ class ComplexTarget extends _i1.FunctionTarget {
             (request[r'aComplexStruct'] as Map<String, dynamic>)),
         request[r'aNullableSimpleStruct'] == null
             ? null
-            : _i3.SimpleStruct.fromJson(
+            : _i3.SimpleStruct?.fromJson(
                 (request[r'aNullableSimpleStruct'] as Map<String, dynamic>)),
         request[r'aNullableComplexStruct'] == null
             ? null
-            : _i3.ComplexStruct.fromJson(
+            : _i3.ComplexStruct?.fromJson(
                 (request[r'aNullableComplexStruct'] as Map<String, dynamic>)),
         (request[r'anIterableOfSimpleStruct'] as Iterable<Object?>)
             .map(
@@ -52,12 +52,12 @@ class ComplexTarget extends _i1.FunctionTarget {
         (request[r'anIterableOfNullableSimpleStruct'] as Iterable<Object?>)
             .map((el) => el == null
                 ? null
-                : _i3.SimpleStruct.fromJson((el as Map<String, dynamic>)))
+                : _i3.SimpleStruct?.fromJson((el as Map<String, dynamic>)))
             .toList(),
         (request[r'anIterableOfNullableComplexStruct'] as Iterable<Object?>)
             .map((el) => el == null
                 ? null
-                : _i3.ComplexStruct.fromJson((el as Map<String, dynamic>)))
+                : _i3.ComplexStruct?.fromJson((el as Map<String, dynamic>)))
             .toList(),
         (request[r'aListOfSimpleStruct'] as Iterable<Object?>)
             .map(
@@ -82,12 +82,12 @@ class ComplexTarget extends _i1.FunctionTarget {
         (request[r'aListOfNullableSimpleStruct'] as Iterable<Object?>)
             .map((el) => el == null
                 ? null
-                : _i3.SimpleStruct.fromJson((el as Map<String, dynamic>)))
+                : _i3.SimpleStruct?.fromJson((el as Map<String, dynamic>)))
             .toList(),
         (request[r'aListOfNullableComplexStruct'] as Iterable<Object?>)
             .map((el) => el == null
                 ? null
-                : _i3.ComplexStruct.fromJson((el as Map<String, dynamic>)))
+                : _i3.ComplexStruct?.fromJson((el as Map<String, dynamic>)))
             .toList(),
         (request[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
           key,
@@ -137,7 +137,7 @@ class ComplexTarget extends _i1.FunctionTarget {
               key,
               value == null
                   ? null
-                  : _i3.SimpleStruct.fromJson((value as Map<String, dynamic>)),
+                  : _i3.SimpleStruct?.fromJson((value as Map<String, dynamic>)),
             )),
         (request[r'aMapOfNullableComplexStruct'] as Map<String, Object?>).map((
           key,
@@ -147,7 +147,8 @@ class ComplexTarget extends _i1.FunctionTarget {
               key,
               value == null
                   ? null
-                  : _i3.ComplexStruct.fromJson((value as Map<String, dynamic>)),
+                  : _i3.ComplexStruct?.fromJson(
+                      (value as Map<String, dynamic>)),
             )),
         request[r'aNullableMapOfNullableSimpleStruct'] == null
             ? null
@@ -161,7 +162,7 @@ class ComplexTarget extends _i1.FunctionTarget {
                       key,
                       value == null
                           ? null
-                          : _i3.SimpleStruct.fromJson(
+                          : _i3.SimpleStruct?.fromJson(
                               (value as Map<String, dynamic>)),
                     )),
         request[r'aNullableMapOfNullableComplexStruct'] == null
@@ -176,7 +177,7 @@ class ComplexTarget extends _i1.FunctionTarget {
                       key,
                       value == null
                           ? null
-                          : _i3.ComplexStruct.fromJson(
+                          : _i3.ComplexStruct?.fromJson(
                               (value as Map<String, dynamic>)),
                     )),
       );

@@ -17,7 +17,7 @@ final class EntrypointGenerator {
   final CloudFunction function;
   final String outputDir;
 
-  String generate() {
+  Library generate() {
     final library = LibraryBuilder();
     final body = BlockBuilder();
     var pipeline = DartTypes.shelf.pipeline.newInstance([]);
@@ -27,7 +27,11 @@ final class EntrypointGenerator {
     final middleware = [
       ...api.metadata,
       ...function.metadata,
-    ].reversed.whereType<ApiMetadataMiddleware>().toList();
+    ]
+        // Middleware are applied in reverse order
+        .reversed
+        .whereType<ApiMetadataMiddleware>()
+        .toList();
     for (final middleware in middleware) {
       pipeline = pipeline.property('addMiddleware').call([
         middleware.type.constInstance([]).property('handle'),
@@ -115,8 +119,9 @@ final class EntrypointGenerator {
                     );
                     final toJson = returnType.toJson(refer('response'));
                     Expression result;
-                    if (returnType.flattened.nullable ||
-                        returnType.nullable && returnType.isDartAsyncFutureOr) {
+                    if (returnType.flattened.isNullableOrFalse ||
+                        returnType.isNullableOrFalse &&
+                            returnType.isDartAsyncFutureOr) {
                       result = refer('response')
                           .equalTo(literalNull)
                           .conditional(literalNull, toJson);
@@ -186,10 +191,6 @@ final class EntrypointGenerator {
         ),
     );
     library.body.addAll([target, entrypoint]);
-    final emitter = DartEmitter.scoped(
-      orderDirectives: true,
-    );
-    final contents = library.build().accept(emitter).toString();
-    return contents;
+    return library.build();
   }
 }

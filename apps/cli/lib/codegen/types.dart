@@ -400,6 +400,18 @@ class _Celest {
 
   /// Creates a [celest.FunctionContext] reference.
   Reference get functionContext => const Reference('FunctionContext', _url);
+
+  /// Creates a [celest.CloudFunction] reference.
+  Reference cloudFunction([Reference? input, Reference? output]) =>
+      TypeReference(
+        (t) => t
+          ..symbol = 'CloudFunction'
+          ..url = _url
+          ..types.addAll([
+            if (input != null) input,
+            if (output != null) output,
+          ]),
+      );
 }
 
 /// `dart:convert` types
