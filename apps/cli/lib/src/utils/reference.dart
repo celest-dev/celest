@@ -1,31 +1,5 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'package:celest_cli/analyzer/serialization.dart';
+import 'package:celest_cli/src/utils/dart_type.dart';
 import 'package:code_builder/code_builder.dart';
-
-final enumIndex = <Reference, bool>{};
-
-extension DartTypeHelper on DartType {
-  DartType get flattened {
-    switch (this) {
-      case final InterfaceType interface
-          when interface.isDartAsyncFuture || interface.isDartAsyncFutureOr:
-        return interface.typeArguments.first;
-      default:
-        return this;
-    }
-  }
-
-  JsonVerdict get isValidReturnType =>
-      flattened.accept(const IsJsonSerializable(TypePosition.return$));
-
-  JsonVerdict get isValidParameterType =>
-      flattened.accept(const IsJsonSerializable(TypePosition.parameter));
-
-  bool get isEnum => element is EnumElement;
-
-  Reference get toCodeBuilder => accept(const TypeToCodeBuilder());
-}
 
 extension ReferenceHelper on Reference {
   bool get isFunctionContext =>

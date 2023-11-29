@@ -5,9 +5,11 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:celest_cli/analyzer/dart_type.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/serialization/checker.dart';
+import 'package:celest_cli/src/utils/dart_type.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 

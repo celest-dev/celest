@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:celest_cli/analyzer/visitor.dart';
 import 'package:celest_cli/ast/serializers.dart';
+import 'package:celest_cli/ast/visitor.dart';
 import 'package:code_builder/code_builder.dart';
 
 part 'ast.g.dart';
