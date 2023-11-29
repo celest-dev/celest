@@ -8,7 +8,7 @@ import 'package:celest/celest.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
-import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_static/shelf_static.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -294,12 +294,12 @@ final class LambdaServer {
   HttpServer? _wsServer;
   var _isRestart = false;
 
-  Future<Response> _urlHandler(Request req) async {
+  Future<shelf.Response> _urlHandler(shelf.Request req) async {
     final body = await req.readAsString();
     final request = await jsonDecode(body) as Map<String, dynamic>;
     final name = request['input'] as String;
     final response = _isRestart ? 'Hello from local, $name!' : 'Hello, $name!';
-    return Response.ok(response);
+    return shelf.Response.ok(response);
   }
 
   final _wsHandler = webSocketHandler((webSocket) {});

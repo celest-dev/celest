@@ -1,0 +1,14 @@
+{
+    "sayHello": [
+        {
+            "input": {
+                "name": "Dillon"
+            },
+            "output": "Hello, Dillon!",
+            "logs": [
+                "first",
+                "second"
+            ]
+        }
+    ]
+}
