@@ -13,7 +13,7 @@ class DoubleReturnTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       final response = _i3.doubleReturn(celestContext);
       return response;
     },

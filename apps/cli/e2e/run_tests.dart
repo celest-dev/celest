@@ -32,7 +32,7 @@ Future<void> main(List<String> args) async {
         projectRoot: projectRoot,
       );
 
-      setUp(() {
+      setUpAll(() {
         final res = Process.runSync(
           Platform.executable,
           ['pub', 'get'],
@@ -45,7 +45,7 @@ Future<void> main(List<String> args) async {
         client = Client();
       });
 
-      tearDown(() {
+      tearDownAll(() {
         client.close();
       });
 

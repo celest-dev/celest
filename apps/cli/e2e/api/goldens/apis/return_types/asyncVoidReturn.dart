@@ -13,7 +13,7 @@ class AsyncVoidReturnTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       return _i3.asyncVoidReturn(celestContext);
     },
     (json) => json as Map<String, dynamic>,

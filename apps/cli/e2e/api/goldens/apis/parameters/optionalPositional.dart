@@ -13,19 +13,15 @@ class OptionalPositionalTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       return _i3.optionalPositional(
         celestContext,
         request[r'optionalString'] == null
             ? null
-            : request[r'optionalString'] == null
-                ? null
-                : (request[r'optionalString'] as String),
+            : (request[r'optionalString'] as String),
         request[r'optionalInt'] == null
             ? null
-            : request[r'optionalInt'] == null
-                ? null
-                : (request[r'optionalInt'] as int),
+            : (request[r'optionalInt'] as int),
       );
     },
     (json) => json as Map<String, dynamic>,

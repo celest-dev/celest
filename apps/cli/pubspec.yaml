@@ -11,6 +11,8 @@ dependencies:
   args: ^2.4.2
   async: ^2.11.0
   aws_common: ^0.6.1
+  built_collection: ^5.1.1
+  built_value: ^8.6.3
   celest:
     path: ../../packages/celest
   celest_cli_common:
@@ -20,7 +22,6 @@ dependencies:
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
-  freezed_annotation: ^2.4.1
   http: ^1.1.2
   json_annotation: ^4.8.1
   mason_logger: ^0.2.10
@@ -35,9 +36,9 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.6
   build_version: ^2.1.1
+  built_value_generator: ^8.8.0
   celest_lints:
     path: ../../packages/celest_lints
-  freezed: ^2.4.5
   json_serializable: ^6.7.1
   test: ^1.24.0
   test_descriptor: ^2.0.1

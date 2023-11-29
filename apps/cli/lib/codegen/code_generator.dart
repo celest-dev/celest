@@ -1,35 +1,33 @@
-import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/analyzer/ast.dart';
+import 'package:celest_cli/analyzer/dart_type.dart';
 import 'package:celest_cli/analyzer/serialization.dart';
-import 'package:celest_cli/analyzer/validator.dart';
 import 'package:celest_cli/analyzer/visitor.dart';
+import 'package:celest_cli/ast/ast.dart' as ast show Parameter;
+import 'package:celest_cli/ast/ast.dart' hide Parameter;
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:path/path.dart' as p;
 
 final class CodeGenerator extends AstVisitor<void> {
   CodeGenerator(
-    this._projectRoot, {
+    String projectRoot, {
     String? outputDir,
-  }) : _outputDir = outputDir ?? p.join(_projectRoot, '.dart_tool', 'celest');
+  }) : _outputDir = outputDir ?? p.join(projectRoot, '.dart_tool', 'celest');
 
   static final _formatter = DartFormatter();
 
-  final String _projectRoot;
   final String _outputDir;
 
   /// A map of generated files to their contents.
   final Map<String, String> outputs = {};
 
   @override
-  void visitProject(ProjectAst project) {
+  void visitProject(Project project) {
     project.apis.forEach(visitApi);
   }
 
   @override
-  void visitApi(ApiAst api) {
+  void visitApi(Api api) {
     final outputDir = p.join(_outputDir, 'apis', api.name);
     for (final function in api.functions) {
       final entrypointFile = p.join(outputDir, '${function.name}.dart');
@@ -37,14 +35,16 @@ final class CodeGenerator extends AstVisitor<void> {
       final body = BlockBuilder();
       var pipeline =
           refer('Pipeline', 'package:shelf/shelf.dart').newInstance([]);
+
+      // TODO(dnys1): To Set (when removed element)
+      // Actually, throw for duplicate values?
       for (final metadata in [
         ...api.metadata,
         ...function.metadata,
       ]) {
-        if (metadata is ApiMiddleware) {
+        if (metadata is ApiMetadataMiddleware) {
           pipeline = pipeline.property('addMiddleware').call([
-            refer(metadata.type.name, metadata.type.libraryUri.toString())
-                .constInstance([]).property('handle'),
+            metadata.type.constInstance([]).property('handle'),
           ]);
         }
       }
@@ -77,10 +77,9 @@ final class CodeGenerator extends AstVisitor<void> {
                   ),
                 ])
                 ..modifier = MethodModifier.async
-                // TODO: request -> variable mapping
                 ..body = Block((b) {
                   final functionImport = p.relative(
-                    p.join(_projectRoot, function.location.path),
+                    p.fromUri(function.location.uri),
                     from: outputDir,
                   );
                   final functionReference = refer(
@@ -93,9 +92,7 @@ final class CodeGenerator extends AstVisitor<void> {
                       .any((param) => param.type.isFunctionContext)) {
                     b.addExpression(
                       declareFinal('celestContext').assign(
-                        functionContext.newInstance([], {
-                          'logger': refer('context').property('logger'),
-                        }),
+                        functionContext.newInstance([]),
                       ),
                     );
                   }
@@ -109,15 +106,8 @@ final class CodeGenerator extends AstVisitor<void> {
                       final fromMap = refer('request').index(
                         literalString(param.name, raw: true),
                       );
-                      final deserialized = param.type.dartType!.accept(
-                        FromJsonSerializer(fromMap),
-                      );
-                      paramExp = param.required
-                          ? deserialized
-                          : fromMap.equalTo(literalNull).conditional(
-                                literalNull,
-                                deserialized,
-                              );
+                      final deserialized = param.type.fromJson(fromMap);
+                      paramExp = deserialized;
                     }
                     if (param.named) {
                       namedParams[param.name] = paramExp;
@@ -129,9 +119,9 @@ final class CodeGenerator extends AstVisitor<void> {
                     positionalParams,
                     namedParams,
                   );
-                  final returnType = function.returnType.dartType!;
-                  switch (returnType.flattened) {
-                    case VoidType():
+                  final returnType = function.returnType;
+                  switch (returnType.flattened.symbol) {
+                    case 'void':
                       b.addExpression(response.returned);
                     default:
                       if (returnType.isDartAsyncFuture ||
@@ -141,14 +131,10 @@ final class CodeGenerator extends AstVisitor<void> {
                       b.addExpression(
                         declareFinal('response').assign(response),
                       );
-                      final toJson = returnType.accept(
-                        ToJsonSerializer(refer('response')),
-                      );
+                      final toJson = returnType.toJson(refer('response'));
                       Expression result;
-                      if (returnType.flattened.nullabilitySuffix !=
-                              NullabilitySuffix.none ||
-                          returnType.nullabilitySuffix !=
-                                  NullabilitySuffix.none &&
+                      if (returnType.flattened.nullable ||
+                          returnType.nullable &&
                               returnType.isDartAsyncFutureOr) {
                         result = refer('response')
                             .equalTo(literalNull)
@@ -239,14 +225,14 @@ final class CodeGenerator extends AstVisitor<void> {
   }
 
   @override
-  void visitApiAuthenticated(ApiAuthenticated annotation) {}
+  void visitApiAuthenticated(ApiMetadataAuthenticated annotation) {}
 
   @override
-  void visitApiMiddleware(ApiMiddleware annotation) {}
+  void visitApiMiddleware(ApiMetadataMiddleware annotation) {}
 
   @override
-  void visitFunction(FunctionAst function) {}
+  void visitFunction(CloudFunction function) {}
 
   @override
-  void visitParameter(ParameterAst parameter) {}
+  void visitParameter(ast.Parameter parameter) {}
 }

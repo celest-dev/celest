@@ -13,7 +13,7 @@ class AsyncOrDoubleReturnNullableTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       final response = await _i3.asyncOrDoubleReturnNullable(celestContext);
       return response == null ? null : response;
     },

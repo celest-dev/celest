@@ -13,7 +13,7 @@ class DoubleReturnNullableTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       final response = _i3.doubleReturnNullable(celestContext);
       return response == null ? null : response;
     },

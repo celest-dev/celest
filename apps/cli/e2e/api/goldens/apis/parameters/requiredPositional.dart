@@ -13,7 +13,7 @@ class RequiredPositionalTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       return _i3.requiredPositional(
         celestContext,
         (request[r'requiredString'] as String),

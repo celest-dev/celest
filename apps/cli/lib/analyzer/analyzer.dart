@@ -5,10 +5,11 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'package:celest_cli/analyzer/ast.dart';
-import 'package:celest_cli/analyzer/validator.dart';
+import 'package:celest_cli/analyzer/dart_type.dart';
+import 'package:celest_cli/ast/ast.dart' as ast;
+import 'package:celest_cli/ast/ast.dart';
 import 'package:path/path.dart' as p;
+import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class CelestAnalyzer {
   CelestAnalyzer._(this.projectRoot, this._context);
@@ -25,22 +26,35 @@ final class CelestAnalyzer {
 
   final String projectRoot;
   final AnalysisContext _context;
+  final List<AnalysisException> errors = [];
 
-  Future<(ProjectAst, List<ValidationException>)> analyzeProject() async {
-    final projectClass = await _findProjectClass();
-    final apis = await _collectApis();
-    final project = ProjectAst(
-      projectClass: projectClass,
-      apis: apis,
+  void _reportError(String error, SourceLocation location) {
+    errors.add(
+      AnalysisException(
+        message: error,
+        location: location,
+      ),
     );
-    final validator = AstValidator();
-    project.accept(validator);
-    return (project, validator.errors);
   }
 
-  Future<String> _findProjectClass() async {
-    final projectFile = await _context.currentSession
-        .getUnitElement(p.join(projectRoot, 'project.dart'));
+  Future<(ast.Project, List<AnalysisException>)> analyzeProject() async {
+    final project = await _findProject();
+    final apis = await _collectApis();
+    return (
+      project.rebuild((p) => p.apis.addAll(apis)),
+      errors,
+    );
+  }
+
+  Future<ast.Project> _findProject() async {
+    final projectYaml = p.join(projectRoot, 'pubspec.yaml');
+    final projectYamlFile = File(projectYaml).readAsStringSync();
+    final projectPubspec = Pubspec.parse(projectYamlFile);
+
+    final projectFilePath = p.join(projectRoot, 'project.dart');
+    // TODO(dnys1): Assert exists
+    final projectFile =
+        await _context.currentSession.getUnitElement(projectFilePath);
     final resolvedProjectFile = switch (projectFile) {
       UnitElementResult _ => projectFile,
       _ => throw StateError('Bad resolution: $projectFile'),
@@ -53,10 +67,17 @@ final class CelestAnalyzer {
       }
       return false;
     });
-    return projectClass.name;
+
+    return ast.Project(
+      name: projectPubspec.name,
+      implementation: ast.ProjectClass(
+        name: projectClass.name,
+        location: projectClass.sourceLocation,
+      ),
+    );
   }
 
-  List<ApiMetdataAst> _collectMetadata(Element element) {
+  List<ast.ApiMetadata> _collectMetadata(Element element) {
     return element.metadata.map((annotation) {
       final value = annotation.computeConstantValue();
       if (value == null) {
@@ -65,15 +86,13 @@ final class CelestAnalyzer {
       final type = value.type!.element!;
       switch (type) {
         case _ when type.library!.isCelestApi && type.name == 'authenticated':
-          return ApiMetdataAst.apiAuthenticated(
-            location: element.sourceLocation(projectRoot),
-            element: annotation,
+          return ast.ApiMetadataAuthenticated(
+            location: element.sourceLocation,
           );
         case _ when type.isMiddleware:
-          return ApiMetdataAst.apiMiddleware(
-            type: value.type!.toAst,
-            location: element.sourceLocation(projectRoot),
-            element: annotation,
+          return ast.ApiMetadataMiddleware(
+            type: value.type!.toCodeBuilder,
+            location: element.sourceLocation,
           );
         case _:
           throw StateError('Bad annotation: $annotation');
@@ -81,8 +100,8 @@ final class CelestAnalyzer {
     }).toList();
   }
 
-  Future<List<ApiAst>> _collectApis() async {
-    final apis = <ApiAst>[];
+  Future<List<ast.Api>> _collectApis() async {
+    final apis = <ast.Api>[];
     final apiDir = Directory(p.join(projectRoot, 'apis'));
     if (!apiDir.existsSync()) {
       return const [];
@@ -104,30 +123,61 @@ final class CelestAnalyzer {
       final functions = apiUnit.library.topLevelElements
           .whereType<FunctionElement>()
           .map((func) {
-        return FunctionAst(
+        final function = ast.CloudFunction(
           name: func.name,
           parameters: func.parameters.map((param) {
-            return ParameterAst(
+            final parameter = ast.Parameter(
               name: param.name,
-              type: param.type.toAst,
+              type: param.type.toCodeBuilder,
               required: param.isRequired,
               named: param.isNamed,
-              location: param.sourceLocation(projectRoot),
-              element: param,
+              location: param.sourceLocation,
             );
+            if (parameter.type.isFunctionContext) {
+              return parameter;
+            }
+            final parameterTypeVerdict = param.type.isValidParameterType;
+            if (!parameterTypeVerdict.isJsonSerializable) {
+              _reportError(
+                'The type of a parameter must be serializable as JSON. ${parameterTypeVerdict.reason}',
+                parameter.location,
+              );
+            }
+            return parameter;
           }).toList(),
-          returnType: func.returnType.toAst,
-          location: func.sourceLocation(projectRoot),
+          returnType: func.returnType.toCodeBuilder,
+          location: func.sourceLocation,
           metadata: _collectMetadata(func),
-          element: func,
         );
+
+        var hasContext = false;
+        for (final param in function.parameters) {
+          if (param.type.isFunctionContext) {
+            if (hasContext) {
+              _reportError(
+                'A FunctionContext parameter may only be specified once',
+                param.location,
+              );
+            }
+            hasContext = true;
+          }
+        }
+        final returnType = func.returnType;
+        final returnTypeVerdict = returnType.isValidReturnType;
+        if (!returnTypeVerdict.isJsonSerializable) {
+          _reportError(
+            'The return type of a function must be serializable as JSON. ${returnTypeVerdict.reason}}',
+            function.location,
+          );
+        }
+        return function;
       }).toList();
       apis.add(
-        ApiAst(
+        ast.Api(
+          uri: apiUnit.library.source.uri,
           name: p.basenameWithoutExtension(apiFile),
           metadata: libraryMetdata,
           functions: functions,
-          element: apiUnit.library,
         ),
       );
     }
@@ -161,8 +211,8 @@ extension on Element {
     });
   }
 
-  SourceLocation sourceLocation(String projectRoot) {
-    final path = this.source!.uri.toFilePath();
+  ast.SourceLocation get sourceLocation {
+    final uri = this.source!.uri;
     final source = this.source!.contents.data;
     final lines = LineSplitter.split(source);
     var currOffset = 0;
@@ -177,29 +227,25 @@ extension on Element {
       currOffset += line.length + 1;
       lineNo++;
     }
-    return SourceLocation(
-      path: p.relative(path, from: projectRoot),
+    return ast.SourceLocation(
+      uri: uri,
       line: lineNo,
       column: column,
     );
   }
 }
 
-extension on DartType {
-  TypeAst get toAst => TypeAst(
-        libraryUri: switch (this) {
-          final ParameterizedType typ => typ.element!.librarySource!.uri,
-          _ => Uri(),
-        },
-        name: switch (this) {
-          final ParameterizedType typ => typ.element!.name!,
-          _ => '',
-        },
-        typeArguments: switch (this) {
-          final ParameterizedType typ =>
-            typ.typeArguments.map((t) => t.toAst).toList(),
-          _ => const [],
-        },
-        dartType: this,
-      );
+final class AnalysisException implements Exception {
+  const AnalysisException({
+    required this.message,
+    required this.location,
+  });
+
+  final String message;
+  final SourceLocation location;
+
+  @override
+  String toString() {
+    return '${location.uri}:${location.line}:${location.column}: $message';
+  }
 }

@@ -1,7 +1,7 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
+import 'package:celest_cli/analyzer/dart_type.dart';
 import 'package:code_builder/code_builder.dart' hide RecordType, FunctionType;
 import 'package:collection/collection.dart';
 
@@ -153,23 +153,62 @@ final class IsJsonSerializable extends TypeVisitor<JsonVerdict> {
   JsonVerdict visitVoidType(VoidType type) => const JsonVerdict.yes();
 }
 
-final class ToJsonSerializer extends TypeVisitor<Expression> {
-  const ToJsonSerializer(this.ref);
-
-  final Expression ref;
+final class TypeToCodeBuilder implements TypeVisitor<Reference> {
+  const TypeToCodeBuilder();
 
   @override
-  Expression visitDynamicType(DynamicType type) => ref;
+  Reference visitDynamicType(DynamicType type) => refer('dynamic');
 
   @override
-  Expression visitFunctionType(FunctionType type) {
+  Reference visitFunctionType(FunctionType type) {
     throw StateError('Bad type: $type');
   }
 
   @override
-  Expression visitInterfaceType(InterfaceType type) {
+  Reference visitInterfaceType(InterfaceType type) {
+    final typeArguments = type.typeArguments.map((type) => type.accept(this));
+    final uri = switch (type) {
+      _ when type.element.library.isDartCore => 'dart:core',
+      _ => type.element.library.source.uri.toString(),
+    };
+    final ref = TypeReference(
+      (t) => t
+        ..symbol = type.element.name
+        ..url = uri
+        ..types.addAll(typeArguments)
+        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
+    );
+    enumIndex[ref] = type.isEnum;
+    return ref;
+  }
+
+  @override
+  Reference visitInvalidType(InvalidType type) {
+    throw StateError('Bad type: $type');
+  }
+
+  @override
+  Reference visitNeverType(NeverType type) => refer('Never', 'dart:core');
+
+  @override
+  Reference visitRecordType(RecordType type) {
+    throw StateError('Bad type: $type');
+  }
+
+  @override
+  Reference visitTypeParameterType(TypeParameterType type) {
+    throw StateError('Bad type: $type');
+  }
+
+  @override
+  Reference visitVoidType(VoidType type) => refer('void');
+}
+
+extension ReferenceSerialization on Reference {
+  Expression toJson(Expression ref) {
+    final type = toTypeReference;
     if (type.isDartAsyncFuture || type.isDartAsyncFutureOr) {
-      return type.typeArguments.single.accept(this);
+      return type.types.single.toJson(ref);
     }
     if (type.isDartCoreBool ||
         type.isDartCoreDouble ||
@@ -187,8 +226,7 @@ final class ToJsonSerializer extends TypeVisitor<Expression> {
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       final element = refer('el');
-      final serializedElement =
-          type.typeArguments.single.accept(ToJsonSerializer(element));
+      final serializedElement = toTypeReference.types.single.toJson(element);
       if (element == serializedElement) {
         return ref;
       }
@@ -210,13 +248,11 @@ final class ToJsonSerializer extends TypeVisitor<Expression> {
           .call([]);
     }
     if (type.isDartCoreMap) {
-      if (!type.typeArguments[0].isDartCoreString) {
+      if (!type.types[0].isDartCoreString) {
         throw StateError('Bad type: $type');
       }
       final value = refer('value');
-      final serializedValue = type.typeArguments[1].accept(
-        ToJsonSerializer(value),
-      );
+      final serializedValue = type.types[1].toJson(value);
       if (value == serializedValue) {
         return ref;
       }
@@ -244,56 +280,17 @@ final class ToJsonSerializer extends TypeVisitor<Expression> {
     return ref.property('toJson').call([]);
   }
 
-  @override
-  Expression visitInvalidType(InvalidType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitNeverType(NeverType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitRecordType(RecordType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitTypeParameterType(TypeParameterType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitVoidType(VoidType type) {
-    throw StateError('Bad type: $type');
-  }
-}
-
-final class FromJsonSerializer extends TypeVisitor<Expression> {
-  const FromJsonSerializer(this.ref);
-
-  final Expression ref;
-
-  @override
-  Expression visitDynamicType(DynamicType type) => ref;
-
-  @override
-  Expression visitFunctionType(FunctionType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  Expression _interfaceFromJson(InterfaceType type) {
+  Expression _fromJson(Expression ref) {
+    final type = toTypeReference;
     if (type.isDartCoreBool ||
         type.isDartCoreDouble ||
         type.isDartCoreInt ||
         type.isDartCoreString ||
         type.isDartCoreNull) {
-      return ref.asA(type.toCodeBuilder);
+      return ref.asA(this);
     }
     if (type.isEnum) {
-      return refer(type.element.name, type.element.source.uri.toString())
-          .property('values')
+      return property('values')
           .property('byName')
           .call([ref.asA(refer('String', 'dart:core'))]);
     }
@@ -301,23 +298,21 @@ final class FromJsonSerializer extends TypeVisitor<Expression> {
       throw StateError('Bad type: $type');
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
-      final ref = this.ref.asA(
-            TypeReference(
-              (t) => t
-                ..symbol = 'Iterable'
-                ..url = 'dart:core'
-                ..types.add(refer('Object?', 'dart:core'))
-                ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
-            ),
-          );
-      final element = refer('el');
-      final serializedElement = type.typeArguments.single.accept(
-        FromJsonSerializer(element),
+      final cast = ref.asA(
+        TypeReference(
+          (t) => t
+            ..symbol = 'Iterable'
+            ..url = 'dart:core'
+            ..types.add(refer('Object?', 'dart:core'))
+            ..isNullable = type.toTypeReference.isNullable,
+        ),
       );
+      final element = refer('el');
+      final serializedElement = type.types.single.fromJson(element);
       if (element == serializedElement) {
-        return ref;
+        return cast;
       }
-      return ref
+      return cast
           .property('map')
           .call([
             Method(
@@ -335,28 +330,26 @@ final class FromJsonSerializer extends TypeVisitor<Expression> {
           .call([]);
     }
     if (type.isDartCoreMap) {
-      if (!type.typeArguments[0].isDartCoreString) {
+      if (!type.types[0].isDartCoreString) {
         throw StateError('Bad type: $type');
       }
-      final ref = this.ref.asA(
-            TypeReference(
-              (t) => t
-                ..symbol = 'Map'
-                ..url = 'dart:core'
-                ..types.addAll([
-                  refer('String', 'dart:core'),
-                  refer('Object?', 'dart:core'),
-                ]),
-            ),
-          );
-      final value = refer('value');
-      final serializedValue = type.typeArguments[1].accept(
-        FromJsonSerializer(value),
+      final cast = ref.asA(
+        TypeReference(
+          (t) => t
+            ..symbol = 'Map'
+            ..url = 'dart:core'
+            ..types.addAll([
+              refer('String', 'dart:core'),
+              refer('Object?', 'dart:core'),
+            ]),
+        ),
       );
+      final value = refer('value');
+      final serializedValue = type.types[1].fromJson(value);
       if (value == serializedValue) {
-        return ref;
+        return cast;
       }
-      return ref.property('map').call([
+      return cast.property('map').call([
         Method(
           (m) => m
             ..requiredParameters.add(
@@ -377,8 +370,7 @@ final class FromJsonSerializer extends TypeVisitor<Expression> {
         ).closure,
       ]);
     }
-    return refer(type.element.name, type.element.source.uri.toString())
-        .newInstanceNamed('fromJson', [
+    return newInstanceNamed('fromJson', [
       ref.asA(
         TypeReference(
           (t) => t
@@ -393,92 +385,11 @@ final class FromJsonSerializer extends TypeVisitor<Expression> {
     ]);
   }
 
-  @override
-  Expression visitInterfaceType(InterfaceType type) {
-    final fromJson = _interfaceFromJson(type);
-    if (type.nullabilitySuffix == NullabilitySuffix.none) {
+  Expression fromJson(Expression ref) {
+    final fromJson = _fromJson(ref);
+    if (!toTypeReference.nullable) {
       return fromJson;
     }
     return ref.equalTo(literalNull).conditional(literalNull, fromJson);
   }
-
-  @override
-  Expression visitInvalidType(InvalidType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitNeverType(NeverType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitRecordType(RecordType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitTypeParameterType(TypeParameterType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Expression visitVoidType(VoidType type) {
-    throw StateError('Bad type: $type');
-  }
-}
-
-extension on DartType {
-  bool get isEnum => element is EnumElement;
-
-  Reference get toCodeBuilder => accept(const TypeToCodeBuilder());
-}
-
-final class TypeToCodeBuilder implements TypeVisitor<Reference> {
-  const TypeToCodeBuilder();
-
-  @override
-  Reference visitDynamicType(DynamicType type) => refer('dynamic');
-
-  @override
-  Reference visitFunctionType(FunctionType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Reference visitInterfaceType(InterfaceType type) {
-    final typeArguments = type.typeArguments.map((type) => type.accept(this));
-    final uri = switch (type) {
-      _ when type.element.library.isDartCore => 'dart:core',
-      _ => type.element.source.uri.toString(),
-    };
-    return TypeReference(
-      (t) => t
-        ..symbol = type.element.name
-        ..url = uri
-        ..types.addAll(typeArguments)
-        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
-    );
-  }
-
-  @override
-  Reference visitInvalidType(InvalidType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Reference visitNeverType(NeverType type) => refer('Never', 'dart:core');
-
-  @override
-  Reference visitRecordType(RecordType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Reference visitTypeParameterType(TypeParameterType type) {
-    throw StateError('Bad type: $type');
-  }
-
-  @override
-  Reference visitVoidType(VoidType type) => refer('void');
 }

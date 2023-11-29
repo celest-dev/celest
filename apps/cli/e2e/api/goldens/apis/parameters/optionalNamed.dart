@@ -13,19 +13,14 @@ class OptionalNamedTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final celestContext = _i2.FunctionContext(logger: context.logger);
+      final celestContext = _i2.FunctionContext();
       return _i3.optionalNamed(
         celestContext,
         namedString: request[r'namedString'] == null
             ? null
-            : request[r'namedString'] == null
-                ? null
-                : (request[r'namedString'] as String),
-        namedInt: request[r'namedInt'] == null
-            ? null
-            : request[r'namedInt'] == null
-                ? null
-                : (request[r'namedInt'] as int),
+            : (request[r'namedString'] as String),
+        namedInt:
+            request[r'namedInt'] == null ? null : (request[r'namedInt'] as int),
       );
     },
     (json) => json as Map<String, dynamic>,

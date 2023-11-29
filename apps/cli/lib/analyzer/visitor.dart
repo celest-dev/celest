@@ -1,25 +1,26 @@
-import 'package:celest_cli/analyzer/ast.dart';
+import 'package:celest_cli/ast/ast.dart';
 
 abstract class AstVisitor<T> {
-  T visitNode(AstNode node) => switch (node) {
-        final ProjectAst project => visitProject(project),
-        final ApiAst api => visitApi(api),
-        final FunctionAst function => visitFunction(function),
-        final ParameterAst parameter => visitParameter(parameter),
-        final ApiAuthenticated apiAuthenticated =>
+  T visitNode(Node node) => switch (node) {
+        final Project project => visitProject(project),
+        final Api api => visitApi(api),
+        final CloudFunction function => visitFunction(function),
+        final Parameter parameter => visitParameter(parameter),
+        final ApiMetadataAuthenticated apiAuthenticated =>
           visitApiAuthenticated(apiAuthenticated),
-        final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
+        final ApiMetadataMiddleware apiMiddleware =>
+          visitApiMiddleware(apiMiddleware),
       };
 
-  T visitProject(ProjectAst project);
+  T visitProject(Project project);
 
-  T visitApi(ApiAst api);
+  T visitApi(Api api);
 
-  T visitFunction(FunctionAst function);
+  T visitFunction(CloudFunction function);
 
-  T visitParameter(ParameterAst parameter);
+  T visitParameter(Parameter parameter);
 
-  T visitApiAuthenticated(ApiAuthenticated annotation);
+  T visitApiAuthenticated(ApiMetadataAuthenticated annotation);
 
-  T visitApiMiddleware(ApiMiddleware annotation);
+  T visitApiMiddleware(ApiMetadataMiddleware annotation);
 }
