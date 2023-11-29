@@ -29,16 +29,16 @@ class SayHelloTarget extends _i1.FunctionTarget {
   @override
   _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
     final handler = _i5.Pipeline()
-        .addMiddleware(const _i6.first().handle)
-        .addMiddleware(const _i6.second().handle)
-        .addMiddleware(const _i6.third().handle)
         .addMiddleware(const _i6.fourth().handle)
+        .addMiddleware(const _i6.third().handle)
+        .addMiddleware(const _i6.second().handle)
+        .addMiddleware(const _i6.first().handle)
         .addHandler(_inner.handler);
     return handler(request);
   }
 }
 
-Future<void> main(List<String> args) async {
+_i4.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
     (_) => SayHelloTarget(),

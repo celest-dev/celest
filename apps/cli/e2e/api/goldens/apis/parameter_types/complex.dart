@@ -191,7 +191,7 @@ class ComplexTarget extends _i1.FunctionTarget {
   }
 }
 
-Future<void> main(List<String> args) async {
+_i4.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
     (_) => ComplexTarget(),

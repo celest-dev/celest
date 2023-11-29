@@ -24,15 +24,14 @@ final class EntrypointGenerator {
 
     // TODO(dnys1): To Set (when removed element)
     // Actually, throw for duplicate values?
-    for (final metadata in [
+    final middleware = [
       ...api.metadata,
       ...function.metadata,
-    ]) {
-      if (metadata is ApiMetadataMiddleware) {
-        pipeline = pipeline.property('addMiddleware').call([
-          metadata.type.constInstance([]).property('handle'),
-        ]);
-      }
+    ].reversed.whereType<ApiMetadataMiddleware>().toList();
+    for (final middleware in middleware) {
+      pipeline = pipeline.property('addMiddleware').call([
+        middleware.type.constInstance([]).property('handle'),
+      ]);
     }
     pipeline = pipeline.property('addHandler').call([
       refer('_inner').property('handler'),

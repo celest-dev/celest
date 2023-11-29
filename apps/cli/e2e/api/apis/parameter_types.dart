@@ -55,7 +55,7 @@ Future<void> simpleOptional(
 ) async {}
 
 class SimpleStruct {
-  SimpleStruct();
+  const SimpleStruct();
   factory SimpleStruct.fromJson(Map<String, Object?> _) => SimpleStruct();
   Map<String, Object?> toJson() => {};
 }
@@ -90,7 +90,7 @@ class ComplexStruct {
   final Map<String, Null> aMapOfNull;
   final Map<String, SimpleStruct> aMapOfSimpleStruct;
 
-  ComplexStruct({
+  const ComplexStruct({
     required this.aString,
     required this.anInt,
     required this.aDouble,
