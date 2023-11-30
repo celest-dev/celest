@@ -186,7 +186,7 @@ final class CelestAnalyzer {
         ),
       );
     }
-    return apis;
+    return apis..sort((a, b) => a.name.compareTo(b.name));
   }
 }
 

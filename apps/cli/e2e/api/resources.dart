@@ -9,6 +9,13 @@ import 'apis/parameter_types.dart' as _i2;
 
 final $_Celest celest = $_Celest();
 
+final class $_MiddlewareApi {
+  final sayHello = _i1.CloudFunction<String, String>(
+    api: r'middleware',
+    functionName: r'sayHello',
+  );
+}
+
 final class $_ParameterTypesApi {
   final simple = _i1.CloudFunction<
       (
@@ -104,6 +111,30 @@ final class $_ParameterTypesApi {
       void>(
     api: r'parameter_types',
     functionName: r'complex',
+  );
+}
+
+final class $_ParametersApi {
+  final optionalPositional = _i1.CloudFunction<(String?, int?), void>(
+    api: r'parameters',
+    functionName: r'optionalPositional',
+  );
+
+  final optionalNamed =
+      _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
+    api: r'parameters',
+    functionName: r'optionalNamed',
+  );
+
+  final requiredPositional = _i1.CloudFunction<(String, int), void>(
+    api: r'parameters',
+    functionName: r'requiredPositional',
+  );
+
+  final requiredNamed =
+      _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
+    api: r'parameters',
+    functionName: r'requiredNamed',
   );
 }
 
@@ -363,45 +394,14 @@ final class $_ReturnTypesApi {
   );
 }
 
-final class $_MiddlewareApi {
-  final sayHello = _i1.CloudFunction<String, String>(
-    api: r'middleware',
-    functionName: r'sayHello',
-  );
-}
-
-final class $_ParametersApi {
-  final optionalPositional = _i1.CloudFunction<(String?, int?), void>(
-    api: r'parameters',
-    functionName: r'optionalPositional',
-  );
-
-  final optionalNamed =
-      _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
-    api: r'parameters',
-    functionName: r'optionalNamed',
-  );
-
-  final requiredPositional = _i1.CloudFunction<(String, int), void>(
-    api: r'parameters',
-    functionName: r'requiredPositional',
-  );
-
-  final requiredNamed =
-      _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
-    api: r'parameters',
-    functionName: r'requiredNamed',
-  );
-}
-
 final class $_CelestApis {
-  final $_ParameterTypesApi parameterTypes = $_ParameterTypesApi();
-
-  final $_ReturnTypesApi returnTypes = $_ReturnTypesApi();
-
   final $_MiddlewareApi middleware = $_MiddlewareApi();
 
+  final $_ParameterTypesApi parameterTypes = $_ParameterTypesApi();
+
   final $_ParametersApi parameters = $_ParametersApi();
+
+  final $_ReturnTypesApi returnTypes = $_ReturnTypesApi();
 }
 
 final class $_Celest {

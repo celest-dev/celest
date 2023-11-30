@@ -13,6 +13,134 @@
   },
   "apis": [
     {
+      "path": "apis/middleware.dart",
+      "name": "middleware",
+      "metadata": [
+        {
+          "$": "ApiMetadataMiddleware",
+          "type": {
+            "symbol": "first",
+            "url": "apis/middleware.dart",
+            "bound": null,
+            "isNullable": false
+          },
+          "location": {
+            "path": "apis/middleware.dart",
+            "line": 1,
+            "column": -1
+          }
+        },
+        {
+          "$": "ApiMetadataMiddleware",
+          "type": {
+            "symbol": "second",
+            "url": "apis/middleware.dart",
+            "bound": null,
+            "isNullable": false
+          },
+          "location": {
+            "path": "apis/middleware.dart",
+            "line": 1,
+            "column": -1
+          }
+        }
+      ],
+      "functions": [
+        {
+          "name": "sayHello",
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "symbol": "FunctionContext",
+                "url": "package:celest/src/functions/context.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/middleware.dart",
+                "line": 9,
+                "column": 40
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/middleware.dart",
+                "line": 9,
+                "column": 56
+              }
+            }
+          ],
+          "returnType": {
+            "symbol": "Future",
+            "url": "dart:async",
+            "bound": null,
+            "types": [
+              {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "symbol": "String",
+            "url": "dart:core",
+            "bound": null,
+            "isNullable": false
+          },
+          "metadata": [
+            {
+              "$": "ApiMetadataMiddleware",
+              "type": {
+                "symbol": "third",
+                "url": "apis/middleware.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "location": {
+                "path": "apis/middleware.dart",
+                "line": 9,
+                "column": 15
+              }
+            },
+            {
+              "$": "ApiMetadataMiddleware",
+              "type": {
+                "symbol": "fourth",
+                "url": "apis/middleware.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "location": {
+                "path": "apis/middleware.dart",
+                "line": 9,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "apis/middleware.dart",
+            "line": 9,
+            "column": 15
+          }
+        }
+      ]
+    },
+    {
       "path": "apis/parameter_types.dart",
       "name": "parameter_types",
       "metadata": [],
@@ -1809,6 +1937,305 @@
           "location": {
             "path": "apis/parameter_types.dart",
             "line": 225,
+            "column": 13
+          }
+        }
+      ]
+    },
+    {
+      "path": "apis/parameters.dart",
+      "name": "parameters",
+      "metadata": [],
+      "functions": [
+        {
+          "name": "optionalPositional",
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "symbol": "FunctionContext",
+                "url": "package:celest/src/functions/context.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 4,
+                "column": 18
+              }
+            },
+            {
+              "name": "optionalString",
+              "type": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": true
+              },
+              "required": false,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 5,
+                "column": 10
+              }
+            },
+            {
+              "name": "optionalInt",
+              "type": {
+                "symbol": "int",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": true
+              },
+              "required": false,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 6,
+                "column": 7
+              }
+            }
+          ],
+          "returnType": {
+            "symbol": "Future",
+            "url": "dart:async",
+            "bound": null,
+            "types": [
+              {
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "symbol": "void"
+          },
+          "metadata": [],
+          "location": {
+            "path": "apis/parameters.dart",
+            "line": 3,
+            "column": 13
+          }
+        },
+        {
+          "name": "optionalNamed",
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "symbol": "FunctionContext",
+                "url": "package:celest/src/functions/context.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 10,
+                "column": 18
+              }
+            },
+            {
+              "name": "namedString",
+              "type": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 11,
+                "column": 10
+              }
+            },
+            {
+              "name": "namedInt",
+              "type": {
+                "symbol": "int",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 12,
+                "column": 7
+              }
+            }
+          ],
+          "returnType": {
+            "symbol": "Future",
+            "url": "dart:async",
+            "bound": null,
+            "types": [
+              {
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "symbol": "void"
+          },
+          "metadata": [],
+          "location": {
+            "path": "apis/parameters.dart",
+            "line": 9,
+            "column": 13
+          }
+        },
+        {
+          "name": "requiredPositional",
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "symbol": "FunctionContext",
+                "url": "package:celest/src/functions/context.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 16,
+                "column": 18
+              }
+            },
+            {
+              "name": "requiredString",
+              "type": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 17,
+                "column": 9
+              }
+            },
+            {
+              "name": "requiredInt",
+              "type": {
+                "symbol": "int",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 18,
+                "column": 6
+              }
+            }
+          ],
+          "returnType": {
+            "symbol": "Future",
+            "url": "dart:async",
+            "bound": null,
+            "types": [
+              {
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "symbol": "void"
+          },
+          "metadata": [],
+          "location": {
+            "path": "apis/parameters.dart",
+            "line": 15,
+            "column": 13
+          }
+        },
+        {
+          "name": "requiredNamed",
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "symbol": "FunctionContext",
+                "url": "package:celest/src/functions/context.dart",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 22,
+                "column": 18
+              }
+            },
+            {
+              "name": "requiredString",
+              "type": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 23,
+                "column": 18
+              }
+            },
+            {
+              "name": "requiredInt",
+              "type": {
+                "symbol": "int",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "path": "apis/parameters.dart",
+                "line": 24,
+                "column": 15
+              }
+            }
+          ],
+          "returnType": {
+            "symbol": "Future",
+            "url": "dart:async",
+            "bound": null,
+            "types": [
+              {
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "symbol": "void"
+          },
+          "metadata": [],
+          "location": {
+            "path": "apis/parameters.dart",
+            "line": 21,
             "column": 13
           }
         }
@@ -4291,433 +4718,6 @@
             "path": "apis/return_types.dart",
             "line": 290,
             "column": 15
-          }
-        }
-      ]
-    },
-    {
-      "path": "apis/middleware.dart",
-      "name": "middleware",
-      "metadata": [
-        {
-          "$": "ApiMetadataMiddleware",
-          "type": {
-            "symbol": "first",
-            "url": "apis/middleware.dart",
-            "bound": null,
-            "isNullable": false
-          },
-          "location": {
-            "path": "apis/middleware.dart",
-            "line": 1,
-            "column": -1
-          }
-        },
-        {
-          "$": "ApiMetadataMiddleware",
-          "type": {
-            "symbol": "second",
-            "url": "apis/middleware.dart",
-            "bound": null,
-            "isNullable": false
-          },
-          "location": {
-            "path": "apis/middleware.dart",
-            "line": 1,
-            "column": -1
-          }
-        }
-      ],
-      "functions": [
-        {
-          "name": "sayHello",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/context.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/middleware.dart",
-                "line": 9,
-                "column": 40
-              }
-            },
-            {
-              "name": "name",
-              "type": {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/middleware.dart",
-                "line": 9,
-                "column": 56
-              }
-            }
-          ],
-          "returnType": {
-            "symbol": "Future",
-            "url": "dart:async",
-            "bound": null,
-            "types": [
-              {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "symbol": "String",
-            "url": "dart:core",
-            "bound": null,
-            "isNullable": false
-          },
-          "metadata": [
-            {
-              "$": "ApiMetadataMiddleware",
-              "type": {
-                "symbol": "third",
-                "url": "apis/middleware.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "location": {
-                "path": "apis/middleware.dart",
-                "line": 9,
-                "column": 15
-              }
-            },
-            {
-              "$": "ApiMetadataMiddleware",
-              "type": {
-                "symbol": "fourth",
-                "url": "apis/middleware.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "location": {
-                "path": "apis/middleware.dart",
-                "line": 9,
-                "column": 15
-              }
-            }
-          ],
-          "location": {
-            "path": "apis/middleware.dart",
-            "line": 9,
-            "column": 15
-          }
-        }
-      ]
-    },
-    {
-      "path": "apis/parameters.dart",
-      "name": "parameters",
-      "metadata": [],
-      "functions": [
-        {
-          "name": "optionalPositional",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/context.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 4,
-                "column": 18
-              }
-            },
-            {
-              "name": "optionalString",
-              "type": {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": true
-              },
-              "required": false,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 5,
-                "column": 10
-              }
-            },
-            {
-              "name": "optionalInt",
-              "type": {
-                "symbol": "int",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": true
-              },
-              "required": false,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 6,
-                "column": 7
-              }
-            }
-          ],
-          "returnType": {
-            "symbol": "Future",
-            "url": "dart:async",
-            "bound": null,
-            "types": [
-              {
-                "symbol": "void"
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "symbol": "void"
-          },
-          "metadata": [],
-          "location": {
-            "path": "apis/parameters.dart",
-            "line": 3,
-            "column": 13
-          }
-        },
-        {
-          "name": "optionalNamed",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/context.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 10,
-                "column": 18
-              }
-            },
-            {
-              "name": "namedString",
-              "type": {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": true
-              },
-              "required": false,
-              "named": true,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 11,
-                "column": 10
-              }
-            },
-            {
-              "name": "namedInt",
-              "type": {
-                "symbol": "int",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": true
-              },
-              "required": false,
-              "named": true,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 12,
-                "column": 7
-              }
-            }
-          ],
-          "returnType": {
-            "symbol": "Future",
-            "url": "dart:async",
-            "bound": null,
-            "types": [
-              {
-                "symbol": "void"
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "symbol": "void"
-          },
-          "metadata": [],
-          "location": {
-            "path": "apis/parameters.dart",
-            "line": 9,
-            "column": 13
-          }
-        },
-        {
-          "name": "requiredPositional",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/context.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 16,
-                "column": 18
-              }
-            },
-            {
-              "name": "requiredString",
-              "type": {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 17,
-                "column": 9
-              }
-            },
-            {
-              "name": "requiredInt",
-              "type": {
-                "symbol": "int",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 18,
-                "column": 6
-              }
-            }
-          ],
-          "returnType": {
-            "symbol": "Future",
-            "url": "dart:async",
-            "bound": null,
-            "types": [
-              {
-                "symbol": "void"
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "symbol": "void"
-          },
-          "metadata": [],
-          "location": {
-            "path": "apis/parameters.dart",
-            "line": 15,
-            "column": 13
-          }
-        },
-        {
-          "name": "requiredNamed",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/context.dart",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 22,
-                "column": 18
-              }
-            },
-            {
-              "name": "requiredString",
-              "type": {
-                "symbol": "String",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": true,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 23,
-                "column": 18
-              }
-            },
-            {
-              "name": "requiredInt",
-              "type": {
-                "symbol": "int",
-                "url": "dart:core",
-                "bound": null,
-                "isNullable": false
-              },
-              "required": true,
-              "named": true,
-              "location": {
-                "path": "apis/parameters.dart",
-                "line": 24,
-                "column": 15
-              }
-            }
-          ],
-          "returnType": {
-            "symbol": "Future",
-            "url": "dart:async",
-            "bound": null,
-            "types": [
-              {
-                "symbol": "void"
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "symbol": "void"
-          },
-          "metadata": [],
-          "location": {
-            "path": "apis/parameters.dart",
-            "line": 21,
-            "column": 13
           }
         }
       ]
