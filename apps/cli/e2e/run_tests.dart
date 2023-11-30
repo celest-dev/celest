@@ -6,6 +6,7 @@ import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/project/builder.dart';
+import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_rpc/protos.dart' as proto;
 import 'package:http/http.dart';
@@ -48,10 +49,14 @@ class TestRunner {
 
   late final testCases = tests[testName];
   late final testName = p.basename(projectRoot);
-  late Directory goldensDir;
+  late final goldensDir = Directory(p.join(projectRoot, 'goldens'));
+  late final projectPaths = ProjectPaths(
+    projectRoot,
+    outputsDir: goldensDir.path,
+  );
   late Client client;
   late final analyzer = CelestAnalyzer.start(
-    projectRoot: projectRoot,
+    projectPaths: projectPaths,
   );
   var port = 8080;
 
@@ -64,7 +69,6 @@ class TestRunner {
           workingDirectory: projectRoot,
         );
         expect(res.exitCode, 0, reason: '${res.stderr}');
-        goldensDir = Directory('$projectRoot/goldens');
         if (updateGoldens) {
           goldensDir.deleteSync(recursive: true);
         }
@@ -92,7 +96,7 @@ class TestRunner {
       final (projectAst, errors) = await analyzer.analyzeProject();
       expect(errors, isEmpty);
 
-      final goldenAst = File('${goldensDir.path}/ast.json');
+      final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
       if (updateGoldens) {
         goldenAst.writeAsStringSync(
           const JsonEncoder.withIndent('  ').convert(projectAst.toJson()),
@@ -108,7 +112,7 @@ class TestRunner {
     test('codegen', () async {
       final (projectAst, errors) = await analyzer.analyzeProject();
       expect(errors, isEmpty);
-      final codegen = CodeGenerator(projectRoot, outputDir: goldensDir.path);
+      final codegen = CodeGenerator(projectPaths);
       projectAst.accept(codegen);
       for (final MapEntry(key: path, value: content)
           in codegen.outputs.entries) {
@@ -129,9 +133,7 @@ class TestRunner {
     test('build', () async {
       final projectBuilder = ProjectBuilder(
         projectName: testName,
-        entrypoint: p.toUri(p.join(goldensDir.path, 'project.build.dart')),
-        rootDir: projectRoot,
-        outputDir: goldensDir.path,
+        projectPaths: projectPaths,
       );
       final project = await projectBuilder.build();
       expect(project, isA<proto.Project>());
@@ -182,7 +184,7 @@ class TestRunner {
         port++;
         apiUri = Uri.parse('http://localhost:$port');
         final entrypoint =
-            '${goldensDir.path}/apis/$apiName/$functionName.dart';
+            projectPaths.functionEntrypoint(apiName, functionName);
         functionProc = await Process.start(
           Platform.executable,
           [entrypoint],

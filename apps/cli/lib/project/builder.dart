@@ -1,29 +1,27 @@
 import 'dart:isolate';
 
+import 'package:celest_cli/project/paths.dart';
 import 'package:celest_rpc/protos.dart' as proto;
+import 'package:path/path.dart' as p;
 
 final class ProjectBuilder {
   ProjectBuilder({
     required this.projectName,
-    required this.entrypoint,
-    required this.rootDir,
-    required this.outputDir,
+    required this.projectPaths,
   });
 
   final String projectName;
-  final Uri entrypoint;
-  final String rootDir;
-  final String outputDir;
+  final ProjectPaths projectPaths;
 
   Future<proto.Project> build() async {
     final receivePort = ReceivePort();
     final errorPort = ReceivePort();
     final isolate = await Isolate.spawnUri(
-      entrypoint,
+      p.toUri(projectPaths.projectBuildDart),
       [
         projectName,
-        rootDir,
-        outputDir,
+        projectPaths.projectRoot,
+        projectPaths.outputsDir,
         'development',
       ],
       receivePort.sendPort,

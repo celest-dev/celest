@@ -7,6 +7,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/serialization/checker.dart';
 import 'package:celest_cli/src/utils/dart_type.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -14,19 +15,19 @@ import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class CelestAnalyzer {
-  CelestAnalyzer._(this.projectRoot, this._context);
+  CelestAnalyzer._(this.projectPaths, this._context);
 
   static CelestAnalyzer start({
-    required String projectRoot,
+    required ProjectPaths projectPaths,
   }) {
     final contextCollection = AnalysisContextCollection(
-      includedPaths: [projectRoot],
+      includedPaths: [projectPaths.projectRoot],
     );
     final context = contextCollection.contexts.single;
-    return CelestAnalyzer._(projectRoot, context);
+    return CelestAnalyzer._(projectPaths, context);
   }
 
-  final String projectRoot;
+  final ProjectPaths projectPaths;
   final AnalysisContext _context;
   final List<AnalysisException> errors = [];
 
@@ -49,11 +50,10 @@ final class CelestAnalyzer {
   }
 
   Future<ast.Project> _findProject() async {
-    final projectYaml = p.join(projectRoot, 'pubspec.yaml');
-    final projectYamlFile = File(projectYaml).readAsStringSync();
+    final projectYamlFile = File(projectPaths.projectYaml).readAsStringSync();
     final projectPubspec = Pubspec.parse(projectYamlFile);
 
-    final projectFilePath = p.join(projectRoot, 'project.dart');
+    final projectFilePath = projectPaths.projectDart;
     // TODO(dnys1): Assert exists
     final projectFile =
         await _context.currentSession.getUnitElement(projectFilePath);
@@ -102,7 +102,7 @@ final class CelestAnalyzer {
 
   Future<List<ast.Api>> _collectApis() async {
     final apis = <ast.Api>[];
-    final apiDir = Directory(p.join(projectRoot, 'apis'));
+    final apiDir = Directory(projectPaths.apisDir);
     if (!apiDir.existsSync()) {
       return const [];
     }
