@@ -7,17 +7,40 @@ import 'package:celest/celest.dart' as _i1;
 
 import 'apis/parameter_types.dart' as _i2;
 
-final $_Celest celest = $_Celest();
+const $_CelestResources resources = $_CelestResources();
 
-final class $_MiddlewareApi {
-  final sayHello = _i1.CloudFunction<String, String>(
+final class $_CelestResources {
+  const $_CelestResources();
+
+  final $_CelestApiResources apis = const $_CelestApiResources();
+}
+
+final class $_CelestApiResources {
+  const $_CelestApiResources();
+
+  final $_MiddlewareApiResource middleware = const $_MiddlewareApiResource();
+
+  final $_ParameterTypesApiResource parameterTypes =
+      const $_ParameterTypesApiResource();
+
+  final $_ParametersApiResource parameters = const $_ParametersApiResource();
+
+  final $_ReturnTypesApiResource returnTypes = const $_ReturnTypesApiResource();
+}
+
+final class $_MiddlewareApiResource {
+  const $_MiddlewareApiResource();
+
+  final sayHello = const _i1.CloudFunction<String, String>(
     api: r'middleware',
     functionName: r'sayHello',
   );
 }
 
-final class $_ParameterTypesApi {
-  final simple = _i1.CloudFunction<
+final class $_ParameterTypesApiResource {
+  const $_ParameterTypesApiResource();
+
+  final simple = const _i1.CloudFunction<
       (
         String,
         int,
@@ -49,7 +72,7 @@ final class $_ParameterTypesApi {
     functionName: r'simple',
   );
 
-  final simpleOptional = _i1.CloudFunction<
+  final simpleOptional = const _i1.CloudFunction<
       (
         String?,
         int?,
@@ -81,7 +104,7 @@ final class $_ParameterTypesApi {
     functionName: r'simpleOptional',
   );
 
-  final complex = _i1.CloudFunction<
+  final complex = const _i1.CloudFunction<
       (
         _i2.SimpleStruct,
         _i2.ComplexStruct,
@@ -114,296 +137,290 @@ final class $_ParameterTypesApi {
   );
 }
 
-final class $_ParametersApi {
-  final optionalPositional = _i1.CloudFunction<(String?, int?), void>(
+final class $_ParametersApiResource {
+  const $_ParametersApiResource();
+
+  final optionalPositional = const _i1.CloudFunction<(String?, int?), void>(
     api: r'parameters',
     functionName: r'optionalPositional',
   );
 
   final optionalNamed =
-      _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
+      const _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
     api: r'parameters',
     functionName: r'optionalNamed',
   );
 
-  final requiredPositional = _i1.CloudFunction<(String, int), void>(
+  final requiredPositional = const _i1.CloudFunction<(String, int), void>(
     api: r'parameters',
     functionName: r'requiredPositional',
   );
 
   final requiredNamed =
-      _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
+      const _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
     api: r'parameters',
     functionName: r'requiredNamed',
   );
 }
 
-final class $_ReturnTypesApi {
-  final asyncVoidReturn = _i1.CloudFunction<void, void>(
+final class $_ReturnTypesApiResource {
+  const $_ReturnTypesApiResource();
+
+  final asyncVoidReturn = const _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncVoidReturn',
   );
 
-  final asyncStringReturn = _i1.CloudFunction<void, String>(
+  final asyncStringReturn = const _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'asyncStringReturn',
   );
 
-  final asyncIntReturn = _i1.CloudFunction<void, int>(
+  final asyncIntReturn = const _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'asyncIntReturn',
   );
 
-  final asyncDoubleReturn = _i1.CloudFunction<void, double>(
+  final asyncDoubleReturn = const _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'asyncDoubleReturn',
   );
 
-  final asyncBoolReturn = _i1.CloudFunction<void, bool>(
+  final asyncBoolReturn = const _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'asyncBoolReturn',
   );
 
-  final asyncListReturn = _i1.CloudFunction<void, List<String>>(
+  final asyncListReturn = const _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'asyncListReturn',
   );
 
-  final asyncMapReturn = _i1.CloudFunction<void, Map<String, String>>(
+  final asyncMapReturn = const _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'asyncMapReturn',
   );
 
-  final asyncIterableReturn = _i1.CloudFunction<void, Iterable<String>>(
+  final asyncIterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'asyncIterableReturn',
   );
 
-  final asyncStructReturn = _i1.CloudFunction<void, _i2.SimpleStruct>(
+  final asyncStructReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
-  final asyncStructReturnNullable = _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  final asyncStructReturnNullable =
+      const _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
 
-  final asyncComplexReturn = _i1.CloudFunction<void, _i2.ComplexStruct>(
+  final asyncComplexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncComplexReturn',
   );
 
-  final asyncOrVoidReturn = _i1.CloudFunction<void, void>(
+  final asyncOrVoidReturn = const _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncOrVoidReturn',
   );
 
-  final asyncOrStringReturn = _i1.CloudFunction<void, String>(
+  final asyncOrStringReturn = const _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'asyncOrStringReturn',
   );
 
-  final asyncOrIntReturn = _i1.CloudFunction<void, int>(
+  final asyncOrIntReturn = const _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'asyncOrIntReturn',
   );
 
-  final asyncOrDoubleReturn = _i1.CloudFunction<void, double>(
+  final asyncOrDoubleReturn = const _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturn',
   );
 
-  final asyncOrBoolReturn = _i1.CloudFunction<void, bool>(
+  final asyncOrBoolReturn = const _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'asyncOrBoolReturn',
   );
 
-  final asyncOrListReturn = _i1.CloudFunction<void, List<String>>(
+  final asyncOrListReturn = const _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'asyncOrListReturn',
   );
 
-  final asyncOrMapReturn = _i1.CloudFunction<void, Map<String, String>>(
+  final asyncOrMapReturn = const _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'asyncOrMapReturn',
   );
 
-  final asyncOrIterableReturn = _i1.CloudFunction<void, Iterable<String>>(
+  final asyncOrIterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'asyncOrIterableReturn',
   );
 
-  final asyncOrStructReturn = _i1.CloudFunction<void, _i2.SimpleStruct>(
+  final asyncOrStructReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
-  final asyncOrComplexReturn = _i1.CloudFunction<void, _i2.ComplexStruct>(
+  final asyncOrComplexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncOrComplexReturn',
   );
 
-  final asyncOrVoidReturnNullable = _i1.CloudFunction<void, void>(
+  final asyncOrVoidReturnNullable = const _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncOrVoidReturnNullable',
   );
 
-  final asyncOrStringReturnNullable = _i1.CloudFunction<void, String?>(
+  final asyncOrStringReturnNullable = const _i1.CloudFunction<void, String?>(
     api: r'return_types',
     functionName: r'asyncOrStringReturnNullable',
   );
 
-  final asyncOrIntReturnNullable = _i1.CloudFunction<void, int?>(
+  final asyncOrIntReturnNullable = const _i1.CloudFunction<void, int?>(
     api: r'return_types',
     functionName: r'asyncOrIntReturnNullable',
   );
 
-  final asyncOrDoubleReturnNullable = _i1.CloudFunction<void, double?>(
+  final asyncOrDoubleReturnNullable = const _i1.CloudFunction<void, double?>(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturnNullable',
   );
 
-  final asyncOrBoolReturnNullable = _i1.CloudFunction<void, bool?>(
+  final asyncOrBoolReturnNullable = const _i1.CloudFunction<void, bool?>(
     api: r'return_types',
     functionName: r'asyncOrBoolReturnNullable',
   );
 
-  final asyncOrListReturnNullable = _i1.CloudFunction<void, List<String>?>(
+  final asyncOrListReturnNullable =
+      const _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
     functionName: r'asyncOrListReturnNullable',
   );
 
   final asyncOrMapReturnNullable =
-      _i1.CloudFunction<void, Map<String, String>?>(
+      const _i1.CloudFunction<void, Map<String, String>?>(
     api: r'return_types',
     functionName: r'asyncOrMapReturnNullable',
   );
 
   final asyncOrIterableReturnNullable =
-      _i1.CloudFunction<void, Iterable<String>?>(
+      const _i1.CloudFunction<void, Iterable<String>?>(
     api: r'return_types',
     functionName: r'asyncOrIterableReturnNullable',
   );
 
   final asyncOrStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      const _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
 
   final asyncOrComplexReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+      const _i1.CloudFunction<void, _i2.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexReturnNullable',
   );
 
-  final voidReturn = _i1.CloudFunction<void, void>(
+  final voidReturn = const _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'voidReturn',
   );
 
-  final stringReturn = _i1.CloudFunction<void, String>(
+  final stringReturn = const _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'stringReturn',
   );
 
-  final intReturn = _i1.CloudFunction<void, int>(
+  final intReturn = const _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'intReturn',
   );
 
-  final doubleReturn = _i1.CloudFunction<void, double>(
+  final doubleReturn = const _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'doubleReturn',
   );
 
-  final boolReturn = _i1.CloudFunction<void, bool>(
+  final boolReturn = const _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'boolReturn',
   );
 
-  final listReturn = _i1.CloudFunction<void, List<String>>(
+  final listReturn = const _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'listReturn',
   );
 
-  final mapReturn = _i1.CloudFunction<void, Map<String, String>>(
+  final mapReturn = const _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'mapReturn',
   );
 
-  final iterableReturn = _i1.CloudFunction<void, Iterable<String>>(
+  final iterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'iterableReturn',
   );
 
-  final structReturn = _i1.CloudFunction<void, _i2.SimpleStruct>(
+  final structReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
-  final complexReturn = _i1.CloudFunction<void, _i2.ComplexStruct>(
+  final complexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
-  final stringReturnNullable = _i1.CloudFunction<void, String?>(
+  final stringReturnNullable = const _i1.CloudFunction<void, String?>(
     api: r'return_types',
     functionName: r'stringReturnNullable',
   );
 
-  final intReturnNullable = _i1.CloudFunction<void, int?>(
+  final intReturnNullable = const _i1.CloudFunction<void, int?>(
     api: r'return_types',
     functionName: r'intReturnNullable',
   );
 
-  final doubleReturnNullable = _i1.CloudFunction<void, double?>(
+  final doubleReturnNullable = const _i1.CloudFunction<void, double?>(
     api: r'return_types',
     functionName: r'doubleReturnNullable',
   );
 
-  final boolReturnNullable = _i1.CloudFunction<void, bool?>(
+  final boolReturnNullable = const _i1.CloudFunction<void, bool?>(
     api: r'return_types',
     functionName: r'boolReturnNullable',
   );
 
-  final listReturnNullable = _i1.CloudFunction<void, List<String>?>(
+  final listReturnNullable = const _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
     functionName: r'listReturnNullable',
   );
 
-  final mapReturnNullable = _i1.CloudFunction<void, Map<String, String>?>(
+  final mapReturnNullable = const _i1.CloudFunction<void, Map<String, String>?>(
     api: r'return_types',
     functionName: r'mapReturnNullable',
   );
 
-  final iterableReturnNullable = _i1.CloudFunction<void, Iterable<String>?>(
+  final iterableReturnNullable =
+      const _i1.CloudFunction<void, Iterable<String>?>(
     api: r'return_types',
     functionName: r'iterableReturnNullable',
   );
 
-  final structReturnNullable = _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  final structReturnNullable = const _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
 
-  final complexReturnNullable = _i1.CloudFunction<void, _i2.ComplexStruct?>(
+  final complexReturnNullable =
+      const _i1.CloudFunction<void, _i2.ComplexStruct?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
-}
-
-final class $_CelestApis {
-  final $_MiddlewareApi middleware = $_MiddlewareApi();
-
-  final $_ParameterTypesApi parameterTypes = $_ParameterTypesApi();
-
-  final $_ParametersApi parameters = $_ParametersApi();
-
-  final $_ReturnTypesApi returnTypes = $_ReturnTypesApi();
-}
-
-final class $_Celest {
-  final $_CelestApis apis = $_CelestApis();
 }

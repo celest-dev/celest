@@ -3,6 +3,8 @@
 
 library;
 
-final $_Celest celest = $_Celest();
+const $_CelestResources resources = $_CelestResources();
 
-final class $_Celest {}
+final class $_CelestResources {
+  const $_CelestResources();
+}

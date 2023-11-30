@@ -17,14 +17,17 @@ final class ResourceGenerator {
     ..name = ''
     ..comments.addAll(_header);
 
-  late final _celestClass = ClassBuilder()
-    ..name = r'$_Celest'
-    ..modifier = ClassModifier.final$;
+  (Reference, ClassBuilder) _beginClass(String name) => (
+        refer(name),
+        ClassBuilder()
+          ..name = name
+          ..modifier = ClassModifier.final$
+          ..constructors.add(Constructor((c) => c..constant = true)),
+      );
 
-  Class _generateApi(Api api) {
-    final apiClass = ClassBuilder()
-      ..name = '\$_${api.name.pascalCase}Api'
-      ..modifier = ClassModifier.final$;
+  (Reference, Class) _generateApi(Api api) {
+    final apiClassName = '\$_${api.name.pascalCase}ApiResource';
+    final (apiClassRef, apiClass) = _beginClass(apiClassName);
     for (final function in api.functions) {
       final inputParameters =
           function.parameters.where((p) => !p.type.isFunctionContext).toList();
@@ -55,55 +58,54 @@ final class ResourceGenerator {
             inputType,
             function.flattenedReturnType,
           )
-              .newInstance([], {
+              .constInstance([], {
             'api': literalString(api.name, raw: true),
             'functionName': literalString(function.name, raw: true),
           }).code,
       );
       apiClass.fields.add(functionField);
     }
-    return apiClass.build();
+    return (apiClassRef, apiClass.build());
   }
 
   Library generate() {
-    _library.body.add(
+    final (celestClassRef, celestClass) = _beginClass(r'$_CelestResources');
+    _library.body.addAll([
       Field(
         (b) => b
-          ..name = 'celest'
-          ..modifier = FieldModifier.final$
-          ..type = refer(r'$_Celest')
-          ..assignment = const Code(r'$_Celest()'),
+          ..name = 'resources'
+          ..modifier = FieldModifier.constant
+          ..type = celestClassRef
+          ..assignment = celestClassRef.constInstance([]).code,
       ),
-    );
+      lazySpec(celestClass.build),
+    ]);
     if (project.apis.isNotEmpty) {
-      final apisClass = ClassBuilder()
-        ..name = r'$_CelestApis'
-        ..modifier = ClassModifier.final$;
+      final (apisClassRef, apisClass) = _beginClass(r'$_CelestApiResources');
+      _library.body.add(lazySpec(apisClass.build));
       for (final api in project.apis) {
-        final apiClass = _generateApi(api);
+        final (apiClassRef, apiClass) = _generateApi(api);
         apisClass.fields.add(
           Field(
             (b) => b
               ..name = api.name.camelCase
               ..modifier = FieldModifier.final$
-              ..type = refer(apiClass.name)
-              ..assignment = refer(apiClass.name).newInstance([]).code,
+              ..type = apiClassRef
+              ..assignment = apiClassRef.constInstance([]).code,
           ),
         );
         _library.body.add(apiClass);
       }
-      _celestClass.fields.add(
+      celestClass.fields.add(
         Field(
           (b) => b
             ..name = 'apis'
             ..modifier = FieldModifier.final$
-            ..type = refer(r'$_CelestApis')
-            ..assignment = const Code(r'$_CelestApis()'),
+            ..type = apisClassRef
+            ..assignment = apisClassRef.constInstance([]).code,
         ),
       );
-      _library.body.add(apisClass.build());
     }
-    _library.body.add(_celestClass.build());
     return _library.build();
   }
 }
