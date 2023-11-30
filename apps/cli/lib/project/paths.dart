@@ -22,13 +22,27 @@ final class ProjectPaths {
   late final String projectBuildDart = p.join(outputsDir, 'project.build.dart');
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
-
   late final String apisDir = p.join(projectRoot, 'apis');
+
+  ProjectEnvPaths environment(String environmentName) =>
+      ProjectEnvPaths(this, environmentName);
+}
+
+final class ProjectEnvPaths {
+  ProjectEnvPaths(this._projectPaths, this._environmentName);
+
+  final ProjectPaths _projectPaths;
+  final String _environmentName;
+
+  late final String outputsDir = p.join(
+    _projectPaths.outputsDir,
+    'environments',
+    _environmentName,
+  );
+
   String apiOutput(String apiName) => p.join(outputsDir, 'apis', apiName);
   String functionEntrypoint(String apiName, String functionName) => p.join(
-        outputsDir,
-        'apis',
-        apiName,
+        apiOutput(apiName),
         '$functionName.dart',
       );
 }

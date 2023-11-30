@@ -12,33 +12,27 @@ const $_CelestResources resources = $_CelestResources();
 final class $_CelestResources {
   const $_CelestResources();
 
-  final $_CelestApiResources apis = const $_CelestApiResources();
+  final $_CelestProdResources prod = const $_CelestProdResources();
 }
 
-final class $_CelestApiResources {
-  const $_CelestApiResources();
+final class $_CelestProdApiResources {
+  const $_CelestProdApiResources();
 
-  final $_MiddlewareApiResource middleware = const $_MiddlewareApiResource();
+  final $_CelestProdParameterTypesApiResource parameterTypes =
+      const $_CelestProdParameterTypesApiResource();
 
-  final $_ParameterTypesApiResource parameterTypes =
-      const $_ParameterTypesApiResource();
+  final $_CelestProdReturnTypesApiResource returnTypes =
+      const $_CelestProdReturnTypesApiResource();
 
-  final $_ParametersApiResource parameters = const $_ParametersApiResource();
+  final $_CelestProdMiddlewareApiResource middleware =
+      const $_CelestProdMiddlewareApiResource();
 
-  final $_ReturnTypesApiResource returnTypes = const $_ReturnTypesApiResource();
+  final $_CelestProdParametersApiResource parameters =
+      const $_CelestProdParametersApiResource();
 }
 
-final class $_MiddlewareApiResource {
-  const $_MiddlewareApiResource();
-
-  final sayHello = const _i1.CloudFunction<String, String>(
-    api: r'middleware',
-    functionName: r'sayHello',
-  );
-}
-
-final class $_ParameterTypesApiResource {
-  const $_ParameterTypesApiResource();
+final class $_CelestProdParameterTypesApiResource {
+  const $_CelestProdParameterTypesApiResource();
 
   final simple = const _i1.CloudFunction<
       (
@@ -137,34 +131,8 @@ final class $_ParameterTypesApiResource {
   );
 }
 
-final class $_ParametersApiResource {
-  const $_ParametersApiResource();
-
-  final optionalPositional = const _i1.CloudFunction<(String?, int?), void>(
-    api: r'parameters',
-    functionName: r'optionalPositional',
-  );
-
-  final optionalNamed =
-      const _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
-    api: r'parameters',
-    functionName: r'optionalNamed',
-  );
-
-  final requiredPositional = const _i1.CloudFunction<(String, int), void>(
-    api: r'parameters',
-    functionName: r'requiredPositional',
-  );
-
-  final requiredNamed =
-      const _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
-    api: r'parameters',
-    functionName: r'requiredNamed',
-  );
-}
-
-final class $_ReturnTypesApiResource {
-  const $_ReturnTypesApiResource();
+final class $_CelestProdReturnTypesApiResource {
+  const $_CelestProdReturnTypesApiResource();
 
   final asyncVoidReturn = const _i1.CloudFunction<void, void>(
     api: r'return_types',
@@ -423,4 +391,45 @@ final class $_ReturnTypesApiResource {
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
+}
+
+final class $_CelestProdMiddlewareApiResource {
+  const $_CelestProdMiddlewareApiResource();
+
+  final sayHello = const _i1.CloudFunction<String, String>(
+    api: r'middleware',
+    functionName: r'sayHello',
+  );
+}
+
+final class $_CelestProdParametersApiResource {
+  const $_CelestProdParametersApiResource();
+
+  final optionalPositional = const _i1.CloudFunction<(String?, int?), void>(
+    api: r'parameters',
+    functionName: r'optionalPositional',
+  );
+
+  final optionalNamed =
+      const _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
+    api: r'parameters',
+    functionName: r'optionalNamed',
+  );
+
+  final requiredPositional = const _i1.CloudFunction<(String, int), void>(
+    api: r'parameters',
+    functionName: r'requiredPositional',
+  );
+
+  final requiredNamed =
+      const _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
+    api: r'parameters',
+    functionName: r'requiredNamed',
+  );
+}
+
+final class $_CelestProdResources {
+  const $_CelestProdResources();
+
+  final $_CelestProdApiResources apis = const $_CelestProdApiResources();
 }

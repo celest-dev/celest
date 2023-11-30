@@ -5,12 +5,19 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
+// ignore: implementation_imports
+import 'package:analyzer/src/dart/element/element.dart';
+// ignore: implementation_imports
+import 'package:analyzer/src/generated/source.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/serialization/checker.dart';
-import 'package:celest_cli/src/utils/dart_type.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 
@@ -41,15 +48,12 @@ final class CelestAnalyzer {
   }
 
   Future<(ast.Project, List<AnalysisException>)> analyzeProject() async {
-    final project = await _findProject();
-    final apis = await _collectApis();
-    return (
-      project.rebuild((p) => p.apis.addAll(apis)),
-      errors,
-    );
+    var project = await _findProject();
+    project = await _collectApis(project);
+    return (project.build(), errors);
   }
 
-  Future<ast.Project> _findProject() async {
+  Future<ast.ProjectBuilder> _findProject() async {
     final projectYamlFile = File(projectPaths.projectYaml).readAsStringSync();
     final projectPubspec = Pubspec.parse(projectYamlFile);
 
@@ -61,20 +65,58 @@ final class CelestAnalyzer {
       UnitElementResult _ => projectFile,
       _ => throw StateError('Bad resolution: $projectFile'),
     };
-    final topLevelClasses = resolvedProjectFile.element.classes;
-    final projectClass = topLevelClasses.firstWhere((el) {
-      if (el.supertype case final supertype?) {
-        return supertype.element.library.isPackageCelest &&
-            supertype.element.name == 'Project';
-      }
-      return false;
+    final topLevelFunctions = resolvedProjectFile.element.functions;
+    final projectDefine = topLevelFunctions.firstWhere((el) {
+      return el.name == 'define';
     });
 
-    return ast.Project(
-      name: projectPubspec.name,
-      type: projectClass.thisType.toCodeBuilder(projectPaths.projectRoot),
-      location: projectClass.sourceLocation(projectPaths.projectRoot),
-    );
+    // Validate `define` method
+    final projectDefineLocation =
+        projectDefine.sourceLocation(projectPaths.projectRoot);
+    switch (projectDefine.parameters) {
+      case [final single] when single.type.isProjectContext:
+        break;
+      default:
+        _reportError(
+          'The `define` method must have a single parameter of type ProjectContext',
+          projectDefineLocation,
+        );
+    }
+
+    // Collect environments
+    final environmentsAnnotation =
+        projectDefine.metadata.firstWhereOrNull((annotation) {
+      return switch (annotation.element) {
+        ConstructorElement(
+          enclosingElement: ClassElement(:final name, :final library),
+        ) =>
+          name == 'environments' && library.isPackageCelest,
+        _ => false,
+      };
+    });
+    if (environmentsAnnotation == null) {
+      // TODO: What to do with no environments?
+      throw StateError('No environments defined for project');
+    }
+    final environmentNames = environmentsAnnotation
+        .computeConstantValue()
+        ?.getField('named')
+        ?.toListValue()
+        ?.map((value) => value.toStringValue())
+        .nonNulls
+        .toList();
+    if (environmentNames == null) {
+      throw StateError('Bad environments: $environmentsAnnotation');
+    }
+
+    return ast.ProjectBuilder()
+      ..name = projectPubspec.name
+      ..reference = refer(
+        'define',
+        projectPaths.relativeToRoot(projectFilePath),
+      )
+      ..location.replace(projectDefineLocation)
+      ..environmentNames.addAll(environmentNames);
   }
 
   List<ast.ApiMetadata> _collectMetadata(Element element) {
@@ -87,12 +129,18 @@ final class CelestAnalyzer {
       switch (type) {
         case _ when type.library!.isCelestApi && type.name == 'authenticated':
           return ast.ApiMetadataAuthenticated(
-            location: element.sourceLocation(projectPaths.projectRoot),
+            location: annotation.sourceLocation(
+              element.source!,
+              projectPaths.projectRoot,
+            ),
           );
         case _ when type.isMiddleware:
           return ast.ApiMetadataMiddleware(
             type: value.type!.toCodeBuilder(projectPaths.projectRoot),
-            location: element.sourceLocation(projectPaths.projectRoot),
+            location: annotation.sourceLocation(
+              element.source!,
+              projectPaths.projectRoot,
+            ),
           );
         case _:
           throw StateError('Bad annotation: $annotation');
@@ -100,29 +148,97 @@ final class CelestAnalyzer {
     }).toList();
   }
 
-  Future<List<ast.Api>> _collectApis() async {
-    final apis = <ast.Api>[];
+  Future<ast.ProjectBuilder> _collectApis(ast.ProjectBuilder project) async {
     final apiDir = Directory(projectPaths.apisDir);
     if (!apiDir.existsSync()) {
-      return const [];
+      return project;
     }
+    final environmentNames = project.environmentNames.build();
+
     final apiFiles = apiDir
         .listSync()
         .whereType<File>()
         .map((file) => file.path)
         .where((path) => path.endsWith('.dart'))
         .toList();
-    for (final apiFile in apiFiles) {
-      final apiUnitResult =
-          await _context.currentSession.getUnitElement(apiFile);
-      final apiUnit = switch (apiUnitResult) {
-        UnitElementResult _ => apiUnitResult.element,
-        _ => throw StateError('Bad resolution: $apiUnitResult'),
-      };
-      final libraryMetdata = _collectMetadata(apiUnit.library);
-      final functions = apiUnit.library.topLevelElements
-          .whereType<FunctionElement>()
-          .map((func) {
+    final apiDeclarations = BuiltMap<String, ApiDeclaration>.build((builder) {
+      for (final apiFile in apiFiles) {
+        switch (p.basename(apiFile).split('.')) {
+          case [final apiName, final environmentName, 'dart']:
+            if (!environmentNames.contains(environmentName)) {
+              // TODO: Report error
+              throw StateError('Bad environment: $environmentName');
+            }
+            builder.updateValue(
+              apiName,
+              (decl) => decl..environmentOverrides[environmentName] = apiFile,
+              ifAbsent: () => ApiDeclaration()
+                ..environmentOverrides[environmentName] = apiFile,
+            );
+          case [final apiName, 'dart']:
+            builder.updateValue(
+              apiName,
+              (decl) => decl..baseApi = apiFile,
+              ifAbsent: () => ApiDeclaration()..baseApi = apiFile,
+            );
+          // TODO: Report error
+          default:
+            throw StateError('Bad file: $apiFile');
+        }
+      }
+    });
+
+    for (final MapEntry(key: apiName, value: apiDeclaration)
+        in apiDeclarations.entries) {
+      // Collect base API
+      if (apiDeclaration.baseApi case final baseApiPath?) {
+        final baseApi = await _collectApi(apiName, baseApiPath);
+        project.baseEnvironment.update(
+          (env) => env.apis[apiName] = baseApi,
+        );
+      }
+
+      // Collect environment APIs
+      for (final MapEntry(key: environmentName, value: apiEnvironmentPath)
+          in apiDeclaration.environmentOverrides.entries) {
+        final environmentApi = await _collectApi(apiName, apiEnvironmentPath);
+        project.environmentOverrides.updateValue(
+          environmentName,
+          (env) => env.rebuild(
+            (b) => b.apis.updateValue(
+              apiName,
+              (api) => api.rebuild(
+                (b) => b
+                  ..metadata.addAll(environmentApi.metadata)
+                  ..functions.update((functions) {
+                    for (final function in environmentApi.functions.entries) {
+                      functions[function.key] = function.value;
+                    }
+                  }),
+              ),
+              ifAbsent: () => environmentApi,
+            ),
+          ),
+          ifAbsent: () => ast.Environment.build(
+            (b) => b
+              ..name = environmentName
+              ..apis[apiName] = environmentApi,
+          ),
+        );
+      }
+    }
+    return project;
+  }
+
+  Future<ast.Api> _collectApi(String apiName, String apiFile) async {
+    final apiUnitResult = await _context.currentSession.getUnitElement(apiFile);
+    final apiUnit = switch (apiUnitResult) {
+      UnitElementResult _ => apiUnitResult.element,
+      _ => throw StateError('Bad resolution: $apiUnitResult'),
+    };
+    final libraryMetdata = _collectMetadata(apiUnit.library);
+    final functions = Map.fromEntries(
+      apiUnit.library.topLevelElements.whereType<FunctionElement>().map((func) {
         // TODO(dnys1): Skip private functions.
         final function = ast.CloudFunction(
           name: func.name,
@@ -173,27 +289,15 @@ final class CelestAnalyzer {
             function.location,
           );
         }
-        return function;
-      }).toList();
-      apis.add(
-        ast.Api(
-          path: projectPaths.relativeToRoot(
-            p.fromUri(apiUnit.library.source.uri),
-          ),
-          name: p.basenameWithoutExtension(apiFile),
-          metadata: libraryMetdata,
-          functions: functions,
-        ),
-      );
-    }
-    return apis..sort((a, b) => a.name.compareTo(b.name));
+        return MapEntry(function.name, function);
+      }),
+    );
+    return ast.Api(
+      name: apiName,
+      metadata: libraryMetdata,
+      functions: functions,
+    );
   }
-}
-
-extension on LibraryElement {
-  bool get isPackageCelest =>
-      source.uri.scheme == 'package' && source.uri.path.startsWith('celest/');
-  bool get isCelestApi => isPackageCelest && name == 'api';
 }
 
 extension on Element {
@@ -240,6 +344,31 @@ extension on Element {
   }
 }
 
+extension on ElementAnnotation {
+  ast.SourceLocation sourceLocation(Source source, String projectRoot) {
+    final impl = this as ElementAnnotationImpl;
+    final offset = impl.annotationAst.offset;
+    final lines = LineSplitter.split(source.contents.data);
+    var currOffset = 0;
+    var lineNo = 1;
+    var column = 0;
+    // Find the line/column number of `nameOffset`.
+    for (final line in lines) {
+      if (currOffset + line.length >= offset) {
+        column = offset - currOffset;
+        break;
+      }
+      currOffset += line.length + 1;
+      lineNo++;
+    }
+    return ast.SourceLocation(
+      path: p.relative(p.fromUri(source.uri), from: projectRoot),
+      line: lineNo,
+      column: column,
+    );
+  }
+}
+
 final class AnalysisException implements Exception {
   const AnalysisException({
     required this.message,
@@ -253,4 +382,9 @@ final class AnalysisException implements Exception {
   String toString() {
     return '${location.path}:${location.line}:${location.column}: $message';
   }
+}
+
+final class ApiDeclaration {
+  String? baseApi;
+  final Map<String, String> environmentOverrides = {};
 }

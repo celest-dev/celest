@@ -25,9 +25,6 @@ class ProjectBuildGenerator {
           ..body = Block((b) {
             b
               ..addExpression(
-                declareFinal('project').assign(projectType.newInstance([])),
-              )
-              ..addExpression(
                 declareFinal('context').assign(
                   DartTypes.celest.projectContext.newInstance([
                     DartTypes.celest.buildEnvironment
@@ -40,7 +37,7 @@ class ProjectBuildGenerator {
               )
               ..addExpression(
                 declareFinal('resources').assign(
-                  refer('context').property('build').call([refer('project')]),
+                  refer('context').property('build').call([projectType]),
                 ),
               )
               ..addExpression(

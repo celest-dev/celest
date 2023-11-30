@@ -73,7 +73,14 @@ final class StartCommand extends CelestCommand {
       return 1;
     }
 
-    final codeGenerator = CodeGenerator(projectPaths);
+    final environment =
+        argResults!.rest.singleOrNull ?? project.environmentNames.singleOrNull;
+    if (environment == null) {
+      logger.err('No environment specified.');
+      return 1;
+    }
+
+    final codeGenerator = CodeGenerator(projectPaths: projectPaths);
     project.accept(codeGenerator);
     for (final MapEntry(key: path, value: contents)
         in codeGenerator.outputs.entries) {

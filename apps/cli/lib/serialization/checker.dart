@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
-import 'package:celest_cli/src/utils/dart_type.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:collection/collection.dart';
 
 enum _TypePosition { parameter, return$ }

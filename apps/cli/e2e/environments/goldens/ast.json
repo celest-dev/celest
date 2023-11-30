@@ -1,0 +1,141 @@
+{
+  "name": "environments",
+  "reference": {
+    "symbol": "define",
+    "url": "project.dart"
+  },
+  "location": {
+    "path": "project.dart",
+    "line": 5,
+    "column": 5
+  },
+  "environmentNames": [
+    "prod",
+    "staging",
+    "dev"
+  ],
+  "baseEnvironment": {
+    "apis": {
+      "override": {
+        "name": "override",
+        "metadata": [],
+        "functions": {
+          "sayHello": {
+            "name": "sayHello",
+            "parameters": [],
+            "returnType": {
+              "symbol": "Future",
+              "url": "dart:async",
+              "bound": null,
+              "types": [
+                {
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "bound": null,
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/override.dart",
+              "line": 1,
+              "column": 15
+            }
+          }
+        }
+      }
+    }
+  },
+  "environmentOverrides": {
+    "dev": {
+      "apis": {
+        "override": {
+          "name": "override",
+          "metadata": [],
+          "functions": {
+            "sayHello": {
+              "name": "sayHello",
+              "parameters": [],
+              "returnType": {
+                "symbol": "Future",
+                "url": "dart:async",
+                "bound": null,
+                "types": [
+                  {
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "bound": null,
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "flattenedReturnType": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "metadata": [],
+              "location": {
+                "path": "apis/override.dev.dart",
+                "line": 1,
+                "column": 15
+              }
+            }
+          }
+        }
+      },
+      "name": "dev"
+    },
+    "staging": {
+      "apis": {
+        "override": {
+          "name": "override",
+          "metadata": [],
+          "functions": {
+            "sayHello": {
+              "name": "sayHello",
+              "parameters": [],
+              "returnType": {
+                "symbol": "Future",
+                "url": "dart:async",
+                "bound": null,
+                "types": [
+                  {
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "bound": null,
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "flattenedReturnType": {
+                "symbol": "String",
+                "url": "dart:core",
+                "bound": null,
+                "isNullable": false
+              },
+              "metadata": [],
+              "location": {
+                "path": "apis/override.staging.dart",
+                "line": 1,
+                "column": 15
+              }
+            }
+          }
+        }
+      },
+      "name": "staging"
+    }
+  }
+}

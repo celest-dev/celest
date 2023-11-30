@@ -1,5 +1,5 @@
 import 'package:celest_cli/codegen/types.dart';
-import 'package:celest_cli/src/utils/dart_type.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:code_builder/code_builder.dart';
 
 extension ReferenceHelper on Reference {

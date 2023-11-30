@@ -1,15 +1,19 @@
 {
   "name": "simple",
-  "type": {
-    "symbol": "HelloProject",
-    "url": "project.dart",
-    "bound": null,
-    "isNullable": false
+  "reference": {
+    "symbol": "define",
+    "url": "project.dart"
   },
   "location": {
     "path": "project.dart",
-    "line": 3,
-    "column": 6
+    "line": 5,
+    "column": 5
   },
-  "apis": []
+  "environmentNames": [
+    "prod"
+  ],
+  "baseEnvironment": {
+    "apis": {}
+  },
+  "environmentOverrides": {}
 }

@@ -10,7 +10,9 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
 final class CodeGenerator extends AstVisitor<void> {
-  CodeGenerator(this._projectPaths);
+  CodeGenerator({
+    required ProjectPaths projectPaths,
+  }) : _projectPaths = projectPaths;
 
   static final _formatter = DartFormatter(
     fixes: StyleFix.all,
@@ -43,21 +45,29 @@ final class CodeGenerator extends AstVisitor<void> {
 
   @override
   void visitProject(Project project) {
-    final resourcesFile = _projectPaths.resourcesDart;
-    final resources = ResourceGenerator(project).generate();
-    outputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
-
     final projectBuildFile = _projectPaths.projectBuildDart;
-    final projectBuild = ProjectBuildGenerator(project.type).generate();
+    final projectBuild = ProjectBuildGenerator(project.reference).generate();
     outputs[projectBuildFile] = _emit(projectBuild, forFile: projectBuildFile);
 
-    project.apis.forEach(visitApi);
+    final resourcesFile = _projectPaths.resourcesDart;
+    final resources = ResourcesGenerator(project: project).generate();
+    outputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
+
+    project.environments.values.forEach(visitEnvironment);
   }
 
   @override
-  void visitApi(Api api) {
-    final outputDir = _projectPaths.apiOutput(api.name);
-    for (final function in api.functions) {
+  void visitEnvironment(Environment environment) {
+    for (final api in environment.apis.values) {
+      visitApi(api, environment);
+    }
+  }
+
+  @override
+  void visitApi(Api api, [Environment? environment]) {
+    final environmentPaths = _projectPaths.environment(environment!.name!);
+    final outputDir = environmentPaths.apiOutput(api.name);
+    for (final function in api.functions.values) {
       final entrypoint = EntrypointGenerator(
         api: api,
         function: function,
@@ -65,7 +75,7 @@ final class CodeGenerator extends AstVisitor<void> {
         outputDir: outputDir,
       ).generate();
       final entrypointFile =
-          _projectPaths.functionEntrypoint(api.name, function.name);
+          environmentPaths.functionEntrypoint(api.name, function.name);
       outputs[entrypointFile] = _emit(entrypoint, forFile: entrypointFile);
     }
   }

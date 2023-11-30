@@ -7,4 +7,10 @@ const $_CelestResources resources = $_CelestResources();
 
 final class $_CelestResources {
   const $_CelestResources();
+
+  final $_CelestProdResources prod = const $_CelestProdResources();
+}
+
+final class $_CelestProdResources {
+  const $_CelestProdResources();
 }

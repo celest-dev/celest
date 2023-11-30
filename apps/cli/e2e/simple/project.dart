@@ -1,9 +1,5 @@
 import 'package:celest/celest.dart';
+import 'package:celest/project.dart' as project;
 
-class HelloProject extends Project {
-  @override
-  List<String> get environments => [];
-
-  @override
-  void build(ProjectContext context) {}
-}
+@project.environments(named: ['prod'])
+void define(ProjectContext context) {}

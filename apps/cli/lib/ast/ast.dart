@@ -12,15 +12,19 @@ sealed class Node {}
 abstract class Project implements Built<Project, ProjectBuilder>, Node {
   factory Project({
     required String name,
-    required Reference type,
+    required Reference reference,
     required SourceLocation location,
-    List<Api> apis = const [],
+    List<String> environmentNames = const [],
+    required Environment baseEnvironment,
+    Map<String, Environment> environmentOverrides = const {},
   }) {
     return _$Project._(
       name: name,
-      type: type,
+      reference: reference,
       location: location,
-      apis: apis.build(),
+      environmentNames: environmentNames.build(),
+      baseEnvironment: baseEnvironment,
+      environmentOverrides: environmentOverrides.build(),
     );
   }
 
@@ -32,9 +36,38 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   Project._();
 
   String get name;
-  Reference get type;
+  Reference get reference;
   SourceLocation get location;
-  BuiltList<Api> get apis;
+  BuiltList<String> get environmentNames;
+  Environment get baseEnvironment;
+  BuiltMap<String, Environment> get environmentOverrides;
+
+  static final _environments = Expando<BuiltMap<String, Environment>>();
+  BuiltMap<String, Environment> get environments {
+    return _environments[this] ??= BuiltMap.build((builder) {
+      for (final environment in environmentNames) {
+        final overrides = environmentOverrides[environment];
+        builder[environment] = baseEnvironment.rebuild((env) {
+          env.name = environment;
+          if (overrides == null) {
+            return;
+          }
+          for (final apiOverride in overrides.apis.values) {
+            env.apis.updateValue(
+              apiOverride.name,
+              (api) => api.rebuild((b) {
+                b.metadata.addAll(apiOverride.metadata);
+                for (final function in apiOverride.functions.values) {
+                  b.functions[function.name] = function;
+                }
+              }),
+              ifAbsent: () => apiOverride,
+            );
+          }
+        });
+      }
+    });
+  }
 
   R accept<R>(AstVisitor<R> visitor) => visitor.visitProject(this);
 
@@ -45,15 +78,43 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   static Serializer<Project> get serializer => _$projectSerializer;
 }
 
+abstract class Environment
+    implements Built<Environment, EnvironmentBuilder>, Node {
+  factory Environment({
+    String? name,
+    Map<String, Api> apis = const {},
+  }) {
+    return _$Environment._(
+      name: name,
+      apis: apis.build(),
+    );
+  }
+
+  factory Environment.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(Environment.serializer, json)!;
+
+  factory Environment.build([void Function(EnvironmentBuilder) updates]) =
+      _$Environment;
+
+  Environment._();
+
+  String? get name;
+  BuiltMap<String, Api> get apis;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(Environment.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<Environment> get serializer => _$environmentSerializer;
+}
+
 abstract class Api implements Built<Api, ApiBuilder> {
   factory Api({
-    required String path,
     required String name,
-    required List<CloudFunction> functions,
+    required Map<String, CloudFunction> functions,
     List<ApiMetadata> metadata = const [],
   }) {
     return _$Api._(
-      path: path,
       name: name,
       metadata: metadata.build(),
       functions: functions.build(),
@@ -67,10 +128,9 @@ abstract class Api implements Built<Api, ApiBuilder> {
 
   Api._();
 
-  String get path;
   String get name;
   BuiltList<ApiMetadata> get metadata;
-  BuiltList<CloudFunction> get functions;
+  BuiltMap<String, CloudFunction> get functions;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(Api.serializer, this) as Map<String, dynamic>;

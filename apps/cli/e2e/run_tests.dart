@@ -69,7 +69,7 @@ class TestRunner {
           workingDirectory: projectRoot,
         );
         expect(res.exitCode, 0, reason: '${res.stderr}');
-        if (updateGoldens) {
+        if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
         goldensDir.createSync();
@@ -112,7 +112,10 @@ class TestRunner {
     test('codegen', () async {
       final (projectAst, errors) = await analyzer.analyzeProject();
       expect(errors, isEmpty);
-      final codegen = CodeGenerator(projectPaths);
+
+      final codegen = CodeGenerator(
+        projectPaths: projectPaths,
+      );
       projectAst.accept(codegen);
       for (final MapEntry(key: path, value: content)
           in codegen.outputs.entries) {
@@ -142,30 +145,27 @@ class TestRunner {
   }
 
   void _testApis(Directory apisDir) {
-    final apis = apisDir
-        .listSync()
-        .whereType<File>()
-        .where((f) => p.extension(f.path) == '.dart');
+    final apis = testCases?.apis ?? const {};
     if (apis.isEmpty) {
       return;
     }
     group('apis', () {
-      for (final api in apis) {
-        _testApi(api);
+      for (final MapEntry(key: apiName, value: apiTest) in apis.entries) {
+        _testApi(apiName, apiTest);
       }
     });
   }
 
-  void _testApi(File api) {
-    final apiName = p.basenameWithoutExtension(api.path);
-    final apiTests = testCases?.apis?[apiName];
-    if (apiTests == null) {
-      return;
-    }
+  void _testApi(String apiName, ApiTest apiTest) {
     group(apiName, () {
-      for (final MapEntry(key: functionName, value: tests)
-          in apiTests.functionTests.entries) {
-        _testFunction(apiName, functionName, tests);
+      for (final MapEntry(key: (functionName, environmentName), value: tests)
+          in apiTest.functionTests.entries) {
+        _testFunction(
+          apiName,
+          functionName,
+          environmentName,
+          tests,
+        );
       }
     });
   }
@@ -173,9 +173,11 @@ class TestRunner {
   void _testFunction(
     String apiName,
     String functionName,
+    String environmentName,
     List<FunctionTest> tests,
   ) {
-    group(functionName, () {
+    final envPaths = projectPaths.environment(environmentName);
+    group('$functionName $environmentName', () {
       late Process functionProc;
       late Uri apiUri;
       final logs = <String>[];
@@ -183,8 +185,7 @@ class TestRunner {
       setUpAll(() async {
         port++;
         apiUri = Uri.parse('http://localhost:$port');
-        final entrypoint =
-            projectPaths.functionEntrypoint(apiName, functionName);
+        final entrypoint = envPaths.functionEntrypoint(apiName, functionName);
         functionProc = await Process.start(
           Platform.executable,
           [entrypoint],
@@ -316,7 +317,7 @@ const Map<String, Test> tests = {
     apis: {
       'middleware': ApiTest(
         functionTests: {
-          'sayHello': [
+          ('sayHello', 'prod'): [
             FunctionTestSuccess(
               name: 'valid name',
               input: {
@@ -335,7 +336,7 @@ const Map<String, Test> tests = {
       ),
       'parameter_types': ApiTest(
         functionTests: {
-          'simple': [
+          ('simple', 'prod'): [
             FunctionTestSuccess(
               name: 'valid input',
               input: complexStruct,
@@ -343,7 +344,7 @@ const Map<String, Test> tests = {
               output: null,
             ),
           ],
-          'simpleOptional': [
+          ('simpleOptional', 'prod'): [
             FunctionTestSuccess(
               name: 'all present',
               input: complexStruct,
@@ -380,7 +381,7 @@ const Map<String, Test> tests = {
               output: null,
             ),
           ],
-          'complex': [
+          ('complex', 'prod'): [
             FunctionTestSuccess(
               name: 'all present',
               input: {
@@ -556,6 +557,35 @@ const Map<String, Test> tests = {
                 'aNullableMapOfNullableComplexStruct': null,
               },
               output: null,
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'environments': Test(
+    apis: {
+      'override': ApiTest(
+        functionTests: {
+          ('sayHello', 'prod'): [
+            FunctionTestSuccess(
+              name: 'dev',
+              input: {},
+              output: 'Hello, World!',
+            ),
+          ],
+          ('sayHello', 'staging'): [
+            FunctionTestSuccess(
+              name: 'dev',
+              input: {},
+              output: 'Hello, Staging!',
+            ),
+          ],
+          ('sayHello', 'dev'): [
+            FunctionTestSuccess(
+              name: 'dev',
+              input: {},
+              output: 'Hello, Dev!',
             ),
           ],
         },

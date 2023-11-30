@@ -11,24 +11,34 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ApiMetadataAuthenticated.serializer)
       ..add(ApiMetadataMiddleware.serializer)
       ..add(CloudFunction.serializer)
+      ..add(Environment.serializer)
       ..add(Parameter.serializer)
       ..add(Project.serializer)
       ..add(SourceLocation.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Api)]),
-          () => new ListBuilder<Api>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(CloudFunction)]),
-          () => new ListBuilder<CloudFunction>())
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(CloudFunction)]),
+          () => new MapBuilder<String, CloudFunction>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Parameter)]),
           () => new ListBuilder<Parameter>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
-          () => new ListBuilder<ApiMetadata>()))
+          () => new ListBuilder<ApiMetadata>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(Environment)]),
+          () => new MapBuilder<String, Environment>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(String), const FullType(Api)]),
+          () => new MapBuilder<String, Api>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
