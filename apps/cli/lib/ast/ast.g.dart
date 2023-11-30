@@ -7,8 +7,6 @@ part of 'ast.dart';
 // **************************************************************************
 
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
-Serializer<ProjectClass> _$projectClassSerializer =
-    new _$ProjectClassSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
 Serializer<ApiMetadataAuthenticated> _$apiMetadataAuthenticatedSerializer =
     new _$ApiMetadataAuthenticatedSerializer();
@@ -32,9 +30,12 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'implementation',
-      serializers.serialize(object.implementation,
-          specifiedType: const FullType(ProjectClass)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(Reference)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(SourceLocation)),
       'apis',
       serializers.serialize(object.apis,
           specifiedType:
@@ -59,63 +60,20 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'implementation':
-          result.implementation.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProjectClass))! as ProjectClass);
+        case 'type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(Reference))! as Reference;
+          break;
+        case 'location':
+          result.location.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SourceLocation))!
+              as SourceLocation);
           break;
         case 'apis':
           result.apis.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(Api)]))!
               as BuiltList<Object?>);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$ProjectClassSerializer implements StructuredSerializer<ProjectClass> {
-  @override
-  final Iterable<Type> types = const [ProjectClass, _$ProjectClass];
-  @override
-  final String wireName = 'ProjectClass';
-
-  @override
-  Iterable<Object?> serialize(Serializers serializers, ProjectClass object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
-    ];
-
-    return result;
-  }
-
-  @override
-  ProjectClass deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectClassBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current! as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
           break;
       }
     }
@@ -376,6 +334,9 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
       'returnType',
       serializers.serialize(object.returnType,
           specifiedType: const FullType(Reference)),
+      'flattenedReturnType',
+      serializers.serialize(object.flattenedReturnType,
+          specifiedType: const FullType(Reference)),
       'metadata',
       serializers.serialize(object.metadata,
           specifiedType:
@@ -412,6 +373,10 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
           break;
         case 'returnType':
           result.returnType = serializers.deserialize(value,
+              specifiedType: const FullType(Reference))! as Reference;
+          break;
+        case 'flattenedReturnType':
+          result.flattenedReturnType = serializers.deserialize(value,
               specifiedType: const FullType(Reference))! as Reference;
           break;
         case 'metadata':
@@ -489,7 +454,9 @@ class _$Project extends Project {
   @override
   final String name;
   @override
-  final ProjectClass implementation;
+  final Reference type;
+  @override
+  final SourceLocation location;
   @override
   final BuiltList<Api> apis;
 
@@ -497,11 +464,14 @@ class _$Project extends Project {
       (new ProjectBuilder()..update(updates))._build();
 
   _$Project._(
-      {required this.name, required this.implementation, required this.apis})
+      {required this.name,
+      required this.type,
+      required this.location,
+      required this.apis})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        implementation, r'Project', 'implementation');
+    BuiltValueNullFieldError.checkNotNull(type, r'Project', 'type');
+    BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
     BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
   }
 
@@ -517,7 +487,8 @@ class _$Project extends Project {
     if (identical(other, this)) return true;
     return other is Project &&
         name == other.name &&
-        implementation == other.implementation &&
+        type == other.type &&
+        location == other.location &&
         apis == other.apis;
   }
 
@@ -525,7 +496,8 @@ class _$Project extends Project {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, implementation.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jc(_$hash, apis.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -535,7 +507,8 @@ class _$Project extends Project {
   String toString() {
     return (newBuiltValueToStringHelper(r'Project')
           ..add('name', name)
-          ..add('implementation', implementation)
+          ..add('type', type)
+          ..add('location', location)
           ..add('apis', apis))
         .toString();
   }
@@ -548,11 +521,14 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  ProjectClassBuilder? _implementation;
-  ProjectClassBuilder get implementation =>
-      _$this._implementation ??= new ProjectClassBuilder();
-  set implementation(ProjectClassBuilder? implementation) =>
-      _$this._implementation = implementation;
+  Reference? _type;
+  Reference? get type => _$this._type;
+  set type(Reference? type) => _$this._type = type;
+
+  SourceLocationBuilder? _location;
+  SourceLocationBuilder get location =>
+      _$this._location ??= new SourceLocationBuilder();
+  set location(SourceLocationBuilder? location) => _$this._location = location;
 
   ListBuilder<Api>? _apis;
   ListBuilder<Api> get apis => _$this._apis ??= new ListBuilder<Api>();
@@ -564,7 +540,8 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
-      _implementation = $v.implementation.toBuilder();
+      _type = $v.type;
+      _location = $v.location.toBuilder();
       _apis = $v.apis.toBuilder();
       _$v = null;
     }
@@ -592,129 +569,20 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
           new _$Project._(
               name: BuiltValueNullFieldError.checkNotNull(
                   name, r'Project', 'name'),
-              implementation: implementation.build(),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'Project', 'type'),
+              location: location.build(),
               apis: apis.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'implementation';
-        implementation.build();
-        _$failedField = 'apis';
-        apis.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Project', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$ProjectClass extends ProjectClass {
-  @override
-  final String name;
-  @override
-  final SourceLocation location;
-
-  factory _$ProjectClass([void Function(ProjectClassBuilder)? updates]) =>
-      (new ProjectClassBuilder()..update(updates))._build();
-
-  _$ProjectClass._({required this.name, required this.location}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'ProjectClass', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        location, r'ProjectClass', 'location');
-  }
-
-  @override
-  ProjectClass rebuild(void Function(ProjectClassBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  ProjectClassBuilder toBuilder() => new ProjectClassBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is ProjectClass &&
-        name == other.name &&
-        location == other.location;
-  }
-
-  @override
-  int get hashCode {
-    var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, location.hashCode);
-    _$hash = $jf(_$hash);
-    return _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'ProjectClass')
-          ..add('name', name)
-          ..add('location', location))
-        .toString();
-  }
-}
-
-class ProjectClassBuilder
-    implements Builder<ProjectClass, ProjectClassBuilder> {
-  _$ProjectClass? _$v;
-
-  String? _name;
-  String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
-
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
-
-  ProjectClassBuilder();
-
-  ProjectClassBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _name = $v.name;
-      _location = $v.location.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(ProjectClass other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ProjectClass;
-  }
-
-  @override
-  void update(void Function(ProjectClassBuilder)? updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  ProjectClass build() => _build();
-
-  _$ProjectClass _build() {
-    _$ProjectClass _$result;
-    try {
-      _$result = _$v ??
-          new _$ProjectClass._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'ProjectClass', 'name'),
-              location: location.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'location';
         location.build();
+        _$failedField = 'apis';
+        apis.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'ProjectClass', _$failedField, e.toString());
+            r'Project', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1243,6 +1111,8 @@ class _$CloudFunction extends CloudFunction {
   @override
   final Reference returnType;
   @override
+  final Reference flattenedReturnType;
+  @override
   final BuiltList<ApiMetadata> metadata;
   @override
   final SourceLocation location;
@@ -1254,6 +1124,7 @@ class _$CloudFunction extends CloudFunction {
       {required this.name,
       required this.parameters,
       required this.returnType,
+      required this.flattenedReturnType,
       required this.metadata,
       required this.location})
       : super._() {
@@ -1262,6 +1133,8 @@ class _$CloudFunction extends CloudFunction {
         parameters, r'CloudFunction', 'parameters');
     BuiltValueNullFieldError.checkNotNull(
         returnType, r'CloudFunction', 'returnType');
+    BuiltValueNullFieldError.checkNotNull(
+        flattenedReturnType, r'CloudFunction', 'flattenedReturnType');
     BuiltValueNullFieldError.checkNotNull(
         metadata, r'CloudFunction', 'metadata');
     BuiltValueNullFieldError.checkNotNull(
@@ -1282,6 +1155,7 @@ class _$CloudFunction extends CloudFunction {
         name == other.name &&
         parameters == other.parameters &&
         returnType == other.returnType &&
+        flattenedReturnType == other.flattenedReturnType &&
         metadata == other.metadata &&
         location == other.location;
   }
@@ -1292,6 +1166,7 @@ class _$CloudFunction extends CloudFunction {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, parameters.hashCode);
     _$hash = $jc(_$hash, returnType.hashCode);
+    _$hash = $jc(_$hash, flattenedReturnType.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
@@ -1304,6 +1179,7 @@ class _$CloudFunction extends CloudFunction {
           ..add('name', name)
           ..add('parameters', parameters)
           ..add('returnType', returnType)
+          ..add('flattenedReturnType', flattenedReturnType)
           ..add('metadata', metadata)
           ..add('location', location))
         .toString();
@@ -1328,6 +1204,11 @@ class CloudFunctionBuilder
   Reference? get returnType => _$this._returnType;
   set returnType(Reference? returnType) => _$this._returnType = returnType;
 
+  Reference? _flattenedReturnType;
+  Reference? get flattenedReturnType => _$this._flattenedReturnType;
+  set flattenedReturnType(Reference? flattenedReturnType) =>
+      _$this._flattenedReturnType = flattenedReturnType;
+
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
       _$this._metadata ??= new ListBuilder<ApiMetadata>();
@@ -1347,6 +1228,7 @@ class CloudFunctionBuilder
       _name = $v.name;
       _parameters = $v.parameters.toBuilder();
       _returnType = $v.returnType;
+      _flattenedReturnType = $v.flattenedReturnType;
       _metadata = $v.metadata.toBuilder();
       _location = $v.location.toBuilder();
       _$v = null;
@@ -1378,6 +1260,8 @@ class CloudFunctionBuilder
               parameters: parameters.build(),
               returnType: BuiltValueNullFieldError.checkNotNull(
                   returnType, r'CloudFunction', 'returnType'),
+              flattenedReturnType: BuiltValueNullFieldError.checkNotNull(
+                  flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
               metadata: metadata.build(),
               location: location.build());
     } catch (_) {

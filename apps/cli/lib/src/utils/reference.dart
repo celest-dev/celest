@@ -42,18 +42,6 @@ extension ReferenceHelper on Reference {
           ),
       };
 
-  TypeReference get flattened {
-    // TODO(dnys1): Should take FutureOr flattening into account, e.g.
-    // FutureOr<T>? => T?
-    switch (this) {
-      case final TypeReference type
-          when type.isDartAsyncFuture || type.isDartAsyncFutureOr:
-        return type.types.first.toTypeReference;
-      default:
-        return toTypeReference;
-    }
-  }
-
   /// Returns a nullable version of `this`.
   TypeReference get nullable {
     return toTypeReference.rebuild((t) => t.isNullable = true);

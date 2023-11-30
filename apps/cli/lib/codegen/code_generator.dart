@@ -2,16 +2,18 @@ import 'package:celest_cli/ast/ast.dart' as ast show Parameter;
 import 'package:celest_cli/ast/ast.dart' hide Parameter;
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/api/entrypoint.dart';
+import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:path/path.dart' as p;
 
+// TODO(dnys1): Create custom allocator so that all file paths are relative.
 final class CodeGenerator extends AstVisitor<void> {
   CodeGenerator(
     this._projectRoot, {
     String? outputDir,
-  }) : _outputDir = outputDir ?? p.join(_projectRoot, '.dart_tool', 'celest');
+  }) : outputDir = outputDir ?? p.join(_projectRoot, '.dart_tool', 'celest');
 
   static final _formatter = DartFormatter(
     fixes: StyleFix.all,
@@ -21,8 +23,12 @@ final class CodeGenerator extends AstVisitor<void> {
         orderDirectives: true,
       );
 
+  String _emit(Spec spec) {
+    return _formatter.format(spec.accept(_emitter).toString());
+  }
+
   final String _projectRoot;
-  final String _outputDir;
+  final String outputDir;
 
   /// A map of generated files to their contents.
   final Map<String, String> outputs = {};
@@ -30,26 +36,27 @@ final class CodeGenerator extends AstVisitor<void> {
   @override
   void visitProject(Project project) {
     final resourcesFile = p.join(_projectRoot, 'resources.dart');
-    final resourcesGenerator = ResourceGenerator(project).generate();
-    outputs[resourcesFile] = _formatter.format(
-      resourcesGenerator.accept(_emitter).toString(),
-    );
+    final resources = ResourceGenerator(project).generate();
+    outputs[resourcesFile] = _emit(resources);
+
+    final projectBuildFile = p.join(outputDir, 'project.build.dart');
+    final projectBuild = ProjectBuildGenerator(project.type).generate();
+    outputs[projectBuildFile] = _emit(projectBuild);
+
     project.apis.forEach(visitApi);
   }
 
   @override
   void visitApi(Api api) {
-    final outputDir = p.join(_outputDir, 'apis', api.name);
+    final outputDir = p.join(this.outputDir, 'apis', api.name);
     for (final function in api.functions) {
-      final generator = EntrypointGenerator(
+      final entrypoint = EntrypointGenerator(
         api: api,
         function: function,
         outputDir: outputDir,
-      );
+      ).generate();
       final entrypointFile = p.join(outputDir, '${function.name}.dart');
-      outputs[entrypointFile] = _formatter.format(
-        generator.generate().accept(_emitter).toString(),
-      );
+      outputs[entrypointFile] = _emit(entrypoint);
     }
   }
 

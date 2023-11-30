@@ -72,10 +72,8 @@ final class CelestAnalyzer {
 
     return ast.Project(
       name: projectPubspec.name,
-      implementation: ast.ProjectClass(
-        name: projectClass.name,
-        location: projectClass.sourceLocation,
-      ),
+      type: projectClass.thisType.toCodeBuilder,
+      location: projectClass.sourceLocation,
     );
   }
 
@@ -125,6 +123,7 @@ final class CelestAnalyzer {
       final functions = apiUnit.library.topLevelElements
           .whereType<FunctionElement>()
           .map((func) {
+        // TODO(dnys1): Skip private functions.
         final function = ast.CloudFunction(
           name: func.name,
           parameters: func.parameters.map((param) {
@@ -148,6 +147,7 @@ final class CelestAnalyzer {
             return parameter;
           }).toList(),
           returnType: func.returnType.toCodeBuilder,
+          flattenedReturnType: func.returnType.flattened.toCodeBuilder,
           location: func.sourceLocation,
           metadata: _collectMetadata(func),
         );

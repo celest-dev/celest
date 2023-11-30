@@ -12,12 +12,14 @@ sealed class Node {}
 abstract class Project implements Built<Project, ProjectBuilder>, Node {
   factory Project({
     required String name,
-    required ProjectClass implementation,
+    required Reference type,
+    required SourceLocation location,
     List<Api> apis = const [],
   }) {
     return _$Project._(
       name: name,
-      implementation: implementation,
+      type: type,
+      location: location,
       apis: apis.build(),
     );
   }
@@ -30,7 +32,8 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   Project._();
 
   String get name;
-  ProjectClass get implementation;
+  Reference get type;
+  SourceLocation get location;
   BuiltList<Api> get apis;
 
   R accept<R>(AstVisitor<R> visitor) => visitor.visitProject(this);
@@ -40,31 +43,6 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
           as Map<String, dynamic>;
 
   static Serializer<Project> get serializer => _$projectSerializer;
-}
-
-abstract class ProjectClass
-    implements Built<ProjectClass, ProjectClassBuilder> {
-  factory ProjectClass({
-    required String name,
-    required SourceLocation location,
-  }) = _$ProjectClass._;
-
-  factory ProjectClass.build([void Function(ProjectClassBuilder) updates]) =
-      _$ProjectClass;
-
-  factory ProjectClass.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(ProjectClass.serializer, json)!;
-
-  ProjectClass._();
-
-  String get name;
-  SourceLocation get location;
-
-  Map<String, dynamic> toJson() =>
-      serializers.serializeWith(ProjectClass.serializer, this)
-          as Map<String, dynamic>;
-
-  static Serializer<ProjectClass> get serializer => _$projectClassSerializer;
 }
 
 abstract class Api implements Built<Api, ApiBuilder> {
@@ -194,6 +172,7 @@ abstract class CloudFunction
     required String name,
     required List<Parameter> parameters,
     required Reference returnType,
+    required Reference flattenedReturnType,
     List<ApiMetadata> metadata = const [],
     required SourceLocation location,
   }) {
@@ -201,6 +180,7 @@ abstract class CloudFunction
       name: name,
       parameters: parameters.build(),
       returnType: returnType,
+      flattenedReturnType: flattenedReturnType,
       metadata: metadata.build(),
       location: location,
     );
@@ -217,6 +197,7 @@ abstract class CloudFunction
   String get name;
   BuiltList<Parameter> get parameters;
   Reference get returnType;
+  Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;
   SourceLocation get location;
 

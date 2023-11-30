@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'dart:core' as core;
+import 'dart:isolate' as isolate;
 import 'dart:typed_data';
 
 import 'package:aws_common/aws_common.dart' as aws_common;
@@ -45,6 +46,9 @@ abstract class DartTypes {
 
   /// `package:functions_framework` types.
   static const functionsFramework = _FunctionsFramework();
+
+  /// `dart:isolate` types.
+  static const isolate = _Isolate();
 
   /// `package:meta` types.
   static const meta = _Meta();
@@ -398,8 +402,8 @@ class _Celest {
 
   static const _url = 'package:celest/celest.dart';
 
-  /// Creates a [celest.FunctionContext] reference.
-  Reference get functionContext => const Reference('FunctionContext', _url);
+  /// Creates a [celest.BuildEnvironment] reference.
+  Reference get buildEnvironment => const Reference('BuildEnvironment', _url);
 
   /// Creates a [celest.CloudFunction] reference.
   Reference cloudFunction([Reference? input, Reference? output]) =>
@@ -412,6 +416,12 @@ class _Celest {
             if (output != null) output,
           ]),
       );
+
+  /// Creates a [celest.FunctionContext] reference.
+  Reference get functionContext => const Reference('FunctionContext', _url);
+
+  /// Creates a [celest.ProjectContext] reference.
+  Reference get projectContext => const Reference('ProjectContext', _url);
 }
 
 /// `dart:convert` types
@@ -446,6 +456,7 @@ class FixNum {
   Reference get int64 => const Reference('Int64', url);
 }
 
+/// `package:functions_framework` types
 class _FunctionsFramework {
   const _FunctionsFramework();
 
@@ -460,6 +471,16 @@ class _FunctionsFramework {
 
   /// Creates a [functions_framework.serve] reference.
   Reference get serve => const Reference('serve', _url);
+}
+
+/// `dart:isolate` types
+class _Isolate {
+  const _Isolate();
+
+  static const _url = 'dart:isolate';
+
+  /// Creates a [isolate.SendPort] reference.
+  Reference get sendPort => const Reference('SendPort', _url);
 }
 
 /// `package:meta` types.

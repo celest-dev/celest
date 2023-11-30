@@ -106,7 +106,8 @@ final class EntrypointGenerator {
                   namedParams,
                 );
                 final returnType = function.returnType;
-                switch (returnType.flattened.symbol) {
+                final flattenedReturnTyep = function.flattenedReturnType;
+                switch (flattenedReturnTyep.symbol) {
                   case 'void':
                     b.addExpression(response.returned);
                   default:
@@ -119,9 +120,7 @@ final class EntrypointGenerator {
                     );
                     final toJson = returnType.toJson(refer('response'));
                     Expression result;
-                    if (returnType.flattened.isNullableOrFalse ||
-                        returnType.isNullableOrFalse &&
-                            returnType.isDartAsyncFutureOr) {
+                    if (flattenedReturnTyep.isNullableOrFalse) {
                       result = refer('response')
                           .equalTo(literalNull)
                           .conditional(literalNull, toJson);

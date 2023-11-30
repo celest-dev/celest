@@ -13,7 +13,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CloudFunction.serializer)
       ..add(Parameter.serializer)
       ..add(Project.serializer)
-      ..add(ProjectClass.serializer)
       ..add(SourceLocation.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Api)]),

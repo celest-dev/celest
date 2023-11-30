@@ -219,49 +219,51 @@ final class $_ReturnTypesApi {
     functionName: r'asyncOrVoidReturnNullable',
   );
 
-  final asyncOrStringReturnNullable = _i1.CloudFunction<void, String>(
+  final asyncOrStringReturnNullable = _i1.CloudFunction<void, String?>(
     api: r'return_types',
     functionName: r'asyncOrStringReturnNullable',
   );
 
-  final asyncOrIntReturnNullable = _i1.CloudFunction<void, int>(
+  final asyncOrIntReturnNullable = _i1.CloudFunction<void, int?>(
     api: r'return_types',
     functionName: r'asyncOrIntReturnNullable',
   );
 
-  final asyncOrDoubleReturnNullable = _i1.CloudFunction<void, double>(
+  final asyncOrDoubleReturnNullable = _i1.CloudFunction<void, double?>(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturnNullable',
   );
 
-  final asyncOrBoolReturnNullable = _i1.CloudFunction<void, bool>(
+  final asyncOrBoolReturnNullable = _i1.CloudFunction<void, bool?>(
     api: r'return_types',
     functionName: r'asyncOrBoolReturnNullable',
   );
 
-  final asyncOrListReturnNullable = _i1.CloudFunction<void, List<String>>(
+  final asyncOrListReturnNullable = _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
     functionName: r'asyncOrListReturnNullable',
   );
 
-  final asyncOrMapReturnNullable = _i1.CloudFunction<void, Map<String, String>>(
+  final asyncOrMapReturnNullable =
+      _i1.CloudFunction<void, Map<String, String>?>(
     api: r'return_types',
     functionName: r'asyncOrMapReturnNullable',
   );
 
   final asyncOrIterableReturnNullable =
-      _i1.CloudFunction<void, Iterable<String>>(
+      _i1.CloudFunction<void, Iterable<String>?>(
     api: r'return_types',
     functionName: r'asyncOrIterableReturnNullable',
   );
 
-  final asyncOrStructReturnNullable = _i1.CloudFunction<void, _i2.SimpleStruct>(
+  final asyncOrStructReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
 
   final asyncOrComplexReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+      _i1.CloudFunction<void, _i2.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexReturnNullable',
   );

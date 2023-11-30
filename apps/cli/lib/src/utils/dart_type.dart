@@ -9,9 +9,9 @@ final enumIndex = <Reference, bool>{};
 extension DartTypeHelper on DartType {
   DartType get flattened {
     switch (this) {
-      case final InterfaceType interface
-          when interface.isDartAsyncFuture || interface.isDartAsyncFutureOr:
-        return interface.typeArguments.first;
+      case final InterfaceType interface:
+        final typeSystem = interface.element.library.typeSystem;
+        return typeSystem.flatten(this);
       default:
         return this;
     }

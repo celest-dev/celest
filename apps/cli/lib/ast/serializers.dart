@@ -9,7 +9,6 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   Project,
-  ProjectClass,
   Api,
   ApiMetadataAuthenticated,
   ApiMetadataMiddleware,

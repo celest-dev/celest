@@ -4,7 +4,9 @@ import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/init/project_generator.dart';
+import 'package:celest_cli/project/builder.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:watcher/watcher.dart';
 
@@ -72,6 +74,16 @@ final class StartCommand extends CelestCommand {
       print('Writing $path');
       print(contents);
     }
+
+    final projectBuilder = ProjectBuilder(
+      projectName: project.name,
+      entrypoint: p.toUri(
+        p.join(codeGenerator.outputDir, 'project.build.dart'),
+      ),
+      rootDir: celestDir.path,
+      outputDir: codeGenerator.outputDir,
+    );
+    final _ = await projectBuilder.build();
 
     final events = StreamGroup.merge([
       ProcessSignal.sigint.watch(),

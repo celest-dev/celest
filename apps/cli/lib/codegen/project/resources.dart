@@ -33,6 +33,9 @@ final class ResourceGenerator {
         [final single] => single.type,
         final multiple => RecordType(
             (r) => r
+              // TODO(dnys1): Treat all parameters the same (named/optional)?
+              // This is only a Dart concept and we can handle the mapping to/from.
+              // i.e. it does not affect the actual HTTP API.
               ..positionalFieldTypes.addAll([
                 for (final parameter in multiple.where((p) => !p.named))
                   parameter.type,
@@ -50,7 +53,7 @@ final class ResourceGenerator {
           ..assignment = DartTypes.celest
               .cloudFunction(
             inputType,
-            function.returnType.flattened,
+            function.flattenedReturnType,
           )
               .newInstance([], {
             'api': literalString(api.name, raw: true),

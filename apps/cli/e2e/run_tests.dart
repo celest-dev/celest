@@ -5,7 +5,9 @@ import 'package:args/args.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/project/builder.dart';
 import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_rpc/protos.dart' as proto;
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -76,6 +78,7 @@ class TestRunner {
 
       _testAnalyzer();
       _testCodegen();
+      _testBuild();
 
       final apisDir = Directory(p.join(projectRoot, 'apis'));
       if (apisDir.existsSync()) {
@@ -119,6 +122,20 @@ class TestRunner {
           expect(content, expected);
         }
       }
+    });
+  }
+
+  void _testBuild() {
+    test('build', () async {
+      final projectBuilder = ProjectBuilder(
+        projectName: testName,
+        entrypoint: p.toUri(p.join(goldensDir.path, 'project.build.dart')),
+        rootDir: projectRoot,
+        outputDir: goldensDir.path,
+      );
+      final project = await projectBuilder.build();
+      expect(project, isA<proto.Project>());
+      print(project.toProto3Json());
     });
   }
 
