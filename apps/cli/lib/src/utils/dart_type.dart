@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:code_builder/code_builder.dart' hide FunctionType, RecordType;
+import 'package:path/path.dart' as p;
 
 final enumIndex = <Reference, bool>{};
 
@@ -19,11 +20,16 @@ extension DartTypeHelper on DartType {
 
   bool get isEnum => element is EnumElement;
 
-  Reference get toCodeBuilder => accept(const _TypeToCodeBuilder());
+  Reference toCodeBuilder(String projectRoot) =>
+      accept(_TypeToCodeBuilder(projectRoot: projectRoot));
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<Reference> {
-  const _TypeToCodeBuilder();
+  const _TypeToCodeBuilder({
+    required this.projectRoot,
+  });
+
+  final String projectRoot;
 
   @override
   Reference visitDynamicType(DynamicType type) => refer('dynamic');
@@ -36,9 +42,14 @@ final class _TypeToCodeBuilder implements TypeVisitor<Reference> {
   @override
   Reference visitInterfaceType(InterfaceType type) {
     final typeArguments = type.typeArguments.map((type) => type.accept(this));
+    final sourceUri = type.element.library.source.uri;
     final uri = switch (type) {
       _ when type.element.library.isDartCore => 'dart:core',
-      _ => type.element.library.source.uri.toString(),
+      _ when sourceUri.scheme == 'file' => p.relative(
+          p.fromUri(sourceUri),
+          from: projectRoot,
+        ),
+      _ => sourceUri.toString(),
     };
     final ref = TypeReference(
       (t) => t

@@ -10,11 +10,13 @@ final class EntrypointGenerator {
   EntrypointGenerator({
     required this.api,
     required this.function,
+    required this.projectRoot,
     required this.outputDir,
   });
 
   final Api api;
   final CloudFunction function;
+  final String projectRoot;
   final String outputDir;
 
   Library generate() {
@@ -66,10 +68,8 @@ final class EntrypointGenerator {
               ])
               ..modifier = MethodModifier.async
               ..body = Block((b) {
-                final functionImport = p.relative(
-                  p.fromUri(function.location.uri),
-                  from: outputDir,
-                );
+                final functionImport =
+                    p.join(projectRoot, function.location.path);
                 final functionReference = refer(
                   function.name,
                   functionImport,

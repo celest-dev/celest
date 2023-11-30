@@ -8,6 +8,10 @@ final class ProjectPaths {
 
   final String _celestDir;
 
+  String absolute(String relativePath) => p.join(projectRoot, relativePath);
+  String relativeToRoot(String path) =>
+      p.relative(p.absolute(path), from: projectRoot);
+
   late final String appRoot =
       p.canonicalize(p.normalize(p.join(_celestDir, '..')));
   late final String projectRoot = _celestDir;

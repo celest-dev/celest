@@ -1,11 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-
-import 'file:///Users/dillonnys/celest/cloud/apps/cli/e2e/api/apis/parameter_types.dart'
-    as _i3;
+import 'dart:async' as _i3;
 
 import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i5;
+import 'package:shelf/shelf.dart' as _i4;
 
 import '../../../apis/parameter_types.dart' as _i2;
 
@@ -20,7 +17,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         (request[r'anInt'] as int),
         (request[r'aDouble'] as double),
         (request[r'aBool'] as bool),
-        _i3.MyEnum.values.byName((request[r'anEnum'] as String)),
+        _i2.MyEnum.values.byName((request[r'anEnum'] as String)),
         (request[r'aNull'] as Null),
         (request[r'anIterableOfString'] as Iterable<Object?>)
             .map((el) => (el as String))
@@ -35,7 +32,7 @@ class SimpleTarget extends _i1.FunctionTarget {
             .map((el) => (el as bool))
             .toList(),
         (request[r'anIterableOfEnum'] as Iterable<Object?>)
-            .map((el) => _i3.MyEnum.values.byName((el as String)))
+            .map((el) => _i2.MyEnum.values.byName((el as String)))
             .toList(),
         (request[r'anIterableOfNull'] as Iterable<Object?>)
             .map((el) => (el as Null))
@@ -53,7 +50,7 @@ class SimpleTarget extends _i1.FunctionTarget {
             .map((el) => (el as bool))
             .toList(),
         (request[r'aListOfEnum'] as Iterable<Object?>)
-            .map((el) => _i3.MyEnum.values.byName((el as String)))
+            .map((el) => _i2.MyEnum.values.byName((el as String)))
             .toList(),
         (request[r'aListOfNull'] as Iterable<Object?>)
             .map((el) => (el as Null))
@@ -96,7 +93,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) =>
             MapEntry(
               key,
-              _i3.MyEnum.values.byName((value as String)),
+              _i2.MyEnum.values.byName((value as String)),
             )),
         (request[r'aMapOfNull'] as Map<String, Object?>).map((
           key,
@@ -112,13 +109,13 @@ class SimpleTarget extends _i1.FunctionTarget {
   );
 
   @override
-  _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
-    final handler = _i5.Pipeline().addHandler(_inner.handler);
+  _i3.FutureOr<_i4.Response> handler(_i4.Request request) {
+    final handler = _i4.Pipeline().addHandler(_inner.handler);
     return handler(request);
   }
 }
 
-_i4.Future<void> main(List<String> args) async {
+_i3.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
     (_) => SimpleTarget(),

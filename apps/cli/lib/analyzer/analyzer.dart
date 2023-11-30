@@ -72,8 +72,8 @@ final class CelestAnalyzer {
 
     return ast.Project(
       name: projectPubspec.name,
-      type: projectClass.thisType.toCodeBuilder,
-      location: projectClass.sourceLocation,
+      type: projectClass.thisType.toCodeBuilder(projectPaths.projectRoot),
+      location: projectClass.sourceLocation(projectPaths.projectRoot),
     );
   }
 
@@ -87,12 +87,12 @@ final class CelestAnalyzer {
       switch (type) {
         case _ when type.library!.isCelestApi && type.name == 'authenticated':
           return ast.ApiMetadataAuthenticated(
-            location: element.sourceLocation,
+            location: element.sourceLocation(projectPaths.projectRoot),
           );
         case _ when type.isMiddleware:
           return ast.ApiMetadataMiddleware(
-            type: value.type!.toCodeBuilder,
-            location: element.sourceLocation,
+            type: value.type!.toCodeBuilder(projectPaths.projectRoot),
+            location: element.sourceLocation(projectPaths.projectRoot),
           );
         case _:
           throw StateError('Bad annotation: $annotation');
@@ -129,10 +129,10 @@ final class CelestAnalyzer {
           parameters: func.parameters.map((param) {
             final parameter = ast.Parameter(
               name: param.name,
-              type: param.type.toCodeBuilder,
+              type: param.type.toCodeBuilder(projectPaths.projectRoot),
               required: param.isRequired,
               named: param.isNamed,
-              location: param.sourceLocation,
+              location: param.sourceLocation(projectPaths.projectRoot),
             );
             if (parameter.type.isFunctionContext) {
               return parameter;
@@ -146,9 +146,10 @@ final class CelestAnalyzer {
             }
             return parameter;
           }).toList(),
-          returnType: func.returnType.toCodeBuilder,
-          flattenedReturnType: func.returnType.flattened.toCodeBuilder,
-          location: func.sourceLocation,
+          returnType: func.returnType.toCodeBuilder(projectPaths.projectRoot),
+          flattenedReturnType:
+              func.returnType.flattened.toCodeBuilder(projectPaths.projectRoot),
+          location: func.sourceLocation(projectPaths.projectRoot),
           metadata: _collectMetadata(func),
         );
 
@@ -176,7 +177,9 @@ final class CelestAnalyzer {
       }).toList();
       apis.add(
         ast.Api(
-          uri: apiUnit.library.source.uri,
+          path: projectPaths.relativeToRoot(
+            p.fromUri(apiUnit.library.source.uri),
+          ),
           name: p.basenameWithoutExtension(apiFile),
           metadata: libraryMetdata,
           functions: functions,
@@ -213,7 +216,7 @@ extension on Element {
     });
   }
 
-  ast.SourceLocation get sourceLocation {
+  ast.SourceLocation sourceLocation(String projectRoot) {
     final uri = this.source!.uri;
     final source = this.source!.contents.data;
     final lines = LineSplitter.split(source);
@@ -230,7 +233,7 @@ extension on Element {
       lineNo++;
     }
     return ast.SourceLocation(
-      uri: uri,
+      path: p.relative(p.fromUri(uri), from: projectRoot),
       line: lineNo,
       column: column,
     );
@@ -248,6 +251,6 @@ final class AnalysisException implements Exception {
 
   @override
   String toString() {
-    return '${location.uri}:${location.line}:${location.column}: $message';
+    return '${location.path}:${location.line}:${location.column}: $message';
   }
 }

@@ -1,10 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:isolate' as _i1;
 
-import 'file:///Users/dillonnys/celest/cloud/apps/cli/e2e/simple/project.dart'
-    as _i2;
-
 import 'package:celest/celest.dart' as _i3;
+
+import '../project.dart' as _i2;
 
 void main(
   List<String> args,

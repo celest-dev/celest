@@ -3,10 +3,9 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'file:///Users/dillonnys/celest/cloud/apps/cli/e2e/api/apis/parameter_types.dart'
-    as _i2;
-
 import 'package:celest/celest.dart' as _i1;
+
+import 'apis/parameter_types.dart' as _i2;
 
 final $_Celest celest = $_Celest();
 

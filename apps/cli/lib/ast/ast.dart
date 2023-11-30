@@ -47,13 +47,13 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
 
 abstract class Api implements Built<Api, ApiBuilder> {
   factory Api({
-    required Uri uri,
+    required String path,
     required String name,
     required List<CloudFunction> functions,
     List<ApiMetadata> metadata = const [],
   }) {
     return _$Api._(
-      uri: uri,
+      path: path,
       name: name,
       metadata: metadata.build(),
       functions: functions.build(),
@@ -67,7 +67,7 @@ abstract class Api implements Built<Api, ApiBuilder> {
 
   Api._();
 
-  Uri get uri;
+  String get path;
   String get name;
   BuiltList<ApiMetadata> get metadata;
   BuiltList<CloudFunction> get functions;
@@ -211,7 +211,7 @@ abstract class CloudFunction
 abstract class SourceLocation
     implements Built<SourceLocation, SourceLocationBuilder> {
   factory SourceLocation({
-    required Uri uri,
+    required String path,
     required int line,
     required int column,
   }) = _$SourceLocation._;
@@ -224,7 +224,8 @@ abstract class SourceLocation
 
   SourceLocation._();
 
-  Uri get uri;
+  /// The path to the source file, relative to the project root.
+  String get path;
   int get line;
   int get column;
 

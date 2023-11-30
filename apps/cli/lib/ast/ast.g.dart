@@ -92,8 +92,8 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
   Iterable<Object?> serialize(Serializers serializers, Api object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'uri',
-      serializers.serialize(object.uri, specifiedType: const FullType(Uri)),
+      'path',
+      serializers.serialize(object.path, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'metadata',
@@ -120,9 +120,9 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'uri':
-          result.uri = serializers.deserialize(value,
-              specifiedType: const FullType(Uri))! as Uri;
+        case 'path':
+          result.path = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -408,8 +408,8 @@ class _$SourceLocationSerializer
   Iterable<Object?> serialize(Serializers serializers, SourceLocation object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'uri',
-      serializers.serialize(object.uri, specifiedType: const FullType(Uri)),
+      'path',
+      serializers.serialize(object.path, specifiedType: const FullType(String)),
       'line',
       serializers.serialize(object.line, specifiedType: const FullType(int)),
       'column',
@@ -431,9 +431,9 @@ class _$SourceLocationSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'uri':
-          result.uri = serializers.deserialize(value,
-              specifiedType: const FullType(Uri))! as Uri;
+        case 'path':
+          result.path = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'line':
           result.line = serializers.deserialize(value,
@@ -593,7 +593,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
 
 class _$Api extends Api {
   @override
-  final Uri uri;
+  final String path;
   @override
   final String name;
   @override
@@ -605,12 +605,12 @@ class _$Api extends Api {
       (new ApiBuilder()..update(updates))._build();
 
   _$Api._(
-      {required this.uri,
+      {required this.path,
       required this.name,
       required this.metadata,
       required this.functions})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(uri, r'Api', 'uri');
+    BuiltValueNullFieldError.checkNotNull(path, r'Api', 'path');
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
@@ -627,7 +627,7 @@ class _$Api extends Api {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Api &&
-        uri == other.uri &&
+        path == other.path &&
         name == other.name &&
         metadata == other.metadata &&
         functions == other.functions;
@@ -636,7 +636,7 @@ class _$Api extends Api {
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, uri.hashCode);
+    _$hash = $jc(_$hash, path.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, functions.hashCode);
@@ -647,7 +647,7 @@ class _$Api extends Api {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'Api')
-          ..add('uri', uri)
+          ..add('path', path)
           ..add('name', name)
           ..add('metadata', metadata)
           ..add('functions', functions))
@@ -658,9 +658,9 @@ class _$Api extends Api {
 class ApiBuilder implements Builder<Api, ApiBuilder> {
   _$Api? _$v;
 
-  Uri? _uri;
-  Uri? get uri => _$this._uri;
-  set uri(Uri? uri) => _$this._uri = uri;
+  String? _path;
+  String? get path => _$this._path;
+  set path(String? path) => _$this._path = path;
 
   String? _name;
   String? get name => _$this._name;
@@ -683,7 +683,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   ApiBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _uri = $v.uri;
+      _path = $v.path;
       _name = $v.name;
       _metadata = $v.metadata.toBuilder();
       _functions = $v.functions.toBuilder();
@@ -711,7 +711,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
     try {
       _$result = _$v ??
           new _$Api._(
-              uri: BuiltValueNullFieldError.checkNotNull(uri, r'Api', 'uri'),
+              path: BuiltValueNullFieldError.checkNotNull(path, r'Api', 'path'),
               name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
               metadata: metadata.build(),
               functions: functions.build());
@@ -1287,7 +1287,7 @@ class CloudFunctionBuilder
 
 class _$SourceLocation extends SourceLocation {
   @override
-  final Uri uri;
+  final String path;
   @override
   final int line;
   @override
@@ -1297,9 +1297,9 @@ class _$SourceLocation extends SourceLocation {
       (new SourceLocationBuilder()..update(updates))._build();
 
   _$SourceLocation._(
-      {required this.uri, required this.line, required this.column})
+      {required this.path, required this.line, required this.column})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(uri, r'SourceLocation', 'uri');
+    BuiltValueNullFieldError.checkNotNull(path, r'SourceLocation', 'path');
     BuiltValueNullFieldError.checkNotNull(line, r'SourceLocation', 'line');
     BuiltValueNullFieldError.checkNotNull(column, r'SourceLocation', 'column');
   }
@@ -1316,7 +1316,7 @@ class _$SourceLocation extends SourceLocation {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SourceLocation &&
-        uri == other.uri &&
+        path == other.path &&
         line == other.line &&
         column == other.column;
   }
@@ -1324,7 +1324,7 @@ class _$SourceLocation extends SourceLocation {
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, uri.hashCode);
+    _$hash = $jc(_$hash, path.hashCode);
     _$hash = $jc(_$hash, line.hashCode);
     _$hash = $jc(_$hash, column.hashCode);
     _$hash = $jf(_$hash);
@@ -1334,7 +1334,7 @@ class _$SourceLocation extends SourceLocation {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'SourceLocation')
-          ..add('uri', uri)
+          ..add('path', path)
           ..add('line', line)
           ..add('column', column))
         .toString();
@@ -1345,9 +1345,9 @@ class SourceLocationBuilder
     implements Builder<SourceLocation, SourceLocationBuilder> {
   _$SourceLocation? _$v;
 
-  Uri? _uri;
-  Uri? get uri => _$this._uri;
-  set uri(Uri? uri) => _$this._uri = uri;
+  String? _path;
+  String? get path => _$this._path;
+  set path(String? path) => _$this._path = path;
 
   int? _line;
   int? get line => _$this._line;
@@ -1362,7 +1362,7 @@ class SourceLocationBuilder
   SourceLocationBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _uri = $v.uri;
+      _path = $v.path;
       _line = $v.line;
       _column = $v.column;
       _$v = null;
@@ -1387,8 +1387,8 @@ class SourceLocationBuilder
   _$SourceLocation _build() {
     final _$result = _$v ??
         new _$SourceLocation._(
-            uri: BuiltValueNullFieldError.checkNotNull(
-                uri, r'SourceLocation', 'uri'),
+            path: BuiltValueNullFieldError.checkNotNull(
+                path, r'SourceLocation', 'path'),
             line: BuiltValueNullFieldError.checkNotNull(
                 line, r'SourceLocation', 'line'),
             column: BuiltValueNullFieldError.checkNotNull(

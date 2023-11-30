@@ -2,12 +2,12 @@
   "name": "simple",
   "type": {
     "symbol": "HelloProject",
-    "url": "file:///Users/dillonnys/celest/cloud/apps/cli/e2e/simple/project.dart",
+    "url": "project.dart",
     "bound": null,
     "isNullable": false
   },
   "location": {
-    "uri": "file:///Users/dillonnys/celest/cloud/apps/cli/e2e/simple/project.dart",
+    "path": "project.dart",
     "line": 3,
     "column": 6
   },
