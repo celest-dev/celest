@@ -10,75 +10,47 @@ const $_CelestResources resources = $_CelestResources();
 final class $_CelestResources {
   const $_CelestResources();
 
-  final $_CelestProdResources prod = const $_CelestProdResources();
-
-  final $_CelestStagingResources staging = const $_CelestStagingResources();
-
-  final $_CelestDevResources dev = const $_CelestDevResources();
+  final $_CelestApiResources apis = const $_CelestApiResources();
 }
 
-final class $_CelestProdApiResources {
-  const $_CelestProdApiResources();
+final class $_CelestApiResources {
+  const $_CelestApiResources();
 
-  final $_CelestProdOverrideApiResource override =
-      const $_CelestProdOverrideApiResource();
+  final $_CelestOverrideApiResource override =
+      const $_CelestOverrideApiResource();
 }
 
-final class $_CelestProdOverrideApiResource {
-  const $_CelestProdOverrideApiResource();
+final class $_CelestOverrideDevApiResource {
+  const $_CelestOverrideDevApiResource();
+
+  final sayHello = const _i1.CloudFunction<void, String>(
+    api: r'override',
+    functionName: r'sayHello',
+    environmentName: r'dev',
+  );
+}
+
+final class $_CelestOverrideStagingApiResource {
+  const $_CelestOverrideStagingApiResource();
+
+  final sayHello = const _i1.CloudFunction<void, String>(
+    api: r'override',
+    functionName: r'sayHello',
+    environmentName: r'staging',
+  );
+}
+
+final class $_CelestOverrideApiResource {
+  const $_CelestOverrideApiResource();
 
   final sayHello = const _i1.CloudFunction<void, String>(
     api: r'override',
     functionName: r'sayHello',
   );
-}
 
-final class $_CelestProdResources {
-  const $_CelestProdResources();
+  final $_CelestOverrideDevApiResource dev$ =
+      const $_CelestOverrideDevApiResource();
 
-  final $_CelestProdApiResources apis = const $_CelestProdApiResources();
-}
-
-final class $_CelestStagingApiResources {
-  const $_CelestStagingApiResources();
-
-  final $_CelestStagingOverrideApiResource override =
-      const $_CelestStagingOverrideApiResource();
-}
-
-final class $_CelestStagingOverrideApiResource {
-  const $_CelestStagingOverrideApiResource();
-
-  final sayHello = const _i1.CloudFunction<void, String>(
-    api: r'override',
-    functionName: r'sayHello',
-  );
-}
-
-final class $_CelestStagingResources {
-  const $_CelestStagingResources();
-
-  final $_CelestStagingApiResources apis = const $_CelestStagingApiResources();
-}
-
-final class $_CelestDevApiResources {
-  const $_CelestDevApiResources();
-
-  final $_CelestDevOverrideApiResource override =
-      const $_CelestDevOverrideApiResource();
-}
-
-final class $_CelestDevOverrideApiResource {
-  const $_CelestDevOverrideApiResource();
-
-  final sayHello = const _i1.CloudFunction<void, String>(
-    api: r'override',
-    functionName: r'sayHello',
-  );
-}
-
-final class $_CelestDevResources {
-  const $_CelestDevResources();
-
-  final $_CelestDevApiResources apis = const $_CelestDevApiResources();
+  final $_CelestOverrideStagingApiResource staging$ =
+      const $_CelestOverrideStagingApiResource();
 }

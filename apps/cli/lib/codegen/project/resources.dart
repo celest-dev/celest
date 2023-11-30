@@ -27,80 +27,73 @@ final class ResourcesGenerator {
           ..constructors.add(Constructor((c) => c..constant = true)),
       );
 
-  (Reference, Class) _generateEnvironment(Environment environment) {
-    final environmentName = environment.name!.pascalCase;
-    final (environmentRef, environmentClass) =
-        _beginClass('\$_Celest${environmentName}Resources');
-    if (environment.apis.isNotEmpty) {
-      final (apisClassRef, apisClass) =
-          _beginClass('\$_Celest${environmentName}ApiResources');
-      _library.body.add(lazySpec(apisClass.build));
-      for (final api in environment.apis.values) {
-        final (apiClassRef, apiClass) = _generateApi(api, environmentName);
-        apisClass.fields.add(
+  (Reference, Class) _generateApi(
+    String apiName,
+    Map<String, Api> environments,
+  ) {
+    final apiClassName = '\$_Celest${apiName.pascalCase}ApiResource';
+    final (apiClassRef, apiClass) = _beginClass(apiClassName);
+    for (final MapEntry(key: environmentName, value: api)
+        in environments.entries) {
+      final (environmentClassRef, environmentClass) = _beginClass(
+        '\$_Celest${apiName.pascalCase}${environmentName.pascalCase}ApiResource',
+      );
+      if (environmentName.isNotEmpty) {
+        apiClass.fields.add(
           Field(
             (b) => b
-              ..name = api.name.camelCase
+              ..name = '${environmentName.camelCase}\$'
               ..modifier = FieldModifier.final$
-              ..type = apiClassRef
-              ..assignment = apiClassRef.constInstance([]).code,
+              ..type = environmentClassRef
+              ..assignment = environmentClassRef.constInstance([]).code,
           ),
         );
-        _library.body.add(apiClass);
+        _library.body.add(lazySpec(environmentClass.build));
       }
-      environmentClass.fields.add(
-        Field(
-          (b) => b
-            ..name = 'apis'
+      for (final function in api.functions.values) {
+        final inputParameters = function.parameters
+            .where((p) => !p.type.isFunctionContext)
+            .toList();
+        final inputType = switch (inputParameters) {
+          [] => refer('void'),
+          [final single] => single.type,
+          final multiple => RecordType(
+              (r) => r
+                // TODO(dnys1): Treat all parameters the same (named/optional)?
+                // This is only a Dart concept and we can handle the mapping to/from.
+                // i.e. it does not affect the actual HTTP API.
+                ..positionalFieldTypes.addAll([
+                  for (final parameter in multiple.where((p) => !p.named))
+                    parameter.type,
+                ])
+                ..namedFieldTypes.addAll({
+                  for (final parameter in multiple.where((p) => p.named))
+                    parameter.name: parameter.type,
+                }),
+            ),
+        };
+        final functionField = Field(
+          (f) => f
+            ..name = function.name.camelCase
             ..modifier = FieldModifier.final$
-            ..type = apisClassRef
-            ..assignment = apisClassRef.constInstance([]).code,
-        ),
-      );
-    }
-    return (environmentRef, environmentClass.build());
-  }
-
-  (Reference, Class) _generateApi(Api api, String environmentName) {
-    final apiClassName =
-        '\$_Celest$environmentName${api.name.pascalCase}ApiResource';
-    final (apiClassRef, apiClass) = _beginClass(apiClassName);
-    for (final function in api.functions.values) {
-      final inputParameters =
-          function.parameters.where((p) => !p.type.isFunctionContext).toList();
-      final inputType = switch (inputParameters) {
-        [] => refer('void'),
-        [final single] => single.type,
-        final multiple => RecordType(
-            (r) => r
-              // TODO(dnys1): Treat all parameters the same (named/optional)?
-              // This is only a Dart concept and we can handle the mapping to/from.
-              // i.e. it does not affect the actual HTTP API.
-              ..positionalFieldTypes.addAll([
-                for (final parameter in multiple.where((p) => !p.named))
-                  parameter.type,
-              ])
-              ..namedFieldTypes.addAll({
-                for (final parameter in multiple.where((p) => p.named))
-                  parameter.name: parameter.type,
-              }),
-          ),
-      };
-      final functionField = Field(
-        (f) => f
-          ..name = function.name.camelCase
-          ..modifier = FieldModifier.final$
-          ..assignment = DartTypes.celest
-              .cloudFunction(
-            inputType,
-            function.flattenedReturnType,
-          )
-              .constInstance([], {
-            'api': literalString(api.name, raw: true),
-            'functionName': literalString(function.name, raw: true),
-          }).code,
-      );
-      apiClass.fields.add(functionField);
+            ..assignment = DartTypes.celest
+                .cloudFunction(
+              inputType,
+              function.flattenedReturnType,
+            )
+                .constInstance([], {
+              'api': literalString(api.name, raw: true),
+              'functionName': literalString(function.name, raw: true),
+              if (environmentName.isNotEmpty)
+                'environmentName': literalString(environmentName, raw: true),
+            }).code,
+        );
+        if (environmentName.isEmpty) {
+          apiClass.fields.add(functionField);
+        } else {
+          environmentClass.fields.add(functionField);
+        }
+      }
     }
     return (apiClassRef, apiClass.build());
   }
@@ -117,19 +110,41 @@ final class ResourcesGenerator {
       ),
       lazySpec(celestClass.build),
     ]);
-    for (final environment in project.environments.values) {
-      final (environmentRef, environmentClass) =
-          _generateEnvironment(environment);
+    final allApis = <String, Map<String, Api>>{};
+    for (final environment in [
+      project.baseEnvironment,
+      ...project.environmentOverrides.values,
+    ]) {
+      for (final api in environment.apis.values) {
+        (allApis[api.name] ??= {})[environment.name ?? ''] = api;
+      }
+    }
+    if (allApis.isNotEmpty) {
+      final (apisClassRef, apisClass) = _beginClass(r'$_CelestApiResources');
+      _library.body.add(lazySpec(apisClass.build));
+      for (final MapEntry(key: apiName, value: environments)
+          in allApis.entries) {
+        final (apiClassRef, apiClass) = _generateApi(apiName, environments);
+        apisClass.fields.add(
+          Field(
+            (b) => b
+              ..name = apiName.camelCase
+              ..modifier = FieldModifier.final$
+              ..type = apiClassRef
+              ..assignment = apiClassRef.constInstance([]).code,
+          ),
+        );
+        _library.body.add(apiClass);
+      }
       celestClass.fields.add(
         Field(
           (b) => b
-            ..name = environment.name!.camelCase
+            ..name = 'apis'
             ..modifier = FieldModifier.final$
-            ..type = environmentRef
-            ..assignment = environmentRef.constInstance([]).code,
+            ..type = apisClassRef
+            ..assignment = apisClassRef.constInstance([]).code,
         ),
       );
-      _library.body.add(environmentClass);
     }
     return _library.build();
   }

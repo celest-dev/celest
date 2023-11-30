@@ -1,11 +1,9 @@
 /// A description of an e2e test.
 class Test {
   const Test({
-    this.environmentNames = const ['prod'],
     this.apis,
   });
 
-  final List<String> environmentNames;
   final Map<String, ApiTest>? apis;
 }
 
