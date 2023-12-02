@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
+import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/project/builder.dart';
@@ -19,6 +20,14 @@ final class StartCommand extends CelestCommand {
 
   @override
   String get name => 'start';
+
+  int _exitWithErrors(List<AnalysisException> errors) {
+    logger.err('Project has errors:');
+    for (final error in errors) {
+      logger.err(error.toString());
+    }
+    return 1;
+  }
 
   @override
   Future<int> run() async {
@@ -65,12 +74,16 @@ final class StartCommand extends CelestCommand {
     final analyzer = CelestAnalyzer.start(
       projectPaths: projectPaths,
     );
-    final (project, errors) = await analyzer.analyzeProject();
-    if (errors.isNotEmpty) {
-      logger
-        ..err('Project has errors:')
-        ..err(errors.join('\n'));
-      return 1;
+    // TODO: Improve exception handling. Allow returning multiple for project.
+    final ast.Project project;
+    try {
+      final analysisResult = await analyzer.analyzeProject();
+      if (analysisResult.errors case final errors when errors.isNotEmpty) {
+        return _exitWithErrors(errors);
+      }
+      project = analysisResult.project;
+    } on AnalysisException catch (e) {
+      return _exitWithErrors([e]);
     }
 
     final environment =

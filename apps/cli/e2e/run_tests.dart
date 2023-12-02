@@ -28,7 +28,14 @@ Future<void> main(List<String> args) async {
   final updateGoldens = argResults['update-goldens'] as bool;
 
   final testDir = p.dirname(p.fromUri(Platform.script));
-  final allTests = Directory(testDir).listSync().whereType<Directory>();
+  final allTests = Directory(testDir)
+      .listSync(recursive: true)
+      .whereType<Directory>()
+      .where((dir) {
+    if (!File(p.join(dir.path, 'pubspec.yaml')).existsSync()) return false;
+    if (argResults.rest.isEmpty) return true;
+    return argResults.rest.contains(p.basename(dir.path));
+  });
   for (final testDir in allTests) {
     final projectRoot = testDir.path;
     TestRunner(
@@ -93,30 +100,30 @@ class TestRunner {
 
   void _testAnalyzer() {
     test('analyzer', () async {
-      final (projectAst, errors) = await analyzer.analyzeProject();
+      final (:project, :errors) = await analyzer.analyzeProject();
       expect(errors, isEmpty);
 
       final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
       if (updateGoldens) {
         goldenAst.writeAsStringSync(
-          const JsonEncoder.withIndent('  ').convert(projectAst.toJson()),
+          const JsonEncoder.withIndent('  ').convert(project.toJson()),
         );
       } else {
-        final expected = jsonDecode(goldenAst.readAsStringSync());
-        expect(projectAst.toJson(), expected);
+        final expectedAst = jsonDecode(goldenAst.readAsStringSync());
+        expect(project.toJson(), expectedAst);
       }
     });
   }
 
   void _testCodegen() {
     test('codegen', () async {
-      final (projectAst, errors) = await analyzer.analyzeProject();
+      final (:project, :errors) = await analyzer.analyzeProject();
       expect(errors, isEmpty);
 
       final codegen = CodeGenerator(
         projectPaths: projectPaths,
       );
-      projectAst.accept(codegen);
+      project.accept(codegen);
       for (final MapEntry(key: path, value: content)
           in codegen.outputs.entries) {
         final goldenFile = File(path);
