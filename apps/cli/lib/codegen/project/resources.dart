@@ -1,5 +1,5 @@
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/ast/ast.dart' hide Parameter;
 import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
@@ -18,6 +18,11 @@ final class ResourcesGenerator {
   final _library = LibraryBuilder()
     ..name = ''
     ..comments.addAll(_header);
+
+  final _referencesByEnvironment = <String, List<Reference>>{};
+  void _saveReference(String environmentName, String ref) {
+    (_referencesByEnvironment[environmentName] ??= []).add(refer(ref));
+  }
 
   (Reference, ClassBuilder) _beginClass(String name) => (
         refer(name),
@@ -90,8 +95,30 @@ final class ResourcesGenerator {
         );
         if (environmentName.isEmpty) {
           apiClass.fields.add(functionField);
+          final overriddenEnvironments =
+              environments.keys.where((env) => env.isNotEmpty).toSet();
+          final baseEnvironments = {
+            ...project.environmentNames,
+          }.difference(overriddenEnvironments);
+          if (overriddenEnvironments.isEmpty) {
+            _saveReference(
+              '',
+              'apis.${apiName.camelCase}.${function.name.camelCase}',
+            );
+          } else {
+            for (final environment in baseEnvironments) {
+              _saveReference(
+                environment,
+                'apis.${apiName.camelCase}.${function.name.camelCase}',
+              );
+            }
+          }
         } else {
           environmentClass.fields.add(functionField);
+          _saveReference(
+            environmentName,
+            'apis.${apiName.camelCase}.${environmentName.camelCase}\$.${function.name.camelCase}',
+          );
         }
       }
     }
@@ -146,6 +173,53 @@ final class ResourcesGenerator {
         ),
       );
     }
+    celestClass.methods.add(
+      Method(
+        (m) => m
+          ..returns = DartTypes.core.list(DartTypes.celest.cloudWidget)
+          ..name = 'forEnvironment'
+          ..requiredParameters.add(
+            Parameter(
+              (p) => p
+                ..name = 'environment'
+                ..type = DartTypes.core.string,
+            ),
+          )
+          ..body = Block((b) {
+            b.addExpression(
+              declareFinal('base').assign(
+                literalList(
+                  [
+                    ...?_referencesByEnvironment[''],
+                  ],
+                  DartTypes.celest.cloudWidget,
+                ),
+              ),
+            );
+            for (final environmentName in project.environmentNames) {
+              final overrides = _referencesByEnvironment[environmentName];
+              b.statements.add(
+                (overrides == null
+                        ? refer('base')
+                        : literalList(
+                            [refer('base').spread, ...overrides],
+                            DartTypes.celest.cloudWidget,
+                          ))
+                    .returned
+                    .wrapWithBlockIf(
+                      refer('environment')
+                          .equalTo(literalString(environmentName)),
+                    ),
+              );
+            }
+            b.addExpression(
+              DartTypes.core.stateError.call([
+                literalString(r'Unknown environment: $environment'),
+              ]).thrown,
+            );
+          }),
+      ),
+    );
     return _library.build();
   }
 }

@@ -96,14 +96,17 @@ final class StartCommand extends CelestCommand {
     final codeGenerator = CodeGenerator(projectPaths: projectPaths);
     project.accept(codeGenerator);
     for (final MapEntry(key: path, value: contents)
-        in codeGenerator.outputs.entries) {
-      print('Writing $path');
-      print(contents);
+        in codeGenerator.fileOutputs.entries) {
+      assert(p.isAbsolute(path));
+      final file = File(path);
+      await file.create(recursive: true);
+      await file.writeAsString(contents);
     }
 
     final projectBuilder = ProjectBuilder(
       projectName: project.name,
       projectPaths: projectPaths,
+      environmentName: 'dev', // TODO
     );
     final _ = await projectBuilder.build();
 

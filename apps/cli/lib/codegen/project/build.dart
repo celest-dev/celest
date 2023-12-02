@@ -1,10 +1,17 @@
 import 'package:celest_cli/codegen/types.dart';
+import 'package:celest_cli/project/paths.dart';
 import 'package:code_builder/code_builder.dart';
 
 class ProjectBuildGenerator {
-  ProjectBuildGenerator(this.projectType);
+  ProjectBuildGenerator({
+    required this.projectType,
+    required this.projectPaths,
+  });
 
   final Reference projectType;
+  final ProjectPaths projectPaths;
+
+  late final _resourcesRef = refer('resources', projectPaths.resourcesDart);
 
   Method get _mainMethod => Method(
         (m) => m
@@ -22,30 +29,26 @@ class ProjectBuildGenerator {
                 ..type = DartTypes.isolate.sendPort,
             ),
           ])
-          ..body = Block((b) {
-            b
-              ..addExpression(
-                declareFinal('context').assign(
-                  DartTypes.celest.projectContext.newInstance([
-                    DartTypes.celest.buildEnvironment
-                        .newInstanceNamed('fromArgs', [refer('args')]),
-                  ]),
-                ),
-              )
-              ..statements.add(
-                const Code('// ignore: invalid_use_of_internal_member'),
-              )
-              ..addExpression(
-                declareFinal('resources').assign(
-                  refer('context').property('build').call([projectType]),
-                ),
-              )
-              ..addExpression(
-                refer('sendPort').property('send').call([
-                  refer('resources').property('writeToBuffer').call([]),
-                ]),
-              );
-          }),
+          ..body = Code.scope(
+            (alloc) => '''
+final context = ${alloc(DartTypes.celest.projectContext)}(
+  ${alloc(DartTypes.celest.buildEnvironment)}.fromArgs(args),
+);
+// ignore: invalid_use_of_internal_member
+final project = context.build(${alloc(projectType)});
+final widgets = ${alloc(DartTypes.celest.cloudWidgetSet)}()
+  ..addAll(project.widgets)
+  ..addAll(
+    ${alloc(_resourcesRef)}
+        .forEnvironment(context.environment)
+        .map((widget) => widget.toProto()),
+  );
+project.widgets
+  ..clear()
+  ..addAll(widgets);
+sendPort.send(project.writeToBuffer());
+''',
+          ),
       );
 
   Library generate() => Library((library) {

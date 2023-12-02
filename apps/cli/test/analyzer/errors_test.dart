@@ -115,6 +115,7 @@ void main() {
 void define() {}
 ''',
         errors: [
+          // TODO: Since functions don't need context, is it confusing to allow here?
           'The `define` method must have a single parameter of type ProjectContext',
         ],
       );

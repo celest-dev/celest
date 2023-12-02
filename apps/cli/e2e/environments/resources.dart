@@ -11,6 +11,29 @@ final class $_CelestResources {
   const $_CelestResources();
 
   final $_CelestApiResources apis = const $_CelestApiResources();
+
+  List<_i1.CloudWidget> forEnvironment(String environment) {
+    final base = <_i1.CloudWidget>[];
+    if (environment == 'prod') {
+      return <_i1.CloudWidget>[
+        ...base,
+        apis.override.sayHello,
+      ];
+    }
+    if (environment == 'staging') {
+      return <_i1.CloudWidget>[
+        ...base,
+        apis.override.staging$.sayHello,
+      ];
+    }
+    if (environment == 'dev') {
+      return <_i1.CloudWidget>[
+        ...base,
+        apis.override.dev$.sayHello,
+      ];
+    }
+    throw StateError('Unknown environment: $environment');
+  }
 }
 
 final class $_CelestApiResources {

@@ -41,17 +41,22 @@ final class CodeGenerator extends AstVisitor<void> {
   final ProjectPaths _projectPaths;
 
   /// A map of generated files to their contents.
-  final Map<String, String> outputs = {};
+  final Map<String, String> fileOutputs = {};
+  // TODO: final List<void Function(proto.Project)> widgetOutputs = [];
 
   @override
   void visitProject(Project project) {
     final projectBuildFile = _projectPaths.projectBuildDart;
-    final projectBuild = ProjectBuildGenerator(project.reference).generate();
-    outputs[projectBuildFile] = _emit(projectBuild, forFile: projectBuildFile);
+    final projectBuild = ProjectBuildGenerator(
+      projectPaths: _projectPaths,
+      projectType: project.reference,
+    ).generate();
+    fileOutputs[projectBuildFile] =
+        _emit(projectBuild, forFile: projectBuildFile);
 
     final resourcesFile = _projectPaths.resourcesDart;
     final resources = ResourcesGenerator(project: project).generate();
-    outputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
+    fileOutputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
 
     project.environments.values.forEach(visitEnvironment);
   }
@@ -76,7 +81,7 @@ final class CodeGenerator extends AstVisitor<void> {
       ).generate();
       final entrypointFile =
           environmentPaths.functionEntrypoint(api.name, function.name);
-      outputs[entrypointFile] = _emit(entrypoint, forFile: entrypointFile);
+      fileOutputs[entrypointFile] = _emit(entrypoint, forFile: entrypointFile);
     }
   }
 

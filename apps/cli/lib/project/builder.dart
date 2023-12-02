@@ -8,10 +8,12 @@ final class ProjectBuilder {
   ProjectBuilder({
     required this.projectName,
     required this.projectPaths,
+    required this.environmentName,
   });
 
   final String projectName;
   final ProjectPaths projectPaths;
+  final String environmentName;
 
   Future<proto.Project> build() async {
     final receivePort = ReceivePort();
@@ -22,7 +24,7 @@ final class ProjectBuilder {
         projectName,
         projectPaths.projectRoot,
         projectPaths.outputsDir,
-        'development',
+        environmentName,
       ],
       receivePort.sendPort,
       onError: errorPort.sendPort,

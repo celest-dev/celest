@@ -1815,6 +1815,65 @@
           }
         }
       },
+      "authenticated_function": {
+        "name": "authenticated_function",
+        "metadata": [],
+        "functions": {
+          "sayHelloAuthenticated": {
+            "name": "sayHelloAuthenticated",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [
+              {
+                "$": "ApiMetadataAuthenticated",
+                "location": {
+                  "path": "apis/authenticated_function.dart",
+                  "line": 3,
+                  "column": 0
+                }
+              }
+            ],
+            "location": {
+              "path": "apis/authenticated_function.dart",
+              "line": 4,
+              "column": 7
+            }
+          },
+          "sayHello": {
+            "name": "sayHello",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/authenticated_function.dart",
+              "line": 5,
+              "column": 7
+            }
+          }
+        }
+      },
       "return_types": {
         "name": "return_types",
         "metadata": [],
@@ -4418,6 +4477,65 @@
               "path": "apis/middleware.dart",
               "line": 9,
               "column": 15
+            }
+          }
+        }
+      },
+      "authenticated_api": {
+        "name": "authenticated_api",
+        "metadata": [
+          {
+            "$": "ApiMetadataAuthenticated",
+            "location": {
+              "path": "apis/authenticated_api.dart",
+              "line": 1,
+              "column": 0
+            }
+          }
+        ],
+        "functions": {
+          "sayHelloAuthenticated": {
+            "name": "sayHelloAuthenticated",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/authenticated_api.dart",
+              "line": 6,
+              "column": 7
+            }
+          },
+          "sayGoodbyeAuthenticated": {
+            "name": "sayGoodbyeAuthenticated",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/authenticated_api.dart",
+              "line": 7,
+              "column": 7
             }
           }
         }

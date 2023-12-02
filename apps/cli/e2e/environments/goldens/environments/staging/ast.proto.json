@@ -1,0 +1,13 @@
+{
+  "projectName": "environments",
+  "environmentName": "staging",
+  "widgets": [
+    {
+      "id": "Celest::CloudFunction-override.sayHello",
+      "cloudFunction": {
+        "api": "override",
+        "functionName": "sayHello"
+      }
+    }
+  ]
+}

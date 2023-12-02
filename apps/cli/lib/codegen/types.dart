@@ -417,6 +417,12 @@ class _Celest {
           ]),
       );
 
+  /// Creates a [celest.CloudWidget] reference.
+  Reference get cloudWidget => const Reference('CloudWidget', _url);
+
+  /// Creates a [celest.CloudWidgetSet] reference.
+  Reference get cloudWidgetSet => const Reference('CloudWidgetSet', _url);
+
   /// Creates a [celest.FunctionContext] reference.
   Reference get functionContext => const Reference('FunctionContext', _url);
 

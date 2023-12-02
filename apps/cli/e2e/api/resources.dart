@@ -13,6 +13,77 @@ final class $_CelestResources {
   const $_CelestResources();
 
   final $_CelestApiResources apis = const $_CelestApiResources();
+
+  List<_i1.CloudWidget> forEnvironment(String environment) {
+    final base = <_i1.CloudWidget>[
+      apis.parameterTypes.simple,
+      apis.parameterTypes.simpleOptional,
+      apis.parameterTypes.complex,
+      apis.authenticatedFunction.sayHelloAuthenticated,
+      apis.authenticatedFunction.sayHello,
+      apis.returnTypes.asyncVoidReturn,
+      apis.returnTypes.asyncStringReturn,
+      apis.returnTypes.asyncIntReturn,
+      apis.returnTypes.asyncDoubleReturn,
+      apis.returnTypes.asyncBoolReturn,
+      apis.returnTypes.asyncListReturn,
+      apis.returnTypes.asyncMapReturn,
+      apis.returnTypes.asyncIterableReturn,
+      apis.returnTypes.asyncStructReturn,
+      apis.returnTypes.asyncStructReturnNullable,
+      apis.returnTypes.asyncComplexReturn,
+      apis.returnTypes.asyncOrVoidReturn,
+      apis.returnTypes.asyncOrStringReturn,
+      apis.returnTypes.asyncOrIntReturn,
+      apis.returnTypes.asyncOrDoubleReturn,
+      apis.returnTypes.asyncOrBoolReturn,
+      apis.returnTypes.asyncOrListReturn,
+      apis.returnTypes.asyncOrMapReturn,
+      apis.returnTypes.asyncOrIterableReturn,
+      apis.returnTypes.asyncOrStructReturn,
+      apis.returnTypes.asyncOrComplexReturn,
+      apis.returnTypes.asyncOrVoidReturnNullable,
+      apis.returnTypes.asyncOrStringReturnNullable,
+      apis.returnTypes.asyncOrIntReturnNullable,
+      apis.returnTypes.asyncOrDoubleReturnNullable,
+      apis.returnTypes.asyncOrBoolReturnNullable,
+      apis.returnTypes.asyncOrListReturnNullable,
+      apis.returnTypes.asyncOrMapReturnNullable,
+      apis.returnTypes.asyncOrIterableReturnNullable,
+      apis.returnTypes.asyncOrStructReturnNullable,
+      apis.returnTypes.asyncOrComplexReturnNullable,
+      apis.returnTypes.voidReturn,
+      apis.returnTypes.stringReturn,
+      apis.returnTypes.intReturn,
+      apis.returnTypes.doubleReturn,
+      apis.returnTypes.boolReturn,
+      apis.returnTypes.listReturn,
+      apis.returnTypes.mapReturn,
+      apis.returnTypes.iterableReturn,
+      apis.returnTypes.structReturn,
+      apis.returnTypes.complexReturn,
+      apis.returnTypes.stringReturnNullable,
+      apis.returnTypes.intReturnNullable,
+      apis.returnTypes.doubleReturnNullable,
+      apis.returnTypes.boolReturnNullable,
+      apis.returnTypes.listReturnNullable,
+      apis.returnTypes.mapReturnNullable,
+      apis.returnTypes.iterableReturnNullable,
+      apis.returnTypes.structReturnNullable,
+      apis.returnTypes.complexReturnNullable,
+      apis.middleware.sayHello,
+      apis.authenticatedApi.sayHelloAuthenticated,
+      apis.authenticatedApi.sayGoodbyeAuthenticated,
+      apis.parameters.optionalPositional,
+      apis.parameters.optionalNamed,
+      apis.parameters.requiredPositional,
+      apis.parameters.requiredNamed,
+    ];
+    if (environment == 'prod') {
+      return base;
+    }
+    throw StateError('Unknown environment: $environment');
+  }
 }
 
 final class $_CelestApiResources {
@@ -21,11 +92,17 @@ final class $_CelestApiResources {
   final $_CelestParameterTypesApiResource parameterTypes =
       const $_CelestParameterTypesApiResource();
 
+  final $_CelestAuthenticatedFunctionApiResource authenticatedFunction =
+      const $_CelestAuthenticatedFunctionApiResource();
+
   final $_CelestReturnTypesApiResource returnTypes =
       const $_CelestReturnTypesApiResource();
 
   final $_CelestMiddlewareApiResource middleware =
       const $_CelestMiddlewareApiResource();
+
+  final $_CelestAuthenticatedApiApiResource authenticatedApi =
+      const $_CelestAuthenticatedApiApiResource();
 
   final $_CelestParametersApiResource parameters =
       const $_CelestParametersApiResource();
@@ -128,6 +205,20 @@ final class $_CelestParameterTypesApiResource {
       void>(
     api: r'parameter_types',
     functionName: r'complex',
+  );
+}
+
+final class $_CelestAuthenticatedFunctionApiResource {
+  const $_CelestAuthenticatedFunctionApiResource();
+
+  final sayHelloAuthenticated = const _i1.CloudFunction<void, String>(
+    api: r'authenticated_function',
+    functionName: r'sayHelloAuthenticated',
+  );
+
+  final sayHello = const _i1.CloudFunction<void, String>(
+    api: r'authenticated_function',
+    functionName: r'sayHello',
   );
 }
 
@@ -399,6 +490,20 @@ final class $_CelestMiddlewareApiResource {
   final sayHello = const _i1.CloudFunction<String, String>(
     api: r'middleware',
     functionName: r'sayHello',
+  );
+}
+
+final class $_CelestAuthenticatedApiApiResource {
+  const $_CelestAuthenticatedApiApiResource();
+
+  final sayHelloAuthenticated = const _i1.CloudFunction<void, String>(
+    api: r'authenticated_api',
+    functionName: r'sayHelloAuthenticated',
+  );
+
+  final sayGoodbyeAuthenticated = const _i1.CloudFunction<void, String>(
+    api: r'authenticated_api',
+    functionName: r'sayGoodbyeAuthenticated',
   );
 }
 

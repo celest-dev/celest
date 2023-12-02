@@ -8,7 +8,6 @@ import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/project/builder.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/src/utils/cli.dart';
-import 'package:celest_rpc/protos.dart' as proto;
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -125,7 +124,7 @@ class TestRunner {
       );
       project.accept(codegen);
       for (final MapEntry(key: path, value: content)
-          in codegen.outputs.entries) {
+          in codegen.fileOutputs.entries) {
         final goldenFile = File(path);
         if (updateGoldens) {
           goldenFile
@@ -141,13 +140,35 @@ class TestRunner {
 
   void _testBuild() {
     test('build', () async {
-      final projectBuilder = ProjectBuilder(
-        projectName: testName,
-        projectPaths: projectPaths,
-      );
-      final project = await projectBuilder.build();
-      expect(project, isA<proto.Project>());
-      print(project.toProto3Json());
+      final (:project, :errors) = await analyzer.analyzeProject();
+      expect(errors, isEmpty);
+
+      for (final environmentName in project.environmentNames) {
+        final projectBuilder = ProjectBuilder(
+          projectName: testName,
+          projectPaths: projectPaths,
+          environmentName: environmentName,
+        );
+        final cloudAst = await projectBuilder.build();
+        final cloudAstFile = File(
+          p.join(
+            projectPaths.environment(environmentName).outputsDir,
+            'ast.proto.json',
+          ),
+        );
+        if (updateGoldens) {
+          cloudAstFile
+            ..createSync(recursive: true)
+            ..writeAsStringSync(
+              const JsonEncoder.withIndent('  ').convert(
+                cloudAst.toProto3Json(),
+              ),
+            );
+        } else {
+          final expectedAst = jsonDecode(cloudAstFile.readAsStringSync());
+          expect(cloudAst.toProto3Json(), expectedAst);
+        }
+      }
     });
   }
 
