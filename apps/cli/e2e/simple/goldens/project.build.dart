@@ -3,8 +3,7 @@ import 'dart:isolate' as _i1;
 
 import 'package:celest/celest.dart' as _i2;
 
-import '../project.dart' as _i3;
-import '../resources.dart' as _i4;
+import '../resources.dart' as _i3;
 
 void main(
   List<String> args,
@@ -13,13 +12,12 @@ void main(
   final context = _i2.ProjectContext(
     _i2.BuildEnvironment.fromArgs(args),
   );
+  final widgets = _i2.CloudWidgetSet();
 // ignore: invalid_use_of_internal_member
-  final project = context.build(_i3.define);
-  final widgets = _i2.CloudWidgetSet()
-    ..addAll(project.widgets)
-    ..addAll(
-      _i4.forEnvironment(context.environment).map((widget) => widget.toProto()),
-    );
+  final project = context.build((context) {
+    widgets.addAll(_i3.all.map((widget) => widget.toProto()));
+  });
+  widgets.addAll(project.widgets);
   project.widgets
     ..clear()
     ..addAll(widgets);

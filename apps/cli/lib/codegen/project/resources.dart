@@ -1,4 +1,5 @@
 import 'package:aws_common/aws_common.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/ast/ast.dart' hide Parameter;
 import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -19,10 +20,7 @@ final class ResourcesGenerator {
     ..name = ''
     ..comments.addAll(_header);
 
-  final _referencesByEnvironment = <String, Set<String>>{};
-  void _saveReference(String environmentName, String ref) {
-    (_referencesByEnvironment[environmentName] ??= {}).add(ref);
-  }
+  final _allResources = <String>{};
 
   final _classBuilders = <String, ClassBuilder>{};
   ClassBuilder _beginClass(String name) {
@@ -39,175 +37,88 @@ final class ResourcesGenerator {
   }
 
   void _generateApi(
-    String apiName,
-    Map<String, Api> environments, {
-    required ClassBuilder apisClass,
-    required ClassBuilder functionsClass,
+    Api api, {
+    required MapBuilder<String, Field> apis,
+    required MapBuilder<String, Field> functions,
   }) {
-    for (final MapEntry(key: environmentName, value: api)
-        in environments.entries) {
-      final apiClass = switch (environmentName) {
-        '' => apisClass,
-        _ => _beginClass('${environmentName.camelCase}Apis'),
-      };
-      final functionClass = switch (environmentName) {
-        '' => functionsClass,
-        _ => _beginClass('${environmentName.camelCase}Functions'),
-      };
-      apiClass.fields.add(
-        Field(
-          (f) => f
-            ..static = true
-            ..modifier = FieldModifier.constant
-            ..name = api.name.camelCase
-            ..assignment = DartTypes.celest.cloudApi.constInstance([], {
-              'name': literalString(api.name, raw: true),
-              if (environmentName != '')
-                'environmentName': literalString(environmentName, raw: true),
-            }).code,
-        ),
-      );
-      for (final function in api.functions.values) {
-        final inputParameters = function.parameters
-            .where((p) => !p.type.isFunctionContext)
-            .toList();
-        final inputType = switch (inputParameters) {
-          [] => refer('void'),
-          [final single] => single.type,
-          final multiple => RecordType(
-              (r) => r
-                // TODO(dnys1): Treat all parameters the same (named/optional)?
-                // This is only a Dart concept and we can handle the mapping to/from.
-                // i.e. it does not affect the actual HTTP API.
-                ..positionalFieldTypes.addAll([
-                  for (final parameter in multiple.where((p) => !p.named))
-                    parameter.type,
-                ])
-                ..namedFieldTypes.addAll({
-                  for (final parameter in multiple.where((p) => p.named))
-                    parameter.name: parameter.type,
-                }),
-            ),
-        };
-        final functionName = '${apiName}_${function.name}'.camelCase;
-        functionClass.fields.add(
-          Field(
-            (f) => f
-              ..static = true
-              ..name = functionName
-              ..modifier = FieldModifier.constant
-              ..assignment = DartTypes.celest
-                  .cloudFunction(
-                inputType,
-                function.flattenedReturnType,
-              )
-                  .constInstance([], {
-                'api': literalString(api.name, raw: true),
-                'functionName': literalString(function.name, raw: true),
-                if (environmentName.isNotEmpty)
-                  'environmentName': literalString(environmentName, raw: true),
-              }).code,
+    final apiFieldName = api.name.camelCase;
+    apis[apiFieldName] ??= Field(
+      (f) => f
+        ..static = true
+        ..modifier = FieldModifier.constant
+        ..name = api.name.camelCase
+        ..assignment = DartTypes.celest.cloudApi.constInstance([], {
+          'name': literalString(api.name, raw: true),
+        }).code,
+    );
+    for (final function in api.functions.values) {
+      final inputParameters =
+          function.parameters.where((p) => !p.type.isFunctionContext).toList();
+      final inputType = switch (inputParameters) {
+        [] => refer('void'),
+        [final single] => single.type,
+        final multiple => RecordType(
+            (r) => r
+              // TODO(dnys1): Treat all parameters the same (named/optional)?
+              // This is only a Dart concept and we can handle the mapping to/from.
+              // i.e. it does not affect the actual HTTP API.
+              ..positionalFieldTypes.addAll([
+                for (final parameter in multiple.where((p) => !p.named))
+                  parameter.type,
+              ])
+              ..namedFieldTypes.addAll({
+                for (final parameter in multiple.where((p) => p.named))
+                  parameter.name: parameter.type,
+              }),
           ),
-        );
-        if (environmentName.isEmpty) {
-          final overriddenEnvironments =
-              environments.keys.where((env) => env.isNotEmpty).toSet();
-          final baseEnvironments = {
-            ...project.environmentNames,
-          }.difference(overriddenEnvironments);
-          final apiRef = 'apis.${apiName.camelCase}';
-          final functionRef = 'functions.$functionName';
-          if (overriddenEnvironments.isEmpty) {
-            _saveReference('', apiRef);
-            _saveReference('', functionRef);
-          } else {
-            for (final environment in baseEnvironments) {
-              _saveReference(environment, apiRef);
-              _saveReference(environment, functionRef);
-            }
-          }
-        } else {
-          _saveReference(
-            environmentName,
-            '${environmentName.camelCase}Apis.${apiName.camelCase}',
-          );
-          _saveReference(
-            environmentName,
-            '${environmentName.camelCase}Functions.$functionName',
-          );
-        }
-      }
+      };
+      final functionFieldName = '${api.name}_${function.name}'.camelCase;
+      functions[functionFieldName] ??= Field(
+        (f) => f
+          ..static = true
+          ..name = functionFieldName
+          ..modifier = FieldModifier.constant
+          ..assignment = DartTypes.celest
+              .cloudFunction(
+            inputType,
+            function.flattenedReturnType,
+          )
+              .constInstance([], {
+            'api': literalString(api.name, raw: true),
+            'functionName': literalString(function.name, raw: true),
+          }).code,
+      );
+      _allResources.addAll([
+        'apis.$apiFieldName',
+        'functions.$functionFieldName',
+      ]);
     }
   }
 
   Library generate() {
-    final allApis = <String, Map<String, Api>>{};
-    for (final environment in [
-      project.baseEnvironment,
-      ...project.environmentOverrides.values,
-    ]) {
-      for (final api in environment.apis.values) {
-        (allApis[api.name] ??= {})[environment.name ?? ''] = api;
-      }
-    }
+    final allApis = project.environments.values
+        .expand((environment) => environment.apis.values);
     if (allApis.isNotEmpty) {
-      final apisClass = _beginClass('apis');
-      final functionsClass = _beginClass('functions');
-      for (final MapEntry(key: apiName, value: environments)
-          in allApis.entries) {
+      final apis = MapBuilder<String, Field>();
+      final functions = MapBuilder<String, Field>();
+      for (final api in allApis) {
         _generateApi(
-          apiName,
-          environments,
-          apisClass: apisClass,
-          functionsClass: functionsClass,
+          api,
+          apis: apis,
+          functions: functions,
         );
       }
+      _beginClass('apis').fields.addAll(apis.build().values);
+      _beginClass('functions').fields.addAll(functions.build().values);
     }
     _library.body.add(
-      Method(
-        (m) => m
-          ..returns = DartTypes.core.list(DartTypes.celest.cloudWidget)
-          ..name = 'forEnvironment'
-          ..requiredParameters.add(
-            Parameter(
-              (p) => p
-                ..name = 'environment'
-                ..type = DartTypes.core.string,
-            ),
-          )
-          ..body = Block((b) {
-            b.addExpression(
-              declareConst('base').assign(
-                literalConstList(
-                  [
-                    ...?_referencesByEnvironment['']?.map(refer),
-                  ],
-                  DartTypes.celest.cloudWidget,
-                ),
-              ),
-            );
-            for (final environmentName in project.environmentNames) {
-              final overrides = _referencesByEnvironment[environmentName];
-              b.statements.add(
-                (overrides == null
-                        ? refer('base')
-                        : literalConstList(
-                            [refer('base').spread, ...overrides.map(refer)],
-                            DartTypes.celest.cloudWidget,
-                          ))
-                    .returned
-                    .wrapWithBlockIf(
-                      refer('environment')
-                          .equalTo(literalString(environmentName)),
-                    ),
-              );
-            }
-            b.addExpression(
-              DartTypes.core.stateError.call([
-                literalString(r'Unknown environment: $environment'),
-              ]).thrown,
-            );
-          }),
+      Field(
+        (f) => f
+          ..type = DartTypes.core.list(DartTypes.celest.cloudWidget)
+          ..name = 'all'
+          ..assignment = literalConstList(
+            _allResources.map(refer).toList(),
+          ).code,
       ),
     );
     return _library.build();

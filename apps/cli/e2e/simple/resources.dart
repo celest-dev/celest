@@ -5,10 +5,4 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/celest.dart' as _i1;
 
-List<_i1.CloudWidget> forEnvironment(String environment) {
-  const base = <_i1.CloudWidget>[];
-  if (environment == 'prod') {
-    return base;
-  }
-  throw StateError('Unknown environment: $environment');
-}
+List<_i1.CloudWidget> all = const [];

@@ -16,58 +16,7 @@ abstract final class functions {
   );
 }
 
-abstract final class devApis {
-  static const override = _i1.CloudApi(
-    name: r'override',
-    environmentName: r'dev',
-  );
-}
-
-abstract final class devFunctions {
-  static const overrideSayHello = _i1.CloudFunction<void, String>(
-    api: r'override',
-    functionName: r'sayHello',
-    environmentName: r'dev',
-  );
-}
-
-abstract final class stagingApis {
-  static const override = _i1.CloudApi(
-    name: r'override',
-    environmentName: r'staging',
-  );
-}
-
-abstract final class stagingFunctions {
-  static const overrideSayHello = _i1.CloudFunction<void, String>(
-    api: r'override',
-    functionName: r'sayHello',
-    environmentName: r'staging',
-  );
-}
-
-List<_i1.CloudWidget> forEnvironment(String environment) {
-  const base = <_i1.CloudWidget>[];
-  if (environment == 'prod') {
-    return const <_i1.CloudWidget>[
-      ...base,
-      apis.override,
-      functions.overrideSayHello,
-    ];
-  }
-  if (environment == 'staging') {
-    return const <_i1.CloudWidget>[
-      ...base,
-      stagingApis.override,
-      stagingFunctions.overrideSayHello,
-    ];
-  }
-  if (environment == 'dev') {
-    return const <_i1.CloudWidget>[
-      ...base,
-      devApis.override,
-      devFunctions.overrideSayHello,
-    ];
-  }
-  throw StateError('Unknown environment: $environment');
-}
+List<_i1.CloudWidget> all = const [
+  apis.override,
+  functions.overrideSayHello,
+];
