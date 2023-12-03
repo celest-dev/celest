@@ -1,4 +1,6 @@
 {
-  "projectName": "simple",
-  "environmentName": "prod"
+  "name": "simple",
+  "environments": [
+    "prod"
+  ]
 }

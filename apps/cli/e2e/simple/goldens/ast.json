@@ -1,7 +1,7 @@
 {
   "name": "simple",
   "reference": {
-    "symbol": "define",
+    "symbol": "project",
     "url": "project.dart"
   },
   "location": {

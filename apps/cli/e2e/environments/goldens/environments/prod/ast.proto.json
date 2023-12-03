@@ -1,15 +1,21 @@
 {
-  "projectName": "environments",
-  "environmentName": "prod",
+  "name": "environments",
+  "environments": [
+    "prod",
+    "staging",
+    "dev"
+  ],
   "widgets": [
     {
-      "id": "Celest::CloudApi-override-1175938290",
+      "type": "Celest::\"CloudApi\"",
+      "id": "override.prod",
       "cloudApi": {
         "name": "override"
       }
     },
     {
-      "id": "Celest::CloudFunction-override.sayHello-1748297383",
+      "type": "Celest::\"CloudFunction\"",
+      "id": "override.sayHello.prod",
       "cloudFunction": {
         "name": "sayHello",
         "apiName": "override"
