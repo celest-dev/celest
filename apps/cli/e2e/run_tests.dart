@@ -61,7 +61,7 @@ class TestRunner {
     outputsDir: goldensDir.path,
   );
   late Client client;
-  late final analyzer = CelestAnalyzer.start(
+  late final analyzer = CelestAnalyzer(
     projectPaths: projectPaths,
   );
   var port = 8080;
@@ -100,16 +100,17 @@ class TestRunner {
   void _testAnalyzer() {
     test('analyzer', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
+      expect(project, isNotNull);
       expect(errors, isEmpty);
 
       final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
       if (updateGoldens) {
         goldenAst.writeAsStringSync(
-          const JsonEncoder.withIndent('  ').convert(project.toJson()),
+          const JsonEncoder.withIndent('  ').convert(project!.toJson()),
         );
       } else {
         final expectedAst = jsonDecode(goldenAst.readAsStringSync());
-        expect(project.toJson(), expectedAst);
+        expect(project!.toJson(), expectedAst);
       }
     });
   }
@@ -117,12 +118,13 @@ class TestRunner {
   void _testCodegen() {
     test('codegen', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
+      expect(project, isNotNull);
       expect(errors, isEmpty);
 
       final codegen = CodeGenerator(
         projectPaths: projectPaths,
       );
-      project.accept(codegen);
+      project!.accept(codegen);
       for (final MapEntry(key: path, value: content)
           in codegen.fileOutputs.entries) {
         final goldenFile = File(path);
@@ -141,9 +143,10 @@ class TestRunner {
   void _testBuild() {
     test('build', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
+      expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      for (final environmentName in project.environmentNames) {
+      for (final environmentName in project!.environmentNames) {
         final projectBuilder = ProjectBuilder(
           project: project,
           projectPaths: projectPaths,
@@ -226,7 +229,14 @@ class TestRunner {
           ..captureStdout(sink: logs.add)
           ..captureStderr()
           ..captureStderr(sink: logs.add);
-        await Future<void>.delayed(const Duration(seconds: 5));
+        // Wait for failure or first "Listening on" message.
+        await Future.any([
+          ProcessUtil(functionProc).stdout.first,
+          ProcessUtil(functionProc)
+              .stderr
+              .first
+              .then((e) => fail('Failed to start function: $e')),
+        ]);
       });
 
       tearDown(logs.clear);

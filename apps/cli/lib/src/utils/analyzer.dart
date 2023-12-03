@@ -24,6 +24,12 @@ extension DartTypeHelper on DartType {
     }
   }
 
+  bool get isProject => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'Project' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isProjectContext => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'ProjectContext' && library.isPackageCelest,

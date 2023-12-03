@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
-import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/project/builder.dart';
@@ -71,19 +70,12 @@ final class StartCommand extends CelestCommand {
 
     final projectPaths = ProjectPaths(celestDir.path);
 
-    final analyzer = CelestAnalyzer.start(
+    final analyzer = CelestAnalyzer(
       projectPaths: projectPaths,
     );
-    // TODO: Improve exception handling. Allow returning multiple for project.
-    final ast.Project project;
-    try {
-      final analysisResult = await analyzer.analyzeProject();
-      if (analysisResult.errors case final errors when errors.isNotEmpty) {
-        return _exitWithErrors(errors);
-      }
-      project = analysisResult.project;
-    } on AnalysisException catch (e) {
-      return _exitWithErrors([e]);
+    final (:project, :errors) = await analyzer.analyzeProject();
+    if (project == null) {
+      return _exitWithErrors(errors);
     }
 
     final environment =

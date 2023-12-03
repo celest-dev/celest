@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:package_config/package_config.dart';
@@ -8,19 +7,18 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
-const _simpleProjectDart = '''
+String _simpleProjectDart(String name) => '''
 import 'package:celest/celest.dart';
-import 'package:celest/project.dart' as project;
 
-@project.environments(named: ['prod'])
-void define(ProjectContext context) {}
+const project = Project(name: '$name');
 ''';
 
 Future<ProjectPaths> newProject({
   required String name,
-  String projectDart = _simpleProjectDart,
+  String? projectDart,
   Map<String, String> apis = const {},
 }) async {
+  projectDart ??= _simpleProjectDart(name);
   final celestDir = p.fromUri(
     Directory.current.uri.resolve('../../packages/celest/'),
   );
@@ -61,7 +59,7 @@ dependencies:
 
 void testNoErrors({
   required String name,
-  String projectDart = _simpleProjectDart,
+  String? projectDart,
   Map<String, String> apis = const {},
 }) {
   testErrors(
@@ -74,7 +72,7 @@ void testNoErrors({
 
 void testErrors({
   required String name,
-  String projectDart = _simpleProjectDart,
+  String? projectDart,
   Map<String, String> apis = const {},
   required List<String> errors,
 }) {
@@ -84,18 +82,13 @@ void testErrors({
       projectDart: projectDart,
       apis: apis,
     );
-    final analyzer = CelestAnalyzer.start(projectPaths: projectPaths);
-    final analysisResult = await Result.capture(analyzer.analyzeProject());
-    final actual = switch (analysisResult) {
-      ValueResult(:final value) => value.errors,
-      ErrorResult(:final error) => [error as AnalysisException],
-      _ => fail('Unexpected result: $analysisResult'),
-    };
+    final analyzer = CelestAnalyzer(projectPaths: projectPaths);
+    final (project: _, errors: actual) = await analyzer.analyzeProject();
     expect(actual, hasLength(errors.length));
     if (errors.isNotEmpty) {
       expect(
         actual.map((e) => e.message),
-        containsAll(errors.map(contains)),
+        unorderedEquals(errors.map(contains)),
       );
     }
   });
@@ -106,29 +99,26 @@ void main() {
     group('project.dart', () {
       testNoErrors(
         name: 'simple_project',
-        projectDart: _simpleProjectDart,
+        projectDart: _simpleProjectDart('simple_project'),
       );
 
       testErrors(
-        name: 'no_project_context',
-        projectDart: '''
-void define() {}
-''',
+        name: 'no_project',
+        projectDart: '',
         errors: [
-          // TODO: Since functions don't need context, is it confusing to allow here?
-          'The `define` method must have a single parameter of type ProjectContext',
+          'No `Project` type found',
         ],
       );
 
       testErrors(
-        name: 'multiple_project_parameters',
+        name: 'empty_project_name',
         projectDart: '''
 import 'package:celest/celest.dart';
 
-void define(ProjectContext context, String random) {}
+const project = Project(name: '');
 ''',
         errors: [
-          'The `define` method must have a single parameter of type ProjectContext',
+          'The project name cannot be empty.',
         ],
       );
 
@@ -137,12 +127,51 @@ void define(ProjectContext context, String random) {}
         projectDart: '''
 import 'package:celest/celest.dart';
 
-void define(ProjectContext context) {}
+const project = Project(name: 'my_project', environments: []);
 ''',
         errors: [
           'No environments have been defined for this project.',
         ],
       );
+
+      testErrors(
+        name: 'invalid_environment',
+        projectDart: '''
+import 'package:celest/celest.dart';
+
+const project = Project(name: 'my_project', environments: ['']);
+''',
+        errors: [
+          'Environment names cannot be empty.',
+        ],
+      );
+
+      testErrors(
+        name: 'duplicate_environment',
+        projectDart: '''
+import 'package:celest/celest.dart';
+
+const project = Project(name: 'my_project', environments: ['prod', 'prod']);
+''',
+        errors: [
+          'Duplicate environment name: "prod"',
+        ],
+      );
+
+      testErrors(
+        name: 'no_environments_and_bad_name',
+        projectDart: '''
+import 'package:celest/celest.dart';
+
+const project = Project(name: '', environments: []);
+''',
+        errors: [
+          'The project name cannot be empty.',
+          'No environments have been defined for this project.',
+        ],
+      );
+
+      // TODO: Test multiple errors
     });
 
     group('apis', () {

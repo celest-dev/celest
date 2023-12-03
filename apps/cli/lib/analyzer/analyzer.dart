@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
@@ -19,12 +20,11 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
-import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class CelestAnalyzer {
-  CelestAnalyzer._(this.projectPaths, this._context);
+  CelestAnalyzer._(this._projectPaths, this._context);
 
-  static CelestAnalyzer start({
+  factory CelestAnalyzer({
     required ProjectPaths projectPaths,
   }) {
     final contextCollection = AnalysisContextCollection(
@@ -34,12 +34,12 @@ final class CelestAnalyzer {
     return CelestAnalyzer._(projectPaths, context);
   }
 
-  final ProjectPaths projectPaths;
+  final ProjectPaths _projectPaths;
   final AnalysisContext _context;
-  final List<AnalysisException> errors = [];
+  final List<AnalysisException> _errors = [];
 
   void _reportError(String error, SourceLocation location) {
-    errors.add(
+    _errors.add(
       AnalysisException(
         message: error,
         location: location,
@@ -47,117 +47,173 @@ final class CelestAnalyzer {
     );
   }
 
-  Future<({ast.Project project, List<AnalysisException> errors})>
+  Future<({ast.Project? project, List<AnalysisException> errors})>
       analyzeProject() async {
     var project = await _findProject();
+    if (project == null) {
+      return (project: null, errors: _errors);
+    }
     project = await _collectApis(project);
-    return (project: project.build(), errors: errors);
+    return (project: project.build(), errors: _errors);
   }
 
-  Future<ast.ProjectBuilder> _findProject() async {
-    final projectYamlFile = File(projectPaths.projectYaml).readAsStringSync();
-    final projectPubspec = Pubspec.parse(projectYamlFile);
-
-    final projectFilePath = projectPaths.projectDart;
+  Future<ast.ProjectBuilder?> _findProject() async {
+    final projectFilePath = _projectPaths.projectDart;
     final projectFileRelativePath =
-        projectPaths.relativeToRoot(projectFilePath);
+        _projectPaths.relativeToRoot(projectFilePath);
     if (!File(projectFilePath).existsSync()) {
-      throw AnalysisException(
-        message:
-            'No project file found at ${projectPaths.relativeToRoot(projectFilePath)}',
-        location: SourceLocation(
+      _reportError(
+        'No project file found at ${_projectPaths.relativeToRoot(projectFilePath)}',
+        SourceLocation(
           path: projectFileRelativePath,
           line: 0,
           column: 0,
         ),
       );
+      return null;
     }
     final projectFile =
         await _context.currentSession.getResolvedUnit(projectFilePath);
-    final resolvedProjectFile = switch (projectFile) {
-      ResolvedUnitResult _ => projectFile,
-      _ => throw AnalysisException(
-          message: 'Could not resolve project file',
-          location: SourceLocation(
-            path: projectFileRelativePath,
-            line: 0,
-            column: 0,
-          ),
-        ),
-    };
-    if (projectFile.errors.isNotEmpty) {
-      throw AnalysisException(
-        message: 'Project file has errors:\n${projectFile.errors.join('\n')}',
-        location: SourceLocation(
+    if (projectFile is! ResolvedUnitResult) {
+      _reportError(
+        'Could not resolve project file',
+        SourceLocation(
           path: projectFileRelativePath,
           line: 0,
           column: 0,
         ),
       );
+      return null;
     }
-    final topLevelFunctions =
-        resolvedProjectFile.unit.declaredElement!.functions;
-    final projectDefine = topLevelFunctions.firstWhere((el) {
-      return el.name == 'define';
-    });
-
-    // Validate `define` method
-    final projectDefineLocation =
-        projectDefine.sourceLocation(projectPaths.projectRoot);
-    switch (projectDefine.parameters) {
-      case [final single] when single.type.isProjectContext:
-        break;
-      default:
-        throw AnalysisException(
-          message:
-              'The `define` method must have a single parameter of type ProjectContext',
-          location: projectDefineLocation,
+    // TODO: Some errors are okay, for example if `resources.dart` hasn't
+    // been updated yet and references a resource that doesn't exist yet.
+    // if (projectFile.errors.isNotEmpty) {
+    //   _reportError(
+    //     'Project file has errors:\n${projectFile.errors.join('\n')}',
+    //     SourceLocation(
+    //       path: projectFileRelativePath,
+    //       line: 0,
+    //       column: 0,
+    //     ),
+    //   );
+    // }
+    final topLevelVariables = projectFile
+        .unit.declaredElement!.topLevelVariables
+        .where((variable) => !variable.isPrivate);
+    var hasConstantEvalErrors = false;
+    final topLevelConstants =
+        <({TopLevelVariableElement element, DartObject value})>[];
+    for (final topLevelVariable in topLevelVariables) {
+      if (!topLevelVariable.isConst) {
+        _reportError(
+          'All top-level variables must be `const`',
+          topLevelVariable.sourceLocation(_projectPaths.projectRoot),
         );
+        hasConstantEvalErrors = true;
+        continue;
+      }
+      switch (topLevelVariable.computeConstantValue()) {
+        case final DartObject constantValue:
+          topLevelConstants.add(
+            (element: topLevelVariable, value: constantValue),
+          );
+        default:
+          _reportError(
+            'Top-level constant could not be evaluated',
+            topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+          );
+          hasConstantEvalErrors = true;
+      }
+    }
+    if (hasConstantEvalErrors) {
+      return null;
+    }
+    final projectDefinition =
+        topLevelConstants.firstWhereOrNull((el) => el.element.type.isProject);
+    if (projectDefinition == null) {
+      _reportError(
+        'No `Project` type found',
+        SourceLocation(
+          path: projectFileRelativePath,
+          line: 0,
+          column: 0,
+        ),
+      );
+      return null;
+    }
+    final (
+      element: projectDefinitionElement,
+      value: projectDefinitionValue,
+    ) = projectDefinition;
+
+    // Validate `project` variable
+    final projectDefineLocation =
+        projectDefinitionElement.sourceLocation(_projectPaths.projectRoot);
+    final projectName =
+        projectDefinitionValue.getField('name')?.toStringValue();
+    assert(
+      projectName != null,
+      'This should be impossible given that `name` is a required field on `Project`',
+    );
+    if (projectName!.isEmpty) {
+      _reportError(
+        'The project name cannot be empty.',
+        projectDefineLocation,
+      );
     }
 
     // Collect environments
-    final environmentsAnnotation =
-        projectDefine.metadata.firstWhereOrNull((annotation) {
-      return switch (annotation.element) {
-        ConstructorElement(
-          enclosingElement: ClassElement(:final name, :final library),
-        ) =>
-          name == 'environments' && library.isPackageCelest,
-        // TODO: Handle constant variable
-        _ => false,
-      };
-    });
-    // TODO: Handle constant evaluation errors
-    if (environmentsAnnotation == null) {
-      // TODO: What to do with no environments?
-      throw AnalysisException(
-        message: 'No environments have been defined for this project.',
-        location: projectDefineLocation,
-      );
-    }
-    final environmentNames = environmentsAnnotation
-        .computeConstantValue()
-        ?.getField('named')
+    final environmentsValue = projectDefinitionValue
+        .getField('environments')
         ?.toListValue()
-        ?.map((value) => value.toStringValue())
-        .nonNulls
+        ?.map((env) => env.toStringValue())
         .toList();
-    if (environmentNames == null) {
-      throw AnalysisException(
-        message:
-            'The `environments` annotation must have a `named` parameter of type List<String>',
-        location: environmentsAnnotation.sourceLocation(
-          projectDefine.source,
-          projectPaths.projectRoot,
-        ),
+    assert(
+      environmentsValue != null,
+      'This should be impossible given that `environments` is a required field on `Project`',
+    );
+    if (environmentsValue!.isEmpty) {
+      _reportError(
+        'No environments have been defined for this project.',
+        projectDefineLocation,
       );
+      return null;
+    }
+    assert(
+      environmentsValue.whereType<Null>().isEmpty,
+      'This should be impossible given that `environments` is a required field on `Project`',
+    );
+
+    var environmentNameErrors = false;
+    final environments = environmentsValue.cast<String>();
+    final seenEnvironments = <String>{};
+    for (final environment in environments) {
+      if (environment.isEmpty) {
+        _reportError(
+          'Environment names cannot be empty.',
+          projectDefineLocation,
+        );
+        environmentNameErrors = true;
+        continue;
+      }
+      if (!seenEnvironments.add(environment)) {
+        _reportError(
+          'Duplicate environment name: "$environment".',
+          projectDefineLocation,
+        );
+        environmentNameErrors = true;
+        continue;
+      }
+    }
+    if (environmentNameErrors) {
+      return null;
     }
 
     return ast.ProjectBuilder()
-      ..name = projectPubspec.name
+      ..name = projectName
       ..reference = refer('define', projectFileRelativePath)
       ..location.replace(projectDefineLocation)
-      ..environmentNames.addAll(environmentNames);
+      ..environmentNames.addAll(environments);
   }
 
   List<ast.ApiMetadata> _collectMetadata(Element element) {
@@ -165,7 +221,7 @@ final class CelestAnalyzer {
         .map((annotation) {
           final location = annotation.sourceLocation(
             element.source!,
-            projectPaths.projectRoot,
+            _projectPaths.projectRoot,
           );
           final value = annotation.computeConstantValue();
           if (value == null) {
@@ -184,7 +240,7 @@ final class CelestAnalyzer {
               );
             case _ when type.isMiddleware:
               return ast.ApiMetadataMiddleware(
-                type: value.type!.toCodeBuilder(projectPaths.projectRoot),
+                type: value.type!.toCodeBuilder(_projectPaths.projectRoot),
                 location: location,
               );
             case _:
@@ -197,7 +253,7 @@ final class CelestAnalyzer {
   }
 
   Future<ast.ProjectBuilder> _collectApis(ast.ProjectBuilder project) async {
-    final apiDir = Directory(projectPaths.apisDir);
+    final apiDir = Directory(_projectPaths.apisDir);
     if (!apiDir.existsSync()) {
       return project;
     }
@@ -251,6 +307,9 @@ final class CelestAnalyzer {
           environmentName: '',
           apiFile: baseApiPath,
         );
+        if (baseApi == null) {
+          continue;
+        }
         project.baseEnvironment.update(
           (env) => env.apis[apiName] = baseApi,
         );
@@ -264,6 +323,9 @@ final class CelestAnalyzer {
           environmentName: environmentName,
           apiFile: apiEnvironmentPath,
         );
+        if (environmentApi == null) {
+          continue;
+        }
         project.environmentOverrides.updateValue(
           environmentName,
           (env) => env.rebuild(
@@ -292,22 +354,24 @@ final class CelestAnalyzer {
     return project;
   }
 
-  Future<ast.Api> _collectApi({
+  Future<ast.Api?> _collectApi({
     required String apiName,
     required String environmentName,
     required String apiFile,
   }) async {
-    final apiUnitResult = await _context.currentSession.getUnitElement(apiFile);
-    final apiUnit = switch (apiUnitResult) {
-      UnitElementResult _ => apiUnitResult.element,
-      _ => throw AnalysisException(
-          message: 'Could not resolve API file',
-          location: SourceLocation(path: apiFile, line: 0, column: 0),
-        ),
-    };
-    final libraryMetdata = _collectMetadata(apiUnit.library);
+    final apiUnit = await _context.currentSession.getUnitElement(apiFile);
+    if (apiUnit is! UnitElementResult) {
+      _reportError(
+        'Could not resolve API file',
+        SourceLocation(path: apiFile, line: 0, column: 0),
+      );
+      return null;
+    }
+    final libraryMetdata = _collectMetadata(apiUnit.element.library);
     final functions = Map.fromEntries(
-      apiUnit.library.topLevelElements.whereType<FunctionElement>().map((func) {
+      apiUnit.element.library.topLevelElements
+          .whereType<FunctionElement>()
+          .map((func) {
         if (func.isPrivate) {
           return null;
         }
@@ -318,10 +382,10 @@ final class CelestAnalyzer {
           parameters: func.parameters.map((param) {
             final parameter = ast.Parameter(
               name: param.name,
-              type: param.type.toCodeBuilder(projectPaths.projectRoot),
+              type: param.type.toCodeBuilder(_projectPaths.projectRoot),
               required: param.isRequired,
               named: param.isNamed,
-              location: param.sourceLocation(projectPaths.projectRoot),
+              location: param.sourceLocation(_projectPaths.projectRoot),
             );
             if (parameter.type.isFunctionContext) {
               return parameter;
@@ -335,10 +399,10 @@ final class CelestAnalyzer {
             }
             return parameter;
           }).toList(),
-          returnType: func.returnType.toCodeBuilder(projectPaths.projectRoot),
-          flattenedReturnType:
-              func.returnType.flattened.toCodeBuilder(projectPaths.projectRoot),
-          location: func.sourceLocation(projectPaths.projectRoot),
+          returnType: func.returnType.toCodeBuilder(_projectPaths.projectRoot),
+          flattenedReturnType: func.returnType.flattened
+              .toCodeBuilder(_projectPaths.projectRoot),
+          location: func.sourceLocation(_projectPaths.projectRoot),
           metadata: _collectMetadata(func),
         );
 

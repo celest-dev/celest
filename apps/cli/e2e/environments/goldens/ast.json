@@ -6,8 +6,8 @@
   },
   "location": {
     "path": "project.dart",
-    "line": 5,
-    "column": 5
+    "line": 3,
+    "column": 6
   },
   "environmentNames": [
     "prod",

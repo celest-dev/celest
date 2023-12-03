@@ -3,13 +3,13 @@
   "environmentName": "dev",
   "widgets": [
     {
-      "id": "Celest::CloudApi-override-1984006261",
+      "id": "Celest::CloudApi-override-1651411132",
       "cloudApi": {
         "name": "override"
       }
     },
     {
-      "id": "Celest::CloudFunction-override.sayHello-919062241",
+      "id": "Celest::CloudFunction-override.sayHello-579126872",
       "cloudFunction": {
         "name": "sayHello",
         "apiName": "override"

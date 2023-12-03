@@ -46,10 +46,8 @@ final class CodeGenerator extends AstVisitor<void> {
   @override
   void visitProject(Project project) {
     final projectBuildFile = _projectPaths.projectBuildDart;
-    final projectBuild = ProjectBuildGenerator(
-      projectPaths: _projectPaths,
-      projectType: project.reference,
-    ).generate();
+    final projectBuild =
+        ProjectBuildGenerator(projectPaths: _projectPaths).generate();
     fileOutputs[projectBuildFile] =
         _emit(projectBuild, forFile: projectBuildFile);
 
