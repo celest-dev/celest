@@ -211,7 +211,10 @@ final class CelestAnalyzer {
 
     return ast.ProjectBuilder()
       ..name = projectName
-      ..reference = refer('define', projectFileRelativePath)
+      ..reference = refer(
+        projectDefinitionElement.name,
+        projectFileRelativePath,
+      )
       ..location.replace(projectDefineLocation)
       ..environmentNames.addAll(environments);
   }

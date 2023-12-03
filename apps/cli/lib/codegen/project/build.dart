@@ -4,9 +4,11 @@ import 'package:code_builder/code_builder.dart';
 
 class ProjectBuildGenerator {
   ProjectBuildGenerator({
+    required this.projectReference,
     required this.projectPaths,
   });
 
+  final Reference projectReference;
   final ProjectPaths projectPaths;
 
   late final _allResourcesRef = refer('all', projectPaths.resourcesDart);
@@ -32,15 +34,11 @@ class ProjectBuildGenerator {
 final context = ${alloc(DartTypes.celest.projectContext)}(
   ${alloc(DartTypes.celest.buildEnvironment)}.fromArgs(args),
 );
-final widgets = ${alloc(DartTypes.celest.cloudWidgetSet)}();
 // ignore: invalid_use_of_internal_member
-final project = context.build((context) {
-  widgets.addAll(${alloc(_allResourcesRef)}.map((widget) => widget.toProto()));
+final project = ${alloc(DartTypes.celest.runWithContext)}(context, () {
+  final widgets = ${alloc(_allResourcesRef)}.map((widget) => widget.toProto());
+  return ${alloc(projectReference)}.toProto()..widgets.addAll(widgets);
 });
-widgets.addAll(project.widgets);
-project.widgets
-  ..clear()
-  ..addAll(widgets);
 sendPort.send(project.writeToBuffer());
 ''',
           ),

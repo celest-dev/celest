@@ -431,6 +431,12 @@ class _Celest {
 
   /// Creates a [celest.ProjectContext] reference.
   Reference get projectContext => const Reference('ProjectContext', _url);
+
+  /// Creates a `celest.runWithContext` reference.
+  Reference get runWithContext => const Reference(
+        'runWithContext',
+        'package:celest/src/core/project_context.dart',
+      );
 }
 
 /// `dart:convert` types

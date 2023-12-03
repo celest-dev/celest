@@ -2,8 +2,10 @@
 import 'dart:isolate' as _i1;
 
 import 'package:celest/celest.dart' as _i2;
+import 'package:celest/src/core/project_context.dart' as _i3;
 
-import '../resources.dart' as _i3;
+import '../project.dart' as _i5;
+import '../resources.dart' as _i4;
 
 void main(
   List<String> args,
@@ -12,14 +14,10 @@ void main(
   final context = _i2.ProjectContext(
     _i2.BuildEnvironment.fromArgs(args),
   );
-  final widgets = _i2.CloudWidgetSet();
 // ignore: invalid_use_of_internal_member
-  final project = context.build((context) {
-    widgets.addAll(_i3.all.map((widget) => widget.toProto()));
+  final project = _i3.runWithContext(context, () {
+    final widgets = _i4.all.map((widget) => widget.toProto());
+    return _i5.project.toProto()..widgets.addAll(widgets);
   });
-  widgets.addAll(project.widgets);
-  project.widgets
-    ..clear()
-    ..addAll(widgets);
   sendPort.send(project.writeToBuffer());
 }
