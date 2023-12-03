@@ -3,10 +3,16 @@
   "environmentName": "staging",
   "widgets": [
     {
-      "id": "Celest::CloudFunction-override.sayHello",
+      "id": "Celest::CloudApi-override-1438615779",
+      "cloudApi": {
+        "name": "override"
+      }
+    },
+    {
+      "id": "Celest::CloudFunction-override.sayHello-457560399",
       "cloudFunction": {
-        "api": "override",
-        "functionName": "sayHello"
+        "name": "sayHello",
+        "apiName": "override"
       }
     }
   ]

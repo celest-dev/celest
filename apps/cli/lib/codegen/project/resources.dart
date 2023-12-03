@@ -19,42 +19,54 @@ final class ResourcesGenerator {
     ..name = ''
     ..comments.addAll(_header);
 
-  final _referencesByEnvironment = <String, List<Reference>>{};
+  final _referencesByEnvironment = <String, Set<String>>{};
   void _saveReference(String environmentName, String ref) {
-    (_referencesByEnvironment[environmentName] ??= []).add(refer(ref));
+    (_referencesByEnvironment[environmentName] ??= {}).add(ref);
   }
 
-  (Reference, ClassBuilder) _beginClass(String name) => (
-        refer(name),
-        ClassBuilder()
-          ..name = name
-          ..modifier = ClassModifier.final$
-          ..constructors.add(Constructor((c) => c..constant = true)),
-      );
+  final _classBuilders = <String, ClassBuilder>{};
+  ClassBuilder _beginClass(String name) {
+    final cached = _classBuilders[name];
+    if (cached != null) {
+      return cached;
+    }
+    final builder = ClassBuilder()
+      ..name = name
+      ..abstract = true
+      ..modifier = ClassModifier.final$;
+    _library.body.add(lazySpec(builder.build));
+    return builder;
+  }
 
-  (Reference, Class) _generateApi(
+  void _generateApi(
     String apiName,
-    Map<String, Api> environments,
-  ) {
-    final apiClassName = '\$_Celest${apiName.pascalCase}ApiResource';
-    final (apiClassRef, apiClass) = _beginClass(apiClassName);
+    Map<String, Api> environments, {
+    required ClassBuilder apisClass,
+    required ClassBuilder functionsClass,
+  }) {
     for (final MapEntry(key: environmentName, value: api)
         in environments.entries) {
-      final (environmentClassRef, environmentClass) = _beginClass(
-        '\$_Celest${apiName.pascalCase}${environmentName.pascalCase}ApiResource',
+      final apiClass = switch (environmentName) {
+        '' => apisClass,
+        _ => _beginClass('${environmentName.camelCase}Apis'),
+      };
+      final functionClass = switch (environmentName) {
+        '' => functionsClass,
+        _ => _beginClass('${environmentName.camelCase}Functions'),
+      };
+      apiClass.fields.add(
+        Field(
+          (f) => f
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..name = api.name.camelCase
+            ..assignment = DartTypes.celest.cloudApi.constInstance([], {
+              'name': literalString(api.name, raw: true),
+              if (environmentName != '')
+                'environmentName': literalString(environmentName, raw: true),
+            }).code,
+        ),
       );
-      if (environmentName.isNotEmpty) {
-        apiClass.fields.add(
-          Field(
-            (b) => b
-              ..name = '${environmentName.camelCase}\$'
-              ..modifier = FieldModifier.final$
-              ..type = environmentClassRef
-              ..assignment = environmentClassRef.constInstance([]).code,
-          ),
-        );
-        _library.body.add(lazySpec(environmentClass.build));
-      }
       for (final function in api.functions.values) {
         final inputParameters = function.parameters
             .where((p) => !p.type.isFunctionContext)
@@ -77,66 +89,58 @@ final class ResourcesGenerator {
                 }),
             ),
         };
-        final functionField = Field(
-          (f) => f
-            ..name = function.name.camelCase
-            ..modifier = FieldModifier.final$
-            ..assignment = DartTypes.celest
-                .cloudFunction(
-              inputType,
-              function.flattenedReturnType,
-            )
-                .constInstance([], {
-              'api': literalString(api.name, raw: true),
-              'functionName': literalString(function.name, raw: true),
-              if (environmentName.isNotEmpty)
-                'environmentName': literalString(environmentName, raw: true),
-            }).code,
+        final functionName = '${apiName}_${function.name}'.camelCase;
+        functionClass.fields.add(
+          Field(
+            (f) => f
+              ..static = true
+              ..name = functionName
+              ..modifier = FieldModifier.constant
+              ..assignment = DartTypes.celest
+                  .cloudFunction(
+                inputType,
+                function.flattenedReturnType,
+              )
+                  .constInstance([], {
+                'api': literalString(api.name, raw: true),
+                'functionName': literalString(function.name, raw: true),
+                if (environmentName.isNotEmpty)
+                  'environmentName': literalString(environmentName, raw: true),
+              }).code,
+          ),
         );
         if (environmentName.isEmpty) {
-          apiClass.fields.add(functionField);
           final overriddenEnvironments =
               environments.keys.where((env) => env.isNotEmpty).toSet();
           final baseEnvironments = {
             ...project.environmentNames,
           }.difference(overriddenEnvironments);
+          final apiRef = 'apis.${apiName.camelCase}';
+          final functionRef = 'functions.$functionName';
           if (overriddenEnvironments.isEmpty) {
-            _saveReference(
-              '',
-              'apis.${apiName.camelCase}.${function.name.camelCase}',
-            );
+            _saveReference('', apiRef);
+            _saveReference('', functionRef);
           } else {
             for (final environment in baseEnvironments) {
-              _saveReference(
-                environment,
-                'apis.${apiName.camelCase}.${function.name.camelCase}',
-              );
+              _saveReference(environment, apiRef);
+              _saveReference(environment, functionRef);
             }
           }
         } else {
-          environmentClass.fields.add(functionField);
           _saveReference(
             environmentName,
-            'apis.${apiName.camelCase}.${environmentName.camelCase}\$.${function.name.camelCase}',
+            '${environmentName.camelCase}Apis.${apiName.camelCase}',
+          );
+          _saveReference(
+            environmentName,
+            '${environmentName.camelCase}Functions.$functionName',
           );
         }
       }
     }
-    return (apiClassRef, apiClass.build());
   }
 
   Library generate() {
-    final (celestClassRef, celestClass) = _beginClass(r'$_CelestResources');
-    _library.body.addAll([
-      Field(
-        (b) => b
-          ..name = 'resources'
-          ..modifier = FieldModifier.constant
-          ..type = celestClassRef
-          ..assignment = celestClassRef.constInstance([]).code,
-      ),
-      lazySpec(celestClass.build),
-    ]);
     final allApis = <String, Map<String, Api>>{};
     for (final environment in [
       project.baseEnvironment,
@@ -147,33 +151,19 @@ final class ResourcesGenerator {
       }
     }
     if (allApis.isNotEmpty) {
-      final (apisClassRef, apisClass) = _beginClass(r'$_CelestApiResources');
-      _library.body.add(lazySpec(apisClass.build));
+      final apisClass = _beginClass('apis');
+      final functionsClass = _beginClass('functions');
       for (final MapEntry(key: apiName, value: environments)
           in allApis.entries) {
-        final (apiClassRef, apiClass) = _generateApi(apiName, environments);
-        apisClass.fields.add(
-          Field(
-            (b) => b
-              ..name = apiName.camelCase
-              ..modifier = FieldModifier.final$
-              ..type = apiClassRef
-              ..assignment = apiClassRef.constInstance([]).code,
-          ),
+        _generateApi(
+          apiName,
+          environments,
+          apisClass: apisClass,
+          functionsClass: functionsClass,
         );
-        _library.body.add(apiClass);
       }
-      celestClass.fields.add(
-        Field(
-          (b) => b
-            ..name = 'apis'
-            ..modifier = FieldModifier.final$
-            ..type = apisClassRef
-            ..assignment = apisClassRef.constInstance([]).code,
-        ),
-      );
     }
-    celestClass.methods.add(
+    _library.body.add(
       Method(
         (m) => m
           ..returns = DartTypes.core.list(DartTypes.celest.cloudWidget)
@@ -187,10 +177,10 @@ final class ResourcesGenerator {
           )
           ..body = Block((b) {
             b.addExpression(
-              declareFinal('base').assign(
-                literalList(
+              declareConst('base').assign(
+                literalConstList(
                   [
-                    ...?_referencesByEnvironment[''],
+                    ...?_referencesByEnvironment['']?.map(refer),
                   ],
                   DartTypes.celest.cloudWidget,
                 ),
@@ -201,8 +191,8 @@ final class ResourcesGenerator {
               b.statements.add(
                 (overrides == null
                         ? refer('base')
-                        : literalList(
-                            [refer('base').spread, ...overrides],
+                        : literalConstList(
+                            [refer('base').spread, ...overrides.map(refer)],
                             DartTypes.celest.cloudWidget,
                           ))
                     .returned

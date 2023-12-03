@@ -5,75 +5,69 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/celest.dart' as _i1;
 
-const $_CelestResources resources = $_CelestResources();
-
-final class $_CelestResources {
-  const $_CelestResources();
-
-  final $_CelestApiResources apis = const $_CelestApiResources();
-
-  List<_i1.CloudWidget> forEnvironment(String environment) {
-    final base = <_i1.CloudWidget>[];
-    if (environment == 'prod') {
-      return <_i1.CloudWidget>[
-        ...base,
-        apis.override.sayHello,
-      ];
-    }
-    if (environment == 'staging') {
-      return <_i1.CloudWidget>[
-        ...base,
-        apis.override.staging$.sayHello,
-      ];
-    }
-    if (environment == 'dev') {
-      return <_i1.CloudWidget>[
-        ...base,
-        apis.override.dev$.sayHello,
-      ];
-    }
-    throw StateError('Unknown environment: $environment');
-  }
+abstract final class apis {
+  static const override = _i1.CloudApi(name: r'override');
 }
 
-final class $_CelestApiResources {
-  const $_CelestApiResources();
-
-  final $_CelestOverrideApiResource override =
-      const $_CelestOverrideApiResource();
+abstract final class functions {
+  static const overrideSayHello = _i1.CloudFunction<void, String>(
+    api: r'override',
+    functionName: r'sayHello',
+  );
 }
 
-final class $_CelestOverrideDevApiResource {
-  const $_CelestOverrideDevApiResource();
+abstract final class devApis {
+  static const override = _i1.CloudApi(
+    name: r'override',
+    environmentName: r'dev',
+  );
+}
 
-  final sayHello = const _i1.CloudFunction<void, String>(
+abstract final class devFunctions {
+  static const overrideSayHello = _i1.CloudFunction<void, String>(
     api: r'override',
     functionName: r'sayHello',
     environmentName: r'dev',
   );
 }
 
-final class $_CelestOverrideStagingApiResource {
-  const $_CelestOverrideStagingApiResource();
+abstract final class stagingApis {
+  static const override = _i1.CloudApi(
+    name: r'override',
+    environmentName: r'staging',
+  );
+}
 
-  final sayHello = const _i1.CloudFunction<void, String>(
+abstract final class stagingFunctions {
+  static const overrideSayHello = _i1.CloudFunction<void, String>(
     api: r'override',
     functionName: r'sayHello',
     environmentName: r'staging',
   );
 }
 
-final class $_CelestOverrideApiResource {
-  const $_CelestOverrideApiResource();
-
-  final sayHello = const _i1.CloudFunction<void, String>(
-    api: r'override',
-    functionName: r'sayHello',
-  );
-
-  final $_CelestOverrideDevApiResource dev$ =
-      const $_CelestOverrideDevApiResource();
-
-  final $_CelestOverrideStagingApiResource staging$ =
-      const $_CelestOverrideStagingApiResource();
+List<_i1.CloudWidget> forEnvironment(String environment) {
+  const base = <_i1.CloudWidget>[];
+  if (environment == 'prod') {
+    return const <_i1.CloudWidget>[
+      ...base,
+      apis.override,
+      functions.overrideSayHello,
+    ];
+  }
+  if (environment == 'staging') {
+    return const <_i1.CloudWidget>[
+      ...base,
+      stagingApis.override,
+      stagingFunctions.overrideSayHello,
+    ];
+  }
+  if (environment == 'dev') {
+    return const <_i1.CloudWidget>[
+      ...base,
+      devApis.override,
+      devFunctions.overrideSayHello,
+    ];
+  }
+  throw StateError('Unknown environment: $environment');
 }

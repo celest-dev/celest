@@ -7,111 +7,23 @@ import 'package:celest/celest.dart' as _i1;
 
 import 'apis/parameter_types.dart' as _i2;
 
-const $_CelestResources resources = $_CelestResources();
+abstract final class apis {
+  static const parameterTypes = _i1.CloudApi(name: r'parameter_types');
 
-final class $_CelestResources {
-  const $_CelestResources();
+  static const authenticatedFunction =
+      _i1.CloudApi(name: r'authenticated_function');
 
-  final $_CelestApiResources apis = const $_CelestApiResources();
+  static const returnTypes = _i1.CloudApi(name: r'return_types');
 
-  List<_i1.CloudWidget> forEnvironment(String environment) {
-    final base = <_i1.CloudWidget>[
-      apis.parameterTypes.simple,
-      apis.parameterTypes.simpleOptional,
-      apis.parameterTypes.complex,
-      apis.authenticatedFunction.sayHelloAuthenticated,
-      apis.authenticatedFunction.sayHello,
-      apis.returnTypes.asyncVoidReturn,
-      apis.returnTypes.asyncStringReturn,
-      apis.returnTypes.asyncIntReturn,
-      apis.returnTypes.asyncDoubleReturn,
-      apis.returnTypes.asyncBoolReturn,
-      apis.returnTypes.asyncListReturn,
-      apis.returnTypes.asyncMapReturn,
-      apis.returnTypes.asyncIterableReturn,
-      apis.returnTypes.asyncStructReturn,
-      apis.returnTypes.asyncStructReturnNullable,
-      apis.returnTypes.asyncComplexReturn,
-      apis.returnTypes.asyncOrVoidReturn,
-      apis.returnTypes.asyncOrStringReturn,
-      apis.returnTypes.asyncOrIntReturn,
-      apis.returnTypes.asyncOrDoubleReturn,
-      apis.returnTypes.asyncOrBoolReturn,
-      apis.returnTypes.asyncOrListReturn,
-      apis.returnTypes.asyncOrMapReturn,
-      apis.returnTypes.asyncOrIterableReturn,
-      apis.returnTypes.asyncOrStructReturn,
-      apis.returnTypes.asyncOrComplexReturn,
-      apis.returnTypes.asyncOrVoidReturnNullable,
-      apis.returnTypes.asyncOrStringReturnNullable,
-      apis.returnTypes.asyncOrIntReturnNullable,
-      apis.returnTypes.asyncOrDoubleReturnNullable,
-      apis.returnTypes.asyncOrBoolReturnNullable,
-      apis.returnTypes.asyncOrListReturnNullable,
-      apis.returnTypes.asyncOrMapReturnNullable,
-      apis.returnTypes.asyncOrIterableReturnNullable,
-      apis.returnTypes.asyncOrStructReturnNullable,
-      apis.returnTypes.asyncOrComplexReturnNullable,
-      apis.returnTypes.voidReturn,
-      apis.returnTypes.stringReturn,
-      apis.returnTypes.intReturn,
-      apis.returnTypes.doubleReturn,
-      apis.returnTypes.boolReturn,
-      apis.returnTypes.listReturn,
-      apis.returnTypes.mapReturn,
-      apis.returnTypes.iterableReturn,
-      apis.returnTypes.structReturn,
-      apis.returnTypes.complexReturn,
-      apis.returnTypes.stringReturnNullable,
-      apis.returnTypes.intReturnNullable,
-      apis.returnTypes.doubleReturnNullable,
-      apis.returnTypes.boolReturnNullable,
-      apis.returnTypes.listReturnNullable,
-      apis.returnTypes.mapReturnNullable,
-      apis.returnTypes.iterableReturnNullable,
-      apis.returnTypes.structReturnNullable,
-      apis.returnTypes.complexReturnNullable,
-      apis.middleware.sayHello,
-      apis.authenticatedApi.sayHelloAuthenticated,
-      apis.authenticatedApi.sayGoodbyeAuthenticated,
-      apis.parameters.optionalPositional,
-      apis.parameters.optionalNamed,
-      apis.parameters.requiredPositional,
-      apis.parameters.requiredNamed,
-    ];
-    if (environment == 'prod') {
-      return base;
-    }
-    throw StateError('Unknown environment: $environment');
-  }
+  static const middleware = _i1.CloudApi(name: r'middleware');
+
+  static const authenticatedApi = _i1.CloudApi(name: r'authenticated_api');
+
+  static const parameters = _i1.CloudApi(name: r'parameters');
 }
 
-final class $_CelestApiResources {
-  const $_CelestApiResources();
-
-  final $_CelestParameterTypesApiResource parameterTypes =
-      const $_CelestParameterTypesApiResource();
-
-  final $_CelestAuthenticatedFunctionApiResource authenticatedFunction =
-      const $_CelestAuthenticatedFunctionApiResource();
-
-  final $_CelestReturnTypesApiResource returnTypes =
-      const $_CelestReturnTypesApiResource();
-
-  final $_CelestMiddlewareApiResource middleware =
-      const $_CelestMiddlewareApiResource();
-
-  final $_CelestAuthenticatedApiApiResource authenticatedApi =
-      const $_CelestAuthenticatedApiApiResource();
-
-  final $_CelestParametersApiResource parameters =
-      const $_CelestParametersApiResource();
-}
-
-final class $_CelestParameterTypesApiResource {
-  const $_CelestParameterTypesApiResource();
-
-  final simple = const _i1.CloudFunction<
+abstract final class functions {
+  static const parameterTypesSimple = _i1.CloudFunction<
       (
         String,
         int,
@@ -143,7 +55,7 @@ final class $_CelestParameterTypesApiResource {
     functionName: r'simple',
   );
 
-  final simpleOptional = const _i1.CloudFunction<
+  static const parameterTypesSimpleOptional = _i1.CloudFunction<
       (
         String?,
         int?,
@@ -175,7 +87,7 @@ final class $_CelestParameterTypesApiResource {
     functionName: r'simpleOptional',
   );
 
-  final complex = const _i1.CloudFunction<
+  static const parameterTypesComplex = _i1.CloudFunction<
       (
         _i2.SimpleStruct,
         _i2.ComplexStruct,
@@ -206,329 +118,415 @@ final class $_CelestParameterTypesApiResource {
     api: r'parameter_types',
     functionName: r'complex',
   );
-}
 
-final class $_CelestAuthenticatedFunctionApiResource {
-  const $_CelestAuthenticatedFunctionApiResource();
-
-  final sayHelloAuthenticated = const _i1.CloudFunction<void, String>(
+  static const authenticatedFunctionSayHelloAuthenticated =
+      _i1.CloudFunction<void, String>(
     api: r'authenticated_function',
     functionName: r'sayHelloAuthenticated',
   );
 
-  final sayHello = const _i1.CloudFunction<void, String>(
+  static const authenticatedFunctionSayHello = _i1.CloudFunction<void, String>(
     api: r'authenticated_function',
     functionName: r'sayHello',
   );
-}
 
-final class $_CelestReturnTypesApiResource {
-  const $_CelestReturnTypesApiResource();
-
-  final asyncVoidReturn = const _i1.CloudFunction<void, void>(
+  static const returnTypesAsyncVoidReturn = _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncVoidReturn',
   );
 
-  final asyncStringReturn = const _i1.CloudFunction<void, String>(
+  static const returnTypesAsyncStringReturn = _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'asyncStringReturn',
   );
 
-  final asyncIntReturn = const _i1.CloudFunction<void, int>(
+  static const returnTypesAsyncIntReturn = _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'asyncIntReturn',
   );
 
-  final asyncDoubleReturn = const _i1.CloudFunction<void, double>(
+  static const returnTypesAsyncDoubleReturn = _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'asyncDoubleReturn',
   );
 
-  final asyncBoolReturn = const _i1.CloudFunction<void, bool>(
+  static const returnTypesAsyncBoolReturn = _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'asyncBoolReturn',
   );
 
-  final asyncListReturn = const _i1.CloudFunction<void, List<String>>(
+  static const returnTypesAsyncListReturn =
+      _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'asyncListReturn',
   );
 
-  final asyncMapReturn = const _i1.CloudFunction<void, Map<String, String>>(
+  static const returnTypesAsyncMapReturn =
+      _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'asyncMapReturn',
   );
 
-  final asyncIterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
+  static const returnTypesAsyncIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'asyncIterableReturn',
   );
 
-  final asyncStructReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesAsyncStructReturn =
+      _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
-  final asyncStructReturnNullable =
-      const _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  static const returnTypesAsyncStructReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
 
-  final asyncComplexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesAsyncComplexReturn =
+      _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncComplexReturn',
   );
 
-  final asyncOrVoidReturn = const _i1.CloudFunction<void, void>(
+  static const returnTypesAsyncOrVoidReturn = _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncOrVoidReturn',
   );
 
-  final asyncOrStringReturn = const _i1.CloudFunction<void, String>(
+  static const returnTypesAsyncOrStringReturn = _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'asyncOrStringReturn',
   );
 
-  final asyncOrIntReturn = const _i1.CloudFunction<void, int>(
+  static const returnTypesAsyncOrIntReturn = _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'asyncOrIntReturn',
   );
 
-  final asyncOrDoubleReturn = const _i1.CloudFunction<void, double>(
+  static const returnTypesAsyncOrDoubleReturn = _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturn',
   );
 
-  final asyncOrBoolReturn = const _i1.CloudFunction<void, bool>(
+  static const returnTypesAsyncOrBoolReturn = _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'asyncOrBoolReturn',
   );
 
-  final asyncOrListReturn = const _i1.CloudFunction<void, List<String>>(
+  static const returnTypesAsyncOrListReturn =
+      _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'asyncOrListReturn',
   );
 
-  final asyncOrMapReturn = const _i1.CloudFunction<void, Map<String, String>>(
+  static const returnTypesAsyncOrMapReturn =
+      _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'asyncOrMapReturn',
   );
 
-  final asyncOrIterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
+  static const returnTypesAsyncOrIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'asyncOrIterableReturn',
   );
 
-  final asyncOrStructReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesAsyncOrStructReturn =
+      _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
-  final asyncOrComplexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesAsyncOrComplexReturn =
+      _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncOrComplexReturn',
   );
 
-  final asyncOrVoidReturnNullable = const _i1.CloudFunction<void, void>(
+  static const returnTypesAsyncOrVoidReturnNullable =
+      _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'asyncOrVoidReturnNullable',
   );
 
-  final asyncOrStringReturnNullable = const _i1.CloudFunction<void, String?>(
+  static const returnTypesAsyncOrStringReturnNullable =
+      _i1.CloudFunction<void, String?>(
     api: r'return_types',
     functionName: r'asyncOrStringReturnNullable',
   );
 
-  final asyncOrIntReturnNullable = const _i1.CloudFunction<void, int?>(
+  static const returnTypesAsyncOrIntReturnNullable =
+      _i1.CloudFunction<void, int?>(
     api: r'return_types',
     functionName: r'asyncOrIntReturnNullable',
   );
 
-  final asyncOrDoubleReturnNullable = const _i1.CloudFunction<void, double?>(
+  static const returnTypesAsyncOrDoubleReturnNullable =
+      _i1.CloudFunction<void, double?>(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturnNullable',
   );
 
-  final asyncOrBoolReturnNullable = const _i1.CloudFunction<void, bool?>(
+  static const returnTypesAsyncOrBoolReturnNullable =
+      _i1.CloudFunction<void, bool?>(
     api: r'return_types',
     functionName: r'asyncOrBoolReturnNullable',
   );
 
-  final asyncOrListReturnNullable =
-      const _i1.CloudFunction<void, List<String>?>(
+  static const returnTypesAsyncOrListReturnNullable =
+      _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
     functionName: r'asyncOrListReturnNullable',
   );
 
-  final asyncOrMapReturnNullable =
-      const _i1.CloudFunction<void, Map<String, String>?>(
+  static const returnTypesAsyncOrMapReturnNullable =
+      _i1.CloudFunction<void, Map<String, String>?>(
     api: r'return_types',
     functionName: r'asyncOrMapReturnNullable',
   );
 
-  final asyncOrIterableReturnNullable =
-      const _i1.CloudFunction<void, Iterable<String>?>(
+  static const returnTypesAsyncOrIterableReturnNullable =
+      _i1.CloudFunction<void, Iterable<String>?>(
     api: r'return_types',
     functionName: r'asyncOrIterableReturnNullable',
   );
 
-  final asyncOrStructReturnNullable =
-      const _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  static const returnTypesAsyncOrStructReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
 
-  final asyncOrComplexReturnNullable =
-      const _i1.CloudFunction<void, _i2.ComplexStruct?>(
+  static const returnTypesAsyncOrComplexReturnNullable =
+      _i1.CloudFunction<void, _i2.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexReturnNullable',
   );
 
-  final voidReturn = const _i1.CloudFunction<void, void>(
+  static const returnTypesVoidReturn = _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'voidReturn',
   );
 
-  final stringReturn = const _i1.CloudFunction<void, String>(
+  static const returnTypesStringReturn = _i1.CloudFunction<void, String>(
     api: r'return_types',
     functionName: r'stringReturn',
   );
 
-  final intReturn = const _i1.CloudFunction<void, int>(
+  static const returnTypesIntReturn = _i1.CloudFunction<void, int>(
     api: r'return_types',
     functionName: r'intReturn',
   );
 
-  final doubleReturn = const _i1.CloudFunction<void, double>(
+  static const returnTypesDoubleReturn = _i1.CloudFunction<void, double>(
     api: r'return_types',
     functionName: r'doubleReturn',
   );
 
-  final boolReturn = const _i1.CloudFunction<void, bool>(
+  static const returnTypesBoolReturn = _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'boolReturn',
   );
 
-  final listReturn = const _i1.CloudFunction<void, List<String>>(
+  static const returnTypesListReturn = _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'listReturn',
   );
 
-  final mapReturn = const _i1.CloudFunction<void, Map<String, String>>(
+  static const returnTypesMapReturn =
+      _i1.CloudFunction<void, Map<String, String>>(
     api: r'return_types',
     functionName: r'mapReturn',
   );
 
-  final iterableReturn = const _i1.CloudFunction<void, Iterable<String>>(
+  static const returnTypesIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
     api: r'return_types',
     functionName: r'iterableReturn',
   );
 
-  final structReturn = const _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesStructReturn =
+      _i1.CloudFunction<void, _i2.SimpleStruct>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
-  final complexReturn = const _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesComplexReturn =
+      _i1.CloudFunction<void, _i2.ComplexStruct>(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
-  final stringReturnNullable = const _i1.CloudFunction<void, String?>(
+  static const returnTypesStringReturnNullable =
+      _i1.CloudFunction<void, String?>(
     api: r'return_types',
     functionName: r'stringReturnNullable',
   );
 
-  final intReturnNullable = const _i1.CloudFunction<void, int?>(
+  static const returnTypesIntReturnNullable = _i1.CloudFunction<void, int?>(
     api: r'return_types',
     functionName: r'intReturnNullable',
   );
 
-  final doubleReturnNullable = const _i1.CloudFunction<void, double?>(
+  static const returnTypesDoubleReturnNullable =
+      _i1.CloudFunction<void, double?>(
     api: r'return_types',
     functionName: r'doubleReturnNullable',
   );
 
-  final boolReturnNullable = const _i1.CloudFunction<void, bool?>(
+  static const returnTypesBoolReturnNullable = _i1.CloudFunction<void, bool?>(
     api: r'return_types',
     functionName: r'boolReturnNullable',
   );
 
-  final listReturnNullable = const _i1.CloudFunction<void, List<String>?>(
+  static const returnTypesListReturnNullable =
+      _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
     functionName: r'listReturnNullable',
   );
 
-  final mapReturnNullable = const _i1.CloudFunction<void, Map<String, String>?>(
+  static const returnTypesMapReturnNullable =
+      _i1.CloudFunction<void, Map<String, String>?>(
     api: r'return_types',
     functionName: r'mapReturnNullable',
   );
 
-  final iterableReturnNullable =
-      const _i1.CloudFunction<void, Iterable<String>?>(
+  static const returnTypesIterableReturnNullable =
+      _i1.CloudFunction<void, Iterable<String>?>(
     api: r'return_types',
     functionName: r'iterableReturnNullable',
   );
 
-  final structReturnNullable = const _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  static const returnTypesStructReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleStruct?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
 
-  final complexReturnNullable =
-      const _i1.CloudFunction<void, _i2.ComplexStruct?>(
+  static const returnTypesComplexReturnNullable =
+      _i1.CloudFunction<void, _i2.ComplexStruct?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
-}
 
-final class $_CelestMiddlewareApiResource {
-  const $_CelestMiddlewareApiResource();
-
-  final sayHello = const _i1.CloudFunction<String, String>(
+  static const middlewareSayHello = _i1.CloudFunction<String, String>(
     api: r'middleware',
     functionName: r'sayHello',
   );
-}
 
-final class $_CelestAuthenticatedApiApiResource {
-  const $_CelestAuthenticatedApiApiResource();
-
-  final sayHelloAuthenticated = const _i1.CloudFunction<void, String>(
+  static const authenticatedApiSayHelloAuthenticated =
+      _i1.CloudFunction<void, String>(
     api: r'authenticated_api',
     functionName: r'sayHelloAuthenticated',
   );
 
-  final sayGoodbyeAuthenticated = const _i1.CloudFunction<void, String>(
+  static const authenticatedApiSayGoodbyeAuthenticated =
+      _i1.CloudFunction<void, String>(
     api: r'authenticated_api',
     functionName: r'sayGoodbyeAuthenticated',
   );
-}
 
-final class $_CelestParametersApiResource {
-  const $_CelestParametersApiResource();
-
-  final optionalPositional = const _i1.CloudFunction<(String?, int?), void>(
+  static const parametersOptionalPositional =
+      _i1.CloudFunction<(String?, int?), void>(
     api: r'parameters',
     functionName: r'optionalPositional',
   );
 
-  final optionalNamed =
-      const _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
+  static const parametersOptionalNamed =
+      _i1.CloudFunction<({String? namedString, int? namedInt}), void>(
     api: r'parameters',
     functionName: r'optionalNamed',
   );
 
-  final requiredPositional = const _i1.CloudFunction<(String, int), void>(
+  static const parametersRequiredPositional =
+      _i1.CloudFunction<(String, int), void>(
     api: r'parameters',
     functionName: r'requiredPositional',
   );
 
-  final requiredNamed =
-      const _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
+  static const parametersRequiredNamed =
+      _i1.CloudFunction<({String requiredString, int requiredInt}), void>(
     api: r'parameters',
     functionName: r'requiredNamed',
   );
+}
+
+List<_i1.CloudWidget> forEnvironment(String environment) {
+  const base = <_i1.CloudWidget>[
+    apis.parameterTypes,
+    functions.parameterTypesSimple,
+    functions.parameterTypesSimpleOptional,
+    functions.parameterTypesComplex,
+    apis.authenticatedFunction,
+    functions.authenticatedFunctionSayHelloAuthenticated,
+    functions.authenticatedFunctionSayHello,
+    apis.returnTypes,
+    functions.returnTypesAsyncVoidReturn,
+    functions.returnTypesAsyncStringReturn,
+    functions.returnTypesAsyncIntReturn,
+    functions.returnTypesAsyncDoubleReturn,
+    functions.returnTypesAsyncBoolReturn,
+    functions.returnTypesAsyncListReturn,
+    functions.returnTypesAsyncMapReturn,
+    functions.returnTypesAsyncIterableReturn,
+    functions.returnTypesAsyncStructReturn,
+    functions.returnTypesAsyncStructReturnNullable,
+    functions.returnTypesAsyncComplexReturn,
+    functions.returnTypesAsyncOrVoidReturn,
+    functions.returnTypesAsyncOrStringReturn,
+    functions.returnTypesAsyncOrIntReturn,
+    functions.returnTypesAsyncOrDoubleReturn,
+    functions.returnTypesAsyncOrBoolReturn,
+    functions.returnTypesAsyncOrListReturn,
+    functions.returnTypesAsyncOrMapReturn,
+    functions.returnTypesAsyncOrIterableReturn,
+    functions.returnTypesAsyncOrStructReturn,
+    functions.returnTypesAsyncOrComplexReturn,
+    functions.returnTypesAsyncOrVoidReturnNullable,
+    functions.returnTypesAsyncOrStringReturnNullable,
+    functions.returnTypesAsyncOrIntReturnNullable,
+    functions.returnTypesAsyncOrDoubleReturnNullable,
+    functions.returnTypesAsyncOrBoolReturnNullable,
+    functions.returnTypesAsyncOrListReturnNullable,
+    functions.returnTypesAsyncOrMapReturnNullable,
+    functions.returnTypesAsyncOrIterableReturnNullable,
+    functions.returnTypesAsyncOrStructReturnNullable,
+    functions.returnTypesAsyncOrComplexReturnNullable,
+    functions.returnTypesVoidReturn,
+    functions.returnTypesStringReturn,
+    functions.returnTypesIntReturn,
+    functions.returnTypesDoubleReturn,
+    functions.returnTypesBoolReturn,
+    functions.returnTypesListReturn,
+    functions.returnTypesMapReturn,
+    functions.returnTypesIterableReturn,
+    functions.returnTypesStructReturn,
+    functions.returnTypesComplexReturn,
+    functions.returnTypesStringReturnNullable,
+    functions.returnTypesIntReturnNullable,
+    functions.returnTypesDoubleReturnNullable,
+    functions.returnTypesBoolReturnNullable,
+    functions.returnTypesListReturnNullable,
+    functions.returnTypesMapReturnNullable,
+    functions.returnTypesIterableReturnNullable,
+    functions.returnTypesStructReturnNullable,
+    functions.returnTypesComplexReturnNullable,
+    apis.middleware,
+    functions.middlewareSayHello,
+    apis.authenticatedApi,
+    functions.authenticatedApiSayHelloAuthenticated,
+    functions.authenticatedApiSayGoodbyeAuthenticated,
+    apis.parameters,
+    functions.parametersOptionalPositional,
+    functions.parametersOptionalNamed,
+    functions.parametersRequiredPositional,
+    functions.parametersRequiredNamed,
+  ];
+  if (environment == 'prod') {
+    return base;
+  }
+  throw StateError('Unknown environment: $environment');
 }

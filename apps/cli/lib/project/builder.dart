@@ -4,6 +4,7 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_rpc/protos.dart' as proto;
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
 
 final class ProjectBuilder {
@@ -78,29 +79,21 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   void visitApi(Api api) {
     // TODO: Should this be deny by default?
     if (api.metadata.whereType<ApiMetadataAuthenticated>().isNotEmpty) {
-      final apiFunctions = cloudAst.widgets.map((widget) {
-        if (widget.hasCloudFunction()) {
-          final cloudFunction = widget.cloudFunction;
-          if (cloudFunction.api == api.name) {
-            return cloudFunction;
-          }
-        }
-        return null;
-      }).nonNulls;
+      final cloudApi = cloudAst.widgets.singleWhereOrNull((widget) {
+        return widget.hasCloudApi() && widget.cloudApi.name == api.name;
+      })?.cloudApi;
       assert(
-        apiFunctions.isNotEmpty,
-        'API should have at least one function to have reached this point',
+        cloudApi != null,
+        'Could not find API ${api.name} in cloud AST',
       );
-      for (final function in apiFunctions) {
-        function.policy = function.policy.rebuild((policy) {
-          policy.statements.add(
-            proto.PolicyStatement(
-              grantee: 'Role::authenticated',
-              actions: ['invoke'],
-            ),
-          );
-        });
-      }
+      cloudApi!.policy = cloudApi.policy.rebuild((policy) {
+        policy.statements.add(
+          proto.PolicyStatement(
+            grantee: 'Role::authenticated',
+            actions: ['invoke'],
+          ),
+        );
+      });
     }
     api.functions.values.forEach(visitFunction);
   }
@@ -114,21 +107,13 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   @override
   void visitFunction(CloudFunction function) {
     if (function.metadata.whereType<ApiMetadataAuthenticated>().isNotEmpty) {
-      final functionProto = cloudAst.widgets
-          .map((widget) {
-            if (widget.hasCloudFunction()) {
-              final cloudFunction = widget.cloudFunction;
-              if (cloudFunction.api == function.apiName &&
-                  cloudFunction.functionName == function.name) {
-                return cloudFunction;
-              }
-            }
-            return null;
-          })
-          .nonNulls
-          .singleOrNull;
+      final functionProto = cloudAst.widgets.singleWhereOrNull((widget) {
+        return widget.hasCloudFunction() &&
+            widget.cloudFunction.apiName == function.apiName &&
+            widget.cloudFunction.name == function.name;
+      })?.cloudFunction;
       assert(
-        functionProto == null,
+        functionProto != null,
         'Could not find function ${function.apiName}.${function.name} in '
         'cloud AST',
       );

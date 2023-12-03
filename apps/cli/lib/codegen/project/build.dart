@@ -11,7 +11,8 @@ class ProjectBuildGenerator {
   final Reference projectType;
   final ProjectPaths projectPaths;
 
-  late final _resourcesRef = refer('resources', projectPaths.resourcesDart);
+  late final _forEnvironmentRef =
+      refer('forEnvironment', projectPaths.resourcesDart);
 
   Method get _mainMethod => Method(
         (m) => m
@@ -39,8 +40,7 @@ final project = context.build(${alloc(projectType)});
 final widgets = ${alloc(DartTypes.celest.cloudWidgetSet)}()
   ..addAll(project.widgets)
   ..addAll(
-    ${alloc(_resourcesRef)}
-        .forEnvironment(context.environment)
+    ${alloc(_forEnvironmentRef)}(context.environment)
         .map((widget) => widget.toProto()),
   );
 project.widgets

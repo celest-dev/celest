@@ -405,6 +405,9 @@ class _Celest {
   /// Creates a [celest.BuildEnvironment] reference.
   Reference get buildEnvironment => const Reference('BuildEnvironment', _url);
 
+  /// Creates a [celest.CloudApi] reference.
+  Reference get cloudApi => const Reference('CloudApi', _url);
+
   /// Creates a [celest.CloudFunction] reference.
   Reference cloudFunction([Reference? input, Reference? output]) =>
       TypeReference(

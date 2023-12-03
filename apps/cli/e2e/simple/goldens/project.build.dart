@@ -18,9 +18,7 @@ void main(
   final widgets = _i2.CloudWidgetSet()
     ..addAll(project.widgets)
     ..addAll(
-      _i4.resources
-          .forEnvironment(context.environment)
-          .map((widget) => widget.toProto()),
+      _i4.forEnvironment(context.environment).map((widget) => widget.toProto()),
     );
   project.widgets
     ..clear()
