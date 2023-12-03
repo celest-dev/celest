@@ -14,6 +14,77 @@
   ],
   "baseEnvironment": {
     "apis": {
+      "anonymous_function": {
+        "name": "anonymous_function",
+        "environmentName": "",
+        "metadata": [
+          {
+            "$": "ApiAuthenticated",
+            "location": {
+              "path": "apis/anonymous_function.dart",
+              "line": 1,
+              "column": 0
+            }
+          }
+        ],
+        "functions": {
+          "sayHello": {
+            "name": "sayHello",
+            "apiName": "anonymous_function",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [
+              {
+                "$": "ApiAnonymous",
+                "location": {
+                  "path": "apis/anonymous_function.dart",
+                  "line": 6,
+                  "column": 0
+                }
+              }
+            ],
+            "location": {
+              "path": "apis/anonymous_function.dart",
+              "line": 7,
+              "column": 7
+            }
+          },
+          "sayHelloAuthenticated": {
+            "name": "sayHelloAuthenticated",
+            "apiName": "anonymous_function",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/anonymous_function.dart",
+              "line": 8,
+              "column": 7
+            }
+          }
+        }
+      },
       "parameter_types": {
         "name": "parameter_types",
         "environmentName": "",
@@ -1842,7 +1913,7 @@
             },
             "metadata": [
               {
-                "$": "ApiMetadataAuthenticated",
+                "$": "ApiAuthenticated",
                 "location": {
                   "path": "apis/authenticated_function.dart",
                   "line": 3,
@@ -4417,7 +4488,7 @@
         "environmentName": "",
         "metadata": [
           {
-            "$": "ApiMetadataMiddleware",
+            "$": "ApiMiddleware",
             "type": {
               "symbol": "first",
               "url": "apis/middleware.dart",
@@ -4431,7 +4502,7 @@
             }
           },
           {
-            "$": "ApiMetadataMiddleware",
+            "$": "ApiMiddleware",
             "type": {
               "symbol": "second",
               "url": "apis/middleware.dart",
@@ -4505,7 +4576,7 @@
             },
             "metadata": [
               {
-                "$": "ApiMetadataMiddleware",
+                "$": "ApiMiddleware",
                 "type": {
                   "symbol": "third",
                   "url": "apis/middleware.dart",
@@ -4519,7 +4590,7 @@
                 }
               },
               {
-                "$": "ApiMetadataMiddleware",
+                "$": "ApiMiddleware",
                 "type": {
                   "symbol": "fourth",
                   "url": "apis/middleware.dart",
@@ -4546,7 +4617,7 @@
         "environmentName": "",
         "metadata": [
           {
-            "$": "ApiMetadataAuthenticated",
+            "$": "ApiAuthenticated",
             "location": {
               "path": "apis/authenticated_api.dart",
               "line": 1,
@@ -4598,6 +4669,77 @@
             "location": {
               "path": "apis/authenticated_api.dart",
               "line": 7,
+              "column": 7
+            }
+          }
+        }
+      },
+      "anonymous_api": {
+        "name": "anonymous_api",
+        "environmentName": "",
+        "metadata": [
+          {
+            "$": "ApiAnonymous",
+            "location": {
+              "path": "apis/anonymous_api.dart",
+              "line": 1,
+              "column": 0
+            }
+          }
+        ],
+        "functions": {
+          "sayHelloAuthenticated": {
+            "name": "sayHelloAuthenticated",
+            "apiName": "anonymous_api",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [
+              {
+                "$": "ApiAuthenticated",
+                "location": {
+                  "path": "apis/anonymous_api.dart",
+                  "line": 6,
+                  "column": 0
+                }
+              }
+            ],
+            "location": {
+              "path": "apis/anonymous_api.dart",
+              "line": 7,
+              "column": 7
+            }
+          },
+          "sayHello": {
+            "name": "sayHello",
+            "apiName": "anonymous_api",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/anonymous_api.dart",
+              "line": 8,
               "column": 7
             }
           }

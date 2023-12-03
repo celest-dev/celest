@@ -9,11 +9,14 @@ part of 'ast.dart';
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
 Serializer<Environment> _$environmentSerializer = new _$EnvironmentSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
-Serializer<ApiMetadataAuthenticated> _$apiMetadataAuthenticatedSerializer =
-    new _$ApiMetadataAuthenticatedSerializer();
-Serializer<ApiMetadataMiddleware> _$apiMetadataMiddlewareSerializer =
-    new _$ApiMetadataMiddlewareSerializer();
-Serializer<Parameter> _$parameterSerializer = new _$ParameterSerializer();
+Serializer<ApiAnonymous> _$apiAnonymousSerializer =
+    new _$ApiAnonymousSerializer();
+Serializer<ApiAuthenticated> _$apiAuthenticatedSerializer =
+    new _$ApiAuthenticatedSerializer();
+Serializer<ApiMiddleware> _$apiMiddlewareSerializer =
+    new _$ApiMiddlewareSerializer();
+Serializer<CloudFunctionParameter> _$cloudFunctionParameterSerializer =
+    new _$CloudFunctionParameterSerializer();
 Serializer<CloudFunction> _$cloudFunctionSerializer =
     new _$CloudFunctionSerializer();
 Serializer<SourceLocation> _$sourceLocationSerializer =
@@ -221,19 +224,14 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
   }
 }
 
-class _$ApiMetadataAuthenticatedSerializer
-    implements StructuredSerializer<ApiMetadataAuthenticated> {
+class _$ApiAnonymousSerializer implements StructuredSerializer<ApiAnonymous> {
   @override
-  final Iterable<Type> types = const [
-    ApiMetadataAuthenticated,
-    _$ApiMetadataAuthenticated
-  ];
+  final Iterable<Type> types = const [ApiAnonymous, _$ApiAnonymous];
   @override
-  final String wireName = 'ApiMetadataAuthenticated';
+  final String wireName = 'ApiAnonymous';
 
   @override
-  Iterable<Object?> serialize(
-      Serializers serializers, ApiMetadataAuthenticated object,
+  Iterable<Object?> serialize(Serializers serializers, ApiAnonymous object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'location',
@@ -245,10 +243,10 @@ class _$ApiMetadataAuthenticatedSerializer
   }
 
   @override
-  ApiMetadataAuthenticated deserialize(
+  ApiAnonymous deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ApiMetadataAuthenticatedBuilder();
+    final result = new ApiAnonymousBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -268,19 +266,57 @@ class _$ApiMetadataAuthenticatedSerializer
   }
 }
 
-class _$ApiMetadataMiddlewareSerializer
-    implements StructuredSerializer<ApiMetadataMiddleware> {
+class _$ApiAuthenticatedSerializer
+    implements StructuredSerializer<ApiAuthenticated> {
   @override
-  final Iterable<Type> types = const [
-    ApiMetadataMiddleware,
-    _$ApiMetadataMiddleware
-  ];
+  final Iterable<Type> types = const [ApiAuthenticated, _$ApiAuthenticated];
   @override
-  final String wireName = 'ApiMetadataMiddleware';
+  final String wireName = 'ApiAuthenticated';
 
   @override
-  Iterable<Object?> serialize(
-      Serializers serializers, ApiMetadataMiddleware object,
+  Iterable<Object?> serialize(Serializers serializers, ApiAuthenticated object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(SourceLocation)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ApiAuthenticated deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ApiAuthenticatedBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'location':
+          result.location.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SourceLocation))!
+              as SourceLocation);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
+  @override
+  final Iterable<Type> types = const [ApiMiddleware, _$ApiMiddleware];
+  @override
+  final String wireName = 'ApiMiddleware';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ApiMiddleware object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'type',
@@ -295,10 +331,10 @@ class _$ApiMetadataMiddlewareSerializer
   }
 
   @override
-  ApiMetadataMiddleware deserialize(
+  ApiMiddleware deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ApiMetadataMiddlewareBuilder();
+    final result = new ApiMiddlewareBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -322,14 +358,19 @@ class _$ApiMetadataMiddlewareSerializer
   }
 }
 
-class _$ParameterSerializer implements StructuredSerializer<Parameter> {
+class _$CloudFunctionParameterSerializer
+    implements StructuredSerializer<CloudFunctionParameter> {
   @override
-  final Iterable<Type> types = const [Parameter, _$Parameter];
+  final Iterable<Type> types = const [
+    CloudFunctionParameter,
+    _$CloudFunctionParameter
+  ];
   @override
-  final String wireName = 'Parameter';
+  final String wireName = 'CloudFunctionParameter';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Parameter object,
+  Iterable<Object?> serialize(
+      Serializers serializers, CloudFunctionParameter object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'name',
@@ -351,9 +392,10 @@ class _$ParameterSerializer implements StructuredSerializer<Parameter> {
   }
 
   @override
-  Parameter deserialize(Serializers serializers, Iterable<Object?> serialized,
+  CloudFunctionParameter deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ParameterBuilder();
+    final result = new CloudFunctionParameterBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -406,8 +448,8 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
           specifiedType: const FullType(String)),
       'parameters',
       serializers.serialize(object.parameters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Parameter)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(CloudFunctionParameter)])),
       'returnType',
       serializers.serialize(object.returnType,
           specifiedType: const FullType(Reference)),
@@ -448,9 +490,9 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
           break;
         case 'parameters':
           result.parameters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(Parameter)]))!
-              as BuiltList<Object?>);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(CloudFunctionParameter)
+              ]))! as BuiltList<Object?>);
           break;
         case 'returnType':
           result.returnType = serializers.deserialize(value,
@@ -959,32 +1001,29 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   }
 }
 
-class _$ApiMetadataAuthenticated extends ApiMetadataAuthenticated {
+class _$ApiAnonymous extends ApiAnonymous {
   @override
   final SourceLocation location;
 
-  factory _$ApiMetadataAuthenticated(
-          [void Function(ApiMetadataAuthenticatedBuilder)? updates]) =>
-      (new ApiMetadataAuthenticatedBuilder()..update(updates))._build();
+  factory _$ApiAnonymous([void Function(ApiAnonymousBuilder)? updates]) =>
+      (new ApiAnonymousBuilder()..update(updates))._build();
 
-  _$ApiMetadataAuthenticated._({required this.location}) : super._() {
+  _$ApiAnonymous._({required this.location}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiMetadataAuthenticated', 'location');
+        location, r'ApiAnonymous', 'location');
   }
 
   @override
-  ApiMetadataAuthenticated rebuild(
-          void Function(ApiMetadataAuthenticatedBuilder) updates) =>
+  ApiAnonymous rebuild(void Function(ApiAnonymousBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiMetadataAuthenticatedBuilder toBuilder() =>
-      new ApiMetadataAuthenticatedBuilder()..replace(this);
+  ApiAnonymousBuilder toBuilder() => new ApiAnonymousBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ApiMetadataAuthenticated && location == other.location;
+    return other is ApiAnonymous && location == other.location;
   }
 
   @override
@@ -997,25 +1036,24 @@ class _$ApiMetadataAuthenticated extends ApiMetadataAuthenticated {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ApiMetadataAuthenticated')
+    return (newBuiltValueToStringHelper(r'ApiAnonymous')
           ..add('location', location))
         .toString();
   }
 }
 
-class ApiMetadataAuthenticatedBuilder
-    implements
-        Builder<ApiMetadataAuthenticated, ApiMetadataAuthenticatedBuilder> {
-  _$ApiMetadataAuthenticated? _$v;
+class ApiAnonymousBuilder
+    implements Builder<ApiAnonymous, ApiAnonymousBuilder> {
+  _$ApiAnonymous? _$v;
 
   SourceLocationBuilder? _location;
   SourceLocationBuilder get location =>
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
-  ApiMetadataAuthenticatedBuilder();
+  ApiAnonymousBuilder();
 
-  ApiMetadataAuthenticatedBuilder get _$this {
+  ApiAnonymousBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _location = $v.location.toBuilder();
@@ -1025,24 +1063,23 @@ class ApiMetadataAuthenticatedBuilder
   }
 
   @override
-  void replace(ApiMetadataAuthenticated other) {
+  void replace(ApiAnonymous other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ApiMetadataAuthenticated;
+    _$v = other as _$ApiAnonymous;
   }
 
   @override
-  void update(void Function(ApiMetadataAuthenticatedBuilder)? updates) {
+  void update(void Function(ApiAnonymousBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  ApiMetadataAuthenticated build() => _build();
+  ApiAnonymous build() => _build();
 
-  _$ApiMetadataAuthenticated _build() {
-    _$ApiMetadataAuthenticated _$result;
+  _$ApiAnonymous _build() {
+    _$ApiAnonymous _$result;
     try {
-      _$result =
-          _$v ?? new _$ApiMetadataAuthenticated._(location: location.build());
+      _$result = _$v ?? new _$ApiAnonymous._(location: location.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1050,7 +1087,7 @@ class ApiMetadataAuthenticatedBuilder
         location.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'ApiMetadataAuthenticated', _$failedField, e.toString());
+            r'ApiAnonymous', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1059,37 +1096,129 @@ class ApiMetadataAuthenticatedBuilder
   }
 }
 
-class _$ApiMetadataMiddleware extends ApiMetadataMiddleware {
+class _$ApiAuthenticated extends ApiAuthenticated {
+  @override
+  final SourceLocation location;
+
+  factory _$ApiAuthenticated(
+          [void Function(ApiAuthenticatedBuilder)? updates]) =>
+      (new ApiAuthenticatedBuilder()..update(updates))._build();
+
+  _$ApiAuthenticated._({required this.location}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        location, r'ApiAuthenticated', 'location');
+  }
+
+  @override
+  ApiAuthenticated rebuild(void Function(ApiAuthenticatedBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ApiAuthenticatedBuilder toBuilder() =>
+      new ApiAuthenticatedBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ApiAuthenticated && location == other.location;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ApiAuthenticated')
+          ..add('location', location))
+        .toString();
+  }
+}
+
+class ApiAuthenticatedBuilder
+    implements Builder<ApiAuthenticated, ApiAuthenticatedBuilder> {
+  _$ApiAuthenticated? _$v;
+
+  SourceLocationBuilder? _location;
+  SourceLocationBuilder get location =>
+      _$this._location ??= new SourceLocationBuilder();
+  set location(SourceLocationBuilder? location) => _$this._location = location;
+
+  ApiAuthenticatedBuilder();
+
+  ApiAuthenticatedBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _location = $v.location.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ApiAuthenticated other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ApiAuthenticated;
+  }
+
+  @override
+  void update(void Function(ApiAuthenticatedBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ApiAuthenticated build() => _build();
+
+  _$ApiAuthenticated _build() {
+    _$ApiAuthenticated _$result;
+    try {
+      _$result = _$v ?? new _$ApiAuthenticated._(location: location.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'location';
+        location.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ApiAuthenticated', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ApiMiddleware extends ApiMiddleware {
   @override
   final Reference type;
   @override
   final SourceLocation location;
 
-  factory _$ApiMetadataMiddleware(
-          [void Function(ApiMetadataMiddlewareBuilder)? updates]) =>
-      (new ApiMetadataMiddlewareBuilder()..update(updates))._build();
+  factory _$ApiMiddleware([void Function(ApiMiddlewareBuilder)? updates]) =>
+      (new ApiMiddlewareBuilder()..update(updates))._build();
 
-  _$ApiMetadataMiddleware._({required this.type, required this.location})
-      : super._() {
+  _$ApiMiddleware._({required this.type, required this.location}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(type, r'ApiMiddleware', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        type, r'ApiMetadataMiddleware', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiMetadataMiddleware', 'location');
+        location, r'ApiMiddleware', 'location');
   }
 
   @override
-  ApiMetadataMiddleware rebuild(
-          void Function(ApiMetadataMiddlewareBuilder) updates) =>
+  ApiMiddleware rebuild(void Function(ApiMiddlewareBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiMetadataMiddlewareBuilder toBuilder() =>
-      new ApiMetadataMiddlewareBuilder()..replace(this);
+  ApiMiddlewareBuilder toBuilder() => new ApiMiddlewareBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ApiMetadataMiddleware &&
+    return other is ApiMiddleware &&
         type == other.type &&
         location == other.location;
   }
@@ -1105,16 +1234,16 @@ class _$ApiMetadataMiddleware extends ApiMetadataMiddleware {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ApiMetadataMiddleware')
+    return (newBuiltValueToStringHelper(r'ApiMiddleware')
           ..add('type', type)
           ..add('location', location))
         .toString();
   }
 }
 
-class ApiMetadataMiddlewareBuilder
-    implements Builder<ApiMetadataMiddleware, ApiMetadataMiddlewareBuilder> {
-  _$ApiMetadataMiddleware? _$v;
+class ApiMiddlewareBuilder
+    implements Builder<ApiMiddleware, ApiMiddlewareBuilder> {
+  _$ApiMiddleware? _$v;
 
   Reference? _type;
   Reference? get type => _$this._type;
@@ -1125,9 +1254,9 @@ class ApiMetadataMiddlewareBuilder
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
-  ApiMetadataMiddlewareBuilder();
+  ApiMiddlewareBuilder();
 
-  ApiMetadataMiddlewareBuilder get _$this {
+  ApiMiddlewareBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _type = $v.type;
@@ -1138,26 +1267,26 @@ class ApiMetadataMiddlewareBuilder
   }
 
   @override
-  void replace(ApiMetadataMiddleware other) {
+  void replace(ApiMiddleware other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ApiMetadataMiddleware;
+    _$v = other as _$ApiMiddleware;
   }
 
   @override
-  void update(void Function(ApiMetadataMiddlewareBuilder)? updates) {
+  void update(void Function(ApiMiddlewareBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  ApiMetadataMiddleware build() => _build();
+  ApiMiddleware build() => _build();
 
-  _$ApiMetadataMiddleware _build() {
-    _$ApiMetadataMiddleware _$result;
+  _$ApiMiddleware _build() {
+    _$ApiMiddleware _$result;
     try {
       _$result = _$v ??
-          new _$ApiMetadataMiddleware._(
+          new _$ApiMiddleware._(
               type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ApiMetadataMiddleware', 'type'),
+                  type, r'ApiMiddleware', 'type'),
               location: location.build());
     } catch (_) {
       late String _$failedField;
@@ -1166,7 +1295,7 @@ class ApiMetadataMiddlewareBuilder
         location.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'ApiMetadataMiddleware', _$failedField, e.toString());
+            r'ApiMiddleware', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1175,7 +1304,7 @@ class ApiMetadataMiddlewareBuilder
   }
 }
 
-class _$Parameter extends Parameter {
+class _$CloudFunctionParameter extends CloudFunctionParameter {
   @override
   final String name;
   @override
@@ -1187,34 +1316,42 @@ class _$Parameter extends Parameter {
   @override
   final SourceLocation location;
 
-  factory _$Parameter([void Function(ParameterBuilder)? updates]) =>
-      (new ParameterBuilder()..update(updates))._build();
+  factory _$CloudFunctionParameter(
+          [void Function(CloudFunctionParameterBuilder)? updates]) =>
+      (new CloudFunctionParameterBuilder()..update(updates))._build();
 
-  _$Parameter._(
+  _$CloudFunctionParameter._(
       {required this.name,
       required this.type,
       required this.required,
       required this.named,
       required this.location})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'Parameter', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'Parameter', 'type');
-    BuiltValueNullFieldError.checkNotNull(required, r'Parameter', 'required');
-    BuiltValueNullFieldError.checkNotNull(named, r'Parameter', 'named');
-    BuiltValueNullFieldError.checkNotNull(location, r'Parameter', 'location');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'CloudFunctionParameter', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'CloudFunctionParameter', 'type');
+    BuiltValueNullFieldError.checkNotNull(
+        required, r'CloudFunctionParameter', 'required');
+    BuiltValueNullFieldError.checkNotNull(
+        named, r'CloudFunctionParameter', 'named');
+    BuiltValueNullFieldError.checkNotNull(
+        location, r'CloudFunctionParameter', 'location');
   }
 
   @override
-  Parameter rebuild(void Function(ParameterBuilder) updates) =>
+  CloudFunctionParameter rebuild(
+          void Function(CloudFunctionParameterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ParameterBuilder toBuilder() => new ParameterBuilder()..replace(this);
+  CloudFunctionParameterBuilder toBuilder() =>
+      new CloudFunctionParameterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Parameter &&
+    return other is CloudFunctionParameter &&
         name == other.name &&
         type == other.type &&
         required == other.required &&
@@ -1236,7 +1373,7 @@ class _$Parameter extends Parameter {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Parameter')
+    return (newBuiltValueToStringHelper(r'CloudFunctionParameter')
           ..add('name', name)
           ..add('type', type)
           ..add('required', required)
@@ -1246,8 +1383,9 @@ class _$Parameter extends Parameter {
   }
 }
 
-class ParameterBuilder implements Builder<Parameter, ParameterBuilder> {
-  _$Parameter? _$v;
+class CloudFunctionParameterBuilder
+    implements Builder<CloudFunctionParameter, CloudFunctionParameterBuilder> {
+  _$CloudFunctionParameter? _$v;
 
   String? _name;
   String? get name => _$this._name;
@@ -1270,9 +1408,9 @@ class ParameterBuilder implements Builder<Parameter, ParameterBuilder> {
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
-  ParameterBuilder();
+  CloudFunctionParameterBuilder();
 
-  ParameterBuilder get _$this {
+  CloudFunctionParameterBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
@@ -1286,32 +1424,32 @@ class ParameterBuilder implements Builder<Parameter, ParameterBuilder> {
   }
 
   @override
-  void replace(Parameter other) {
+  void replace(CloudFunctionParameter other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Parameter;
+    _$v = other as _$CloudFunctionParameter;
   }
 
   @override
-  void update(void Function(ParameterBuilder)? updates) {
+  void update(void Function(CloudFunctionParameterBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  Parameter build() => _build();
+  CloudFunctionParameter build() => _build();
 
-  _$Parameter _build() {
-    _$Parameter _$result;
+  _$CloudFunctionParameter _build() {
+    _$CloudFunctionParameter _$result;
     try {
       _$result = _$v ??
-          new _$Parameter._(
+          new _$CloudFunctionParameter._(
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'Parameter', 'name'),
+                  name, r'CloudFunctionParameter', 'name'),
               type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'Parameter', 'type'),
+                  type, r'CloudFunctionParameter', 'type'),
               required: BuiltValueNullFieldError.checkNotNull(
-                  required, r'Parameter', 'required'),
+                  required, r'CloudFunctionParameter', 'required'),
               named: BuiltValueNullFieldError.checkNotNull(
-                  named, r'Parameter', 'named'),
+                  named, r'CloudFunctionParameter', 'named'),
               location: location.build());
     } catch (_) {
       late String _$failedField;
@@ -1320,7 +1458,7 @@ class ParameterBuilder implements Builder<Parameter, ParameterBuilder> {
         location.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Parameter', _$failedField, e.toString());
+            r'CloudFunctionParameter', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1335,7 +1473,7 @@ class _$CloudFunction extends CloudFunction {
   @override
   final String apiName;
   @override
-  final BuiltList<Parameter> parameters;
+  final BuiltList<CloudFunctionParameter> parameters;
   @override
   final Reference returnType;
   @override
@@ -1431,10 +1569,10 @@ class CloudFunctionBuilder
   String? get apiName => _$this._apiName;
   set apiName(String? apiName) => _$this._apiName = apiName;
 
-  ListBuilder<Parameter>? _parameters;
-  ListBuilder<Parameter> get parameters =>
-      _$this._parameters ??= new ListBuilder<Parameter>();
-  set parameters(ListBuilder<Parameter>? parameters) =>
+  ListBuilder<CloudFunctionParameter>? _parameters;
+  ListBuilder<CloudFunctionParameter> get parameters =>
+      _$this._parameters ??= new ListBuilder<CloudFunctionParameter>();
+  set parameters(ListBuilder<CloudFunctionParameter>? parameters) =>
       _$this._parameters = parameters;
 
   Reference? _returnType;

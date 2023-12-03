@@ -216,35 +216,45 @@ final class CelestAnalyzer {
       ..environmentNames.addAll(environments);
   }
 
-  List<ast.ApiMetadata> _collectMetadata(Element element) {
+  List<ast.ApiMetadata> _collectApiMetadata(Element element) {
+    var hasAuth = false;
     return element.metadata
         .map((annotation) {
           final location = annotation.sourceLocation(
             element.source!,
             _projectPaths.projectRoot,
           );
-          final value = annotation.computeConstantValue();
-          if (value == null) {
-            _reportError(
-              'Could not resolve annotation',
-              location,
-            );
+          final type = annotation.computeConstantValue()?.type;
+          if (type == null) {
+            _reportError('Could not resolve annotation', location);
             return null;
           }
-          final type = value.type!.element!;
+
+          void assertSingleAuth() {
+            if (hasAuth) {
+              _reportError(
+                'Either `api.authenticated` or `api.anonymous` may be specified '
+                'but not both.',
+                location,
+              );
+            }
+            hasAuth = true;
+          }
+
           switch (type) {
-            case _
-                when type.library!.isCelestApi && type.name == 'authenticated':
-              return ast.ApiMetadataAuthenticated(
-                location: location,
-              );
+            case _ when type.isApiAuthenticated:
+              assertSingleAuth();
+              return ast.ApiAuthenticated(location: location);
+            case _ when type.isApiAnonymous:
+              assertSingleAuth();
+              return ast.ApiAnonymous(location: location);
             case _ when type.isMiddleware:
-              return ast.ApiMetadataMiddleware(
-                type: value.type!.toCodeBuilder(_projectPaths.projectRoot),
+              return ast.ApiMiddleware(
+                type: type.toCodeBuilder(_projectPaths.projectRoot),
                 location: location,
               );
-            case _:
-              _reportError('Invalid annotation value', location);
+            default:
+              _reportError('Invalid API annotation', location);
               return null;
           }
         })
@@ -367,7 +377,7 @@ final class CelestAnalyzer {
       );
       return null;
     }
-    final libraryMetdata = _collectMetadata(apiUnit.element.library);
+    final libraryMetdata = _collectApiMetadata(apiUnit.element.library);
     final functions = Map.fromEntries(
       apiUnit.element.library.topLevelElements
           .whereType<FunctionElement>()
@@ -380,7 +390,7 @@ final class CelestAnalyzer {
           name: func.name,
           apiName: apiName,
           parameters: func.parameters.map((param) {
-            final parameter = ast.Parameter(
+            final parameter = ast.CloudFunctionParameter(
               name: param.name,
               type: param.type.toCodeBuilder(_projectPaths.projectRoot),
               required: param.isRequired,
@@ -403,7 +413,7 @@ final class CelestAnalyzer {
           flattenedReturnType: func.returnType.flattened
               .toCodeBuilder(_projectPaths.projectRoot),
           location: func.sourceLocation(_projectPaths.projectRoot),
-          metadata: _collectMetadata(func),
+          metadata: _collectApiMetadata(func),
         );
 
         var hasContext = false;
@@ -439,25 +449,6 @@ final class CelestAnalyzer {
 }
 
 extension on Element {
-  bool get isMiddleware {
-    final el = this;
-    if (el is! ClassElement) {
-      return false;
-    }
-    final supertypes = el.allSupertypes;
-    if (supertypes.isEmpty) {
-      return false;
-    }
-    return supertypes.any((supertype) {
-      final supertypeElement = supertype.element;
-      if (supertypeElement is! ClassElement) {
-        return false;
-      }
-      return supertypeElement.library.isPackageCelest &&
-          supertypeElement.name == 'Middleware';
-    });
-  }
-
   ast.SourceLocation sourceLocation(String projectRoot) {
     final uri = source!.uri;
     final (lineNo, column) = source!.offsetToLineCol(nameOffset);

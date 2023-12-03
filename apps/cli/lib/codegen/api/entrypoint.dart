@@ -1,5 +1,5 @@
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/ast/ast.dart' hide Parameter;
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/serialization/generator.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -32,7 +32,7 @@ final class EntrypointGenerator {
     ]
         // Middleware are applied in reverse order
         .reversed
-        .whereType<ApiMetadataMiddleware>()
+        .whereType<ApiMiddleware>()
         .toList();
     for (final middleware in middleware) {
       pipeline = pipeline.property('addMiddleware').call([

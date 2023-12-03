@@ -2,18 +2,18 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:code_builder/code_builder.dart'
-    show Reference, TypeReference, TypeReferenceBuilder;
+import 'package:code_builder/code_builder.dart';
 
 part 'serializers.g.dart';
 
 @SerializersFor([
   Project,
   Api,
-  ApiMetadataAuthenticated,
-  ApiMetadataMiddleware,
+  ApiAuthenticated,
+  ApiAnonymous,
+  ApiMiddleware,
   CloudFunction,
-  Parameter,
+  CloudFunctionParameter,
   SourceLocation,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

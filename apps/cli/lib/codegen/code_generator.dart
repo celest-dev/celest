@@ -1,5 +1,4 @@
-import 'package:celest_cli/ast/ast.dart' as ast show Parameter;
-import 'package:celest_cli/ast/ast.dart' hide Parameter;
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint.dart';
@@ -81,14 +80,17 @@ final class CodeGenerator extends AstVisitor<void> {
   }
 
   @override
-  void visitApiAuthenticated(ApiMetadataAuthenticated annotation) {}
+  void visitApiAuthenticated(ApiAuthenticated annotation) {}
 
   @override
-  void visitApiMiddleware(ApiMetadataMiddleware annotation) {}
+  void visitApiAnonymous(ApiAnonymous annotation) {}
+
+  @override
+  void visitApiMiddleware(ApiMiddleware annotation) {}
 
   @override
   void visitFunction(CloudFunction function) {}
 
   @override
-  void visitParameter(ast.Parameter parameter) {}
+  void visitParameter(CloudFunctionParameter parameter) {}
 }

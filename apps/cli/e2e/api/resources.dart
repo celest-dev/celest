@@ -8,6 +8,8 @@ import 'package:celest/celest.dart' as _i1;
 import 'apis/parameter_types.dart' as _i2;
 
 abstract final class apis {
+  static const anonymousFunction = _i1.CloudApi(name: r'anonymous_function');
+
   static const parameterTypes = _i1.CloudApi(name: r'parameter_types');
 
   static const authenticatedFunction =
@@ -19,10 +21,23 @@ abstract final class apis {
 
   static const authenticatedApi = _i1.CloudApi(name: r'authenticated_api');
 
+  static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
+
   static const parameters = _i1.CloudApi(name: r'parameters');
 }
 
 abstract final class functions {
+  static const anonymousFunctionSayHello = _i1.CloudFunction<void, String>(
+    api: r'anonymous_function',
+    functionName: r'sayHello',
+  );
+
+  static const anonymousFunctionSayHelloAuthenticated =
+      _i1.CloudFunction<void, String>(
+    api: r'anonymous_function',
+    functionName: r'sayHelloAuthenticated',
+  );
+
   static const parameterTypesSimple = _i1.CloudFunction<
       (
         String,
@@ -429,6 +444,17 @@ abstract final class functions {
     functionName: r'sayGoodbyeAuthenticated',
   );
 
+  static const anonymousApiSayHelloAuthenticated =
+      _i1.CloudFunction<void, String>(
+    api: r'anonymous_api',
+    functionName: r'sayHelloAuthenticated',
+  );
+
+  static const anonymousApiSayHello = _i1.CloudFunction<void, String>(
+    api: r'anonymous_api',
+    functionName: r'sayHello',
+  );
+
   static const parametersOptionalPositional =
       _i1.CloudFunction<(String?, int?), void>(
     api: r'parameters',
@@ -455,6 +481,9 @@ abstract final class functions {
 }
 
 List<_i1.CloudWidget> all = const [
+  apis.anonymousFunction,
+  functions.anonymousFunctionSayHello,
+  functions.anonymousFunctionSayHelloAuthenticated,
   apis.parameterTypes,
   functions.parameterTypesSimple,
   functions.parameterTypesSimpleOptional,
@@ -518,6 +547,9 @@ List<_i1.CloudWidget> all = const [
   apis.authenticatedApi,
   functions.authenticatedApiSayHelloAuthenticated,
   functions.authenticatedApiSayGoodbyeAuthenticated,
+  apis.anonymousApi,
+  functions.anonymousApiSayHelloAuthenticated,
+  functions.anonymousApiSayHello,
   apis.parameters,
   functions.parametersOptionalPositional,
   functions.parametersOptionalNamed,

@@ -141,78 +141,102 @@ abstract class Api implements Built<Api, ApiBuilder> {
 
 sealed class ApiMetadata implements Node {}
 
-abstract class ApiMetadataAuthenticated
-    implements
-        Built<ApiMetadataAuthenticated, ApiMetadataAuthenticatedBuilder>,
-        ApiMetadata {
-  factory ApiMetadataAuthenticated({
+sealed class ApiAuth implements ApiMetadata {}
+
+abstract class ApiAnonymous
+    implements Built<ApiAnonymous, ApiAnonymousBuilder>, ApiAuth {
+  factory ApiAnonymous({
     required SourceLocation location,
-  }) = _$ApiMetadataAuthenticated._;
+  }) = _$ApiAnonymous._;
 
-  factory ApiMetadataAuthenticated.build([
-    void Function(ApiMetadataAuthenticatedBuilder) updates,
-  ]) = _$ApiMetadataAuthenticated;
+  factory ApiAnonymous.build([void Function(ApiAnonymousBuilder) updates]) =
+      _$ApiAnonymous;
 
-  factory ApiMetadataAuthenticated.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(ApiMetadataAuthenticated.serializer, json)!;
+  factory ApiAnonymous.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(ApiAnonymous.serializer, json)!;
 
-  ApiMetadataAuthenticated._();
+  ApiAnonymous._();
 
   SourceLocation get location;
 
   Map<String, dynamic> toJson() =>
-      serializers.serializeWith(ApiMetadataAuthenticated.serializer, this)
+      serializers.serializeWith(ApiAnonymous.serializer, this)
           as Map<String, dynamic>;
 
-  static Serializer<ApiMetadataAuthenticated> get serializer =>
-      _$apiMetadataAuthenticatedSerializer;
+  static Serializer<ApiAnonymous> get serializer => _$apiAnonymousSerializer;
 }
 
-abstract class ApiMetadataMiddleware
-    implements
-        Built<ApiMetadataMiddleware, ApiMetadataMiddlewareBuilder>,
-        ApiMetadata {
-  factory ApiMetadataMiddleware({
+abstract class ApiAuthenticated
+    implements Built<ApiAuthenticated, ApiAuthenticatedBuilder>, ApiAuth {
+  factory ApiAuthenticated({
+    required SourceLocation location,
+  }) = _$ApiAuthenticated._;
+
+  factory ApiAuthenticated.build([
+    void Function(ApiAuthenticatedBuilder) updates,
+  ]) = _$ApiAuthenticated;
+
+  factory ApiAuthenticated.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(ApiAuthenticated.serializer, json)!;
+
+  ApiAuthenticated._();
+
+  SourceLocation get location;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(ApiAuthenticated.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<ApiAuthenticated> get serializer =>
+      _$apiAuthenticatedSerializer;
+}
+
+abstract class ApiMiddleware
+    implements Built<ApiMiddleware, ApiMiddlewareBuilder>, ApiMetadata {
+  factory ApiMiddleware({
     required Reference type,
     required SourceLocation location,
-  }) = _$ApiMetadataMiddleware._;
+  }) = _$ApiMiddleware._;
 
-  factory ApiMetadataMiddleware.build([
-    void Function(ApiMetadataMiddlewareBuilder) updates,
-  ]) = _$ApiMetadataMiddleware;
+  factory ApiMiddleware.build([
+    void Function(ApiMiddlewareBuilder) updates,
+  ]) = _$ApiMiddleware;
 
-  factory ApiMetadataMiddleware.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(ApiMetadataMiddleware.serializer, json)!;
+  factory ApiMiddleware.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(ApiMiddleware.serializer, json)!;
 
-  ApiMetadataMiddleware._();
+  ApiMiddleware._();
 
   Reference get type;
   SourceLocation get location;
 
   Map<String, dynamic> toJson() =>
-      serializers.serializeWith(ApiMetadataMiddleware.serializer, this)
+      serializers.serializeWith(ApiMiddleware.serializer, this)
           as Map<String, dynamic>;
 
-  static Serializer<ApiMetadataMiddleware> get serializer =>
-      _$apiMetadataMiddlewareSerializer;
+  static Serializer<ApiMiddleware> get serializer => _$apiMiddlewareSerializer;
 }
 
-abstract class Parameter implements Built<Parameter, ParameterBuilder>, Node {
-  factory Parameter({
+abstract class CloudFunctionParameter
+    implements
+        Built<CloudFunctionParameter, CloudFunctionParameterBuilder>,
+        Node {
+  factory CloudFunctionParameter({
     required String name,
     required Reference type,
     required bool required,
     required bool named,
     required SourceLocation location,
-  }) = _$Parameter._;
+  }) = _$CloudFunctionParameter._;
 
-  factory Parameter.build([void Function(ParameterBuilder) updates]) =
-      _$Parameter;
+  factory CloudFunctionParameter.build([
+    void Function(CloudFunctionParameterBuilder) updates,
+  ]) = _$CloudFunctionParameter;
 
-  factory Parameter.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(Parameter.serializer, json)!;
+  factory CloudFunctionParameter.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(CloudFunctionParameter.serializer, json)!;
 
-  Parameter._();
+  CloudFunctionParameter._();
 
   String get name;
   Reference get type;
@@ -221,10 +245,11 @@ abstract class Parameter implements Built<Parameter, ParameterBuilder>, Node {
   SourceLocation get location;
 
   Map<String, dynamic> toJson() =>
-      serializers.serializeWith(Parameter.serializer, this)
+      serializers.serializeWith(CloudFunctionParameter.serializer, this)
           as Map<String, dynamic>;
 
-  static Serializer<Parameter> get serializer => _$parameterSerializer;
+  static Serializer<CloudFunctionParameter> get serializer =>
+      _$cloudFunctionParameterSerializer;
 }
 
 abstract class CloudFunction
@@ -232,7 +257,7 @@ abstract class CloudFunction
   factory CloudFunction({
     required String name,
     required String apiName,
-    required List<Parameter> parameters,
+    required List<CloudFunctionParameter> parameters,
     required Reference returnType,
     required Reference flattenedReturnType,
     List<ApiMetadata> metadata = const [],
@@ -259,7 +284,7 @@ abstract class CloudFunction
 
   String get name;
   String get apiName;
-  BuiltList<Parameter> get parameters;
+  BuiltList<CloudFunctionParameter> get parameters;
   Reference get returnType;
   Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;

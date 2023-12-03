@@ -36,6 +36,37 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isApiAuthenticated => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'authenticated' && library.isCelestApi,
+        _ => false,
+      };
+
+  bool get isApiAnonymous => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'anonymous' && library.isCelestApi,
+        _ => false,
+      };
+
+  bool get isMiddleware {
+    final el = element;
+    if (el is! ClassElement) {
+      return false;
+    }
+    final supertypes = el.allSupertypes;
+    if (supertypes.isEmpty) {
+      return false;
+    }
+    return supertypes.any((supertype) {
+      final supertypeElement = supertype.element;
+      if (supertypeElement is! ClassElement) {
+        return false;
+      }
+      return supertypeElement.library.isPackageCelest &&
+          supertypeElement.name == 'Middleware';
+    });
+  }
+
   bool get isEnum => element is EnumElement;
 
   Reference toCodeBuilder(String projectRoot) =>

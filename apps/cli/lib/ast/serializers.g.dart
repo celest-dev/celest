@@ -8,11 +8,12 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Api.serializer)
-      ..add(ApiMetadataAuthenticated.serializer)
-      ..add(ApiMetadataMiddleware.serializer)
+      ..add(ApiAnonymous.serializer)
+      ..add(ApiAuthenticated.serializer)
+      ..add(ApiMiddleware.serializer)
       ..add(CloudFunction.serializer)
+      ..add(CloudFunctionParameter.serializer)
       ..add(Environment.serializer)
-      ..add(Parameter.serializer)
       ..add(Project.serializer)
       ..add(SourceLocation.serializer)
       ..addBuilderFactory(
@@ -23,8 +24,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(String), const FullType(CloudFunction)]),
           () => new MapBuilder<String, CloudFunction>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Parameter)]),
-          () => new ListBuilder<Parameter>())
+          const FullType(
+              BuiltList, const [const FullType(CloudFunctionParameter)]),
+          () => new ListBuilder<CloudFunctionParameter>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())

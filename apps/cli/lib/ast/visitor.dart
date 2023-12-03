@@ -6,11 +6,11 @@ abstract class AstVisitor<T> {
         final Environment environment => visitEnvironment(environment),
         final Api api => visitApi(api),
         final CloudFunction function => visitFunction(function),
-        final Parameter parameter => visitParameter(parameter),
-        final ApiMetadataAuthenticated apiAuthenticated =>
+        final CloudFunctionParameter parameter => visitParameter(parameter),
+        final ApiAnonymous apiAnonymous => visitApiAnonymous(apiAnonymous),
+        final ApiAuthenticated apiAuthenticated =>
           visitApiAuthenticated(apiAuthenticated),
-        final ApiMetadataMiddleware apiMiddleware =>
-          visitApiMiddleware(apiMiddleware),
+        final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
       };
 
   T visitProject(Project project);
@@ -21,9 +21,11 @@ abstract class AstVisitor<T> {
 
   T visitFunction(CloudFunction function);
 
-  T visitParameter(Parameter parameter);
+  T visitParameter(CloudFunctionParameter parameter);
 
-  T visitApiAuthenticated(ApiMetadataAuthenticated annotation);
+  T visitApiAuthenticated(ApiAuthenticated annotation);
 
-  T visitApiMiddleware(ApiMetadataMiddleware annotation);
+  T visitApiAnonymous(ApiAnonymous annotation);
+
+  T visitApiMiddleware(ApiMiddleware annotation);
 }

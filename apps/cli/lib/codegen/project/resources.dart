@@ -1,6 +1,6 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:celest_cli/ast/ast.dart' hide Parameter;
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';

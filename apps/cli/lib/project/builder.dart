@@ -1,9 +1,9 @@
 import 'dart:isolate';
 
-import 'package:celest/celest.dart' show CloudFunctionAction, Role;
+import 'package:celest/celest.dart';
 // ignore: implementation_imports
 import 'package:celest/src/authz/policy.dart' as core;
-import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_rpc/protos.dart' as proto;
@@ -17,7 +17,7 @@ final class ProjectBuilder {
     required this.environmentName,
   });
 
-  final Project project;
+  final ast.Project project;
   final ProjectPaths projectPaths;
   final String environmentName;
 
@@ -69,19 +69,19 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   final proto.Project cloudAst;
 
   @override
-  void visitProject(Project project) {
+  void visitProject(ast.Project project) {
     project.environments.values.forEach(visitEnvironment);
   }
 
   @override
-  void visitEnvironment(Environment environment) {
+  void visitEnvironment(ast.Environment environment) {
     environment.apis.values.forEach(visitApi);
   }
 
   @override
-  void visitApi(Api api) {
-    // TODO: Should this be deny by default?
-    if (api.metadata.whereType<ApiMetadataAuthenticated>().isNotEmpty) {
+  void visitApi(ast.Api api) {
+    final apiAuth = api.metadata.whereType<ast.ApiAuth>().singleOrNull;
+    if (apiAuth != null) {
       final cloudApi = cloudAst.widgets.singleWhereOrNull((widget) {
         return widget.hasCloudApi() && widget.cloudApi.name == api.name;
       })?.cloudApi;
@@ -92,7 +92,10 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
       cloudApi!.policy = cloudApi.policy.rebuild((policy) {
         policy.statements.add(
           core.PolicyStatement(
-            grantee: const Role.authenticated(),
+            grantee: switch (apiAuth) {
+              ast.ApiAuthenticated() => const Role.authenticated(),
+              ast.ApiAnonymous() => const Role.anonymous(),
+            },
             actions: [CloudFunctionAction.invoke],
           ).toProto(),
         );
@@ -102,14 +105,19 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   }
 
   @override
-  void visitApiAuthenticated(ApiMetadataAuthenticated annotation) {}
+  void visitApiAuthenticated(ast.ApiAuthenticated annotation) {}
 
   @override
-  void visitApiMiddleware(ApiMetadataMiddleware annotation) {}
+  void visitApiAnonymous(ast.ApiAnonymous annotation) {}
 
   @override
-  void visitFunction(CloudFunction function) {
-    if (function.metadata.whereType<ApiMetadataAuthenticated>().isNotEmpty) {
+  void visitApiMiddleware(ast.ApiMiddleware annotation) {}
+
+  @override
+  void visitFunction(ast.CloudFunction function) {
+    final functionAuth =
+        function.metadata.whereType<ast.ApiAuth>().singleOrNull;
+    if (functionAuth != null) {
       final functionProto = cloudAst.widgets.singleWhereOrNull((widget) {
         return widget.hasCloudFunction() &&
             widget.cloudFunction.apiName == function.apiName &&
@@ -123,7 +131,10 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
       functionProto!.policy = functionProto.policy.rebuild((policy) {
         policy.statements.add(
           core.PolicyStatement(
-            grantee: const Role.authenticated(),
+            grantee: switch (functionAuth) {
+              ast.ApiAuthenticated() => const Role.authenticated(),
+              ast.ApiAnonymous() => const Role.anonymous(),
+            },
             actions: [CloudFunctionAction.invoke],
           ).toProto(),
         );
@@ -132,5 +143,5 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   }
 
   @override
-  void visitParameter(Parameter parameter) {}
+  void visitParameter(ast.CloudFunctionParameter parameter) {}
 }

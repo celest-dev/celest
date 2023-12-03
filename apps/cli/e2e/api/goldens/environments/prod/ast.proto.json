@@ -3,6 +3,46 @@
   "environmentName": "prod",
   "widgets": [
     {
+      "id": "Celest::CloudApi-anonymous_function-1429872141",
+      "cloudApi": {
+        "name": "anonymous_function",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::invoke"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Celest::CloudFunction-anonymous_function.sayHello-771994430",
+      "cloudFunction": {
+        "name": "sayHello",
+        "apiName": "anonymous_function",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$anonymous",
+              "actions": [
+                "CloudFunctionAction::invoke"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Celest::CloudFunction-anonymous_function.sayHelloAuthenticated-413795554",
+      "cloudFunction": {
+        "name": "sayHelloAuthenticated",
+        "apiName": "anonymous_function"
+      }
+    },
+    {
       "id": "Celest::CloudApi-parameter_types-859472295",
       "cloudApi": {
         "name": "parameter_types"
@@ -456,6 +496,46 @@
       "cloudFunction": {
         "name": "sayGoodbyeAuthenticated",
         "apiName": "authenticated_api"
+      }
+    },
+    {
+      "id": "Celest::CloudApi-anonymous_api-490190880",
+      "cloudApi": {
+        "name": "anonymous_api",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$anonymous",
+              "actions": [
+                "CloudFunctionAction::invoke"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Celest::CloudFunction-anonymous_api.sayHelloAuthenticated-1410775781",
+      "cloudFunction": {
+        "name": "sayHelloAuthenticated",
+        "apiName": "anonymous_api",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::invoke"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Celest::CloudFunction-anonymous_api.sayHello-1156845727",
+      "cloudFunction": {
+        "name": "sayHello",
+        "apiName": "anonymous_api"
       }
     },
     {

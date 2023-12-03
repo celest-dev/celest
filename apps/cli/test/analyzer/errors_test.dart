@@ -170,8 +170,6 @@ const project = Project(name: '', environments: []);
           'No environments have been defined for this project.',
         ],
       );
-
-      // TODO: Test multiple errors
     });
 
     group('apis', () {
@@ -276,7 +274,7 @@ String sayHello() => 'Hello, World!';
         },
         errors: [
           // TODO: Make more specific
-          'Invalid annotation value',
+          'Invalid API annotation',
         ],
       );
 
@@ -295,6 +293,92 @@ String sayHello() => 'Hello, World!';
         errors: [
           // TODO: Make more specific
           'Could not resolve annotation',
+        ],
+      );
+
+      testNoErrors(
+        name: 'api_authenticated',
+        apis: {
+          'greeting.dart': '''
+@api.authenticated()
+library;
+
+import 'package:celest/api.dart' as api;
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testNoErrors(
+        name: 'api_anonymous',
+        apis: {
+          'greeting.dart': '''
+@api.anonymous()
+library;
+
+import 'package:celest/api.dart' as api;
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testErrors(
+        name: 'multiple_api_auth',
+        apis: {
+          'greeting.dart': '''
+@api.anonymous()
+@api.authenticated()
+library;
+
+import 'package:celest/api.dart' as api;
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Either `api.authenticated` or `api.anonymous` may be specified',
+        ],
+      );
+
+      testNoErrors(
+        name: 'function_authenticated',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/api.dart' as api;
+
+@api.authenticated()
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testNoErrors(
+        name: 'function_anonymous',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/api.dart' as api;
+
+@api.anonymous()
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testErrors(
+        name: 'multiple_function_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/api.dart' as api;
+
+@api.anonymous()
+@api.authenticated()
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Either `api.authenticated` or `api.anonymous` may be specified',
         ],
       );
     });
