@@ -1,5 +1,8 @@
 import 'dart:isolate';
 
+import 'package:celest/celest.dart' show CloudFunctionAction, Role;
+// ignore: implementation_imports
+import 'package:celest/src/authz/policy.dart' as core;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/project/paths.dart';
@@ -88,10 +91,10 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
       );
       cloudApi!.policy = cloudApi.policy.rebuild((policy) {
         policy.statements.add(
-          proto.PolicyStatement(
-            grantee: 'Role::authenticated',
-            actions: ['invoke'],
-          ),
+          core.PolicyStatement(
+            grantee: const Role.authenticated(),
+            actions: [CloudFunctionAction.invoke],
+          ).toProto(),
         );
       });
     }
@@ -119,10 +122,10 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
       );
       functionProto!.policy = functionProto.policy.rebuild((policy) {
         policy.statements.add(
-          proto.PolicyStatement(
-            grantee: 'Role::authenticated',
-            actions: ['invoke'],
-          ),
+          core.PolicyStatement(
+            grantee: const Role.authenticated(),
+            actions: [CloudFunctionAction.invoke],
+          ).toProto(),
         );
       });
     }

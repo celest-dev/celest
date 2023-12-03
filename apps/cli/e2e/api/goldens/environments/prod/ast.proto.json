@@ -43,9 +43,9 @@
         "policy": {
           "statements": [
             {
-              "grantee": "Role::authenticated",
+              "grantee": "Celest::Role::$authenticated",
               "actions": [
-                "invoke"
+                "CloudFunctionAction::invoke"
               ]
             }
           ]
@@ -435,9 +435,9 @@
         "policy": {
           "statements": [
             {
-              "grantee": "Role::authenticated",
+              "grantee": "Celest::Role::$authenticated",
               "actions": [
-                "invoke"
+                "CloudFunctionAction::invoke"
               ]
             }
           ]
