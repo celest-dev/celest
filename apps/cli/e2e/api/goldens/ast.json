@@ -16,6 +16,7 @@
     "apis": {
       "parameter_types": {
         "name": "parameter_types",
+        "environmentName": "",
         "metadata": [],
         "functions": {
           "simple": {
@@ -1820,6 +1821,7 @@
       },
       "authenticated_function": {
         "name": "authenticated_function",
+        "environmentName": "",
         "metadata": [],
         "functions": {
           "sayHelloAuthenticated": {
@@ -1881,6 +1883,7 @@
       },
       "return_types": {
         "name": "return_types",
+        "environmentName": "",
         "metadata": [],
         "functions": {
           "asyncVoidReturn": {
@@ -4411,6 +4414,7 @@
       },
       "middleware": {
         "name": "middleware",
+        "environmentName": "",
         "metadata": [
           {
             "$": "ApiMetadataMiddleware",
@@ -4539,6 +4543,7 @@
       },
       "authenticated_api": {
         "name": "authenticated_api",
+        "environmentName": "",
         "metadata": [
           {
             "$": "ApiMetadataAuthenticated",
@@ -4600,6 +4605,7 @@
       },
       "parameters": {
         "name": "parameters",
+        "environmentName": "",
         "metadata": [],
         "functions": {
           "optionalPositional": {

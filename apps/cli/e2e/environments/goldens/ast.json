@@ -18,6 +18,7 @@
     "apis": {
       "override": {
         "name": "override",
+        "environmentName": "",
         "metadata": [],
         "functions": {
           "sayHello": {
@@ -60,6 +61,7 @@
       "apis": {
         "override": {
           "name": "override",
+          "environmentName": "dev",
           "metadata": [],
           "functions": {
             "sayHello": {
@@ -102,6 +104,7 @@
       "apis": {
         "override": {
           "name": "override",
+          "environmentName": "staging",
           "metadata": [],
           "functions": {
             "sayHello": {

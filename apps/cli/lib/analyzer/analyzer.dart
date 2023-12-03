@@ -246,7 +246,11 @@ final class CelestAnalyzer {
         in apiDeclarations.entries) {
       // Collect base API
       if (apiDeclaration.baseApi case final baseApiPath?) {
-        final baseApi = await _collectApi(apiName, baseApiPath);
+        final baseApi = await _collectApi(
+          apiName: apiName,
+          environmentName: '',
+          apiFile: baseApiPath,
+        );
         project.baseEnvironment.update(
           (env) => env.apis[apiName] = baseApi,
         );
@@ -255,7 +259,11 @@ final class CelestAnalyzer {
       // Collect environment APIs
       for (final MapEntry(key: environmentName, value: apiEnvironmentPath)
           in apiDeclaration.environmentOverrides.entries) {
-        final environmentApi = await _collectApi(apiName, apiEnvironmentPath);
+        final environmentApi = await _collectApi(
+          apiName: apiName,
+          environmentName: environmentName,
+          apiFile: apiEnvironmentPath,
+        );
         project.environmentOverrides.updateValue(
           environmentName,
           (env) => env.rebuild(
@@ -284,7 +292,11 @@ final class CelestAnalyzer {
     return project;
   }
 
-  Future<ast.Api> _collectApi(String apiName, String apiFile) async {
+  Future<ast.Api> _collectApi({
+    required String apiName,
+    required String environmentName,
+    required String apiFile,
+  }) async {
     final apiUnitResult = await _context.currentSession.getUnitElement(apiFile);
     final apiUnit = switch (apiUnitResult) {
       UnitElementResult _ => apiUnitResult.element,
@@ -355,6 +367,7 @@ final class CelestAnalyzer {
     );
     return ast.Api(
       name: apiName,
+      environmentName: environmentName,
       metadata: libraryMetdata,
       functions: functions,
     );

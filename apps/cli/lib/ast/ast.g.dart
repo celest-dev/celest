@@ -166,6 +166,9 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'environmentName',
+      serializers.serialize(object.environmentName,
+          specifiedType: const FullType(String)),
       'metadata',
       serializers.serialize(object.metadata,
           specifiedType:
@@ -192,6 +195,10 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'environmentName':
+          result.environmentName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'metadata':
@@ -811,6 +818,8 @@ class _$Api extends Api {
   @override
   final String name;
   @override
+  final String environmentName;
+  @override
   final BuiltList<ApiMetadata> metadata;
   @override
   final BuiltMap<String, CloudFunction> functions;
@@ -818,9 +827,15 @@ class _$Api extends Api {
   factory _$Api([void Function(ApiBuilder)? updates]) =>
       (new ApiBuilder()..update(updates))._build();
 
-  _$Api._({required this.name, required this.metadata, required this.functions})
+  _$Api._(
+      {required this.name,
+      required this.environmentName,
+      required this.metadata,
+      required this.functions})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        environmentName, r'Api', 'environmentName');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
   }
@@ -837,6 +852,7 @@ class _$Api extends Api {
     if (identical(other, this)) return true;
     return other is Api &&
         name == other.name &&
+        environmentName == other.environmentName &&
         metadata == other.metadata &&
         functions == other.functions;
   }
@@ -845,6 +861,7 @@ class _$Api extends Api {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, environmentName.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, functions.hashCode);
     _$hash = $jf(_$hash);
@@ -855,6 +872,7 @@ class _$Api extends Api {
   String toString() {
     return (newBuiltValueToStringHelper(r'Api')
           ..add('name', name)
+          ..add('environmentName', environmentName)
           ..add('metadata', metadata)
           ..add('functions', functions))
         .toString();
@@ -867,6 +885,11 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
+
+  String? _environmentName;
+  String? get environmentName => _$this._environmentName;
+  set environmentName(String? environmentName) =>
+      _$this._environmentName = environmentName;
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
@@ -886,6 +909,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
+      _environmentName = $v.environmentName;
       _metadata = $v.metadata.toBuilder();
       _functions = $v.functions.toBuilder();
       _$v = null;
@@ -913,6 +937,8 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
       _$result = _$v ??
           new _$Api._(
               name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
+              environmentName: BuiltValueNullFieldError.checkNotNull(
+                  environmentName, r'Api', 'environmentName'),
               metadata: metadata.build(),
               functions: functions.build());
     } catch (_) {

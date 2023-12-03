@@ -49,21 +49,19 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
         final overrides = environmentOverrides[environment];
         builder[environment] = baseEnvironment.rebuild((env) {
           env.name = environment;
-          if (overrides == null) {
-            return;
-          }
-          for (final apiOverride in overrides.apis.values) {
-            env.apis.updateValue(
-              apiOverride.name,
-              (api) => api.rebuild((b) {
-                b.metadata.addAll(apiOverride.metadata);
-                for (final function in apiOverride.functions.values) {
-                  b.functions[function.name] = function;
-                }
-              }),
-              ifAbsent: () => apiOverride,
-            );
-          }
+          env.apis.updateAllValues((apiName, api) {
+            final apiOverride = overrides?.apis[apiName];
+            return api.rebuild((b) {
+              b.environmentName = environment;
+              if (apiOverride == null) {
+                return;
+              }
+              b.metadata.addAll(apiOverride.metadata);
+              for (final function in apiOverride.functions.values) {
+                b.functions[function.name] = function;
+              }
+            });
+          });
         });
       }
     });
@@ -111,11 +109,13 @@ abstract class Environment
 abstract class Api implements Built<Api, ApiBuilder> {
   factory Api({
     required String name,
+    required String environmentName,
     required Map<String, CloudFunction> functions,
     List<ApiMetadata> metadata = const [],
   }) {
     return _$Api._(
       name: name,
+      environmentName: environmentName,
       metadata: metadata.build(),
       functions: functions.build(),
     );
@@ -129,6 +129,7 @@ abstract class Api implements Built<Api, ApiBuilder> {
   Api._();
 
   String get name;
+  String get environmentName;
   BuiltList<ApiMetadata> get metadata;
   BuiltMap<String, CloudFunction> get functions;
 

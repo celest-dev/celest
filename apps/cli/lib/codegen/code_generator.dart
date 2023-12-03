@@ -62,14 +62,12 @@ final class CodeGenerator extends AstVisitor<void> {
 
   @override
   void visitEnvironment(Environment environment) {
-    for (final api in environment.apis.values) {
-      visitApi(api, environment);
-    }
+    environment.apis.values.forEach(visitApi);
   }
 
   @override
-  void visitApi(Api api, [Environment? environment]) {
-    final environmentPaths = _projectPaths.environment(environment!.name!);
+  void visitApi(Api api) {
+    final environmentPaths = _projectPaths.environment(api.environmentName);
     final outputDir = environmentPaths.apiOutput(api.name);
     for (final function in api.functions.values) {
       final entrypoint = EntrypointGenerator(
