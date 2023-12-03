@@ -42,7 +42,6 @@ final class CodeGenerator extends AstVisitor<void> {
 
   /// A map of generated files to their contents.
   final Map<String, String> fileOutputs = {};
-  // TODO: final List<void Function(proto.Project)> widgetOutputs = [];
 
   @override
   void visitProject(Project project) {

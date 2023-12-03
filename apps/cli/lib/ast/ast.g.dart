@@ -394,6 +394,9 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'apiName',
+      serializers.serialize(object.apiName,
+          specifiedType: const FullType(String)),
       'parameters',
       serializers.serialize(object.parameters,
           specifiedType:
@@ -430,6 +433,10 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'apiName':
+          result.apiName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'parameters':
@@ -1300,6 +1307,8 @@ class _$CloudFunction extends CloudFunction {
   @override
   final String name;
   @override
+  final String apiName;
+  @override
   final BuiltList<Parameter> parameters;
   @override
   final Reference returnType;
@@ -1315,6 +1324,7 @@ class _$CloudFunction extends CloudFunction {
 
   _$CloudFunction._(
       {required this.name,
+      required this.apiName,
       required this.parameters,
       required this.returnType,
       required this.flattenedReturnType,
@@ -1322,6 +1332,7 @@ class _$CloudFunction extends CloudFunction {
       required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CloudFunction', 'name');
+    BuiltValueNullFieldError.checkNotNull(apiName, r'CloudFunction', 'apiName');
     BuiltValueNullFieldError.checkNotNull(
         parameters, r'CloudFunction', 'parameters');
     BuiltValueNullFieldError.checkNotNull(
@@ -1346,6 +1357,7 @@ class _$CloudFunction extends CloudFunction {
     if (identical(other, this)) return true;
     return other is CloudFunction &&
         name == other.name &&
+        apiName == other.apiName &&
         parameters == other.parameters &&
         returnType == other.returnType &&
         flattenedReturnType == other.flattenedReturnType &&
@@ -1357,6 +1369,7 @@ class _$CloudFunction extends CloudFunction {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, apiName.hashCode);
     _$hash = $jc(_$hash, parameters.hashCode);
     _$hash = $jc(_$hash, returnType.hashCode);
     _$hash = $jc(_$hash, flattenedReturnType.hashCode);
@@ -1370,6 +1383,7 @@ class _$CloudFunction extends CloudFunction {
   String toString() {
     return (newBuiltValueToStringHelper(r'CloudFunction')
           ..add('name', name)
+          ..add('apiName', apiName)
           ..add('parameters', parameters)
           ..add('returnType', returnType)
           ..add('flattenedReturnType', flattenedReturnType)
@@ -1386,6 +1400,10 @@ class CloudFunctionBuilder
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
+
+  String? _apiName;
+  String? get apiName => _$this._apiName;
+  set apiName(String? apiName) => _$this._apiName = apiName;
 
   ListBuilder<Parameter>? _parameters;
   ListBuilder<Parameter> get parameters =>
@@ -1419,6 +1437,7 @@ class CloudFunctionBuilder
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
+      _apiName = $v.apiName;
       _parameters = $v.parameters.toBuilder();
       _returnType = $v.returnType;
       _flattenedReturnType = $v.flattenedReturnType;
@@ -1450,6 +1469,8 @@ class CloudFunctionBuilder
           new _$CloudFunction._(
               name: BuiltValueNullFieldError.checkNotNull(
                   name, r'CloudFunction', 'name'),
+              apiName: BuiltValueNullFieldError.checkNotNull(
+                  apiName, r'CloudFunction', 'apiName'),
               parameters: parameters.build(),
               returnType: BuiltValueNullFieldError.checkNotNull(
                   returnType, r'CloudFunction', 'returnType'),

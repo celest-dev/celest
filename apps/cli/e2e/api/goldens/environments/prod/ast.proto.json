@@ -27,7 +27,17 @@
       "id": "Celest::CloudFunction-authenticated_function.sayHelloAuthenticated",
       "cloudFunction": {
         "api": "authenticated_function",
-        "functionName": "sayHelloAuthenticated"
+        "functionName": "sayHelloAuthenticated",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Role::authenticated",
+              "actions": [
+                "invoke"
+              ]
+            }
+          ]
+        }
       }
     },
     {
@@ -398,14 +408,34 @@
       "id": "Celest::CloudFunction-authenticated_api.sayHelloAuthenticated",
       "cloudFunction": {
         "api": "authenticated_api",
-        "functionName": "sayHelloAuthenticated"
+        "functionName": "sayHelloAuthenticated",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Role::authenticated",
+              "actions": [
+                "invoke"
+              ]
+            }
+          ]
+        }
       }
     },
     {
       "id": "Celest::CloudFunction-authenticated_api.sayGoodbyeAuthenticated",
       "cloudFunction": {
         "api": "authenticated_api",
-        "functionName": "sayGoodbyeAuthenticated"
+        "functionName": "sayGoodbyeAuthenticated",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Role::authenticated",
+              "actions": [
+                "invoke"
+              ]
+            }
+          ]
+        }
       }
     },
     {

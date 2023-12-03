@@ -145,7 +145,7 @@ class TestRunner {
 
       for (final environmentName in project.environmentNames) {
         final projectBuilder = ProjectBuilder(
-          projectName: testName,
+          project: project,
           projectPaths: projectPaths,
           environmentName: environmentName,
         );

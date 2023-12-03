@@ -104,7 +104,7 @@ final class StartCommand extends CelestCommand {
     }
 
     final projectBuilder = ProjectBuilder(
-      projectName: project.name,
+      project: project,
       projectPaths: projectPaths,
       environmentName: 'dev', // TODO
     );

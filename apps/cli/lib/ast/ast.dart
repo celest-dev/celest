@@ -230,6 +230,7 @@ abstract class CloudFunction
     implements Built<CloudFunction, CloudFunctionBuilder>, Node {
   factory CloudFunction({
     required String name,
+    required String apiName,
     required List<Parameter> parameters,
     required Reference returnType,
     required Reference flattenedReturnType,
@@ -238,6 +239,7 @@ abstract class CloudFunction
   }) {
     return _$CloudFunction._(
       name: name,
+      apiName: apiName,
       parameters: parameters.build(),
       returnType: returnType,
       flattenedReturnType: flattenedReturnType,
@@ -255,6 +257,7 @@ abstract class CloudFunction
   CloudFunction._();
 
   String get name;
+  String get apiName;
   BuiltList<Parameter> get parameters;
   Reference get returnType;
   Reference get flattenedReturnType;

@@ -302,6 +302,7 @@ final class CelestAnalyzer {
 
         final function = ast.CloudFunction(
           name: func.name,
+          apiName: apiName,
           parameters: func.parameters.map((param) {
             final parameter = ast.Parameter(
               name: param.name,

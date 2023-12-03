@@ -22,6 +22,7 @@
         "functions": {
           "sayHello": {
             "name": "sayHello",
+            "apiName": "override",
             "parameters": [],
             "returnType": {
               "symbol": "Future",
@@ -63,6 +64,7 @@
           "functions": {
             "sayHello": {
               "name": "sayHello",
+              "apiName": "override",
               "parameters": [],
               "returnType": {
                 "symbol": "Future",
@@ -104,6 +106,7 @@
           "functions": {
             "sayHello": {
               "name": "sayHello",
+              "apiName": "override",
               "parameters": [],
               "returnType": {
                 "symbol": "Future",
