@@ -359,7 +359,27 @@ String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Either `api.authenticated` or `api.anonymous` may be specified',
+          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_api_auth_same_type',
+        apis: {
+          'greeting.dart': '''
+@api.anonymous()
+@api.anonymous()
+library;
+
+import 'package:celest/api.dart' as api;
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+              'specified on the same function or API library',
         ],
       );
 
@@ -399,7 +419,8 @@ String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Either `api.authenticated` or `api.anonymous` may be specified',
+          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+              'specified on the same function or API library',
         ],
       );
     });

@@ -236,8 +236,8 @@ final class CelestAnalyzer {
           void assertSingleAuth() {
             if (hasAuth) {
               _reportError(
-                'Either `api.authenticated` or `api.anonymous` may be specified '
-                'but not both.',
+                'Only one `api.authenticated` or `api.anonymous` annotation '
+                'may be specified on the same function or API library.',
                 location,
               );
             }
