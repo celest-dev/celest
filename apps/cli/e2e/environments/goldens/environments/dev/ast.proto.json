@@ -7,14 +7,14 @@
   ],
   "widgets": [
     {
-      "type": "Celest::\"CloudApi\"",
+      "type": "Celest::CloudApi",
       "id": "override.dev",
       "cloudApi": {
         "name": "override"
       }
     },
     {
-      "type": "Celest::\"CloudFunction\"",
+      "type": "Celest::CloudFunction",
       "id": "override.sayHello.dev",
       "cloudFunction": {
         "name": "sayHello",

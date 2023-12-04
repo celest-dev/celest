@@ -19,6 +19,8 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_rpc:
     path: ../../packages/celest_rpc
+  cedar_dart:
+    path: ../../packages/cedar_dart
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
