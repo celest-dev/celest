@@ -15,6 +15,9 @@ abstract final class apis {
   static const authenticatedFunction =
       _i1.CloudApi(name: r'authenticated_function');
 
+  static const apiAuthConstantVariables =
+      _i1.CloudApi(name: r'api_auth_constant_variables');
+
   static const returnTypes = _i1.CloudApi(name: r'return_types');
 
   static const middleware = _i1.CloudApi(name: r'middleware');
@@ -142,6 +145,18 @@ abstract final class functions {
 
   static const authenticatedFunctionSayHello = _i1.CloudFunction<void, String>(
     api: r'authenticated_function',
+    functionName: r'sayHello',
+  );
+
+  static const apiAuthConstantVariablesSayHelloAuthenticated =
+      _i1.CloudFunction<void, String>(
+    api: r'api_auth_constant_variables',
+    functionName: r'sayHelloAuthenticated',
+  );
+
+  static const apiAuthConstantVariablesSayHello =
+      _i1.CloudFunction<void, String>(
+    api: r'api_auth_constant_variables',
     functionName: r'sayHello',
   );
 
@@ -491,6 +506,9 @@ List<_i1.CloudWidget> all = const [
   apis.authenticatedFunction,
   functions.authenticatedFunctionSayHelloAuthenticated,
   functions.authenticatedFunctionSayHello,
+  apis.apiAuthConstantVariables,
+  functions.apiAuthConstantVariablesSayHelloAuthenticated,
+  functions.apiAuthConstantVariablesSayHello,
   apis.returnTypes,
   functions.returnTypesAsyncVoidReturn,
   functions.returnTypesAsyncStringReturn,

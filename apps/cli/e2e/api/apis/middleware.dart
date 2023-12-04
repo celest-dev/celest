@@ -1,8 +1,12 @@
-@first()
-@second()
+@_first
+@_second
 library;
 
 import 'package:celest/celest.dart';
+
+// Annotations can be constructor invocations or variables.
+const _first = first();
+const _second = second();
 
 @third()
 @fourth()

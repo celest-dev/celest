@@ -1952,6 +1952,77 @@
           }
         }
       },
+      "api_auth_constant_variables": {
+        "name": "api_auth_constant_variables",
+        "environmentName": "",
+        "metadata": [
+          {
+            "$": "ApiAnonymous",
+            "location": {
+              "path": "apis/api_auth_constant_variables.dart",
+              "line": 1,
+              "column": 0
+            }
+          }
+        ],
+        "functions": {
+          "sayHelloAuthenticated": {
+            "name": "sayHelloAuthenticated",
+            "apiName": "api_auth_constant_variables",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [
+              {
+                "$": "ApiAuthenticated",
+                "location": {
+                  "path": "apis/api_auth_constant_variables.dart",
+                  "line": 10,
+                  "column": 0
+                }
+              }
+            ],
+            "location": {
+              "path": "apis/api_auth_constant_variables.dart",
+              "line": 11,
+              "column": 7
+            }
+          },
+          "sayHello": {
+            "name": "sayHello",
+            "apiName": "api_auth_constant_variables",
+            "parameters": [],
+            "returnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "symbol": "String",
+              "url": "dart:core",
+              "bound": null,
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "apis/api_auth_constant_variables.dart",
+              "line": 12,
+              "column": 7
+            }
+          }
+        }
+      },
       "return_types": {
         "name": "return_types",
         "environmentName": "",
@@ -4533,7 +4604,7 @@
                 "named": false,
                 "location": {
                   "path": "apis/middleware.dart",
-                  "line": 9,
+                  "line": 13,
                   "column": 40
                 }
               },
@@ -4549,7 +4620,7 @@
                 "named": false,
                 "location": {
                   "path": "apis/middleware.dart",
-                  "line": 9,
+                  "line": 13,
                   "column": 56
                 }
               }
@@ -4585,7 +4656,7 @@
                 },
                 "location": {
                   "path": "apis/middleware.dart",
-                  "line": 7,
+                  "line": 11,
                   "column": 0
                 }
               },
@@ -4599,14 +4670,14 @@
                 },
                 "location": {
                   "path": "apis/middleware.dart",
-                  "line": 8,
+                  "line": 12,
                   "column": 0
                 }
               }
             ],
             "location": {
               "path": "apis/middleware.dart",
-              "line": 9,
+              "line": 13,
               "column": 15
             }
           }

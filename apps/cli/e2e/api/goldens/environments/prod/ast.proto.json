@@ -113,6 +113,49 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "api_auth_constant_variables.prod",
+      "cloudApi": {
+        "name": "api_auth_constant_variables",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$anonymous",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "api_auth_constant_variables.sayHelloAuthenticated.prod",
+      "cloudFunction": {
+        "name": "sayHelloAuthenticated",
+        "apiName": "api_auth_constant_variables",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "api_auth_constant_variables.sayHello.prod",
+      "cloudFunction": {
+        "name": "sayHello",
+        "apiName": "api_auth_constant_variables"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "return_types.prod",
       "cloudApi": {
         "name": "return_types"

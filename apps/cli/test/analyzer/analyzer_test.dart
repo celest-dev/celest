@@ -324,6 +324,27 @@ String sayHello() => 'Hello, World!';
         },
       );
 
+      testNoErrors(
+        name: 'const_variable_annotations',
+        apis: {
+          'greeting.dart': '''
+@anonymous
+@logRequests
+library;
+
+const anonymous = api.anonymous();
+const logRequests = middleware.logRequests();
+const logResponses = middleware.logResponses();
+
+import 'package:celest/api.dart' as api;
+import 'package:celest/middleware.dart' as middleware;
+
+@logResponses
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
       testErrors(
         name: 'multiple_api_auth',
         apis: {
