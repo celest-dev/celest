@@ -59,11 +59,13 @@ dependencies:
 
 void testNoErrors({
   required String name,
+  String? skip,
   String? projectDart,
   Map<String, String> apis = const {},
 }) {
   testErrors(
     name: name,
+    skip: skip,
     errors: [],
     projectDart: projectDart,
     apis: apis,
@@ -72,11 +74,12 @@ void testNoErrors({
 
 void testErrors({
   required String name,
+  String? skip,
   String? projectDart,
   Map<String, String> apis = const {},
   required List<String> errors,
 }) {
-  test(name, () async {
+  test(name, skip: skip, () async {
     final projectPaths = await newProject(
       name: name,
       projectDart: projectDart,
@@ -219,6 +222,112 @@ String sayHello() => 'Hello, World!';
       );
 
       testErrors(
+        name: 'bad_parameter_types',
+        apis: {
+          'greeting.dart': '''
+void sayHello({
+  required Enum enum,
+  required List<Enum> listOfEnum,
+  required Iterable<Enum> iterableOfEnum,
+  required Set<Enum> setOfEnum,
+  required void Function() function,
+  required List<void Function()> listOfFunction,
+  required Iterable<void Function()> iterableOfFunction,
+  required Set<void Function()> setOfFunction,
+  required InvalidType invalidType,
+  required List<InvalidType> listOfInvalidType,
+  required Iterable<InvalidType> iterableOfInvalidType,
+  required Set<InvalidType> setOfInvalidType,
+  required Never never,
+  required List<Never> listOfNever,
+  required Iterable<Never> iterableOfNever,
+  required Set<Never> setOfNever,
+  required void void_,
+  required List<void> listOfVoid,
+  required Iterable<void> iterableOfVoid,
+  required Set<void> setOfVoid,
+}) {}
+''',
+        },
+        errors: [
+          'Untyped enums are not supported', // Enum
+          'Untyped enums are not supported', // List<Enum>
+          'Untyped enums are not supported', // Iterable<Enum>
+          'Untyped enums are not supported', // Set<Enum>
+          'Function types are not supported', // void Function()
+          'Function types are not supported', // List<void Function()>
+          'Function types are not supported', // Iterable<void Function()>
+          'Function types are not supported', // Set<void Function()>
+          'Invalid type', // InvalidType
+          'Invalid type', // List<InvalidType>
+          'Invalid type', // Iterable<InvalidType>
+          'Invalid type', // Set<InvalidType>
+          'Never types are not supported', // Never
+          'Never types are not supported', // List<Never>
+          'Never types are not supported', // Iterable<Never>
+          'Never types are not supported', // Set<Never>
+          'Void types are not supported in this position', // void
+          'Void types are not supported in this position', // List<void>
+          'Void types are not supported in this position', // Iterable<void>
+          'Void types are not supported in this position', // Set<void>
+        ],
+      );
+
+      testErrors(
+        name: 'bad_return_types',
+        apis: {
+          'greeting.dart': '''
+typedef ReturnTypes = ({
+  Enum enum,
+  List<Enum> listOfEnum,
+  Iterable<Enum> iterableOfEnum,
+  Set<Enum> setOfEnum,
+  void Function() function,
+  List<void Function()> listOfFunction,
+  Iterable<void Function()> iterableOfFunction,
+  Set<void Function()> setOfFunction,
+  InvalidType invalidType,
+  List<InvalidType> listOfInvalidType,
+  Iterable<InvalidType> iterableOfInvalidType,
+  Set<InvalidType> setOfInvalidType,
+  Never never,
+  List<Never> listOfNever,
+  Iterable<Never> iterableOfNever,
+  Set<Never> setOfNever,
+  void void_,
+  List<void> listOfVoid,
+  Iterable<void> iterableOfVoid,
+  Set<void> setOfVoid,
+});
+
+ReturnTypes sayHello() {}
+''',
+        },
+        errors: [
+          'Untyped enums are not supported', // Enum
+          'Untyped enums are not supported', // List<Enum>
+          'Untyped enums are not supported', // Iterable<Enum>
+          'Untyped enums are not supported', // Set<Enum>
+          'Function types are not supported', // void Function()
+          'Function types are not supported', // List<void Function()>
+          'Function types are not supported', // Iterable<void Function()>
+          'Function types are not supported', // Set<void Function()>
+          'Invalid type', // InvalidType
+          'Invalid type', // List<InvalidType>
+          'Invalid type', // Iterable<InvalidType>
+          'Invalid type', // Set<InvalidType>
+          'Never types are not supported', // Never
+          'Never types are not supported', // List<Never>
+          'Never types are not supported', // Iterable<Never>
+          'Never types are not supported', // Set<Never>
+          'Void types are not supported in this position', // void
+          'Void types are not supported in this position', // List<void>
+          'Void types are not supported in this position', // Iterable<void>
+          'Void types are not supported in this position', // Set<void>
+        ],
+      );
+
+      testErrors(
         name: 'bad_json_parameter',
         apis: {
           'greeting.dart': '''
@@ -232,6 +341,20 @@ String sayHello(NotJson _) => 'Hello, World!';
         ],
       );
 
+      testNoErrors(
+        name: 'valid_json',
+        apis: {
+          'greeting.dart': '''
+class ValidJson {
+  factory ValidJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+  Map<String, dynamic> toJson() => throw UnimplementedError();
+}
+
+ValidJson sayHello(ValidJson param) => param;
+''',
+        },
+      );
+
       testErrors(
         name: 'bad_json_return',
         apis: {
@@ -243,6 +366,26 @@ NotJson sayHello() => NotJson();
         },
         errors: [
           'The return type of a function must be serializable as JSON. No toJson method found for type: NotJson',
+        ],
+      );
+
+      testErrors(
+        name: 'toJson_in_extension',
+        apis: {
+          'greeting.dart': '''
+class OnlyFromJson {
+  factory OnlyFromJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+}
+
+extension on OnlyFromJson {
+  Map<String, dynamic> toJson() => throw UnimplementedError();
+}
+
+OnlyFromJson sayHello() => OnlyFromJson();
+''',
+        },
+        errors: [
+          'The return type of a function must be serializable as JSON. No toJson method found for type: OnlyFromJson',
         ],
       );
 

@@ -13,14 +13,14 @@ dependencies:
   aws_common: ^0.6.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
+  cedar_dart:
+    path: ../../packages/cedar_dart
   celest:
     path: ../../packages/celest
   celest_cli_common:
     path: ../../packages/celest_cli_common
   celest_rpc:
     path: ../../packages/celest_rpc
-  cedar_dart:
-    path: ../../packages/cedar_dart
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
@@ -38,6 +38,23 @@ dependencies:
   stream_transform: ^2.1.0
   watcher: ^1.1.0
 
+dependency_overrides:
+  test:
+    git:
+      url: https://github.com/dart-lang/test
+      ref: master
+      path: pkgs/test
+  test_core:
+    git:
+      url: https://github.com/dart-lang/test
+      ref: master
+      path: pkgs/test_core
+  test_api:
+    git:
+      url: https://github.com/dart-lang/test
+      ref: master
+      path: pkgs/test_api
+
 dev_dependencies:
   build_runner: ^2.4.6
   build_version: ^2.1.1
@@ -46,7 +63,11 @@ dev_dependencies:
     path: ../../packages/celest_lints
   json_serializable: ^6.7.1
   package_config: ^2.1.0
-  test: ^1.24.0
+  test:
+    git:
+      url: https://github.com/dart-lang/test
+      ref: master
+      path: pkgs/test
   test_descriptor: ^2.0.1
 
 executables:

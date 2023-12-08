@@ -7,6 +7,15 @@ extension ReferenceHelper on Reference {
       symbol == 'FunctionContext' &&
       (url?.startsWith('package:celest') ?? false);
 
+  bool get isSimpleJson =>
+      isDartCoreBool ||
+      isDartCoreDouble ||
+      isDartCoreInt ||
+      isDartCoreString ||
+      isDartCoreObject ||
+      isDartCoreNull ||
+      isEnum;
+
   bool get isDartAsyncFuture => symbol == 'Future' && url == 'dart:async';
 
   bool get isDartAsyncFutureOr => symbol == 'FutureOr' && url == 'dart:async';
@@ -35,6 +44,12 @@ extension ReferenceHelper on Reference {
 
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
+        final TypedefRecordType typedef => TypeReference(
+            (t) => t
+              ..symbol = typedef.symbol
+              ..url = typedef.url
+              ..isNullable = typedef.recordType.isNullable,
+          ),
         _ => TypeReference(
             (t) => t
               ..symbol = symbol
@@ -50,6 +65,10 @@ extension ReferenceHelper on Reference {
   /// Returns a non-nullable version of `this`.
   TypeReference get nonNullable {
     return toTypeReference.rebuild((t) => t.isNullable = false);
+  }
+
+  TypeReference withNullability(bool isNullable) {
+    return toTypeReference.rebuild((t) => t.isNullable = isNullable);
   }
 
   bool get isNullableOrFalse => toTypeReference.isNullable ?? false;

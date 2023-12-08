@@ -235,7 +235,7 @@ class TestRunner {
           ProcessUtil(functionProc)
               .stderr
               .first
-              .then((e) => fail('Failed to start function: $e')),
+              .then((e) => fail('Failed to start function: ${utf8.decode(e)}')),
         ]);
       });
 
@@ -304,6 +304,7 @@ const complexStruct = <String, dynamic>{
   'anEnum': 'a',
   'aNull': null,
   'aSimpleStruct': simpleStruct,
+  'aSimpleClass': simpleStruct,
   'anIterableOfString': ['hello', 'world'],
   'anIterableOfInt': [1, 2, 3],
   'anIterableOfDouble': [1.0, 2.0, 3.0],
@@ -311,6 +312,7 @@ const complexStruct = <String, dynamic>{
   'anIterableOfEnum': ['a', 'b', 'c'],
   'anIterableOfNull': [null, null],
   'anIterableOfSimpleStruct': [simpleStruct, simpleStruct],
+  'anIterableOfSimpleClass': [simpleStruct, simpleStruct],
   'aListOfString': ['hello', 'world'],
   'aListOfInt': [1, 2, 3],
   'aListOfDouble': [1.0, 2.0, 3.0],
@@ -318,6 +320,7 @@ const complexStruct = <String, dynamic>{
   'aListOfEnum': ['a', 'b', 'c'],
   'aListOfNull': [null, null],
   'aListOfSimpleStruct': [simpleStruct, simpleStruct],
+  'aListOfSimpleClass': [simpleStruct, simpleStruct],
   'aMapOfString': {
     'hello': 'world',
   },
@@ -344,6 +347,11 @@ const complexStruct = <String, dynamic>{
     'null': null,
   },
   'aMapOfSimpleStruct': {
+    'one': simpleStruct,
+    'two': simpleStruct,
+    'three': simpleStruct,
+  },
+  'aMapOfSimpleClass': {
     'one': simpleStruct,
     'two': simpleStruct,
     'three': simpleStruct,
@@ -425,8 +433,12 @@ const Map<String, Test> tests = {
               input: {
                 'aSimpleStruct': simpleStruct,
                 'aComplexStruct': complexStruct,
+                'aSimpleClass': simpleStruct,
+                'aComplexClass': complexStruct,
                 'aNullableSimpleStruct': simpleStruct,
                 'aNullableComplexStruct': complexStruct,
+                'aNullableSimpleClass': simpleStruct,
+                'aNullableComplexClass': complexStruct,
                 'anIterableOfSimpleStruct': [
                   simpleStruct,
                   simpleStruct,
@@ -435,11 +447,27 @@ const Map<String, Test> tests = {
                   complexStruct,
                   complexStruct,
                 ],
+                'anIterableOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'anIterableOfComplexClass': [
+                  complexStruct,
+                  complexStruct,
+                ],
                 'aNullableIterableOfSimpleStruct': [
                   simpleStruct,
                   simpleStruct,
                 ],
                 'aNullableIterableOfComplexStruct': [
+                  complexStruct,
+                  complexStruct,
+                ],
+                'aNullableIterableOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'aNullableIterableOfComplexClass': [
                   complexStruct,
                   complexStruct,
                 ],
@@ -453,6 +481,16 @@ const Map<String, Test> tests = {
                   null,
                   complexStruct,
                 ],
+                'anIterableOfNullableSimpleClass': [
+                  simpleStruct,
+                  null,
+                  simpleStruct,
+                ],
+                'anIterableOfNullableComplexClass': [
+                  complexStruct,
+                  null,
+                  complexStruct,
+                ],
                 'aListOfSimpleStruct': [
                   simpleStruct,
                   simpleStruct,
@@ -461,11 +499,27 @@ const Map<String, Test> tests = {
                   complexStruct,
                   complexStruct,
                 ],
+                'aListOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'aListOfComplexClass': [
+                  complexStruct,
+                  complexStruct,
+                ],
                 'aNullableListOfSimpleStruct': [
                   simpleStruct,
                   simpleStruct,
                 ],
                 'aNullableListOfComplexStruct': [
+                  complexStruct,
+                  complexStruct,
+                ],
+                'aNullableListOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'aNullableListOfComplexClass': [
                   complexStruct,
                   complexStruct,
                 ],
@@ -479,12 +533,32 @@ const Map<String, Test> tests = {
                   null,
                   complexStruct,
                 ],
+                'aListOfNullableSimpleClass': [
+                  simpleStruct,
+                  null,
+                  simpleStruct,
+                ],
+                'aListOfNullableComplexClass': [
+                  complexStruct,
+                  null,
+                  complexStruct,
+                ],
                 'aMapOfSimpleStruct': {
                   'one': simpleStruct,
                   'two': simpleStruct,
                   'three': simpleStruct,
                 },
                 'aMapOfComplexStruct': {
+                  'one': complexStruct,
+                  'two': complexStruct,
+                  'three': complexStruct,
+                },
+                'aMapOfSimpleClass': {
+                  'one': simpleStruct,
+                  'two': simpleStruct,
+                  'three': simpleStruct,
+                },
+                'aMapOfComplexClass': {
                   'one': complexStruct,
                   'two': complexStruct,
                   'three': complexStruct,
@@ -499,12 +573,32 @@ const Map<String, Test> tests = {
                   'two': complexStruct,
                   'three': complexStruct,
                 },
+                'aNullableMapOfSimpleClass': {
+                  'one': simpleStruct,
+                  'two': simpleStruct,
+                  'three': simpleStruct,
+                },
+                'aNullableMapOfComplexClass': {
+                  'one': complexStruct,
+                  'two': complexStruct,
+                  'three': complexStruct,
+                },
                 'aMapOfNullableSimpleStruct': {
                   'one': simpleStruct,
                   'two': null,
                   'three': simpleStruct,
                 },
                 'aMapOfNullableComplexStruct': {
+                  'one': complexStruct,
+                  'two': null,
+                  'three': complexStruct,
+                },
+                'aMapOfNullableSimpleClass': {
+                  'one': simpleStruct,
+                  'two': null,
+                  'three': simpleStruct,
+                },
+                'aMapOfNullableComplexClass': {
                   'one': complexStruct,
                   'two': null,
                   'three': complexStruct,
@@ -519,6 +613,16 @@ const Map<String, Test> tests = {
                   'two': null,
                   'three': complexStruct,
                 },
+                'aNullableMapOfNullableSimpleClass': {
+                  'one': simpleStruct,
+                  'two': null,
+                  'three': simpleStruct,
+                },
+                'aNullableMapOfNullableComplexClass': {
+                  'one': complexStruct,
+                  'two': null,
+                  'three': complexStruct,
+                },
               },
               output: null,
             ),
@@ -527,8 +631,12 @@ const Map<String, Test> tests = {
               input: {
                 'aSimpleStruct': simpleStruct,
                 'aComplexStruct': complexStruct,
+                'aSimpleClass': simpleStruct,
+                'aComplexClass': complexStruct,
                 'aNullableSimpleStruct': null,
                 'aNullableComplexStruct': null,
+                'aNullableSimpleClass': null,
+                'aNullableComplexClass': null,
                 'anIterableOfSimpleStruct': [
                   simpleStruct,
                   simpleStruct,
@@ -537,14 +645,34 @@ const Map<String, Test> tests = {
                   complexStruct,
                   complexStruct,
                 ],
+                'anIterableOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'anIterableOfComplexClass': [
+                  complexStruct,
+                  complexStruct,
+                ],
                 'aNullableIterableOfSimpleStruct': null,
                 'aNullableIterableOfComplexStruct': null,
+                'aNullableIterableOfSimpleClass': null,
+                'aNullableIterableOfComplexClass': null,
                 'anIterableOfNullableSimpleStruct': [
                   simpleStruct,
                   null,
                   simpleStruct,
                 ],
                 'anIterableOfNullableComplexStruct': [
+                  complexStruct,
+                  null,
+                  complexStruct,
+                ],
+                'anIterableOfNullableSimpleClass': [
+                  simpleStruct,
+                  null,
+                  simpleStruct,
+                ],
+                'anIterableOfNullableComplexClass': [
                   complexStruct,
                   null,
                   complexStruct,
@@ -557,14 +685,34 @@ const Map<String, Test> tests = {
                   complexStruct,
                   complexStruct,
                 ],
+                'aListOfSimpleClass': [
+                  simpleStruct,
+                  simpleStruct,
+                ],
+                'aListOfComplexClass': [
+                  complexStruct,
+                  complexStruct,
+                ],
                 'aNullableListOfSimpleStruct': null,
                 'aNullableListOfComplexStruct': null,
+                'aNullableListOfSimpleClass': null,
+                'aNullableListOfComplexClass': null,
                 'aListOfNullableSimpleStruct': [
                   simpleStruct,
                   null,
                   simpleStruct,
                 ],
                 'aListOfNullableComplexStruct': [
+                  complexStruct,
+                  null,
+                  complexStruct,
+                ],
+                'aListOfNullableSimpleClass': [
+                  simpleStruct,
+                  null,
+                  simpleStruct,
+                ],
+                'aListOfNullableComplexClass': [
                   complexStruct,
                   null,
                   complexStruct,
@@ -579,8 +727,20 @@ const Map<String, Test> tests = {
                   'two': complexStruct,
                   'three': complexStruct,
                 },
+                'aMapOfSimpleClass': {
+                  'one': simpleStruct,
+                  'two': simpleStruct,
+                  'three': simpleStruct,
+                },
+                'aMapOfComplexClass': {
+                  'one': complexStruct,
+                  'two': complexStruct,
+                  'three': complexStruct,
+                },
                 'aNullableMapOfSimpleStruct': null,
                 'aNullableMapOfComplexStruct': null,
+                'aNullableMapOfSimpleClass': null,
+                'aNullableMapOfComplexClass': null,
                 'aMapOfNullableSimpleStruct': {
                   'one': simpleStruct,
                   'two': null,
@@ -591,8 +751,20 @@ const Map<String, Test> tests = {
                   'two': null,
                   'three': complexStruct,
                 },
+                'aMapOfNullableSimpleClass': {
+                  'one': simpleStruct,
+                  'two': null,
+                  'three': simpleStruct,
+                },
+                'aMapOfNullableComplexClass': {
+                  'one': complexStruct,
+                  'two': null,
+                  'three': complexStruct,
+                },
                 'aNullableMapOfNullableSimpleStruct': null,
                 'aNullableMapOfNullableComplexStruct': null,
+                'aNullableMapOfNullableSimpleClass': null,
+                'aNullableMapOfNullableComplexClass': null,
               },
               output: null,
             ),

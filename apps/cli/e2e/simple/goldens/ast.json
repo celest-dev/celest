@@ -1,6 +1,7 @@
 {
   "name": "simple",
   "reference": {
+    "$": "Reference",
     "symbol": "project",
     "url": "project.dart"
   },

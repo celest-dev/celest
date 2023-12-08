@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
@@ -6,10 +5,6 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-// ignore: implementation_imports
-import 'package:analyzer/src/dart/element/element.dart';
-// ignore: implementation_imports
-import 'package:analyzer/src/generated/source.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
@@ -74,7 +69,7 @@ final class CelestAnalyzer {
     }
     final projectFile =
         await _context.currentSession.getResolvedUnit(projectFilePath);
-    if (projectFile is! ResolvedUnitResult) {
+    if (projectFile is! ResolvedUnitResult || !projectFile.exists) {
       _reportError(
         'Could not resolve project file',
         SourceLocation(
@@ -372,19 +367,19 @@ final class CelestAnalyzer {
     required String environmentName,
     required String apiFile,
   }) async {
-    final apiUnit = await _context.currentSession.getUnitElement(apiFile);
-    if (apiUnit is! UnitElementResult) {
+    final apiLibraryResult =
+        await _context.currentSession.getResolvedLibrary(apiFile);
+    if (apiLibraryResult is! ResolvedLibraryResult) {
       _reportError(
         'Could not resolve API file',
         SourceLocation(path: apiFile, line: 0, column: 0),
       );
       return null;
     }
-    final libraryMetdata = _collectApiMetadata(apiUnit.element.library);
+    final library = apiLibraryResult.element;
+    final libraryMetdata = _collectApiMetadata(library);
     final functions = Map.fromEntries(
-      apiUnit.element.library.topLevelElements
-          .whereType<FunctionElement>()
-          .map((func) {
+      library.topLevelElements.whereType<FunctionElement>().map((func) {
         if (func.isPrivate) {
           return null;
         }
@@ -404,11 +399,13 @@ final class CelestAnalyzer {
               return parameter;
             }
             final parameterTypeVerdict = param.type.isValidParameterType;
-            if (!parameterTypeVerdict.isJsonSerializable) {
-              _reportError(
-                'The type of a parameter must be serializable as JSON. ${parameterTypeVerdict.reason}',
-                parameter.location,
-              );
+            if (!parameterTypeVerdict.isSerializable) {
+              for (final reason in parameterTypeVerdict.reasons) {
+                _reportError(
+                  'The type of a parameter must be serializable as JSON. $reason',
+                  parameter.location,
+                );
+              }
             }
             return parameter;
           }).toList(),
@@ -433,11 +430,13 @@ final class CelestAnalyzer {
         }
         final returnType = func.returnType;
         final returnTypeVerdict = returnType.isValidReturnType;
-        if (!returnTypeVerdict.isJsonSerializable) {
-          _reportError(
-            'The return type of a function must be serializable as JSON. ${returnTypeVerdict.reason}',
-            function.location,
-          );
+        if (!returnTypeVerdict.isSerializable) {
+          for (final reason in returnTypeVerdict.reasons) {
+            _reportError(
+              'The return type of a function must be serializable as JSON. $reason',
+              function.location,
+            );
+          }
         }
         return MapEntry(function.name, function);
       }).nonNulls,
@@ -448,51 +447,6 @@ final class CelestAnalyzer {
       metadata: libraryMetdata,
       functions: functions,
     );
-  }
-}
-
-extension on Element {
-  ast.SourceLocation sourceLocation(String projectRoot) {
-    final uri = source!.uri;
-    final (lineNo, column) = source!.offsetToLineCol(nameOffset);
-    return ast.SourceLocation(
-      path: p.relative(p.fromUri(uri), from: projectRoot),
-      line: lineNo,
-      column: column,
-    );
-  }
-}
-
-extension on ElementAnnotation {
-  ast.SourceLocation sourceLocation(Source source, String projectRoot) {
-    final impl = this as ElementAnnotationImpl;
-    final offset = impl.annotationAst.offset;
-    final (lineNo, column) = source.offsetToLineCol(offset);
-    return ast.SourceLocation(
-      path: p.relative(p.fromUri(source.uri), from: projectRoot),
-      line: lineNo,
-      column: column,
-    );
-  }
-}
-
-extension on Source {
-  /// Finds the line and column number corresponding to [offset].
-  (int line, int col) offsetToLineCol(int offset) {
-    final source = this;
-    final lines = LineSplitter.split(source.contents.data);
-    var currOffset = 0;
-    var lineNo = 1;
-    var column = 1;
-    for (final line in lines) {
-      if (currOffset + line.length >= offset) {
-        column = offset - currOffset;
-        break;
-      }
-      currOffset += line.length + 1;
-      lineNo++;
-    }
-    return (lineNo, column);
   }
 }
 

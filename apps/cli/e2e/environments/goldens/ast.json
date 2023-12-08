@@ -1,6 +1,7 @@
 {
   "name": "environments",
   "reference": {
+    "$": "Reference",
     "symbol": "project",
     "url": "project.dart"
   },
@@ -26,23 +27,23 @@
             "apiName": "override",
             "parameters": [],
             "returnType": {
+              "$": "TypeReference",
               "symbol": "Future",
               "url": "dart:async",
-              "bound": null,
               "types": [
                 {
+                  "$": "TypeReference",
                   "symbol": "String",
                   "url": "dart:core",
-                  "bound": null,
                   "isNullable": false
                 }
               ],
               "isNullable": false
             },
             "flattenedReturnType": {
+              "$": "TypeReference",
               "symbol": "String",
               "url": "dart:core",
-              "bound": null,
               "isNullable": false
             },
             "metadata": [],
@@ -69,23 +70,23 @@
               "apiName": "override",
               "parameters": [],
               "returnType": {
+                "$": "TypeReference",
                 "symbol": "Future",
                 "url": "dart:async",
-                "bound": null,
                 "types": [
                   {
+                    "$": "TypeReference",
                     "symbol": "String",
                     "url": "dart:core",
-                    "bound": null,
                     "isNullable": false
                   }
                 ],
                 "isNullable": false
               },
               "flattenedReturnType": {
+                "$": "TypeReference",
                 "symbol": "String",
                 "url": "dart:core",
-                "bound": null,
                 "isNullable": false
               },
               "metadata": [],
@@ -112,23 +113,23 @@
               "apiName": "override",
               "parameters": [],
               "returnType": {
+                "$": "TypeReference",
                 "symbol": "Future",
                 "url": "dart:async",
-                "bound": null,
                 "types": [
                   {
+                    "$": "TypeReference",
                     "symbol": "String",
                     "url": "dart:core",
-                    "bound": null,
                     "isNullable": false
                   }
                 ],
                 "isNullable": false
               },
               "flattenedReturnType": {
+                "$": "TypeReference",
                 "symbol": "String",
                 "url": "dart:core",
-                "bound": null,
                 "isNullable": false
               },
               "metadata": [],

@@ -115,6 +115,10 @@ final class EntrypointGenerator {
                         returnType.isDartAsyncFutureOr) {
                       response = response.awaited;
                     }
+                    // TODO: Remove
+                    b.statements.add(
+                      const Code('// ignore: unused_local_variable'),
+                    );
                     b.addExpression(
                       declareFinal('response').assign(response),
                     );

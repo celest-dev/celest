@@ -7,7 +7,7 @@ import 'package:shelf/shelf.dart' as _i5;
 
 import '../../../../../apis/return_types.dart' as _i3;
 
-class BoolReturnTarget extends _i1.FunctionTarget {
+class ComplexClassReturnNullableTarget extends _i1.FunctionTarget {
   final _inner = _i1.JsonWithContextFunctionTarget(
     (
       request,
@@ -15,8 +15,8 @@ class BoolReturnTarget extends _i1.FunctionTarget {
     ) async {
       final celestContext = _i2.FunctionContext();
 // ignore: unused_local_variable
-      final response = _i3.boolReturn(celestContext);
-      return response;
+      final response = _i3.complexClassReturnNullable(celestContext);
+      return response == null ? null : response.toJson();
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -31,6 +31,6 @@ class BoolReturnTarget extends _i1.FunctionTarget {
 _i4.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
-    (_) => BoolReturnTarget(),
+    (_) => ComplexClassReturnNullableTarget(),
   );
 }

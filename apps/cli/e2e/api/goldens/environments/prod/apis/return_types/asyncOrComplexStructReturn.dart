@@ -7,7 +7,7 @@ import 'package:shelf/shelf.dart' as _i5;
 
 import '../../../../../apis/return_types.dart' as _i3;
 
-class ComplexReturnTarget extends _i1.FunctionTarget {
+class AsyncOrComplexStructReturnTarget extends _i1.FunctionTarget {
   final _inner = _i1.JsonWithContextFunctionTarget(
     (
       request,
@@ -15,7 +15,7 @@ class ComplexReturnTarget extends _i1.FunctionTarget {
     ) async {
       final celestContext = _i2.FunctionContext();
 // ignore: unused_local_variable
-      final response = _i3.complexReturn(celestContext);
+      final response = await _i3.asyncOrComplexStructReturn(celestContext);
       return {
         'aBool': response.aBool,
         'aDouble': response.aDouble,
@@ -90,6 +90,6 @@ class ComplexReturnTarget extends _i1.FunctionTarget {
 _i4.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
-    (_) => ComplexReturnTarget(),
+    (_) => AsyncOrComplexStructReturnTarget(),
   );
 }

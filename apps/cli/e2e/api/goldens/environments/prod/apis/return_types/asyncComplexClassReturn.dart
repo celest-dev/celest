@@ -7,15 +7,16 @@ import 'package:shelf/shelf.dart' as _i5;
 
 import '../../../../../apis/return_types.dart' as _i3;
 
-class AsyncOrComplexReturnNullableTarget extends _i1.FunctionTarget {
+class AsyncComplexClassReturnTarget extends _i1.FunctionTarget {
   final _inner = _i1.JsonWithContextFunctionTarget(
     (
       request,
       context,
     ) async {
       final celestContext = _i2.FunctionContext();
-      final response = await _i3.asyncOrComplexReturnNullable(celestContext);
-      return response == null ? null : response.toJson();
+// ignore: unused_local_variable
+      final response = await _i3.asyncComplexClassReturn(celestContext);
+      return response.toJson();
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -30,6 +31,6 @@ class AsyncOrComplexReturnNullableTarget extends _i1.FunctionTarget {
 _i4.Future<void> main(List<String> args) async {
   await _i1.serve(
     args,
-    (_) => AsyncOrComplexReturnNullableTarget(),
+    (_) => AsyncComplexClassReturnTarget(),
   );
 }

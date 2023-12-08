@@ -90,6 +90,9 @@ class _Core {
   /// Creates a [core.Duration] reference.
   Reference get duration => const Reference('Duration', _url);
 
+  /// Creates a [dynamic] reference.
+  Reference get dynamic => const Reference('dynamic');
+
   /// Creates a [core.Exception] reference.
   Reference get exception => const Reference('Exception', _url);
 
@@ -130,6 +133,9 @@ class _Core {
 
   /// Creates an [core.MapEntry] reference.
   Reference get mapEntry => const Reference('MapEntry', _url);
+
+  /// Creates an [core.Never] reference.
+  Reference get never => const Reference('Never', _url);
 
   /// Creates a [core.Null] reference.
   Reference get null$ => const Reference('Null', _url);

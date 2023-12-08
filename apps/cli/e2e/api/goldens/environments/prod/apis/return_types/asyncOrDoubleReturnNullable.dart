@@ -14,6 +14,7 @@ class AsyncOrDoubleReturnNullableTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final celestContext = _i2.FunctionContext();
+// ignore: unused_local_variable
       final response = await _i3.asyncOrDoubleReturnNullable(celestContext);
       return response == null ? null : response;
     },

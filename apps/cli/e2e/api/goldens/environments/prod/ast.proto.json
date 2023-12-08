@@ -203,6 +203,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.asyncIterableReturn.prod",
+      "cloudFunction": {
+        "name": "asyncIterableReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.asyncListReturn.prod",
       "cloudFunction": {
         "name": "asyncListReturn",
@@ -214,14 +222,6 @@
       "id": "return_types.asyncMapReturn.prod",
       "cloudFunction": {
         "name": "asyncMapReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncIterableReturn.prod",
-      "cloudFunction": {
-        "name": "asyncIterableReturn",
         "apiName": "return_types"
       }
     },
@@ -243,9 +243,33 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncComplexReturn.prod",
+      "id": "return_types.asyncComplexStructReturn.prod",
       "cloudFunction": {
-        "name": "asyncComplexReturn",
+        "name": "asyncComplexStructReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncComplexStructReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncComplexStructReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncComplexClassReturn.prod",
+      "cloudFunction": {
+        "name": "asyncComplexClassReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncClassReturnNullable",
         "apiName": "return_types"
       }
     },
@@ -291,6 +315,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIterableReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrIterableReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.asyncOrListReturn.prod",
       "cloudFunction": {
         "name": "asyncOrListReturn",
@@ -307,14 +339,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIterableReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrIterableReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "return_types.asyncOrStructReturn.prod",
       "cloudFunction": {
         "name": "asyncOrStructReturn",
@@ -323,9 +347,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrComplexReturn.prod",
+      "id": "return_types.asyncOrComplexStructReturn.prod",
       "cloudFunction": {
-        "name": "asyncOrComplexReturn",
+        "name": "asyncOrComplexStructReturn",
         "apiName": "return_types"
       }
     },
@@ -371,6 +395,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIterableReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrIterableReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.asyncOrListReturnNullable.prod",
       "cloudFunction": {
         "name": "asyncOrListReturnNullable",
@@ -387,14 +419,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIterableReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrIterableReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "return_types.asyncOrStructReturnNullable.prod",
       "cloudFunction": {
         "name": "asyncOrStructReturnNullable",
@@ -403,9 +427,25 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrComplexReturnNullable.prod",
+      "id": "return_types.asyncOrComplexStructReturnNullable.prod",
       "cloudFunction": {
-        "name": "asyncOrComplexReturnNullable",
+        "name": "asyncOrComplexStructReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrSimpleClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrSimpleClassReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrComplexClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrComplexClassReturnNullable",
         "apiName": "return_types"
       }
     },
@@ -451,6 +491,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.iterableReturn.prod",
+      "cloudFunction": {
+        "name": "iterableReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.listReturn.prod",
       "cloudFunction": {
         "name": "listReturn",
@@ -467,14 +515,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.iterableReturn.prod",
-      "cloudFunction": {
-        "name": "iterableReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "return_types.structReturn.prod",
       "cloudFunction": {
         "name": "structReturn",
@@ -486,6 +526,22 @@
       "id": "return_types.complexReturn.prod",
       "cloudFunction": {
         "name": "complexReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.simpleClassReturn.prod",
+      "cloudFunction": {
+        "name": "simpleClassReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.complexClassReturn.prod",
+      "cloudFunction": {
+        "name": "complexClassReturn",
         "apiName": "return_types"
       }
     },
@@ -523,6 +579,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.iterableReturnNullable.prod",
+      "cloudFunction": {
+        "name": "iterableReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.listReturnNullable.prod",
       "cloudFunction": {
         "name": "listReturnNullable",
@@ -539,14 +603,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.iterableReturnNullable.prod",
-      "cloudFunction": {
-        "name": "iterableReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "return_types.structReturnNullable.prod",
       "cloudFunction": {
         "name": "structReturnNullable",
@@ -558,6 +614,22 @@
       "id": "return_types.complexReturnNullable.prod",
       "cloudFunction": {
         "name": "complexReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.simpleClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "simpleClassReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.complexClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "complexClassReturnNullable",
         "apiName": "return_types"
       }
     },

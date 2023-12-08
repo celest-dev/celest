@@ -107,30 +107,464 @@ abstract final class functions {
 
   static const parameterTypesComplex = _i1.CloudFunction<
       (
-        _i2.SimpleStruct,
-        _i2.ComplexStruct,
-        _i2.SimpleStruct?,
-        _i2.ComplexStruct?,
-        Iterable<_i2.SimpleStruct>,
-        Iterable<_i2.ComplexStruct>,
-        Iterable<_i2.SimpleStruct>?,
-        Iterable<_i2.ComplexStruct>?,
-        Iterable<_i2.SimpleStruct?>,
-        Iterable<_i2.ComplexStruct?>,
-        List<_i2.SimpleStruct>,
-        List<_i2.ComplexStruct>,
-        List<_i2.SimpleStruct>?,
-        List<_i2.ComplexStruct>?,
-        List<_i2.SimpleStruct?>,
-        List<_i2.ComplexStruct?>,
-        Map<String, _i2.SimpleStruct>,
-        Map<String, _i2.ComplexStruct>,
-        Map<String, _i2.SimpleStruct>?,
-        Map<String, _i2.ComplexStruct>?,
-        Map<String, _i2.SimpleStruct?>,
-        Map<String, _i2.ComplexStruct?>,
-        Map<String, _i2.SimpleStruct?>?,
-        Map<String, _i2.ComplexStruct?>?
+        (),
+        ({
+          bool aBool,
+          double aDouble,
+          List<bool> aListOfBool,
+          List<double> aListOfDouble,
+          List<_i2.MyEnum> aListOfEnum,
+          List<int> aListOfInt,
+          List<Null> aListOfNull,
+          List<_i2.SimpleClass> aListOfSimpleClass,
+          List<()> aListOfSimpleStruct,
+          List<String> aListOfString,
+          Map<String, bool> aMapOfBool,
+          Map<String, double> aMapOfDouble,
+          Map<String, _i2.MyEnum> aMapOfEnum,
+          Map<String, int> aMapOfInt,
+          Map<String, Null> aMapOfNull,
+          Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+          Map<String, ()> aMapOfSimpleStruct,
+          Map<String, String> aMapOfString,
+          Null aNull,
+          _i2.SimpleClass aSimpleClass,
+          () aSimpleStruct,
+          String aString,
+          _i2.MyEnum anEnum,
+          int anInt,
+          Iterable<bool> anIterableOfBool,
+          Iterable<double> anIterableOfDouble,
+          Iterable<_i2.MyEnum> anIterableOfEnum,
+          Iterable<int> anIterableOfInt,
+          Iterable<Null> anIterableOfNull,
+          Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+          Iterable<()> anIterableOfSimpleStruct,
+          Iterable<String> anIterableOfString
+        }),
+        _i2.SimpleClass,
+        _i2.ComplexClass,
+        ()?,
+        ({
+          bool aBool,
+          double aDouble,
+          List<bool> aListOfBool,
+          List<double> aListOfDouble,
+          List<_i2.MyEnum> aListOfEnum,
+          List<int> aListOfInt,
+          List<Null> aListOfNull,
+          List<_i2.SimpleClass> aListOfSimpleClass,
+          List<()> aListOfSimpleStruct,
+          List<String> aListOfString,
+          Map<String, bool> aMapOfBool,
+          Map<String, double> aMapOfDouble,
+          Map<String, _i2.MyEnum> aMapOfEnum,
+          Map<String, int> aMapOfInt,
+          Map<String, Null> aMapOfNull,
+          Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+          Map<String, ()> aMapOfSimpleStruct,
+          Map<String, String> aMapOfString,
+          Null aNull,
+          _i2.SimpleClass aSimpleClass,
+          () aSimpleStruct,
+          String aString,
+          _i2.MyEnum anEnum,
+          int anInt,
+          Iterable<bool> anIterableOfBool,
+          Iterable<double> anIterableOfDouble,
+          Iterable<_i2.MyEnum> anIterableOfEnum,
+          Iterable<int> anIterableOfInt,
+          Iterable<Null> anIterableOfNull,
+          Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+          Iterable<()> anIterableOfSimpleStruct,
+          Iterable<String> anIterableOfString
+        })?,
+        _i2.SimpleClass?,
+        _i2.ComplexClass?,
+        Iterable<()>,
+        Iterable<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>,
+        Iterable<_i2.SimpleClass>,
+        Iterable<_i2.ComplexClass>,
+        Iterable<()>?,
+        Iterable<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>?,
+        Iterable<_i2.SimpleClass>?,
+        Iterable<_i2.ComplexClass>?,
+        Iterable<()?>,
+        Iterable<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })?>,
+        Iterable<_i2.SimpleClass?>,
+        Iterable<_i2.ComplexClass?>,
+        List<()>,
+        List<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>,
+        List<_i2.SimpleClass>,
+        List<_i2.ComplexClass>,
+        List<()>?,
+        List<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>?,
+        List<_i2.SimpleClass>?,
+        List<_i2.ComplexClass>?,
+        List<()?>,
+        List<
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })?>,
+        List<_i2.SimpleClass?>,
+        List<_i2.ComplexClass?>,
+        Map<String, ()>,
+        Map<
+            String,
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>,
+        Map<String, _i2.SimpleClass>,
+        Map<String, _i2.ComplexClass>,
+        Map<String, ()>?,
+        Map<
+            String,
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })>?,
+        Map<String, _i2.SimpleClass>?,
+        Map<String, _i2.ComplexClass>?,
+        Map<String, ()?>,
+        Map<
+            String,
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })?>,
+        Map<String, _i2.SimpleClass?>,
+        Map<String, _i2.ComplexClass?>,
+        Map<String, ()?>?,
+        Map<
+            String,
+            ({
+              bool aBool,
+              double aDouble,
+              List<bool> aListOfBool,
+              List<double> aListOfDouble,
+              List<_i2.MyEnum> aListOfEnum,
+              List<int> aListOfInt,
+              List<Null> aListOfNull,
+              List<_i2.SimpleClass> aListOfSimpleClass,
+              List<()> aListOfSimpleStruct,
+              List<String> aListOfString,
+              Map<String, bool> aMapOfBool,
+              Map<String, double> aMapOfDouble,
+              Map<String, _i2.MyEnum> aMapOfEnum,
+              Map<String, int> aMapOfInt,
+              Map<String, Null> aMapOfNull,
+              Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+              Map<String, ()> aMapOfSimpleStruct,
+              Map<String, String> aMapOfString,
+              Null aNull,
+              _i2.SimpleClass aSimpleClass,
+              () aSimpleStruct,
+              String aString,
+              _i2.MyEnum anEnum,
+              int anInt,
+              Iterable<bool> anIterableOfBool,
+              Iterable<double> anIterableOfDouble,
+              Iterable<_i2.MyEnum> anIterableOfEnum,
+              Iterable<int> anIterableOfInt,
+              Iterable<Null> anIterableOfNull,
+              Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+              Iterable<()> anIterableOfSimpleStruct,
+              Iterable<String> anIterableOfString
+            })?>?,
+        Map<String, _i2.SimpleClass?>?,
+        Map<String, _i2.ComplexClass?>?
       ),
       void>(
     api: r'parameter_types',
@@ -185,6 +619,12 @@ abstract final class functions {
     functionName: r'asyncBoolReturn',
   );
 
+  static const returnTypesAsyncIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
+    api: r'return_types',
+    functionName: r'asyncIterableReturn',
+  );
+
   static const returnTypesAsyncListReturn =
       _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
@@ -197,28 +637,107 @@ abstract final class functions {
     functionName: r'asyncMapReturn',
   );
 
-  static const returnTypesAsyncIterableReturn =
-      _i1.CloudFunction<void, Iterable<String>>(
-    api: r'return_types',
-    functionName: r'asyncIterableReturn',
-  );
-
-  static const returnTypesAsyncStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesAsyncStructReturn = _i1.CloudFunction<void, ()>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
   static const returnTypesAsyncStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      _i1.CloudFunction<void, ()?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
 
-  static const returnTypesAsyncComplexReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesAsyncComplexStructReturn = _i1.CloudFunction<
+      void,
+      ({
+        bool aBool,
+        double aDouble,
+        List<bool> aListOfBool,
+        List<double> aListOfDouble,
+        List<_i2.MyEnum> aListOfEnum,
+        List<int> aListOfInt,
+        List<Null> aListOfNull,
+        List<_i2.SimpleClass> aListOfSimpleClass,
+        List<()> aListOfSimpleStruct,
+        List<String> aListOfString,
+        Map<String, bool> aMapOfBool,
+        Map<String, double> aMapOfDouble,
+        Map<String, _i2.MyEnum> aMapOfEnum,
+        Map<String, int> aMapOfInt,
+        Map<String, Null> aMapOfNull,
+        Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+        Map<String, ()> aMapOfSimpleStruct,
+        Map<String, String> aMapOfString,
+        Null aNull,
+        _i2.SimpleClass aSimpleClass,
+        () aSimpleStruct,
+        String aString,
+        _i2.MyEnum anEnum,
+        int anInt,
+        Iterable<bool> anIterableOfBool,
+        Iterable<double> anIterableOfDouble,
+        Iterable<_i2.MyEnum> anIterableOfEnum,
+        Iterable<int> anIterableOfInt,
+        Iterable<Null> anIterableOfNull,
+        Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+        Iterable<()> anIterableOfSimpleStruct,
+        Iterable<String> anIterableOfString
+      })>(
     api: r'return_types',
-    functionName: r'asyncComplexReturn',
+    functionName: r'asyncComplexStructReturn',
+  );
+
+  static const returnTypesAsyncComplexStructReturnNullable = _i1.CloudFunction<
+      void,
+      ({
+        bool aBool,
+        double aDouble,
+        List<bool> aListOfBool,
+        List<double> aListOfDouble,
+        List<_i2.MyEnum> aListOfEnum,
+        List<int> aListOfInt,
+        List<Null> aListOfNull,
+        List<_i2.SimpleClass> aListOfSimpleClass,
+        List<()> aListOfSimpleStruct,
+        List<String> aListOfString,
+        Map<String, bool> aMapOfBool,
+        Map<String, double> aMapOfDouble,
+        Map<String, _i2.MyEnum> aMapOfEnum,
+        Map<String, int> aMapOfInt,
+        Map<String, Null> aMapOfNull,
+        Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+        Map<String, ()> aMapOfSimpleStruct,
+        Map<String, String> aMapOfString,
+        Null aNull,
+        _i2.SimpleClass aSimpleClass,
+        () aSimpleStruct,
+        String aString,
+        _i2.MyEnum anEnum,
+        int anInt,
+        Iterable<bool> anIterableOfBool,
+        Iterable<double> anIterableOfDouble,
+        Iterable<_i2.MyEnum> anIterableOfEnum,
+        Iterable<int> anIterableOfInt,
+        Iterable<Null> anIterableOfNull,
+        Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+        Iterable<()> anIterableOfSimpleStruct,
+        Iterable<String> anIterableOfString
+      })?>(
+    api: r'return_types',
+    functionName: r'asyncComplexStructReturnNullable',
+  );
+
+  static const returnTypesAsyncComplexClassReturn =
+      _i1.CloudFunction<void, _i2.ComplexClass>(
+    api: r'return_types',
+    functionName: r'asyncComplexClassReturn',
+  );
+
+  static const returnTypesAsyncClassReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleClass?>(
+    api: r'return_types',
+    functionName: r'asyncClassReturnNullable',
   );
 
   static const returnTypesAsyncOrVoidReturn = _i1.CloudFunction<void, void>(
@@ -246,6 +765,12 @@ abstract final class functions {
     functionName: r'asyncOrBoolReturn',
   );
 
+  static const returnTypesAsyncOrIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
+    api: r'return_types',
+    functionName: r'asyncOrIterableReturn',
+  );
+
   static const returnTypesAsyncOrListReturn =
       _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
@@ -258,22 +783,49 @@ abstract final class functions {
     functionName: r'asyncOrMapReturn',
   );
 
-  static const returnTypesAsyncOrIterableReturn =
-      _i1.CloudFunction<void, Iterable<String>>(
-    api: r'return_types',
-    functionName: r'asyncOrIterableReturn',
-  );
-
-  static const returnTypesAsyncOrStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesAsyncOrStructReturn = _i1.CloudFunction<void, ()>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
-  static const returnTypesAsyncOrComplexReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesAsyncOrComplexStructReturn = _i1.CloudFunction<
+      void,
+      ({
+        bool aBool,
+        double aDouble,
+        List<bool> aListOfBool,
+        List<double> aListOfDouble,
+        List<_i2.MyEnum> aListOfEnum,
+        List<int> aListOfInt,
+        List<Null> aListOfNull,
+        List<_i2.SimpleClass> aListOfSimpleClass,
+        List<()> aListOfSimpleStruct,
+        List<String> aListOfString,
+        Map<String, bool> aMapOfBool,
+        Map<String, double> aMapOfDouble,
+        Map<String, _i2.MyEnum> aMapOfEnum,
+        Map<String, int> aMapOfInt,
+        Map<String, Null> aMapOfNull,
+        Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+        Map<String, ()> aMapOfSimpleStruct,
+        Map<String, String> aMapOfString,
+        Null aNull,
+        _i2.SimpleClass aSimpleClass,
+        () aSimpleStruct,
+        String aString,
+        _i2.MyEnum anEnum,
+        int anInt,
+        Iterable<bool> anIterableOfBool,
+        Iterable<double> anIterableOfDouble,
+        Iterable<_i2.MyEnum> anIterableOfEnum,
+        Iterable<int> anIterableOfInt,
+        Iterable<Null> anIterableOfNull,
+        Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+        Iterable<()> anIterableOfSimpleStruct,
+        Iterable<String> anIterableOfString
+      })>(
     api: r'return_types',
-    functionName: r'asyncOrComplexReturn',
+    functionName: r'asyncOrComplexStructReturn',
   );
 
   static const returnTypesAsyncOrVoidReturnNullable =
@@ -306,6 +858,12 @@ abstract final class functions {
     functionName: r'asyncOrBoolReturnNullable',
   );
 
+  static const returnTypesAsyncOrIterableReturnNullable =
+      _i1.CloudFunction<void, Iterable<String>?>(
+    api: r'return_types',
+    functionName: r'asyncOrIterableReturnNullable',
+  );
+
   static const returnTypesAsyncOrListReturnNullable =
       _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
@@ -318,22 +876,63 @@ abstract final class functions {
     functionName: r'asyncOrMapReturnNullable',
   );
 
-  static const returnTypesAsyncOrIterableReturnNullable =
-      _i1.CloudFunction<void, Iterable<String>?>(
-    api: r'return_types',
-    functionName: r'asyncOrIterableReturnNullable',
-  );
-
   static const returnTypesAsyncOrStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      _i1.CloudFunction<void, ()?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
 
-  static const returnTypesAsyncOrComplexReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+  static const returnTypesAsyncOrComplexStructReturnNullable =
+      _i1.CloudFunction<
+          void,
+          ({
+            bool aBool,
+            double aDouble,
+            List<bool> aListOfBool,
+            List<double> aListOfDouble,
+            List<_i2.MyEnum> aListOfEnum,
+            List<int> aListOfInt,
+            List<Null> aListOfNull,
+            List<_i2.SimpleClass> aListOfSimpleClass,
+            List<()> aListOfSimpleStruct,
+            List<String> aListOfString,
+            Map<String, bool> aMapOfBool,
+            Map<String, double> aMapOfDouble,
+            Map<String, _i2.MyEnum> aMapOfEnum,
+            Map<String, int> aMapOfInt,
+            Map<String, Null> aMapOfNull,
+            Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+            Map<String, ()> aMapOfSimpleStruct,
+            Map<String, String> aMapOfString,
+            Null aNull,
+            _i2.SimpleClass aSimpleClass,
+            () aSimpleStruct,
+            String aString,
+            _i2.MyEnum anEnum,
+            int anInt,
+            Iterable<bool> anIterableOfBool,
+            Iterable<double> anIterableOfDouble,
+            Iterable<_i2.MyEnum> anIterableOfEnum,
+            Iterable<int> anIterableOfInt,
+            Iterable<Null> anIterableOfNull,
+            Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+            Iterable<()> anIterableOfSimpleStruct,
+            Iterable<String> anIterableOfString
+          })?>(
     api: r'return_types',
-    functionName: r'asyncOrComplexReturnNullable',
+    functionName: r'asyncOrComplexStructReturnNullable',
+  );
+
+  static const returnTypesAsyncOrSimpleClassReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleClass?>(
+    api: r'return_types',
+    functionName: r'asyncOrSimpleClassReturnNullable',
+  );
+
+  static const returnTypesAsyncOrComplexClassReturnNullable =
+      _i1.CloudFunction<void, _i2.ComplexClass?>(
+    api: r'return_types',
+    functionName: r'asyncOrComplexClassReturnNullable',
   );
 
   static const returnTypesVoidReturn = _i1.CloudFunction<void, void>(
@@ -361,6 +960,12 @@ abstract final class functions {
     functionName: r'boolReturn',
   );
 
+  static const returnTypesIterableReturn =
+      _i1.CloudFunction<void, Iterable<String>>(
+    api: r'return_types',
+    functionName: r'iterableReturn',
+  );
+
   static const returnTypesListReturn = _i1.CloudFunction<void, List<String>>(
     api: r'return_types',
     functionName: r'listReturn',
@@ -372,22 +977,61 @@ abstract final class functions {
     functionName: r'mapReturn',
   );
 
-  static const returnTypesIterableReturn =
-      _i1.CloudFunction<void, Iterable<String>>(
-    api: r'return_types',
-    functionName: r'iterableReturn',
-  );
-
-  static const returnTypesStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+  static const returnTypesStructReturn = _i1.CloudFunction<void, ()>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
-  static const returnTypesComplexReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+  static const returnTypesComplexReturn = _i1.CloudFunction<
+      void,
+      ({
+        bool aBool,
+        double aDouble,
+        List<bool> aListOfBool,
+        List<double> aListOfDouble,
+        List<_i2.MyEnum> aListOfEnum,
+        List<int> aListOfInt,
+        List<Null> aListOfNull,
+        List<_i2.SimpleClass> aListOfSimpleClass,
+        List<()> aListOfSimpleStruct,
+        List<String> aListOfString,
+        Map<String, bool> aMapOfBool,
+        Map<String, double> aMapOfDouble,
+        Map<String, _i2.MyEnum> aMapOfEnum,
+        Map<String, int> aMapOfInt,
+        Map<String, Null> aMapOfNull,
+        Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+        Map<String, ()> aMapOfSimpleStruct,
+        Map<String, String> aMapOfString,
+        Null aNull,
+        _i2.SimpleClass aSimpleClass,
+        () aSimpleStruct,
+        String aString,
+        _i2.MyEnum anEnum,
+        int anInt,
+        Iterable<bool> anIterableOfBool,
+        Iterable<double> anIterableOfDouble,
+        Iterable<_i2.MyEnum> anIterableOfEnum,
+        Iterable<int> anIterableOfInt,
+        Iterable<Null> anIterableOfNull,
+        Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+        Iterable<()> anIterableOfSimpleStruct,
+        Iterable<String> anIterableOfString
+      })>(
     api: r'return_types',
     functionName: r'complexReturn',
+  );
+
+  static const returnTypesSimpleClassReturn =
+      _i1.CloudFunction<void, _i2.SimpleClass>(
+    api: r'return_types',
+    functionName: r'simpleClassReturn',
+  );
+
+  static const returnTypesComplexClassReturn =
+      _i1.CloudFunction<void, _i2.ComplexClass>(
+    api: r'return_types',
+    functionName: r'complexClassReturn',
   );
 
   static const returnTypesStringReturnNullable =
@@ -412,6 +1056,12 @@ abstract final class functions {
     functionName: r'boolReturnNullable',
   );
 
+  static const returnTypesIterableReturnNullable =
+      _i1.CloudFunction<void, Iterable<String>?>(
+    api: r'return_types',
+    functionName: r'iterableReturnNullable',
+  );
+
   static const returnTypesListReturnNullable =
       _i1.CloudFunction<void, List<String>?>(
     api: r'return_types',
@@ -424,22 +1074,61 @@ abstract final class functions {
     functionName: r'mapReturnNullable',
   );
 
-  static const returnTypesIterableReturnNullable =
-      _i1.CloudFunction<void, Iterable<String>?>(
-    api: r'return_types',
-    functionName: r'iterableReturnNullable',
-  );
-
-  static const returnTypesStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+  static const returnTypesStructReturnNullable = _i1.CloudFunction<void, ()?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
 
-  static const returnTypesComplexReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+  static const returnTypesComplexReturnNullable = _i1.CloudFunction<
+      void,
+      ({
+        bool aBool,
+        double aDouble,
+        List<bool> aListOfBool,
+        List<double> aListOfDouble,
+        List<_i2.MyEnum> aListOfEnum,
+        List<int> aListOfInt,
+        List<Null> aListOfNull,
+        List<_i2.SimpleClass> aListOfSimpleClass,
+        List<()> aListOfSimpleStruct,
+        List<String> aListOfString,
+        Map<String, bool> aMapOfBool,
+        Map<String, double> aMapOfDouble,
+        Map<String, _i2.MyEnum> aMapOfEnum,
+        Map<String, int> aMapOfInt,
+        Map<String, Null> aMapOfNull,
+        Map<String, _i2.SimpleClass> aMapOfSimpleClass,
+        Map<String, ()> aMapOfSimpleStruct,
+        Map<String, String> aMapOfString,
+        Null aNull,
+        _i2.SimpleClass aSimpleClass,
+        () aSimpleStruct,
+        String aString,
+        _i2.MyEnum anEnum,
+        int anInt,
+        Iterable<bool> anIterableOfBool,
+        Iterable<double> anIterableOfDouble,
+        Iterable<_i2.MyEnum> anIterableOfEnum,
+        Iterable<int> anIterableOfInt,
+        Iterable<Null> anIterableOfNull,
+        Iterable<_i2.SimpleClass> anIterableOfSimpleClass,
+        Iterable<()> anIterableOfSimpleStruct,
+        Iterable<String> anIterableOfString
+      })?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
+  );
+
+  static const returnTypesSimpleClassReturnNullable =
+      _i1.CloudFunction<void, _i2.SimpleClass?>(
+    api: r'return_types',
+    functionName: r'simpleClassReturnNullable',
+  );
+
+  static const returnTypesComplexClassReturnNullable =
+      _i1.CloudFunction<void, _i2.ComplexClass?>(
+    api: r'return_types',
+    functionName: r'complexClassReturnNullable',
   );
 
   static const middlewareSayHello = _i1.CloudFunction<String, String>(
@@ -515,51 +1204,60 @@ List<_i1.CloudWidget> all = const [
   functions.returnTypesAsyncIntReturn,
   functions.returnTypesAsyncDoubleReturn,
   functions.returnTypesAsyncBoolReturn,
+  functions.returnTypesAsyncIterableReturn,
   functions.returnTypesAsyncListReturn,
   functions.returnTypesAsyncMapReturn,
-  functions.returnTypesAsyncIterableReturn,
   functions.returnTypesAsyncStructReturn,
   functions.returnTypesAsyncStructReturnNullable,
-  functions.returnTypesAsyncComplexReturn,
+  functions.returnTypesAsyncComplexStructReturn,
+  functions.returnTypesAsyncComplexStructReturnNullable,
+  functions.returnTypesAsyncComplexClassReturn,
+  functions.returnTypesAsyncClassReturnNullable,
   functions.returnTypesAsyncOrVoidReturn,
   functions.returnTypesAsyncOrStringReturn,
   functions.returnTypesAsyncOrIntReturn,
   functions.returnTypesAsyncOrDoubleReturn,
   functions.returnTypesAsyncOrBoolReturn,
+  functions.returnTypesAsyncOrIterableReturn,
   functions.returnTypesAsyncOrListReturn,
   functions.returnTypesAsyncOrMapReturn,
-  functions.returnTypesAsyncOrIterableReturn,
   functions.returnTypesAsyncOrStructReturn,
-  functions.returnTypesAsyncOrComplexReturn,
+  functions.returnTypesAsyncOrComplexStructReturn,
   functions.returnTypesAsyncOrVoidReturnNullable,
   functions.returnTypesAsyncOrStringReturnNullable,
   functions.returnTypesAsyncOrIntReturnNullable,
   functions.returnTypesAsyncOrDoubleReturnNullable,
   functions.returnTypesAsyncOrBoolReturnNullable,
+  functions.returnTypesAsyncOrIterableReturnNullable,
   functions.returnTypesAsyncOrListReturnNullable,
   functions.returnTypesAsyncOrMapReturnNullable,
-  functions.returnTypesAsyncOrIterableReturnNullable,
   functions.returnTypesAsyncOrStructReturnNullable,
-  functions.returnTypesAsyncOrComplexReturnNullable,
+  functions.returnTypesAsyncOrComplexStructReturnNullable,
+  functions.returnTypesAsyncOrSimpleClassReturnNullable,
+  functions.returnTypesAsyncOrComplexClassReturnNullable,
   functions.returnTypesVoidReturn,
   functions.returnTypesStringReturn,
   functions.returnTypesIntReturn,
   functions.returnTypesDoubleReturn,
   functions.returnTypesBoolReturn,
+  functions.returnTypesIterableReturn,
   functions.returnTypesListReturn,
   functions.returnTypesMapReturn,
-  functions.returnTypesIterableReturn,
   functions.returnTypesStructReturn,
   functions.returnTypesComplexReturn,
+  functions.returnTypesSimpleClassReturn,
+  functions.returnTypesComplexClassReturn,
   functions.returnTypesStringReturnNullable,
   functions.returnTypesIntReturnNullable,
   functions.returnTypesDoubleReturnNullable,
   functions.returnTypesBoolReturnNullable,
+  functions.returnTypesIterableReturnNullable,
   functions.returnTypesListReturnNullable,
   functions.returnTypesMapReturnNullable,
-  functions.returnTypesIterableReturnNullable,
   functions.returnTypesStructReturnNullable,
   functions.returnTypesComplexReturnNullable,
+  functions.returnTypesSimpleClassReturnNullable,
+  functions.returnTypesComplexClassReturnNullable,
   apis.middleware,
   functions.middlewareSayHello,
   apis.authenticatedApi,

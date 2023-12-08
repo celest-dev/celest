@@ -14,6 +14,7 @@ class MapReturnTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final celestContext = _i2.FunctionContext();
+// ignore: unused_local_variable
       final response = _i3.mapReturn(celestContext);
       return response;
     },

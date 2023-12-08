@@ -1,3 +1,6 @@
+import 'package:celest_cli/codegen/types.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -18,8 +21,8 @@ extension ToFromJson on Reference {
     if (type.isEnum) {
       return ref.property('name');
     }
-    if (type.isDartCoreSet || type.isDartCoreEnum) {
-      throw StateError('Bad type: $type');
+    if (type.isDartCoreEnum || type.isDartCoreSet) {
+      throw unreachable('Should have been caught in checker');
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       final element = refer('el');
@@ -46,7 +49,7 @@ extension ToFromJson on Reference {
     }
     if (type.isDartCoreMap) {
       if (!type.types[0].isDartCoreString) {
-        throw StateError('Bad type: $type');
+        throw unreachable('Should have been caught in checker');
       }
       final value = refer('value');
       final serializedValue = type.types[1].toJson(value);
@@ -66,13 +69,29 @@ extension ToFromJson on Reference {
                 (p) => p..name = 'value',
               ),
             )
-            ..body = refer('MapEntry').newInstance([
+            ..body = DartTypes.core.mapEntry.newInstance([
               refer('key'),
               serializedValue,
             ]).code
             ..lambda = true,
         ).closure,
       ]);
+    }
+    if (this case TypedefRecordType(recordType: final record)) {
+      final serialized = <String, Expression>{};
+      for (final (index, field) in record.positionalFieldTypes.indexed) {
+        final indexProperty = '\$$index';
+        serialized[indexProperty] = field.toJson(
+          ref.property(indexProperty),
+        );
+      }
+      for (final MapEntry(key: name, value: field)
+          in record.namedFieldTypes.entries) {
+        serialized[name] = field.toJson(
+          ref.property(name),
+        );
+      }
+      return literalMap(serialized);
     }
     return ref.property('toJson').call([]);
   }
@@ -90,23 +109,19 @@ extension ToFromJson on Reference {
       return nonNullable
           .property('values')
           .property('byName')
-          .call([ref.asA(refer('String', 'dart:core'))]);
+          .call([ref.asA(DartTypes.core.string)]);
     }
-    if (type.isDartCoreSet || type.isDartCoreEnum) {
-      throw StateError('Bad type: $type');
+    if (type.isDartCoreEnum || type.isDartCoreSet) {
+      throw unreachable('Should have been caught in checker');
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       final cast = ref.asA(
-        TypeReference(
-          (t) => t
-            ..symbol = 'Iterable'
-            ..url = 'dart:core'
-            ..types.add(refer('Object?', 'dart:core'))
-            ..isNullable = false, // already null-checked
-        ),
+        // already null-checked
+        DartTypes.core.iterable(DartTypes.core.object.nullable),
       );
       final element = refer('el');
-      final serializedElement = type.types.single.fromJson(element);
+      final elementType = type.types.single;
+      final serializedElement = elementType.fromJson(element);
       if (element == serializedElement) {
         return cast;
       }
@@ -120,8 +135,21 @@ extension ToFromJson on Reference {
                     (p) => p..name = 'el',
                   ),
                 )
-                ..body = serializedElement.code
-                ..lambda = true,
+                ..body = Block((b) {
+                  if (!type.types.single.isSimpleJson) {
+                    b.addExpression(
+                      element.asA(
+                        DartTypes.core
+                            .map(
+                              DartTypes.core.string,
+                              DartTypes.core.object.nullable,
+                            )
+                            .withNullability(elementType.isNullableOrFalse),
+                      ),
+                    );
+                  }
+                  b.addExpression(serializedElement.returned);
+                }),
             ).closure,
           ])
           .property('toList')
@@ -129,21 +157,17 @@ extension ToFromJson on Reference {
     }
     if (type.isDartCoreMap) {
       if (!type.types[0].isDartCoreString) {
-        throw StateError('Bad type: $type');
+        throw unreachable('Should have been caught in checker');
       }
       final cast = ref.asA(
-        TypeReference(
-          (t) => t
-            ..symbol = 'Map'
-            ..url = 'dart:core'
-            ..types.addAll([
-              refer('String', 'dart:core'),
-              refer('Object?', 'dart:core'),
-            ]),
+        DartTypes.core.map(
+          DartTypes.core.string,
+          DartTypes.core.object.nullable,
         ),
       );
       final value = refer('value');
-      final serializedValue = type.types[1].fromJson(value);
+      final valueType = type.types[1];
+      final serializedValue = valueType.fromJson(value);
       if (value == serializedValue) {
         return cast;
       }
@@ -160,24 +184,50 @@ extension ToFromJson on Reference {
                 (p) => p..name = 'value',
               ),
             )
-            ..body = refer('MapEntry').newInstance([
-              refer('key'),
-              serializedValue,
-            ]).code
-            ..lambda = true,
+            ..body = Block((b) {
+              if (!valueType.isSimpleJson) {
+                b.addExpression(
+                  value.asA(
+                    DartTypes.core
+                        .map(
+                          DartTypes.core.string,
+                          DartTypes.core.object.nullable,
+                        )
+                        .withNullability(valueType.isNullableOrFalse),
+                  ),
+                );
+              }
+              b.addExpression(
+                refer('MapEntry').newInstance([
+                  refer('key'),
+                  serializedValue,
+                ]).returned,
+              );
+            }),
         ).closure,
       ]);
     }
+    if (this case TypedefRecordType(recordType: final record)) {
+      final deserializedPositional = <Expression>[];
+      for (final (index, field) in record.positionalFieldTypes.indexed) {
+        final indexProperty = '\$$index';
+        deserializedPositional.add(
+          field.type.fromJson(
+            ref.index(literalString(indexProperty)),
+          ),
+        );
+      }
+      final deserializedNamed = <String, Expression>{};
+      for (final MapEntry(:key, :value) in record.namedFieldTypes.entries) {
+        deserializedNamed[key] = value.fromJson(ref.index(literalString(key)));
+      }
+      return literalRecord(deserializedPositional, deserializedNamed);
+    }
     return newInstanceNamed('fromJson', [
       ref.asA(
-        TypeReference(
-          (t) => t
-            ..symbol = 'Map'
-            ..url = 'dart:core'
-            ..types.addAll([
-              refer('String', 'dart:core'),
-              refer('dynamic'),
-            ]),
+        DartTypes.core.map(
+          DartTypes.core.string,
+          DartTypes.core.dynamic,
         ),
       ),
     ]);

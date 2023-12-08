@@ -12,6 +12,7 @@ class SayHelloTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
+      // ignore: unused_local_variable
       final response = _i2.sayHello();
       return response;
     },
