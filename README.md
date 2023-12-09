@@ -9,4 +9,4 @@ You can join our waitlist at [celest.dev](https://celest.dev). To learn more abo
 ## Connect with us
 
 - Follow our [Twitter](https://twitter.com/Celest_Dev) account.
-- You can email us at contact@celest.dev
+- Email us at contact@celest.dev
