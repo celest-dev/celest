@@ -3,7 +3,6 @@
 
 import 'dart:async';
 import 'dart:convert' as convert;
-import 'dart:core' as core;
 import 'dart:isolate' as isolate;
 import 'dart:typed_data';
 
@@ -13,15 +12,76 @@ import 'package:built_value/built_value.dart' as built_value;
 import 'package:built_value/json_object.dart' as built_value_json_object;
 import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
+import 'package:celest_cli/src/types/type_checker.dart';
+import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:functions_framework/serve.dart' as functions_framework;
 import 'package:meta/meta.dart' as meta;
 import 'package:shelf/shelf.dart' as shelf;
 
+final class DartTypeReference extends Reference {
+  const DartTypeReference(
+    super.symbol, [
+    super.url,
+    this._wireType,
+  ]);
+
+  String get typeUri => '$url#$symbol';
+  String get wireTypeUri => _wireType ?? typeUri;
+  final String? _wireType;
+
+  static final _checkerCache = <DartTypeReference, TypeChecker>{};
+
+  TypeChecker get checker => _checkerCache[this] ??= _checker;
+  TypeChecker get _checker {
+    assert(url != null);
+    return TypeChecker.fromUrl(typeUri);
+  }
+}
+
+final _allTypes = () {
+  final container = _DartTypeContainer();
+  container.add(DartTypes.core.bigInt);
+  container.add(DartTypes.core.bool);
+  container.add(DartTypes.core.dateTime);
+  container.add(DartTypes.core.deprecated);
+  container.add(DartTypes.core.double);
+  container.add(DartTypes.core.duration);
+  container.add(DartTypes.core.dynamic);
+  container.add(DartTypes.core.exception);
+  container.add(DartTypes.core.function);
+  container.add(DartTypes.core.int);
+  container.add(DartTypes.core.mapEntry);
+  container.add(DartTypes.core.never);
+  container.add(DartTypes.core.null$);
+  container.add(DartTypes.core.object);
+  container.add(DartTypes.core.override);
+  container.add(DartTypes.core.regExp);
+  container.add(DartTypes.core.stackTrace);
+  container.add(DartTypes.core.stateError);
+  container.add(DartTypes.core.string);
+  container.add(DartTypes.core.type);
+  container.add(DartTypes.core.uri);
+  container.add(DartTypes.core.uriData);
+  container.add(DartTypes.core.void$);
+  container.add(DartTypes.typedData.uint8List);
+  return container;
+}();
+
+class _DartTypeContainer {
+  final Map<String, DartTypeReference> _types = {};
+
+  void add(DartTypeReference type) {
+    _types[type.typeUri] = type;
+  }
+}
+
 /// Common type references used throughout code generation.
 abstract class DartTypes {
   DartTypes._();
+
+  static DartTypeReference? fromUri(String uri) => _allTypes._types[uri];
 
   /// `dart:core` types.
   static const core = _Core();
@@ -72,37 +132,50 @@ class _Core {
 
   static const _url = 'dart:core';
 
-  /// Creates a [core.BigInt] reference.
-  Reference get bigInt => const Reference('BigInt', _url);
+  /// Creates a [BigInt] reference.
+  DartTypeReference get bigInt => const DartTypeReference(
+        'BigInt',
+        _url,
+        'dart:core#String',
+      );
 
-  /// Creates a [core.bool] reference.
-  Reference get bool => const Reference('bool', _url);
+  /// Creates a [bool] reference.
+  DartTypeReference get bool => const DartTypeReference('bool', _url);
 
-  /// Creates a [core.DateTime] reference.
-  Reference get dateTime => const Reference('DateTime', _url);
+  /// Creates a [DateTime] reference.
+  DartTypeReference get dateTime => const DartTypeReference(
+        'DateTime',
+        _url,
+        'dart:core#String',
+      );
 
-  /// Creates a [core.Deprecated] reference.
-  Reference get deprecated => const Reference('Deprecated', _url);
+  /// Creates a [Deprecated] reference.
+  DartTypeReference get deprecated =>
+      const DartTypeReference('Deprecated', _url);
 
-  /// Creates a [core.double] reference.
-  Reference get double => const Reference('double', _url);
+  /// Creates a [double] reference.
+  DartTypeReference get double => const DartTypeReference('double', _url);
 
-  /// Creates a [core.Duration] reference.
-  Reference get duration => const Reference('Duration', _url);
+  /// Creates a [Duration] reference.
+  DartTypeReference get duration => const DartTypeReference(
+        'Duration',
+        _url,
+        'dart:core#Map',
+      );
 
   /// Creates a [dynamic] reference.
-  Reference get dynamic => const Reference('dynamic');
+  DartTypeReference get dynamic => const DartTypeReference('dynamic', _url);
 
-  /// Creates a [core.Exception] reference.
-  Reference get exception => const Reference('Exception', _url);
+  /// Creates a [Exception] reference.
+  DartTypeReference get exception => const DartTypeReference('Exception', _url);
 
-  /// Creates a [core.Function] reference.
-  Reference get function => const Reference('Function', _url);
+  /// Creates a [Function] reference.
+  DartTypeReference get function => const DartTypeReference('Function', _url);
 
-  /// Creates an [core.int] reference.
-  Reference get int => const Reference('int', _url);
+  /// Creates an [int] reference.
+  DartTypeReference get int => const DartTypeReference('int', _url);
 
-  /// Creates a [core.Iterable] reference.
+  /// Creates a [Iterable] reference.
   Reference iterable([Reference? ref]) => TypeReference(
         (t) => t
           ..symbol = 'Iterable'
@@ -112,7 +185,7 @@ class _Core {
           ]),
       );
 
-  /// Creates a [core.List] reference.
+  /// Creates a [List] reference.
   Reference list([Reference? ref]) => TypeReference(
         (t) => t
           ..symbol = 'List'
@@ -122,7 +195,7 @@ class _Core {
           ]),
       );
 
-  /// Creates a [core.Map] reference.
+  /// Creates a [Map] reference.
   Reference map(Reference key, Reference value) => TypeReference(
         (t) => t
           ..symbol = 'Map'
@@ -131,25 +204,29 @@ class _Core {
           ..types.add(value),
       );
 
-  /// Creates an [core.MapEntry] reference.
-  Reference get mapEntry => const Reference('MapEntry', _url);
+  /// Creates an [MapEntry] reference.
+  DartTypeReference get mapEntry => const DartTypeReference('MapEntry', _url);
 
-  /// Creates an [core.Never] reference.
-  Reference get never => const Reference('Never', _url);
+  /// Creates an [Never] reference.
+  DartTypeReference get never => const DartTypeReference('Never', _url);
 
-  /// Creates a [core.Null] reference.
-  Reference get null$ => const Reference('Null', _url);
+  /// Creates a [Null] reference.
+  DartTypeReference get null$ => const DartTypeReference('Null', _url);
 
-  /// Creates an [core.Object] reference.
-  Reference get object => const Reference('Object', _url);
+  /// Creates an [Object] reference.
+  DartTypeReference get object => const DartTypeReference('Object', _url);
 
-  /// Creates a [core.override] reference.
-  Reference get override => const Reference('override', _url);
+  /// Creates a [override] reference.
+  DartTypeReference get override => const DartTypeReference('override', _url);
 
-  /// Creates a [core.RegExp] reference.
-  Reference get regExp => const Reference('RegExp', _url);
+  /// Creates a [RegExp] reference.
+  DartTypeReference get regExp => const DartTypeReference(
+        'RegExp',
+        _url,
+        'dart:core#String',
+      );
 
-  /// Creates a [core.Set] reference.
+  /// Creates a [Set] reference.
   Reference set(Reference ref) => TypeReference(
         (t) => t
           ..symbol = 'Set'
@@ -157,20 +234,39 @@ class _Core {
           ..types.add(ref),
       );
 
-  /// Create a [core.StateError] reference.
-  Reference get stateError => const Reference('StateError', _url);
+  /// Creates a [StackTrace] reference.
+  DartTypeReference get stackTrace => const DartTypeReference(
+        'StackTrace',
+        _url,
+        'dart:core#String',
+      );
 
-  /// Creates a [core.String] reference.
-  Reference get string => const Reference('String', _url);
+  /// Create a [StateError] reference.
+  DartTypeReference get stateError =>
+      const DartTypeReference('StateError', _url);
 
-  /// Creates a [core.Type] reference.
-  Reference get type => const Reference('Type', _url);
+  /// Creates a [String] reference.
+  DartTypeReference get string => const DartTypeReference('String', _url);
 
-  /// Creates a [core.Uri] reference.
-  Reference get uri => const Reference('Uri', _url);
+  /// Creates a [Type] reference.
+  DartTypeReference get type => const DartTypeReference('Type', _url);
+
+  /// Creates a [Uri] reference.
+  DartTypeReference get uri => const DartTypeReference(
+        'Uri',
+        _url,
+        'dart:core#String',
+      );
+
+  /// Creates a [UriData] reference.
+  DartTypeReference get uriData => const DartTypeReference(
+        'UriData',
+        _url,
+        'dart:core#String',
+      );
 
   /// Creates a `void` reference.
-  Reference get void$ => const Reference('void');
+  DartTypeReference get void$ => const DartTypeReference('void');
 }
 
 /// `dart:async` types
@@ -206,7 +302,7 @@ class _Async {
       );
 
   /// Creates a `runZoned` refererence.
-  Reference get runZoned => const Reference('runZoned', _url);
+  DartTypeReference get runZoned => const DartTypeReference('runZoned', _url);
 }
 
 /// `package:aws_common` types.
@@ -224,37 +320,43 @@ class _AwsCommon {
       );
 
   /// Creates an [aws_common.AWSHeaders] reference.
-  Reference get awsHeaders => const Reference('AWSHeaders', _url);
+  DartTypeReference get awsHeaders =>
+      const DartTypeReference('AWSHeaders', _url);
 
   /// Creates an [aws_common.AWSHttpClient] reference.
-  Reference get awsHttpClient => const Reference('AWSHttpClient', _url);
+  DartTypeReference get awsHttpClient =>
+      const DartTypeReference('AWSHttpClient', _url);
 
   /// Creates an [aws_common.AWSHttpMethod] reference.
-  Reference get awsHttpMethod => const Reference('AWSHttpMethod', _url);
+  DartTypeReference get awsHttpMethod =>
+      const DartTypeReference('AWSHttpMethod', _url);
 
   /// Creates an [aws_common.AWSSerializable] reference.
-  Reference get awsSerializable => const Reference('AWSSerializable', _url);
+  DartTypeReference get awsSerializable =>
+      const DartTypeReference('AWSSerializable', _url);
 
   /// Creates an [aws_common.AWSService] reference.
-  Reference get awsService => const Reference('AWSService', _url);
+  DartTypeReference get awsService =>
+      const DartTypeReference('AWSService', _url);
 
   /// Creates an [aws_common.AWSBaseHttpRequest] reference.
-  Reference get awsBaseHttpRequest =>
-      const Reference('AWSBaseHttpRequest', _url);
+  DartTypeReference get awsBaseHttpRequest =>
+      const DartTypeReference('AWSBaseHttpRequest', _url);
 
   /// Creates an [aws_common.AWSBaseHttpResponse] reference.
-  Reference get awsBaseHttpResponse =>
-      const Reference('AWSBaseHttpResponse', _url);
+  DartTypeReference get awsBaseHttpResponse =>
+      const DartTypeReference('AWSBaseHttpResponse', _url);
 
   /// Creates an [aws_common.AWSHttpRequest] reference.
-  Reference get awsHttpRequest => const Reference('AWSHttpRequest', _url);
+  DartTypeReference get awsHttpRequest =>
+      const DartTypeReference('AWSHttpRequest', _url);
 
   /// Creates an [aws_common.AWSStreamedHttpRequest] reference.
-  Reference get awsStreamedHttpRequest =>
-      const Reference('AWSStreamedHttpRequest', _url);
+  DartTypeReference get awsStreamedHttpRequest =>
+      const DartTypeReference('AWSStreamedHttpRequest', _url);
 
   /// Creates a secure [aws_common.uuid] instance.
-  Expression uuid() => const Reference('uuid', _url).call([], {
+  Expression uuid() => const DartTypeReference('uuid', _url).call([], {
         'secure': literalTrue,
       });
 }
@@ -269,13 +371,16 @@ class BuiltValueType {
   static const collectionUrl = 'package:built_collection/built_collection.dart';
 
   /// A [built_value.BuiltValue] reference.
-  Reference get builtValue => const Reference('BuiltValue', mainUrl);
+  DartTypeReference get builtValue =>
+      const DartTypeReference('BuiltValue', mainUrl);
 
   /// A [built_value.BuiltValueField] reference.
-  Reference get builtValueField => const Reference('BuiltValueField', mainUrl);
+  DartTypeReference get builtValueField =>
+      const DartTypeReference('BuiltValueField', mainUrl);
 
   /// A [built_value.BuiltValueHook] reference.
-  Reference get builtValueHook => const Reference('BuiltValueHook', mainUrl);
+  DartTypeReference get builtValueHook =>
+      const DartTypeReference('BuiltValueHook', mainUrl);
 
   /// Creates a [built_value.Built] reference for [ref] and its builder class,
   /// [builderRef].
@@ -297,7 +402,7 @@ class BuiltValueType {
   /// Creates a [built_collection.BuiltListMultimap] reference with key [key]
   /// and [value] generic types.
   ///
-  /// For example, a key of [core.String] and value of [core.String] creates
+  /// For example, a key of [String] and value of [String] creates
   /// a `BuiltListMultimap<String, String>` which is the same a
   /// `Map<String, List<String>>` when built.
   Reference builtListMultimap(Reference key, Reference value) => TypeReference(
@@ -328,7 +433,7 @@ class BuiltValueType {
   /// Creates a [built_collection.BuiltSetMultimap] reference with key [key]
   /// and [value] generic types.
   ///
-  /// For example, a key of [core.String] and value of [core.String] creates
+  /// For example, a key of [String] and value of [String] creates
   /// a `BuiltSetMultimap<String, String>` which is the same a
   /// `Map<String, Set<String>>` when built.
   Reference builtSetMultimap(Reference key, Reference value) => TypeReference(
@@ -339,10 +444,12 @@ class BuiltValueType {
       );
 
   /// Creates a [built_value_serializer.FullType] reference.
-  Reference get fullType => const Reference('FullType', serializerUrl);
+  DartTypeReference get fullType =>
+      const DartTypeReference('FullType', serializerUrl);
 
   /// Creates a [built_value_json_object.JsonObject] reference.
-  Reference get jsonObject => const Reference('JsonObject', jsonUrl);
+  DartTypeReference get jsonObject =>
+      const DartTypeReference('JsonObject', jsonUrl);
 
   /// The builder for [built_collection.ListBuilder].
   Reference listBuilder(Reference ref) => TypeReference(
@@ -370,8 +477,8 @@ class BuiltValueType {
       );
 
   /// Creates a [built_value.newBuiltValueToStringHelper] reference.
-  Reference get newBuiltValueToStringHelper =>
-      const Reference('newBuiltValueToStringHelper', mainUrl);
+  DartTypeReference get newBuiltValueToStringHelper =>
+      const DartTypeReference('newBuiltValueToStringHelper', mainUrl);
 
   /// Creates a [built_value_serializer.PrimitiveSerializer] reference for
   /// generic type [ref].
@@ -399,7 +506,8 @@ class BuiltValueType {
       );
 
   /// Creates a [built_value_serializer.Serializers] reference.
-  Reference get serializers => const Reference('Serializers', serializerUrl);
+  DartTypeReference get serializers =>
+      const DartTypeReference('Serializers', serializerUrl);
 }
 
 /// `package:celest` types
@@ -407,12 +515,14 @@ class _Celest {
   const _Celest();
 
   static const _url = 'package:celest/celest.dart';
+  static const _coreUrl = 'package:celest_core/celest_core.dart';
 
   /// Creates a [celest.BuildEnvironment] reference.
-  Reference get buildEnvironment => const Reference('BuildEnvironment', _url);
+  DartTypeReference get buildEnvironment =>
+      const DartTypeReference('BuildEnvironment', _url);
 
   /// Creates a [celest.CloudApi] reference.
-  Reference get cloudApi => const Reference('CloudApi', _url);
+  DartTypeReference get cloudApi => const DartTypeReference('CloudApi', _url);
 
   /// Creates a [celest.CloudFunction] reference.
   Reference cloudFunction([Reference? input, Reference? output]) =>
@@ -427,25 +537,30 @@ class _Celest {
       );
 
   /// Creates a [celest.CloudWidget] reference.
-  Reference get cloudWidget => const Reference('CloudWidget', _url);
+  DartTypeReference get cloudWidget =>
+      const DartTypeReference('CloudWidget', _url);
 
   /// Creates a [celest.CloudWidgetSet] reference.
-  Reference get cloudWidgetSet => const Reference('CloudWidgetSet', _url);
+  DartTypeReference get cloudWidgetSet =>
+      const DartTypeReference('CloudWidgetSet', _url);
 
   /// Creates a [celest.FunctionContext] reference.
-  Reference get functionContext => const Reference('FunctionContext', _url);
+  DartTypeReference get functionContext =>
+      const DartTypeReference('FunctionContext', _url);
 
   /// Creates a [celest.ProjectContext] reference.
-  Reference get projectContext => const Reference('ProjectContext', _url);
+  DartTypeReference get projectContext =>
+      const DartTypeReference('ProjectContext', _url);
 
   /// Creates a `celest.runWithContext` reference.
-  Reference get runWithContext => const Reference(
+  DartTypeReference get runWithContext => const DartTypeReference(
         'runWithContext',
         'package:celest/src/core/project_context.dart',
       );
 
-  /// Creates a [celest.Serializers] reference.
-  Reference get serializers => const Reference('Serializers', _url);
+  /// Creates a [celest_core.Serializers] reference.
+  DartTypeReference get serializers =>
+      const DartTypeReference('Serializers', _coreUrl);
 }
 
 /// `dart:convert` types
@@ -455,19 +570,23 @@ class _Convert {
   static const _url = 'dart:convert';
 
   /// Creates a [convert.base64Decode] reference.
-  Reference get base64Decode => const Reference('base64Decode', _url);
+  DartTypeReference get base64Decode =>
+      const DartTypeReference('base64Decode', _url);
 
   /// Creates a [convert.base64Encode] reference.
-  Reference get base64Encode => const Reference('base64Encode', _url);
+  DartTypeReference get base64Encode =>
+      const DartTypeReference('base64Encode', _url);
 
   /// Creates a [convert.jsonEncode] reference.
-  Reference get jsonEncode => const Reference('jsonEncode', _url);
+  DartTypeReference get jsonEncode =>
+      const DartTypeReference('jsonEncode', _url);
 
   /// Creates a [convert.jsonDecode] reference.
-  Reference get jsonDecode => const Reference('jsonDecode', _url);
+  DartTypeReference get jsonDecode =>
+      const DartTypeReference('jsonDecode', _url);
 
   /// Creates a [convert.utf8] reference.
-  Reference get utf8 => const Reference('utf8', _url);
+  DartTypeReference get utf8 => const DartTypeReference('utf8', _url);
 }
 
 /// `package:fixnum` types
@@ -477,7 +596,7 @@ class FixNum {
   static const url = 'package:fixnum/fixnum.dart';
 
   /// Creates an [Int64] reference.
-  Reference get int64 => const Reference('Int64', url);
+  DartTypeReference get int64 => const DartTypeReference('Int64', url);
 }
 
 /// `package:functions_framework` types
@@ -487,14 +606,15 @@ class _FunctionsFramework {
   static const _url = 'package:functions_framework/serve.dart';
 
   /// Creates a [functions_framework.FunctionTarget] reference.
-  Reference get functionTarget => const Reference('FunctionTarget', _url);
+  DartTypeReference get functionTarget =>
+      const DartTypeReference('FunctionTarget', _url);
 
   /// Creates a [functions_framework.JsonWithContextFunctionTarget] reference.
-  Reference get jsonWithContextFunctionTarget =>
-      const Reference('JsonWithContextFunctionTarget', _url);
+  DartTypeReference get jsonWithContextFunctionTarget =>
+      const DartTypeReference('JsonWithContextFunctionTarget', _url);
 
   /// Creates a [functions_framework.serve] reference.
-  Reference get serve => const Reference('serve', _url);
+  DartTypeReference get serve => const DartTypeReference('serve', _url);
 }
 
 /// `dart:isolate` types
@@ -504,7 +624,7 @@ class _Isolate {
   static const _url = 'dart:isolate';
 
   /// Creates a [isolate.SendPort] reference.
-  Reference get sendPort => const Reference('SendPort', _url);
+  DartTypeReference get sendPort => const DartTypeReference('SendPort', _url);
 }
 
 /// `package:meta` types.
@@ -514,13 +634,14 @@ class _Meta {
   static const _url = 'package:meta/meta.dart';
 
   /// Creates a [meta.experimental] reference.
-  Reference get experimental => const Reference('experimental', _url);
+  DartTypeReference get experimental =>
+      const DartTypeReference('experimental', _url);
 
   /// Creates a [meta.internal] reference.
-  Reference get internal => const Reference('internal', _url);
+  DartTypeReference get internal => const DartTypeReference('internal', _url);
 
   /// Creates a [meta.immutable] reference.
-  Reference get immutable => const Reference('immutable', _url);
+  DartTypeReference get immutable => const DartTypeReference('immutable', _url);
 }
 
 /// `package:shelf` types
@@ -530,19 +651,20 @@ class _Shelf {
   static const _url = 'package:shelf/shelf.dart';
 
   /// Creates a [shelf.Handler] reference.
-  Reference get handler => const Reference('Handler', _url);
+  DartTypeReference get handler => const DartTypeReference('Handler', _url);
 
   /// Creates a [shelf.Middleware] reference.
-  Reference get middleware => const Reference('Middleware', _url);
+  DartTypeReference get middleware =>
+      const DartTypeReference('Middleware', _url);
 
   /// Creates a [shelf.Pipeline] reference.
-  Reference get pipeline => const Reference('Pipeline', _url);
+  DartTypeReference get pipeline => const DartTypeReference('Pipeline', _url);
 
   /// Creates a [shelf.Request] reference.
-  Reference get request => const Reference('Request', _url);
+  DartTypeReference get request => const DartTypeReference('Request', _url);
 
   /// Creates a [shelf.Response] reference.
-  Reference get response => const Reference('Response', _url);
+  DartTypeReference get response => const DartTypeReference('Response', _url);
 }
 
 /// `package:shelf_router` types
@@ -552,10 +674,10 @@ class ShelfRouter {
   static const url = 'package:shelf_router/shelf_router.dart';
 
   /// Creates a [shelf_router.Route] reference.
-  Reference get route => const Reference('Route', url);
+  DartTypeReference get route => const DartTypeReference('Route', url);
 
   /// Creates a [shelf_router.Router] reference.
-  Reference get router => const Reference('Router', url);
+  DartTypeReference get router => const DartTypeReference('Router', url);
 }
 
 /// `package:test` types
@@ -565,7 +687,7 @@ class _Test {
   static const _url = 'package:test/test.dart';
 
   /// Creates an `test` reference.
-  Reference get test => const Reference('test', _url);
+  DartTypeReference get test => const DartTypeReference('test', _url);
 }
 
 /// `dart:typed_data` types
@@ -575,5 +697,9 @@ class _TypedData {
   static const _url = 'dart:typed_data';
 
   /// Creates a [Uint8List] reference.
-  Reference get uint8List => const Reference('Uint8List', _url);
+  DartTypeReference get uint8List => const DartTypeReference(
+        'Uint8List',
+        _url,
+        'dart:core#String',
+      );
 }

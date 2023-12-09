@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
@@ -16,12 +17,16 @@ final class TypeHelper {
 
   final _dartTypeToReference = <DartType, codegen.Reference>{};
   final _referenceToDartType = <codegen.Reference, DartType>{};
+  final _wireTypeToDartType = <String, DartType>{};
 
   codegen.Reference toReference(DartType type) {
     final reference = _dartTypeToReference[type] ??= type.accept(
       _TypeToCodeBuilder(projectRoot: _projectPaths.projectRoot),
     );
     _referenceToDartType[reference] ??= type;
+    if (toWireType(type) case final wireType?) {
+      _wireTypeToDartType[wireType] ??= type;
+    }
     return reference;
   }
 
@@ -29,10 +34,27 @@ final class TypeHelper {
     final dartType = _referenceToDartType[reference];
     if (dartType == null) {
       throw unreachable(
-        'Reference $reference was not found in the cache. Did you forget to call toReference?',
+        'Reference $reference was not found in the cache. Did you forget to '
+        'call toReference?',
       );
     }
     return dartType;
+  }
+
+  String? toWireType(DartType type) => switch (type.element) {
+        final element? => urlOfElement(element),
+        _ => null,
+      };
+
+  DartType fromWireType(String wireType) {
+    final type = _wireTypeToDartType[wireType];
+    if (type == null) {
+      throw unreachable(
+        'Wire type $wireType was not found in the cache. Did you forget to '
+        'call toReference?',
+      );
+    }
+    return type;
   }
 }
 

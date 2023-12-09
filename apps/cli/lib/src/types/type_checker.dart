@@ -210,7 +210,7 @@ final class _LibraryTypeChecker extends TypeChecker {
       element is InterfaceElement && element == _type.element;
 
   @override
-  String toString() => _urlOfElement(_type.element!);
+  String toString() => urlOfElement(_type.element!);
 }
 
 // Checks a runtime type against an Uri and Symbol.
@@ -229,15 +229,15 @@ final class _UriTypeChecker extends TypeChecker {
   int get hashCode => _url.hashCode;
 
   /// Url as a [Uri] object, lazily constructed.
-  Uri get uri => _cache[this] ??= _normalizeUrl(Uri.parse(_url));
+  Uri get uri => _cache[this] ??= normalizeUrl(Uri.parse(_url));
 
   /// Returns whether this type represents the same as [url].
   bool hasSameUrl(dynamic url) =>
       uri.toString() ==
-      (url is String ? url : _normalizeUrl(url as Uri).toString());
+      (url is String ? url : normalizeUrl(url as Uri).toString());
 
   @override
-  bool isExactly(Element element) => hasSameUrl(_urlOfElement(element));
+  bool isExactly(Element element) => hasSameUrl(urlOfElement(element));
 
   @override
   String toString() => '$uri';
@@ -253,14 +253,16 @@ final class _AnyChecker extends TypeChecker {
 }
 
 /// Returns a URL representing [element].
-String _urlOfElement(Element element) => element.kind == ElementKind.DYNAMIC
-    ? 'dart:core#dynamic'
-    // using librarySource.uri – in case the element is in a part
-    : _normalizeUrl(element.librarySource!.uri)
-        .replace(fragment: element.name)
-        .toString();
+String urlOfElement(Element element) => switch (element.kind) {
+      ElementKind.DYNAMIC => 'dart:core#dynamic',
+      ElementKind.NEVER => 'dart:core#Never',
+      // using librarySource.uri – in case the element is in a part
+      _ => normalizeUrl(element.librarySource!.uri)
+          .replace(fragment: element.name)
+          .toString()
+    };
 
-Uri _normalizeUrl(Uri url) {
+Uri normalizeUrl(Uri url) {
   switch (url.scheme) {
     case 'dart':
       return _normalizeDartUrl(url);

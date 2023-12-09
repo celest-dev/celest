@@ -323,15 +323,27 @@ const complexStruct = <String, dynamic>{
   'aBool': true,
   'anEnum': 'a',
   'aNull': null,
+  'aBigInt': '42',
+  'aDateTime': '2021-01-01T00:00:00.000Z',
+  'aDuration': {
+    'days': 1,
+    'hours': 2,
+    'minutes': 3,
+    'seconds': 4,
+    'milliseconds': 5,
+    'microseconds': 6,
+  },
+  'aRegExp': '.*',
+  'aStackTrace': '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+  'aUri': 'https://google.com',
+  'aUriData': 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+  'aUint8List': 'SGVsbG8sIFdvcmxkIQ==',
   'aSimpleStruct': simpleStruct,
   'aSimpleClass': simpleStruct,
   'anIterableOfString': ['hello', 'world'],
-  'anIterableOfInt': [1, 2, 3],
-  'anIterableOfDouble': [1.0, 2.0, 3.0],
-  'anIterableOfBool': [true, false],
-  'anIterableOfEnum': ['a', 'b', 'c'],
-  'anIterableOfNull': [null, null],
-  'anIterableOfSimpleStruct': [simpleStruct, simpleStruct],
+  'anIterableOfUint8List': ['SGVsbG8sIFdvcmxkIQ==', 'SGVsbG8sIFdvcmxkIQ=='],
   'anIterableOfSimpleClass': [simpleStruct, simpleStruct],
   'aListOfString': ['hello', 'world'],
   'aListOfInt': [1, 2, 3],
@@ -339,6 +351,41 @@ const complexStruct = <String, dynamic>{
   'aListOfBool': [true, false],
   'aListOfEnum': ['a', 'b', 'c'],
   'aListOfNull': [null, null],
+  'aListOfBigInt': ['42', '43'],
+  'aListOfDateTime': ['2021-01-01T00:00:00.000Z', '2021-01-02T00:00:00.000Z'],
+  'aListOfDuration': [
+    {
+      'days': 1,
+      'hours': 2,
+      'minutes': 3,
+      'seconds': 4,
+      'milliseconds': 5,
+      'microseconds': 6,
+    },
+    {
+      'days': 1,
+      'hours': 2,
+      'minutes': 3,
+      'seconds': 4,
+      'milliseconds': 5,
+      'microseconds': 6,
+    },
+  ],
+  'aListOfRegExp': ['.*', '.*'],
+  'aListOfStackTrace': [
+    '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+    '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+  ],
+  'aListOfUri': ['https://google.com', 'https://google.com'],
+  'aListOfUriData': [
+    'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+    'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+  ],
+  'aListOfUint8List': ['SGVsbG8sIFdvcmxkIQ==', 'SGVsbG8sIFdvcmxkIQ=='],
   'aListOfSimpleStruct': [simpleStruct, simpleStruct],
   'aListOfSimpleClass': [simpleStruct, simpleStruct],
   'aMapOfString': {
@@ -365,6 +412,73 @@ const complexStruct = <String, dynamic>{
   },
   'aMapOfNull': {
     'null': null,
+  },
+  'aMapOfBigInt': {
+    'one': '1',
+    'two': '2',
+    'three': '3',
+  },
+  'aMapOfDateTime': {
+    'one': '2021-01-01T00:00:00.000Z',
+    'two': '2021-01-02T00:00:00.000Z',
+    'three': '2021-01-03T00:00:00.000Z',
+  },
+  'aMapOfDuration': {
+    'one': {
+      'days': 1,
+      'hours': 2,
+      'minutes': 3,
+      'seconds': 4,
+      'milliseconds': 5,
+      'microseconds': 6,
+    },
+    'two': {
+      'days': 1,
+      'hours': 2,
+      'minutes': 3,
+      'seconds': 4,
+      'milliseconds': 5,
+      'microseconds': 6,
+    },
+    'three': {
+      'days': 1,
+      'hours': 2,
+      'minutes': 3,
+      'seconds': 4,
+      'milliseconds': 5,
+      'microseconds': 6,
+    },
+  },
+  'aMapOfRegExp': {
+    'one': '.*',
+    'two': '.*',
+    'three': '.*',
+  },
+  'aMapOfStackTrace': {
+    'one': '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+    'two': '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+    'three': '''
+#0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
+''',
+  },
+  'aMapOfUri': {
+    'one': 'https://google.com',
+    'two': 'https://google.com',
+    'three': 'https://google.com',
+  },
+  'aMapOfUriData': {
+    'one': 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+    'two': 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+    'three': 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
+  },
+  'aMapOfUint8List': {
+    'one': 'SGVsbG8sIFdvcmxkIQ==',
+    'two': 'SGVsbG8sIFdvcmxkIQ==',
+    'three': 'SGVsbG8sIFdvcmxkIQ==',
   },
   'aMapOfSimpleStruct': {
     'one': simpleStruct,
@@ -418,32 +532,7 @@ const Map<String, Test> tests = {
             ),
             FunctionTestSuccess(
               name: 'all null',
-              input: {
-                'aString': null,
-                'anInt': null,
-                'aDouble': null,
-                'aBool': null,
-                'anEnum': null,
-                'aNull': null,
-                'anIterableOfString': null,
-                'anIterableOfInt': null,
-                'anIterableOfDouble': null,
-                'anIterableOfBool': null,
-                'anIterableOfEnum': null,
-                'anIterableOfNull': null,
-                'aListOfString': null,
-                'aListOfInt': null,
-                'aListOfDouble': null,
-                'aListOfBool': null,
-                'aListOfEnum': null,
-                'aListOfNull': null,
-                'aMapOfString': null,
-                'aMapOfInt': null,
-                'aMapOfDouble': null,
-                'aMapOfBool': null,
-                'aMapOfEnum': null,
-                'aMapOfNull': null,
-              },
+              input: {},
               output: null,
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -106,6 +107,15 @@ final class JsonGenerator {
       }
       return literalMap(serialized);
     }
+    if (supportedDartSdkType.isExactlyType(dartType)) {
+      return DartTypes.celest.serializers
+          .property('instance')
+          .property('serialize')
+          .call([
+        literalString(typeHelper.toWireType(dartType)!),
+        ref,
+      ]);
+    }
     return ref.property('toJson').call([]);
   }
 
@@ -161,15 +171,18 @@ final class JsonGenerator {
                 ..body = Block((b) {
                   final elementType = type.toTypeReference.types.single;
                   final dartElementType = typeHelper.fromReference(elementType);
-                  if (!dartElementType.isSimpleJson) {
+                  final isSimpleJson = dartElementType.isSimpleJson;
+                  final isBuiltIn = dartElementType.element != null &&
+                      supportedDartSdkType.isExactlyType(dartElementType);
+                  final isMapOnWire = !isSimpleJson && !isBuiltIn;
+                  if (isMapOnWire) {
+                    final wireType = DartTypes.core.map(
+                      DartTypes.core.string,
+                      DartTypes.core.object.nullable,
+                    );
                     b.addExpression(
                       element.asA(
-                        DartTypes.core
-                            .map(
-                              DartTypes.core.string,
-                              DartTypes.core.object.nullable,
-                            )
-                            .withNullability(elementType.isNullableOrFalse),
+                        wireType.withNullability(elementType.isNullableOrFalse),
                       ),
                     );
                   }
@@ -213,15 +226,18 @@ final class JsonGenerator {
               ),
             )
             ..body = Block((b) {
-              if (!dartValueType.isSimpleJson) {
+              final isSimpleJson = dartValueType.isSimpleJson;
+              final isBuiltIn = dartValueType.element != null &&
+                  supportedDartSdkType.isExactlyType(dartValueType);
+              final isMapOnWire = !isSimpleJson && !isBuiltIn;
+              if (isMapOnWire) {
+                final wireType = DartTypes.core.map(
+                  DartTypes.core.string,
+                  DartTypes.core.object.nullable,
+                );
                 b.addExpression(
                   value.asA(
-                    DartTypes.core
-                        .map(
-                          DartTypes.core.string,
-                          DartTypes.core.object.nullable,
-                        )
-                        .withNullability(valueType.isNullableOrFalse),
+                    wireType.withNullability(valueType.isNullableOrFalse),
                   ),
                 );
               }
@@ -251,6 +267,19 @@ final class JsonGenerator {
         deserializedNamed[key] = fromJson(value, ref.index(literalString(key)));
       }
       return literalRecord(deserializedPositional, deserializedNamed);
+    }
+    if (supportedDartSdkType.isExactlyType(dartType)) {
+      return DartTypes.celest.serializers
+          .property('instance')
+          .property('deserialize')
+          .call(
+        [
+          literalString(typeHelper.toWireType(dartType)!),
+          ref,
+        ],
+        {},
+        [type], // <T>
+      );
     }
     return type.newInstanceNamed('fromJson', [
       ref.asA(

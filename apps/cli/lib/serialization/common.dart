@@ -1,14 +1,14 @@
-import 'package:celest_cli/src/types/dart_type_checkers.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 
 /// Supported Dart SDK types in serialization.
 final supportedDartSdkType = TypeChecker.any([
-  DartTypeCheckers.core.bigInt,
-  DartTypeCheckers.core.dateTime,
-  DartTypeCheckers.core.duration,
-  DartTypeCheckers.core.regExp,
-  DartTypeCheckers.core.stackTrace,
-  DartTypeCheckers.core.uri,
-  DartTypeCheckers.core.uriData,
-  DartTypeCheckers.typedData.uint8List,
+  DartTypes.core.bigInt.checker,
+  DartTypes.core.dateTime.checker,
+  DartTypes.core.duration.checker,
+  DartTypes.core.regExp.checker,
+  DartTypes.core.stackTrace.checker,
+  DartTypes.core.uri.checker,
+  DartTypes.core.uriData.checker,
+  DartTypes.typedData.uint8List.checker,
 ]);
