@@ -9,12 +9,14 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   Project,
+  Environment,
   Api,
   ApiAuthenticated,
   ApiAnonymous,
   ApiMiddleware,
   CloudFunction,
   CloudFunctionParameter,
+  EnvironmentVariable,
   SourceLocation,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
@@ -363,10 +365,12 @@ final class TypedefRecordTypeSerializer
           );
       }
     }
+    final recordType = recordTypeBuilder.build();
     return TypedefRecordType(
       symbol: symbol,
       url: url,
-      recordType: recordTypeBuilder.build(),
+      recordType: recordType,
+      isNullable: recordType.isNullable ?? false, // TODO: Blocked on Dart SDK
     );
   }
 

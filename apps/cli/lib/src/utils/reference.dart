@@ -1,4 +1,4 @@
-import 'package:celest_cli/codegen/types.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -6,41 +6,6 @@ extension ReferenceHelper on Reference {
   bool get isFunctionContext =>
       symbol == 'FunctionContext' &&
       (url?.startsWith('package:celest') ?? false);
-
-  bool get isSimpleJson =>
-      isDartCoreBool ||
-      isDartCoreDouble ||
-      isDartCoreInt ||
-      isDartCoreString ||
-      isDartCoreObject ||
-      isDartCoreNull ||
-      isEnum;
-
-  bool get isDartAsyncFuture => symbol == 'Future' && url == 'dart:async';
-
-  bool get isDartAsyncFutureOr => symbol == 'FutureOr' && url == 'dart:async';
-
-  bool get isDartCoreObject => symbol == 'Object' && url == 'dart:core';
-
-  bool get isDartCoreString => symbol == 'String' && url == 'dart:core';
-
-  bool get isDartCoreInt => symbol == 'int' && url == 'dart:core';
-
-  bool get isDartCoreDouble => symbol == 'double' && url == 'dart:core';
-
-  bool get isDartCoreBool => symbol == 'bool' && url == 'dart:core';
-
-  bool get isDartCoreList => symbol == 'List' && url == 'dart:core';
-
-  bool get isDartCoreMap => symbol == 'Map' && url == 'dart:core';
-
-  bool get isDartCoreSet => symbol == 'Set' && url == 'dart:core';
-
-  bool get isDartCoreIterable => symbol == 'Iterable' && url == 'dart:core';
-
-  bool get isDartCoreNull => symbol == 'Null' && url == 'dart:core';
-
-  bool get isDartCoreEnum => symbol == 'Enum' && url == 'dart:core';
 
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
@@ -72,8 +37,6 @@ extension ReferenceHelper on Reference {
   }
 
   bool get isNullableOrFalse => toTypeReference.isNullable ?? false;
-
-  bool get isEnum => enumIndex[this] ?? false;
 
   /// Constructs a `built_value` FullType reference for this.
   Expression fullType([Iterable<Reference>? parameters]) {

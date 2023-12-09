@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/element/type_visitor.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
 // ignore: implementation_imports
@@ -11,13 +9,10 @@ import 'package:analyzer/src/dart/element/type.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
-import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 // ignore: implementation_imports
 import 'package:code_builder/src/visitors.dart';
-
-final enumIndex = <codegen.Reference, bool>{};
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
@@ -105,110 +100,15 @@ extension DartTypeHelper on DartType {
 
   bool get isEnum => element is EnumElement;
 
-  codegen.Reference toCodeBuilder(String projectRoot) =>
-      accept(_TypeToCodeBuilder(projectRoot: projectRoot));
-}
-
-final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
-  const _TypeToCodeBuilder({
-    required this.projectRoot,
-  });
-
-  final String projectRoot;
-
-  @override
-  codegen.Reference visitDynamicType(DynamicType type) =>
-      DartTypes.core.dynamic;
-
-  @override
-  codegen.Reference visitFunctionType(FunctionType type) {
-    return codegen.FunctionType(
-      (b) => b
-        ..returnType = type.returnType.accept(this)
-        ..optionalParameters.addAll([
-          for (final parameter
-              in type.parameters.where((p) => p.isOptionalPositional))
-            parameter.type.accept(this),
-        ])
-        ..requiredParameters.addAll([
-          for (final parameter
-              in type.parameters.where((p) => p.isRequiredPositional))
-            parameter.type.accept(this),
-        ])
-        ..namedParameters.addAll({
-          for (final parameter
-              in type.parameters.where((p) => p.isOptionalNamed))
-            parameter.name: parameter.type.accept(this),
-        })
-        ..namedRequiredParameters.addAll({
-          for (final parameter
-              in type.parameters.where((p) => p.isRequiredNamed))
-            parameter.name: parameter.type.accept(this),
-        })
-        ..types.addAll([
-          for (final formal in type.typeFormals)
-            codegen.TypeReference(
-              (t) => t
-                ..symbol = formal.name
-                ..bound = formal.bound?.accept(this),
-            ),
-        ]),
-    );
-  }
-
-  @override
-  codegen.Reference visitInterfaceType(InterfaceType type) {
-    final typeArguments = type.typeArguments.map((type) => type.accept(this));
-    final ref = codegen.TypeReference(
-      (t) => t
-        ..symbol = type.element.name
-        ..url = type.uri
-        ..types.addAll(typeArguments)
-        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
-    );
-    enumIndex[ref] = type.isEnum;
-    return ref;
-  }
-
-  @override
-  codegen.Reference visitInvalidType(InvalidType type) =>
-      codegen.refer(type.getDisplayString(withNullability: false));
-
-  @override
-  codegen.Reference visitNeverType(NeverType type) => DartTypes.core.never;
-
-  @override
-  codegen.Reference visitRecordType(RecordType type) {
-    return TypedefRecordType(
-      // TODO(dnys1): How to handle no alias?
-      symbol: type.alias!.element.name,
-      url: type.alias!.element.sourceLocation.path,
-      recordType: codegen.RecordType(
-        (r) => r
-          ..positionalFieldTypes.addAll([
-            for (final parameter in type.positionalFields)
-              parameter.type.toCodeBuilder(projectRoot),
-          ])
-          ..namedFieldTypes.addAll({
-            for (final parameter in type.namedFields)
-              parameter.name: parameter.type.toCodeBuilder(projectRoot),
-          })
-          ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
-      ),
-    );
-  }
-
-  @override
-  codegen.Reference visitTypeParameterType(TypeParameterType type) {
-    return codegen.TypeReference(
-      (t) => t
-        ..symbol = type.getDisplayString(withNullability: false)
-        ..bound = type.bound is DynamicType ? null : type.bound.accept(this),
-    );
-  }
-
-  @override
-  codegen.Reference visitVoidType(VoidType type) => DartTypes.core.void$;
+  bool get isSimpleJson =>
+      isDartCoreBool ||
+      isDartCoreDouble ||
+      isDartCoreInt ||
+      isDartCoreNum ||
+      isDartCoreString ||
+      isDartCoreObject ||
+      isDartCoreNull ||
+      isEnum;
 }
 
 extension ElementSourceLocation on Element {
@@ -299,6 +199,7 @@ final class TypedefRecordType extends codegen.Expression
     this.symbol,
     this.url,
     required this.recordType,
+    required this.isNullable,
   });
 
   @override
@@ -307,6 +208,7 @@ final class TypedefRecordType extends codegen.Expression
   final String? url;
 
   final codegen.RecordType recordType;
+  final bool isNullable;
 
   @override
   R accept<R>(SpecVisitor<R> visitor, [R? context]) =>
@@ -356,4 +258,22 @@ final class TypedefRecordType extends codegen.Expression
 
   @override
   codegen.Reference get type => recordType;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TypedefRecordType &&
+          runtimeType == other.runtimeType &&
+          symbol == other.symbol &&
+          url == other.url &&
+          recordType == other.recordType &&
+          isNullable == other.isNullable;
+
+  @override
+  int get hashCode => Object.hash(
+        symbol,
+        url,
+        recordType,
+        isNullable,
+      );
 }

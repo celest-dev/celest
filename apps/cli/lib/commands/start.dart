@@ -85,7 +85,10 @@ final class StartCommand extends CelestCommand {
       return 1;
     }
 
-    final codeGenerator = CodeGenerator(projectPaths: projectPaths);
+    final codeGenerator = CodeGenerator(
+      projectPaths: projectPaths,
+      typeHelper: analyzer.typeHelper,
+    );
     project.accept(codeGenerator);
     for (final MapEntry(key: path, value: contents)
         in codeGenerator.fileOutputs.entries) {

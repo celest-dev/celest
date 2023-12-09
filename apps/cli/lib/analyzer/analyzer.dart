@@ -10,8 +10,9 @@ import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/paths.dart';
-import 'package:celest_cli/serialization/checker.dart';
+import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
@@ -25,6 +26,7 @@ final class CelestAnalyzer {
     this._projectPaths,
     this._context, {
     required Logger logger,
+    required this.typeHelper,
   }) : _logger = logger;
 
   factory CelestAnalyzer({
@@ -39,7 +41,12 @@ final class CelestAnalyzer {
       includedPaths: [projectPaths.projectRoot],
     );
     final context = contextCollection.contexts.single;
-    return CelestAnalyzer._(projectPaths, context, logger: logger);
+    return CelestAnalyzer._(
+      projectPaths,
+      context,
+      logger: logger,
+      typeHelper: TypeHelper(projectPaths: projectPaths),
+    );
   }
 
   final Logger _logger;
@@ -48,6 +55,7 @@ final class CelestAnalyzer {
   final List<AnalysisException> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
+  final TypeHelper typeHelper;
 
   void _reportError(String error, SourceLocation location) {
     _errors.add(
@@ -289,7 +297,7 @@ final class CelestAnalyzer {
               return ast.ApiAnonymous(location: location);
             case _ when type.isMiddleware:
               return ast.ApiMiddleware(
-                type: type.toCodeBuilder(_projectPaths.projectRoot),
+                type: typeHelper.toReference(type),
                 location: location,
               );
             default:
@@ -396,7 +404,7 @@ final class CelestAnalyzer {
           parameters: func.parameters.map((param) {
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
-              type: param.type.toCodeBuilder(_projectPaths.projectRoot),
+              type: typeHelper.toReference(param.type),
               required: param.isRequired,
               named: param.isNamed,
               location: param.sourceLocation,
@@ -415,9 +423,9 @@ final class CelestAnalyzer {
             }
             return parameter;
           }).toList(),
-          returnType: func.returnType.toCodeBuilder(_projectPaths.projectRoot),
-          flattenedReturnType: func.returnType.flattened
-              .toCodeBuilder(_projectPaths.projectRoot),
+          returnType: typeHelper.toReference(func.returnType),
+          flattenedReturnType:
+              typeHelper.toReference(func.returnType.flattened),
           location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
         );

@@ -1,5 +1,5 @@
-import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:code_builder/code_builder.dart';
 
 class ProjectBuildGenerator {

@@ -5,12 +5,14 @@ import 'package:celest_cli/codegen/api/entrypoint.dart';
 import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
 final class CodeGenerator extends AstVisitor<void> {
   CodeGenerator({
     required ProjectPaths projectPaths,
+    required this.typeHelper,
   }) : _projectPaths = projectPaths;
 
   static final _formatter = DartFormatter(
@@ -38,6 +40,7 @@ final class CodeGenerator extends AstVisitor<void> {
   }
 
   final ProjectPaths _projectPaths;
+  final TypeHelper typeHelper;
 
   /// A map of generated files to their contents.
   final Map<String, String> fileOutputs = {};
@@ -74,6 +77,7 @@ final class CodeGenerator extends AstVisitor<void> {
         function: function,
         projectRoot: _projectPaths.projectRoot,
         outputDir: outputDir,
+        typeHelper: typeHelper,
       ).generate();
       final entrypointFile =
           environmentPaths.functionEntrypoint(api.name, function.name);

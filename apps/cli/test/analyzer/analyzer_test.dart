@@ -336,7 +336,8 @@ String sayHello(NotJson _) => 'Hello, World!';
 ''',
         },
         errors: [
-          'The type of a parameter must be serializable as JSON. No fromJson constructor found for type: NotJson',
+          'The type of a parameter must be serializable as JSON. '
+              'Type NotJson must have a fromJson constructor.',
         ],
       );
 
@@ -364,7 +365,8 @@ NotJson sayHello() => NotJson();
 ''',
         },
         errors: [
-          'The return type of a function must be serializable as JSON. No toJson method found for type: NotJson',
+          'The return type of a function must be serializable as JSON. '
+              'Type NotJson must have a toJson method.',
         ],
       );
 
@@ -384,7 +386,8 @@ OnlyFromJson sayHello() => OnlyFromJson();
 ''',
         },
         errors: [
-          'The return type of a function must be serializable as JSON. No toJson method found for type: OnlyFromJson',
+          'The return type of a function must be serializable as JSON. '
+              'Type OnlyFromJson must have a toJson method.',
         ],
       );
 

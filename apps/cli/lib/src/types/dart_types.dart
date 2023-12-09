@@ -443,6 +443,9 @@ class _Celest {
         'runWithContext',
         'package:celest/src/core/project_context.dart',
       );
+
+  /// Creates a [celest.Serializers] reference.
+  Reference get serializers => const Reference('Serializers', _url);
 }
 
 /// `dart:convert` types

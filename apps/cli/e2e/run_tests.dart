@@ -137,6 +137,7 @@ class TestRunner {
 
       final codegen = CodeGenerator(
         projectPaths: projectPaths,
+        typeHelper: analyzer.typeHelper,
       );
       project!.accept(codegen);
 

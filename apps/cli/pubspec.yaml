@@ -34,39 +34,22 @@ dependencies:
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ^1.0.4
+  source_span: ^1.10.0
   stream_transform: ^2.1.0
   watcher: ^1.1.0
-
-dependency_overrides:
-  test:
-    git:
-      url: https://github.com/dart-lang/test
-      ref: master
-      path: pkgs/test
-  test_core:
-    git:
-      url: https://github.com/dart-lang/test
-      ref: master
-      path: pkgs/test_core
-  test_api:
-    git:
-      url: https://github.com/dart-lang/test
-      ref: master
-      path: pkgs/test_api
+  yaml: ^3.1.2
 
 dev_dependencies:
+  build: ^2.4.1
   build_runner: ^2.4.6
+  build_test: ^2.2.1
   build_version: ^2.1.1
   built_value_generator: ^8.8.0
   celest_lints:
     path: ../../packages/celest_lints
   json_serializable: ^6.7.1
   package_config: ^2.1.0
-  test:
-    git:
-      url: https://github.com/dart-lang/test
-      ref: master
-      path: pkgs/test
+  test: ^1.24.9
   test_descriptor: ^2.0.1
 
 executables:

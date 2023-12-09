@@ -1,7 +1,8 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/codegen/types.dart';
-import 'package:celest_cli/serialization/generator.dart';
+import 'package:celest_cli/serialization/json_generator.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -11,12 +12,18 @@ final class EntrypointGenerator {
     required this.function,
     required this.projectRoot,
     required this.outputDir,
+    required this.typeHelper,
   });
 
   final Api api;
   final CloudFunction function;
   final String projectRoot;
   final String outputDir;
+  final TypeHelper typeHelper;
+
+  late final JsonGenerator jsonGenerator = JsonGenerator(
+    typeHelper: typeHelper,
+  );
 
   Library generate() {
     final library = LibraryBuilder();
@@ -89,7 +96,8 @@ final class EntrypointGenerator {
                     final fromMap = refer('request').index(
                       literalString(param.name, raw: true),
                     );
-                    final deserialized = param.type.fromJson(fromMap);
+                    final deserialized =
+                        jsonGenerator.fromJson(param.type, fromMap);
                     paramExp = deserialized;
                   }
                   if (param.named) {
@@ -108,8 +116,9 @@ final class EntrypointGenerator {
                   case 'void':
                     b.addExpression(response.returned);
                   default:
-                    if (returnType.isDartAsyncFuture ||
-                        returnType.isDartAsyncFutureOr) {
+                    final dartReturnType = typeHelper.fromReference(returnType);
+                    if (dartReturnType.isDartAsyncFuture ||
+                        dartReturnType.isDartAsyncFutureOr) {
                       response = response.awaited;
                     }
                     // TODO: Remove
@@ -119,7 +128,10 @@ final class EntrypointGenerator {
                     b.addExpression(
                       declareFinal('response').assign(response),
                     );
-                    final toJson = returnType.toJson(refer('response'));
+                    final toJson = jsonGenerator.toJson(
+                      returnType,
+                      refer('response'),
+                    );
                     Expression result;
                     if (flattenedReturnTyep.isNullableOrFalse) {
                       result = refer('response')
