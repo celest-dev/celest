@@ -9,6 +9,7 @@ import 'package:celest_cli/project/builder.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:http/http.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -63,6 +64,7 @@ class TestRunner {
   late Client client;
   late final analyzer = CelestAnalyzer(
     projectPaths: projectPaths,
+    logger: Logger(level: Level.verbose),
   );
   var port = 8080;
 

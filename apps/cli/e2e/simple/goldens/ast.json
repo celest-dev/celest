@@ -14,7 +14,8 @@
     "prod"
   ],
   "baseEnvironment": {
-    "apis": {}
+    "apis": {},
+    "envVars": []
   },
   "environmentOverrides": {}
 }

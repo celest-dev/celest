@@ -1,0 +1,57 @@
+{
+  "name": "env_vars",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project.dart"
+  },
+  "location": {
+    "path": "project.dart",
+    "line": 3,
+    "column": 6
+  },
+  "environmentNames": [
+    "prod",
+    "dev"
+  ],
+  "baseEnvironment": {
+    "apis": {},
+    "envVars": [
+      {
+        "dartName": "myEnv",
+        "envName": "MY_ENV",
+        "location": {
+          "path": "config/env.dart",
+          "line": 3,
+          "column": 26
+        }
+      }
+    ]
+  },
+  "environmentOverrides": {
+    "dev": {
+      "apis": {},
+      "envVars": [
+        {
+          "dartName": "myEnv",
+          "envName": "MY_DEV_ENV",
+          "location": {
+            "path": "config/env.dev.dart",
+            "line": 3,
+            "column": 26
+          }
+        },
+        {
+          "dartName": "devEnv",
+          "envName": "DEV_ENV",
+          "location": {
+            "path": "config/env.dev.dart",
+            "line": 4,
+            "column": 26
+          }
+        }
+      ],
+      "name": "dev"
+    }
+  }
+}

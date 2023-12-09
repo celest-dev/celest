@@ -78,6 +78,12 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isEnvironmentVariable => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'EnvironmentVariable' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isMiddleware {
     final el = element;
     if (el is! ClassElement) {

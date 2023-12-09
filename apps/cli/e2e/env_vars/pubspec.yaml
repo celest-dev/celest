@@ -1,0 +1,8 @@
+name: env_vars
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  celest:
+    path: ../../../../packages/celest

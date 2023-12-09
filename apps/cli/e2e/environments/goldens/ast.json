@@ -55,7 +55,8 @@
           }
         }
       }
-    }
+    },
+    "envVars": []
   },
   "environmentOverrides": {
     "dev": {
@@ -99,6 +100,7 @@
           }
         }
       },
+      "envVars": [],
       "name": "dev"
     },
     "staging": {
@@ -142,6 +144,7 @@
           }
         }
       },
+      "envVars": [],
       "name": "staging"
     }
   }

@@ -72,6 +72,7 @@ final class StartCommand extends CelestCommand {
 
     final analyzer = CelestAnalyzer(
       projectPaths: projectPaths,
+      logger: logger,
     );
     final (:project, :errors) = await analyzer.analyzeProject();
     if (project == null) {

@@ -23,6 +23,7 @@ final class ProjectPaths {
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
   late final String apisDir = p.join(projectRoot, 'apis');
+  late final String configDir = p.join(projectRoot, 'config');
 
   ProjectEnvPaths environment(String environmentName) =>
       ProjectEnvPaths(this, environmentName);

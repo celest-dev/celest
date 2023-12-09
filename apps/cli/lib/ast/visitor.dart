@@ -11,6 +11,8 @@ abstract class AstVisitor<T> {
         final ApiAuthenticated apiAuthenticated =>
           visitApiAuthenticated(apiAuthenticated),
         final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
+        final EnvironmentVariable environmentVariable =>
+          visitEnvironmentVariable(environmentVariable),
       };
 
   T visitProject(Project project);
@@ -28,4 +30,6 @@ abstract class AstVisitor<T> {
   T visitApiAnonymous(ApiAnonymous annotation);
 
   T visitApiMiddleware(ApiMiddleware annotation);
+
+  T visitEnvironmentVariable(EnvironmentVariable variable);
 }

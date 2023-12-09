@@ -72,17 +72,13 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
       return const Verdict.yes();
     }
     if (type.isDartCoreEnum) {
-      return Verdict.no(
-        'Untyped enums are not supported',
-      );
+      return Verdict.no('Untyped enums are not supported');
     }
     if (type.isEnum) {
       return const Verdict.yes();
     }
     if (type.isDartCoreSet) {
-      return Verdict.no(
-        'Sets are not supported',
-      );
+      return Verdict.no('Set types are not supported');
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       return type.typeArguments.single.accept(
@@ -91,9 +87,7 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
     }
     if (type.isDartCoreMap) {
       if (!type.typeArguments[0].isDartCoreString) {
-        return Verdict.no(
-          'Map keys must be strings',
-        );
+        return Verdict.no('Map keys must be strings');
       }
       return type.typeArguments[1].accept(
         _IsSerializable(position, depth + 1),

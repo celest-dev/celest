@@ -95,4 +95,7 @@ final class CodeGenerator extends AstVisitor<void> {
 
   @override
   void visitParameter(CloudFunctionParameter parameter) {}
+
+  @override
+  void visitEnvironmentVariable(EnvironmentVariable variable) {}
 }

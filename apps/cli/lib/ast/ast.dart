@@ -81,10 +81,12 @@ abstract class Environment
   factory Environment({
     String? name,
     Map<String, Api> apis = const {},
+    List<EnvironmentVariable> envVars = const [],
   }) {
     return _$Environment._(
       name: name,
       apis: apis.build(),
+      envVars: envVars.build(),
     );
   }
 
@@ -98,6 +100,7 @@ abstract class Environment
 
   String? get name;
   BuiltMap<String, Api> get apis;
+  BuiltList<EnvironmentVariable> get envVars;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(Environment.serializer, this)
@@ -295,6 +298,34 @@ abstract class CloudFunction
           as Map<String, dynamic>;
 
   static Serializer<CloudFunction> get serializer => _$cloudFunctionSerializer;
+}
+
+abstract class EnvironmentVariable
+    implements Built<EnvironmentVariable, EnvironmentVariableBuilder>, Node {
+  factory EnvironmentVariable({
+    required String dartName,
+    required String envName,
+    required SourceLocation location,
+  }) = _$EnvironmentVariable._;
+
+  factory EnvironmentVariable.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(EnvironmentVariable.serializer, json)!;
+
+  EnvironmentVariable._();
+
+  /// The name of the variable in Dart, e.g. `myEnv`.
+  String get dartName;
+
+  /// The name of the variable in the environment, e.g. `MY_ENV`.
+  String get envName;
+  SourceLocation get location;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(EnvironmentVariable.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<EnvironmentVariable> get serializer =>
+      _$environmentVariableSerializer;
 }
 
 abstract class SourceLocation

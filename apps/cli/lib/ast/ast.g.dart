@@ -19,6 +19,8 @@ Serializer<CloudFunctionParameter> _$cloudFunctionParameterSerializer =
     new _$CloudFunctionParameterSerializer();
 Serializer<CloudFunction> _$cloudFunctionSerializer =
     new _$CloudFunctionSerializer();
+Serializer<EnvironmentVariable> _$environmentVariableSerializer =
+    new _$EnvironmentVariableSerializer();
 Serializer<SourceLocation> _$sourceLocationSerializer =
     new _$SourceLocationSerializer();
 
@@ -118,6 +120,10 @@ class _$EnvironmentSerializer implements StructuredSerializer<Environment> {
       serializers.serialize(object.apis,
           specifiedType: const FullType(
               BuiltMap, const [const FullType(String), const FullType(Api)])),
+      'envVars',
+      serializers.serialize(object.envVars,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(EnvironmentVariable)])),
     ];
     Object? value;
     value = object.name;
@@ -149,6 +155,12 @@ class _$EnvironmentSerializer implements StructuredSerializer<Environment> {
           result.apis.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(Api)]))!);
+          break;
+        case 'envVars':
+          result.envVars.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(EnvironmentVariable)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -520,6 +532,67 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
   }
 }
 
+class _$EnvironmentVariableSerializer
+    implements StructuredSerializer<EnvironmentVariable> {
+  @override
+  final Iterable<Type> types = const [
+    EnvironmentVariable,
+    _$EnvironmentVariable
+  ];
+  @override
+  final String wireName = 'EnvironmentVariable';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, EnvironmentVariable object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'dartName',
+      serializers.serialize(object.dartName,
+          specifiedType: const FullType(String)),
+      'envName',
+      serializers.serialize(object.envName,
+          specifiedType: const FullType(String)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(SourceLocation)),
+    ];
+
+    return result;
+  }
+
+  @override
+  EnvironmentVariable deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new EnvironmentVariableBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'dartName':
+          result.dartName = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'envName':
+          result.envName = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'location':
+          result.location.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SourceLocation))!
+              as SourceLocation);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$SourceLocationSerializer
     implements StructuredSerializer<SourceLocation> {
   @override
@@ -759,12 +832,16 @@ class _$Environment extends Environment {
   final String? name;
   @override
   final BuiltMap<String, Api> apis;
+  @override
+  final BuiltList<EnvironmentVariable> envVars;
 
   factory _$Environment([void Function(EnvironmentBuilder)? updates]) =>
       (new EnvironmentBuilder()..update(updates))._build();
 
-  _$Environment._({this.name, required this.apis}) : super._() {
+  _$Environment._({this.name, required this.apis, required this.envVars})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(apis, r'Environment', 'apis');
+    BuiltValueNullFieldError.checkNotNull(envVars, r'Environment', 'envVars');
   }
 
   @override
@@ -777,7 +854,10 @@ class _$Environment extends Environment {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Environment && name == other.name && apis == other.apis;
+    return other is Environment &&
+        name == other.name &&
+        apis == other.apis &&
+        envVars == other.envVars;
   }
 
   @override
@@ -785,6 +865,7 @@ class _$Environment extends Environment {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, apis.hashCode);
+    _$hash = $jc(_$hash, envVars.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -793,7 +874,8 @@ class _$Environment extends Environment {
   String toString() {
     return (newBuiltValueToStringHelper(r'Environment')
           ..add('name', name)
-          ..add('apis', apis))
+          ..add('apis', apis)
+          ..add('envVars', envVars))
         .toString();
   }
 }
@@ -810,6 +892,12 @@ class EnvironmentBuilder implements Builder<Environment, EnvironmentBuilder> {
       _$this._apis ??= new MapBuilder<String, Api>();
   set apis(MapBuilder<String, Api>? apis) => _$this._apis = apis;
 
+  ListBuilder<EnvironmentVariable>? _envVars;
+  ListBuilder<EnvironmentVariable> get envVars =>
+      _$this._envVars ??= new ListBuilder<EnvironmentVariable>();
+  set envVars(ListBuilder<EnvironmentVariable>? envVars) =>
+      _$this._envVars = envVars;
+
   EnvironmentBuilder();
 
   EnvironmentBuilder get _$this {
@@ -817,6 +905,7 @@ class EnvironmentBuilder implements Builder<Environment, EnvironmentBuilder> {
     if ($v != null) {
       _name = $v.name;
       _apis = $v.apis.toBuilder();
+      _envVars = $v.envVars.toBuilder();
       _$v = null;
     }
     return this;
@@ -839,12 +928,16 @@ class EnvironmentBuilder implements Builder<Environment, EnvironmentBuilder> {
   _$Environment _build() {
     _$Environment _$result;
     try {
-      _$result = _$v ?? new _$Environment._(name: name, apis: apis.build());
+      _$result = _$v ??
+          new _$Environment._(
+              name: name, apis: apis.build(), envVars: envVars.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'apis';
         apis.build();
+        _$failedField = 'envVars';
+        envVars.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'Environment', _$failedField, e.toString());
@@ -1655,6 +1748,137 @@ class CloudFunctionBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CloudFunction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$EnvironmentVariable extends EnvironmentVariable {
+  @override
+  final String dartName;
+  @override
+  final String envName;
+  @override
+  final SourceLocation location;
+
+  factory _$EnvironmentVariable(
+          [void Function(EnvironmentVariableBuilder)? updates]) =>
+      (new EnvironmentVariableBuilder()..update(updates))._build();
+
+  _$EnvironmentVariable._(
+      {required this.dartName, required this.envName, required this.location})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        dartName, r'EnvironmentVariable', 'dartName');
+    BuiltValueNullFieldError.checkNotNull(
+        envName, r'EnvironmentVariable', 'envName');
+    BuiltValueNullFieldError.checkNotNull(
+        location, r'EnvironmentVariable', 'location');
+  }
+
+  @override
+  EnvironmentVariable rebuild(
+          void Function(EnvironmentVariableBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  EnvironmentVariableBuilder toBuilder() =>
+      new EnvironmentVariableBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is EnvironmentVariable &&
+        dartName == other.dartName &&
+        envName == other.envName &&
+        location == other.location;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, dartName.hashCode);
+    _$hash = $jc(_$hash, envName.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'EnvironmentVariable')
+          ..add('dartName', dartName)
+          ..add('envName', envName)
+          ..add('location', location))
+        .toString();
+  }
+}
+
+class EnvironmentVariableBuilder
+    implements Builder<EnvironmentVariable, EnvironmentVariableBuilder> {
+  _$EnvironmentVariable? _$v;
+
+  String? _dartName;
+  String? get dartName => _$this._dartName;
+  set dartName(String? dartName) => _$this._dartName = dartName;
+
+  String? _envName;
+  String? get envName => _$this._envName;
+  set envName(String? envName) => _$this._envName = envName;
+
+  SourceLocationBuilder? _location;
+  SourceLocationBuilder get location =>
+      _$this._location ??= new SourceLocationBuilder();
+  set location(SourceLocationBuilder? location) => _$this._location = location;
+
+  EnvironmentVariableBuilder();
+
+  EnvironmentVariableBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _dartName = $v.dartName;
+      _envName = $v.envName;
+      _location = $v.location.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(EnvironmentVariable other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$EnvironmentVariable;
+  }
+
+  @override
+  void update(void Function(EnvironmentVariableBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  EnvironmentVariable build() => _build();
+
+  _$EnvironmentVariable _build() {
+    _$EnvironmentVariable _$result;
+    try {
+      _$result = _$v ??
+          new _$EnvironmentVariable._(
+              dartName: BuiltValueNullFieldError.checkNotNull(
+                  dartName, r'EnvironmentVariable', 'dartName'),
+              envName: BuiltValueNullFieldError.checkNotNull(
+                  envName, r'EnvironmentVariable', 'envName'),
+              location: location.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'location';
+        location.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'EnvironmentVariable', _$failedField, e.toString());
       }
       rethrow;
     }

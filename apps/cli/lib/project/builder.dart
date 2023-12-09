@@ -144,4 +144,7 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
 
   @override
   void visitParameter(ast.CloudFunctionParameter parameter) {}
+
+  @override
+  void visitEnvironmentVariable(ast.EnvironmentVariable variable) {}
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -17,6 +18,7 @@ Future<ProjectPaths> newProject({
   required String name,
   String? projectDart,
   Map<String, String> apis = const {},
+  Map<String, String> config = const {},
 }) async {
   projectDart ??= _simpleProjectDart(name);
   final celestDir = p.fromUri(
@@ -51,6 +53,11 @@ dependencies:
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
           d.file(fileName, contents),
       ]),
+    if (config.isNotEmpty)
+      d.dir('config', [
+        for (final MapEntry(key: fileName, value: contents) in config.entries)
+          d.file(fileName, contents),
+      ]),
   ]);
   await project.create();
   final projectRoot = d.path(name);
@@ -62,6 +69,7 @@ void testNoErrors({
   String? skip,
   String? projectDart,
   Map<String, String> apis = const {},
+  Map<String, String> config = const {},
 }) {
   testErrors(
     name: name,
@@ -69,6 +77,7 @@ void testNoErrors({
     errors: [],
     projectDart: projectDart,
     apis: apis,
+    config: config,
   );
 }
 
@@ -77,6 +86,7 @@ void testErrors({
   String? skip,
   String? projectDart,
   Map<String, String> apis = const {},
+  Map<String, String> config = const {},
   required List<String> errors,
 }) {
   test(name, skip: skip, () async {
@@ -84,8 +94,12 @@ void testErrors({
       name: name,
       projectDart: projectDart,
       apis: apis,
+      config: config,
     );
-    final analyzer = CelestAnalyzer(projectPaths: projectPaths);
+    final analyzer = CelestAnalyzer(
+      projectPaths: projectPaths,
+      logger: Logger(level: Level.verbose),
+    );
     final (project: _, errors: actual) = await analyzer.analyzeProject();
     expect(actual, hasLength(errors.length));
     if (errors.isNotEmpty) {
@@ -229,23 +243,19 @@ void sayHello({
   required Enum enum,
   required List<Enum> listOfEnum,
   required Iterable<Enum> iterableOfEnum,
-  required Set<Enum> setOfEnum,
   required void Function() function,
   required List<void Function()> listOfFunction,
   required Iterable<void Function()> iterableOfFunction,
-  required Set<void Function()> setOfFunction,
   required InvalidType invalidType,
   required List<InvalidType> listOfInvalidType,
   required Iterable<InvalidType> iterableOfInvalidType,
-  required Set<InvalidType> setOfInvalidType,
   required Never never,
   required List<Never> listOfNever,
   required Iterable<Never> iterableOfNever,
-  required Set<Never> setOfNever,
   required void void_,
   required List<void> listOfVoid,
   required Iterable<void> iterableOfVoid,
-  required Set<void> setOfVoid,
+  required Set<String> set,
 }) {}
 ''',
         },
@@ -253,23 +263,19 @@ void sayHello({
           'Untyped enums are not supported', // Enum
           'Untyped enums are not supported', // List<Enum>
           'Untyped enums are not supported', // Iterable<Enum>
-          'Untyped enums are not supported', // Set<Enum>
           'Function types are not supported', // void Function()
           'Function types are not supported', // List<void Function()>
           'Function types are not supported', // Iterable<void Function()>
-          'Function types are not supported', // Set<void Function()>
           'Invalid type', // InvalidType
           'Invalid type', // List<InvalidType>
           'Invalid type', // Iterable<InvalidType>
-          'Invalid type', // Set<InvalidType>
           'Never types are not supported', // Never
           'Never types are not supported', // List<Never>
           'Never types are not supported', // Iterable<Never>
-          'Never types are not supported', // Set<Never>
           'Void types are not supported in this position', // void
           'Void types are not supported in this position', // List<void>
           'Void types are not supported in this position', // Iterable<void>
-          'Void types are not supported in this position', // Set<void>
+          'Set types are not supported', // Set<String>
         ],
       );
 
@@ -281,23 +287,19 @@ typedef ReturnTypes = ({
   Enum enum,
   List<Enum> listOfEnum,
   Iterable<Enum> iterableOfEnum,
-  Set<Enum> setOfEnum,
   void Function() function,
   List<void Function()> listOfFunction,
   Iterable<void Function()> iterableOfFunction,
-  Set<void Function()> setOfFunction,
   InvalidType invalidType,
   List<InvalidType> listOfInvalidType,
   Iterable<InvalidType> iterableOfInvalidType,
-  Set<InvalidType> setOfInvalidType,
   Never never,
   List<Never> listOfNever,
   Iterable<Never> iterableOfNever,
-  Set<Never> setOfNever,
   void void_,
   List<void> listOfVoid,
   Iterable<void> iterableOfVoid,
-  Set<void> setOfVoid,
+  Set<String> set,
 });
 
 ReturnTypes sayHello() {}
@@ -307,23 +309,19 @@ ReturnTypes sayHello() {}
           'Untyped enums are not supported', // Enum
           'Untyped enums are not supported', // List<Enum>
           'Untyped enums are not supported', // Iterable<Enum>
-          'Untyped enums are not supported', // Set<Enum>
           'Function types are not supported', // void Function()
           'Function types are not supported', // List<void Function()>
           'Function types are not supported', // Iterable<void Function()>
-          'Function types are not supported', // Set<void Function()>
           'Invalid type', // InvalidType
           'Invalid type', // List<InvalidType>
           'Invalid type', // Iterable<InvalidType>
-          'Invalid type', // Set<InvalidType>
           'Never types are not supported', // Never
           'Never types are not supported', // List<Never>
           'Never types are not supported', // Iterable<Never>
-          'Never types are not supported', // Set<Never>
           'Void types are not supported in this position', // void
           'Void types are not supported in this position', // List<void>
           'Void types are not supported in this position', // Iterable<void>
-          'Void types are not supported in this position', // Set<void>
+          'Set types are not supported', // Set<String>
         ],
       );
 
@@ -480,7 +478,7 @@ const logRequests = middleware.logRequests();
 const logResponses = middleware.logResponses();
 
 import 'package:celest/api.dart' as api;
-import 'package:celest/middleware.dart' as middleware;
+import 'package:celest/api/middleware.dart' as middleware;
 
 @logResponses
 String sayHello() => 'Hello, World!';
@@ -564,6 +562,80 @@ String sayHello() => 'Hello, World!';
         errors: [
           'Only one `api.authenticated` or `api.anonymous` annotation may be '
               'specified on the same function or API library',
+        ],
+      );
+    });
+
+    group('env_vars', () {
+      testNoErrors(
+        name: 'good_envs',
+        config: {
+          'env.dart': '''
+import 'package:celest/celest.dart';
+
+const EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
+const EnvironmentVariable anotherEnv = EnvironmentVariable(name: 'ANOTHER_ENV');
+''',
+        },
+      );
+
+      testErrors(
+        name: 'bad_envs',
+        config: {
+          'env.dart': '''
+import 'package:celest/celest.dart';
+
+const EnvironmentVariable myEnv = EnvironmentVariable(name: '');
+''',
+        },
+        errors: [
+          'The environment variable name cannot be empty.',
+        ],
+      );
+
+      testErrors(
+        name: 'duplicate_envs',
+        config: {
+          'env.dart': '''
+import 'package:celest/celest.dart';
+
+const EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
+const EnvironmentVariable anotherEnv = EnvironmentVariable(name: 'MY_ENV');
+''',
+        },
+        errors: [
+          'Duplicate environment variable name: "MY_ENV"',
+        ],
+      );
+
+      testErrors(
+        name: 'non_const_env',
+        config: {
+          'env.dart': '''
+import 'package:celest/celest.dart';
+
+final EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
+''',
+        },
+        errors: [
+          'Environment variables must be declared as `const`',
+        ],
+      );
+
+      testErrors(
+        name: 'non_env_var_const',
+        config: {
+          'env.dart': '''
+import 'package:celest/celest.dart';
+
+const Project project = Project(
+  name: 'my_project', 
+  environments: ['prod', 'dev'],
+);
+''',
+        },
+        errors: [
+          'Only environment variables can be declared in this file.',
         ],
       );
     });

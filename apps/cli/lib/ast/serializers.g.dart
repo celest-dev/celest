@@ -14,6 +14,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionParameter.serializer)
       ..add(Environment.serializer)
+      ..add(EnvironmentVariable.serializer)
       ..add(Project.serializer)
       ..add(SourceLocation.serializer)
       ..addBuilderFactory(
@@ -40,7 +41,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(Api)]),
-          () => new MapBuilder<String, Api>()))
+          () => new MapBuilder<String, Api>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EnvironmentVariable)]),
+          () => new ListBuilder<EnvironmentVariable>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
@@ -5,7 +6,7 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/paths.dart';
@@ -14,24 +15,35 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
+typedef ErrorReporter = void Function(String message, SourceLocation location);
+
 final class CelestAnalyzer {
-  CelestAnalyzer._(this._projectPaths, this._context);
+  CelestAnalyzer._(
+    this._projectPaths,
+    this._context, {
+    required Logger logger,
+  }) : _logger = logger;
 
   factory CelestAnalyzer({
     required ProjectPaths projectPaths,
+    required Logger logger,
   }) {
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
     );
     final context = contextCollection.contexts.single;
-    return CelestAnalyzer._(projectPaths, context);
+    return CelestAnalyzer._(projectPaths, context, logger: logger);
   }
 
+  final Logger _logger;
   final ProjectPaths _projectPaths;
   final AnalysisContext _context;
   final List<AnalysisException> _errors = [];
+  late _ScopedWidgetCollector _widgetCollector;
+  late ast.ProjectBuilder _project;
 
   void _reportError(String error, SourceLocation location) {
     _errors.add(
@@ -44,15 +56,22 @@ final class CelestAnalyzer {
 
   Future<({ast.Project? project, List<AnalysisException> errors})>
       analyzeProject() async {
-    var project = await _findProject();
+    final project = await _findProject();
     if (project == null) {
       return (project: null, errors: _errors);
     }
-    project = await _collectApis(project);
-    return (project: project.build(), errors: _errors);
+    _project = project;
+    _widgetCollector = _ScopedWidgetCollector(
+      environmentNames: project.environmentNames.build(),
+      errorReporter: _reportError,
+    );
+    await _collectApis();
+    await _collectEnv();
+    return (project: _project.build(), errors: _errors);
   }
 
   Future<ast.ProjectBuilder?> _findProject() async {
+    _logger.detail('Analyzing project');
     final projectFilePath = _projectPaths.projectDart;
     final projectFileRelativePath =
         _projectPaths.relativeToRoot(projectFilePath);
@@ -67,6 +86,7 @@ final class CelestAnalyzer {
       );
       return null;
     }
+    _logger.detail('Found project file at $projectFilePath');
     final projectFile =
         await _context.currentSession.getResolvedUnit(projectFilePath);
     if (projectFile is! ResolvedUnitResult || !projectFile.exists) {
@@ -80,6 +100,7 @@ final class CelestAnalyzer {
       );
       return null;
     }
+    _logger.detail('Resolved project file');
     // TODO: Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
@@ -120,6 +141,18 @@ final class CelestAnalyzer {
           hasConstantEvalErrors = true;
       }
     }
+    _logger.detail(
+      'Resolved top-level constants: ${prettyPrintJson({
+            'hasConstantEvalErrors': '$hasConstantEvalErrors',
+            'constants': {
+              for (final constant in topLevelConstants)
+                constant.element.name: {
+                  'type': constant.element.type.toString(),
+                  'value': constant.value.toString(),
+                },
+            },
+          })}',
+    );
     if (hasConstantEvalErrors) {
       return null;
     }
@@ -144,6 +177,8 @@ final class CelestAnalyzer {
     // Validate `project` variable
     final projectDefineLocation =
         projectDefinitionElement.sourceLocation(_projectPaths.projectRoot);
+    _logger
+        .detail('Resolved project definition location: $projectDefineLocation');
     final projectName =
         projectDefinitionValue.getField('name')?.toStringValue();
     assert(
@@ -156,6 +191,7 @@ final class CelestAnalyzer {
         projectDefineLocation,
       );
     }
+    _logger.detail('Resolved project name: $projectName');
 
     // Collect environments
     final environmentsValue = projectDefinitionValue
@@ -179,7 +215,7 @@ final class CelestAnalyzer {
       'This should be impossible given that `environments` is a required field on `Project`',
     );
 
-    var environmentNameErrors = false;
+    var hasEnvironmentNameErrors = false;
     final environments = environmentsValue.cast<String>();
     final seenEnvironments = <String>{};
     for (final environment in environments) {
@@ -188,7 +224,7 @@ final class CelestAnalyzer {
           'Environment names cannot be empty.',
           projectDefineLocation,
         );
-        environmentNameErrors = true;
+        hasEnvironmentNameErrors = true;
         continue;
       }
       if (!seenEnvironments.add(environment)) {
@@ -196,11 +232,17 @@ final class CelestAnalyzer {
           'Duplicate environment name: "$environment".',
           projectDefineLocation,
         );
-        environmentNameErrors = true;
+        hasEnvironmentNameErrors = true;
         continue;
       }
     }
-    if (environmentNameErrors) {
+    _logger.detail(
+      'Resolved environments: ${prettyPrintJson({
+            'hasEnvironmentNameErrors': '$hasEnvironmentNameErrors',
+            'environments': environments,
+          })}',
+    );
+    if (hasEnvironmentNameErrors) {
       return null;
     }
 
@@ -260,12 +302,11 @@ final class CelestAnalyzer {
         .toList();
   }
 
-  Future<ast.ProjectBuilder> _collectApis(ast.ProjectBuilder project) async {
+  Future<void> _collectApis() async {
     final apiDir = Directory(_projectPaths.apisDir);
     if (!apiDir.existsSync()) {
-      return project;
+      return;
     }
-    final environmentNames = project.environmentNames.build();
 
     final apiFiles = apiDir
         .listSync()
@@ -273,68 +314,35 @@ final class CelestAnalyzer {
         .map((file) => file.path)
         .where((path) => path.endsWith('.dart'))
         .toList();
-    final apiDeclarations = BuiltMap<String, ApiDeclaration>.build((builder) {
-      for (final apiFile in apiFiles) {
-        switch (p.basename(apiFile).split('.')) {
-          case [final apiName, final environmentName, 'dart']:
-            if (!environmentNames.contains(environmentName)) {
-              _reportError(
-                'Unknown environment for file: "$environmentName"',
-                SourceLocation(path: apiFile, line: 0, column: 0),
-              );
-              continue;
-            }
-            builder.updateValue(
-              apiName,
-              (decl) => decl..environmentOverrides[environmentName] = apiFile,
-              ifAbsent: () => ApiDeclaration()
-                ..environmentOverrides[environmentName] = apiFile,
-            );
-          case [final apiName, 'dart']:
-            builder.updateValue(
-              apiName,
-              (decl) => decl..baseApi = apiFile,
-              ifAbsent: () => ApiDeclaration()..baseApi = apiFile,
-            );
-          default:
-            _reportError(
-              'API files must be named as follows: <api_name>.dart or <api_name>.<environment_name>.dart',
-              SourceLocation(path: apiFile, line: 0, column: 0),
-            );
-            continue;
-        }
-      }
-    });
-
-    for (final MapEntry(key: apiName, value: apiDeclaration)
-        in apiDeclarations.entries) {
-      // Collect base API
-      if (apiDeclaration.baseApi case final baseApiPath?) {
+    final apiDeclarations = _widgetCollector.collect(
+      apiFiles,
+      scope: 'API',
+      placeholder: '<api_name>',
+    );
+    await apiDeclarations.traverse(
+      onBase: (apiName, baseApiPath) async {
         final baseApi = await _collectApi(
           apiName: apiName,
           environmentName: '',
           apiFile: baseApiPath,
         );
         if (baseApi == null) {
-          continue;
+          return;
         }
-        project.baseEnvironment.update(
+        _project.baseEnvironment.update(
           (env) => env.apis[apiName] = baseApi,
         );
-      }
-
-      // Collect environment APIs
-      for (final MapEntry(key: environmentName, value: apiEnvironmentPath)
-          in apiDeclaration.environmentOverrides.entries) {
+      },
+      onEnvOverride: (apiName, environmentName, apiEnvironmentPath) async {
         final environmentApi = await _collectApi(
           apiName: apiName,
           environmentName: environmentName,
           apiFile: apiEnvironmentPath,
         );
         if (environmentApi == null) {
-          continue;
+          return;
         }
-        project.environmentOverrides.updateValue(
+        _project.environmentOverrides.updateValue(
           environmentName,
           (env) => env.rebuild(
             (b) => b.apis.updateValue(
@@ -357,9 +365,8 @@ final class CelestAnalyzer {
               ..apis[apiName] = environmentApi,
           ),
         );
-      }
-    }
-    return project;
+      },
+    );
   }
 
   Future<ast.Api?> _collectApi({
@@ -448,6 +455,142 @@ final class CelestAnalyzer {
       functions: functions,
     );
   }
+
+  Future<void> _collectEnv() async {
+    final envDir = Directory(_projectPaths.configDir);
+    if (!envDir.existsSync()) {
+      _logger.detail('No config directory found. Skipping env collection.');
+      return;
+    }
+
+    final envFiles = envDir
+        .listSync()
+        .whereType<File>()
+        .map((file) => file.path)
+        .where(
+          (path) =>
+              p.basename(path).startsWith('env') && path.endsWith('.dart'),
+        )
+        .toList();
+    _logger.detail('Found ${envFiles.length} env files: $envFiles');
+    final envDeclarations = _widgetCollector.collect(
+      envFiles,
+      scope: 'Environment variable',
+      placeholder: 'env',
+    );
+    assert(
+      envDeclarations.length == 1,
+      'There should only ever be one env collected, even with multiple '
+      'environment overridees.',
+    );
+
+    await envDeclarations.traverse(
+      onBase: (_, path) async {
+        _logger.detail('Collecting base env from $path');
+        final envVars = await _collectEnvironmentVariables(path);
+        _logger.detail('Collected base env vars: $envVars');
+        _project.baseEnvironment.envVars.addAll(envVars);
+      },
+      onEnvOverride: (_, environmentName, path) async {
+        _logger.detail('Collecting $environmentName env from $path');
+        final envVars = await _collectEnvironmentVariables(path);
+        _logger.detail('Collected $environmentName env vars: $envVars');
+        _project.environmentOverrides.updateValue(
+          environmentName,
+          (env) => env.rebuild((b) => b.envVars.addAll(envVars)),
+          ifAbsent: () => ast.Environment.build(
+            (b) => b
+              ..name = environmentName
+              ..envVars.addAll(envVars),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List<ast.EnvironmentVariable>> _collectEnvironmentVariables(
+    String path,
+  ) async {
+    final envLibraryResult =
+        await _context.currentSession.getResolvedLibrary(path);
+    if (envLibraryResult is! ResolvedLibraryResult) {
+      _reportError(
+        'Could not resolve environment variable file',
+        SourceLocation(path: path, line: 0, column: 0),
+      );
+      return [];
+    }
+    final library = envLibraryResult.element;
+    final topLevelVariables = library.definingCompilationUnit.topLevelVariables
+        .where((variable) => !variable.isPrivate);
+    final topLevelConstants =
+        <({TopLevelVariableElement element, DartObject value})>[];
+    for (final topLevelVariable in topLevelVariables) {
+      if (!topLevelVariable.isConst) {
+        _reportError(
+          'Environment variables must be declared as `const`',
+          topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+        );
+        continue;
+      }
+      switch (topLevelVariable.computeConstantValue()) {
+        case final DartObject constantValue:
+          topLevelConstants.add(
+            (element: topLevelVariable, value: constantValue),
+          );
+        default:
+          _reportError(
+            'Top-level constant could not be evaluated',
+            topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+          );
+      }
+    }
+    final envVars = <ast.EnvironmentVariable>[];
+    final seenEnvNames = <String>{};
+    for (final topLevelConstant in topLevelConstants) {
+      if (!topLevelConstant.element.type.isEnvironmentVariable) {
+        _reportError(
+          'Only environment variables can be declared in this file.',
+          topLevelConstant.element.sourceLocation(_projectPaths.projectRoot),
+        );
+        continue;
+      }
+      final location = topLevelConstant.element.sourceLocation(
+        _projectPaths.projectRoot,
+      );
+      final dartName = topLevelConstant.element.name;
+      final envName = topLevelConstant.value.getField('name')?.toStringValue();
+      if (envName == null) {
+        _reportError(
+          'Environment variable value could not be evaluated',
+          location,
+        );
+        continue;
+      }
+      if (envName.isEmpty) {
+        _reportError(
+          'The environment variable name cannot be empty.',
+          location,
+        );
+        continue;
+      }
+      if (!seenEnvNames.add(envName)) {
+        _reportError(
+          'Duplicate environment variable name: "$envName"',
+          location,
+        );
+        continue;
+      }
+      envVars.add(
+        ast.EnvironmentVariable(
+          dartName: dartName,
+          envName: envName,
+          location: location,
+        ),
+      );
+    }
+    return envVars;
+  }
 }
 
 final class AnalysisException implements Exception {
@@ -465,7 +608,79 @@ final class AnalysisException implements Exception {
   }
 }
 
-final class ApiDeclaration {
+final class WidgetDeclaration {
   String? baseApi;
   final Map<String, String> environmentOverrides = {};
+}
+
+final class _ScopedWidgetCollector {
+  _ScopedWidgetCollector({
+    required this.environmentNames,
+    required this.errorReporter,
+  });
+
+  final ErrorReporter errorReporter;
+  final Iterable<String> environmentNames;
+
+  Map<String, WidgetDeclaration> collect(
+    List<String> files, {
+    required String scope,
+    required String placeholder,
+  }) {
+    final declarations = <String, WidgetDeclaration>{};
+    for (final file in files) {
+      switch (p.basename(file).split('.')) {
+        case [final baseName, final environmentName, 'dart']:
+          if (!environmentNames.contains(environmentName)) {
+            errorReporter(
+              'Unknown environment for file: "$environmentName"',
+              SourceLocation(path: file, line: 0, column: 0),
+            );
+            continue;
+          }
+          declarations.update(
+            baseName,
+            (decl) => decl..environmentOverrides[environmentName] = file,
+            ifAbsent: () => WidgetDeclaration()
+              ..environmentOverrides[environmentName] = file,
+          );
+        case [final baseName, 'dart']:
+          declarations.update(
+            baseName,
+            (decl) => decl..baseApi = file,
+            ifAbsent: () => WidgetDeclaration()..baseApi = file,
+          );
+        default:
+          errorReporter(
+            '$scope files must be named as follows: $placeholder.dart or '
+            '$placeholder.<environment_name>.dart',
+            SourceLocation(path: file, line: 0, column: 0),
+          );
+          continue;
+      }
+    }
+    return declarations;
+  }
+}
+
+extension on Map<String, WidgetDeclaration> {
+  Future<void> traverse({
+    required FutureOr<void> Function(String name, String path) onBase,
+    required FutureOr<void> Function(
+      String name,
+      String environment,
+      String path,
+    ) onEnvOverride,
+  }) async {
+    for (final MapEntry(key: name, value: declaration) in entries) {
+      if (declaration.baseApi case final basePath?) {
+        await onBase(name, basePath);
+      }
+
+      for (final MapEntry(key: environmentName, value: environmentPath)
+          in declaration.environmentOverrides.entries) {
+        await onEnvOverride(name, environmentName, environmentPath);
+      }
+    }
+  }
 }
