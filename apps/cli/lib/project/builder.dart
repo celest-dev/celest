@@ -7,7 +7,7 @@ import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_rpc/protos.dart' as proto;
+import 'package:celest_core/protos.dart' as proto;
 import 'package:collection/collection.dart';
 
 final class ProjectBuilder {
