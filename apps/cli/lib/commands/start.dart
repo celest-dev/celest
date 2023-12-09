@@ -5,9 +5,8 @@ import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/project/builder.dart';
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:watcher/watcher.dart';
 
@@ -68,7 +67,7 @@ final class StartCommand extends CelestCommand {
       ).generate();
     }
 
-    final projectPaths = ProjectPaths(celestDir.path);
+    final projectPaths = init(projectRoot: celestDir.path);
 
     final analyzer = CelestAnalyzer(
       projectPaths: projectPaths,

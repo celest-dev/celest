@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/sdk.dart';
 import 'package:celest_cli/src/version.dart';
-import 'package:path/path.dart' as p;
 
 sealed class ProjectItem {
   const ProjectItem();

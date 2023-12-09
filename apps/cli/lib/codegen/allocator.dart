@@ -1,6 +1,6 @@
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:path/path.dart' as p;
 
 final class CelestAllocator implements Allocator {
   CelestAllocator({
@@ -26,8 +26,16 @@ final class CelestAllocator implements Allocator {
     // Fix `file://` and root-relative paths to be relative to the current file.
     final uri = Uri.parse(url);
     url = switch (uri.scheme) {
-      '' => p.relative(projectPaths.absolute(url), from: p.dirname(forFile)),
-      'file' => p.relative(uri.path, from: p.dirname(forFile)),
+      'project' => p.relative(
+          p.join(projectPaths.projectRoot, uri.path),
+          from: p.dirname(forFile),
+        ),
+      '' || 'file' => p.isRelative(uri.path)
+          ? url
+          : p.relative(
+              p.fromUri(uri),
+              from: p.dirname(forFile),
+            ),
       _ => url,
     };
     return '_i${_imports.putIfAbsent(url, _nextKey)}.$symbol';

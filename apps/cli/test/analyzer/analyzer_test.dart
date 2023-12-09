@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
@@ -61,7 +62,7 @@ dependencies:
   ]);
   await project.create();
   final projectRoot = d.path(name);
-  return ProjectPaths(projectRoot);
+  return init(projectRoot: projectRoot);
 }
 
 void testNoErrors({

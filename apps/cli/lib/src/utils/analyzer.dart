@@ -12,10 +12,10 @@ import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/types.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 // ignore: implementation_imports
 import 'package:code_builder/src/visitors.dart';
-import 'package:path/path.dart' as p;
 
 final enumIndex = <codegen.Reference, bool>{};
 
@@ -159,11 +159,10 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   @override
   codegen.Reference visitInterfaceType(InterfaceType type) {
     final typeArguments = type.typeArguments.map((type) => type.accept(this));
-    final uri = type.uri(projectRoot);
     final ref = codegen.TypeReference(
       (t) => t
         ..symbol = type.element.name
-        ..url = uri
+        ..url = type.uri
         ..types.addAll(typeArguments)
         ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
@@ -183,7 +182,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     return TypedefRecordType(
       // TODO(dnys1): How to handle no alias?
       symbol: type.alias!.element.name,
-      url: type.alias!.element.sourceLocation(projectRoot).path,
+      url: type.alias!.element.sourceLocation.path,
       recordType: codegen.RecordType(
         (r) => r
           ..positionalFieldTypes.addAll([
@@ -213,11 +212,19 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 }
 
 extension ElementSourceLocation on Element {
-  ast.SourceLocation sourceLocation(String projectRoot) {
+  ast.SourceLocation get sourceLocation {
     final uri = source!.uri;
     final (lineNo, column) = source!.offsetToLineCol(nameOffset);
     return ast.SourceLocation(
-      path: p.relative(p.fromUri(uri), from: projectRoot),
+      // Store relative location in posix format for convenience and easier
+      // cross-platform testing.
+      path: Uri(
+        scheme: 'project',
+        path: p.relative(
+          p.fromUri(uri),
+          from: projectPaths.projectRoot,
+        ),
+      ).toString(),
       line: lineNo,
       column: column,
     );
@@ -225,12 +232,20 @@ extension ElementSourceLocation on Element {
 }
 
 extension ElementAnnotationSourceLocation on ElementAnnotation {
-  ast.SourceLocation sourceLocation(Source source, String projectRoot) {
+  ast.SourceLocation sourceLocation(Source source) {
     final impl = this as ElementAnnotationImpl;
     final offset = impl.annotationAst.offset;
     final (lineNo, column) = source.offsetToLineCol(offset);
     return ast.SourceLocation(
-      path: p.relative(p.fromUri(source.uri), from: projectRoot),
+      // Store relative location in posix format for convenience and easier
+      // cross-platform testing.
+      path: Uri(
+        scheme: 'project',
+        path: p.relative(
+          p.fromUri(source.uri),
+          from: projectPaths.projectRoot,
+        ),
+      ).toString(),
       line: lineNo,
       column: column,
     );
@@ -258,16 +273,21 @@ extension SourceLineCol on Source {
 }
 
 extension DartTypeUri on DartType {
-  String? uri(String projectRoot) {
+  String? get uri {
     final library = element?.library;
     final sourceUri = library?.source.uri;
     return switch (this) {
       _ when library == null || sourceUri == null => null,
       _ when library.isDartCore => 'dart:core',
-      _ when sourceUri.scheme == 'file' => p.relative(
-          p.fromUri(sourceUri),
-          from: projectRoot,
-        ),
+      _ when sourceUri.scheme == 'file' || sourceUri.scheme == '' => Uri(
+          scheme: 'project',
+          // Store relative location in posix format for convenience and easier
+          // cross-platform testing.
+          path: p.relative(
+            p.fromUri(sourceUri),
+            from: projectPaths.projectRoot,
+          ),
+        ).toString(),
       _ => sourceUri.toString(),
     };
   }

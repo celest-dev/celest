@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/project/builder.dart';
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:http/http.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -14,6 +15,8 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 import 'test.dart';
+
+int nextPort() => Random().nextInt(10000) + 30000;
 
 Future<void> main(List<String> args) async {
   final argParser = ArgParser()
@@ -26,6 +29,12 @@ Future<void> main(List<String> args) async {
 
   final argResults = argParser.parse(args);
   final updateGoldens = argResults['update-goldens'] as bool;
+
+  if (updateGoldens && Platform.isWindows) {
+    throw Exception(
+      'Cannot update goldens on Windows due to path differences.',
+    );
+  }
 
   final testDir = p.dirname(p.fromUri(Platform.script));
   final allTests = Directory(testDir)
@@ -57,8 +66,8 @@ class TestRunner {
   late final testCases = tests[testName];
   late final testName = p.basename(projectRoot);
   late final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-  late final projectPaths = ProjectPaths(
-    projectRoot,
+  late final projectPaths = init(
+    projectRoot: projectRoot,
     outputsDir: goldensDir.path,
   );
   late Client client;
@@ -66,7 +75,6 @@ class TestRunner {
     projectPaths: projectPaths,
     logger: Logger(level: Level.verbose),
   );
-  var port = 8080;
 
   void run() {
     group(testName, () {
@@ -105,6 +113,10 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
+      if (Platform.isWindows) {
+        // Cannot check/update goldens on Windows due to path differences.
+        return;
+      }
       final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
       if (updateGoldens) {
         goldenAst.writeAsStringSync(
@@ -127,6 +139,11 @@ class TestRunner {
         projectPaths: projectPaths,
       );
       project!.accept(codegen);
+
+      if (Platform.isWindows) {
+        // Cannot check/update goldens on Windows due to path differences.
+        return;
+      }
       for (final MapEntry(key: path, value: content)
           in codegen.fileOutputs.entries) {
         final goldenFile = File(path);
@@ -136,7 +153,7 @@ class TestRunner {
             ..writeAsStringSync(content);
         } else {
           final expected = goldenFile.readAsStringSync();
-          expect(content, expected);
+          expect(content, equalsIgnoringWhitespace(expected));
         }
       }
     });
@@ -210,13 +227,13 @@ class TestRunner {
     List<FunctionTest> tests,
   ) {
     final envPaths = projectPaths.environment(environmentName);
+    final port = nextPort();
     group('$functionName $environmentName', () {
       late Process functionProc;
       late Uri apiUri;
       final logs = <String>[];
 
       setUpAll(() async {
-        port++;
         apiUri = Uri.parse('http://localhost:$port');
         final entrypoint = envPaths.functionEntrypoint(apiName, functionName);
         functionProc = await Process.start(

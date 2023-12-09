@@ -4,7 +4,6 @@ import 'package:celest_cli/codegen/types.dart';
 import 'package:celest_cli/serialization/generator.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:path/path.dart' as p;
 
 final class EntrypointGenerator {
   EntrypointGenerator({
@@ -68,11 +67,9 @@ final class EntrypointGenerator {
               ])
               ..modifier = MethodModifier.async
               ..body = Block((b) {
-                final functionImport =
-                    p.join(projectRoot, function.location.path);
                 final functionReference = refer(
                   function.name,
-                  functionImport,
+                  function.location.path,
                 );
                 if (function.parameters
                     .any((param) => param.type.isFunctionContext)) {

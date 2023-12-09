@@ -3,10 +3,10 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project.dart"
+    "url": "project:project.dart"
   },
   "location": {
-    "path": "project.dart",
+    "path": "project:project.dart",
     "line": 3,
     "column": 6
   },

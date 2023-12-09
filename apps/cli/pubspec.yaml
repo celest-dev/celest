@@ -13,8 +13,6 @@ dependencies:
   aws_common: ^0.6.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
-  cedar_dart:
-    path: ../../packages/cedar_dart
   celest:
     path: ../../packages/celest
   celest_cli_common:
@@ -30,6 +28,7 @@ dependencies:
   json_annotation: ^4.8.1
   mason_logger: ^0.2.10
   meta: ^1.11.0
+  os_detect: ^2.0.1
   path: ^1.8.3
   pubspec_parse: ^1.2.3
   shelf: ^1.4.1

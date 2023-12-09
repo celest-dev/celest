@@ -1,21 +1,16 @@
-import 'package:path/path.dart' as p;
+import 'package:celest_cli/src/context.dart';
 
 final class ProjectPaths {
   ProjectPaths(
-    this._celestDir, {
+    this.projectRoot, {
     String? outputsDir,
-  }) : outputsDir = outputsDir ?? p.join(_celestDir, '.dart_tool', 'celest');
+  }) : outputsDir = outputsDir ?? p.join(projectRoot, '.dart_tool', 'celest');
 
-  final String _celestDir;
-
-  String absolute(String relativePath) => p.join(projectRoot, relativePath);
-  String relativeToRoot(String path) =>
-      p.relative(p.absolute(path), from: projectRoot);
+  final String projectRoot;
+  final String outputsDir;
 
   late final String appRoot =
-      p.canonicalize(p.normalize(p.join(_celestDir, '..')));
-  late final String projectRoot = _celestDir;
-  late final String outputsDir;
+      p.canonicalize(p.normalize(p.join(projectRoot, '..')));
 
   late final String projectYaml = p.join(projectRoot, 'pubspec.yaml');
   late final String projectDart = p.join(projectRoot, 'project.dart');

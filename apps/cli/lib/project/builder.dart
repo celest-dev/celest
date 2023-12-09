@@ -6,9 +6,9 @@ import 'package:celest/src/authz/policy.dart' as core;
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_rpc/protos.dart' as proto;
 import 'package:collection/collection.dart';
-import 'package:path/path.dart' as p;
 
 final class ProjectBuilder {
   ProjectBuilder({

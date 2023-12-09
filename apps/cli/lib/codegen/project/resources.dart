@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/ast/ast.dart';
@@ -20,7 +22,9 @@ final class ResourcesGenerator {
     ..name = ''
     ..comments.addAll(_header);
 
-  final _allResources = <String>{};
+  // SplayTree ensures consistent ordering in output file which helps with
+  // diffs.
+  final _allResources = SplayTreeSet<String>();
 
   final _classBuilders = <String, ClassBuilder>{};
   ClassBuilder _beginClass(String name) {
@@ -38,8 +42,8 @@ final class ResourcesGenerator {
 
   void _generateApi(
     Api api, {
-    required MapBuilder<String, Field> apis,
-    required MapBuilder<String, Field> functions,
+    required Map<String, Field> apis,
+    required Map<String, Field> functions,
   }) {
     final apiFieldName = api.name.camelCase;
     apis[apiFieldName] ??= Field(
@@ -99,8 +103,9 @@ final class ResourcesGenerator {
     final allApis = project.environments.values
         .expand((environment) => environment.apis.values);
     if (allApis.isNotEmpty) {
-      final apis = MapBuilder<String, Field>();
-      final functions = MapBuilder<String, Field>();
+      // Ensures consistent ordering in output file which helps with diffs.
+      final apis = SplayTreeMap<String, Field>();
+      final functions = SplayTreeMap<String, Field>();
       for (final api in allApis) {
         _generateApi(
           api,

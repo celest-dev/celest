@@ -11,12 +11,12 @@ import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/paths.dart';
 import 'package:celest_cli/serialization/checker.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:path/path.dart' as p;
 
 typedef ErrorReporter = void Function(String message, SourceLocation location);
 
@@ -31,6 +31,10 @@ final class CelestAnalyzer {
     required ProjectPaths projectPaths,
     required Logger logger,
   }) {
+    init(
+      projectRoot: projectPaths.projectRoot,
+      outputsDir: projectPaths.outputsDir,
+    );
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
     );
@@ -73,11 +77,10 @@ final class CelestAnalyzer {
   Future<ast.ProjectBuilder?> _findProject() async {
     _logger.detail('Analyzing project');
     final projectFilePath = _projectPaths.projectDart;
-    final projectFileRelativePath =
-        _projectPaths.relativeToRoot(projectFilePath);
+    final projectFileRelativePath = p.basename(projectFilePath);
     if (!File(projectFilePath).existsSync()) {
       _reportError(
-        'No project file found at ${_projectPaths.relativeToRoot(projectFilePath)}',
+        'No project file found at $projectFilePath',
         SourceLocation(
           path: projectFileRelativePath,
           line: 0,
@@ -123,7 +126,7 @@ final class CelestAnalyzer {
       if (!topLevelVariable.isConst) {
         _reportError(
           'All top-level variables must be `const`',
-          topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+          topLevelVariable.sourceLocation,
         );
         hasConstantEvalErrors = true;
         continue;
@@ -136,7 +139,7 @@ final class CelestAnalyzer {
         default:
           _reportError(
             'Top-level constant could not be evaluated',
-            topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+            topLevelVariable.sourceLocation,
           );
           hasConstantEvalErrors = true;
       }
@@ -175,8 +178,7 @@ final class CelestAnalyzer {
     ) = projectDefinition;
 
     // Validate `project` variable
-    final projectDefineLocation =
-        projectDefinitionElement.sourceLocation(_projectPaths.projectRoot);
+    final projectDefineLocation = projectDefinitionElement.sourceLocation;
     _logger
         .detail('Resolved project definition location: $projectDefineLocation');
     final projectName =
@@ -250,7 +252,7 @@ final class CelestAnalyzer {
       ..name = projectName
       ..reference = refer(
         projectDefinitionElement.name,
-        projectFileRelativePath,
+        Uri(scheme: 'project', path: projectFileRelativePath).toString(),
       )
       ..location.replace(projectDefineLocation)
       ..environmentNames.addAll(environments);
@@ -260,10 +262,7 @@ final class CelestAnalyzer {
     var hasAuth = false;
     return element.metadata
         .map((annotation) {
-          final location = annotation.sourceLocation(
-            element.source!,
-            _projectPaths.projectRoot,
-          );
+          final location = annotation.sourceLocation(element.source!);
           final type = annotation.computeConstantValue()?.type;
           if (type == null) {
             _reportError('Could not resolve annotation', location);
@@ -400,7 +399,7 @@ final class CelestAnalyzer {
               type: param.type.toCodeBuilder(_projectPaths.projectRoot),
               required: param.isRequired,
               named: param.isNamed,
-              location: param.sourceLocation(_projectPaths.projectRoot),
+              location: param.sourceLocation,
             );
             if (parameter.type.isFunctionContext) {
               return parameter;
@@ -419,7 +418,7 @@ final class CelestAnalyzer {
           returnType: func.returnType.toCodeBuilder(_projectPaths.projectRoot),
           flattenedReturnType: func.returnType.flattened
               .toCodeBuilder(_projectPaths.projectRoot),
-          location: func.sourceLocation(_projectPaths.projectRoot),
+          location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
         );
 
@@ -529,7 +528,7 @@ final class CelestAnalyzer {
       if (!topLevelVariable.isConst) {
         _reportError(
           'Environment variables must be declared as `const`',
-          topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+          topLevelVariable.sourceLocation,
         );
         continue;
       }
@@ -541,7 +540,7 @@ final class CelestAnalyzer {
         default:
           _reportError(
             'Top-level constant could not be evaluated',
-            topLevelVariable.sourceLocation(_projectPaths.projectRoot),
+            topLevelVariable.sourceLocation,
           );
       }
     }
@@ -551,13 +550,11 @@ final class CelestAnalyzer {
       if (!topLevelConstant.element.type.isEnvironmentVariable) {
         _reportError(
           'Only environment variables can be declared in this file.',
-          topLevelConstant.element.sourceLocation(_projectPaths.projectRoot),
+          topLevelConstant.element.sourceLocation,
         );
         continue;
       }
-      final location = topLevelConstant.element.sourceLocation(
-        _projectPaths.projectRoot,
-      );
+      final location = topLevelConstant.element.sourceLocation;
       final dartName = topLevelConstant.element.name;
       final envName = topLevelConstant.value.getField('name')?.toStringValue();
       if (envName == null) {

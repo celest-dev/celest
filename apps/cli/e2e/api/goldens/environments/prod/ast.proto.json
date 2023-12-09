@@ -6,9 +6,121 @@
   "widgets": [
     {
       "type": "Celest::CloudApi",
+      "id": "anonymous_api.prod",
+      "cloudApi": {
+        "name": "anonymous_api",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$anonymous",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "anonymous_function.prod",
       "cloudApi": {
         "name": "anonymous_function",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "api_auth_constant_variables.prod",
+      "cloudApi": {
+        "name": "api_auth_constant_variables",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$anonymous",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "authenticated_api.prod",
+      "cloudApi": {
+        "name": "authenticated_api",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "authenticated_function.prod",
+      "cloudApi": {
+        "name": "authenticated_function"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "middleware.prod",
+      "cloudApi": {
+        "name": "middleware"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "parameter_types.prod",
+      "cloudApi": {
+        "name": "parameter_types"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "parameters.prod",
+      "cloudApi": {
+        "name": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
+      "id": "return_types.prod",
+      "cloudApi": {
+        "name": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "anonymous_api.sayHello.prod",
+      "cloudFunction": {
+        "name": "sayHello",
+        "apiName": "anonymous_api"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "anonymous_api.sayHelloAuthenticated.prod",
+      "cloudFunction": {
+        "name": "sayHelloAuthenticated",
+        "apiName": "anonymous_api",
         "policy": {
           "statements": [
             {
@@ -48,84 +160,11 @@
       }
     },
     {
-      "type": "Celest::CloudApi",
-      "id": "parameter_types.prod",
-      "cloudApi": {
-        "name": "parameter_types"
-      }
-    },
-    {
       "type": "Celest::CloudFunction",
-      "id": "parameter_types.simple.prod",
-      "cloudFunction": {
-        "name": "simple",
-        "apiName": "parameter_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameter_types.simpleOptional.prod",
-      "cloudFunction": {
-        "name": "simpleOptional",
-        "apiName": "parameter_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameter_types.complex.prod",
-      "cloudFunction": {
-        "name": "complex",
-        "apiName": "parameter_types"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "authenticated_function.prod",
-      "cloudApi": {
-        "name": "authenticated_function"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "authenticated_function.sayHelloAuthenticated.prod",
-      "cloudFunction": {
-        "name": "sayHelloAuthenticated",
-        "apiName": "authenticated_function",
-        "policy": {
-          "statements": [
-            {
-              "grantee": "Celest::Role::$authenticated",
-              "actions": [
-                "CloudFunctionAction::\"invoke\""
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "authenticated_function.sayHello.prod",
+      "id": "api_auth_constant_variables.sayHello.prod",
       "cloudFunction": {
         "name": "sayHello",
-        "apiName": "authenticated_function"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "api_auth_constant_variables.prod",
-      "cloudApi": {
-        "name": "api_auth_constant_variables",
-        "policy": {
-          "statements": [
-            {
-              "grantee": "Celest::Role::$anonymous",
-              "actions": [
-                "CloudFunctionAction::\"invoke\""
-              ]
-            }
-          ]
-        }
+        "apiName": "api_auth_constant_variables"
       }
     },
     {
@@ -148,40 +187,147 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "api_auth_constant_variables.sayHello.prod",
+      "id": "authenticated_api.sayGoodbyeAuthenticated.prod",
+      "cloudFunction": {
+        "name": "sayGoodbyeAuthenticated",
+        "apiName": "authenticated_api"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "authenticated_api.sayHelloAuthenticated.prod",
+      "cloudFunction": {
+        "name": "sayHelloAuthenticated",
+        "apiName": "authenticated_api"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "authenticated_function.sayHello.prod",
       "cloudFunction": {
         "name": "sayHello",
-        "apiName": "api_auth_constant_variables"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "return_types.prod",
-      "cloudApi": {
-        "name": "return_types"
+        "apiName": "authenticated_function"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncVoidReturn.prod",
+      "id": "authenticated_function.sayHelloAuthenticated.prod",
       "cloudFunction": {
-        "name": "asyncVoidReturn",
+        "name": "sayHelloAuthenticated",
+        "apiName": "authenticated_function",
+        "policy": {
+          "statements": [
+            {
+              "grantee": "Celest::Role::$authenticated",
+              "actions": [
+                "CloudFunctionAction::\"invoke\""
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "middleware.sayHello.prod",
+      "cloudFunction": {
+        "name": "sayHello",
+        "apiName": "middleware"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameter_types.complex.prod",
+      "cloudFunction": {
+        "name": "complex",
+        "apiName": "parameter_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameter_types.simple.prod",
+      "cloudFunction": {
+        "name": "simple",
+        "apiName": "parameter_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameter_types.simpleOptional.prod",
+      "cloudFunction": {
+        "name": "simpleOptional",
+        "apiName": "parameter_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameters.optionalNamed.prod",
+      "cloudFunction": {
+        "name": "optionalNamed",
+        "apiName": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameters.optionalPositional.prod",
+      "cloudFunction": {
+        "name": "optionalPositional",
+        "apiName": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameters.requiredNamed.prod",
+      "cloudFunction": {
+        "name": "requiredNamed",
+        "apiName": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "parameters.requiredPositional.prod",
+      "cloudFunction": {
+        "name": "requiredPositional",
+        "apiName": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncBoolReturn.prod",
+      "cloudFunction": {
+        "name": "asyncBoolReturn",
         "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncStringReturn.prod",
+      "id": "return_types.asyncClassReturnNullable.prod",
       "cloudFunction": {
-        "name": "asyncStringReturn",
+        "name": "asyncClassReturnNullable",
         "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncIntReturn.prod",
+      "id": "return_types.asyncComplexClassReturn.prod",
       "cloudFunction": {
-        "name": "asyncIntReturn",
+        "name": "asyncComplexClassReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncComplexStructReturn.prod",
+      "cloudFunction": {
+        "name": "asyncComplexStructReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncComplexStructReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncComplexStructReturnNullable",
         "apiName": "return_types"
       }
     },
@@ -195,9 +341,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncBoolReturn.prod",
+      "id": "return_types.asyncIntReturn.prod",
       "cloudFunction": {
-        "name": "asyncBoolReturn",
+        "name": "asyncIntReturn",
         "apiName": "return_types"
       }
     },
@@ -227,6 +373,190 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrBoolReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrBoolReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrBoolReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrBoolReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrComplexClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrComplexClassReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrComplexStructReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrComplexStructReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrComplexStructReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrComplexStructReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrDoubleReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrDoubleReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrDoubleReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrDoubleReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIntReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrIntReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIntReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrIntReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIterableReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrIterableReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrIterableReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrIterableReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrListReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrListReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrListReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrListReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrMapReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrMapReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrMapReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrMapReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrSimpleClassReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrSimpleClassReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrStringReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrStringReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrStringReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrStringReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrStructReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrStructReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrStructReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrStructReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrVoidReturn.prod",
+      "cloudFunction": {
+        "name": "asyncOrVoidReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncOrVoidReturnNullable.prod",
+      "cloudFunction": {
+        "name": "asyncOrVoidReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.asyncStringReturn.prod",
+      "cloudFunction": {
+        "name": "asyncStringReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.asyncStructReturn.prod",
       "cloudFunction": {
         "name": "asyncStructReturn",
@@ -243,241 +573,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.asyncComplexStructReturn.prod",
+      "id": "return_types.asyncVoidReturn.prod",
       "cloudFunction": {
-        "name": "asyncComplexStructReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncComplexStructReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncComplexStructReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncComplexClassReturn.prod",
-      "cloudFunction": {
-        "name": "asyncComplexClassReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncClassReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncClassReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrVoidReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrVoidReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrStringReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrStringReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIntReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrIntReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrDoubleReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrDoubleReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrBoolReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrBoolReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIterableReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrIterableReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrListReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrListReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrMapReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrMapReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrStructReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrStructReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrComplexStructReturn.prod",
-      "cloudFunction": {
-        "name": "asyncOrComplexStructReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrVoidReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrVoidReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrStringReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrStringReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIntReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrIntReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrDoubleReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrDoubleReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrBoolReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrBoolReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrIterableReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrIterableReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrListReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrListReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrMapReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrMapReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrStructReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrStructReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrComplexStructReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrComplexStructReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrSimpleClassReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrSimpleClassReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.asyncOrComplexClassReturnNullable.prod",
-      "cloudFunction": {
-        "name": "asyncOrComplexClassReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.voidReturn.prod",
-      "cloudFunction": {
-        "name": "voidReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.stringReturn.prod",
-      "cloudFunction": {
-        "name": "stringReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.intReturn.prod",
-      "cloudFunction": {
-        "name": "intReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.doubleReturn.prod",
-      "cloudFunction": {
-        "name": "doubleReturn",
+        "name": "asyncVoidReturn",
         "apiName": "return_types"
       }
     },
@@ -491,49 +589,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.iterableReturn.prod",
+      "id": "return_types.boolReturnNullable.prod",
       "cloudFunction": {
-        "name": "iterableReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.listReturn.prod",
-      "cloudFunction": {
-        "name": "listReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.mapReturn.prod",
-      "cloudFunction": {
-        "name": "mapReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.structReturn.prod",
-      "cloudFunction": {
-        "name": "structReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.complexReturn.prod",
-      "cloudFunction": {
-        "name": "complexReturn",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.simpleClassReturn.prod",
-      "cloudFunction": {
-        "name": "simpleClassReturn",
+        "name": "boolReturnNullable",
         "apiName": "return_types"
       }
     },
@@ -547,65 +605,17 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.stringReturnNullable.prod",
+      "id": "return_types.complexClassReturnNullable.prod",
       "cloudFunction": {
-        "name": "stringReturnNullable",
+        "name": "complexClassReturnNullable",
         "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.intReturnNullable.prod",
+      "id": "return_types.complexReturn.prod",
       "cloudFunction": {
-        "name": "intReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.doubleReturnNullable.prod",
-      "cloudFunction": {
-        "name": "doubleReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.boolReturnNullable.prod",
-      "cloudFunction": {
-        "name": "boolReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.iterableReturnNullable.prod",
-      "cloudFunction": {
-        "name": "iterableReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.listReturnNullable.prod",
-      "cloudFunction": {
-        "name": "listReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.mapReturnNullable.prod",
-      "cloudFunction": {
-        "name": "mapReturnNullable",
-        "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "return_types.structReturnNullable.prod",
-      "cloudFunction": {
-        "name": "structReturnNullable",
+        "name": "complexReturn",
         "apiName": "return_types"
       }
     },
@@ -619,6 +629,94 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "return_types.doubleReturn.prod",
+      "cloudFunction": {
+        "name": "doubleReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.doubleReturnNullable.prod",
+      "cloudFunction": {
+        "name": "doubleReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.intReturn.prod",
+      "cloudFunction": {
+        "name": "intReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.intReturnNullable.prod",
+      "cloudFunction": {
+        "name": "intReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.iterableReturn.prod",
+      "cloudFunction": {
+        "name": "iterableReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.iterableReturnNullable.prod",
+      "cloudFunction": {
+        "name": "iterableReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.listReturn.prod",
+      "cloudFunction": {
+        "name": "listReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.listReturnNullable.prod",
+      "cloudFunction": {
+        "name": "listReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.mapReturn.prod",
+      "cloudFunction": {
+        "name": "mapReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.mapReturnNullable.prod",
+      "cloudFunction": {
+        "name": "mapReturnNullable",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "return_types.simpleClassReturn.prod",
+      "cloudFunction": {
+        "name": "simpleClassReturn",
+        "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "return_types.simpleClassReturnNullable.prod",
       "cloudFunction": {
         "name": "simpleClassReturnNullable",
@@ -627,140 +725,42 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "return_types.complexClassReturnNullable.prod",
+      "id": "return_types.stringReturn.prod",
       "cloudFunction": {
-        "name": "complexClassReturnNullable",
+        "name": "stringReturn",
         "apiName": "return_types"
       }
     },
     {
-      "type": "Celest::CloudApi",
-      "id": "middleware.prod",
-      "cloudApi": {
-        "name": "middleware"
+      "type": "Celest::CloudFunction",
+      "id": "return_types.stringReturnNullable.prod",
+      "cloudFunction": {
+        "name": "stringReturnNullable",
+        "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "middleware.sayHello.prod",
+      "id": "return_types.structReturn.prod",
       "cloudFunction": {
-        "name": "sayHello",
-        "apiName": "middleware"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "authenticated_api.prod",
-      "cloudApi": {
-        "name": "authenticated_api",
-        "policy": {
-          "statements": [
-            {
-              "grantee": "Celest::Role::$authenticated",
-              "actions": [
-                "CloudFunctionAction::\"invoke\""
-              ]
-            }
-          ]
-        }
+        "name": "structReturn",
+        "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "authenticated_api.sayHelloAuthenticated.prod",
+      "id": "return_types.structReturnNullable.prod",
       "cloudFunction": {
-        "name": "sayHelloAuthenticated",
-        "apiName": "authenticated_api"
+        "name": "structReturnNullable",
+        "apiName": "return_types"
       }
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "authenticated_api.sayGoodbyeAuthenticated.prod",
+      "id": "return_types.voidReturn.prod",
       "cloudFunction": {
-        "name": "sayGoodbyeAuthenticated",
-        "apiName": "authenticated_api"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "anonymous_api.prod",
-      "cloudApi": {
-        "name": "anonymous_api",
-        "policy": {
-          "statements": [
-            {
-              "grantee": "Celest::Role::$anonymous",
-              "actions": [
-                "CloudFunctionAction::\"invoke\""
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "anonymous_api.sayHelloAuthenticated.prod",
-      "cloudFunction": {
-        "name": "sayHelloAuthenticated",
-        "apiName": "anonymous_api",
-        "policy": {
-          "statements": [
-            {
-              "grantee": "Celest::Role::$authenticated",
-              "actions": [
-                "CloudFunctionAction::\"invoke\""
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "anonymous_api.sayHello.prod",
-      "cloudFunction": {
-        "name": "sayHello",
-        "apiName": "anonymous_api"
-      }
-    },
-    {
-      "type": "Celest::CloudApi",
-      "id": "parameters.prod",
-      "cloudApi": {
-        "name": "parameters"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameters.optionalPositional.prod",
-      "cloudFunction": {
-        "name": "optionalPositional",
-        "apiName": "parameters"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameters.optionalNamed.prod",
-      "cloudFunction": {
-        "name": "optionalNamed",
-        "apiName": "parameters"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameters.requiredPositional.prod",
-      "cloudFunction": {
-        "name": "requiredPositional",
-        "apiName": "parameters"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "parameters.requiredNamed.prod",
-      "cloudFunction": {
-        "name": "requiredNamed",
-        "apiName": "parameters"
+        "name": "voidReturn",
+        "apiName": "return_types"
       }
     }
   ]
