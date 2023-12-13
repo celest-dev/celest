@@ -108,6 +108,13 @@
       }
     },
     {
+      "type": "Celest::CloudApi",
+      "id": "serialization.prod",
+      "cloudApi": {
+        "name": "serialization"
+      }
+    },
+    {
       "type": "Celest::CloudFunction",
       "id": "anonymous_api.sayHello.prod",
       "cloudFunction": {
@@ -761,6 +768,62 @@
       "cloudFunction": {
         "name": "voidReturn",
         "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.defaultValues.prod",
+      "cloudFunction": {
+        "name": "defaultValues",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.empty.prod",
+      "cloudFunction": {
+        "name": "empty",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.emptySuper.prod",
+      "cloudFunction": {
+        "name": "emptySuper",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.fields.prod",
+      "cloudFunction": {
+        "name": "fields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.mixedFields.prod",
+      "cloudFunction": {
+        "name": "mixedFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.namedFields.prod",
+      "cloudFunction": {
+        "name": "namedFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.superFields.prod",
+      "cloudFunction": {
+        "name": "superFields",
+        "apiName": "serialization"
       }
     }
   ]

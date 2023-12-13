@@ -13,96 +13,90 @@ enum _TypePosition { parameter, return$ }
 sealed class Verdict {
   const Verdict();
 
-  const factory Verdict.yes() = _VerdictYes;
-  factory Verdict.no(String reason) = _VerdictNo.single;
+  const factory Verdict.yes({
+    SerializationSpec? serializationSpec,
+  }) = VerdictYes;
+  factory Verdict.no(String reason) = VerdictNo.single;
 
   bool get isSerializable;
   List<String> get reasons;
 
   Verdict operator &(Verdict other) => switch ((this, other)) {
-        (_VerdictYes(), _VerdictYes()) => const Verdict.yes(),
-        (_VerdictYes(), _VerdictNo(:final reasons)) ||
-        (_VerdictNo(:final reasons), _VerdictYes()) =>
-          _VerdictNo(reasons),
         (
-          _VerdictNo(reasons: final reasonsThis),
-          _VerdictNo(reasons: final reasonsOther)
+          VerdictYes(serializationSpec: final serializationSpecThis),
+          VerdictYes(serializationSpec: final serializationSpecOther)
         ) =>
-          _VerdictNo([...reasonsThis, ...reasonsOther]),
+          Verdict.yes(
+            serializationSpec: serializationSpecThis ?? serializationSpecOther,
+          ),
+        (VerdictYes(), final VerdictNo no) ||
+        (final VerdictNo no, VerdictYes()) =>
+          no,
+        (
+          VerdictNo(reasons: final reasonsThis),
+          VerdictNo(reasons: final reasonsOther)
+        ) =>
+          VerdictNo([...reasonsThis, ...reasonsOther]),
       };
 }
 
-final class _VerdictYes extends Verdict {
-  const _VerdictYes();
+final class VerdictYes extends Verdict {
+  const VerdictYes({
+    this.serializationSpec,
+  });
 
   @override
   bool get isSerializable => true;
+
+  final SerializationSpec? serializationSpec;
 
   @override
   List<String> get reasons => const [];
 }
 
-final class _VerdictNo extends Verdict {
-  const _VerdictNo(this.reasons);
-  _VerdictNo.single(String reason) : reasons = [reason];
+final class VerdictNo extends Verdict {
+  const VerdictNo(this.reasons);
+  VerdictNo.single(String reason) : reasons = [reason];
 
   @override
   bool get isSerializable => false;
 
   @override
   final List<String> reasons;
+
+  @override
+  String toString() => reasons.join('; ');
 }
 
-extension TypeIsSerializable on DartType {
-  /// Determines whether a [DartType] can be serialized in a return position.
-  ///
-  /// Types in this position must:
-  /// {@macro celest.is_serializable_return}
-  Verdict get isValidReturnType =>
-      flattened.accept(const _IsSerializable(_TypePosition.return$));
+final class SerializationSpec {
+  SerializationSpec({
+    required this.className,
+    required this.uri,
+    required this.fields,
+  });
 
-  /// Determines whether a [DartType] can be serialized in a parameter position.
-  ///
-  /// Types in this position must:
-  /// {@macro celest.is_serializable_parameter}
-  Verdict get isValidParameterType =>
-      flattened.accept(const _IsSerializable(_TypePosition.parameter));
+  final String className;
+  final Uri uri;
+  final List<FieldElement> fields;
+  List<ParameterElement>? parameters;
 }
 
 /// Determines whether a [DartType] can be serialized to/from JSON.
 ///
-/// For types in the [_TypePosition.parameter] position, the type must:
-///
-/// {@template celest.is_serializable_parameter}
 /// - Be a simple JSON type (bool, double, int, String, null, Object)
 /// - Be an enum
 /// - Be a supported Dart SDK type
 /// - Be a class with a constructor named `fromJson` that takes a single
 ///   required parameter whose type is `Map<String, dynamic>`.
-/// - Be a class which: has fields of the above types, has a constructor with
-///   all fields present. For these classes, we generate custom serialization
-///   code.
-/// {@endtemplate}
-///
-/// For types in the [_TypePosition.return$] position, the type must:
-///
-/// {@template celest.is_serializable_return}
-/// - Be a simple JSON type (bool, double, int, String, null, Object)
-/// - Be an enum
-/// - Be a supported Dart SDK type
 /// - Be a class with a method named `toJson` that takes no required parameters.
 /// - Be a class which: has fields of the above types, has a constructor with
 ///   all fields present. For these classes, we generate custom serialization
 ///   code.
-/// {@endtemplate}
-final class _IsSerializable extends TypeVisitor<Verdict> {
+final class IsSerializable extends TypeVisitor<Verdict> {
   // TODO(dnys1): Detect cycles
-  const _IsSerializable(this.position, [this.depth = 0]);
+  const IsSerializable([this.depth = 0]);
 
-  final _TypePosition position;
   final int depth;
-
-  void tt() {}
 
   Verdict? _isSimpleJson(InterfaceType type) {
     if (type.isDartCoreBool ||
@@ -125,7 +119,7 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       return type.typeArguments.single.accept(
-        _IsSerializable(position, depth + 1),
+        IsSerializable(depth + 1),
       );
     }
     if (type.isDartCoreMap) {
@@ -133,7 +127,7 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
         return Verdict.no('Map keys must be strings');
       }
       return type.typeArguments[1].accept(
-        _IsSerializable(position, depth + 1),
+        IsSerializable(depth + 1),
       );
     }
     return null;
@@ -214,31 +208,33 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
     // Either it has its own fromJson/toJson methods, or it meets the
     // requirements needed to generate implementations.
     var verdict = const Verdict.yes();
-    switch (position) {
-      case _TypePosition.parameter:
-        // Check for custom serialization.
-        final fromJsonCtor = type.constructors.singleWhereOrNull(
-          (element) => element.name == 'fromJson',
+
+    // Check fromJson-able
+    {
+      final fromJsonCtor = type.constructors.singleWhereOrNull(
+        (element) => element.name == 'fromJson',
+      );
+      final hasCustomSerialization = fromJsonCtor != null;
+      if (hasCustomSerialization) {
+        verdict &= _customParameterSerializability(type, fromJsonCtor);
+      } else {
+        verdict &= type.accept(
+          const _IsSerializableClass(_TypePosition.parameter),
         );
-        if (fromJsonCtor != null) {
-          verdict &= _customParameterSerializability(type, fromJsonCtor);
-        } else {
-          return Verdict.no(
-            'Type ${type.element.name} must have a fromJson constructor.',
-          );
-          // verdict &= type.accept(_IsSerializableClass(position));
-        }
-      case _TypePosition.return$:
-        // Check for custom serialization.
-        final toJsonMethod = type.getMethod('toJson');
-        if (toJsonMethod != null) {
-          verdict &= _customReturnSerializability(type, toJsonMethod);
-        } else {
-          return Verdict.no(
-            'Type ${type.element.name} must have a toJson method.',
-          );
-          // verdict &= type.accept(_IsSerializableClass(position));
-        }
+      }
+    }
+
+    // Check toJson-able
+    {
+      final toJsonMethod = type.getMethod('toJson');
+      final hasCustomSerialization = toJsonMethod != null;
+      if (hasCustomSerialization) {
+        verdict &= _customReturnSerializability(type, toJsonMethod);
+      } else {
+        verdict &= type.accept(
+          const _IsSerializableClass(_TypePosition.return$),
+        );
+      }
     }
     return verdict;
   }
@@ -256,12 +252,12 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
     var verdict = const Verdict.yes();
     for (final field in type.positionalFields) {
       verdict &= field.type.accept(
-        _IsSerializable(position, depth + 1),
+        IsSerializable(depth + 1),
       );
     }
     for (final field in type.namedFields) {
       verdict &= field.type.accept(
-        _IsSerializable(position, depth + 1),
+        IsSerializable(depth + 1),
       );
     }
     return verdict;
@@ -274,12 +270,8 @@ final class _IsSerializable extends TypeVisitor<Verdict> {
   }
 
   @override
-  Verdict visitVoidType(VoidType type) {
-    if (depth == 0 && position == _TypePosition.return$) {
-      return const Verdict.yes();
-    }
-    return Verdict.no('Void types are not supported in this position');
-  }
+  Verdict visitVoidType(VoidType type) =>
+      Verdict.no('Void types are not supported');
 }
 
 final class _IsSerializableClass extends TypeVisitor<Verdict> {
@@ -305,20 +297,86 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         'a class or does not have a fromJson/toJson method.',
       );
     }
-    var verdict = const Verdict.yes();
     final fields = element.sortedFields;
-    for (final field in fields) {
-      if (field.isPrivate) {
-        if (position == _TypePosition.parameter) {
+    final serializationSpec = SerializationSpec(
+      className: element.displayName,
+      uri: element.library.source.uri,
+      fields: fields,
+    );
+    var verdict = Verdict.yes(
+      serializationSpec: serializationSpec,
+    );
+    switch (position) {
+      case _TypePosition.return$:
+        for (final field in fields) {
+          if (field.isPrivate) {
+            verdict &= Verdict.no(
+              'Private field "${field.displayName}" is not supported in a class '
+              'used as a return type. Consider defining custom fromJson/toJson '
+              'methods or making the field public.',
+            );
+            continue;
+          }
+          final fieldVerdict = field.type.accept(const IsSerializable());
+          if (fieldVerdict is VerdictNo) {
+            verdict &= Verdict.no(
+              'Field "${field.displayName}" of type "${element.displayName}" is '
+              'not serializable: $fieldVerdict',
+            );
+          }
+        }
+      case _TypePosition.parameter:
+        var constructorVerdict = const Verdict.yes();
+        final unnamedConstructor =
+            element.constructors.firstWhereOrNull((ctor) {
+          if (ctor.name.isNotEmpty) {
+            return false;
+          }
+          final parameters = ctor.parameters;
+          for (final parameter in parameters) {
+            FieldElement? fieldFormal(ParameterElement param) {
+              return switch (param) {
+                FieldFormalParameterElement(:final field?) => field,
+                SuperFormalParameterElement(
+                  :final superConstructorParameter?
+                ) =>
+                  fieldFormal(superConstructorParameter),
+                _ =>
+                  fields.firstWhereOrNull((field) => field.name == param.name),
+              };
+            }
+
+            final parameterField = fieldFormal(parameter);
+            if (parameterField == null) {
+              constructorVerdict &= Verdict.no(
+                'Constructor parameter "${parameter.displayName}" is not '
+                'supported.',
+              );
+              return false;
+            }
+            if (!fields.contains(parameterField)) {
+              constructorVerdict &= Verdict.no(
+                'Constructor parameter "${parameter.displayName}" is not '
+                'a field of the class ${element.displayName}.',
+              );
+              return false;
+            }
+          }
+          return true;
+        });
+        if (unnamedConstructor == null) {
           verdict &= Verdict.no(
-            'Private field "${field.displayName}" is not supported in a class '
-            'used as a parameter. Consider defining custom fromJson/toJson '
-            'methods or making the field public.',
+            'Class ${element.displayName} must have an unnamed constructor with '
+            'the same number of parameters as fields.',
+          );
+        } else if (element.isAbstract && !unnamedConstructor.isFactory) {
+          constructorVerdict &= Verdict.no(
+            'Class ${element.displayName} is abstract and must have an unnamed '
+            'or fromJson factory constructor to be used.',
           );
         }
-        continue;
-      }
-      verdict &= field.type.accept(_IsSerializable(position));
+        verdict &= constructorVerdict;
+        serializationSpec.parameters = unnamedConstructor?.parameters;
     }
     return verdict;
   }
@@ -333,7 +391,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitRecordType(RecordType type) =>
-      type.accept(_IsSerializable(position));
+      type.accept(const IsSerializable());
 
   @override
   Verdict visitTypeParameterType(TypeParameterType type) {

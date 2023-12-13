@@ -6,6 +6,7 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
@@ -68,6 +69,7 @@ final class CelestAnalyzer {
 
   Future<({ast.Project? project, List<AnalysisException> errors})>
       analyzeProject() async {
+    _errors.clear();
     final project = await _findProject();
     if (project == null) {
       return (project: null, errors: _errors);
@@ -112,6 +114,7 @@ final class CelestAnalyzer {
       return null;
     }
     _logger.detail('Resolved project file');
+    typeHelper.typeSystem = projectFile.typeSystem;
     // TODO: Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
@@ -412,7 +415,7 @@ final class CelestAnalyzer {
             if (parameter.type.isFunctionContext) {
               return parameter;
             }
-            final parameterTypeVerdict = param.type.isValidParameterType;
+            final parameterTypeVerdict = typeHelper.isSerializable(param.type);
             if (!parameterTypeVerdict.isSerializable) {
               for (final reason in parameterTypeVerdict.reasons) {
                 _reportError(
@@ -443,7 +446,10 @@ final class CelestAnalyzer {
           }
         }
         final returnType = func.returnType;
-        final returnTypeVerdict = returnType.isValidReturnType;
+        final returnTypeVerdict = switch (returnType.flattened) {
+          VoidType() => const Verdict.yes(),
+          final flattened => typeHelper.isSerializable(flattened),
+        };
         if (!returnTypeVerdict.isSerializable) {
           for (final reason in returnTypeVerdict.reasons) {
             _reportError(

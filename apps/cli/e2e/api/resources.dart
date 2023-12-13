@@ -8,6 +8,7 @@ import 'dart:typed_data' as _i3;
 import 'package:celest/celest.dart' as _i1;
 
 import 'apis/parameter_types.dart' as _i2;
+import 'apis/serialization.dart' as _i4;
 
 abstract final class apis {
   static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
@@ -29,6 +30,8 @@ abstract final class apis {
   static const parameters = _i1.CloudApi(name: r'parameters');
 
   static const returnTypes = _i1.CloudApi(name: r'return_types');
+
+  static const serialization = _i1.CloudApi(name: r'serialization');
 }
 
 abstract final class functions {
@@ -1530,6 +1533,46 @@ abstract final class functions {
     api: r'return_types',
     functionName: r'voidReturn',
   );
+
+  static const serializationDefaultValues =
+      _i1.CloudFunction<_i4.DefaultValues, _i4.DefaultValues>(
+    api: r'serialization',
+    functionName: r'defaultValues',
+  );
+
+  static const serializationEmpty = _i1.CloudFunction<_i4.Empty, _i4.Empty>(
+    api: r'serialization',
+    functionName: r'empty',
+  );
+
+  static const serializationEmptySuper =
+      _i1.CloudFunction<_i4.EmptySuper, _i4.EmptySuper>(
+    api: r'serialization',
+    functionName: r'emptySuper',
+  );
+
+  static const serializationFields = _i1.CloudFunction<_i4.Fields, _i4.Fields>(
+    api: r'serialization',
+    functionName: r'fields',
+  );
+
+  static const serializationMixedFields =
+      _i1.CloudFunction<_i4.MixedFields, _i4.MixedFields>(
+    api: r'serialization',
+    functionName: r'mixedFields',
+  );
+
+  static const serializationNamedFields =
+      _i1.CloudFunction<_i4.NamedFields, _i4.NamedFields>(
+    api: r'serialization',
+    functionName: r'namedFields',
+  );
+
+  static const serializationSuperFields =
+      _i1.CloudFunction<_i4.SuperFields, _i4.SuperFields>(
+    api: r'serialization',
+    functionName: r'superFields',
+  );
 }
 
 List<_i1.CloudWidget> all = const [
@@ -1542,6 +1585,7 @@ List<_i1.CloudWidget> all = const [
   apis.parameterTypes,
   apis.parameters,
   apis.returnTypes,
+  apis.serialization,
   functions.anonymousApiSayHello,
   functions.anonymousApiSayHelloAuthenticated,
   functions.anonymousFunctionSayHello,
@@ -1619,4 +1663,11 @@ List<_i1.CloudWidget> all = const [
   functions.returnTypesStructReturn,
   functions.returnTypesStructReturnNullable,
   functions.returnTypesVoidReturn,
+  functions.serializationDefaultValues,
+  functions.serializationEmpty,
+  functions.serializationEmptySuper,
+  functions.serializationFields,
+  functions.serializationMixedFields,
+  functions.serializationNamedFields,
+  functions.serializationSuperFields,
 ];

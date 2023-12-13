@@ -86,6 +86,293 @@
           }
         }
       },
+      "serialization": {
+        "name": "serialization",
+        "environmentName": "",
+        "metadata": [],
+        "functions": {
+          "emptySuper": {
+            "name": "emptySuper",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "EmptySuper",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 9,
+                  "column": 33
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "EmptySuper",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "EmptySuper",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 9,
+              "column": 11
+            }
+          },
+          "empty": {
+            "name": "empty",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Empty",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 10,
+                  "column": 18
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Empty",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Empty",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 10,
+              "column": 6
+            }
+          },
+          "superFields": {
+            "name": "superFields",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "SuperFields",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 42,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "SuperFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "SuperFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 42,
+              "column": 12
+            }
+          },
+          "fields": {
+            "name": "fields",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 43,
+                  "column": 21
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 43,
+              "column": 7
+            }
+          },
+          "namedFields": {
+            "name": "namedFields",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NamedFields",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 44,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NamedFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NamedFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 44,
+              "column": 12
+            }
+          },
+          "mixedFields": {
+            "name": "mixedFields",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 45,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 45,
+              "column": 12
+            }
+          },
+          "defaultValues": {
+            "name": "defaultValues",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "DefaultValues",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "path": "project:apis/serialization.dart",
+                  "line": 60,
+                  "column": 42
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "DefaultValues",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "DefaultValues",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "path": "project:apis/serialization.dart",
+              "line": 60,
+              "column": 14
+            }
+          }
+        }
+      },
       "parameter_types": {
         "name": "parameter_types",
         "environmentName": "",

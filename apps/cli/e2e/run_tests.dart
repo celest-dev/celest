@@ -257,20 +257,18 @@ class TestRunner {
               .first
               .then((e) => fail('Failed to start function: ${utf8.decode(e)}')),
         ]);
+
+        await expectLater(
+          client.get(apiUri),
+          completes,
+        );
       });
 
-      tearDown(logs.clear);
+      setUp(logs.clear);
 
       tearDownAll(() async {
         functionProc.kill();
         await functionProc.exitCode;
-      });
-
-      test('can serve', () {
-        expect(
-          client.get(apiUri),
-          completes,
-        );
       });
 
       for (final testCase in tests) {
@@ -876,6 +874,112 @@ const Map<String, Test> tests = {
                 'aNullableMapOfNullableComplexClass': null,
               },
               output: null,
+            ),
+          ],
+        },
+      ),
+      'serialization': ApiTest(
+        functionTests: {
+          ('empty', 'prod'): [
+            FunctionTestSuccess(
+              name: 'empty',
+              input: {},
+              output: {},
+            ),
+          ],
+          ('emptySuper', 'prod'): [
+            FunctionTestSuccess(
+              name: 'emptySuper',
+              input: {},
+              output: {},
+            ),
+          ],
+          ('fields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'fields',
+              input: {
+                'value': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+              },
+              output: {
+                'superField': 'superField',
+                'field': 'field',
+              },
+            ),
+          ],
+          ('superFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'superFields',
+              input: {
+                'value': {
+                  'superField': 'superField',
+                },
+              },
+              output: {
+                'superField': 'superField',
+              },
+            ),
+          ],
+          ('namedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'namedFields',
+              input: {
+                'value': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+              },
+              output: {
+                'superField': 'superField',
+                'field': 'field',
+              },
+            ),
+          ],
+          ('mixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'mixedFields',
+              input: {
+                'value': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+              },
+              output: {
+                'superField': 'superField',
+                'field': 'field',
+              },
+            ),
+          ],
+          ('defaultValues', 'prod'): [
+            FunctionTestSuccess(
+              name: 'all fields set',
+              input: {
+                'value': {
+                  'field': 'field',
+                  'nullableField': 'nullableField',
+                  'nullableFieldWithDefault': 'nullableFieldWithDefault',
+                },
+              },
+              output: {
+                'field': 'field',
+                'nullableField': 'nullableField',
+                'nullableFieldWithDefault': 'nullableFieldWithDefault',
+                'fieldWithoutInitializer': 'default',
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'all defaults',
+              input: {
+                'value': {},
+              },
+              output: {
+                'field': 'default',
+                'nullableField': null,
+                'nullableFieldWithDefault': 'default',
+                'fieldWithoutInitializer': 'default',
+              },
             ),
           ],
         },

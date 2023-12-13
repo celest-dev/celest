@@ -102,13 +102,10 @@ void testErrors({
       logger: Logger(level: Level.verbose),
     );
     final (project: _, errors: actual) = await analyzer.analyzeProject();
-    expect(actual, hasLength(errors.length));
-    if (errors.isNotEmpty) {
-      expect(
-        actual.map((e) => e.message),
-        unorderedEquals(errors.map(contains)),
-      );
-    }
+    expect(
+      actual.map((e) => e.message),
+      unorderedEquals(errors.map(contains)),
+    );
   });
 }
 
@@ -237,7 +234,7 @@ String sayHello() => 'Hello, World!';
       );
 
       testErrors(
-        name: 'bad_parameter_types',
+        name: 'bad_parameter_types_core',
         apis: {
           'greeting.dart': '''
 void sayHello({
@@ -273,15 +270,15 @@ void sayHello({
           'Never types are not supported', // Never
           'Never types are not supported', // List<Never>
           'Never types are not supported', // Iterable<Never>
-          'Void types are not supported in this position', // void
-          'Void types are not supported in this position', // List<void>
-          'Void types are not supported in this position', // Iterable<void>
+          'Void types are not supported', // void
+          'Void types are not supported', // List<void>
+          'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
         ],
       );
 
       testErrors(
-        name: 'bad_return_types',
+        name: 'bad_return_types_core',
         apis: {
           'greeting.dart': '''
 typedef ReturnTypes = ({
@@ -319,9 +316,9 @@ ReturnTypes sayHello() {}
           'Never types are not supported', // Never
           'Never types are not supported', // List<Never>
           'Never types are not supported', // Iterable<Never>
-          'Void types are not supported in this position', // void
-          'Void types are not supported in this position', // List<void>
-          'Void types are not supported in this position', // Iterable<void>
+          'Void types are not supported', // void
+          'Void types are not supported', // List<void>
+          'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
         ],
       );
@@ -330,27 +327,39 @@ ReturnTypes sayHello() {}
         name: 'bad_json_parameter',
         apis: {
           'greeting.dart': '''
-class NotJson {}
+abstract class NotJsonable {}
 
-String sayHello(NotJson _) => 'Hello, World!';
+String sayHello(NotJsonable _) => 'Hello, World!';
 ''',
         },
         errors: [
           'The type of a parameter must be serializable as JSON. '
-              'Type NotJson must have a fromJson constructor.',
+              'Class NotJsonable is abstract and must have an unnamed or '
+              'fromJson factory constructor to be used.',
         ],
       );
 
       testNoErrors(
-        name: 'valid_json',
+        name: 'valid_jsonable',
         apis: {
           'greeting.dart': '''
-class ValidJson {
-  factory ValidJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+class ValidJsonable {}
+
+ValidJsonable sayHello(ValidJsonable param) => param;
+''',
+        },
+      );
+
+      testNoErrors(
+        name: 'valid_custom_json',
+        apis: {
+          'greeting.dart': '''
+class ValidCustomJson {
+  factory ValidCustomJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
   Map<String, dynamic> toJson() => throw UnimplementedError();
 }
 
-ValidJson sayHello(ValidJson param) => param;
+ValidCustomJson sayHello(ValidCustomJson param) => param;
 ''',
         },
       );
@@ -359,14 +368,19 @@ ValidJson sayHello(ValidJson param) => param;
         name: 'bad_json_return',
         apis: {
           'greeting.dart': '''
-class NotJson {}
+class NotJsonable {
+  NotJson(this.value);
 
-NotJson sayHello() => NotJson();
+  final Enum value;
+}
+
+NotJsonable sayHello() => throw UnimplementedError();
 ''',
         },
         errors: [
           'The return type of a function must be serializable as JSON. '
-              'Type NotJson must have a toJson method.',
+              'Field "value" of type "NotJsonable" is not serializable: '
+              'Untyped enums are not supported',
         ],
       );
 
@@ -376,10 +390,12 @@ NotJson sayHello() => NotJson();
           'greeting.dart': '''
 class OnlyFromJson {
   factory OnlyFromJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+
+  late String _field;
 }
 
 extension on OnlyFromJson {
-  Map<String, dynamic> toJson() => throw UnimplementedError();
+  Map<String, dynamic> toJson() => {'field': _field};
 }
 
 OnlyFromJson sayHello() => OnlyFromJson();
@@ -387,7 +403,9 @@ OnlyFromJson sayHello() => OnlyFromJson();
         },
         errors: [
           'The return type of a function must be serializable as JSON. '
-              'Type OnlyFromJson must have a toJson method.',
+              'Private field "_field" is not supported in a class used as a '
+              'return type. Consider defining custom fromJson/toJson methods '
+              'or making the field public.',
         ],
       );
 

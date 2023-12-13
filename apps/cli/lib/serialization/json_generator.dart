@@ -1,4 +1,5 @@
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -116,7 +117,24 @@ final class JsonGenerator {
         ref,
       ]);
     }
-    return ref.property('toJson').call([]);
+    final serializationVerdict = typeHelper.isSerializable(dartType);
+    assert(
+      serializationVerdict is VerdictYes,
+      'Should not have passed analyzer if no',
+    );
+    final serializationSpec =
+        (serializationVerdict as VerdictYes).serializationSpec;
+    if (serializationSpec == null) {
+      return ref.property('toJson').call([]);
+    }
+    final serialized = <String, Expression>{};
+    for (final field in serializationSpec.fields) {
+      serialized[field.name] = toJson(
+        typeHelper.toReference(field.type),
+        ref.property(field.name),
+      );
+    }
+    return literalMap(serialized);
   }
 
   Expression fromJson(Reference type, Expression ref) {
@@ -281,13 +299,57 @@ final class JsonGenerator {
         [type], // <T>
       );
     }
-    return type.newInstanceNamed('fromJson', [
-      ref.asA(
-        DartTypes.core.map(
-          DartTypes.core.string,
-          DartTypes.core.dynamic,
+    final serializationVerdict = typeHelper.isSerializable(dartType);
+    assert(
+      serializationVerdict is VerdictYes,
+      'Should not have passed analyzer if no',
+    );
+    final serializationSpec =
+        (serializationVerdict as VerdictYes).serializationSpec;
+    if (serializationSpec == null) {
+      return type.newInstanceNamed('fromJson', [
+        ref.asA(
+          DartTypes.core.map(
+            DartTypes.core.string,
+            DartTypes.core.dynamic,
+          ),
         ),
-      ),
-    ]);
+      ]);
+    }
+    assert(
+      serializationSpec.parameters != null,
+      'Parameter types should have constructor parameters set',
+    );
+    final parameters = serializationSpec.parameters!;
+    final classReference = refer(
+      serializationSpec.className,
+      serializationSpec.uri.toString(),
+    );
+    final deserializedPositional = <Expression>[];
+    final deserializedNamed = <String, Expression>{};
+    for (final parameter in parameters) {
+      final reference = typeHelper.toReference(parameter.type);
+      final initializer = parameter.defaultValueCode;
+      var deserialized = fromJson(
+        reference.withNullability(
+          reference.isNullableOrFalse || initializer != null,
+        ),
+        ref.index(literalString(parameter.name, raw: true)),
+      );
+      if (initializer != null) {
+        deserialized = deserialized.parenthesized.ifNullThen(
+          CodeExpression(Code(initializer)),
+        );
+      }
+      if (parameter.isPositional) {
+        deserializedPositional.add(deserialized);
+      } else {
+        deserializedNamed[parameter.name] = deserialized;
+      }
+    }
+    return classReference.newInstance(
+      deserializedPositional,
+      deserializedNamed,
+    );
   }
 }

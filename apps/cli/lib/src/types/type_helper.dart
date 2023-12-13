@@ -1,7 +1,9 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -14,10 +16,25 @@ final class TypeHelper {
   }) : _projectPaths = projectPaths;
 
   final ProjectPaths _projectPaths;
+  TypeSystem? _typeSystem;
+  TypeSystem get typeSystem {
+    if (_typeSystem == null) {
+      throw StateError(
+        'TypeHelper.typeSystem was accessed before it was initialized. '
+        'The type system is only available after analysis.',
+      );
+    }
+    return _typeSystem!;
+  }
+
+  set typeSystem(TypeSystem typeSystem) {
+    _typeSystem = typeSystem;
+  }
 
   final _dartTypeToReference = <DartType, codegen.Reference>{};
   final _referenceToDartType = <codegen.Reference, DartType>{};
   final _wireTypeToDartType = <String, DartType>{};
+  final _serializationVerdicts = <DartType, Verdict>{};
 
   codegen.Reference toReference(DartType type) {
     final reference = _dartTypeToReference[type] ??= type.accept(
@@ -56,6 +73,21 @@ final class TypeHelper {
     }
     return type;
   }
+
+  /// Determines whether a [DartType] can be serialized.
+  ///
+  /// Types must:
+  /// - Be a simple JSON type (bool, double, int, String, null, Object)
+  /// - Be an enum
+  /// - Be a supported Dart SDK type
+  /// - Be a class with a constructor named `fromJson` that takes a single
+  ///   required parameter whose type is `Map<String, dynamic>`.
+  /// - Be a class with a method named `toJson` that takes no required parameters.
+  /// - Be a class which: has fields of the above types, has a constructor with
+  ///   all fields present. For these classes, we generate custom serialization
+  ///   code.
+  Verdict isSerializable(DartType type) =>
+      _serializationVerdicts[type] ??= type.accept(const IsSerializable());
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
