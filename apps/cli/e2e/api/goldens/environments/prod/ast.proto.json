@@ -772,6 +772,78 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "serialization.asyncDefaultValues.prod",
+      "cloudFunction": {
+        "name": "asyncDefaultValues",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncEmpty.prod",
+      "cloudFunction": {
+        "name": "asyncEmpty",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncEmptySuper.prod",
+      "cloudFunction": {
+        "name": "asyncEmptySuper",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncFields.prod",
+      "cloudFunction": {
+        "name": "asyncFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncMixedFields.prod",
+      "cloudFunction": {
+        "name": "asyncMixedFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNamedFields.prod",
+      "cloudFunction": {
+        "name": "asyncNamedFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNestedClass.prod",
+      "cloudFunction": {
+        "name": "asyncNestedClass",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNullableFields.prod",
+      "cloudFunction": {
+        "name": "asyncNullableFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncSuperFields.prod",
+      "cloudFunction": {
+        "name": "asyncSuperFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "serialization.defaultValues.prod",
       "cloudFunction": {
         "name": "defaultValues",
@@ -815,6 +887,22 @@
       "id": "serialization.namedFields.prod",
       "cloudFunction": {
         "name": "namedFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.nestedClass.prod",
+      "cloudFunction": {
+        "name": "nestedClass",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.nullableFields.prod",
+      "cloudFunction": {
+        "name": "nullableFields",
         "apiName": "serialization"
       }
     },

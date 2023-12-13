@@ -7,7 +7,10 @@ class EmptySuper {}
 class Empty extends EmptySuper {}
 
 EmptySuper emptySuper(EmptySuper value) => value;
+Future<EmptySuper> asyncEmptySuper(EmptySuper value) async => value;
+
 Empty empty(Empty value) => value;
+Future<Empty> asyncEmpty(Empty value) async => value;
 
 class SuperFields {
   SuperFields(this.superField);
@@ -40,9 +43,19 @@ class MixedFields extends SuperFields {
 }
 
 SuperFields superFields(SuperFields value) => value;
+Future<SuperFields> asyncSuperFields(SuperFields value) async => value;
+
 Fields fields(Fields value) => value;
+Future<Fields> asyncFields(Fields value) async => value;
+
+Fields? nullableFields(Fields? value) => value;
+Future<Fields?> asyncNullableFields(Fields? value) async => value;
+
 NamedFields namedFields(NamedFields value) => value;
+Future<NamedFields> asyncNamedFields(NamedFields value) async => value;
+
 MixedFields mixedFields(MixedFields value) => value;
+Future<MixedFields> asyncMixedFields(MixedFields value) async => value;
 
 class DefaultValues {
   DefaultValues({
@@ -58,3 +71,13 @@ class DefaultValues {
 }
 
 DefaultValues defaultValues(DefaultValues value) => value;
+Future<DefaultValues> asyncDefaultValues(DefaultValues value) async => value;
+
+class NestedClass {
+  NestedClass(this.fields);
+
+  final Fields fields;
+}
+
+NestedClass nestedClass(NestedClass value) => value;
+Future<NestedClass> asyncNestedClass(NestedClass value) async => value;

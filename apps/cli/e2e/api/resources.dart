@@ -1534,6 +1534,60 @@ abstract final class functions {
     functionName: r'voidReturn',
   );
 
+  static const serializationAsyncDefaultValues =
+      _i1.CloudFunction<_i4.DefaultValues, _i4.DefaultValues>(
+    api: r'serialization',
+    functionName: r'asyncDefaultValues',
+  );
+
+  static const serializationAsyncEmpty =
+      _i1.CloudFunction<_i4.Empty, _i4.Empty>(
+    api: r'serialization',
+    functionName: r'asyncEmpty',
+  );
+
+  static const serializationAsyncEmptySuper =
+      _i1.CloudFunction<_i4.EmptySuper, _i4.EmptySuper>(
+    api: r'serialization',
+    functionName: r'asyncEmptySuper',
+  );
+
+  static const serializationAsyncFields =
+      _i1.CloudFunction<_i4.Fields, _i4.Fields>(
+    api: r'serialization',
+    functionName: r'asyncFields',
+  );
+
+  static const serializationAsyncMixedFields =
+      _i1.CloudFunction<_i4.MixedFields, _i4.MixedFields>(
+    api: r'serialization',
+    functionName: r'asyncMixedFields',
+  );
+
+  static const serializationAsyncNamedFields =
+      _i1.CloudFunction<_i4.NamedFields, _i4.NamedFields>(
+    api: r'serialization',
+    functionName: r'asyncNamedFields',
+  );
+
+  static const serializationAsyncNestedClass =
+      _i1.CloudFunction<_i4.NestedClass, _i4.NestedClass>(
+    api: r'serialization',
+    functionName: r'asyncNestedClass',
+  );
+
+  static const serializationAsyncNullableFields =
+      _i1.CloudFunction<_i4.Fields?, _i4.Fields?>(
+    api: r'serialization',
+    functionName: r'asyncNullableFields',
+  );
+
+  static const serializationAsyncSuperFields =
+      _i1.CloudFunction<_i4.SuperFields, _i4.SuperFields>(
+    api: r'serialization',
+    functionName: r'asyncSuperFields',
+  );
+
   static const serializationDefaultValues =
       _i1.CloudFunction<_i4.DefaultValues, _i4.DefaultValues>(
     api: r'serialization',
@@ -1566,6 +1620,18 @@ abstract final class functions {
       _i1.CloudFunction<_i4.NamedFields, _i4.NamedFields>(
     api: r'serialization',
     functionName: r'namedFields',
+  );
+
+  static const serializationNestedClass =
+      _i1.CloudFunction<_i4.NestedClass, _i4.NestedClass>(
+    api: r'serialization',
+    functionName: r'nestedClass',
+  );
+
+  static const serializationNullableFields =
+      _i1.CloudFunction<_i4.Fields?, _i4.Fields?>(
+    api: r'serialization',
+    functionName: r'nullableFields',
   );
 
   static const serializationSuperFields =
@@ -1663,11 +1729,22 @@ List<_i1.CloudWidget> all = const [
   functions.returnTypesStructReturn,
   functions.returnTypesStructReturnNullable,
   functions.returnTypesVoidReturn,
+  functions.serializationAsyncDefaultValues,
+  functions.serializationAsyncEmpty,
+  functions.serializationAsyncEmptySuper,
+  functions.serializationAsyncFields,
+  functions.serializationAsyncMixedFields,
+  functions.serializationAsyncNamedFields,
+  functions.serializationAsyncNestedClass,
+  functions.serializationAsyncNullableFields,
+  functions.serializationAsyncSuperFields,
   functions.serializationDefaultValues,
   functions.serializationEmpty,
   functions.serializationEmptySuper,
   functions.serializationFields,
   functions.serializationMixedFields,
   functions.serializationNamedFields,
+  functions.serializationNestedClass,
+  functions.serializationNullableFields,
   functions.serializationSuperFields,
 ];
