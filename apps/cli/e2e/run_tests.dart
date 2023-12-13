@@ -1126,10 +1126,14 @@ const Map<String, Test> tests = {
           ],
           ('nestedClass', 'prod'): [
             FunctionTestSuccess(
-              name: 'nestedClass',
+              name: 'present',
               input: {
                 'value': {
                   'fields': {
+                    'superField': 'superField',
+                    'field': 'field',
+                  },
+                  'nullableFields': {
                     'superField': 'superField',
                     'field': 'field',
                   },
@@ -1137,15 +1141,17 @@ const Map<String, Test> tests = {
               },
               output: {
                 'fields': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+                'nullableFields': {
                   'superField': 'superField',
                   'field': 'field',
                 },
               },
             ),
-          ],
-          ('asyncNestedClass', 'prod'): [
             FunctionTestSuccess(
-              name: 'nestedClass',
+              name: 'null',
               input: {
                 'value': {
                   'fields': {
@@ -1159,6 +1165,52 @@ const Map<String, Test> tests = {
                   'superField': 'superField',
                   'field': 'field',
                 },
+                'nullableFields': null,
+              },
+            ),
+          ],
+          ('asyncNestedClass', 'prod'): [
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': {
+                  'fields': {
+                    'superField': 'superField',
+                    'field': 'field',
+                  },
+                  'nullableFields': {
+                    'superField': 'superField',
+                    'field': 'field',
+                  },
+                },
+              },
+              output: {
+                'fields': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+                'nullableFields': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {
+                'value': {
+                  'fields': {
+                    'superField': 'superField',
+                    'field': 'field',
+                  },
+                },
+              },
+              output: {
+                'fields': {
+                  'superField': 'superField',
+                  'field': 'field',
+                },
+                'nullableFields': null,
               },
             ),
           ],

@@ -1,4 +1,4 @@
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/project/project_paths.dart';
 // ignore: library_prefixes
 import 'package:os_detect/os_detect.dart' as Platform;
 import 'package:path/path.dart' as path;

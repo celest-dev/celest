@@ -1,8 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
+import 'package:celest_core/celest_core.dart' as _i3;
 import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i4;
+import 'package:shelf/shelf.dart' as _i5;
 
 import '../../../../../apis/serialization.dart' as _i2;
 
@@ -13,41 +14,60 @@ class AsyncDefaultValuesTarget extends _i1.FunctionTarget {
       context,
     ) async {
       // ignore: unused_local_variable
-      final response = await _i2.asyncDefaultValues(_i2.DefaultValues(
-        field: (request[r'value'][r'field'] == null
-                ? null
-                : (request[r'value'][r'field'] as String)) ??
-            'default',
-        nullableField: request[r'value'][r'nullableField'] == null
-            ? null
-            : (request[r'value'][r'nullableField'] as String),
-        nullableFieldWithDefault: (request[r'value']
-                        [r'nullableFieldWithDefault'] ==
-                    null
-                ? null
-                : (request[r'value'][r'nullableFieldWithDefault'] as String)) ??
-            'default',
+      final response = await _i2.asyncDefaultValues(
+          _i3.Serializers.instance.deserializeWithType<_i2.DefaultValues>(
+        r'project:apis/serialization.dart#DefaultValues',
+        request[r'value'],
       ));
-      return {
-        'field': response.field,
-        'nullableField': response.nullableField,
-        'nullableFieldWithDefault': response.nullableFieldWithDefault,
-        'fieldWithoutInitializer': response.fieldWithoutInitializer,
-      };
+      return _i3.Serializers.instance.serializeWithType<_i2.DefaultValues>(
+        r'project:apis/serialization.dart#DefaultValues',
+        response,
+      );
     },
     (json) => json as Map<String, dynamic>,
   );
 
   @override
-  _i3.FutureOr<_i4.Response> handler(_i4.Request request) {
-    final handler = _i4.Pipeline().addHandler(_inner.handler);
+  _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
+    final handler = _i5.Pipeline().addHandler(_inner.handler);
     return handler(request);
   }
 }
 
-_i3.Future<void> main(List<String> args) async {
+_i4.Future<void> main(List<String> args) async {
+  _i3.Serializers.instance.put(const DefaultValuesSerializer());
   await _i1.serve(
     args,
     (_) => AsyncDefaultValuesTarget(),
   );
+}
+
+final class DefaultValuesSerializer extends _i3.Serializer<_i2.DefaultValues> {
+  const DefaultValuesSerializer();
+
+  @override
+  String get dartType => r'project:apis/serialization.dart#DefaultValues';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.DefaultValues deserialize(Object? value) {
+    // ignore: unused_local_variable
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return _i2.DefaultValues(
+      field: ((serialized?[r'field'] as String?)) ?? 'default',
+      nullableField: (serialized?[r'nullableField'] as String?),
+      nullableFieldWithDefault:
+          ((serialized?[r'nullableFieldWithDefault'] as String?)) ?? 'default',
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.DefaultValues value) => {
+        'field': value.field,
+        'nullableField': value.nullableField,
+        'nullableFieldWithDefault': value.nullableFieldWithDefault,
+        'fieldWithoutInitializer': value.fieldWithoutInitializer,
+      };
 }

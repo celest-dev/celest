@@ -22,6 +22,21 @@ final class ProjectPaths {
 
   ProjectEnvPaths environment(String environmentName) =>
       ProjectEnvPaths(this, environmentName);
+
+  Uri normalizeUri(Uri uri) {
+    return switch (uri.scheme) {
+      'file' => _fileToAssetUri(uri),
+      _ => normalizeUri(uri),
+    };
+  }
+
+  Uri _fileToAssetUri(Uri uri) {
+    final relativePath = p.relative(
+      p.fromUri(uri),
+      from: projectRoot,
+    );
+    return Uri(scheme: 'project', path: relativePath);
+  }
 }
 
 final class ProjectEnvPaths {

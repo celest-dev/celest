@@ -20,36 +20,36 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
       return response == null
           ? null
           : {
-              'aBigInt': _i4.Serializers.instance.serialize(
+              'aBigInt': _i4.Serializers.instance.serializeWithType(
                 'dart:core#BigInt',
                 response.aBigInt,
               ),
               'aBool': response.aBool,
-              'aDateTime': _i4.Serializers.instance.serialize(
+              'aDateTime': _i4.Serializers.instance.serializeWithType(
                 'dart:core#DateTime',
                 response.aDateTime,
               ),
               'aDouble': response.aDouble,
-              'aDuration': _i4.Serializers.instance.serialize(
+              'aDuration': _i4.Serializers.instance.serializeWithType(
                 'dart:core#Duration',
                 response.aDuration,
               ),
               'aListOfBigInt': response.aListOfBigInt
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#BigInt',
                         el,
                       ))
                   .toList(),
               'aListOfBool': response.aListOfBool,
               'aListOfDateTime': response.aListOfDateTime
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#DateTime',
                         el,
                       ))
                   .toList(),
               'aListOfDouble': response.aListOfDouble,
               'aListOfDuration': response.aListOfDuration
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#Duration',
                         el,
                       ))
@@ -58,7 +58,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               'aListOfInt': response.aListOfInt,
               'aListOfNull': response.aListOfNull,
               'aListOfRegExp': response.aListOfRegExp
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#RegExp',
                         el,
                       ))
@@ -68,26 +68,26 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               'aListOfSimpleStruct':
                   response.aListOfSimpleStruct.map((el) => {}).toList(),
               'aListOfStackTrace': response.aListOfStackTrace
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#StackTrace',
                         el,
                       ))
                   .toList(),
               'aListOfString': response.aListOfString,
               'aListOfUint8List': response.aListOfUint8List
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:typed_data#Uint8List',
                         el,
                       ))
                   .toList(),
               'aListOfUri': response.aListOfUri
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#Uri',
                         el,
                       ))
                   .toList(),
               'aListOfUriData': response.aListOfUriData
-                  .map((el) => _i4.Serializers.instance.serialize(
+                  .map((el) => _i4.Serializers.instance.serializeWithType(
                         'dart:core#UriData',
                         el,
                       ))
@@ -98,7 +98,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#BigInt',
                       value,
                     ),
@@ -110,7 +110,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#DateTime',
                       value,
                     ),
@@ -122,7 +122,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#Duration',
                       value,
                     ),
@@ -143,7 +143,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#RegExp',
                       value,
                     ),
@@ -170,7 +170,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#StackTrace',
                       value,
                     ),
@@ -182,7 +182,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:typed_data#Uint8List',
                       value,
                     ),
@@ -193,7 +193,7 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#Uri',
                       value,
                     ),
@@ -204,32 +204,32 @@ class ComplexReturnNullableTarget extends _i1.FunctionTarget {
               ) =>
                   MapEntry(
                     key,
-                    _i4.Serializers.instance.serialize(
+                    _i4.Serializers.instance.serializeWithType(
                       'dart:core#UriData',
                       value,
                     ),
                   )),
               'aNull': response.aNull,
-              'aRegExp': _i4.Serializers.instance.serialize(
+              'aRegExp': _i4.Serializers.instance.serializeWithType(
                 'dart:core#RegExp',
                 response.aRegExp,
               ),
               'aSimpleClass': response.aSimpleClass.toJson(),
               'aSimpleStruct': {},
-              'aStackTrace': _i4.Serializers.instance.serialize(
+              'aStackTrace': _i4.Serializers.instance.serializeWithType(
                 'dart:core#StackTrace',
                 response.aStackTrace,
               ),
               'aString': response.aString,
-              'aUint8List': _i4.Serializers.instance.serialize(
+              'aUint8List': _i4.Serializers.instance.serializeWithType(
                 'dart:typed_data#Uint8List',
                 response.aUint8List,
               ),
-              'aUri': _i4.Serializers.instance.serialize(
+              'aUri': _i4.Serializers.instance.serializeWithType(
                 'dart:core#Uri',
                 response.aUri,
               ),
-              'aUriData': _i4.Serializers.instance.serialize(
+              'aUriData': _i4.Serializers.instance.serializeWithType(
                 'dart:core#UriData',
                 response.aUriData,
               ),

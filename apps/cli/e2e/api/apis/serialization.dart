@@ -74,9 +74,13 @@ DefaultValues defaultValues(DefaultValues value) => value;
 Future<DefaultValues> asyncDefaultValues(DefaultValues value) async => value;
 
 class NestedClass {
-  NestedClass(this.fields);
+  NestedClass(
+    this.fields,
+    this.nullableFields,
+  );
 
   final Fields fields;
+  final Fields? nullableFields;
 }
 
 NestedClass nestedClass(NestedClass value) => value;

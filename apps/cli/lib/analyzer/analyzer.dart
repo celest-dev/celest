@@ -10,7 +10,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';

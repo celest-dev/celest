@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:analyzer/dart/element/type.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
@@ -24,6 +27,7 @@ final class EntrypointGenerator {
   late final JsonGenerator jsonGenerator = JsonGenerator(
     typeHelper: typeHelper,
   );
+  final _customSerializers = <Uri, Class>{};
 
   Library generate() {
     final library = LibraryBuilder();
@@ -181,6 +185,34 @@ final class EntrypointGenerator {
           ),
         ),
     );
+
+    final queue = Queue.of(
+      [
+        function.flattenedReturnType,
+        ...function.parameters.map((p) => p.type),
+      ].where((type) => !type.isFunctionContext).map(typeHelper.fromReference),
+    );
+
+    final seen = <DartType>{};
+    void addCustomType(DartType type) {
+      if (!seen.add(type)) {
+        return;
+      }
+      final customSerializer = typeHelper.customSerializer(type);
+      if (customSerializer
+          case (
+            final uri,
+            final serializer,
+            final referencedTypes,
+          )) {
+        _customSerializers[uri] = serializer;
+        queue.addAll(referencedTypes);
+      }
+    }
+
+    while (queue.isNotEmpty) {
+      addCustomType(queue.removeFirst());
+    }
     final entrypoint = Method(
       (m) => m
         ..name = 'main'
@@ -193,16 +225,35 @@ final class EntrypointGenerator {
               ..type = DartTypes.core.list(DartTypes.core.string),
           ),
         )
-        ..body = Code.scope(
-          (alloc) => '''
+        ..body = Block((b) {
+          for (final serializer in _customSerializers.values) {
+            b.addExpression(
+              DartTypes.celest.serializers
+                  .property('instance')
+                  .property('put')
+                  .call([
+                refer(serializer.name).constInstance([]),
+              ]),
+            );
+          }
+
+          b.statements.add(
+            Code.scope(
+              (alloc) => '''
   await ${alloc(DartTypes.functionsFramework.serve)}(
     args,
     (_) => ${target.name}(),
   );
 ''',
-        ),
+            ),
+          );
+        }),
     );
-    library.body.addAll([target, entrypoint]);
+    library.body.addAll([
+      target,
+      entrypoint,
+      ..._customSerializers.values,
+    ]);
     return library.build();
   }
 }

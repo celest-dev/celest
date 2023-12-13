@@ -4,7 +4,7 @@ import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint.dart';
 import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -34,9 +34,13 @@ final class CodeGenerator extends AstVisitor<void> {
     Spec spec, {
     required String forFile,
   }) {
-    return _formatter.format(
-      spec.accept(_emitter(forFile: forFile)).toString(),
-    );
+    final code = spec.accept(_emitter(forFile: forFile)).toString();
+    try {
+      return _formatter.format(code);
+    } on Object {
+      print(code);
+      rethrow;
+    }
   }
 
   final ProjectPaths _projectPaths;

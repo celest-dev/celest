@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/type.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -13,6 +14,7 @@ final class JsonGenerator {
   });
 
   final TypeHelper typeHelper;
+  final Set<DartType> referencedTypes = {};
 
   Expression toJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
@@ -111,9 +113,9 @@ final class JsonGenerator {
     if (supportedDartSdkType.isExactlyType(dartType)) {
       return DartTypes.celest.serializers
           .property('instance')
-          .property('serialize')
+          .property('serializeWithType')
           .call([
-        literalString(typeHelper.toWireType(dartType)!),
+        literalString(typeHelper.toUri(dartType)!),
         ref,
       ]);
     }
@@ -127,18 +129,27 @@ final class JsonGenerator {
     if (serializationSpec == null) {
       return ref.property('toJson').call([]);
     }
-    final serialized = <String, Expression>{};
-    for (final field in serializationSpec.fields) {
-      serialized[field.name] = toJson(
-        typeHelper.toReference(field.type),
-        ref.property(field.name),
-      );
-    }
-    return literalMap(serialized);
+    referencedTypes.add(dartType);
+    return DartTypes.celest.serializers
+        .property('instance')
+        .property('serializeWithType')
+        .call([
+      literalString(serializationSpec.uri.toString(), raw: true),
+      ref,
+    ], {}, [
+      type,
+    ]);
   }
 
-  Expression fromJson(Reference type, Expression ref) {
-    final fromJson = _fromJson(type, ref);
+  Expression fromJson(
+    Reference type,
+    Expression ref, {
+    bool nullChecked = true,
+  }) {
+    final fromJson = _fromJson(type, ref, nullChecked: nullChecked);
+    if (!nullChecked) {
+      return fromJson;
+    }
     return switch (type) {
       // TODO: Needed to support TypedefRecordType
       dynamic(:final bool isNullable) when !isNullable => fromJson,
@@ -146,7 +157,11 @@ final class JsonGenerator {
     };
   }
 
-  Expression _fromJson(Reference type, Expression ref) {
+  Expression _fromJson(
+    Reference type,
+    Expression ref, {
+    required bool nullChecked,
+  }) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartCoreBool ||
         dartType.isDartCoreDouble ||
@@ -154,7 +169,7 @@ final class JsonGenerator {
         dartType.isDartCoreNum ||
         dartType.isDartCoreString ||
         dartType.isDartCoreNull) {
-      return ref.asA(type.nonNullable);
+      return ref.asA(nullChecked ? type.nonNullable : type);
     }
     if (typeHelper.fromReference(type).isEnum) {
       return type.nonNullable
@@ -289,10 +304,10 @@ final class JsonGenerator {
     if (supportedDartSdkType.isExactlyType(dartType)) {
       return DartTypes.celest.serializers
           .property('instance')
-          .property('deserialize')
+          .property('deserializeWithType')
           .call(
         [
-          literalString(typeHelper.toWireType(dartType)!),
+          literalString(typeHelper.toUri(dartType)!),
           ref,
         ],
         {},
@@ -316,40 +331,15 @@ final class JsonGenerator {
         ),
       ]);
     }
-    assert(
-      serializationSpec.parameters != null,
-      'Parameter types should have constructor parameters set',
-    );
-    final parameters = serializationSpec.parameters!;
-    final classReference = refer(
-      serializationSpec.className,
-      serializationSpec.uri.toString(),
-    );
-    final deserializedPositional = <Expression>[];
-    final deserializedNamed = <String, Expression>{};
-    for (final parameter in parameters) {
-      final reference = typeHelper.toReference(parameter.type);
-      final initializer = parameter.defaultValueCode;
-      var deserialized = fromJson(
-        reference.withNullability(
-          reference.isNullableOrFalse || initializer != null,
-        ),
-        ref.index(literalString(parameter.name, raw: true)),
-      );
-      if (initializer != null) {
-        deserialized = deserialized.parenthesized.ifNullThen(
-          CodeExpression(Code(initializer)),
-        );
-      }
-      if (parameter.isPositional) {
-        deserializedPositional.add(deserialized);
-      } else {
-        deserializedNamed[parameter.name] = deserialized;
-      }
-    }
-    return classReference.newInstance(
-      deserializedPositional,
-      deserializedNamed,
-    );
+    referencedTypes.add(dartType);
+    return DartTypes.celest.serializers
+        .property('instance')
+        .property('deserializeWithType')
+        .call([
+      literalString(serializationSpec.uri.toString(), raw: true),
+      ref,
+    ], {}, [
+      type,
+    ]);
   }
 }

@@ -558,6 +558,16 @@ class _Celest {
         'package:celest/src/core/project_context.dart',
       );
 
+  /// Creates a [celest_core.Serializer] reference.
+  TypeReference serializer([Reference? dartType]) => TypeReference(
+        (t) => t
+          ..symbol = 'Serializer'
+          ..url = _coreUrl
+          ..types.addAll([
+            if (dartType != null) dartType,
+          ]),
+      );
+
   /// Creates a [celest_core.Serializers] reference.
   DartTypeReference get serializers =>
       const DartTypeReference('Serializers', _coreUrl);

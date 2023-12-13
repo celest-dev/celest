@@ -1,9 +1,11 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:collection/collection.dart';
@@ -50,6 +52,9 @@ final class VerdictYes extends Verdict {
 
   final SerializationSpec? serializationSpec;
 
+  Verdict withSpec(SerializationSpec spec) =>
+      Verdict.yes(serializationSpec: spec);
+
   @override
   List<String> get reasons => const [];
 }
@@ -70,15 +75,18 @@ final class VerdictNo extends Verdict {
 
 final class SerializationSpec {
   SerializationSpec({
-    required this.className,
     required this.uri,
+    required this.isNullable,
+    required this.element,
     required this.fields,
+    required this.constructor,
   });
 
-  final String className;
   final Uri uri;
+  final bool isNullable;
+  final ClassElement element;
   final List<FieldElement> fields;
-  List<ParameterElement>? parameters;
+  final ConstructorElement constructor;
 }
 
 /// Determines whether a [DartType] can be serialized to/from JSON.
@@ -94,9 +102,7 @@ final class SerializationSpec {
 ///   code.
 final class IsSerializable extends TypeVisitor<Verdict> {
   // TODO(dnys1): Detect cycles
-  const IsSerializable([this.depth = 0]);
-
-  final int depth;
+  const IsSerializable();
 
   Verdict? _isSimpleJson(InterfaceType type) {
     if (type.isDartCoreBool ||
@@ -118,17 +124,13 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return Verdict.no('Set types are not supported');
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
-      return type.typeArguments.single.accept(
-        IsSerializable(depth + 1),
-      );
+      return type.typeArguments.single.accept(this);
     }
     if (type.isDartCoreMap) {
       if (!type.typeArguments[0].isDartCoreString) {
         return Verdict.no('Map keys must be strings');
       }
-      return type.typeArguments[1].accept(
-        IsSerializable(depth + 1),
-      );
+      return type.typeArguments[1].accept(this);
     }
     return null;
   }
@@ -136,9 +138,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   @override
   Verdict visitDynamicType(DynamicType type) {
     // Needed to support `Map<String, dynamic>`.
-    return depth > 0
-        ? const Verdict.yes()
-        : Verdict.no('Dynamic types are not supported');
+    return const Verdict.yes();
   }
 
   @override
@@ -251,14 +251,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   Verdict visitRecordType(RecordType type) {
     var verdict = const Verdict.yes();
     for (final field in type.positionalFields) {
-      verdict &= field.type.accept(
-        IsSerializable(depth + 1),
-      );
+      verdict &= field.type.accept(this);
     }
     for (final field in type.namedFields) {
-      verdict &= field.type.accept(
-        IsSerializable(depth + 1),
-      );
+      verdict &= field.type.accept(this);
     }
     return verdict;
   }
@@ -298,87 +294,91 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       );
     }
     final fields = element.sortedFields;
-    final serializationSpec = SerializationSpec(
-      className: element.displayName,
-      uri: element.library.source.uri,
-      fields: fields,
-    );
-    var verdict = Verdict.yes(
-      serializationSpec: serializationSpec,
-    );
-    switch (position) {
-      case _TypePosition.return$:
-        for (final field in fields) {
-          if (field.isPrivate) {
-            verdict &= Verdict.no(
-              'Private field "${field.displayName}" is not supported in a class '
-              'used as a return type. Consider defining custom fromJson/toJson '
-              'methods or making the field public.',
-            );
-            continue;
-          }
-          final fieldVerdict = field.type.accept(const IsSerializable());
-          if (fieldVerdict is VerdictNo) {
-            verdict &= Verdict.no(
-              'Field "${field.displayName}" of type "${element.displayName}" is '
-              'not serializable: $fieldVerdict',
-            );
-          }
-        }
-      case _TypePosition.parameter:
-        var constructorVerdict = const Verdict.yes();
-        final unnamedConstructor =
-            element.constructors.firstWhereOrNull((ctor) {
-          if (ctor.name.isNotEmpty) {
-            return false;
-          }
-          final parameters = ctor.parameters;
-          for (final parameter in parameters) {
-            FieldElement? fieldFormal(ParameterElement param) {
-              return switch (param) {
-                FieldFormalParameterElement(:final field?) => field,
-                SuperFormalParameterElement(
-                  :final superConstructorParameter?
-                ) =>
-                  fieldFormal(superConstructorParameter),
-                _ =>
-                  fields.firstWhereOrNull((field) => field.name == param.name),
-              };
-            }
-
-            final parameterField = fieldFormal(parameter);
-            if (parameterField == null) {
-              constructorVerdict &= Verdict.no(
-                'Constructor parameter "${parameter.displayName}" is not '
-                'supported.',
-              );
-              return false;
-            }
-            if (!fields.contains(parameterField)) {
-              constructorVerdict &= Verdict.no(
-                'Constructor parameter "${parameter.displayName}" is not '
-                'a field of the class ${element.displayName}.',
-              );
-              return false;
-            }
-          }
-          return true;
-        });
-        if (unnamedConstructor == null) {
-          verdict &= Verdict.no(
-            'Class ${element.displayName} must have an unnamed constructor with '
-            'the same number of parameters as fields.',
-          );
-        } else if (element.isAbstract && !unnamedConstructor.isFactory) {
-          constructorVerdict &= Verdict.no(
-            'Class ${element.displayName} is abstract and must have an unnamed '
-            'or fromJson factory constructor to be used.',
-          );
-        }
-        verdict &= constructorVerdict;
-        serializationSpec.parameters = unnamedConstructor?.parameters;
+    var verdict = const Verdict.yes();
+    var fieldsVerdict = const Verdict.yes();
+    for (final field in fields) {
+      if (field.isPrivate) {
+        fieldsVerdict &= Verdict.no(
+          'Private field "${field.displayName}" is not supported in a class '
+          'used as a return type. Consider defining custom fromJson/toJson '
+          'methods or making the field public.',
+        );
+        continue;
+      }
+      final fieldVerdict = field.type.accept(const IsSerializable());
+      if (fieldVerdict is VerdictNo) {
+        fieldsVerdict &= Verdict.no(
+          'Field "${field.displayName}" of type "${element.displayName}" is '
+          'not serializable: $fieldVerdict',
+        );
+      }
     }
-    return verdict;
+    if (position == _TypePosition.return$) {
+      verdict &= fieldsVerdict;
+    }
+    var constructorVerdict = const Verdict.yes();
+    final unnamedConstructor = element.constructors.firstWhereOrNull((ctor) {
+      if (ctor.name.isNotEmpty) {
+        return false;
+      }
+      final parameters = ctor.parameters;
+      for (final parameter in parameters) {
+        FieldElement? fieldFormal(ParameterElement param) {
+          return switch (param) {
+            FieldFormalParameterElement(:final field?) => field,
+            SuperFormalParameterElement(:final superConstructorParameter?) =>
+              fieldFormal(superConstructorParameter),
+            _ => fields.firstWhereOrNull((field) => field.name == param.name),
+          };
+        }
+
+        final parameterField = fieldFormal(parameter);
+        if (parameterField == null) {
+          constructorVerdict &= Verdict.no(
+            'Constructor parameter "${parameter.displayName}" is not '
+            'supported.',
+          );
+          return false;
+        }
+        if (!fields.contains(parameterField)) {
+          constructorVerdict &= Verdict.no(
+            'Constructor parameter "${parameter.displayName}" is not '
+            'a field of the class ${element.displayName}.',
+          );
+          return false;
+        }
+      }
+      return true;
+    });
+    if (unnamedConstructor == null) {
+      constructorVerdict &= Verdict.no(
+        'Class ${element.displayName} must have an unnamed constructor with '
+        'the same number of parameters as fields.',
+      );
+    } else if (element.isAbstract && !unnamedConstructor.isFactory) {
+      constructorVerdict &= Verdict.no(
+        'Class ${element.displayName} is abstract and must have an unnamed '
+        'or fromJson factory constructor to be used.',
+      );
+    }
+    if (position == _TypePosition.parameter) {
+      verdict &= constructorVerdict;
+    }
+    final dartTypeUri = projectPaths
+        .normalizeUri(element.library.source.uri)
+        .replace(fragment: element.name);
+    return switch (verdict & fieldsVerdict & constructorVerdict) {
+      VerdictNo() => verdict,
+      VerdictYes() => (verdict as VerdictYes).withSpec(
+          SerializationSpec(
+            uri: dartTypeUri,
+            isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
+            element: element,
+            fields: fields,
+            constructor: unnamedConstructor!,
+          ),
+        ),
+    };
   }
 
   @override

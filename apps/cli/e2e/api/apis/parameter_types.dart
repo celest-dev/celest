@@ -268,35 +268,35 @@ class ComplexClass {
         aBool: json['aBool'] as bool,
         anEnum: MyEnum.values.byName(json['anEnum'] as String),
         aNull: json['aNull'] as Null,
-        aBigInt: Serializers.instance.deserialize(
+        aBigInt: Serializers.instance.deserializeWithType(
           'dart:core#BigInt',
           json['aBigInt'],
         ),
-        aDateTime: Serializers.instance.deserialize(
+        aDateTime: Serializers.instance.deserializeWithType(
           'dart:core#DateTime',
           json['aDateTime'],
         ),
-        aDuration: Serializers.instance.deserialize(
+        aDuration: Serializers.instance.deserializeWithType(
           'dart:core#Duration',
           json['aDuration'],
         ),
-        aRegExp: Serializers.instance.deserialize(
+        aRegExp: Serializers.instance.deserializeWithType(
           'dart:core#RegExp',
           json['aRegExp'],
         ),
-        aStackTrace: Serializers.instance.deserialize(
+        aStackTrace: Serializers.instance.deserializeWithType(
           'dart:core#StackTrace',
           json['aStackTrace'],
         ),
-        aUri: Serializers.instance.deserialize(
+        aUri: Serializers.instance.deserializeWithType(
           'dart:core#Uri',
           json['aUri'],
         ),
-        aUriData: Serializers.instance.deserialize(
+        aUriData: Serializers.instance.deserializeWithType(
           'dart:core#UriData',
           json['aUriData'],
         ),
-        aUint8List: Serializers.instance.deserialize(
+        aUint8List: Serializers.instance.deserializeWithType(
           'dart:typed_data#Uint8List',
           json['aUint8List'],
         ),
@@ -324,36 +324,36 @@ class ComplexClass {
             .map((e) => e as Null)
             .toList(),
         aListOfBigInt: (json['aListOfBigInt'] as List<dynamic>)
-            .map((e) =>
-                Serializers.instance.deserialize<BigInt>('dart:core#BigInt', e))
+            .map((e) => Serializers.instance
+                .deserializeWithType<BigInt>('dart:core#BigInt', e))
             .toList(),
         aListOfDateTime: (json['aListOfDateTime'] as List<dynamic>)
             .map((e) => Serializers.instance
-                .deserialize<DateTime>('dart:core#DateTime', e))
+                .deserializeWithType<DateTime>('dart:core#DateTime', e))
             .toList(),
         aListOfDuration: (json['aListOfDuration'] as List<dynamic>)
             .map((e) => Serializers.instance
-                .deserialize<Duration>('dart:core#Duration', e))
+                .deserializeWithType<Duration>('dart:core#Duration', e))
             .toList(),
         aListOfRegExp: (json['aListOfRegExp'] as List<dynamic>)
-            .map((e) =>
-                Serializers.instance.deserialize<RegExp>('dart:core#RegExp', e))
+            .map((e) => Serializers.instance
+                .deserializeWithType<RegExp>('dart:core#RegExp', e))
             .toList(),
         aListOfStackTrace: (json['aListOfStackTrace'] as List<dynamic>)
             .map((e) => Serializers.instance
-                .deserialize<StackTrace>('dart:core#StackTrace', e))
+                .deserializeWithType<StackTrace>('dart:core#StackTrace', e))
             .toList(),
         aListOfUri: (json['aListOfUri'] as List<dynamic>)
-            .map((e) =>
-                Serializers.instance.deserialize<Uri>('dart:core#Uri', e))
+            .map((e) => Serializers.instance
+                .deserializeWithType<Uri>('dart:core#Uri', e))
             .toList(),
         aListOfUriData: (json['aListOfUriData'] as List<dynamic>)
             .map((e) => Serializers.instance
-                .deserialize<UriData>('dart:core#UriData', e))
+                .deserializeWithType<UriData>('dart:core#UriData', e))
             .toList(),
         aListOfUint8List: (json['aListOfUint8List'] as List<dynamic>)
             .map((e) => Serializers.instance
-                .deserialize<Uint8List>('dart:typed_data#Uint8List', e))
+                .deserializeWithType<Uint8List>('dart:typed_data#Uint8List', e))
             .toList(),
         aListOfSimpleStruct: (json['aListOfSimpleStruct'] as List<dynamic>)
             .map((e) => ())
@@ -377,40 +377,42 @@ class ComplexClass {
             (k, e) => MapEntry(
                 k,
                 Serializers.instance
-                    .deserialize<BigInt>('dart:core#BigInt', e))),
+                    .deserializeWithType<BigInt>('dart:core#BigInt', e))),
         aMapOfDateTime: (json['aMapOfDateTime'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(
                 k,
                 Serializers.instance
-                    .deserialize<DateTime>('dart:core#DateTime', e))),
+                    .deserializeWithType<DateTime>('dart:core#DateTime', e))),
         aMapOfDuration: (json['aMapOfDuration'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(
                 k,
                 Serializers.instance
-                    .deserialize<Duration>('dart:core#Duration', e))),
+                    .deserializeWithType<Duration>('dart:core#Duration', e))),
         aMapOfRegExp: (json['aMapOfRegExp'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(
                 k,
                 Serializers.instance
-                    .deserialize<RegExp>('dart:core#RegExp', e))),
+                    .deserializeWithType<RegExp>('dart:core#RegExp', e))),
         aMapOfStackTrace: (json['aMapOfStackTrace'] as Map<String, dynamic>)
             .map((k, e) => MapEntry(
                 k,
-                Serializers.instance
-                    .deserialize<StackTrace>('dart:core#StackTrace', e))),
+                Serializers.instance.deserializeWithType<StackTrace>(
+                    'dart:core#StackTrace', e))),
         aMapOfUri: (json['aMapOfUri'] as Map<String, dynamic>).map((k, e) =>
             MapEntry(
-                k, Serializers.instance.deserialize<Uri>('dart:core#Uri', e))),
+                k,
+                Serializers.instance
+                    .deserializeWithType<Uri>('dart:core#Uri', e))),
         aMapOfUriData: (json['aMapOfUriData'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(
                 k,
                 Serializers.instance
-                    .deserialize<UriData>('dart:core#UriData', e))),
+                    .deserializeWithType<UriData>('dart:core#UriData', e))),
         aMapOfUint8List: (json['aMapOfUint8List'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(
                 k,
-                Serializers.instance
-                    .deserialize<Uint8List>('dart:typed_data#Uint8List', e))),
+                Serializers.instance.deserializeWithType<Uint8List>(
+                    'dart:typed_data#Uint8List', e))),
         aMapOfSimpleStruct: (json['aMapOfSimpleStruct'] as Map<String, dynamic>)
             .map((k, e) => MapEntry(k, ())),
         aMapOfSimpleClass: (json['aMapOfSimpleClass'] as Map<String, dynamic>)
@@ -424,19 +426,21 @@ class ComplexClass {
         'aBool': aBool,
         'anEnum': anEnum.name,
         'aNull': aNull,
-        'aBigInt': Serializers.instance.serialize('dart:core#BigInt', aBigInt),
-        'aDateTime':
-            Serializers.instance.serialize('dart:core#DateTime', aDateTime),
-        'aDuration':
-            Serializers.instance.serialize('dart:core#Duration', aDuration),
-        'aRegExp': Serializers.instance.serialize('dart:core#RegExp', aRegExp),
-        'aStackTrace':
-            Serializers.instance.serialize('dart:core#StackTrace', aStackTrace),
-        'aUri': Serializers.instance.serialize('dart:core#Uri', aUri),
-        'aUriData':
-            Serializers.instance.serialize('dart:core#UriData', aUriData),
+        'aBigInt':
+            Serializers.instance.serializeWithType('dart:core#BigInt', aBigInt),
+        'aDateTime': Serializers.instance
+            .serializeWithType('dart:core#DateTime', aDateTime),
+        'aDuration': Serializers.instance
+            .serializeWithType('dart:core#Duration', aDuration),
+        'aRegExp':
+            Serializers.instance.serializeWithType('dart:core#RegExp', aRegExp),
+        'aStackTrace': Serializers.instance
+            .serializeWithType('dart:core#StackTrace', aStackTrace),
+        'aUri': Serializers.instance.serializeWithType('dart:core#Uri', aUri),
+        'aUriData': Serializers.instance
+            .serializeWithType('dart:core#UriData', aUriData),
         'aUint8List': Serializers.instance
-            .serialize('dart:typed_data#Uint8List', aUint8List),
+            .serializeWithType('dart:typed_data#Uint8List', aUint8List),
         'aSimpleStruct': (),
         'aSimpleClass': aSimpleClass.toJson(),
         'anIterableOfSimpleClass':
@@ -448,30 +452,36 @@ class ComplexClass {
         'aListOfEnum': aListOfEnum.map((e) => e.name).toList(),
         'aListOfNull': aListOfNull,
         'aListOfBigInt': aListOfBigInt
-            .map((e) => Serializers.instance.serialize('dart:core#BigInt', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#BigInt', e))
             .toList(),
         'aListOfDateTime': aListOfDateTime
-            .map((e) => Serializers.instance.serialize('dart:core#DateTime', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#DateTime', e))
             .toList(),
         'aListOfDuration': aListOfDuration
-            .map((e) => Serializers.instance.serialize('dart:core#Duration', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#Duration', e))
             .toList(),
         'aListOfRegExp': aListOfRegExp
-            .map((e) => Serializers.instance.serialize('dart:core#RegExp', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#RegExp', e))
             .toList(),
         'aListOfStackTrace': aListOfStackTrace
-            .map((e) =>
-                Serializers.instance.serialize('dart:core#StackTrace', e))
+            .map((e) => Serializers.instance
+                .serializeWithType('dart:core#StackTrace', e))
             .toList(),
         'aListOfUri': aListOfUri
-            .map((e) => Serializers.instance.serialize('dart:core#Uri', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#Uri', e))
             .toList(),
         'aListOfUriData': aListOfUriData
-            .map((e) => Serializers.instance.serialize('dart:core#UriData', e))
+            .map((e) =>
+                Serializers.instance.serializeWithType('dart:core#UriData', e))
             .toList(),
         'aListOfUint8List': aListOfUint8List
-            .map((e) =>
-                Serializers.instance.serialize('dart:typed_data#Uint8List', e))
+            .map((e) => Serializers.instance
+                .serializeWithType('dart:typed_data#Uint8List', e))
             .toList(),
         'aListOfSimpleStruct': aListOfSimpleStruct.map((e) => ()).toList(),
         'aListOfSimpleClass':
@@ -482,22 +492,24 @@ class ComplexClass {
         'aMapOfBool': aMapOfBool,
         'aMapOfEnum': aMapOfEnum.map((k, e) => MapEntry(k, e.name)),
         'aMapOfNull': aMapOfNull,
-        'aMapOfBigInt': aMapOfBigInt.map((k, e) =>
-            MapEntry(k, Serializers.instance.serialize('dart:core#BigInt', e))),
-        'aMapOfDateTime': aMapOfDateTime.map((k, e) => MapEntry(
-            k, Serializers.instance.serialize('dart:core#DateTime', e))),
-        'aMapOfDuration': aMapOfDuration.map((k, e) => MapEntry(
-            k, Serializers.instance.serialize('dart:core#Duration', e))),
-        'aMapOfRegExp': aMapOfRegExp.map((k, e) =>
-            MapEntry(k, Serializers.instance.serialize('dart:core#RegExp', e))),
-        'aMapOfStackTrace': aMapOfStackTrace.map((k, e) => MapEntry(
-            k, Serializers.instance.serialize('dart:core#StackTrace', e))),
-        'aMapOfUri': aMapOfUri.map((k, e) =>
-            MapEntry(k, Serializers.instance.serialize('dart:core#Uri', e))),
+        'aMapOfBigInt': aMapOfBigInt.map((k, e) => MapEntry(
+            k, Serializers.instance.serializeWithType('dart:core#BigInt', e))),
+        'aMapOfDateTime': aMapOfDateTime.map((k, e) => MapEntry(k,
+            Serializers.instance.serializeWithType('dart:core#DateTime', e))),
+        'aMapOfDuration': aMapOfDuration.map((k, e) => MapEntry(k,
+            Serializers.instance.serializeWithType('dart:core#Duration', e))),
+        'aMapOfRegExp': aMapOfRegExp.map((k, e) => MapEntry(
+            k, Serializers.instance.serializeWithType('dart:core#RegExp', e))),
+        'aMapOfStackTrace': aMapOfStackTrace.map((k, e) => MapEntry(k,
+            Serializers.instance.serializeWithType('dart:core#StackTrace', e))),
+        'aMapOfUri': aMapOfUri.map((k, e) => MapEntry(
+            k, Serializers.instance.serializeWithType('dart:core#Uri', e))),
         'aMapOfUriData': aMapOfUriData.map((k, e) => MapEntry(
-            k, Serializers.instance.serialize('dart:core#UriData', e))),
+            k, Serializers.instance.serializeWithType('dart:core#UriData', e))),
         'aMapOfUint8List': aMapOfUint8List.map((k, e) => MapEntry(
-            k, Serializers.instance.serialize('dart:typed_data#Uint8List', e))),
+            k,
+            Serializers.instance
+                .serializeWithType('dart:typed_data#Uint8List', e))),
         'aMapOfSimpleStruct': aMapOfSimpleStruct.map((k, e) => MapEntry(k, ())),
         'aMapOfSimpleClass':
             aMapOfSimpleClass.map((k, e) => MapEntry(k, e.toJson())),

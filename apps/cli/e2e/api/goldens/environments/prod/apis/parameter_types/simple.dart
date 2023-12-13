@@ -21,35 +21,35 @@ class SimpleTarget extends _i1.FunctionTarget {
         (request[r'aBool'] as bool),
         _i2.MyEnum.values.byName((request[r'anEnum'] as String)),
         (request[r'aNull'] as Null),
-        _i3.Serializers.instance.deserialize<BigInt>(
+        _i3.Serializers.instance.deserializeWithType<BigInt>(
           'dart:core#BigInt',
           request[r'aBigInt'],
         ),
-        _i3.Serializers.instance.deserialize<DateTime>(
+        _i3.Serializers.instance.deserializeWithType<DateTime>(
           'dart:core#DateTime',
           request[r'aDateTime'],
         ),
-        _i3.Serializers.instance.deserialize<Duration>(
+        _i3.Serializers.instance.deserializeWithType<Duration>(
           'dart:core#Duration',
           request[r'aDuration'],
         ),
-        _i3.Serializers.instance.deserialize<RegExp>(
+        _i3.Serializers.instance.deserializeWithType<RegExp>(
           'dart:core#RegExp',
           request[r'aRegExp'],
         ),
-        _i3.Serializers.instance.deserialize<StackTrace>(
+        _i3.Serializers.instance.deserializeWithType<StackTrace>(
           'dart:core#StackTrace',
           request[r'aStackTrace'],
         ),
-        _i3.Serializers.instance.deserialize<Uri>(
+        _i3.Serializers.instance.deserializeWithType<Uri>(
           'dart:core#Uri',
           request[r'aUri'],
         ),
-        _i3.Serializers.instance.deserialize<UriData>(
+        _i3.Serializers.instance.deserializeWithType<UriData>(
           'dart:core#UriData',
           request[r'aUriData'],
         ),
-        _i3.Serializers.instance.deserialize<_i4.Uint8List>(
+        _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
           'dart:typed_data#Uint8List',
           request[r'aUint8List'],
         ),
@@ -57,7 +57,7 @@ class SimpleTarget extends _i1.FunctionTarget {
           return (el as String);
         }).toList(),
         (request[r'anIterableOfUint8List'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<_i4.Uint8List>(
+          return _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
             'dart:typed_data#Uint8List',
             el,
           );
@@ -81,49 +81,49 @@ class SimpleTarget extends _i1.FunctionTarget {
           return (el as Null);
         }).toList(),
         (request[r'aListOfBigInt'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<BigInt>(
+          return _i3.Serializers.instance.deserializeWithType<BigInt>(
             'dart:core#BigInt',
             el,
           );
         }).toList(),
         (request[r'aListOfDateTime'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<DateTime>(
+          return _i3.Serializers.instance.deserializeWithType<DateTime>(
             'dart:core#DateTime',
             el,
           );
         }).toList(),
         (request[r'aListOfDuration'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<Duration>(
+          return _i3.Serializers.instance.deserializeWithType<Duration>(
             'dart:core#Duration',
             el,
           );
         }).toList(),
         (request[r'aListOfRegExp'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<RegExp>(
+          return _i3.Serializers.instance.deserializeWithType<RegExp>(
             'dart:core#RegExp',
             el,
           );
         }).toList(),
         (request[r'aListOfStackTrace'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<StackTrace>(
+          return _i3.Serializers.instance.deserializeWithType<StackTrace>(
             'dart:core#StackTrace',
             el,
           );
         }).toList(),
         (request[r'aListOfUri'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<Uri>(
+          return _i3.Serializers.instance.deserializeWithType<Uri>(
             'dart:core#Uri',
             el,
           );
         }).toList(),
         (request[r'aListOfUriData'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<UriData>(
+          return _i3.Serializers.instance.deserializeWithType<UriData>(
             'dart:core#UriData',
             el,
           );
         }).toList(),
         (request[r'aListOfUint8List'] as Iterable<Object?>).map((el) {
-          return _i3.Serializers.instance.deserialize<_i4.Uint8List>(
+          return _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
             'dart:typed_data#Uint8List',
             el,
           );
@@ -188,7 +188,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<BigInt>(
+            _i3.Serializers.instance.deserializeWithType<BigInt>(
               'dart:core#BigInt',
               value,
             ),
@@ -200,7 +200,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<DateTime>(
+            _i3.Serializers.instance.deserializeWithType<DateTime>(
               'dart:core#DateTime',
               value,
             ),
@@ -212,7 +212,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<Duration>(
+            _i3.Serializers.instance.deserializeWithType<Duration>(
               'dart:core#Duration',
               value,
             ),
@@ -224,7 +224,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<RegExp>(
+            _i3.Serializers.instance.deserializeWithType<RegExp>(
               'dart:core#RegExp',
               value,
             ),
@@ -236,7 +236,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<StackTrace>(
+            _i3.Serializers.instance.deserializeWithType<StackTrace>(
               'dart:core#StackTrace',
               value,
             ),
@@ -248,7 +248,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<Uri>(
+            _i3.Serializers.instance.deserializeWithType<Uri>(
               'dart:core#Uri',
               value,
             ),
@@ -260,7 +260,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<UriData>(
+            _i3.Serializers.instance.deserializeWithType<UriData>(
               'dart:core#UriData',
               value,
             ),
@@ -272,7 +272,7 @@ class SimpleTarget extends _i1.FunctionTarget {
         ) {
           return MapEntry(
             key,
-            _i3.Serializers.instance.deserialize<_i4.Uint8List>(
+            _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
               'dart:typed_data#Uint8List',
               value,
             ),

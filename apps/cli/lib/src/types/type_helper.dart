@@ -2,8 +2,9 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
-import 'package:celest_cli/project/paths.dart';
+import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -41,7 +42,7 @@ final class TypeHelper {
       _TypeToCodeBuilder(projectRoot: _projectPaths.projectRoot),
     );
     _referenceToDartType[reference] ??= type;
-    if (toWireType(type) case final wireType?) {
+    if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;
     }
     return reference;
@@ -58,7 +59,7 @@ final class TypeHelper {
     return dartType;
   }
 
-  String? toWireType(DartType type) => switch (type.element) {
+  String? toUri(DartType type) => switch (type.element) {
         final element? => urlOfElement(element),
         _ => null,
       };
@@ -88,6 +89,23 @@ final class TypeHelper {
   ///   code.
   Verdict isSerializable(DartType type) =>
       _serializationVerdicts[type] ??= type.accept(const IsSerializable());
+
+  (
+    Uri,
+    codegen.Class,
+    Set<DartType> referencedTypes,
+  )? customSerializer(DartType type) {
+    final verdict = isSerializable(type);
+    if (verdict case VerdictYes(:final serializationSpec?)) {
+      final serializerGenerator = SerializerGenerator(
+        typeHelper: this,
+        serializationSpec: serializationSpec,
+      );
+      final (clazz, referencedTypes) = serializerGenerator.build();
+      return (serializationSpec.uri, clazz, referencedTypes);
+    }
+    return null;
+  }
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
