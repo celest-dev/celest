@@ -14,18 +14,15 @@ class AsyncNullableFieldsTarget extends _i1.FunctionTarget {
       context,
     ) async {
       // ignore: unused_local_variable
-      final response = await _i2.asyncNullableFields(request[r'value'] == null
-          ? null
-          : _i3.Serializers.instance.deserializeWithType<_i2.Fields?>(
-              r'project:apis/serialization.dart#Fields',
-              request[r'value'],
-            ));
-      return response == null
-          ? null
-          : _i3.Serializers.instance.serializeWithType<_i2.Fields?>(
-              r'project:apis/serialization.dart#Fields',
-              response,
-            );
+      final response = await _i2.asyncNullableFields(
+          _i3.Serializers.instance.deserializeWithType<_i2.Fields?>(
+        r'project:apis/serialization.dart#Fields',
+        request[r'value'],
+      ));
+      return _i3.Serializers.instance.serializeWithType<_i2.Fields?>(
+        r'project:apis/serialization.dart#Fields',
+        response,
+      );
     },
     (json) => json as Map<String, dynamic>,
   );

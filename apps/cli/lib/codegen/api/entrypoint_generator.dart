@@ -132,18 +132,10 @@ final class EntrypointGenerator {
                     b.addExpression(
                       declareFinal('response').assign(response),
                     );
-                    final toJson = jsonGenerator.toJson(
-                      returnType,
+                    final result = jsonGenerator.toJson(
+                      flattenedReturnTyep,
                       refer('response'),
                     );
-                    Expression result;
-                    if (flattenedReturnTyep.isNullableOrFalse) {
-                      result = refer('response')
-                          .equalTo(literalNull)
-                          .conditional(literalNull, toJson);
-                    } else {
-                      result = toJson;
-                    }
                     b.addExpression(result.returned);
                 }
               }),

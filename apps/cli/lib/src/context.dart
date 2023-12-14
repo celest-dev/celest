@@ -1,4 +1,5 @@
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/src/types/type_helper.dart';
 // ignore: library_prefixes
 import 'package:os_detect/os_detect.dart' as Platform;
 import 'package:path/path.dart' as path;
@@ -24,3 +25,4 @@ ProjectPaths init({
 }
 
 late ProjectPaths projectPaths;
+final TypeHelper typeHelper = TypeHelper();

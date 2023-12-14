@@ -16,7 +16,7 @@ class IterableReturnNullableTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
 // ignore: unused_local_variable
       final response = _i3.iterableReturnNullable(celestContext);
-      return response == null ? null : response;
+      return response;
     },
     (json) => json as Map<String, dynamic>,
   );

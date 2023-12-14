@@ -27,7 +27,6 @@ final class CelestAnalyzer {
     this._projectPaths,
     this._context, {
     required Logger logger,
-    required this.typeHelper,
   }) : _logger = logger;
 
   factory CelestAnalyzer({
@@ -46,7 +45,6 @@ final class CelestAnalyzer {
       projectPaths,
       context,
       logger: logger,
-      typeHelper: TypeHelper(projectPaths: projectPaths),
     );
   }
 
@@ -56,7 +54,7 @@ final class CelestAnalyzer {
   final List<AnalysisException> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
-  final TypeHelper typeHelper;
+  final TypeHelper typeHelper = TypeHelper();
 
   void _reportError(String error, SourceLocation location) {
     _errors.add(

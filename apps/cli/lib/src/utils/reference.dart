@@ -1,5 +1,4 @@
 import 'package:celest_cli/src/types/dart_types.dart';
-import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:code_builder/code_builder.dart';
 
 extension ReferenceHelper on Reference {
@@ -9,12 +8,6 @@ extension ReferenceHelper on Reference {
 
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
-        final TypedefRecordType typedef => TypeReference(
-            (t) => t
-              ..symbol = typedef.symbol
-              ..url = typedef.url
-              ..isNullable = typedef.recordType.isNullable,
-          ),
         _ => TypeReference(
             (t) => t
               ..symbol = symbol
@@ -36,7 +29,10 @@ extension ReferenceHelper on Reference {
     return toTypeReference.rebuild((t) => t.isNullable = isNullable);
   }
 
-  bool get isNullableOrFalse => toTypeReference.isNullable ?? false;
+  bool get isNullableOrFalse => switch (this) {
+        TypeReference(:final isNullable) => isNullable ?? false,
+        _ => false,
+      };
 
   /// Constructs a `built_value` FullType reference for this.
   Expression fullType([Iterable<Reference>? parameters]) {
@@ -67,6 +63,23 @@ extension ExpressionUtil on Expression {
       return property(name);
     }
   }
+
+  Expression nullSafeIndex(
+    Expression index, {
+    bool isNullable = true,
+  }) =>
+      _BinaryExpression(
+        // ignore: invalid_use_of_visible_for_overriding_member
+        expression,
+        CodeExpression(
+          Block.of([
+            const Code('['),
+            index.code,
+            const Code(']'),
+          ]),
+        ),
+        isNullable ? '?' : '',
+      );
 
   Expression wrapWithInlineNullCheck(Expression check) {
     return check.equalTo(literalNull).conditional(literalNull, nullChecked);
@@ -103,4 +116,29 @@ extension CodeHelpers on Code {
       if (performCheck) const Code('}'),
     ]);
   }
+}
+
+final class _BinaryExpression extends Expression implements BinaryExpression {
+  const _BinaryExpression(
+    this.left,
+    this.right,
+    this.operator, {
+    this.addSpace = true,
+    this.isConst = false,
+  });
+
+  @override
+  final Expression left;
+  @override
+  final Expression right;
+  @override
+  final String operator;
+  @override
+  final bool addSpace;
+  @override
+  final bool isConst;
+
+  @override
+  R accept<R>(ExpressionVisitor<R> visitor, [R? context]) =>
+      visitor.visitBinaryExpression(this, context);
 }

@@ -16,7 +16,7 @@ class ComplexClassReturnNullableTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
 // ignore: unused_local_variable
       final response = _i3.complexClassReturnNullable(celestContext);
-      return response == null ? null : response.toJson();
+      return response?.toJson();
     },
     (json) => json as Map<String, dynamic>,
   );

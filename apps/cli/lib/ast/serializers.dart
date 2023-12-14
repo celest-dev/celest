@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:code_builder/code_builder.dart';
 
 part 'serializers.g.dart';
@@ -24,7 +23,6 @@ final Serializers serializers = (_$serializers.toBuilder()
       ..add(const ReferenceSerializer())
       ..add(const TypeReferenceSerializer())
       ..add(const RecordTypeSerializer())
-      ..add(const TypedefRecordTypeSerializer())
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Reference)]),
         BuiltList<Reference>.new,
@@ -89,7 +87,6 @@ final class ReferenceSerializer implements StructuredSerializer<Reference> {
     }
     final wireName = switch (object) {
       TypeReference() => 'TypeReference',
-      TypedefRecordType() => 'TypedefRecordType',
       RecordType() => 'RecordType',
       _ => 'Reference',
     };
@@ -332,81 +329,6 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
 
   @override
   String get wireName => 'RecordType';
-}
-
-final class TypedefRecordTypeSerializer
-    implements StructuredSerializer<TypedefRecordType> {
-  const TypedefRecordTypeSerializer();
-
-  @override
-  TypedefRecordType deserialize(
-    Serializers serializers,
-    Iterable<Object?> serialized, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    String? symbol;
-    String? url;
-    final recordTypeBuilder = RecordTypeBuilder();
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final name = iterator.current as String;
-      final value = iterator.moveNext() ? iterator.current : null;
-      switch (name) {
-        case 'symbol':
-          symbol = value as String?;
-        case 'url':
-          url = value as String?;
-        case 'recordType':
-          recordTypeBuilder.replace(
-            serializers.deserialize(
-              value as Iterable<Object?>,
-              specifiedType: const FullType(RecordType),
-            )! as RecordType,
-          );
-      }
-    }
-    final recordType = recordTypeBuilder.build();
-    return TypedefRecordType(
-      symbol: symbol,
-      url: url,
-      recordType: recordType,
-      isNullable: recordType.isNullable ?? false, // TODO: Blocked on Dart SDK
-    );
-  }
-
-  @override
-  Iterable<Object?> serialize(
-    Serializers serializers,
-    TypedefRecordType object, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    final serialized = <Object?>[];
-    if (object.symbol case final symbol?) {
-      serialized
-        ..add('symbol')
-        ..add(symbol);
-    }
-    if (object.url case final url?) {
-      serialized
-        ..add('url')
-        ..add(url);
-    }
-    serialized
-      ..add('recordType')
-      ..add(
-        serializers.serialize(
-          object.recordType,
-          specifiedType: const FullType(RecordType),
-        ),
-      );
-    return serialized;
-  }
-
-  @override
-  Iterable<Type> get types => [TypedefRecordType];
-
-  @override
-  String get wireName => 'TypedefRecordType';
 }
 
 final class _CustomJsonPlugin extends StandardJsonPlugin {

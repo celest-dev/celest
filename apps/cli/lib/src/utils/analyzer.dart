@@ -10,9 +10,6 @@ import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
-import 'package:code_builder/code_builder.dart' as codegen;
-// ignore: implementation_imports
-import 'package:code_builder/src/visitors.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
@@ -164,89 +161,4 @@ extension DartTypeUri on DartType {
     }
     return projectPaths.normalizeUri(sourceUri);
   }
-}
-
-final class TypedefRecordType extends codegen.Expression
-    implements codegen.Reference, codegen.Spec {
-  const TypedefRecordType({
-    this.symbol,
-    this.url,
-    required this.recordType,
-    required this.isNullable,
-  });
-
-  @override
-  final String? symbol;
-  @override
-  final String? url;
-
-  final codegen.RecordType recordType;
-  final bool isNullable;
-
-  @override
-  R accept<R>(SpecVisitor<R> visitor, [R? context]) =>
-      visitor.visitRecordType(recordType, context);
-
-  @override
-  codegen.Expression constInstance(
-    Iterable<codegen.Expression> positionalArguments, [
-    Map<String, codegen.Expression> namedArguments = const {},
-    List<codegen.Reference> typeArguments = const [],
-  ]) {
-    throw UnimplementedError();
-  }
-
-  @override
-  codegen.Expression constInstanceNamed(
-    String name,
-    Iterable<codegen.Expression> positionalArguments, [
-    Map<String, codegen.Expression> namedArguments = const {},
-    List<codegen.Reference> typeArguments = const [],
-  ]) {
-    throw UnsupportedError(
-      'Record types do not have named constructors',
-    );
-  }
-
-  @override
-  codegen.Expression newInstance(
-    Iterable<codegen.Expression> positionalArguments, [
-    Map<String, codegen.Expression> namedArguments = const {},
-    List<codegen.Reference> typeArguments = const [],
-  ]) {
-    throw UnimplementedError();
-  }
-
-  @override
-  codegen.Expression newInstanceNamed(
-    String name,
-    Iterable<codegen.Expression> positionalArguments, [
-    Map<String, codegen.Expression> namedArguments = const {},
-    List<codegen.Reference> typeArguments = const [],
-  ]) {
-    throw UnsupportedError(
-      'Record types do not have named constructors',
-    );
-  }
-
-  @override
-  codegen.Reference get type => recordType;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TypedefRecordType &&
-          runtimeType == other.runtimeType &&
-          symbol == other.symbol &&
-          url == other.url &&
-          recordType == other.recordType &&
-          isNullable == other.isNullable;
-
-  @override
-  int get hashCode => Object.hash(
-        symbol,
-        url,
-        recordType,
-        isNullable,
-      );
 }

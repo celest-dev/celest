@@ -16,11 +16,8 @@ class OptionalNamedTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
       return _i3.optionalNamed(
         celestContext,
-        namedString: request[r'namedString'] == null
-            ? null
-            : (request[r'namedString'] as String),
-        namedInt:
-            request[r'namedInt'] == null ? null : (request[r'namedInt'] as int),
+        namedString: (request[r'namedString'] as String?),
+        namedInt: (request[r'namedInt'] as int?),
       );
     },
     (json) => json as Map<String, dynamic>,

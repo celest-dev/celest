@@ -16,7 +16,7 @@ class AsyncOrStringReturnNullableTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
 // ignore: unused_local_variable
       final response = await _i3.asyncOrStringReturnNullable(celestContext);
-      return response == null ? null : response;
+      return response;
     },
     (json) => json as Map<String, dynamic>,
   );

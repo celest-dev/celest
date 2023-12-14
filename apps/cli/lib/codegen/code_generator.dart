@@ -1,7 +1,7 @@
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/allocator.dart';
-import 'package:celest_cli/codegen/api/entrypoint.dart';
+import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
 import 'package:celest_cli/project/project_paths.dart';

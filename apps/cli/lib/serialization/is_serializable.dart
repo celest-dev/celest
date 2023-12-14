@@ -76,17 +76,45 @@ final class VerdictNo extends Verdict {
 final class SerializationSpec {
   SerializationSpec({
     required this.uri,
+    required this.type,
     required this.isNullable,
-    required this.element,
     required this.fields,
-    required this.constructor,
+    required this.parameters,
   });
 
   final Uri uri;
+  final DartType type;
   final bool isNullable;
-  final ClassElement element;
-  final List<FieldElement> fields;
-  final ConstructorElement constructor;
+  final List<FieldSpec> fields;
+  final List<ParameterSpec> parameters;
+}
+
+final class FieldSpec {
+  FieldSpec({
+    required this.name,
+    required this.type,
+  });
+
+  final String name;
+  final DartType type;
+}
+
+final class ParameterSpec {
+  ParameterSpec({
+    required this.name,
+    required this.type,
+    required this.isPositional,
+    required this.isOptional,
+    required this.isNamed,
+    required this.defaultValueCode,
+  });
+
+  final String name;
+  final DartType type;
+  final bool isPositional;
+  final bool isOptional;
+  final bool isNamed;
+  final String? defaultValueCode;
 }
 
 /// Determines whether a [DartType] can be serialized to/from JSON.
@@ -256,7 +284,44 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     for (final field in type.namedFields) {
       verdict &= field.type.accept(this);
     }
-    return verdict;
+    return switch (verdict) {
+      VerdictNo() => verdict,
+      VerdictYes() => verdict.withSpec(
+          SerializationSpec(
+            uri: projectPaths
+                .normalizeUri(type.alias!.element.sourceLocation.uri)
+                .replace(fragment: type.alias!.element.name),
+            isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
+            type: type,
+            fields: [
+              for (final (index, field) in type.positionalFields.indexed)
+                FieldSpec(name: '\$$index', type: field.type),
+              for (final field in type.namedFields)
+                FieldSpec(name: field.name, type: field.type),
+            ],
+            parameters: [
+              for (final (index, field) in type.positionalFields.indexed)
+                ParameterSpec(
+                  name: '\$$index',
+                  type: field.type,
+                  isPositional: true,
+                  isOptional: false,
+                  isNamed: false,
+                  defaultValueCode: null,
+                ),
+              for (final field in type.namedFields)
+                ParameterSpec(
+                  name: field.name,
+                  type: field.type,
+                  isPositional: false,
+                  isOptional: true,
+                  isNamed: true,
+                  defaultValueCode: null,
+                ),
+            ],
+          ),
+        )
+    };
   }
 
   @override
@@ -373,9 +438,22 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           SerializationSpec(
             uri: dartTypeUri,
             isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
-            element: element,
-            fields: fields,
-            constructor: unnamedConstructor!,
+            type: type,
+            fields: [
+              for (final field in fields)
+                FieldSpec(name: field.displayName, type: field.type),
+            ],
+            parameters: [
+              for (final parameter in unnamedConstructor!.parameters)
+                ParameterSpec(
+                  name: parameter.displayName,
+                  type: parameter.type,
+                  isPositional: parameter.isPositional,
+                  isOptional: parameter.isOptional,
+                  isNamed: parameter.isNamed,
+                  defaultValueCode: parameter.defaultValueCode,
+                ),
+            ],
           ),
         ),
     };

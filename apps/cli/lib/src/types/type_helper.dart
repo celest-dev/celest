@@ -2,9 +2,9 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
-import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -12,11 +12,11 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 
 final class TypeHelper {
-  TypeHelper({
-    required ProjectPaths projectPaths,
-  }) : _projectPaths = projectPaths;
+  factory TypeHelper() => _instance;
+  TypeHelper._();
 
-  final ProjectPaths _projectPaths;
+  static final _instance = TypeHelper._();
+
   TypeSystem? _typeSystem;
   TypeSystem get typeSystem {
     if (_typeSystem == null) {
@@ -37,10 +37,13 @@ final class TypeHelper {
   final _wireTypeToDartType = <String, DartType>{};
   final _serializationVerdicts = <DartType, Verdict>{};
 
+  // TODO: Test types that are only referred to in nested fields/parameters
   codegen.Reference toReference(DartType type) {
-    final reference = _dartTypeToReference[type] ??= type.accept(
-      _TypeToCodeBuilder(projectRoot: _projectPaths.projectRoot),
-    );
+    if (_dartTypeToReference[type] case final reference?) {
+      return reference;
+    }
+    final reference = type.accept(const _TypeToCodeBuilder());
+    _dartTypeToReference[type] = reference;
     _referenceToDartType[reference] ??= type;
     if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;
@@ -109,11 +112,7 @@ final class TypeHelper {
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
-  const _TypeToCodeBuilder({
-    required this.projectRoot,
-  });
-
-  final String projectRoot;
+  const _TypeToCodeBuilder();
 
   @override
   codegen.Reference visitDynamicType(DynamicType type) =>
@@ -123,33 +122,36 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   codegen.Reference visitFunctionType(FunctionType type) {
     return codegen.FunctionType(
       (b) => b
-        ..returnType = type.returnType.accept(this)
+        ..returnType = typeHelper.toReference(type.returnType)
         ..optionalParameters.addAll([
           for (final parameter
               in type.parameters.where((p) => p.isOptionalPositional))
-            parameter.type.accept(this),
+            typeHelper.toReference(parameter.type),
         ])
         ..requiredParameters.addAll([
           for (final parameter
               in type.parameters.where((p) => p.isRequiredPositional))
-            parameter.type.accept(this),
+            typeHelper.toReference(parameter.type),
         ])
         ..namedParameters.addAll({
           for (final parameter
               in type.parameters.where((p) => p.isOptionalNamed))
-            parameter.name: parameter.type.accept(this),
+            parameter.name: typeHelper.toReference(parameter.type),
         })
         ..namedRequiredParameters.addAll({
           for (final parameter
               in type.parameters.where((p) => p.isRequiredNamed))
-            parameter.name: parameter.type.accept(this),
+            parameter.name: typeHelper.toReference(parameter.type),
         })
         ..types.addAll([
           for (final formal in type.typeFormals)
             codegen.TypeReference(
               (t) => t
                 ..symbol = formal.name
-                ..bound = formal.bound?.accept(this),
+                ..bound = switch (formal.bound) {
+                  final bound? => typeHelper.toReference(bound),
+                  _ => null,
+                },
             ),
         ]),
     );
@@ -157,7 +159,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 
   @override
   codegen.Reference visitInterfaceType(InterfaceType type) {
-    final typeArguments = type.typeArguments.map((type) => type.accept(this));
+    final typeArguments = type.typeArguments.map(typeHelper.toReference);
     final ref = codegen.TypeReference(
       (t) => t
         ..symbol = type.element.name
@@ -177,24 +179,28 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 
   @override
   codegen.Reference visitRecordType(RecordType type) {
-    return TypedefRecordType(
-      // TODO(dnys1): How to handle no alias?
-      symbol: type.alias!.element.name,
-      url: type.alias!.element.sourceLocation.uri.toString(),
-      recordType: codegen.RecordType(
-        (r) => r
-          ..positionalFieldTypes.addAll([
-            for (final parameter in type.positionalFields)
-              parameter.type.accept(this),
-          ])
-          ..namedFieldTypes.addAll({
-            for (final parameter in type.namedFields)
-              parameter.name: parameter.type.accept(this),
-          })
-          ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
-      ),
-      isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
+    final recordType = codegen.RecordType(
+      (r) => r
+        ..positionalFieldTypes.addAll([
+          for (final parameter in type.positionalFields)
+            typeHelper.toReference(parameter.type),
+        ])
+        ..namedFieldTypes.addAll({
+          for (final parameter in type.namedFields)
+            parameter.name: typeHelper.toReference(parameter.type),
+        })
+        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
+    if (type.alias case final alias?) {
+      return codegen.TypeReference(
+        (b) => b
+          ..symbol = alias.element.displayName
+          ..url = alias.element.sourceLocation.uri.toString()
+          // TODO: Blocked by SDK
+          ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
+      );
+    }
+    return recordType;
   }
 
   @override
@@ -202,7 +208,9 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     return codegen.TypeReference(
       (t) => t
         ..symbol = type.getDisplayString(withNullability: false)
-        ..bound = type.bound is DynamicType ? null : type.bound.accept(this),
+        ..bound = type.bound is DynamicType
+            ? null
+            : typeHelper.toReference(type.bound),
     );
   }
 

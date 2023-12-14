@@ -15,350 +15,276 @@ class SimpleOptionalTarget extends _i1.FunctionTarget {
       context,
     ) async {
       return _i2.simpleOptional(
-        request[r'aString'] == null ? null : (request[r'aString'] as String),
-        request[r'anInt'] == null ? null : (request[r'anInt'] as int),
-        request[r'aDouble'] == null ? null : (request[r'aDouble'] as double),
-        request[r'aBool'] == null ? null : (request[r'aBool'] as bool),
+        (request[r'aString'] as String?),
+        (request[r'anInt'] as int?),
+        (request[r'aDouble'] as double?),
+        (request[r'aBool'] as bool?),
         request[r'anEnum'] == null
             ? null
             : _i2.MyEnum.values.byName((request[r'anEnum'] as String)),
         (request[r'aNull'] as Null),
-        request[r'aBigInt'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<BigInt?>(
-                'dart:core#BigInt',
-                request[r'aBigInt'],
-              ),
-        request[r'aDateTime'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<DateTime?>(
-                'dart:core#DateTime',
-                request[r'aDateTime'],
-              ),
-        request[r'aDuration'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<Duration?>(
-                'dart:core#Duration',
-                request[r'aDuration'],
-              ),
-        request[r'aRegExp'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<RegExp?>(
-                'dart:core#RegExp',
-                request[r'aRegExp'],
-              ),
-        request[r'aStackTrace'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<StackTrace?>(
-                'dart:core#StackTrace',
-                request[r'aStackTrace'],
-              ),
-        request[r'aUri'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<Uri?>(
-                'dart:core#Uri',
-                request[r'aUri'],
-              ),
-        request[r'aUriData'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<UriData?>(
-                'dart:core#UriData',
-                request[r'aUriData'],
-              ),
-        request[r'aUint8List'] == null
-            ? null
-            : _i3.Serializers.instance.deserializeWithType<_i4.Uint8List?>(
-                'dart:typed_data#Uint8List',
-                request[r'aUint8List'],
-              ),
-        request[r'anIterableOfString'] == null
-            ? null
-            : (request[r'anIterableOfString'] as Iterable<Object?>).map((el) {
-                return (el as String);
-              }).toList(),
-        request[r'anIterableOfUint8List'] == null
-            ? null
-            : (request[r'anIterableOfUint8List'] as Iterable<Object?>)
-                .map((el) {
-                return _i3.Serializers.instance
-                    .deserializeWithType<_i4.Uint8List>(
+        _i3.Serializers.instance.deserializeWithType<BigInt?>(
+          'dart:core#BigInt',
+          request[r'aBigInt'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<DateTime?>(
+          'dart:core#DateTime',
+          request[r'aDateTime'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<Duration?>(
+          'dart:core#Duration',
+          request[r'aDuration'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<RegExp?>(
+          'dart:core#RegExp',
+          request[r'aRegExp'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<StackTrace?>(
+          'dart:core#StackTrace',
+          request[r'aStackTrace'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<Uri?>(
+          'dart:core#Uri',
+          request[r'aUri'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<UriData?>(
+          'dart:core#UriData',
+          request[r'aUriData'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<_i4.Uint8List?>(
+          'dart:typed_data#Uint8List',
+          request[r'aUint8List'],
+        ),
+        (request[r'anIterableOfString'] as Iterable<Object?>?)
+            ?.map((el) => (el as String))
+            .toList(),
+        (request[r'anIterableOfUint8List'] as Iterable<Object?>?)
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
                   'dart:typed_data#Uint8List',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfString'] == null
-            ? null
-            : (request[r'aListOfString'] as Iterable<Object?>).map((el) {
-                return (el as String);
-              }).toList(),
-        request[r'aListOfInt'] == null
-            ? null
-            : (request[r'aListOfInt'] as Iterable<Object?>).map((el) {
-                return (el as int);
-              }).toList(),
-        request[r'aListOfDouble'] == null
-            ? null
-            : (request[r'aListOfDouble'] as Iterable<Object?>).map((el) {
-                return (el as double);
-              }).toList(),
-        request[r'aListOfBool'] == null
-            ? null
-            : (request[r'aListOfBool'] as Iterable<Object?>).map((el) {
-                return (el as bool);
-              }).toList(),
-        request[r'aListOfEnum'] == null
-            ? null
-            : (request[r'aListOfEnum'] as Iterable<Object?>).map((el) {
-                return _i2.MyEnum.values.byName((el as String));
-              }).toList(),
-        request[r'aListOfNull'] == null
-            ? null
-            : (request[r'aListOfNull'] as Iterable<Object?>).map((el) {
-                return (el as Null);
-              }).toList(),
-        request[r'aListOfBigInt'] == null
-            ? null
-            : (request[r'aListOfBigInt'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<BigInt>(
+                ))
+            .toList(),
+        (request[r'aListOfString'] as Iterable<Object?>?)
+            ?.map((el) => (el as String))
+            .toList(),
+        (request[r'aListOfInt'] as Iterable<Object?>?)
+            ?.map((el) => (el as int))
+            .toList(),
+        (request[r'aListOfDouble'] as Iterable<Object?>?)
+            ?.map((el) => (el as double))
+            .toList(),
+        (request[r'aListOfBool'] as Iterable<Object?>?)
+            ?.map((el) => (el as bool))
+            .toList(),
+        (request[r'aListOfEnum'] as Iterable<Object?>?)
+            ?.map((el) => _i2.MyEnum.values.byName((el as String)))
+            .toList(),
+        (request[r'aListOfNull'] as Iterable<Object?>?)
+            ?.map((el) => (el as Null))
+            .toList(),
+        (request[r'aListOfBigInt'] as Iterable<Object?>?)
+            ?.map((el) => _i3.Serializers.instance.deserializeWithType<BigInt>(
                   'dart:core#BigInt',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfDateTime'] == null
-            ? null
-            : (request[r'aListOfDateTime'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<DateTime>(
-                  'dart:core#DateTime',
-                  el,
-                );
-              }).toList(),
-        request[r'aListOfDuration'] == null
-            ? null
-            : (request[r'aListOfDuration'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<Duration>(
-                  'dart:core#Duration',
-                  el,
-                );
-              }).toList(),
-        request[r'aListOfRegExp'] == null
-            ? null
-            : (request[r'aListOfRegExp'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<RegExp>(
+                ))
+            .toList(),
+        (request[r'aListOfDateTime'] as Iterable<Object?>?)
+            ?.map(
+                (el) => _i3.Serializers.instance.deserializeWithType<DateTime>(
+                      'dart:core#DateTime',
+                      el,
+                    ))
+            .toList(),
+        (request[r'aListOfDuration'] as Iterable<Object?>?)
+            ?.map(
+                (el) => _i3.Serializers.instance.deserializeWithType<Duration>(
+                      'dart:core#Duration',
+                      el,
+                    ))
+            .toList(),
+        (request[r'aListOfRegExp'] as Iterable<Object?>?)
+            ?.map((el) => _i3.Serializers.instance.deserializeWithType<RegExp>(
                   'dart:core#RegExp',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfStackTrace'] == null
-            ? null
-            : (request[r'aListOfStackTrace'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<StackTrace>(
+                ))
+            .toList(),
+        (request[r'aListOfStackTrace'] as Iterable<Object?>?)
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<StackTrace>(
                   'dart:core#StackTrace',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfUri'] == null
-            ? null
-            : (request[r'aListOfUri'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<Uri>(
+                ))
+            .toList(),
+        (request[r'aListOfUri'] as Iterable<Object?>?)
+            ?.map((el) => _i3.Serializers.instance.deserializeWithType<Uri>(
                   'dart:core#Uri',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfUriData'] == null
-            ? null
-            : (request[r'aListOfUriData'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance.deserializeWithType<UriData>(
+                ))
+            .toList(),
+        (request[r'aListOfUriData'] as Iterable<Object?>?)
+            ?.map((el) => _i3.Serializers.instance.deserializeWithType<UriData>(
                   'dart:core#UriData',
                   el,
-                );
-              }).toList(),
-        request[r'aListOfUint8List'] == null
-            ? null
-            : (request[r'aListOfUint8List'] as Iterable<Object?>).map((el) {
-                return _i3.Serializers.instance
-                    .deserializeWithType<_i4.Uint8List>(
+                ))
+            .toList(),
+        (request[r'aListOfUint8List'] as Iterable<Object?>?)
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
                   'dart:typed_data#Uint8List',
                   el,
-                );
-              }).toList(),
-        request[r'aMapOfString'] == null
-            ? null
-            : (request[r'aMapOfString'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  (value as String),
-                );
-              }),
-        request[r'aMapOfInt'] == null
-            ? null
-            : (request[r'aMapOfInt'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  (value as int),
-                );
-              }),
-        request[r'aMapOfDouble'] == null
-            ? null
-            : (request[r'aMapOfDouble'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  (value as double),
-                );
-              }),
-        request[r'aMapOfBool'] == null
-            ? null
-            : (request[r'aMapOfBool'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  (value as bool),
-                );
-              }),
-        request[r'aMapOfEnum'] == null
-            ? null
-            : (request[r'aMapOfEnum'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i2.MyEnum.values.byName((value as String)),
-                );
-              }),
-        request[r'aMapOfNull'] == null
-            ? null
-            : (request[r'aMapOfNull'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  (value as Null),
-                );
-              }),
-        request[r'aMapOfBigInt'] == null
-            ? null
-            : (request[r'aMapOfBigInt'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<BigInt>(
-                    'dart:core#BigInt',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfDateTime'] == null
-            ? null
-            : (request[r'aMapOfDateTime'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<DateTime>(
-                    'dart:core#DateTime',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfDuration'] == null
-            ? null
-            : (request[r'aMapOfDuration'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<Duration>(
-                    'dart:core#Duration',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfRegExp'] == null
-            ? null
-            : (request[r'aMapOfRegExp'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<RegExp>(
-                    'dart:core#RegExp',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfStackTrace'] == null
-            ? null
-            : (request[r'aMapOfStackTrace'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<StackTrace>(
-                    'dart:core#StackTrace',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfUri'] == null
-            ? null
-            : (request[r'aMapOfUri'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<Uri>(
-                    'dart:core#Uri',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfUriData'] == null
-            ? null
-            : (request[r'aMapOfUriData'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<UriData>(
-                    'dart:core#UriData',
-                    value,
-                  ),
-                );
-              }),
-        request[r'aMapOfUint8List'] == null
-            ? null
-            : (request[r'aMapOfUint8List'] as Map<String, Object?>).map((
-                key,
-                value,
-              ) {
-                return MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
-                    'dart:typed_data#Uint8List',
-                    value,
-                  ),
-                );
-              }),
+                ))
+            .toList(),
+        (request[r'aMapOfString'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            (value as String),
+          );
+        }),
+        (request[r'aMapOfInt'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            (value as int),
+          );
+        }),
+        (request[r'aMapOfDouble'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            (value as double),
+          );
+        }),
+        (request[r'aMapOfBool'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            (value as bool),
+          );
+        }),
+        (request[r'aMapOfEnum'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i2.MyEnum.values.byName((value as String)),
+          );
+        }),
+        (request[r'aMapOfNull'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            (value as Null),
+          );
+        }),
+        (request[r'aMapOfBigInt'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<BigInt>(
+              'dart:core#BigInt',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfDateTime'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<DateTime>(
+              'dart:core#DateTime',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfDuration'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<Duration>(
+              'dart:core#Duration',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfRegExp'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<RegExp>(
+              'dart:core#RegExp',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfStackTrace'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<StackTrace>(
+              'dart:core#StackTrace',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfUri'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<Uri>(
+              'dart:core#Uri',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfUriData'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<UriData>(
+              'dart:core#UriData',
+              value,
+            ),
+          );
+        }),
+        (request[r'aMapOfUint8List'] as Map<String, Object?>?)?.map((
+          key,
+          value,
+        ) {
+          return MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
+              'dart:typed_data#Uint8List',
+              value,
+            ),
+          );
+        }),
       );
     },
     (json) => json as Map<String, dynamic>,

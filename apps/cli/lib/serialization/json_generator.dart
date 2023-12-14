@@ -19,7 +19,9 @@ final class JsonGenerator {
   Expression toJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartAsyncFuture || dartType.isDartAsyncFutureOr) {
-      return toJson(type.toTypeReference.types.single, ref);
+      unreachable(
+        'Must pass the flattened type so that nullability is correctly handled',
+      );
     }
     if (dartType.isDartCoreBool ||
         dartType.isDartCoreDouble ||
@@ -31,7 +33,7 @@ final class JsonGenerator {
       return ref;
     }
     if (typeHelper.fromReference(type).isEnum) {
-      return ref.property('name');
+      return ref.nullableProperty('name', type.isNullableOrFalse);
     }
     if (dartType.isDartCoreEnum || dartType.isDartCoreSet) {
       throw unreachable('Should have been caught in checker');
@@ -92,25 +94,8 @@ final class JsonGenerator {
         ).closure,
       ]);
     }
-    if (type case TypedefRecordType(recordType: final record)) {
-      final serialized = <String, Expression>{};
-      for (final (index, field) in record.positionalFieldTypes.indexed) {
-        final indexProperty = '\$$index';
-        serialized[indexProperty] = toJson(
-          field,
-          ref.property(indexProperty),
-        );
-      }
-      for (final MapEntry(key: name, value: field)
-          in record.namedFieldTypes.entries) {
-        serialized[name] = toJson(
-          field,
-          ref.property(name),
-        );
-      }
-      return literalMap(serialized);
-    }
-    if (supportedDartSdkType.isExactlyType(dartType)) {
+    if (dartType.element != null &&
+        supportedDartSdkType.isExactlyType(dartType)) {
       return DartTypes.celest.serializers
           .property('instance')
           .property('serializeWithType')
@@ -127,7 +112,7 @@ final class JsonGenerator {
     final serializationSpec =
         (serializationVerdict as VerdictYes).serializationSpec;
     if (serializationSpec == null) {
-      return ref.property('toJson').call([]);
+      return ref.nullableProperty('toJson', type.isNullableOrFalse).call([]);
     }
     referencedTypes.add(dartType);
     return DartTypes.celest.serializers
@@ -141,27 +126,7 @@ final class JsonGenerator {
     ]);
   }
 
-  Expression fromJson(
-    Reference type,
-    Expression ref, {
-    bool nullChecked = true,
-  }) {
-    final fromJson = _fromJson(type, ref, nullChecked: nullChecked);
-    if (!nullChecked) {
-      return fromJson;
-    }
-    return switch (type) {
-      // TODO: Needed to support TypedefRecordType
-      dynamic(:final bool isNullable) when !isNullable => fromJson,
-      _ => ref.equalTo(literalNull).conditional(literalNull, fromJson),
-    };
-  }
-
-  Expression _fromJson(
-    Reference type,
-    Expression ref, {
-    required bool nullChecked,
-  }) {
+  Expression fromJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartCoreBool ||
         dartType.isDartCoreDouble ||
@@ -169,21 +134,27 @@ final class JsonGenerator {
         dartType.isDartCoreNum ||
         dartType.isDartCoreString ||
         dartType.isDartCoreNull) {
-      return ref.asA(nullChecked ? type.nonNullable : type);
+      return ref.asA(type);
     }
     if (typeHelper.fromReference(type).isEnum) {
-      return type.nonNullable
+      // TODO: Use Serializers
+      final deserialized = type.nonNullable
           .property('values')
           .property('byName')
           .call([ref.asA(DartTypes.core.string)]);
+      if (type.isNullableOrFalse) {
+        return ref.equalTo(literalNull).conditional(literalNull, deserialized);
+      }
+      return deserialized;
     }
     if (dartType.isDartCoreEnum || dartType.isDartCoreSet) {
       throw unreachable('Should have been caught in checker');
     }
     if (dartType.isDartCoreIterable || dartType.isDartCoreList) {
       final cast = ref.asA(
-        // already null-checked
-        DartTypes.core.iterable(DartTypes.core.object.nullable),
+        DartTypes.core
+            .iterable(DartTypes.core.object.nullable)
+            .withNullability(type.isNullableOrFalse),
       );
       final element = refer('el');
       final elementType = type.toTypeReference.types.single;
@@ -192,7 +163,7 @@ final class JsonGenerator {
         return cast;
       }
       return cast
-          .property('map')
+          .nullableProperty('map', type.isNullableOrFalse)
           .call([
             Method(
               (m) => m
@@ -201,26 +172,7 @@ final class JsonGenerator {
                     (p) => p..name = 'el',
                   ),
                 )
-                ..body = Block((b) {
-                  final elementType = type.toTypeReference.types.single;
-                  final dartElementType = typeHelper.fromReference(elementType);
-                  final isSimpleJson = dartElementType.isSimpleJson;
-                  final isBuiltIn = dartElementType.element != null &&
-                      supportedDartSdkType.isExactlyType(dartElementType);
-                  final isMapOnWire = !isSimpleJson && !isBuiltIn;
-                  if (isMapOnWire) {
-                    final wireType = DartTypes.core.map(
-                      DartTypes.core.string,
-                      DartTypes.core.object.nullable,
-                    );
-                    b.addExpression(
-                      element.asA(
-                        wireType.withNullability(elementType.isNullableOrFalse),
-                      ),
-                    );
-                  }
-                  b.addExpression(serializedElement.returned);
-                }),
+                ..body = serializedElement.code,
             ).closure,
           ])
           .property('toList')
@@ -233,10 +185,12 @@ final class JsonGenerator {
         throw unreachable('Should have been caught in checker');
       }
       final cast = ref.asA(
-        DartTypes.core.map(
-          DartTypes.core.string,
-          DartTypes.core.object.nullable,
-        ),
+        DartTypes.core
+            .map(
+              DartTypes.core.string,
+              DartTypes.core.object.nullable,
+            )
+            .withNullability(type.isNullableOrFalse),
       );
       final value = refer('value');
       final valueType = type.toTypeReference.types[1];
@@ -245,7 +199,7 @@ final class JsonGenerator {
         return cast;
       }
       final dartValueType = typeHelper.fromReference(valueType);
-      return cast.property('map').call([
+      return cast.nullableProperty('map', type.isNullableOrFalse).call([
         Method(
           (m) => m
             ..requiredParameters.add(
@@ -275,7 +229,7 @@ final class JsonGenerator {
                 );
               }
               b.addExpression(
-                refer('MapEntry').newInstance([
+                DartTypes.core.mapEntry.newInstance([
                   refer('key'),
                   serializedValue,
                 ]).returned,
@@ -284,24 +238,8 @@ final class JsonGenerator {
         ).closure,
       ]);
     }
-    if (type case TypedefRecordType(recordType: final record)) {
-      final deserializedPositional = <Expression>[];
-      for (final (index, field) in record.positionalFieldTypes.indexed) {
-        final indexProperty = '\$$index';
-        deserializedPositional.add(
-          fromJson(
-            field.type,
-            ref.index(literalString(indexProperty)),
-          ),
-        );
-      }
-      final deserializedNamed = <String, Expression>{};
-      for (final MapEntry(:key, :value) in record.namedFieldTypes.entries) {
-        deserializedNamed[key] = fromJson(value, ref.index(literalString(key)));
-      }
-      return literalRecord(deserializedPositional, deserializedNamed);
-    }
-    if (supportedDartSdkType.isExactlyType(dartType)) {
+    if (dartType.element != null &&
+        supportedDartSdkType.isExactlyType(dartType)) {
       return DartTypes.celest.serializers
           .property('instance')
           .property('deserializeWithType')
@@ -322,14 +260,22 @@ final class JsonGenerator {
     final serializationSpec =
         (serializationVerdict as VerdictYes).serializationSpec;
     if (serializationSpec == null) {
-      return type.newInstanceNamed('fromJson', [
-        ref.asA(
-          DartTypes.core.map(
-            DartTypes.core.string,
-            DartTypes.core.dynamic,
+      // TODO: Use Serializers
+      final deserialized = type.nonNullable.newInstanceNamed(
+        'fromJson',
+        [
+          ref.asA(
+            DartTypes.core.map(
+              DartTypes.core.string,
+              DartTypes.core.dynamic,
+            ),
           ),
-        ),
-      ]);
+        ],
+      );
+      if (type.isNullableOrFalse) {
+        return ref.equalTo(literalNull).conditional(literalNull, deserialized);
+      }
+      return deserialized;
     }
     referencedTypes.add(dartType);
     return DartTypes.celest.serializers

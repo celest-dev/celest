@@ -17,7 +17,7 @@ class AsyncOrComplexClassReturnNullableTarget extends _i1.FunctionTarget {
 // ignore: unused_local_variable
       final response =
           await _i3.asyncOrComplexClassReturnNullable(celestContext);
-      return response == null ? null : response.toJson();
+      return response?.toJson();
     },
     (json) => json as Map<String, dynamic>,
   );

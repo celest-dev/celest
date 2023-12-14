@@ -1,8 +1,9 @@
-import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -15,18 +16,22 @@ final class SerializerGenerator {
   final TypeHelper typeHelper;
   final SerializationSpec serializationSpec;
 
-  late final element = serializationSpec.element;
+  late final type = serializationSpec.type;
   late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
-  late final classType = typeHelper.toReference(element.thisType);
+  late final typeReference = typeHelper.toReference(type).nonNullable;
   late final uri = serializationSpec.uri.toString();
 
-  (Class, Set<DartType>) build() {
+  (Class, Set<ast.DartType>) build() {
     final clazz = Class((b) {
-      final className = element.displayName;
+      final className = switch (type) {
+        ast.InterfaceType() => type.element!.displayName,
+        ast.RecordType() => type.alias!.element.displayName,
+        _ => unreachable('Unsupported type $type'),
+      };
       b
         ..modifier = ClassModifier.final$
         ..name = '${className}Serializer'
-        ..extend = DartTypes.celest.serializer(classType);
+        ..extend = DartTypes.celest.serializer(typeReference);
 
       // Create unnamed constant constructor
       b.constructors.add(
@@ -66,7 +71,7 @@ final class SerializerGenerator {
         Method(
           (b) => b
             ..name = 'deserialize'
-            ..returns = classType
+            ..returns = typeReference
             ..requiredParameters.add(
               Parameter(
                 (b) => b
@@ -80,8 +85,8 @@ final class SerializerGenerator {
                 // serialized may not be used, but we need to assert the type
                 const Code('// ignore: unused_local_variable'),
               );
-              final mayBeAbsent = serializationSpec.constructor.parameters
-                  .every((p) => p.isOptional);
+              final mayBeAbsent =
+                  serializationSpec.parameters.every((p) => p.isOptional);
               b.addExpression(
                 declareFinal('serialized').assign(
                   refer('assertWireType').call([
@@ -115,7 +120,7 @@ final class SerializerGenerator {
               Parameter(
                 (b) => b
                   ..name = 'value'
-                  ..type = classType,
+                  ..type = typeReference,
               ),
             )
             ..annotations.add(DartTypes.core.override)
@@ -145,7 +150,7 @@ final class SerializerGenerator {
     final ref = _reference(from, isNullable: isNullable);
     final deserializedPositional = <Expression>[];
     final deserializedNamed = <String, Expression>{};
-    for (final parameter in serializationSpec.constructor.parameters) {
+    for (final parameter in serializationSpec.parameters) {
       final reference = typeHelper.toReference(parameter.type);
       final initializer = parameter.defaultValueCode;
       var deserialized = jsonGenerator.fromJson(
@@ -153,8 +158,6 @@ final class SerializerGenerator {
           reference.isNullableOrFalse || initializer != null,
         ),
         ref.index(literalString(parameter.name, raw: true)),
-        // TODO: hack
-        nullChecked: false,
       );
       if (initializer != null) {
         deserialized = deserialized.parenthesized.ifNullThen(
@@ -167,10 +170,17 @@ final class SerializerGenerator {
         deserializedNamed[parameter.name] = deserialized;
       }
     }
-    return classType.newInstance(
-      deserializedPositional,
-      deserializedNamed,
-    );
+    return switch (serializationSpec.type) {
+      ast.InterfaceType() => typeReference.nonNullable.newInstance(
+          deserializedPositional,
+          deserializedNamed,
+        ),
+      ast.RecordType() => literalRecord(
+          deserializedPositional,
+          deserializedNamed,
+        ),
+      _ => unreachable('Unsupported type ${serializationSpec.type}'),
+    };
   }
 
   Reference _reference(
