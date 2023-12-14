@@ -87,12 +87,11 @@ final class CelestAnalyzer {
   Future<ast.ProjectBuilder?> _findProject() async {
     _logger.detail('Analyzing project');
     final projectFilePath = _projectPaths.projectDart;
-    final projectFileRelativePath = p.basename(projectFilePath);
     if (!File(projectFilePath).existsSync()) {
       _reportError(
         'No project file found at $projectFilePath',
         SourceLocation(
-          path: projectFileRelativePath,
+          uri: projectFilePath,
           line: 0,
           column: 0,
         ),
@@ -106,7 +105,7 @@ final class CelestAnalyzer {
       _reportError(
         'Could not resolve project file',
         SourceLocation(
-          path: projectFileRelativePath,
+          uri: projectFilePath,
           line: 0,
           column: 0,
         ),
@@ -176,7 +175,7 @@ final class CelestAnalyzer {
       _reportError(
         'No `Project` type found',
         SourceLocation(
-          path: projectFileRelativePath,
+          uri: projectFilePath,
           line: 0,
           column: 0,
         ),
@@ -263,7 +262,7 @@ final class CelestAnalyzer {
       ..name = projectName
       ..reference = refer(
         projectDefinitionElement.name,
-        Uri(scheme: 'project', path: projectFileRelativePath).toString(),
+        _projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       )
       ..location.replace(projectDefineLocation)
       ..environmentNames.addAll(environments);
@@ -389,7 +388,7 @@ final class CelestAnalyzer {
     if (apiLibraryResult is! ResolvedLibraryResult) {
       _reportError(
         'Could not resolve API file',
-        SourceLocation(path: apiFile, line: 0, column: 0),
+        SourceLocation(uri: apiFile, line: 0, column: 0),
       );
       return null;
     }
@@ -529,7 +528,7 @@ final class CelestAnalyzer {
     if (envLibraryResult is! ResolvedLibraryResult) {
       _reportError(
         'Could not resolve environment variable file',
-        SourceLocation(path: path, line: 0, column: 0),
+        SourceLocation(uri: path, line: 0, column: 0),
       );
       return [];
     }
@@ -615,7 +614,7 @@ final class AnalysisException implements Exception {
 
   @override
   String toString() {
-    return '${location.path}:${location.line}:${location.column}: $message';
+    return '${location.uri}:${location.line}:${location.column}: $message';
   }
 }
 
@@ -645,7 +644,7 @@ final class _ScopedWidgetCollector {
           if (!environmentNames.contains(environmentName)) {
             errorReporter(
               'Unknown environment for file: "$environmentName"',
-              SourceLocation(path: file, line: 0, column: 0),
+              SourceLocation(uri: file, line: 0, column: 0),
             );
             continue;
           }
@@ -665,7 +664,7 @@ final class _ScopedWidgetCollector {
           errorReporter(
             '$scope files must be named as follows: $placeholder.dart or '
             '$placeholder.<environment_name>.dart',
-            SourceLocation(path: file, line: 0, column: 0),
+            SourceLocation(uri: file, line: 0, column: 0),
           );
           continue;
       }

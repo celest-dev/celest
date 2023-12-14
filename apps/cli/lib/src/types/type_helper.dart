@@ -161,7 +161,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     final ref = codegen.TypeReference(
       (t) => t
         ..symbol = type.element.name
-        ..url = type.uri
+        ..url = type.uri.toString()
         ..types.addAll(typeArguments)
         ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
@@ -180,7 +180,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     return TypedefRecordType(
       // TODO(dnys1): How to handle no alias?
       symbol: type.alias!.element.name,
-      url: type.alias!.element.sourceLocation.path,
+      url: type.alias!.element.sourceLocation.uri.toString(),
       recordType: codegen.RecordType(
         (r) => r
           ..positionalFieldTypes.addAll([

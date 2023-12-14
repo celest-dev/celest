@@ -80,7 +80,7 @@ final class EntrypointGenerator {
               ..body = Block((b) {
                 final functionReference = refer(
                   function.name,
-                  function.location.path,
+                  function.location.uri.toString(),
                 );
                 if (function.parameters
                     .any((param) => param.type.isFunctionContext)) {

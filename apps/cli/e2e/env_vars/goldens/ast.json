@@ -6,7 +6,7 @@
     "url": "project:project.dart"
   },
   "location": {
-    "path": "project:project.dart",
+    "uri": "project:project.dart",
     "line": 3,
     "column": 6
   },
@@ -21,7 +21,7 @@
         "dartName": "myEnv",
         "envName": "MY_ENV",
         "location": {
-          "path": "project:config/env.dart",
+          "uri": "project:config/env.dart",
           "line": 3,
           "column": 26
         }
@@ -36,7 +36,7 @@
           "dartName": "myEnv",
           "envName": "MY_DEV_ENV",
           "location": {
-            "path": "project:config/env.dev.dart",
+            "uri": "project:config/env.dev.dart",
             "line": 3,
             "column": 26
           }
@@ -45,7 +45,7 @@
           "dartName": "devEnv",
           "envName": "DEV_ENV",
           "location": {
-            "path": "project:config/env.dev.dart",
+            "uri": "project:config/env.dev.dart",
             "line": 4,
             "column": 26
           }

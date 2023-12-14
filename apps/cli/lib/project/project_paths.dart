@@ -1,4 +1,5 @@
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/type_checker.dart';
 
 final class ProjectPaths {
   ProjectPaths(
@@ -25,12 +26,16 @@ final class ProjectPaths {
 
   Uri normalizeUri(Uri uri) {
     return switch (uri.scheme) {
-      'file' => _fileToAssetUri(uri),
-      _ => normalizeUri(uri),
+      'file' || '' => _fileToAssetUri(uri),
+      'dart' => normalizeDartUrl(uri),
+      'package' => uri,
+      _ => uri,
     };
   }
 
   Uri _fileToAssetUri(Uri uri) {
+    // Store relative location in posix format for convenience and easier
+    // cross-platform testing.
     final relativePath = p.relative(
       p.fromUri(uri),
       from: projectRoot,

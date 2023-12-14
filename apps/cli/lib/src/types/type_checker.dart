@@ -265,7 +265,7 @@ String urlOfElement(Element element) => switch (element.kind) {
 Uri normalizeUrl(Uri url) {
   switch (url.scheme) {
     case 'dart':
-      return _normalizeDartUrl(url);
+      return normalizeDartUrl(url);
     case 'package':
       return _packageToAssetUrl(url);
     case 'file':
@@ -281,7 +281,7 @@ Uri normalizeUrl(Uri url) {
 ///
 /// This isn't a user-knowable path, so we strip out extra path segments
 /// and only expose `dart:core`.
-Uri _normalizeDartUrl(Uri url) => url.pathSegments.isNotEmpty
+Uri normalizeDartUrl(Uri url) => url.pathSegments.isNotEmpty
     ? url.replace(pathSegments: url.pathSegments.take(1))
     : url;
 

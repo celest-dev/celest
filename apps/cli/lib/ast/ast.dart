@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:celest_cli/ast/serializers.dart';
 import 'package:celest_cli/ast/visitor.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 
 part 'ast.g.dart';
@@ -331,10 +332,24 @@ abstract class EnvironmentVariable
 abstract class SourceLocation
     implements Built<SourceLocation, SourceLocationBuilder> {
   factory SourceLocation({
-    required String path,
+    required Object /* String | Uri */ uri,
     required int line,
     required int column,
-  }) = _$SourceLocation._;
+  }) {
+    return _$SourceLocation._(
+      uri: switch (uri) {
+        String() => projectPaths.normalizeUri(p.toUri(uri)),
+        Uri() => projectPaths.normalizeUri(uri),
+        _ => throw ArgumentError.value(
+            uri,
+            'uri',
+            'Must be a String or Uri.',
+          ),
+      },
+      line: line,
+      column: column,
+    );
+  }
 
   factory SourceLocation.build([void Function(SourceLocationBuilder) updates]) =
       _$SourceLocation;
@@ -345,7 +360,7 @@ abstract class SourceLocation
   SourceLocation._();
 
   /// The path to the source file, relative to the project root.
-  String get path;
+  Uri get uri;
   int get line;
   int get column;
 

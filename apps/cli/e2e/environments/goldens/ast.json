@@ -6,7 +6,7 @@
     "url": "project:project.dart"
   },
   "location": {
-    "path": "project:project.dart",
+    "uri": "project:project.dart",
     "line": 3,
     "column": 6
   },
@@ -48,7 +48,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/override.dart",
+              "uri": "project:apis/override.dart",
               "line": 1,
               "column": 15
             }
@@ -92,7 +92,7 @@
               },
               "metadata": [],
               "location": {
-                "path": "project:apis/override.dev.dart",
+                "uri": "project:apis/override.dev.dart",
                 "line": 1,
                 "column": 15
               }
@@ -136,7 +136,7 @@
               },
               "metadata": [],
               "location": {
-                "path": "project:apis/override.staging.dart",
+                "uri": "project:apis/override.staging.dart",
                 "line": 1,
                 "column": 15
               }

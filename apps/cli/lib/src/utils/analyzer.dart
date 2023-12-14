@@ -116,15 +116,7 @@ extension ElementSourceLocation on Element {
     final uri = source!.uri;
     final (lineNo, column) = source!.offsetToLineCol(nameOffset);
     return ast.SourceLocation(
-      // Store relative location in posix format for convenience and easier
-      // cross-platform testing.
-      path: Uri(
-        scheme: 'project',
-        path: p.relative(
-          p.fromUri(uri),
-          from: projectPaths.projectRoot,
-        ),
-      ).toString(),
+      uri: uri,
       line: lineNo,
       column: column,
     );
@@ -137,15 +129,7 @@ extension ElementAnnotationSourceLocation on ElementAnnotation {
     final offset = impl.annotationAst.offset;
     final (lineNo, column) = source.offsetToLineCol(offset);
     return ast.SourceLocation(
-      // Store relative location in posix format for convenience and easier
-      // cross-platform testing.
-      path: Uri(
-        scheme: 'project',
-        path: p.relative(
-          p.fromUri(source.uri),
-          from: projectPaths.projectRoot,
-        ),
-      ).toString(),
+      uri: source.uri,
       line: lineNo,
       column: column,
     );
@@ -173,23 +157,12 @@ extension SourceLineCol on Source {
 }
 
 extension DartTypeUri on DartType {
-  String? get uri {
-    final library = element?.library;
-    final sourceUri = library?.source.uri;
-    return switch (this) {
-      _ when library == null || sourceUri == null => null,
-      _ when library.isDartCore => 'dart:core',
-      _ when sourceUri.scheme == 'file' || sourceUri.scheme == '' => Uri(
-          scheme: 'project',
-          // Store relative location in posix format for convenience and easier
-          // cross-platform testing.
-          path: p.relative(
-            p.fromUri(sourceUri),
-            from: projectPaths.projectRoot,
-          ),
-        ).toString(),
-      _ => sourceUri.toString(),
-    };
+  Uri? get uri {
+    final sourceUri = element?.library?.source.uri;
+    if (sourceUri == null) {
+      return null;
+    }
+    return projectPaths.normalizeUri(sourceUri);
   }
 }
 

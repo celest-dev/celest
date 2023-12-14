@@ -6,7 +6,7 @@
     "url": "project:project.dart"
   },
   "location": {
-    "path": "project:project.dart",
+    "uri": "project:project.dart",
     "line": 3,
     "column": 6
   },
@@ -22,7 +22,7 @@
           {
             "$": "ApiAuthenticated",
             "location": {
-              "path": "project:apis/anonymous_function.dart",
+              "uri": "project:apis/anonymous_function.dart",
               "line": 1,
               "column": 0
             }
@@ -49,14 +49,14 @@
               {
                 "$": "ApiAnonymous",
                 "location": {
-                  "path": "project:apis/anonymous_function.dart",
+                  "uri": "project:apis/anonymous_function.dart",
                   "line": 6,
                   "column": 0
                 }
               }
             ],
             "location": {
-              "path": "project:apis/anonymous_function.dart",
+              "uri": "project:apis/anonymous_function.dart",
               "line": 7,
               "column": 7
             }
@@ -79,7 +79,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/anonymous_function.dart",
+              "uri": "project:apis/anonymous_function.dart",
               "line": 8,
               "column": 7
             }
@@ -106,7 +106,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 9,
                   "column": 33
                 }
@@ -126,7 +126,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 9,
               "column": 11
             }
@@ -146,7 +146,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 10,
                   "column": 46
                 }
@@ -174,7 +174,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 10,
               "column": 19
             }
@@ -194,7 +194,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 12,
                   "column": 18
                 }
@@ -214,7 +214,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 12,
               "column": 6
             }
@@ -234,7 +234,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 13,
                   "column": 31
                 }
@@ -262,7 +262,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 13,
               "column": 14
             }
@@ -282,7 +282,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 45,
                   "column": 36
                 }
@@ -302,7 +302,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 45,
               "column": 12
             }
@@ -322,7 +322,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 46,
                   "column": 49
                 }
@@ -350,7 +350,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 46,
               "column": 20
             }
@@ -370,7 +370,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 48,
                   "column": 21
                 }
@@ -390,7 +390,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 48,
               "column": 7
             }
@@ -410,7 +410,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 49,
                   "column": 34
                 }
@@ -438,7 +438,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 49,
               "column": 15
             }
@@ -458,7 +458,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 51,
                   "column": 31
                 }
@@ -478,7 +478,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 51,
               "column": 8
             }
@@ -498,7 +498,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 52,
                   "column": 44
                 }
@@ -526,7 +526,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 52,
               "column": 16
             }
@@ -546,7 +546,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 54,
                   "column": 36
                 }
@@ -566,7 +566,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 54,
               "column": 12
             }
@@ -586,7 +586,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 55,
                   "column": 49
                 }
@@ -614,7 +614,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 55,
               "column": 20
             }
@@ -634,7 +634,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 57,
                   "column": 36
                 }
@@ -654,7 +654,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 57,
               "column": 12
             }
@@ -674,7 +674,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 58,
                   "column": 49
                 }
@@ -702,7 +702,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 58,
               "column": 20
             }
@@ -722,7 +722,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 73,
                   "column": 42
                 }
@@ -742,7 +742,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 73,
               "column": 14
             }
@@ -762,7 +762,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 74,
                   "column": 55
                 }
@@ -790,7 +790,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 74,
               "column": 22
             }
@@ -810,7 +810,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 86,
                   "column": 36
                 }
@@ -830,7 +830,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 86,
               "column": 12
             }
@@ -850,7 +850,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/serialization.dart",
+                  "uri": "project:apis/serialization.dart",
                   "line": 87,
                   "column": 49
                 }
@@ -878,7 +878,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/serialization.dart",
+              "uri": "project:apis/serialization.dart",
               "line": 87,
               "column": 20
             }
@@ -905,7 +905,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 8,
                   "column": 9
                 }
@@ -921,7 +921,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 9,
                   "column": 6
                 }
@@ -937,7 +937,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 10,
                   "column": 9
                 }
@@ -953,7 +953,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 11,
                   "column": 7
                 }
@@ -969,7 +969,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 12,
                   "column": 9
                 }
@@ -985,7 +985,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 13,
                   "column": 7
                 }
@@ -1001,7 +1001,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 14,
                   "column": 9
                 }
@@ -1017,7 +1017,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 15,
                   "column": 11
                 }
@@ -1033,7 +1033,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 16,
                   "column": 11
                 }
@@ -1049,7 +1049,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 17,
                   "column": 9
                 }
@@ -1065,7 +1065,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 18,
                   "column": 13
                 }
@@ -1081,7 +1081,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 19,
                   "column": 6
                 }
@@ -1097,7 +1097,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 20,
                   "column": 10
                 }
@@ -1113,7 +1113,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 21,
                   "column": 12
                 }
@@ -1137,7 +1137,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 22,
                   "column": 19
                 }
@@ -1161,7 +1161,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 23,
                   "column": 22
                 }
@@ -1185,7 +1185,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 24,
                   "column": 15
                 }
@@ -1209,7 +1209,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 25,
                   "column": 12
                 }
@@ -1233,7 +1233,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 26,
                   "column": 15
                 }
@@ -1257,7 +1257,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 27,
                   "column": 13
                 }
@@ -1281,7 +1281,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 28,
                   "column": 15
                 }
@@ -1305,7 +1305,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 29,
                   "column": 13
                 }
@@ -1329,7 +1329,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 30,
                   "column": 15
                 }
@@ -1353,7 +1353,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 31,
                   "column": 17
                 }
@@ -1377,7 +1377,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 32,
                   "column": 17
                 }
@@ -1401,7 +1401,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 33,
                   "column": 15
                 }
@@ -1425,7 +1425,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 34,
                   "column": 19
                 }
@@ -1449,7 +1449,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 35,
                   "column": 12
                 }
@@ -1473,7 +1473,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 36,
                   "column": 16
                 }
@@ -1497,7 +1497,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 37,
                   "column": 18
                 }
@@ -1527,7 +1527,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 38,
                   "column": 22
                 }
@@ -1557,7 +1557,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 39,
                   "column": 19
                 }
@@ -1587,7 +1587,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 40,
                   "column": 22
                 }
@@ -1617,7 +1617,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 41,
                   "column": 20
                 }
@@ -1647,7 +1647,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 42,
                   "column": 22
                 }
@@ -1677,7 +1677,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 43,
                   "column": 20
                 }
@@ -1707,7 +1707,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 44,
                   "column": 22
                 }
@@ -1737,7 +1737,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 45,
                   "column": 24
                 }
@@ -1767,7 +1767,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 46,
                   "column": 24
                 }
@@ -1797,7 +1797,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 47,
                   "column": 22
                 }
@@ -1827,7 +1827,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 48,
                   "column": 26
                 }
@@ -1857,7 +1857,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 49,
                   "column": 19
                 }
@@ -1887,7 +1887,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 50,
                   "column": 23
                 }
@@ -1917,7 +1917,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 51,
                   "column": 25
                 }
@@ -1941,7 +1941,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameter_types.dart",
+              "uri": "project:apis/parameter_types.dart",
               "line": 7,
               "column": 13
             }
@@ -1961,7 +1961,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 55,
                   "column": 10
                 }
@@ -1977,7 +1977,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 56,
                   "column": 7
                 }
@@ -1993,7 +1993,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 57,
                   "column": 10
                 }
@@ -2009,7 +2009,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 58,
                   "column": 8
                 }
@@ -2025,7 +2025,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 59,
                   "column": 10
                 }
@@ -2041,7 +2041,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 60,
                   "column": 7
                 }
@@ -2057,7 +2057,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 61,
                   "column": 10
                 }
@@ -2073,7 +2073,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 62,
                   "column": 12
                 }
@@ -2089,7 +2089,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 63,
                   "column": 12
                 }
@@ -2105,7 +2105,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 64,
                   "column": 10
                 }
@@ -2121,7 +2121,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 65,
                   "column": 14
                 }
@@ -2137,7 +2137,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 66,
                   "column": 7
                 }
@@ -2153,7 +2153,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 67,
                   "column": 11
                 }
@@ -2169,7 +2169,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 68,
                   "column": 13
                 }
@@ -2193,7 +2193,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 69,
                   "column": 20
                 }
@@ -2217,7 +2217,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 70,
                   "column": 23
                 }
@@ -2241,7 +2241,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 71,
                   "column": 16
                 }
@@ -2265,7 +2265,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 72,
                   "column": 13
                 }
@@ -2289,7 +2289,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 73,
                   "column": 16
                 }
@@ -2313,7 +2313,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 74,
                   "column": 14
                 }
@@ -2337,7 +2337,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 75,
                   "column": 16
                 }
@@ -2361,7 +2361,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 76,
                   "column": 14
                 }
@@ -2385,7 +2385,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 77,
                   "column": 16
                 }
@@ -2409,7 +2409,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 78,
                   "column": 18
                 }
@@ -2433,7 +2433,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 79,
                   "column": 18
                 }
@@ -2457,7 +2457,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 80,
                   "column": 16
                 }
@@ -2481,7 +2481,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 81,
                   "column": 20
                 }
@@ -2505,7 +2505,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 82,
                   "column": 13
                 }
@@ -2529,7 +2529,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 83,
                   "column": 17
                 }
@@ -2553,7 +2553,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 84,
                   "column": 19
                 }
@@ -2583,7 +2583,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 85,
                   "column": 23
                 }
@@ -2613,7 +2613,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 86,
                   "column": 20
                 }
@@ -2643,7 +2643,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 87,
                   "column": 23
                 }
@@ -2673,7 +2673,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 88,
                   "column": 21
                 }
@@ -2703,7 +2703,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 89,
                   "column": 23
                 }
@@ -2733,7 +2733,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 90,
                   "column": 21
                 }
@@ -2763,7 +2763,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 91,
                   "column": 23
                 }
@@ -2793,7 +2793,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 92,
                   "column": 25
                 }
@@ -2823,7 +2823,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 93,
                   "column": 25
                 }
@@ -2853,7 +2853,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 94,
                   "column": 23
                 }
@@ -2883,7 +2883,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 95,
                   "column": 27
                 }
@@ -2913,7 +2913,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 96,
                   "column": 20
                 }
@@ -2943,7 +2943,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 97,
                   "column": 24
                 }
@@ -2973,7 +2973,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 98,
                   "column": 26
                 }
@@ -2997,7 +2997,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameter_types.dart",
+              "uri": "project:apis/parameter_types.dart",
               "line": 54,
               "column": 13
             }
@@ -3020,7 +3020,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 520,
                   "column": 15
                 }
@@ -3704,7 +3704,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 521,
                   "column": 16
                 }
@@ -3720,7 +3720,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 522,
                   "column": 14
                 }
@@ -3736,7 +3736,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 523,
                   "column": 15
                 }
@@ -3755,7 +3755,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 524,
                   "column": 16
                 }
@@ -4439,7 +4439,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 525,
                   "column": 17
                 }
@@ -4455,7 +4455,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 526,
                   "column": 15
                 }
@@ -4471,7 +4471,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 527,
                   "column": 16
                 }
@@ -4498,7 +4498,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 528,
                   "column": 25
                 }
@@ -5190,7 +5190,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 529,
                   "column": 26
                 }
@@ -5214,7 +5214,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 530,
                   "column": 24
                 }
@@ -5238,7 +5238,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 531,
                   "column": 25
                 }
@@ -5265,7 +5265,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 532,
                   "column": 26
                 }
@@ -5957,7 +5957,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 533,
                   "column": 27
                 }
@@ -5981,7 +5981,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 534,
                   "column": 25
                 }
@@ -6005,7 +6005,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 535,
                   "column": 26
                 }
@@ -6032,7 +6032,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 536,
                   "column": 26
                 }
@@ -6724,7 +6724,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 537,
                   "column": 27
                 }
@@ -6748,7 +6748,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 538,
                   "column": 25
                 }
@@ -6772,7 +6772,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 539,
                   "column": 26
                 }
@@ -6799,7 +6799,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 540,
                   "column": 21
                 }
@@ -7491,7 +7491,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 541,
                   "column": 22
                 }
@@ -7515,7 +7515,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 542,
                   "column": 20
                 }
@@ -7539,7 +7539,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 543,
                   "column": 21
                 }
@@ -7566,7 +7566,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 544,
                   "column": 22
                 }
@@ -8258,7 +8258,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 545,
                   "column": 23
                 }
@@ -8282,7 +8282,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 546,
                   "column": 21
                 }
@@ -8306,7 +8306,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 547,
                   "column": 22
                 }
@@ -8333,7 +8333,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 548,
                   "column": 22
                 }
@@ -9025,7 +9025,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 549,
                   "column": 23
                 }
@@ -9049,7 +9049,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 550,
                   "column": 21
                 }
@@ -9073,7 +9073,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 551,
                   "column": 22
                 }
@@ -9106,7 +9106,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 552,
                   "column": 28
                 }
@@ -9804,7 +9804,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 553,
                   "column": 29
                 }
@@ -9834,7 +9834,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 554,
                   "column": 27
                 }
@@ -9864,7 +9864,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 555,
                   "column": 28
                 }
@@ -9897,7 +9897,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 556,
                   "column": 29
                 }
@@ -10595,7 +10595,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 557,
                   "column": 30
                 }
@@ -10625,7 +10625,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 558,
                   "column": 28
                 }
@@ -10655,7 +10655,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 559,
                   "column": 29
                 }
@@ -10688,7 +10688,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 560,
                   "column": 29
                 }
@@ -11386,7 +11386,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 561,
                   "column": 30
                 }
@@ -11416,7 +11416,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 562,
                   "column": 28
                 }
@@ -11446,7 +11446,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 563,
                   "column": 29
                 }
@@ -11479,7 +11479,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 564,
                   "column": 30
                 }
@@ -12177,7 +12177,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 565,
                   "column": 31
                 }
@@ -12207,7 +12207,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 566,
                   "column": 29
                 }
@@ -12237,7 +12237,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameter_types.dart",
+                  "uri": "project:apis/parameter_types.dart",
                   "line": 567,
                   "column": 30
                 }
@@ -12261,7 +12261,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameter_types.dart",
+              "uri": "project:apis/parameter_types.dart",
               "line": 519,
               "column": 13
             }
@@ -12293,14 +12293,14 @@
               {
                 "$": "ApiAuthenticated",
                 "location": {
-                  "path": "project:apis/authenticated_function.dart",
+                  "uri": "project:apis/authenticated_function.dart",
                   "line": 3,
                   "column": 0
                 }
               }
             ],
             "location": {
-              "path": "project:apis/authenticated_function.dart",
+              "uri": "project:apis/authenticated_function.dart",
               "line": 4,
               "column": 7
             }
@@ -12323,7 +12323,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/authenticated_function.dart",
+              "uri": "project:apis/authenticated_function.dart",
               "line": 5,
               "column": 7
             }
@@ -12337,7 +12337,7 @@
           {
             "$": "ApiAnonymous",
             "location": {
-              "path": "project:apis/api_auth_constant_variables.dart",
+              "uri": "project:apis/api_auth_constant_variables.dart",
               "line": 1,
               "column": 0
             }
@@ -12364,14 +12364,14 @@
               {
                 "$": "ApiAuthenticated",
                 "location": {
-                  "path": "project:apis/api_auth_constant_variables.dart",
+                  "uri": "project:apis/api_auth_constant_variables.dart",
                   "line": 10,
                   "column": 0
                 }
               }
             ],
             "location": {
-              "path": "project:apis/api_auth_constant_variables.dart",
+              "uri": "project:apis/api_auth_constant_variables.dart",
               "line": 11,
               "column": 7
             }
@@ -12394,7 +12394,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/api_auth_constant_variables.dart",
+              "uri": "project:apis/api_auth_constant_variables.dart",
               "line": 12,
               "column": 7
             }
@@ -12421,7 +12421,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 11,
                   "column": 45
                 }
@@ -12445,7 +12445,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 11,
               "column": 13
             }
@@ -12465,7 +12465,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 13,
                   "column": 49
                 }
@@ -12493,7 +12493,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 13,
               "column": 15
             }
@@ -12513,7 +12513,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 17,
                   "column": 43
                 }
@@ -12541,7 +12541,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 17,
               "column": 12
             }
@@ -12561,7 +12561,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 21,
                   "column": 49
                 }
@@ -12589,7 +12589,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 21,
               "column": 15
             }
@@ -12609,7 +12609,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 25,
                   "column": 45
                 }
@@ -12637,7 +12637,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 25,
               "column": 13
             }
@@ -12657,7 +12657,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 29,
                   "column": 61
                 }
@@ -12701,7 +12701,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 29,
               "column": 25
             }
@@ -12721,7 +12721,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 33,
                   "column": 53
                 }
@@ -12765,7 +12765,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 33,
               "column": 21
             }
@@ -12785,7 +12785,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 37,
                   "column": 59
                 }
@@ -12841,7 +12841,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 37,
               "column": 28
             }
@@ -12861,7 +12861,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 41,
                   "column": 55
                 }
@@ -12895,7 +12895,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 41,
               "column": 21
             }
@@ -12915,7 +12915,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 45,
                   "column": 64
                 }
@@ -12949,7 +12949,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 45,
               "column": 22
             }
@@ -12969,7 +12969,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 49,
                   "column": 63
                 }
@@ -14333,7 +14333,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 49,
               "column": 22
             }
@@ -14353,7 +14353,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 113,
                   "column": 18
                 }
@@ -15717,7 +15717,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 112,
               "column": 23
             }
@@ -15737,7 +15737,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 118,
                   "column": 61
                 }
@@ -15765,7 +15765,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 118,
               "column": 21
             }
@@ -15785,7 +15785,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 181,
                   "column": 62
                 }
@@ -15813,7 +15813,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 181,
               "column": 21
             }
@@ -15833,7 +15833,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 185,
                   "column": 49
                 }
@@ -15857,7 +15857,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 185,
               "column": 15
             }
@@ -15877,7 +15877,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 187,
                   "column": 53
                 }
@@ -15905,7 +15905,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 187,
               "column": 17
             }
@@ -15925,7 +15925,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 191,
                   "column": 47
                 }
@@ -15953,7 +15953,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 191,
               "column": 14
             }
@@ -15973,7 +15973,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 195,
                   "column": 53
                 }
@@ -16001,7 +16001,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 195,
               "column": 17
             }
@@ -16021,7 +16021,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 199,
                   "column": 49
                 }
@@ -16049,7 +16049,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 199,
               "column": 15
             }
@@ -16069,7 +16069,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 204,
                   "column": 20
                 }
@@ -16113,7 +16113,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 203,
               "column": 27
             }
@@ -16133,7 +16133,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 208,
                   "column": 57
                 }
@@ -16177,7 +16177,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 208,
               "column": 23
             }
@@ -16197,7 +16197,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 212,
                   "column": 63
                 }
@@ -16253,7 +16253,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 212,
               "column": 30
             }
@@ -16273,7 +16273,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 216,
                   "column": 59
                 }
@@ -16307,7 +16307,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 216,
               "column": 23
             }
@@ -16327,7 +16327,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 221,
                   "column": 18
                 }
@@ -17691,7 +17691,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 220,
               "column": 24
             }
@@ -17711,7 +17711,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 285,
                   "column": 58
                 }
@@ -17735,7 +17735,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 285,
               "column": 16
             }
@@ -17755,7 +17755,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 289,
                   "column": 62
                 }
@@ -17783,7 +17783,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 289,
               "column": 18
             }
@@ -17803,7 +17803,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 293,
                   "column": 56
                 }
@@ -17831,7 +17831,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 293,
               "column": 15
             }
@@ -17851,7 +17851,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 297,
                   "column": 62
                 }
@@ -17879,7 +17879,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 297,
               "column": 18
             }
@@ -17899,7 +17899,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 301,
                   "column": 58
                 }
@@ -17927,7 +17927,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 301,
               "column": 16
             }
@@ -17947,7 +17947,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 306,
                   "column": 20
                 }
@@ -17991,7 +17991,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 305,
               "column": 28
             }
@@ -18011,7 +18011,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 310,
                   "column": 66
                 }
@@ -18055,7 +18055,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 310,
               "column": 24
             }
@@ -18075,7 +18075,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 315,
                   "column": 20
                 }
@@ -18131,7 +18131,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 314,
               "column": 31
             }
@@ -18151,7 +18151,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 319,
                   "column": 68
                 }
@@ -18185,7 +18185,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 319,
               "column": 24
             }
@@ -18205,7 +18205,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 324,
                   "column": 20
                 }
@@ -19569,7 +19569,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 323,
               "column": 25
             }
@@ -19589,7 +19589,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 329,
                   "column": 20
                 }
@@ -19617,7 +19617,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 328,
               "column": 23
             }
@@ -19637,7 +19637,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 334,
                   "column": 20
                 }
@@ -19665,7 +19665,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 333,
               "column": 24
             }
@@ -19685,7 +19685,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 338,
                   "column": 32
                 }
@@ -19701,7 +19701,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 338,
               "column": 5
             }
@@ -19721,7 +19721,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 340,
                   "column": 36
                 }
@@ -19741,7 +19741,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 340,
               "column": 7
             }
@@ -19761,7 +19761,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 344,
                   "column": 30
                 }
@@ -19781,7 +19781,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 344,
               "column": 4
             }
@@ -19801,7 +19801,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 348,
                   "column": 36
                 }
@@ -19821,7 +19821,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 348,
               "column": 7
             }
@@ -19841,7 +19841,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 352,
                   "column": 32
                 }
@@ -19861,7 +19861,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 352,
               "column": 5
             }
@@ -19881,7 +19881,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 356,
                   "column": 48
                 }
@@ -19917,7 +19917,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 356,
               "column": 17
             }
@@ -19937,7 +19937,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 360,
                   "column": 40
                 }
@@ -19973,7 +19973,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 360,
               "column": 13
             }
@@ -19993,7 +19993,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 364,
                   "column": 46
                 }
@@ -20041,7 +20041,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 364,
               "column": 20
             }
@@ -20061,7 +20061,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 368,
                   "column": 42
                 }
@@ -20087,7 +20087,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 368,
               "column": 13
             }
@@ -20107,7 +20107,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 372,
                   "column": 44
                 }
@@ -21463,7 +21463,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 372,
               "column": 14
             }
@@ -21483,7 +21483,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 435,
                   "column": 46
                 }
@@ -21503,7 +21503,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 435,
               "column": 12
             }
@@ -21523,7 +21523,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 439,
                   "column": 48
                 }
@@ -21543,7 +21543,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 439,
               "column": 13
             }
@@ -21563,7 +21563,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 502,
                   "column": 45
                 }
@@ -21583,7 +21583,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 502,
               "column": 8
             }
@@ -21603,7 +21603,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 506,
                   "column": 39
                 }
@@ -21623,7 +21623,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 506,
               "column": 5
             }
@@ -21643,7 +21643,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 510,
                   "column": 45
                 }
@@ -21663,7 +21663,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 510,
               "column": 8
             }
@@ -21683,7 +21683,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 514,
                   "column": 41
                 }
@@ -21703,7 +21703,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 514,
               "column": 6
             }
@@ -21723,7 +21723,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 518,
                   "column": 57
                 }
@@ -21759,7 +21759,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 518,
               "column": 18
             }
@@ -21779,7 +21779,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 522,
                   "column": 49
                 }
@@ -21815,7 +21815,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 522,
               "column": 14
             }
@@ -21835,7 +21835,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 526,
                   "column": 55
                 }
@@ -21883,7 +21883,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 526,
               "column": 21
             }
@@ -21903,7 +21903,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 530,
                   "column": 51
                 }
@@ -21929,7 +21929,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 530,
               "column": 14
             }
@@ -21949,7 +21949,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 534,
                   "column": 53
                 }
@@ -23305,7 +23305,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 534,
               "column": 15
             }
@@ -23325,7 +23325,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 538,
                   "column": 55
                 }
@@ -23345,7 +23345,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 538,
               "column": 13
             }
@@ -23365,7 +23365,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/return_types.dart",
+                  "uri": "project:apis/return_types.dart",
                   "line": 542,
                   "column": 57
                 }
@@ -23385,7 +23385,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/return_types.dart",
+              "uri": "project:apis/return_types.dart",
               "line": 542,
               "column": 14
             }
@@ -23405,7 +23405,7 @@
               "isNullable": false
             },
             "location": {
-              "path": "project:apis/middleware.dart",
+              "uri": "project:apis/middleware.dart",
               "line": 1,
               "column": 0
             }
@@ -23419,7 +23419,7 @@
               "isNullable": false
             },
             "location": {
-              "path": "project:apis/middleware.dart",
+              "uri": "project:apis/middleware.dart",
               "line": 2,
               "column": 0
             }
@@ -23441,7 +23441,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/middleware.dart",
+                  "uri": "project:apis/middleware.dart",
                   "line": 13,
                   "column": 40
                 }
@@ -23457,7 +23457,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/middleware.dart",
+                  "uri": "project:apis/middleware.dart",
                   "line": 13,
                   "column": 56
                 }
@@ -23493,7 +23493,7 @@
                   "isNullable": false
                 },
                 "location": {
-                  "path": "project:apis/middleware.dart",
+                  "uri": "project:apis/middleware.dart",
                   "line": 11,
                   "column": 0
                 }
@@ -23507,14 +23507,14 @@
                   "isNullable": false
                 },
                 "location": {
-                  "path": "project:apis/middleware.dart",
+                  "uri": "project:apis/middleware.dart",
                   "line": 12,
                   "column": 0
                 }
               }
             ],
             "location": {
-              "path": "project:apis/middleware.dart",
+              "uri": "project:apis/middleware.dart",
               "line": 13,
               "column": 15
             }
@@ -23528,7 +23528,7 @@
           {
             "$": "ApiAuthenticated",
             "location": {
-              "path": "project:apis/authenticated_api.dart",
+              "uri": "project:apis/authenticated_api.dart",
               "line": 1,
               "column": 0
             }
@@ -23553,7 +23553,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/authenticated_api.dart",
+              "uri": "project:apis/authenticated_api.dart",
               "line": 6,
               "column": 7
             }
@@ -23576,7 +23576,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/authenticated_api.dart",
+              "uri": "project:apis/authenticated_api.dart",
               "line": 7,
               "column": 7
             }
@@ -23590,7 +23590,7 @@
           {
             "$": "ApiAnonymous",
             "location": {
-              "path": "project:apis/anonymous_api.dart",
+              "uri": "project:apis/anonymous_api.dart",
               "line": 1,
               "column": 0
             }
@@ -23617,14 +23617,14 @@
               {
                 "$": "ApiAuthenticated",
                 "location": {
-                  "path": "project:apis/anonymous_api.dart",
+                  "uri": "project:apis/anonymous_api.dart",
                   "line": 6,
                   "column": 0
                 }
               }
             ],
             "location": {
-              "path": "project:apis/anonymous_api.dart",
+              "uri": "project:apis/anonymous_api.dart",
               "line": 7,
               "column": 7
             }
@@ -23647,7 +23647,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/anonymous_api.dart",
+              "uri": "project:apis/anonymous_api.dart",
               "line": 8,
               "column": 7
             }
@@ -23674,7 +23674,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 4,
                   "column": 18
                 }
@@ -23690,7 +23690,7 @@
                 "required": false,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 5,
                   "column": 10
                 }
@@ -23706,7 +23706,7 @@
                 "required": false,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 6,
                   "column": 7
                 }
@@ -23730,7 +23730,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameters.dart",
+              "uri": "project:apis/parameters.dart",
               "line": 3,
               "column": 13
             }
@@ -23750,7 +23750,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 10,
                   "column": 18
                 }
@@ -23766,7 +23766,7 @@
                 "required": false,
                 "named": true,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 11,
                   "column": 10
                 }
@@ -23782,7 +23782,7 @@
                 "required": false,
                 "named": true,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 12,
                   "column": 7
                 }
@@ -23806,7 +23806,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameters.dart",
+              "uri": "project:apis/parameters.dart",
               "line": 9,
               "column": 13
             }
@@ -23826,7 +23826,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 16,
                   "column": 18
                 }
@@ -23842,7 +23842,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 17,
                   "column": 9
                 }
@@ -23858,7 +23858,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 18,
                   "column": 6
                 }
@@ -23882,7 +23882,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameters.dart",
+              "uri": "project:apis/parameters.dart",
               "line": 15,
               "column": 13
             }
@@ -23902,7 +23902,7 @@
                 "required": true,
                 "named": false,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 22,
                   "column": 18
                 }
@@ -23918,7 +23918,7 @@
                 "required": true,
                 "named": true,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 23,
                   "column": 18
                 }
@@ -23934,7 +23934,7 @@
                 "required": true,
                 "named": true,
                 "location": {
-                  "path": "project:apis/parameters.dart",
+                  "uri": "project:apis/parameters.dart",
                   "line": 24,
                   "column": 15
                 }
@@ -23958,7 +23958,7 @@
             },
             "metadata": [],
             "location": {
-              "path": "project:apis/parameters.dart",
+              "uri": "project:apis/parameters.dart",
               "line": 21,
               "column": 13
             }
