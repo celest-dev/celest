@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type_provider.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
@@ -30,6 +31,21 @@ final class TypeHelper {
 
   set typeSystem(TypeSystem typeSystem) {
     _typeSystem = typeSystem;
+  }
+
+  TypeProvider? _typeProvider;
+  TypeProvider get typeProvider {
+    if (_typeProvider == null) {
+      throw StateError(
+        'TypeHelper.typeProvider was accessed before it was initialized. '
+        'The type provider is only available after analysis.',
+      );
+    }
+    return _typeProvider!;
+  }
+
+  set typeProvider(TypeProvider typeProvider) {
+    _typeProvider = typeProvider;
   }
 
   final _dartTypeToReference = <DartType, codegen.Reference>{};
@@ -196,7 +212,8 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
         (b) => b
           ..symbol = alias.element.displayName
           ..url = alias.element.sourceLocation.uri.toString()
-          // TODO: Blocked by SDK
+          // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
+          // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,
           ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
       );
     }

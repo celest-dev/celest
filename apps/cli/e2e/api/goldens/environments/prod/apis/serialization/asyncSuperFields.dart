@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
@@ -13,7 +14,6 @@ class AsyncSuperFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      // ignore: unused_local_variable
       final response = await _i2.asyncSuperFields(
           _i3.Serializers.instance.deserializeWithType<_i2.SuperFields>(
         r'project:apis/serialization.dart#SuperFields',
@@ -53,7 +53,6 @@ final class SuperFieldsSerializer extends _i3.Serializer<_i2.SuperFields> {
 
   @override
   _i2.SuperFields deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.SuperFields((serialized[r'superField'] as String));
   }

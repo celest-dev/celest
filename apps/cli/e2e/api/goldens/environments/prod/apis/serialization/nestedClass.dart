@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
@@ -13,7 +14,6 @@ class NestedClassTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      // ignore: unused_local_variable
       final response = _i2.nestedClass(
           _i3.Serializers.instance.deserializeWithType<_i2.NestedClass>(
         r'project:apis/serialization.dart#NestedClass',
@@ -54,7 +54,6 @@ final class NestedClassSerializer extends _i3.Serializer<_i2.NestedClass> {
 
   @override
   _i2.NestedClass deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.NestedClass(
       _i3.Serializers.instance.deserializeWithType<_i2.Fields>(
@@ -93,7 +92,6 @@ final class FieldsSerializer extends _i3.Serializer<_i2.Fields> {
 
   @override
   _i2.Fields deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.Fields(
       (serialized[r'superField'] as String),

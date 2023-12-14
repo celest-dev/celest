@@ -15,6 +15,12 @@ final class CodeGenerator extends AstVisitor<void> {
     required this.typeHelper,
   }) : _projectPaths = projectPaths;
 
+  static const _ignoredRules = [
+    'type=lint',
+    'unused_local_variable',
+    'unnecessary_cast',
+  ];
+  static final _header = '// ignore_for_file: ${_ignoredRules.join(', ')}';
   static final _formatter = DartFormatter(
     fixes: StyleFix.all,
   );
@@ -36,7 +42,7 @@ final class CodeGenerator extends AstVisitor<void> {
   }) {
     final code = spec.accept(_emitter(forFile: forFile)).toString();
     try {
-      return _formatter.format(code);
+      return _formatter.format('$_header\n$code');
     } on Object {
       print(code);
       rethrow;

@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
@@ -16,7 +17,6 @@ class AsyncOrStructReturnTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final celestContext = _i2.FunctionContext();
-// ignore: unused_local_variable
       final response = await _i3.asyncOrStructReturn(celestContext);
       return _i4.Serializers.instance.serializeWithType<_i5.SimpleStruct>(
         r'project:apis/parameter_types.dart#SimpleStruct',
@@ -52,7 +52,6 @@ final class SimpleStructSerializer extends _i4.Serializer<_i5.SimpleStruct> {
 
   @override
   _i5.SimpleStruct deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return ();
   }

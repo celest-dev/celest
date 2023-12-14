@@ -804,6 +804,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "serialization.asyncFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "asyncFromAndToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "serialization.asyncMixedFields.prod",
       "cloudFunction": {
         "name": "asyncMixedFields",
@@ -828,9 +836,57 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNonMapFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapFromAndToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNonMapToJson.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncNonMapToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapToJsonWithDefaults",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "serialization.asyncNullableFields.prod",
       "cloudFunction": {
         "name": "asyncNullableFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncOnlyFromJson.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyFromJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncOnlyToJson.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.asyncOnlyToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyToJsonWithDefaults",
         "apiName": "serialization"
       }
     },
@@ -876,6 +932,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "serialization.fromAndToJson.prod",
+      "cloudFunction": {
+        "name": "fromAndToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "serialization.mixedFields.prod",
       "cloudFunction": {
         "name": "mixedFields",
@@ -900,9 +964,57 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "serialization.nonMapFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "nonMapFromAndToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.nonMapToJson.prod",
+      "cloudFunction": {
+        "name": "nonMapToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.nonMapToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "nonMapToJsonWithDefaults",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "serialization.nullableFields.prod",
       "cloudFunction": {
         "name": "nullableFields",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.onlyFromJson.prod",
+      "cloudFunction": {
+        "name": "onlyFromJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.onlyToJson.prod",
+      "cloudFunction": {
+        "name": "onlyToJson",
+        "apiName": "serialization"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "serialization.onlyToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "onlyToJsonWithDefaults",
         "apiName": "serialization"
       }
     },

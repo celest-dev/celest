@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
@@ -14,7 +15,6 @@ class AsyncOrIntReturnTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final celestContext = _i2.FunctionContext();
-// ignore: unused_local_variable
       final response = await _i3.asyncOrIntReturn(celestContext);
       return response;
     },

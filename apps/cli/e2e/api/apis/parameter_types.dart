@@ -49,6 +49,7 @@ Future<void> simple(
   Map<String, Uri> aMapOfUri,
   Map<String, UriData> aMapOfUriData,
   Map<String, Uint8List> aMapOfUint8List,
+  // TODO: Map<String, Object?> / Map<String, dynamic>
 ) async {}
 
 Future<void> simpleOptional(

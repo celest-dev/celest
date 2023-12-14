@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
@@ -12,7 +13,6 @@ class SayHelloTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      // ignore: unused_local_variable
       final response = _i2.sayHello();
       return response;
     },

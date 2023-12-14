@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 // ignore: implementation_imports
@@ -8,6 +7,7 @@ import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:collection/collection.dart';
 
 enum _TypePosition { parameter, return$ }
@@ -40,6 +40,8 @@ sealed class Verdict {
         ) =>
           VerdictNo([...reasonsThis, ...reasonsOther]),
       };
+
+  Verdict withSpec(SerializationSpec spec);
 }
 
 final class VerdictYes extends Verdict {
@@ -52,6 +54,7 @@ final class VerdictYes extends Verdict {
 
   final SerializationSpec? serializationSpec;
 
+  @override
   Verdict withSpec(SerializationSpec spec) =>
       Verdict.yes(serializationSpec: spec);
 
@@ -70,6 +73,9 @@ final class VerdictNo extends Verdict {
   final List<String> reasons;
 
   @override
+  Verdict withSpec(SerializationSpec spec) => this;
+
+  @override
   String toString() => reasons.join('; ');
 }
 
@@ -77,16 +83,22 @@ final class SerializationSpec {
   SerializationSpec({
     required this.uri,
     required this.type,
+    required this.wireType,
     required this.isNullable,
     required this.fields,
     required this.parameters,
+    required this.hasFromJson,
+    required this.hasToJson,
   });
 
   final Uri uri;
   final DartType type;
+  final DartType wireType;
   final bool isNullable;
   final List<FieldSpec> fields;
   final List<ParameterSpec> parameters;
+  final bool hasFromJson;
+  final bool hasToJson;
 }
 
 final class FieldSpec {
@@ -132,7 +144,11 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   // TODO(dnys1): Detect cycles
   const IsSerializable();
 
-  Verdict? _isSimpleJson(InterfaceType type) {
+  Verdict? _isSimpleJson(DartType type) {
+    if (type is! InterfaceType) {
+      // Cannot make a verdict.
+      return null;
+    }
     if (type.isDartCoreBool ||
         type.isDartCoreDouble ||
         type.isDartCoreInt ||
@@ -143,60 +159,59 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return const Verdict.yes();
     }
     if (type.isDartCoreEnum) {
-      return Verdict.no('Untyped enums are not supported');
-    }
-    if (type.isEnum) {
-      return const Verdict.yes();
+      return const VerdictNo(['Untyped enums are not supported']);
     }
     if (type.isDartCoreSet) {
-      return Verdict.no('Set types are not supported');
+      return const VerdictNo(['Set types are not supported']);
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
-      return type.typeArguments.single.accept(this);
+      return _isSimpleJson(type.typeArguments.single);
     }
     if (type.isDartCoreMap) {
       if (!type.typeArguments[0].isDartCoreString) {
-        return Verdict.no('Map keys must be strings');
+        return const VerdictNo(['Map keys must be strings']);
       }
-      return type.typeArguments[1].accept(this);
+      return switch (type.typeArguments[1]) {
+        DynamicType() => const Verdict.yes(),
+        final type => _isSimpleJson(type),
+      };
     }
+    // Cannot make a verdict.
     return null;
   }
 
   @override
-  Verdict visitDynamicType(DynamicType type) {
-    // Needed to support `Map<String, dynamic>`.
-    return const Verdict.yes();
-  }
+  Verdict visitDynamicType(DynamicType type) =>
+      const VerdictNo(['Dynamic values are not supported']);
 
   @override
   Verdict visitFunctionType(FunctionType type) =>
-      Verdict.no('Function types are not supported');
+      const VerdictNo(['Function types are not supported']);
 
   Verdict _customParameterSerializability(
     InterfaceType type,
     ConstructorElement fromJsonCtor,
+    DartType wireType,
   ) {
     final requiredParam = fromJsonCtor.parameters.singleOrNull;
-    if (requiredParam == null) {
+    if (requiredParam == null ||
+        !requiredParam.isPositional ||
+        requiredParam.isOptional) {
       return Verdict.no(
-        'No required parameter found for fromJson constructor of type: ${type.element.name}',
+        'The fromJson constructor of type ${type.element.name} must have '
+        'exactly one required, positional parameter.',
       );
     }
-    if (requiredParam.type
-        // TODO(dnys1): Use a type checker for Map<String, dynamic> instead.
-        case InterfaceType(
-          isDartCoreMap: true,
-          typeArguments: [
-            InterfaceType(isDartCoreString: true),
-            DynamicType() || InterfaceType(isDartCoreObject: true),
-          ]
-        )) {
-      return const Verdict.yes();
+    if (!typeHelper.typeSystem.isAssignableTo(
+      wireType,
+      requiredParam.type,
+    )) {
+      return Verdict.no(
+        'The parameter type of ${type.element.name}\'s fromJson constructor '
+        'must be assignable to $wireType.',
+      );
     }
-    return Verdict.no(
-      'Invalid parameter type of ${type.element.name}\'s fromJson constructor: ${requiredParam.type}',
-    );
+    return const Verdict.yes();
   }
 
   Verdict _customReturnSerializability(
@@ -209,14 +224,13 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       );
     }
     final returnType = toJsonMethod.returnType;
-    if (returnType case final InterfaceType returnType) {
-      if (_isSimpleJson(returnType) case final verdict?) {
-        return verdict;
-      }
-    }
-    return Verdict.no(
-      'Invalid return type of ${type.element.name}\'s toJson method: $returnType',
-    );
+    return switch (_isSimpleJson(returnType)) {
+      VerdictYes() => const Verdict.yes(),
+      _ => Verdict.no(
+          'Invalid return type of ${type.element.name}\'s toJson method: '
+          '$returnType. Only simple JSON types are allowed.',
+        ),
+    };
   }
 
   @override
@@ -224,11 +238,47 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     if (_isSimpleJson(type) case final verdict?) {
       return verdict;
     }
+
+    if (type.isDartCoreIterable || type.isDartCoreList) {
+      return typeHelper.isSerializable(type.typeArguments.single);
+    }
+    if (type.isDartCoreMap) {
+      if (!type.typeArguments[0].isDartCoreString) {
+        return Verdict.no('Map keys must be strings');
+      }
+      return typeHelper.isSerializable(type.typeArguments[1]);
+    }
+
+    if (type.isEnum) {
+      return Verdict.yes(
+        serializationSpec: SerializationSpec(
+          uri: projectPaths
+              .normalizeUri(type.element.sourceLocation.uri)
+              .replace(fragment: type.element.name),
+          isNullable: typeHelper.typeSystem.isNullable(type),
+          type: type,
+          wireType: typeHelper.typeProvider.stringType,
+          fields: const [],
+          parameters: const [],
+          hasFromJson: true,
+          hasToJson: true,
+        ),
+      );
+    }
+
     // TODO(dnys1): Test
     // TODO(dnys1): Test for extends/implements these types
     // TODO(dnys1): Test for extends/implements these types w/ custom serde
     if (supportedDartSdkType.isExactlyType(type)) {
       return const Verdict.yes();
+    }
+
+    final element = type.element;
+    if (element is! ClassElement) {
+      return Verdict.no(
+        'The type "${element.displayName}" is not serializable since it is not '
+        'a class or does not have a fromJson/toJson method.',
+      );
     }
 
     // Check if non-SDK class is serializable.
@@ -237,91 +287,122 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     // requirements needed to generate implementations.
     var verdict = const Verdict.yes();
 
-    // Check fromJson-able
-    {
-      final fromJsonCtor = type.constructors.singleWhereOrNull(
-        (element) => element.name == 'fromJson',
+    // Check toJson
+    final toJsonMethod = type.getMethod('toJson');
+    final hasToJson = toJsonMethod != null;
+    if (hasToJson) {
+      verdict &= _customReturnSerializability(type, toJsonMethod);
+    } else {
+      verdict &= type.accept(
+        const _IsSerializableClass(_TypePosition.return$),
       );
-      final hasCustomSerialization = fromJsonCtor != null;
-      if (hasCustomSerialization) {
-        verdict &= _customParameterSerializability(type, fromJsonCtor);
-      } else {
-        verdict &= type.accept(
-          const _IsSerializableClass(_TypePosition.parameter),
-        );
-      }
     }
+    final wireType = toJsonMethod?.returnType ?? jsonMapType;
 
-    // Check toJson-able
-    {
-      final toJsonMethod = type.getMethod('toJson');
-      final hasCustomSerialization = toJsonMethod != null;
-      if (hasCustomSerialization) {
-        verdict &= _customReturnSerializability(type, toJsonMethod);
-      } else {
-        verdict &= type.accept(
-          const _IsSerializableClass(_TypePosition.return$),
-        );
-      }
+    // Check fromJson
+    final fromJsonCtor = type.constructors.singleWhereOrNull(
+      (element) => element.name == 'fromJson',
+    );
+    final hasFromJson = fromJsonCtor != null;
+    if (hasFromJson) {
+      verdict &= _customParameterSerializability(
+        type,
+        fromJsonCtor,
+        wireType,
+      );
+    } else {
+      verdict &= type.accept(
+        const _IsSerializableClass(_TypePosition.parameter),
+      );
     }
-    return verdict;
+    final wireConstructor = fromJsonCtor ??
+        type.constructors.singleWhere((ctor) => ctor.name.isEmpty);
+
+    final dartTypeUri = projectPaths
+        .normalizeUri(element.library.source.uri)
+        .replace(fragment: element.name);
+    return verdict.withSpec(
+      SerializationSpec(
+        uri: dartTypeUri,
+        isNullable: typeHelper.typeSystem.isNullable(type),
+        type: type,
+        wireType: wireType,
+        fields: [
+          for (final field in element.sortedFields)
+            FieldSpec(name: field.displayName, type: field.type),
+        ],
+        parameters: [
+          for (final parameter in wireConstructor.parameters)
+            ParameterSpec(
+              name: parameter.displayName,
+              type: parameter.type,
+              isPositional: parameter.isPositional,
+              isOptional: parameter.isOptional,
+              isNamed: parameter.isNamed,
+              defaultValueCode: parameter.defaultValueCode,
+            ),
+        ],
+        hasFromJson: hasFromJson,
+        hasToJson: hasToJson,
+      ),
+    );
   }
 
   @override
   Verdict visitInvalidType(InvalidType type) =>
-      Verdict.no('Invalid type: $type');
+      const VerdictNo(['Invalid type']);
 
   @override
   Verdict visitNeverType(NeverType type) =>
-      Verdict.no('Never types are not supported');
+      const VerdictNo(['Never types are not supported']);
 
   @override
   Verdict visitRecordType(RecordType type) {
     var verdict = const Verdict.yes();
     for (final field in type.positionalFields) {
-      verdict &= field.type.accept(this);
+      verdict &= typeHelper.isSerializable(field.type);
     }
     for (final field in type.namedFields) {
-      verdict &= field.type.accept(this);
+      verdict &= typeHelper.isSerializable(field.type);
     }
-    return switch (verdict) {
-      VerdictNo() => verdict,
-      VerdictYes() => verdict.withSpec(
-          SerializationSpec(
-            uri: projectPaths
-                .normalizeUri(type.alias!.element.sourceLocation.uri)
-                .replace(fragment: type.alias!.element.name),
-            isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
-            type: type,
-            fields: [
-              for (final (index, field) in type.positionalFields.indexed)
-                FieldSpec(name: '\$$index', type: field.type),
-              for (final field in type.namedFields)
-                FieldSpec(name: field.name, type: field.type),
-            ],
-            parameters: [
-              for (final (index, field) in type.positionalFields.indexed)
-                ParameterSpec(
-                  name: '\$$index',
-                  type: field.type,
-                  isPositional: true,
-                  isOptional: false,
-                  isNamed: false,
-                  defaultValueCode: null,
-                ),
-              for (final field in type.namedFields)
-                ParameterSpec(
-                  name: field.name,
-                  type: field.type,
-                  isPositional: false,
-                  isOptional: true,
-                  isNamed: true,
-                  defaultValueCode: null,
-                ),
-            ],
-          ),
-        )
-    };
+    return verdict.withSpec(
+      SerializationSpec(
+        uri: projectPaths
+            .normalizeUri(type.alias!.element.sourceLocation.uri)
+            .replace(fragment: type.alias!.element.name),
+        isNullable: typeHelper.typeSystem.isNullable(type),
+        type: type,
+        wireType: jsonMapType,
+        fields: [
+          for (final (index, field) in type.positionalFields.indexed)
+            FieldSpec(name: '\$$index', type: field.type),
+          for (final field in type.namedFields)
+            FieldSpec(name: field.name, type: field.type),
+        ],
+        parameters: [
+          for (final (index, field) in type.positionalFields.indexed)
+            ParameterSpec(
+              name: '\$$index',
+              type: field.type,
+              isPositional: true,
+              isOptional: false,
+              isNamed: false,
+              defaultValueCode: null,
+            ),
+          for (final field in type.namedFields)
+            ParameterSpec(
+              name: field.name,
+              type: field.type,
+              isPositional: false,
+              isOptional: true,
+              isNamed: true,
+              defaultValueCode: null,
+            ),
+        ],
+        hasFromJson: false,
+        hasToJson: false,
+      ),
+    );
   }
 
   @override
@@ -342,12 +423,11 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   final _TypePosition position;
 
   @override
-  Verdict visitDynamicType(DynamicType type) =>
-      Verdict.no('Dynamic types are not supported');
+  Verdict visitDynamicType(DynamicType type) => unreachable('Not a class type');
 
   @override
   Verdict visitFunctionType(FunctionType type) =>
-      Verdict.no('Function types are not supported');
+      unreachable('Not a class type');
 
   @override
   Verdict visitInterfaceType(InterfaceType type) {
@@ -429,57 +509,24 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     if (position == _TypePosition.parameter) {
       verdict &= constructorVerdict;
     }
-    final dartTypeUri = projectPaths
-        .normalizeUri(element.library.source.uri)
-        .replace(fragment: element.name);
-    return switch (verdict & fieldsVerdict & constructorVerdict) {
-      VerdictNo() => verdict,
-      VerdictYes() => (verdict as VerdictYes).withSpec(
-          SerializationSpec(
-            uri: dartTypeUri,
-            isNullable: type.nullabilitySuffix != NullabilitySuffix.none,
-            type: type,
-            fields: [
-              for (final field in fields)
-                FieldSpec(name: field.displayName, type: field.type),
-            ],
-            parameters: [
-              for (final parameter in unnamedConstructor!.parameters)
-                ParameterSpec(
-                  name: parameter.displayName,
-                  type: parameter.type,
-                  isPositional: parameter.isPositional,
-                  isOptional: parameter.isOptional,
-                  isNamed: parameter.isNamed,
-                  defaultValueCode: parameter.defaultValueCode,
-                ),
-            ],
-          ),
-        ),
-    };
+    return verdict;
   }
 
   @override
-  Verdict visitInvalidType(InvalidType type) =>
-      Verdict.no('Invalid type: $type');
+  Verdict visitInvalidType(InvalidType type) => unreachable('Not a class type');
 
   @override
-  Verdict visitNeverType(NeverType type) =>
-      Verdict.no('Never types are not supported');
+  Verdict visitNeverType(NeverType type) => unreachable('Not a class type');
 
   @override
-  Verdict visitRecordType(RecordType type) =>
-      type.accept(const IsSerializable());
+  Verdict visitRecordType(RecordType type) => unreachable('Not a class type');
 
   @override
-  Verdict visitTypeParameterType(TypeParameterType type) {
-    // TODO(dnys1): Generic tests and support?
-    return Verdict.no('Generic types are not supported');
-  }
+  Verdict visitTypeParameterType(TypeParameterType type) =>
+      unreachable('Not a class type');
 
   @override
-  Verdict visitVoidType(VoidType type) =>
-      Verdict.no('Void types are not supported');
+  Verdict visitVoidType(VoidType type) => unreachable('Not a class type');
 }
 
 // Below is copied from `package:json_serializable`.

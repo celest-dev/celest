@@ -254,6 +254,9 @@ void sayHello({
   required List<void> listOfVoid,
   required Iterable<void> iterableOfVoid,
   required Set<String> set,
+  required dynamic dyn,
+  required List<dynamic> listOfDyn,
+  required Iterable<dynamic> iterableOfDyn,
 }) {}
 ''',
         },
@@ -274,6 +277,9 @@ void sayHello({
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
+          'Dynamic values are not supported', // dynamic
+          'Dynamic values are not supported', // List<dynamic>
+          'Dynamic values are not supported', // Iterable<dynamic>
         ],
       );
 
@@ -298,6 +304,9 @@ typedef ReturnTypes = ({
   List<void> listOfVoid,
   Iterable<void> iterableOfVoid,
   Set<String> set,
+  dynamic dyn,
+  List<dynamic> listOfDyn,
+  Iterable<dynamic> iterableOfDyn,
 });
 
 ReturnTypes sayHello() {}
@@ -320,6 +329,9 @@ ReturnTypes sayHello() {}
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
+          'Dynamic values are not supported', // dynamic
+          'Dynamic values are not supported', // List<dynamic>
+          'Dynamic values are not supported', // Iterable<dynamic>
         ],
       );
 
@@ -406,6 +418,53 @@ OnlyFromJson sayHello() => OnlyFromJson();
               'Private field "_field" is not supported in a class used as a '
               'return type. Consider defining custom fromJson/toJson methods '
               'or making the field public.',
+        ],
+      );
+
+      testErrors(
+        name: 'non_map_from_json',
+        apis: {
+          'greeting.dart': '''
+class NonMapFromJson {
+  NonMapFromJson.fromJson(this.field);
+
+  final String field;
+}
+
+NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
+''',
+        },
+        errors: [
+          'The type of a parameter must be serializable as JSON. The parameter '
+              'type of NonMapFromJson\'s fromJson constructor must be '
+              'assignable to Map<String, Object?>.',
+          'The return type of a function must be serializable as JSON. The '
+              'parameter type of NonMapFromJson\'s fromJson constructor must '
+              'be assignable to Map<String, Object?>.',
+        ],
+      );
+
+      testErrors(
+        name: 'from_json_optional_parameter',
+        apis: {
+          'greeting.dart': '''
+class FromJson {
+  FromJson.fromJson([Map<String, Object?> json]): 
+    field = json?['field'] as String? ?? 'default';
+
+  final String field;
+}
+
+FromJson fromJson(FromJson value) => value;
+''',
+        },
+        errors: [
+          'The type of a parameter must be serializable as JSON. The fromJson '
+              'constructor of type FromJson must have exactly one required, '
+              'positional parameter.',
+          'The return type of a function must be serializable as JSON. The '
+              'fromJson constructor of type FromJson must have exactly one '
+              'required, positional parameter.',
         ],
       );
 

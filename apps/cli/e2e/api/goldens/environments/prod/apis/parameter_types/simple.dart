@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
 import 'dart:typed_data' as _i4;
@@ -19,7 +20,10 @@ class SimpleTarget extends _i1.FunctionTarget {
         (request[r'anInt'] as int),
         (request[r'aDouble'] as double),
         (request[r'aBool'] as bool),
-        _i2.MyEnum.values.byName((request[r'anEnum'] as String)),
+        _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+          r'project:apis/parameter_types.dart#MyEnum',
+          request[r'anEnum'],
+        ),
         (request[r'aNull'] as Null),
         _i3.Serializers.instance.deserializeWithType<BigInt>(
           'dart:core#BigInt',
@@ -76,7 +80,11 @@ class SimpleTarget extends _i1.FunctionTarget {
             .map((el) => (el as bool))
             .toList(),
         (request[r'aListOfEnum'] as Iterable<Object?>)
-            .map((el) => _i2.MyEnum.values.byName((el as String)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+                  r'project:apis/parameter_types.dart#MyEnum',
+                  el,
+                ))
             .toList(),
         (request[r'aListOfNull'] as Iterable<Object?>)
             .map((el) => (el as Null))
@@ -134,153 +142,142 @@ class SimpleTarget extends _i1.FunctionTarget {
         (request[r'aMapOfString'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            (value as String),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              (value as String),
+            )),
         (request[r'aMapOfInt'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            (value as int),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              (value as int),
+            )),
         (request[r'aMapOfDouble'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            (value as double),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              (value as double),
+            )),
         (request[r'aMapOfBool'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            (value as bool),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              (value as bool),
+            )),
         (request[r'aMapOfEnum'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i2.MyEnum.values.byName((value as String)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+                r'project:apis/parameter_types.dart#MyEnum',
+                value,
+              ),
+            )),
         (request[r'aMapOfNull'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            (value as Null),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              (value as Null),
+            )),
         (request[r'aMapOfBigInt'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<BigInt>(
-              'dart:core#BigInt',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<BigInt>(
+                'dart:core#BigInt',
+                value,
+              ),
+            )),
         (request[r'aMapOfDateTime'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<DateTime>(
-              'dart:core#DateTime',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<DateTime>(
+                'dart:core#DateTime',
+                value,
+              ),
+            )),
         (request[r'aMapOfDuration'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<Duration>(
-              'dart:core#Duration',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<Duration>(
+                'dart:core#Duration',
+                value,
+              ),
+            )),
         (request[r'aMapOfRegExp'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<RegExp>(
-              'dart:core#RegExp',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<RegExp>(
+                'dart:core#RegExp',
+                value,
+              ),
+            )),
         (request[r'aMapOfStackTrace'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<StackTrace>(
-              'dart:core#StackTrace',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<StackTrace>(
+                'dart:core#StackTrace',
+                value,
+              ),
+            )),
         (request[r'aMapOfUri'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<Uri>(
-              'dart:core#Uri',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<Uri>(
+                'dart:core#Uri',
+                value,
+              ),
+            )),
         (request[r'aMapOfUriData'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<UriData>(
-              'dart:core#UriData',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<UriData>(
+                'dart:core#UriData',
+                value,
+              ),
+            )),
         (request[r'aMapOfUint8List'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
-              'dart:typed_data#Uint8List',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i4.Uint8List>(
+                'dart:typed_data#Uint8List',
+                value,
+              ),
+            )),
       );
     },
     (json) => json as Map<String, dynamic>,
@@ -294,8 +291,28 @@ class SimpleTarget extends _i1.FunctionTarget {
 }
 
 _i5.Future<void> main(List<String> args) async {
+  _i3.Serializers.instance.put(const MyEnumSerializer());
   await _i1.serve(
     args,
     (_) => SimpleTarget(),
   );
+}
+
+final class MyEnumSerializer extends _i3.Serializer<_i2.MyEnum> {
+  const MyEnumSerializer();
+
+  @override
+  String get dartType => r'project:apis/parameter_types.dart#MyEnum';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.MyEnum deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return _i2.MyEnum.values.byName(serialized);
+  }
+
+  @override
+  String serialize(_i2.MyEnum value) => value.name;
 }

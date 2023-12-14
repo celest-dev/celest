@@ -1,8 +1,11 @@
 import 'package:analyzer/dart/element/type.dart' as ast;
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
@@ -20,6 +23,7 @@ final class SerializerGenerator {
   late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
   late final typeReference = typeHelper.toReference(type).nonNullable;
   late final uri = serializationSpec.uri.toString();
+  late final wireType = typeHelper.toReference(serializationSpec.wireType);
 
   (Class, Set<ast.DartType>) build() {
     final clazz = Class((b) {
@@ -81,41 +85,39 @@ final class SerializerGenerator {
             )
             ..annotations.add(DartTypes.core.override)
             ..body = Block((b) {
-              b.statements.add(
-                // serialized may not be used, but we need to assert the type
-                const Code('// ignore: unused_local_variable'),
-              );
               final mayBeAbsent =
                   serializationSpec.parameters.every((p) => p.isOptional);
+              final (wireType, deserialized) = switch (type) {
+                ast.InterfaceType() when type.isEnum => (
+                    this.wireType,
+                    typeReference.nonNullable
+                        .property('values')
+                        .property('byName')
+                        .call([
+                      refer('serialized'),
+                    ]),
+                  ),
+                _ => (
+                    this.wireType.withNullability(mayBeAbsent),
+                    _deserialize('serialized', mayBeAbsent: mayBeAbsent),
+                  ),
+              };
               b.addExpression(
                 declareFinal('serialized').assign(
                   refer('assertWireType').call([
                     refer('value'),
                   ], {}, [
-                    DartTypes.core
-                        .map(
-                          DartTypes.core.string,
-                          DartTypes.core.object.nullable,
-                        )
-                        .withNullability(mayBeAbsent),
+                    wireType,
                   ]),
                 ),
               );
-              b.addExpression(
-                _deserialize(
-                  'serialized',
-                  isNullable: mayBeAbsent,
-                ).returned,
-              );
+              b.addExpression(deserialized.returned);
             }),
         ),
         Method(
           (b) => b
             ..name = 'serialize'
-            ..returns = DartTypes.core.map(
-              DartTypes.core.string,
-              DartTypes.core.object.nullable,
-            )
+            ..returns = wireType
             ..requiredParameters.add(
               Parameter(
                 (b) => b
@@ -124,7 +126,11 @@ final class SerializerGenerator {
               ),
             )
             ..annotations.add(DartTypes.core.override)
-            ..body = _serialize('value').code,
+            ..body = switch (type) {
+              ast.InterfaceType() when type.isEnum =>
+                refer('value').property('name').code,
+              _ => _serialize('value').code,
+            },
         ),
       ]);
     });
@@ -133,6 +139,9 @@ final class SerializerGenerator {
 
   Expression _serialize(String from) {
     final ref = _reference(from, isNullable: false);
+    if (serializationSpec.hasToJson) {
+      return ref.property('toJson').call([]);
+    }
     final serialized = <String, Expression>{};
     for (final field in serializationSpec.fields) {
       serialized[field.name] = jsonGenerator.toJson(
@@ -145,9 +154,18 @@ final class SerializerGenerator {
 
   Expression _deserialize(
     String from, {
-    required bool isNullable,
+    required bool mayBeAbsent,
   }) {
-    final ref = _reference(from, isNullable: isNullable);
+    if (serializationSpec.hasFromJson) {
+      Expression ref = _reference(from, isNullable: false);
+      if (mayBeAbsent) {
+        ref = ref.ifNullThen(literalConstMap({}));
+      }
+      return typeReference.nonNullable.property('fromJson').call([
+        ref,
+      ]);
+    }
+    final ref = _reference(from, isNullable: mayBeAbsent);
     final deserializedPositional = <Expression>[];
     final deserializedNamed = <String, Expression>{};
     for (final parameter in serializationSpec.parameters) {
@@ -157,7 +175,9 @@ final class SerializerGenerator {
         reference.withNullability(
           reference.isNullableOrFalse || initializer != null,
         ),
-        ref.index(literalString(parameter.name, raw: true)),
+        serializationSpec.wireType.isDartCoreMap
+            ? ref.index(literalString(parameter.name, raw: true))
+            : ref,
       );
       if (initializer != null) {
         deserialized = deserialized.parenthesized.ifNullThen(
@@ -186,9 +206,14 @@ final class SerializerGenerator {
   Reference _reference(
     String variable, {
     required bool isNullable,
-  }) =>
-      switch (isNullable) {
-        true => refer('$variable?'),
-        false => refer(variable),
-      };
+  }) {
+    if (!TypeChecker.fromStatic(serializationSpec.wireType)
+        .isExactlyType(jsonMapType)) {
+      return refer(variable);
+    }
+    return switch (isNullable) {
+      true => refer('$variable?'),
+      false => refer(variable),
+    };
+  }
 }

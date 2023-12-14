@@ -1214,6 +1214,188 @@ const Map<String, Test> tests = {
               },
             ),
           ],
+          ('onlyFromJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'onlyFromJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('asyncOnlyFromJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncOnlyFromJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('onlyToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'onlyToJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('asyncOnlyToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncOnlyToJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('onlyToJsonWithDefaults', 'prod'): [
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: {
+                'field': 'default',
+              },
+            ),
+          ],
+          ('asyncOnlyToJsonWithDefaults', 'prod'): [
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: {
+                'field': 'default',
+              },
+            ),
+          ],
+          ('fromAndToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'fromAndToJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('asyncFromAndToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncFromAndToJson',
+              input: {
+                'value': {
+                  'field': 'field',
+                },
+              },
+              output: {
+                'field': 'field',
+              },
+            ),
+          ],
+          ('nonMapToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nonMapToJson',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+          ],
+          ('asyncNonMapToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNonMapToJson',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+          ],
+          ('nonMapToJsonWithDefaults', 'prod'): [
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: 'default',
+            ),
+          ],
+          ('asyncNonMapToJsonWithDefaults', 'prod'): [
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: 'default',
+            ),
+          ],
+          ('nonMapFromAndToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nonMapFromAndToJson',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+          ],
+          ('asyncNonMapFromAndToJson', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNonMapFromAndToJson',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+          ],
         },
       ),
     },

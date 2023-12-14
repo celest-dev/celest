@@ -85,3 +85,109 @@ class NestedClass {
 
 NestedClass nestedClass(NestedClass value) => value;
 Future<NestedClass> asyncNestedClass(NestedClass value) async => value;
+
+class OnlyFromJson {
+  OnlyFromJson.fromJson(Map<String, Object?> json)
+      : field = json['field'] as String;
+
+  final String field;
+}
+
+class OnlyToJson {
+  OnlyToJson(this.field);
+
+  final String field;
+
+  Map<String, Object?> toJson() => {
+        'field': field,
+      };
+}
+
+class OnlyToJsonWithDefaults {
+  OnlyToJsonWithDefaults([this.field = 'default']);
+
+  final String field;
+  final String anotherField = 'default';
+
+  Map<String, Object?> toJson() => {
+        'field': field,
+      };
+}
+
+class FromJsonAndToJson {
+  FromJsonAndToJson.fromJson(Map<String, Object?> json)
+      : field = json['field'] as String;
+
+  final String field;
+
+  Map<String, Object?> toJson() => {
+        'field': field,
+      };
+}
+
+class NonMapToJson {
+  NonMapToJson(this.field);
+
+  final String field;
+
+  String toJson() => field;
+}
+
+class NonMapToJsonWithDefaults {
+  NonMapToJsonWithDefaults([this.field = 'default']);
+
+  final String field;
+  final String anotherField = 'default';
+
+  String toJson() => field;
+}
+
+class NonMapFromAndToJson {
+  NonMapFromAndToJson.fromJson(this.field);
+
+  final String field;
+
+  String toJson() => field;
+}
+
+OnlyFromJson onlyFromJson(OnlyFromJson value) => value;
+Future<OnlyFromJson> asyncOnlyFromJson(OnlyFromJson value) async => value;
+
+OnlyToJson onlyToJson(OnlyToJson value) => value;
+Future<OnlyToJson> asyncOnlyToJson(OnlyToJson value) async => value;
+
+OnlyToJsonWithDefaults onlyToJsonWithDefaults(
+  OnlyToJsonWithDefaults value,
+) =>
+    value;
+Future<OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
+  OnlyToJsonWithDefaults value,
+) async =>
+    value;
+
+FromJsonAndToJson fromAndToJson(FromJsonAndToJson value) => value;
+Future<FromJsonAndToJson> asyncFromAndToJson(
+  FromJsonAndToJson value,
+) async =>
+    value;
+
+NonMapToJson nonMapToJson(NonMapToJson value) => value;
+Future<NonMapToJson> asyncNonMapToJson(NonMapToJson value) async => value;
+
+NonMapToJsonWithDefaults nonMapToJsonWithDefaults(
+  NonMapToJsonWithDefaults value,
+) =>
+    value;
+Future<NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
+  NonMapToJsonWithDefaults value,
+) async =>
+    value;
+
+NonMapFromAndToJson nonMapFromAndToJson(
+  NonMapFromAndToJson value,
+) =>
+    value;
+Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
+  NonMapFromAndToJson value,
+) async =>
+    value;

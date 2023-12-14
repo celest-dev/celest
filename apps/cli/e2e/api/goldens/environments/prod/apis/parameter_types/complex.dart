@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 import 'dart:typed_data' as _i6;
@@ -23,10 +24,14 @@ class ComplexTarget extends _i1.FunctionTarget {
           r'project:apis/parameter_types.dart#ComplexStruct',
           request[r'aComplexStruct'],
         ),
-        _i2.SimpleClass.fromJson(
-            (request[r'aSimpleClass'] as Map<String, dynamic>)),
-        _i2.ComplexClass.fromJson(
-            (request[r'aComplexClass'] as Map<String, dynamic>)),
+        _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+          r'project:apis/parameter_types.dart#SimpleClass',
+          request[r'aSimpleClass'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+          r'project:apis/parameter_types.dart#ComplexClass',
+          request[r'aComplexClass'],
+        ),
         _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct?>(
           r'project:apis/parameter_types.dart#SimpleStruct',
           request[r'aNullableSimpleStruct'],
@@ -35,14 +40,14 @@ class ComplexTarget extends _i1.FunctionTarget {
           r'project:apis/parameter_types.dart#ComplexStruct',
           request[r'aNullableComplexStruct'],
         ),
-        request[r'aNullableSimpleClass'] == null
-            ? null
-            : _i2.SimpleClass.fromJson(
-                (request[r'aNullableSimpleClass'] as Map<String, dynamic>)),
-        request[r'aNullableComplexClass'] == null
-            ? null
-            : _i2.ComplexClass.fromJson(
-                (request[r'aNullableComplexClass'] as Map<String, dynamic>)),
+        _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass?>(
+          r'project:apis/parameter_types.dart#SimpleClass',
+          request[r'aNullableSimpleClass'],
+        ),
+        _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass?>(
+          r'project:apis/parameter_types.dart#ComplexClass',
+          request[r'aNullableComplexClass'],
+        ),
         (request[r'anIterableOfSimpleStruct'] as Iterable<Object?>)
             .map((el) =>
                 _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
@@ -58,11 +63,18 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'anIterableOfSimpleClass'] as Iterable<Object?>)
-            .map((el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'anIterableOfComplexClass'] as Iterable<Object?>)
-            .map(
-                (el) => _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'aNullableIterableOfSimpleStruct'] as Iterable<Object?>?)
             ?.map((el) =>
@@ -79,12 +91,18 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'aNullableIterableOfSimpleClass'] as Iterable<Object?>?)
-            ?.map(
-                (el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'aNullableIterableOfComplexClass'] as Iterable<Object?>?)
-            ?.map(
-                (el) => _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'anIterableOfNullableSimpleStruct'] as Iterable<Object?>)
             .map((el) =>
@@ -101,14 +119,18 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'anIterableOfNullableSimpleClass'] as Iterable<Object?>)
-            .map((el) => el == null
-                ? null
-                : _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass?>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'anIterableOfNullableComplexClass'] as Iterable<Object?>)
-            .map((el) => el == null
-                ? null
-                : _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass?>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'aListOfSimpleStruct'] as Iterable<Object?>)
             .map((el) =>
@@ -125,11 +147,18 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'aListOfSimpleClass'] as Iterable<Object?>)
-            .map((el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'aListOfComplexClass'] as Iterable<Object?>)
-            .map(
-                (el) => _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'aNullableListOfSimpleStruct'] as Iterable<Object?>?)
             ?.map((el) =>
@@ -146,12 +175,18 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'aNullableListOfSimpleClass'] as Iterable<Object?>?)
-            ?.map(
-                (el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'aNullableListOfComplexClass'] as Iterable<Object?>?)
-            ?.map(
-                (el) => _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            ?.map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'aListOfNullableSimpleStruct'] as Iterable<Object?>)
             .map((el) =>
@@ -168,215 +203,208 @@ class ComplexTarget extends _i1.FunctionTarget {
                 ))
             .toList(),
         (request[r'aListOfNullableSimpleClass'] as Iterable<Object?>)
-            .map((el) => el == null
-                ? null
-                : _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass?>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
             .toList(),
         (request[r'aListOfNullableComplexClass'] as Iterable<Object?>)
-            .map((el) => el == null
-                ? null
-                : _i2.ComplexClass.fromJson((el as Map<String, dynamic>)))
+            .map((el) =>
+                _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass?>(
+                  r'project:apis/parameter_types.dart#ComplexClass',
+                  el,
+                ))
             .toList(),
         (request[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
-              r'project:apis/parameter_types.dart#SimpleStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
+                r'project:apis/parameter_types.dart#SimpleStruct',
+                value,
+              ),
+            )),
         (request[r'aMapOfComplexStruct'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct>(
-              r'project:apis/parameter_types.dart#ComplexStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct>(
+                r'project:apis/parameter_types.dart#ComplexStruct',
+                value,
+              ),
+            )),
         (request[r'aMapOfSimpleClass'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i2.SimpleClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                r'project:apis/parameter_types.dart#SimpleClass',
+                value,
+              ),
+            )),
         (request[r'aMapOfComplexClass'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i2.ComplexClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                r'project:apis/parameter_types.dart#ComplexClass',
+                value,
+              ),
+            )),
         (request[r'aNullableMapOfSimpleStruct'] as Map<String, Object?>?)?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
-              r'project:apis/parameter_types.dart#SimpleStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
+                r'project:apis/parameter_types.dart#SimpleStruct',
+                value,
+              ),
+            )),
         (request[r'aNullableMapOfComplexStruct'] as Map<String, Object?>?)
             ?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct>(
-              r'project:apis/parameter_types.dart#ComplexStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+                MapEntry(
+                  key,
+                  _i3.Serializers.instance
+                      .deserializeWithType<_i2.ComplexStruct>(
+                    r'project:apis/parameter_types.dart#ComplexStruct',
+                    value,
+                  ),
+                )),
         (request[r'aNullableMapOfSimpleClass'] as Map<String, Object?>?)?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i2.SimpleClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                r'project:apis/parameter_types.dart#SimpleClass',
+                value,
+              ),
+            )),
         (request[r'aNullableMapOfComplexClass'] as Map<String, Object?>?)?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>);
-          return MapEntry(
-            key,
-            _i2.ComplexClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass>(
+                r'project:apis/parameter_types.dart#ComplexClass',
+                value,
+              ),
+            )),
         (request[r'aMapOfNullableSimpleStruct'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct?>(
-              r'project:apis/parameter_types.dart#SimpleStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct?>(
+                r'project:apis/parameter_types.dart#SimpleStruct',
+                value,
+              ),
+            )),
         (request[r'aMapOfNullableComplexStruct'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct?>(
-              r'project:apis/parameter_types.dart#ComplexStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct?>(
+                r'project:apis/parameter_types.dart#ComplexStruct',
+                value,
+              ),
+            )),
         (request[r'aMapOfNullableSimpleClass'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            value == null
-                ? null
-                : _i2.SimpleClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass?>(
+                r'project:apis/parameter_types.dart#SimpleClass',
+                value,
+              ),
+            )),
         (request[r'aMapOfNullableComplexClass'] as Map<String, Object?>).map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            value == null
-                ? null
-                : _i2.ComplexClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+            MapEntry(
+              key,
+              _i3.Serializers.instance.deserializeWithType<_i2.ComplexClass?>(
+                r'project:apis/parameter_types.dart#ComplexClass',
+                value,
+              ),
+            )),
         (request[r'aNullableMapOfNullableSimpleStruct']
                 as Map<String, Object?>?)
             ?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct?>(
-              r'project:apis/parameter_types.dart#SimpleStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+                MapEntry(
+                  key,
+                  _i3.Serializers.instance
+                      .deserializeWithType<_i2.SimpleStruct?>(
+                    r'project:apis/parameter_types.dart#SimpleStruct',
+                    value,
+                  ),
+                )),
         (request[r'aNullableMapOfNullableComplexStruct']
                 as Map<String, Object?>?)
             ?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            _i3.Serializers.instance.deserializeWithType<_i2.ComplexStruct?>(
-              r'project:apis/parameter_types.dart#ComplexStruct',
-              value,
-            ),
-          );
-        }),
+        ) =>
+                MapEntry(
+                  key,
+                  _i3.Serializers.instance
+                      .deserializeWithType<_i2.ComplexStruct?>(
+                    r'project:apis/parameter_types.dart#ComplexStruct',
+                    value,
+                  ),
+                )),
         (request[r'aNullableMapOfNullableSimpleClass'] as Map<String, Object?>?)
             ?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            value == null
-                ? null
-                : _i2.SimpleClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+                MapEntry(
+                  key,
+                  _i3.Serializers.instance
+                      .deserializeWithType<_i2.SimpleClass?>(
+                    r'project:apis/parameter_types.dart#SimpleClass',
+                    value,
+                  ),
+                )),
         (request[r'aNullableMapOfNullableComplexClass']
                 as Map<String, Object?>?)
             ?.map((
           key,
           value,
-        ) {
-          (value as Map<String, Object?>?);
-          return MapEntry(
-            key,
-            value == null
-                ? null
-                : _i2.ComplexClass.fromJson((value as Map<String, dynamic>)),
-          );
-        }),
+        ) =>
+                MapEntry(
+                  key,
+                  _i3.Serializers.instance
+                      .deserializeWithType<_i2.ComplexClass?>(
+                    r'project:apis/parameter_types.dart#ComplexClass',
+                    value,
+                  ),
+                )),
       );
     },
     (json) => json as Map<String, dynamic>,
@@ -392,6 +420,9 @@ class ComplexTarget extends _i1.FunctionTarget {
 _i4.Future<void> main(List<String> args) async {
   _i3.Serializers.instance.put(const SimpleStructSerializer());
   _i3.Serializers.instance.put(const ComplexStructSerializer());
+  _i3.Serializers.instance.put(const SimpleClassSerializer());
+  _i3.Serializers.instance.put(const ComplexClassSerializer());
+  _i3.Serializers.instance.put(const MyEnumSerializer());
   await _i1.serve(
     args,
     (_) => ComplexTarget(),
@@ -409,7 +440,6 @@ final class SimpleStructSerializer extends _i3.Serializer<_i2.SimpleStruct> {
 
   @override
   _i2.SimpleStruct deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return ();
   }
@@ -429,7 +459,6 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
 
   @override
   _i2.ComplexStruct deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return (
       aBigInt: _i3.Serializers.instance.deserializeWithType<BigInt>(
@@ -471,7 +500,10 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
               ))
           .toList(),
       aListOfEnum: (serialized?[r'aListOfEnum'] as Iterable<Object?>)
-          .map((el) => _i2.MyEnum.values.byName((el as String)))
+          .map((el) => _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+                r'project:apis/parameter_types.dart#MyEnum',
+                el,
+              ))
           .toList(),
       aListOfInt: (serialized?[r'aListOfInt'] as Iterable<Object?>)
           .map((el) => (el as int))
@@ -485,10 +517,14 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
                 el,
               ))
           .toList(),
-      aListOfSimpleClass: (serialized?[r'aListOfSimpleClass']
-              as Iterable<Object?>)
-          .map((el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
-          .toList(),
+      aListOfSimpleClass:
+          (serialized?[r'aListOfSimpleClass'] as Iterable<Object?>)
+              .map((el) =>
+                  _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                    r'project:apis/parameter_types.dart#SimpleClass',
+                    el,
+                  ))
+              .toList(),
       aListOfSimpleStruct: (serialized?[r'aListOfSimpleStruct']
               as Iterable<Object?>)
           .map((el) =>
@@ -529,190 +565,181 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
       aMapOfBigInt: (serialized?[r'aMapOfBigInt'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<BigInt>(
-            'dart:core#BigInt',
-            value,
-          ),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<BigInt>(
+              'dart:core#BigInt',
+              value,
+            ),
+          )),
       aMapOfBool: (serialized?[r'aMapOfBool'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          (value as bool),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            (value as bool),
+          )),
       aMapOfDateTime:
           (serialized?[r'aMapOfDateTime'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<DateTime>(
-            'dart:core#DateTime',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<DateTime>(
+                  'dart:core#DateTime',
+                  value,
+                ),
+              )),
       aMapOfDouble: (serialized?[r'aMapOfDouble'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          (value as double),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            (value as double),
+          )),
       aMapOfDuration:
           (serialized?[r'aMapOfDuration'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<Duration>(
-            'dart:core#Duration',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<Duration>(
+                  'dart:core#Duration',
+                  value,
+                ),
+              )),
       aMapOfEnum: (serialized?[r'aMapOfEnum'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i2.MyEnum.values.byName((value as String)),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+              r'project:apis/parameter_types.dart#MyEnum',
+              value,
+            ),
+          )),
       aMapOfInt: (serialized?[r'aMapOfInt'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          (value as int),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            (value as int),
+          )),
       aMapOfNull: (serialized?[r'aMapOfNull'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          (value as Null),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            (value as Null),
+          )),
       aMapOfRegExp: (serialized?[r'aMapOfRegExp'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<RegExp>(
-            'dart:core#RegExp',
-            value,
-          ),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<RegExp>(
+              'dart:core#RegExp',
+              value,
+            ),
+          )),
       aMapOfSimpleClass:
           (serialized?[r'aMapOfSimpleClass'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        (value as Map<String, Object?>);
-        return MapEntry(
-          key,
-          _i2.SimpleClass.fromJson((value as Map<String, dynamic>)),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  value,
+                ),
+              )),
       aMapOfSimpleStruct:
           (serialized?[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        (value as Map<String, Object?>);
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
-            r'project:apis/parameter_types.dart#SimpleStruct',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
+                  r'project:apis/parameter_types.dart#SimpleStruct',
+                  value,
+                ),
+              )),
       aMapOfStackTrace:
           (serialized?[r'aMapOfStackTrace'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<StackTrace>(
-            'dart:core#StackTrace',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<StackTrace>(
+                  'dart:core#StackTrace',
+                  value,
+                ),
+              )),
       aMapOfString: (serialized?[r'aMapOfString'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          (value as String),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            (value as String),
+          )),
       aMapOfUint8List:
           (serialized?[r'aMapOfUint8List'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<_i6.Uint8List>(
-            'dart:typed_data#Uint8List',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<_i6.Uint8List>(
+                  'dart:typed_data#Uint8List',
+                  value,
+                ),
+              )),
       aMapOfUri: (serialized?[r'aMapOfUri'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<Uri>(
-            'dart:core#Uri',
-            value,
-          ),
-        );
-      }),
+      ) =>
+          MapEntry(
+            key,
+            _i3.Serializers.instance.deserializeWithType<Uri>(
+              'dart:core#Uri',
+              value,
+            ),
+          )),
       aMapOfUriData:
           (serialized?[r'aMapOfUriData'] as Map<String, Object?>).map((
         key,
         value,
-      ) {
-        return MapEntry(
-          key,
-          _i3.Serializers.instance.deserializeWithType<UriData>(
-            'dart:core#UriData',
-            value,
-          ),
-        );
-      }),
+      ) =>
+              MapEntry(
+                key,
+                _i3.Serializers.instance.deserializeWithType<UriData>(
+                  'dart:core#UriData',
+                  value,
+                ),
+              )),
       aNull: (serialized?[r'aNull'] as Null),
       aRegExp: _i3.Serializers.instance.deserializeWithType<RegExp>(
         'dart:core#RegExp',
         serialized?[r'aRegExp'],
       ),
-      aSimpleClass: _i2.SimpleClass.fromJson(
-          (serialized?[r'aSimpleClass'] as Map<String, dynamic>)),
+      aSimpleClass:
+          _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+        r'project:apis/parameter_types.dart#SimpleClass',
+        serialized?[r'aSimpleClass'],
+      ),
       aSimpleStruct:
           _i3.Serializers.instance.deserializeWithType<_i2.SimpleStruct>(
         r'project:apis/parameter_types.dart#SimpleStruct',
@@ -735,12 +762,19 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
         'dart:core#UriData',
         serialized?[r'aUriData'],
       ),
-      anEnum: _i2.MyEnum.values.byName((serialized?[r'anEnum'] as String)),
+      anEnum: _i3.Serializers.instance.deserializeWithType<_i2.MyEnum>(
+        r'project:apis/parameter_types.dart#MyEnum',
+        serialized?[r'anEnum'],
+      ),
       anInt: (serialized?[r'anInt'] as int),
-      anIterableOfSimpleClass: (serialized?[r'anIterableOfSimpleClass']
-              as Iterable<Object?>)
-          .map((el) => _i2.SimpleClass.fromJson((el as Map<String, dynamic>)))
-          .toList()
+      anIterableOfSimpleClass:
+          (serialized?[r'anIterableOfSimpleClass'] as Iterable<Object?>)
+              .map((el) =>
+                  _i3.Serializers.instance.deserializeWithType<_i2.SimpleClass>(
+                    r'project:apis/parameter_types.dart#SimpleClass',
+                    el,
+                  ))
+              .toList()
     );
   }
 
@@ -780,7 +814,12 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
                   el,
                 ))
             .toList(),
-        'aListOfEnum': value.aListOfEnum.map((el) => el.name).toList(),
+        'aListOfEnum': value.aListOfEnum
+            .map((el) => _i3.Serializers.instance.serializeWithType<_i2.MyEnum>(
+                  r'project:apis/parameter_types.dart#MyEnum',
+                  el,
+                ))
+            .toList(),
         'aListOfInt': value.aListOfInt,
         'aListOfNull': value.aListOfNull,
         'aListOfRegExp': value.aListOfRegExp
@@ -789,8 +828,13 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
                   el,
                 ))
             .toList(),
-        'aListOfSimpleClass':
-            value.aListOfSimpleClass.map((el) => el.toJson()).toList(),
+        'aListOfSimpleClass': value.aListOfSimpleClass
+            .map((el) =>
+                _i3.Serializers.instance.serializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
+            .toList(),
         'aListOfSimpleStruct': value.aListOfSimpleStruct
             .map((el) =>
                 _i3.Serializers.instance.serializeWithType<_i2.SimpleStruct>(
@@ -864,7 +908,10 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              value.name,
+              _i3.Serializers.instance.serializeWithType<_i2.MyEnum>(
+                r'project:apis/parameter_types.dart#MyEnum',
+                value,
+              ),
             )),
         'aMapOfInt': value.aMapOfInt,
         'aMapOfNull': value.aMapOfNull,
@@ -885,7 +932,10 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              value.toJson(),
+              _i3.Serializers.instance.serializeWithType<_i2.SimpleClass>(
+                r'project:apis/parameter_types.dart#SimpleClass',
+                value,
+              ),
             )),
         'aMapOfSimpleStruct': value.aMapOfSimpleStruct.map((
           key,
@@ -948,7 +998,11 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
           'dart:core#RegExp',
           value.aRegExp,
         ),
-        'aSimpleClass': value.aSimpleClass.toJson(),
+        'aSimpleClass':
+            _i3.Serializers.instance.serializeWithType<_i2.SimpleClass>(
+          r'project:apis/parameter_types.dart#SimpleClass',
+          value.aSimpleClass,
+        ),
         'aSimpleStruct':
             _i3.Serializers.instance.serializeWithType<_i2.SimpleStruct>(
           r'project:apis/parameter_types.dart#SimpleStruct',
@@ -971,9 +1025,74 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
           'dart:core#UriData',
           value.aUriData,
         ),
-        'anEnum': value.anEnum.name,
+        'anEnum': _i3.Serializers.instance.serializeWithType<_i2.MyEnum>(
+          r'project:apis/parameter_types.dart#MyEnum',
+          value.anEnum,
+        ),
         'anInt': value.anInt,
-        'anIterableOfSimpleClass':
-            value.anIterableOfSimpleClass.map((el) => el.toJson()).toList(),
+        'anIterableOfSimpleClass': value.anIterableOfSimpleClass
+            .map((el) =>
+                _i3.Serializers.instance.serializeWithType<_i2.SimpleClass>(
+                  r'project:apis/parameter_types.dart#SimpleClass',
+                  el,
+                ))
+            .toList(),
       };
+}
+
+final class SimpleClassSerializer extends _i3.Serializer<_i2.SimpleClass> {
+  const SimpleClassSerializer();
+
+  @override
+  String get dartType => r'project:apis/parameter_types.dart#SimpleClass';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.SimpleClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, dynamic>>(value);
+    return _i2.SimpleClass.fromJson(serialized);
+  }
+
+  @override
+  Map<String, dynamic> serialize(_i2.SimpleClass value) => value.toJson();
+}
+
+final class ComplexClassSerializer extends _i3.Serializer<_i2.ComplexClass> {
+  const ComplexClassSerializer();
+
+  @override
+  String get dartType => r'project:apis/parameter_types.dart#ComplexClass';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.ComplexClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, dynamic>>(value);
+    return _i2.ComplexClass.fromJson(serialized);
+  }
+
+  @override
+  Map<String, dynamic> serialize(_i2.ComplexClass value) => value.toJson();
+}
+
+final class MyEnumSerializer extends _i3.Serializer<_i2.MyEnum> {
+  const MyEnumSerializer();
+
+  @override
+  String get dartType => r'project:apis/parameter_types.dart#MyEnum';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.MyEnum deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return _i2.MyEnum.values.byName(serialized);
+  }
+
+  @override
+  String serialize(_i2.MyEnum value) => value.name;
 }

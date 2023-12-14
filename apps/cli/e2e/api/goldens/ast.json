@@ -882,6 +882,622 @@
               "line": 87,
               "column": 20
             }
+          },
+          "onlyFromJson": {
+            "name": "onlyFromJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 153,
+                  "column": 39
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 153,
+              "column": 13
+            }
+          },
+          "asyncOnlyFromJson": {
+            "name": "asyncOnlyFromJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 154,
+                  "column": 52
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 154,
+              "column": 21
+            }
+          },
+          "onlyToJson": {
+            "name": "onlyToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 156,
+                  "column": 33
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 156,
+              "column": 11
+            }
+          },
+          "asyncOnlyToJson": {
+            "name": "asyncOnlyToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 157,
+                  "column": 46
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 157,
+              "column": 19
+            }
+          },
+          "onlyToJsonWithDefaults": {
+            "name": "onlyToJsonWithDefaults",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 160,
+                  "column": 25
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 159,
+              "column": 23
+            }
+          },
+          "asyncOnlyToJsonWithDefaults": {
+            "name": "asyncOnlyToJsonWithDefaults",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 164,
+                  "column": 25
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 163,
+              "column": 31
+            }
+          },
+          "fromAndToJson": {
+            "name": "fromAndToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 168,
+                  "column": 50
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 168,
+              "column": 18
+            }
+          },
+          "asyncFromAndToJson": {
+            "name": "asyncFromAndToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 170,
+                  "column": 20
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 169,
+              "column": 26
+            }
+          },
+          "nonMapToJson": {
+            "name": "nonMapToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 174,
+                  "column": 39
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 174,
+              "column": 13
+            }
+          },
+          "asyncNonMapToJson": {
+            "name": "asyncNonMapToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 175,
+                  "column": 52
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 175,
+              "column": 21
+            }
+          },
+          "nonMapToJsonWithDefaults": {
+            "name": "nonMapToJsonWithDefaults",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 178,
+                  "column": 27
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 177,
+              "column": 25
+            }
+          },
+          "asyncNonMapToJsonWithDefaults": {
+            "name": "asyncNonMapToJsonWithDefaults",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 182,
+                  "column": 27
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 181,
+              "column": 33
+            }
+          },
+          "nonMapFromAndToJson": {
+            "name": "nonMapFromAndToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 187,
+                  "column": 22
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 186,
+              "column": 20
+            }
+          },
+          "asyncNonMapFromAndToJson": {
+            "name": "asyncNonMapFromAndToJson",
+            "apiName": "serialization",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/serialization.dart",
+                  "line": 191,
+                  "column": 22
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/serialization.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/serialization.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/serialization.dart",
+              "line": 190,
+              "column": 28
+            }
           }
         }
       },
@@ -1962,7 +2578,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 55,
+                  "line": 56,
                   "column": 10
                 }
               },
@@ -1978,7 +2594,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 56,
+                  "line": 57,
                   "column": 7
                 }
               },
@@ -1994,7 +2610,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 57,
+                  "line": 58,
                   "column": 10
                 }
               },
@@ -2010,7 +2626,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 58,
+                  "line": 59,
                   "column": 8
                 }
               },
@@ -2026,7 +2642,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 59,
+                  "line": 60,
                   "column": 10
                 }
               },
@@ -2042,7 +2658,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 60,
+                  "line": 61,
                   "column": 7
                 }
               },
@@ -2058,7 +2674,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 61,
+                  "line": 62,
                   "column": 10
                 }
               },
@@ -2074,7 +2690,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 62,
+                  "line": 63,
                   "column": 12
                 }
               },
@@ -2090,7 +2706,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 63,
+                  "line": 64,
                   "column": 12
                 }
               },
@@ -2106,7 +2722,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 64,
+                  "line": 65,
                   "column": 10
                 }
               },
@@ -2122,7 +2738,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 65,
+                  "line": 66,
                   "column": 14
                 }
               },
@@ -2138,7 +2754,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 66,
+                  "line": 67,
                   "column": 7
                 }
               },
@@ -2154,7 +2770,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 67,
+                  "line": 68,
                   "column": 11
                 }
               },
@@ -2170,7 +2786,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 68,
+                  "line": 69,
                   "column": 13
                 }
               },
@@ -2194,7 +2810,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 69,
+                  "line": 70,
                   "column": 20
                 }
               },
@@ -2218,7 +2834,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 70,
+                  "line": 71,
                   "column": 23
                 }
               },
@@ -2242,7 +2858,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 71,
+                  "line": 72,
                   "column": 16
                 }
               },
@@ -2266,7 +2882,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 72,
+                  "line": 73,
                   "column": 13
                 }
               },
@@ -2290,7 +2906,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 73,
+                  "line": 74,
                   "column": 16
                 }
               },
@@ -2314,7 +2930,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 74,
+                  "line": 75,
                   "column": 14
                 }
               },
@@ -2338,7 +2954,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 75,
+                  "line": 76,
                   "column": 16
                 }
               },
@@ -2362,7 +2978,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 76,
+                  "line": 77,
                   "column": 14
                 }
               },
@@ -2386,7 +3002,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 77,
+                  "line": 78,
                   "column": 16
                 }
               },
@@ -2410,7 +3026,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 78,
+                  "line": 79,
                   "column": 18
                 }
               },
@@ -2434,7 +3050,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 79,
+                  "line": 80,
                   "column": 18
                 }
               },
@@ -2458,7 +3074,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 80,
+                  "line": 81,
                   "column": 16
                 }
               },
@@ -2482,7 +3098,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 81,
+                  "line": 82,
                   "column": 20
                 }
               },
@@ -2506,7 +3122,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 82,
+                  "line": 83,
                   "column": 13
                 }
               },
@@ -2530,7 +3146,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 83,
+                  "line": 84,
                   "column": 17
                 }
               },
@@ -2554,7 +3170,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 84,
+                  "line": 85,
                   "column": 19
                 }
               },
@@ -2584,7 +3200,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 85,
+                  "line": 86,
                   "column": 23
                 }
               },
@@ -2614,7 +3230,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 86,
+                  "line": 87,
                   "column": 20
                 }
               },
@@ -2644,7 +3260,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 87,
+                  "line": 88,
                   "column": 23
                 }
               },
@@ -2674,7 +3290,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 88,
+                  "line": 89,
                   "column": 21
                 }
               },
@@ -2704,7 +3320,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 89,
+                  "line": 90,
                   "column": 23
                 }
               },
@@ -2734,7 +3350,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 90,
+                  "line": 91,
                   "column": 21
                 }
               },
@@ -2764,7 +3380,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 91,
+                  "line": 92,
                   "column": 23
                 }
               },
@@ -2794,7 +3410,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 92,
+                  "line": 93,
                   "column": 25
                 }
               },
@@ -2824,7 +3440,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 93,
+                  "line": 94,
                   "column": 25
                 }
               },
@@ -2854,7 +3470,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 94,
+                  "line": 95,
                   "column": 23
                 }
               },
@@ -2884,7 +3500,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 95,
+                  "line": 96,
                   "column": 27
                 }
               },
@@ -2914,7 +3530,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 96,
+                  "line": 97,
                   "column": 20
                 }
               },
@@ -2944,7 +3560,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 97,
+                  "line": 98,
                   "column": 24
                 }
               },
@@ -2974,7 +3590,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 98,
+                  "line": 99,
                   "column": 26
                 }
               }
@@ -2998,7 +3614,7 @@
             "metadata": [],
             "location": {
               "uri": "project:apis/parameter_types.dart",
-              "line": 54,
+              "line": 55,
               "column": 13
             }
           },
@@ -3018,7 +3634,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 520,
+                  "line": 521,
                   "column": 15
                 }
               },
@@ -3034,7 +3650,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 521,
+                  "line": 522,
                   "column": 16
                 }
               },
@@ -3050,7 +3666,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 522,
+                  "line": 523,
                   "column": 14
                 }
               },
@@ -3066,7 +3682,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 523,
+                  "line": 524,
                   "column": 15
                 }
               },
@@ -3082,7 +3698,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 524,
+                  "line": 525,
                   "column": 16
                 }
               },
@@ -3098,7 +3714,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 525,
+                  "line": 526,
                   "column": 17
                 }
               },
@@ -3114,7 +3730,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 526,
+                  "line": 527,
                   "column": 15
                 }
               },
@@ -3130,7 +3746,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 527,
+                  "line": 528,
                   "column": 16
                 }
               },
@@ -3154,7 +3770,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 528,
+                  "line": 529,
                   "column": 25
                 }
               },
@@ -3178,7 +3794,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 529,
+                  "line": 530,
                   "column": 26
                 }
               },
@@ -3202,7 +3818,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 530,
+                  "line": 531,
                   "column": 24
                 }
               },
@@ -3226,7 +3842,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 531,
+                  "line": 532,
                   "column": 25
                 }
               },
@@ -3250,7 +3866,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 532,
+                  "line": 533,
                   "column": 26
                 }
               },
@@ -3274,7 +3890,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 533,
+                  "line": 534,
                   "column": 27
                 }
               },
@@ -3298,7 +3914,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 534,
+                  "line": 535,
                   "column": 25
                 }
               },
@@ -3322,7 +3938,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 535,
+                  "line": 536,
                   "column": 26
                 }
               },
@@ -3346,7 +3962,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 536,
+                  "line": 537,
                   "column": 26
                 }
               },
@@ -3370,7 +3986,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 537,
+                  "line": 538,
                   "column": 27
                 }
               },
@@ -3394,7 +4010,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 538,
+                  "line": 539,
                   "column": 25
                 }
               },
@@ -3418,7 +4034,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 539,
+                  "line": 540,
                   "column": 26
                 }
               },
@@ -3442,7 +4058,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 540,
+                  "line": 541,
                   "column": 21
                 }
               },
@@ -3466,7 +4082,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 541,
+                  "line": 542,
                   "column": 22
                 }
               },
@@ -3490,7 +4106,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 542,
+                  "line": 543,
                   "column": 20
                 }
               },
@@ -3514,7 +4130,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 543,
+                  "line": 544,
                   "column": 21
                 }
               },
@@ -3538,7 +4154,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 544,
+                  "line": 545,
                   "column": 22
                 }
               },
@@ -3562,7 +4178,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 545,
+                  "line": 546,
                   "column": 23
                 }
               },
@@ -3586,7 +4202,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 546,
+                  "line": 547,
                   "column": 21
                 }
               },
@@ -3610,7 +4226,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 547,
+                  "line": 548,
                   "column": 22
                 }
               },
@@ -3634,7 +4250,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 548,
+                  "line": 549,
                   "column": 22
                 }
               },
@@ -3658,7 +4274,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 549,
+                  "line": 550,
                   "column": 23
                 }
               },
@@ -3682,7 +4298,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 550,
+                  "line": 551,
                   "column": 21
                 }
               },
@@ -3706,7 +4322,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 551,
+                  "line": 552,
                   "column": 22
                 }
               },
@@ -3736,7 +4352,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 552,
+                  "line": 553,
                   "column": 28
                 }
               },
@@ -3766,7 +4382,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 553,
+                  "line": 554,
                   "column": 29
                 }
               },
@@ -3796,7 +4412,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 554,
+                  "line": 555,
                   "column": 27
                 }
               },
@@ -3826,7 +4442,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 555,
+                  "line": 556,
                   "column": 28
                 }
               },
@@ -3856,7 +4472,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 556,
+                  "line": 557,
                   "column": 29
                 }
               },
@@ -3886,7 +4502,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 557,
+                  "line": 558,
                   "column": 30
                 }
               },
@@ -3916,7 +4532,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 558,
+                  "line": 559,
                   "column": 28
                 }
               },
@@ -3946,7 +4562,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 559,
+                  "line": 560,
                   "column": 29
                 }
               },
@@ -3976,7 +4592,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 560,
+                  "line": 561,
                   "column": 29
                 }
               },
@@ -4006,7 +4622,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 561,
+                  "line": 562,
                   "column": 30
                 }
               },
@@ -4036,7 +4652,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 562,
+                  "line": 563,
                   "column": 28
                 }
               },
@@ -4066,7 +4682,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 563,
+                  "line": 564,
                   "column": 29
                 }
               },
@@ -4096,7 +4712,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 564,
+                  "line": 565,
                   "column": 30
                 }
               },
@@ -4126,7 +4742,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 565,
+                  "line": 566,
                   "column": 31
                 }
               },
@@ -4156,7 +4772,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 566,
+                  "line": 567,
                   "column": 29
                 }
               },
@@ -4186,7 +4802,7 @@
                 "named": false,
                 "location": {
                   "uri": "project:apis/parameter_types.dart",
-                  "line": 567,
+                  "line": 568,
                   "column": 30
                 }
               }
@@ -4210,7 +4826,7 @@
             "metadata": [],
             "location": {
               "uri": "project:apis/parameter_types.dart",
-              "line": 519,
+              "line": 520,
               "column": 13
             }
           }

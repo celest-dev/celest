@@ -111,7 +111,9 @@ final class CelestAnalyzer {
       return null;
     }
     _logger.detail('Resolved project file');
-    typeHelper.typeSystem = projectFile.typeSystem;
+    typeHelper
+      ..typeSystem = projectFile.typeSystem
+      ..typeProvider = projectFile.typeProvider;
     // TODO: Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {

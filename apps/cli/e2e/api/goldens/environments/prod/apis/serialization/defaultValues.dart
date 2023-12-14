@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
@@ -13,7 +14,6 @@ class DefaultValuesTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      // ignore: unused_local_variable
       final response = _i2.defaultValues(
           _i3.Serializers.instance.deserializeWithType<_i2.DefaultValues>(
         r'project:apis/serialization.dart#DefaultValues',
@@ -53,7 +53,6 @@ final class DefaultValuesSerializer extends _i3.Serializer<_i2.DefaultValues> {
 
   @override
   _i2.DefaultValues deserialize(Object? value) {
-    // ignore: unused_local_variable
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return _i2.DefaultValues(
       field: ((serialized?[r'field'] as String?)) ?? 'default',
