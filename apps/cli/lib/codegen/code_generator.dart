@@ -5,6 +5,7 @@ import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -69,18 +70,12 @@ final class CodeGenerator extends AstVisitor<void> {
     final resources = ResourcesGenerator(project: project).generate();
     fileOutputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
 
-    project.environments.values.forEach(visitEnvironment);
-  }
-
-  @override
-  void visitEnvironment(Environment environment) {
-    environment.apis.values.forEach(visitApi);
+    project.apis.values.forEach(visitApi);
   }
 
   @override
   void visitApi(Api api) {
-    final environmentPaths = _projectPaths.environment(api.environmentName);
-    final outputDir = environmentPaths.apiOutput(api.name);
+    final outputDir = projectPaths.apiOutput(api.name);
     for (final function in api.functions.values) {
       final entrypoint = EntrypointGenerator(
         api: api,
@@ -90,7 +85,7 @@ final class CodeGenerator extends AstVisitor<void> {
         typeHelper: typeHelper,
       ).generate();
       final entrypointFile =
-          environmentPaths.functionEntrypoint(api.name, function.name);
+          projectPaths.functionEntrypoint(api.name, function.name);
       fileOutputs[entrypointFile] = _emit(entrypoint, forFile: entrypointFile);
     }
   }

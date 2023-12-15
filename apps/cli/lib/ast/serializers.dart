@@ -8,7 +8,6 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   Project,
-  Environment,
   Api,
   ApiAuthenticated,
   ApiAnonymous,

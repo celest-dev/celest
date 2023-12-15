@@ -1,7 +1,0 @@
-{
-  "name": "env_vars",
-  "environments": [
-    "prod",
-    "dev"
-  ]
-}

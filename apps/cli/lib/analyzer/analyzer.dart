@@ -74,7 +74,6 @@ final class CelestAnalyzer {
     }
     _project = project;
     _widgetCollector = _ScopedWidgetCollector(
-      environmentNames: project.environmentNames.build(),
       errorReporter: _reportError,
     );
     await _collectApis();
@@ -205,67 +204,13 @@ final class CelestAnalyzer {
     }
     _logger.detail('Resolved project name: $projectName');
 
-    // Collect environments
-    final environmentsValue = projectDefinitionValue
-        .getField('environments')
-        ?.toListValue()
-        ?.map((env) => env.toStringValue())
-        .toList();
-    assert(
-      environmentsValue != null,
-      'This should be impossible given that `environments` is a required field on `Project`',
-    );
-    if (environmentsValue!.isEmpty) {
-      _reportError(
-        'No environments have been defined for this project.',
-        projectDefineLocation,
-      );
-      return null;
-    }
-    assert(
-      environmentsValue.whereType<Null>().isEmpty,
-      'This should be impossible given that `environments` is a required field on `Project`',
-    );
-
-    var hasEnvironmentNameErrors = false;
-    final environments = environmentsValue.cast<String>();
-    final seenEnvironments = <String>{};
-    for (final environment in environments) {
-      if (environment.isEmpty) {
-        _reportError(
-          'Environment names cannot be empty.',
-          projectDefineLocation,
-        );
-        hasEnvironmentNameErrors = true;
-        continue;
-      }
-      if (!seenEnvironments.add(environment)) {
-        _reportError(
-          'Duplicate environment name: "$environment".',
-          projectDefineLocation,
-        );
-        hasEnvironmentNameErrors = true;
-        continue;
-      }
-    }
-    _logger.detail(
-      'Resolved environments: ${prettyPrintJson({
-            'hasEnvironmentNameErrors': '$hasEnvironmentNameErrors',
-            'environments': environments,
-          })}',
-    );
-    if (hasEnvironmentNameErrors) {
-      return null;
-    }
-
     return ast.ProjectBuilder()
       ..name = projectName
       ..reference = refer(
         projectDefinitionElement.name,
         _projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       )
-      ..location.replace(projectDefineLocation)
-      ..environmentNames.addAll(environments);
+      ..location.replace(projectDefineLocation);
   }
 
   List<ast.ApiMetadata> _collectApiMetadata(Element element) {
@@ -328,59 +273,23 @@ final class CelestAnalyzer {
       scope: 'API',
       placeholder: '<api_name>',
     );
-    await apiDeclarations.traverse(
-      onBase: (apiName, baseApiPath) async {
-        final baseApi = await _collectApi(
-          apiName: apiName,
-          environmentName: '',
-          apiFile: baseApiPath,
-        );
-        if (baseApi == null) {
-          return;
-        }
-        _project.baseEnvironment.update(
-          (env) => env.apis[apiName] = baseApi,
-        );
-      },
-      onEnvOverride: (apiName, environmentName, apiEnvironmentPath) async {
-        final environmentApi = await _collectApi(
-          apiName: apiName,
-          environmentName: environmentName,
-          apiFile: apiEnvironmentPath,
-        );
-        if (environmentApi == null) {
-          return;
-        }
-        _project.environmentOverrides.updateValue(
-          environmentName,
-          (env) => env.rebuild(
-            (b) => b.apis.updateValue(
-              apiName,
-              (api) => api.rebuild(
-                (b) => b
-                  ..metadata.addAll(environmentApi.metadata)
-                  ..functions.update((functions) {
-                    for (final function in environmentApi.functions.entries) {
-                      functions[function.key] = function.value;
-                    }
-                  }),
-              ),
-              ifAbsent: () => environmentApi,
-            ),
-          ),
-          ifAbsent: () => ast.Environment.build(
-            (b) => b
-              ..name = environmentName
-              ..apis[apiName] = environmentApi,
-          ),
-        );
-      },
-    );
+    for (final MapEntry(key: apiName, value: apiPath)
+        in apiDeclarations.entries) {
+      final baseApi = await _collectApi(
+        apiName: apiName,
+        apiFile: apiPath,
+      );
+      if (baseApi == null) {
+        return;
+      }
+      _project.apis.update(
+        (apis) => apis[apiName] = baseApi,
+      );
+    }
   }
 
   Future<ast.Api?> _collectApi({
     required String apiName,
-    required String environmentName,
     required String apiFile,
   }) async {
     final apiLibraryResult =
@@ -462,7 +371,6 @@ final class CelestAnalyzer {
     );
     return ast.Api(
       name: apiName,
-      environmentName: environmentName,
       metadata: libraryMetdata,
       functions: functions,
     );
@@ -495,29 +403,12 @@ final class CelestAnalyzer {
       'There should only ever be one env collected, even with multiple '
       'environment overridees.',
     );
-
-    await envDeclarations.traverse(
-      onBase: (_, path) async {
-        _logger.detail('Collecting base env from $path');
-        final envVars = await _collectEnvironmentVariables(path);
-        _logger.detail('Collected base env vars: $envVars');
-        _project.baseEnvironment.envVars.addAll(envVars);
-      },
-      onEnvOverride: (_, environmentName, path) async {
-        _logger.detail('Collecting $environmentName env from $path');
-        final envVars = await _collectEnvironmentVariables(path);
-        _logger.detail('Collected $environmentName env vars: $envVars');
-        _project.environmentOverrides.updateValue(
-          environmentName,
-          (env) => env.rebuild((b) => b.envVars.addAll(envVars)),
-          ifAbsent: () => ast.Environment.build(
-            (b) => b
-              ..name = environmentName
-              ..envVars.addAll(envVars),
-          ),
-        );
-      },
-    );
+    for (final path in envDeclarations.values) {
+      _logger.detail('Collecting base env from $path');
+      final envVars = await _collectEnvironmentVariables(path);
+      _logger.detail('Collected base env vars: $envVars');
+      _project.envVars.addAll(envVars);
+    }
   }
 
   Future<List<ast.EnvironmentVariable>> _collectEnvironmentVariables(
@@ -618,79 +509,31 @@ final class AnalysisException implements Exception {
   }
 }
 
-final class WidgetDeclaration {
-  String? baseApi;
-  final Map<String, String> environmentOverrides = {};
-}
-
 final class _ScopedWidgetCollector {
   _ScopedWidgetCollector({
-    required this.environmentNames,
     required this.errorReporter,
   });
 
   final ErrorReporter errorReporter;
-  final Iterable<String> environmentNames;
 
-  Map<String, WidgetDeclaration> collect(
+  Map<String, String> collect(
     List<String> files, {
     required String scope,
     required String placeholder,
   }) {
-    final declarations = <String, WidgetDeclaration>{};
+    final declarations = <String, String>{};
     for (final file in files) {
       switch (p.basename(file).split('.')) {
-        case [final baseName, final environmentName, 'dart']:
-          if (!environmentNames.contains(environmentName)) {
-            errorReporter(
-              'Unknown environment for file: "$environmentName"',
-              SourceLocation(uri: file, line: 0, column: 0),
-            );
-            continue;
-          }
-          declarations.update(
-            baseName,
-            (decl) => decl..environmentOverrides[environmentName] = file,
-            ifAbsent: () => WidgetDeclaration()
-              ..environmentOverrides[environmentName] = file,
-          );
         case [final baseName, 'dart']:
-          declarations.update(
-            baseName,
-            (decl) => decl..baseApi = file,
-            ifAbsent: () => WidgetDeclaration()..baseApi = file,
-          );
+          declarations[baseName] = file;
         default:
           errorReporter(
-            '$scope files must be named as follows: $placeholder.dart or '
-            '$placeholder.<environment_name>.dart',
+            '$scope files must be named as follows: $placeholder.dart',
             SourceLocation(uri: file, line: 0, column: 0),
           );
           continue;
       }
     }
     return declarations;
-  }
-}
-
-extension on Map<String, WidgetDeclaration> {
-  Future<void> traverse({
-    required FutureOr<void> Function(String name, String path) onBase,
-    required FutureOr<void> Function(
-      String name,
-      String environment,
-      String path,
-    ) onEnvOverride,
-  }) async {
-    for (final MapEntry(key: name, value: declaration) in entries) {
-      if (declaration.baseApi case final basePath?) {
-        await onBase(name, basePath);
-      }
-
-      for (final MapEntry(key: environmentName, value: environmentPath)
-          in declaration.environmentOverrides.entries) {
-        await onEnvOverride(name, environmentName, environmentPath);
-      }
-    }
   }
 }

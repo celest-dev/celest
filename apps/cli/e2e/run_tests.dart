@@ -166,31 +166,25 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      for (final environmentName in project!.environmentNames) {
-        final projectBuilder = ProjectBuilder(
-          project: project,
-          projectPaths: projectPaths,
-          environmentName: environmentName,
-        );
-        final cloudAst = await projectBuilder.build();
-        final cloudAstFile = File(
-          p.join(
-            projectPaths.environment(environmentName).outputsDir,
-            'ast.proto.json',
-          ),
-        );
-        if (updateGoldens) {
-          cloudAstFile
-            ..createSync(recursive: true)
-            ..writeAsStringSync(
-              const JsonEncoder.withIndent('  ').convert(
-                cloudAst.toProto3Json(),
-              ),
-            );
-        } else {
-          final expectedAst = jsonDecode(cloudAstFile.readAsStringSync());
-          expect(cloudAst.toProto3Json(), expectedAst);
-        }
+      final projectBuilder = ProjectBuilder(
+        project: project!,
+        projectPaths: projectPaths,
+      );
+      final cloudAst = await projectBuilder.build();
+      final cloudAstFile = File(
+        p.join(projectPaths.outputsDir, 'ast.proto.json'),
+      );
+      if (updateGoldens) {
+        cloudAstFile
+          ..createSync(recursive: true)
+          ..writeAsStringSync(
+            const JsonEncoder.withIndent('  ').convert(
+              cloudAst.toProto3Json(),
+            ),
+          );
+      } else {
+        final expectedAst = jsonDecode(cloudAstFile.readAsStringSync());
+        expect(cloudAst.toProto3Json(), expectedAst);
       }
     });
   }
@@ -209,12 +203,11 @@ class TestRunner {
 
   void _testApi(String apiName, ApiTest apiTest) {
     group(apiName, () {
-      for (final MapEntry(key: (functionName, environmentName), value: tests)
+      for (final MapEntry(key: functionName, value: tests)
           in apiTest.functionTests.entries) {
         _testFunction(
           apiName,
           functionName,
-          environmentName,
           tests,
         );
       }
@@ -224,19 +217,20 @@ class TestRunner {
   void _testFunction(
     String apiName,
     String functionName,
-    String environmentName,
     List<FunctionTest> tests,
   ) {
-    final envPaths = projectPaths.environment(environmentName);
     final port = nextPort();
-    group('$functionName $environmentName', () {
+    group(functionName, () {
       late Process functionProc;
       late Uri apiUri;
       final logs = <String>[];
 
       setUpAll(() async {
         apiUri = Uri.parse('http://localhost:$port');
-        final entrypoint = envPaths.functionEntrypoint(apiName, functionName);
+        final entrypoint = projectPaths.functionEntrypoint(
+          apiName,
+          functionName,
+        );
         functionProc = await Process.start(
           Platform.executable,
           [entrypoint],
@@ -495,7 +489,7 @@ const Map<String, Test> tests = {
     apis: {
       'middleware': ApiTest(
         functionTests: {
-          ('sayHello', 'prod'): [
+          'sayHello': [
             FunctionTestSuccess(
               name: 'valid name',
               input: {
@@ -514,7 +508,7 @@ const Map<String, Test> tests = {
       ),
       'parameter_types': ApiTest(
         functionTests: {
-          ('simple', 'prod'): [
+          'simple': [
             FunctionTestSuccess(
               name: 'valid input',
               input: complexStruct,
@@ -522,7 +516,7 @@ const Map<String, Test> tests = {
               output: null,
             ),
           ],
-          ('simpleOptional', 'prod'): [
+          'simpleOptional': [
             FunctionTestSuccess(
               name: 'all present',
               input: complexStruct,
@@ -534,7 +528,7 @@ const Map<String, Test> tests = {
               output: null,
             ),
           ],
-          ('complex', 'prod'): [
+          'complex': [
             FunctionTestSuccess(
               name: 'all present',
               input: {
@@ -880,35 +874,35 @@ const Map<String, Test> tests = {
       ),
       'classes': ApiTest(
         functionTests: {
-          ('empty', 'prod'): [
+          'empty': [
             FunctionTestSuccess(
               name: 'empty',
               input: {},
               output: {},
             ),
           ],
-          ('asyncEmpty', 'prod'): [
+          'asyncEmpty': [
             FunctionTestSuccess(
               name: 'asyncEmpty',
               input: {},
               output: {},
             ),
           ],
-          ('emptySuper', 'prod'): [
+          'emptySuper': [
             FunctionTestSuccess(
               name: 'emptySuper',
               input: {},
               output: {},
             ),
           ],
-          ('asyncEmptySuper', 'prod'): [
+          'asyncEmptySuper': [
             FunctionTestSuccess(
               name: 'asyncEmptySuper',
               input: {},
               output: {},
             ),
           ],
-          ('fields', 'prod'): [
+          'fields': [
             FunctionTestSuccess(
               name: 'fields',
               input: {
@@ -923,7 +917,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncFields', 'prod'): [
+          'asyncFields': [
             FunctionTestSuccess(
               name: 'asyncFields',
               input: {
@@ -938,7 +932,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nullableFields', 'prod'): [
+          'nullableFields': [
             FunctionTestSuccess(
               name: 'null',
               input: {},
@@ -958,7 +952,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNullableFields', 'prod'): [
+          'asyncNullableFields': [
             FunctionTestSuccess(
               name: 'null',
               input: {},
@@ -978,7 +972,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('superFields', 'prod'): [
+          'superFields': [
             FunctionTestSuccess(
               name: 'superFields',
               input: {
@@ -991,7 +985,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncSuperFields', 'prod'): [
+          'asyncSuperFields': [
             FunctionTestSuccess(
               name: 'asyncSuperFields',
               input: {
@@ -1004,7 +998,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('namedFields', 'prod'): [
+          'namedFields': [
             FunctionTestSuccess(
               name: 'namedFields',
               input: {
@@ -1019,7 +1013,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNamedFields', 'prod'): [
+          'asyncNamedFields': [
             FunctionTestSuccess(
               name: 'asyncNamedFields',
               input: {
@@ -1034,7 +1028,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('mixedFields', 'prod'): [
+          'mixedFields': [
             FunctionTestSuccess(
               name: 'mixedFields',
               input: {
@@ -1049,7 +1043,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncMixedFields', 'prod'): [
+          'asyncMixedFields': [
             FunctionTestSuccess(
               name: 'asyncMixedFields',
               input: {
@@ -1064,7 +1058,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('defaultValues', 'prod'): [
+          'defaultValues': [
             FunctionTestSuccess(
               name: 'all fields set',
               input: {
@@ -1094,7 +1088,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncDefaultValues', 'prod'): [
+          'asyncDefaultValues': [
             FunctionTestSuccess(
               name: 'all fields set',
               input: {
@@ -1124,7 +1118,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nestedClass', 'prod'): [
+          'nestedClass': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1169,7 +1163,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNestedClass', 'prod'): [
+          'asyncNestedClass': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1214,7 +1208,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('onlyFromJson', 'prod'): [
+          'onlyFromJson': [
             FunctionTestSuccess(
               name: 'onlyFromJson',
               input: {
@@ -1227,7 +1221,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncOnlyFromJson', 'prod'): [
+          'asyncOnlyFromJson': [
             FunctionTestSuccess(
               name: 'asyncOnlyFromJson',
               input: {
@@ -1240,7 +1234,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('onlyToJson', 'prod'): [
+          'onlyToJson': [
             FunctionTestSuccess(
               name: 'onlyToJson',
               input: {
@@ -1253,7 +1247,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncOnlyToJson', 'prod'): [
+          'asyncOnlyToJson': [
             FunctionTestSuccess(
               name: 'asyncOnlyToJson',
               input: {
@@ -1266,7 +1260,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('onlyToJsonWithDefaults', 'prod'): [
+          'onlyToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1286,7 +1280,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncOnlyToJsonWithDefaults', 'prod'): [
+          'asyncOnlyToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1306,7 +1300,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('fromAndToJson', 'prod'): [
+          'fromAndToJson': [
             FunctionTestSuccess(
               name: 'fromAndToJson',
               input: {
@@ -1319,7 +1313,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncFromAndToJson', 'prod'): [
+          'asyncFromAndToJson': [
             FunctionTestSuccess(
               name: 'asyncFromAndToJson',
               input: {
@@ -1332,7 +1326,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nonMapToJson', 'prod'): [
+          'nonMapToJson': [
             FunctionTestSuccess(
               name: 'nonMapToJson',
               input: {
@@ -1341,7 +1335,7 @@ const Map<String, Test> tests = {
               output: 'field',
             ),
           ],
-          ('asyncNonMapToJson', 'prod'): [
+          'asyncNonMapToJson': [
             FunctionTestSuccess(
               name: 'asyncNonMapToJson',
               input: {
@@ -1350,7 +1344,7 @@ const Map<String, Test> tests = {
               output: 'field',
             ),
           ],
-          ('nonMapToJsonWithDefaults', 'prod'): [
+          'nonMapToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1364,7 +1358,7 @@ const Map<String, Test> tests = {
               output: 'default',
             ),
           ],
-          ('asyncNonMapToJsonWithDefaults', 'prod'): [
+          'asyncNonMapToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
@@ -1378,7 +1372,7 @@ const Map<String, Test> tests = {
               output: 'default',
             ),
           ],
-          ('nonMapFromAndToJson', 'prod'): [
+          'nonMapFromAndToJson': [
             FunctionTestSuccess(
               name: 'nonMapFromAndToJson',
               input: {
@@ -1387,7 +1381,7 @@ const Map<String, Test> tests = {
               output: 'field',
             ),
           ],
-          ('asyncNonMapFromAndToJson', 'prod'): [
+          'asyncNonMapFromAndToJson': [
             FunctionTestSuccess(
               name: 'asyncNonMapFromAndToJson',
               input: {
@@ -1400,7 +1394,7 @@ const Map<String, Test> tests = {
       ),
       'records': ApiTest(
         functionTests: {
-          ('nonAliasedPositionalFields', 'prod'): [
+          'nonAliasedPositionalFields': [
             FunctionTestSuccess(
               name: 'nonAliasedPositionalFields',
               input: {
@@ -1415,7 +1409,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNonAliasedPositionalFields', 'prod'): [
+          'asyncNonAliasedPositionalFields': [
             FunctionTestSuccess(
               name: 'asyncNonAliasedPositionalFields',
               input: {
@@ -1430,7 +1424,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('aliasedPositionalFields', 'prod'): [
+          'aliasedPositionalFields': [
             FunctionTestSuccess(
               name: 'aliasedPositionalFields',
               input: {
@@ -1445,7 +1439,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncAliasedPositionalFields', 'prod'): [
+          'asyncAliasedPositionalFields': [
             FunctionTestSuccess(
               name: 'asyncAliasedPositionalFields',
               input: {
@@ -1460,7 +1454,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('positionalFields', 'prod'): [
+          'positionalFields': [
             FunctionTestSuccess(
               name: 'positionalFields',
               input: {
@@ -1485,7 +1479,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncPositionalFields', 'prod'): [
+          'asyncPositionalFields': [
             FunctionTestSuccess(
               name: 'positionalFields',
               input: {
@@ -1510,7 +1504,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nonAliasedNamedFields', 'prod'): [
+          'nonAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'nonAliasedNamedFields',
               input: {
@@ -1525,7 +1519,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNonAliasedNamedFields', 'prod'): [
+          'asyncNonAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'asyncNonAliasedNamedFields',
               input: {
@@ -1540,7 +1534,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('aliasedNamedFields', 'prod'): [
+          'aliasedNamedFields': [
             FunctionTestSuccess(
               name: 'aliasedNamedFields',
               input: {
@@ -1555,7 +1549,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncAliasedNamedFields', 'prod'): [
+          'asyncAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'asyncAliasedNamedFields',
               input: {
@@ -1570,7 +1564,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('namedFields', 'prod'): [
+          'namedFields': [
             FunctionTestSuccess(
               name: 'namedFields',
               input: {
@@ -1595,7 +1589,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNamedFields', 'prod'): [
+          'asyncNamedFields': [
             FunctionTestSuccess(
               name: 'namedFields',
               input: {
@@ -1620,7 +1614,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('aliasedMixedFields', 'prod'): [
+          'aliasedMixedFields': [
             FunctionTestSuccess(
               name: 'aliasedMixedFields',
               input: {
@@ -1635,7 +1629,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncAliasedMixedFields', 'prod'): [
+          'asyncAliasedMixedFields': [
             FunctionTestSuccess(
               name: 'asyncAliasedMixedFields',
               input: {
@@ -1650,7 +1644,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nonAliasedMixedFields', 'prod'): [
+          'nonAliasedMixedFields': [
             FunctionTestSuccess(
               name: 'nonAliasedMixedFields',
               input: {
@@ -1665,7 +1659,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNonAliasedMixedFields', 'prod'): [
+          'asyncNonAliasedMixedFields': [
             FunctionTestSuccess(
               name: 'asyncNonAliasedMixedFields',
               input: {
@@ -1680,7 +1674,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('mixedFields', 'prod'): [
+          'mixedFields': [
             FunctionTestSuccess(
               name: 'mixedFields',
               input: {
@@ -1705,7 +1699,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncMixedFields', 'prod'): [
+          'asyncMixedFields': [
             FunctionTestSuccess(
               name: 'asyncMixedFields',
               input: {
@@ -1730,7 +1724,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nested', 'prod'): [
+          'nested': [
             FunctionTestSuccess(
               name: 'nested',
               input: {
@@ -1757,7 +1751,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNested', 'prod'): [
+          'asyncNested': [
             FunctionTestSuccess(
               name: 'asyncNested',
               input: {
@@ -1784,7 +1778,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('nullableNested', 'prod'): [
+          'nullableNested': [
             FunctionTestSuccess(
               name: 'null',
               input: {},
@@ -1829,7 +1823,7 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          ('asyncNullableNested', 'prod'): [
+          'asyncNullableNested': [
             FunctionTestSuccess(
               name: 'null',
               input: {},
@@ -1872,35 +1866,6 @@ const Map<String, Test> tests = {
                   'anotherField': 'anotherField',
                 },
               },
-            ),
-          ],
-        },
-      ),
-    },
-  ),
-  'environments': Test(
-    apis: {
-      'override': ApiTest(
-        functionTests: {
-          ('sayHello', 'prod'): [
-            FunctionTestSuccess(
-              name: 'dev',
-              input: {},
-              output: 'Hello, World!',
-            ),
-          ],
-          ('sayHello', 'staging'): [
-            FunctionTestSuccess(
-              name: 'dev',
-              input: {},
-              output: 'Hello, Staging!',
-            ),
-          ],
-          ('sayHello', 'dev'): [
-            FunctionTestSuccess(
-              name: 'dev',
-              input: {},
-              output: 'Hello, Dev!',
             ),
           ],
         },

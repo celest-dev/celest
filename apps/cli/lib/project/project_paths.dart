@@ -21,8 +21,11 @@ final class ProjectPaths {
   late final String apisDir = p.join(projectRoot, 'apis');
   late final String configDir = p.join(projectRoot, 'config');
 
-  ProjectEnvPaths environment(String environmentName) =>
-      ProjectEnvPaths(this, environmentName);
+  String apiOutput(String apiName) => p.join(outputsDir, 'apis', apiName);
+  String functionEntrypoint(String apiName, String functionName) => p.join(
+        apiOutput(apiName),
+        '$functionName.dart',
+      );
 
   Uri normalizeUri(Uri uri) {
     return switch (uri.scheme) {
@@ -42,23 +45,4 @@ final class ProjectPaths {
     );
     return Uri(scheme: 'project', path: relativePath);
   }
-}
-
-final class ProjectEnvPaths {
-  ProjectEnvPaths(this._projectPaths, this._environmentName);
-
-  final ProjectPaths _projectPaths;
-  final String _environmentName;
-
-  late final String outputsDir = p.join(
-    _projectPaths.outputsDir,
-    'environments',
-    _environmentName,
-  );
-
-  String apiOutput(String apiName) => p.join(outputsDir, 'apis', apiName);
-  String functionEntrypoint(String apiName, String functionName) => p.join(
-        apiOutput(apiName),
-        '$functionName.dart',
-      );
 }

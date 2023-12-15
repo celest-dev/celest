@@ -12,8 +12,7 @@ class ApiTest {
     required this.functionTests,
   });
 
-  final Map<(String functionName, String environmentName), List<FunctionTest>>
-      functionTests;
+  final Map<String, List<FunctionTest>> functionTests;
 }
 
 sealed class FunctionTest {

@@ -14,12 +14,10 @@ final class ProjectBuilder {
   ProjectBuilder({
     required this.project,
     required this.projectPaths,
-    required this.environmentName,
   });
 
   final ast.Project project;
   final ProjectPaths projectPaths;
-  final String environmentName;
 
   Future<proto.Project> build() async {
     final receivePort = ReceivePort();
@@ -30,7 +28,6 @@ final class ProjectBuilder {
         project.name,
         projectPaths.projectRoot,
         projectPaths.outputsDir,
-        environmentName,
       ],
       receivePort.sendPort,
       onError: errorPort.sendPort,
@@ -70,12 +67,7 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
 
   @override
   void visitProject(ast.Project project) {
-    project.environments.values.forEach(visitEnvironment);
-  }
-
-  @override
-  void visitEnvironment(ast.Environment environment) {
-    environment.apis.values.forEach(visitApi);
+    project.apis.values.forEach(visitApi);
   }
 
   @override

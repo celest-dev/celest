@@ -78,13 +78,6 @@ final class StartCommand extends CelestCommand {
       return _exitWithErrors(errors);
     }
 
-    final environment =
-        argResults!.rest.singleOrNull ?? project.environmentNames.singleOrNull;
-    if (environment == null) {
-      logger.err('No environment specified.');
-      return 1;
-    }
-
     final codeGenerator = CodeGenerator(
       projectPaths: projectPaths,
       typeHelper: analyzer.typeHelper,
@@ -101,7 +94,6 @@ final class StartCommand extends CelestCommand {
     final projectBuilder = ProjectBuilder(
       project: project,
       projectPaths: projectPaths,
-      environmentName: 'dev', // TODO
     );
     final _ = await projectBuilder.build();
 

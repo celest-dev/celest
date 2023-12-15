@@ -7,7 +7,6 @@ part of 'ast.dart';
 // **************************************************************************
 
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
-Serializer<Environment> _$environmentSerializer = new _$EnvironmentSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
 Serializer<ApiAnonymous> _$apiAnonymousSerializer =
     new _$ApiAnonymousSerializer();
@@ -42,17 +41,14 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(SourceLocation)),
-      'environmentNames',
-      serializers.serialize(object.environmentNames,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
-      'baseEnvironment',
-      serializers.serialize(object.baseEnvironment,
-          specifiedType: const FullType(Environment)),
-      'environmentOverrides',
-      serializers.serialize(object.environmentOverrides,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(Environment)])),
+      'apis',
+      serializers.serialize(object.apis,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(Api)])),
+      'envVars',
+      serializers.serialize(object.envVars,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(EnvironmentVariable)])),
     ];
 
     return result;
@@ -81,75 +77,6 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
           result.location.replace(serializers.deserialize(value,
                   specifiedType: const FullType(SourceLocation))!
               as SourceLocation);
-          break;
-        case 'environmentNames':
-          result.environmentNames.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
-        case 'baseEnvironment':
-          result.baseEnvironment.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Environment))! as Environment);
-          break;
-        case 'environmentOverrides':
-          result.environmentOverrides.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(Environment)
-              ]))!);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$EnvironmentSerializer implements StructuredSerializer<Environment> {
-  @override
-  final Iterable<Type> types = const [Environment, _$Environment];
-  @override
-  final String wireName = 'Environment';
-
-  @override
-  Iterable<Object?> serialize(Serializers serializers, Environment object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'apis',
-      serializers.serialize(object.apis,
-          specifiedType: const FullType(
-              BuiltMap, const [const FullType(String), const FullType(Api)])),
-      'envVars',
-      serializers.serialize(object.envVars,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(EnvironmentVariable)])),
-    ];
-    Object? value;
-    value = object.name;
-    if (value != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    return result;
-  }
-
-  @override
-  Environment deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new EnvironmentBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current! as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'apis':
           result.apis.replace(serializers.deserialize(value,
@@ -181,9 +108,6 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'environmentName',
-      serializers.serialize(object.environmentName,
-          specifiedType: const FullType(String)),
       'metadata',
       serializers.serialize(object.metadata,
           specifiedType:
@@ -210,10 +134,6 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'environmentName':
-          result.environmentName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'metadata':
@@ -654,11 +574,9 @@ class _$Project extends Project {
   @override
   final SourceLocation location;
   @override
-  final BuiltList<String> environmentNames;
+  final BuiltMap<String, Api> apis;
   @override
-  final Environment baseEnvironment;
-  @override
-  final BuiltMap<String, Environment> environmentOverrides;
+  final BuiltList<EnvironmentVariable> envVars;
 
   factory _$Project([void Function(ProjectBuilder)? updates]) =>
       (new ProjectBuilder()..update(updates))._build();
@@ -667,19 +585,14 @@ class _$Project extends Project {
       {required this.name,
       required this.reference,
       required this.location,
-      required this.environmentNames,
-      required this.baseEnvironment,
-      required this.environmentOverrides})
+      required this.apis,
+      required this.envVars})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name');
     BuiltValueNullFieldError.checkNotNull(reference, r'Project', 'reference');
     BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
-    BuiltValueNullFieldError.checkNotNull(
-        environmentNames, r'Project', 'environmentNames');
-    BuiltValueNullFieldError.checkNotNull(
-        baseEnvironment, r'Project', 'baseEnvironment');
-    BuiltValueNullFieldError.checkNotNull(
-        environmentOverrides, r'Project', 'environmentOverrides');
+    BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
+    BuiltValueNullFieldError.checkNotNull(envVars, r'Project', 'envVars');
   }
 
   @override
@@ -696,9 +609,8 @@ class _$Project extends Project {
         name == other.name &&
         reference == other.reference &&
         location == other.location &&
-        environmentNames == other.environmentNames &&
-        baseEnvironment == other.baseEnvironment &&
-        environmentOverrides == other.environmentOverrides;
+        apis == other.apis &&
+        envVars == other.envVars;
   }
 
   @override
@@ -707,9 +619,8 @@ class _$Project extends Project {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, reference.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
-    _$hash = $jc(_$hash, environmentNames.hashCode);
-    _$hash = $jc(_$hash, baseEnvironment.hashCode);
-    _$hash = $jc(_$hash, environmentOverrides.hashCode);
+    _$hash = $jc(_$hash, apis.hashCode);
+    _$hash = $jc(_$hash, envVars.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -720,9 +631,8 @@ class _$Project extends Project {
           ..add('name', name)
           ..add('reference', reference)
           ..add('location', location)
-          ..add('environmentNames', environmentNames)
-          ..add('baseEnvironment', baseEnvironment)
-          ..add('environmentOverrides', environmentOverrides))
+          ..add('apis', apis)
+          ..add('envVars', envVars))
         .toString();
   }
 }
@@ -743,24 +653,16 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
-  ListBuilder<String>? _environmentNames;
-  ListBuilder<String> get environmentNames =>
-      _$this._environmentNames ??= new ListBuilder<String>();
-  set environmentNames(ListBuilder<String>? environmentNames) =>
-      _$this._environmentNames = environmentNames;
+  MapBuilder<String, Api>? _apis;
+  MapBuilder<String, Api> get apis =>
+      _$this._apis ??= new MapBuilder<String, Api>();
+  set apis(MapBuilder<String, Api>? apis) => _$this._apis = apis;
 
-  EnvironmentBuilder? _baseEnvironment;
-  EnvironmentBuilder get baseEnvironment =>
-      _$this._baseEnvironment ??= new EnvironmentBuilder();
-  set baseEnvironment(EnvironmentBuilder? baseEnvironment) =>
-      _$this._baseEnvironment = baseEnvironment;
-
-  MapBuilder<String, Environment>? _environmentOverrides;
-  MapBuilder<String, Environment> get environmentOverrides =>
-      _$this._environmentOverrides ??= new MapBuilder<String, Environment>();
-  set environmentOverrides(
-          MapBuilder<String, Environment>? environmentOverrides) =>
-      _$this._environmentOverrides = environmentOverrides;
+  ListBuilder<EnvironmentVariable>? _envVars;
+  ListBuilder<EnvironmentVariable> get envVars =>
+      _$this._envVars ??= new ListBuilder<EnvironmentVariable>();
+  set envVars(ListBuilder<EnvironmentVariable>? envVars) =>
+      _$this._envVars = envVars;
 
   ProjectBuilder();
 
@@ -770,9 +672,8 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
       _name = $v.name;
       _reference = $v.reference;
       _location = $v.location.toBuilder();
-      _environmentNames = $v.environmentNames.toBuilder();
-      _baseEnvironment = $v.baseEnvironment.toBuilder();
-      _environmentOverrides = $v.environmentOverrides.toBuilder();
+      _apis = $v.apis.toBuilder();
+      _envVars = $v.envVars.toBuilder();
       _$v = null;
     }
     return this;
@@ -802,145 +703,20 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
               reference: BuiltValueNullFieldError.checkNotNull(
                   reference, r'Project', 'reference'),
               location: location.build(),
-              environmentNames: environmentNames.build(),
-              baseEnvironment: baseEnvironment.build(),
-              environmentOverrides: environmentOverrides.build());
+              apis: apis.build(),
+              envVars: envVars.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'location';
         location.build();
-        _$failedField = 'environmentNames';
-        environmentNames.build();
-        _$failedField = 'baseEnvironment';
-        baseEnvironment.build();
-        _$failedField = 'environmentOverrides';
-        environmentOverrides.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Project', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$Environment extends Environment {
-  @override
-  final String? name;
-  @override
-  final BuiltMap<String, Api> apis;
-  @override
-  final BuiltList<EnvironmentVariable> envVars;
-
-  factory _$Environment([void Function(EnvironmentBuilder)? updates]) =>
-      (new EnvironmentBuilder()..update(updates))._build();
-
-  _$Environment._({this.name, required this.apis, required this.envVars})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(apis, r'Environment', 'apis');
-    BuiltValueNullFieldError.checkNotNull(envVars, r'Environment', 'envVars');
-  }
-
-  @override
-  Environment rebuild(void Function(EnvironmentBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  EnvironmentBuilder toBuilder() => new EnvironmentBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is Environment &&
-        name == other.name &&
-        apis == other.apis &&
-        envVars == other.envVars;
-  }
-
-  @override
-  int get hashCode {
-    var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, apis.hashCode);
-    _$hash = $jc(_$hash, envVars.hashCode);
-    _$hash = $jf(_$hash);
-    return _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'Environment')
-          ..add('name', name)
-          ..add('apis', apis)
-          ..add('envVars', envVars))
-        .toString();
-  }
-}
-
-class EnvironmentBuilder implements Builder<Environment, EnvironmentBuilder> {
-  _$Environment? _$v;
-
-  String? _name;
-  String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
-
-  MapBuilder<String, Api>? _apis;
-  MapBuilder<String, Api> get apis =>
-      _$this._apis ??= new MapBuilder<String, Api>();
-  set apis(MapBuilder<String, Api>? apis) => _$this._apis = apis;
-
-  ListBuilder<EnvironmentVariable>? _envVars;
-  ListBuilder<EnvironmentVariable> get envVars =>
-      _$this._envVars ??= new ListBuilder<EnvironmentVariable>();
-  set envVars(ListBuilder<EnvironmentVariable>? envVars) =>
-      _$this._envVars = envVars;
-
-  EnvironmentBuilder();
-
-  EnvironmentBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _name = $v.name;
-      _apis = $v.apis.toBuilder();
-      _envVars = $v.envVars.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(Environment other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Environment;
-  }
-
-  @override
-  void update(void Function(EnvironmentBuilder)? updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  Environment build() => _build();
-
-  _$Environment _build() {
-    _$Environment _$result;
-    try {
-      _$result = _$v ??
-          new _$Environment._(
-              name: name, apis: apis.build(), envVars: envVars.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
         _$failedField = 'apis';
         apis.build();
         _$failedField = 'envVars';
         envVars.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Environment', _$failedField, e.toString());
+            r'Project', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -953,8 +729,6 @@ class _$Api extends Api {
   @override
   final String name;
   @override
-  final String environmentName;
-  @override
   final BuiltList<ApiMetadata> metadata;
   @override
   final BuiltMap<String, CloudFunction> functions;
@@ -962,15 +736,9 @@ class _$Api extends Api {
   factory _$Api([void Function(ApiBuilder)? updates]) =>
       (new ApiBuilder()..update(updates))._build();
 
-  _$Api._(
-      {required this.name,
-      required this.environmentName,
-      required this.metadata,
-      required this.functions})
+  _$Api._({required this.name, required this.metadata, required this.functions})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        environmentName, r'Api', 'environmentName');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
   }
@@ -987,7 +755,6 @@ class _$Api extends Api {
     if (identical(other, this)) return true;
     return other is Api &&
         name == other.name &&
-        environmentName == other.environmentName &&
         metadata == other.metadata &&
         functions == other.functions;
   }
@@ -996,7 +763,6 @@ class _$Api extends Api {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, environmentName.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, functions.hashCode);
     _$hash = $jf(_$hash);
@@ -1007,7 +773,6 @@ class _$Api extends Api {
   String toString() {
     return (newBuiltValueToStringHelper(r'Api')
           ..add('name', name)
-          ..add('environmentName', environmentName)
           ..add('metadata', metadata)
           ..add('functions', functions))
         .toString();
@@ -1020,11 +785,6 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
-
-  String? _environmentName;
-  String? get environmentName => _$this._environmentName;
-  set environmentName(String? environmentName) =>
-      _$this._environmentName = environmentName;
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
@@ -1044,7 +804,6 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
-      _environmentName = $v.environmentName;
       _metadata = $v.metadata.toBuilder();
       _functions = $v.functions.toBuilder();
       _$v = null;
@@ -1072,8 +831,6 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
       _$result = _$v ??
           new _$Api._(
               name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
-              environmentName: BuiltValueNullFieldError.checkNotNull(
-                  environmentName, r'Api', 'environmentName'),
               metadata: metadata.build(),
               functions: functions.build());
     } catch (_) {

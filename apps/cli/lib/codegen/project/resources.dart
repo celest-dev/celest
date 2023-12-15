@@ -100,8 +100,7 @@ final class ResourcesGenerator {
   }
 
   Library generate() {
-    final allApis = project.environments.values
-        .expand((environment) => environment.apis.values);
+    final allApis = project.apis.values;
     if (allApis.isNotEmpty) {
       // Ensures consistent ordering in output file which helps with diffs.
       final apis = SplayTreeMap<String, Field>();

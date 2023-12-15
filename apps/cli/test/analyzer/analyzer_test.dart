@@ -136,55 +136,6 @@ const project = Project(name: '');
           'The project name cannot be empty.',
         ],
       );
-
-      testErrors(
-        name: 'no_environments',
-        projectDart: '''
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'my_project', environments: []);
-''',
-        errors: [
-          'No environments have been defined for this project.',
-        ],
-      );
-
-      testErrors(
-        name: 'invalid_environment',
-        projectDart: '''
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'my_project', environments: ['']);
-''',
-        errors: [
-          'Environment names cannot be empty.',
-        ],
-      );
-
-      testErrors(
-        name: 'duplicate_environment',
-        projectDart: '''
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'my_project', environments: ['prod', 'prod']);
-''',
-        errors: [
-          'Duplicate environment name: "prod"',
-        ],
-      );
-
-      testErrors(
-        name: 'no_environments_and_bad_name',
-        projectDart: '''
-import 'package:celest/celest.dart';
-
-const project = Project(name: '', environments: []);
-''',
-        errors: [
-          'The project name cannot be empty.',
-          'No environments have been defined for this project.',
-        ],
-      );
     });
 
     group('apis', () {
@@ -197,39 +148,15 @@ String sayHello() => 'Hello, World!';
         },
       );
 
-      testNoErrors(
-        name: 'simple_api_with_environments',
-        apis: {
-          'greeting.dart': '''
-String sayHello() => 'Hello, World!';
-''',
-          'greeting.prod.dart': '''
-String sayHello() => 'Hello, Prod!';
-''',
-        },
-      );
-
       testErrors(
-        name: 'unknown_environment',
+        name: 'bad_file_name',
         apis: {
           'greeting.dev.dart': '''
 String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Unknown environment for file: "dev"',
-        ],
-      );
-
-      testErrors(
-        name: 'bad_file_name',
-        apis: {
-          'greeting.dev.what.dart': '''
-String sayHello() => 'Hello, World!';
-''',
-        },
-        errors: [
-          'API files must be named as follows: <api_name>.dart or <api_name>.<environment_name>.dart',
+          'API files must be named as follows: <api_name>.dart',
         ],
       );
 

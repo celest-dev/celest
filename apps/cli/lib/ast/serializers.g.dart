@@ -13,7 +13,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ApiMiddleware.serializer)
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionParameter.serializer)
-      ..add(Environment.serializer)
       ..add(EnvironmentVariable.serializer)
       ..add(Project.serializer)
       ..add(SourceLocation.serializer)
@@ -31,13 +30,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(String), const FullType(Environment)]),
-          () => new MapBuilder<String, Environment>())
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(Api)]),

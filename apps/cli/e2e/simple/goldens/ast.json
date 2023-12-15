@@ -10,12 +10,6 @@
     "line": 3,
     "column": 6
   },
-  "environmentNames": [
-    "prod"
-  ],
-  "baseEnvironment": {
-    "apis": {},
-    "envVars": []
-  },
-  "environmentOverrides": {}
+  "apis": {},
+  "envVars": []
 }
