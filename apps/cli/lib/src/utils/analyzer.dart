@@ -10,6 +10,8 @@ import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
+import 'package:code_builder/code_builder.dart' as codegen;
+import 'package:collection/collection.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
@@ -106,6 +108,34 @@ extension DartTypeHelper on DartType {
       isDartCoreObject ||
       isDartCoreNull ||
       isEnum;
+}
+
+extension RecordTypeHelper on RecordType {
+  String get symbol {
+    switch (alias) {
+      case final alias?:
+        return alias.element.displayName;
+      default:
+        final reference = typeHelper.toReference(this) as codegen.RecordType;
+        final uniqueHash = const ListEquality<Object>().hash([
+          ...reference.positionalFieldTypes,
+          ...reference.namedFieldTypes.entries.expand(
+            (entry) => [entry.key, entry.value],
+          ),
+        ]);
+        return 'Record\$${uniqueHash.toRadixString(36)}';
+    }
+  }
+
+  String? get url => switch (alias) {
+        final alias? => alias.element.sourceLocation.uri.toString(),
+        _ => null,
+      };
+
+  Uri get uri => switch (url) {
+        final url? => Uri.parse(url).replace(fragment: symbol),
+        _ => Uri(fragment: symbol),
+      };
 }
 
 extension ElementSourceLocation on Element {

@@ -1,11 +1,13 @@
 import 'dart:collection';
 
-import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type.dart' as ast show RecordType;
+import 'package:analyzer/dart/element/type.dart' hide RecordType;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -28,6 +30,7 @@ final class EntrypointGenerator {
     typeHelper: typeHelper,
   );
   final _customSerializers = <Uri, Class>{};
+  final _anonymousRecordTypes = <String, RecordType>{};
 
   Library generate() {
     final library = LibraryBuilder();
@@ -196,6 +199,10 @@ final class EntrypointGenerator {
         _customSerializers[uri] = serializer;
         queue.addAll(referencedTypes);
       }
+      if ((type, typeHelper.toReference(type))
+          case (final ast.RecordType dartType, final RecordType recordType)) {
+        _anonymousRecordTypes[dartType.symbol] = recordType;
+      }
     }
 
     while (queue.isNotEmpty) {
@@ -240,6 +247,13 @@ final class EntrypointGenerator {
     library.body.addAll([
       target,
       entrypoint,
+      ..._anonymousRecordTypes.entries.map(
+        (recordType) => TypeDef(
+          (t) => t
+            ..name = recordType.key
+            ..definition = recordType.value,
+        ),
+      ),
       ..._customSerializers.values,
     ]);
     return library.build();

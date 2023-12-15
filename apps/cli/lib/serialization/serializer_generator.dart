@@ -29,7 +29,7 @@ final class SerializerGenerator {
     final clazz = Class((b) {
       final className = switch (type) {
         ast.InterfaceType() => type.element!.displayName,
-        ast.RecordType() => type.alias!.element.displayName,
+        ast.RecordType() => (type as ast.RecordType).symbol,
         _ => unreachable('Unsupported type $type'),
       };
       b
@@ -142,9 +142,9 @@ final class SerializerGenerator {
     if (serializationSpec.hasToJson) {
       return ref.property('toJson').call([]);
     }
-    final serialized = <String, Expression>{};
+    final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.fields) {
-      serialized[field.name] = jsonGenerator.toJson(
+      serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
         typeHelper.toReference(field.type),
         ref.property(field.name),
       );

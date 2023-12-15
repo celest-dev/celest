@@ -4,12 +4,13 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:typed_data' as _i3;
+import 'dart:typed_data' as _i4;
 
 import 'package:celest/celest.dart' as _i1;
 
-import 'apis/parameter_types.dart' as _i2;
-import 'apis/serialization.dart' as _i4;
+import 'apis/classes.dart' as _i2;
+import 'apis/parameter_types.dart' as _i3;
+import 'apis/records.dart' as _i5;
 
 abstract final class apis {
   static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
@@ -24,15 +25,17 @@ abstract final class apis {
   static const authenticatedFunction =
       _i1.CloudApi(name: r'authenticated_function');
 
+  static const classes = _i1.CloudApi(name: r'classes');
+
   static const middleware = _i1.CloudApi(name: r'middleware');
 
   static const parameterTypes = _i1.CloudApi(name: r'parameter_types');
 
   static const parameters = _i1.CloudApi(name: r'parameters');
 
-  static const returnTypes = _i1.CloudApi(name: r'return_types');
+  static const records = _i1.CloudApi(name: r'records');
 
-  static const serialization = _i1.CloudApi(name: r'serialization');
+  static const returnTypes = _i1.CloudApi(name: r'return_types');
 }
 
 abstract final class functions {
@@ -93,6 +96,194 @@ abstract final class functions {
     functionName: r'sayHelloAuthenticated',
   );
 
+  static const classesAsyncDefaultValues =
+      _i1.CloudFunction<_i2.DefaultValues, _i2.DefaultValues>(
+    api: r'classes',
+    functionName: r'asyncDefaultValues',
+  );
+
+  static const classesAsyncEmpty = _i1.CloudFunction<_i2.Empty, _i2.Empty>(
+    api: r'classes',
+    functionName: r'asyncEmpty',
+  );
+
+  static const classesAsyncEmptySuper =
+      _i1.CloudFunction<_i2.EmptySuper, _i2.EmptySuper>(
+    api: r'classes',
+    functionName: r'asyncEmptySuper',
+  );
+
+  static const classesAsyncFields = _i1.CloudFunction<_i2.Fields, _i2.Fields>(
+    api: r'classes',
+    functionName: r'asyncFields',
+  );
+
+  static const classesAsyncFromAndToJson =
+      _i1.CloudFunction<_i2.FromJsonAndToJson, _i2.FromJsonAndToJson>(
+    api: r'classes',
+    functionName: r'asyncFromAndToJson',
+  );
+
+  static const classesAsyncMixedFields =
+      _i1.CloudFunction<_i2.MixedFields, _i2.MixedFields>(
+    api: r'classes',
+    functionName: r'asyncMixedFields',
+  );
+
+  static const classesAsyncNamedFields =
+      _i1.CloudFunction<_i2.NamedFields, _i2.NamedFields>(
+    api: r'classes',
+    functionName: r'asyncNamedFields',
+  );
+
+  static const classesAsyncNestedClass =
+      _i1.CloudFunction<_i2.NestedClass, _i2.NestedClass>(
+    api: r'classes',
+    functionName: r'asyncNestedClass',
+  );
+
+  static const classesAsyncNonMapFromAndToJson =
+      _i1.CloudFunction<_i2.NonMapFromAndToJson, _i2.NonMapFromAndToJson>(
+    api: r'classes',
+    functionName: r'asyncNonMapFromAndToJson',
+  );
+
+  static const classesAsyncNonMapToJson =
+      _i1.CloudFunction<_i2.NonMapToJson, _i2.NonMapToJson>(
+    api: r'classes',
+    functionName: r'asyncNonMapToJson',
+  );
+
+  static const classesAsyncNonMapToJsonWithDefaults = _i1.CloudFunction<
+      _i2.NonMapToJsonWithDefaults, _i2.NonMapToJsonWithDefaults>(
+    api: r'classes',
+    functionName: r'asyncNonMapToJsonWithDefaults',
+  );
+
+  static const classesAsyncNullableFields =
+      _i1.CloudFunction<_i2.Fields?, _i2.Fields?>(
+    api: r'classes',
+    functionName: r'asyncNullableFields',
+  );
+
+  static const classesAsyncOnlyFromJson =
+      _i1.CloudFunction<_i2.OnlyFromJson, _i2.OnlyFromJson>(
+    api: r'classes',
+    functionName: r'asyncOnlyFromJson',
+  );
+
+  static const classesAsyncOnlyToJson =
+      _i1.CloudFunction<_i2.OnlyToJson, _i2.OnlyToJson>(
+    api: r'classes',
+    functionName: r'asyncOnlyToJson',
+  );
+
+  static const classesAsyncOnlyToJsonWithDefaults =
+      _i1.CloudFunction<_i2.OnlyToJsonWithDefaults, _i2.OnlyToJsonWithDefaults>(
+    api: r'classes',
+    functionName: r'asyncOnlyToJsonWithDefaults',
+  );
+
+  static const classesAsyncSuperFields =
+      _i1.CloudFunction<_i2.SuperFields, _i2.SuperFields>(
+    api: r'classes',
+    functionName: r'asyncSuperFields',
+  );
+
+  static const classesDefaultValues =
+      _i1.CloudFunction<_i2.DefaultValues, _i2.DefaultValues>(
+    api: r'classes',
+    functionName: r'defaultValues',
+  );
+
+  static const classesEmpty = _i1.CloudFunction<_i2.Empty, _i2.Empty>(
+    api: r'classes',
+    functionName: r'empty',
+  );
+
+  static const classesEmptySuper =
+      _i1.CloudFunction<_i2.EmptySuper, _i2.EmptySuper>(
+    api: r'classes',
+    functionName: r'emptySuper',
+  );
+
+  static const classesFields = _i1.CloudFunction<_i2.Fields, _i2.Fields>(
+    api: r'classes',
+    functionName: r'fields',
+  );
+
+  static const classesFromAndToJson =
+      _i1.CloudFunction<_i2.FromJsonAndToJson, _i2.FromJsonAndToJson>(
+    api: r'classes',
+    functionName: r'fromAndToJson',
+  );
+
+  static const classesMixedFields =
+      _i1.CloudFunction<_i2.MixedFields, _i2.MixedFields>(
+    api: r'classes',
+    functionName: r'mixedFields',
+  );
+
+  static const classesNamedFields =
+      _i1.CloudFunction<_i2.NamedFields, _i2.NamedFields>(
+    api: r'classes',
+    functionName: r'namedFields',
+  );
+
+  static const classesNestedClass =
+      _i1.CloudFunction<_i2.NestedClass, _i2.NestedClass>(
+    api: r'classes',
+    functionName: r'nestedClass',
+  );
+
+  static const classesNonMapFromAndToJson =
+      _i1.CloudFunction<_i2.NonMapFromAndToJson, _i2.NonMapFromAndToJson>(
+    api: r'classes',
+    functionName: r'nonMapFromAndToJson',
+  );
+
+  static const classesNonMapToJson =
+      _i1.CloudFunction<_i2.NonMapToJson, _i2.NonMapToJson>(
+    api: r'classes',
+    functionName: r'nonMapToJson',
+  );
+
+  static const classesNonMapToJsonWithDefaults = _i1.CloudFunction<
+      _i2.NonMapToJsonWithDefaults, _i2.NonMapToJsonWithDefaults>(
+    api: r'classes',
+    functionName: r'nonMapToJsonWithDefaults',
+  );
+
+  static const classesNullableFields =
+      _i1.CloudFunction<_i2.Fields?, _i2.Fields?>(
+    api: r'classes',
+    functionName: r'nullableFields',
+  );
+
+  static const classesOnlyFromJson =
+      _i1.CloudFunction<_i2.OnlyFromJson, _i2.OnlyFromJson>(
+    api: r'classes',
+    functionName: r'onlyFromJson',
+  );
+
+  static const classesOnlyToJson =
+      _i1.CloudFunction<_i2.OnlyToJson, _i2.OnlyToJson>(
+    api: r'classes',
+    functionName: r'onlyToJson',
+  );
+
+  static const classesOnlyToJsonWithDefaults =
+      _i1.CloudFunction<_i2.OnlyToJsonWithDefaults, _i2.OnlyToJsonWithDefaults>(
+    api: r'classes',
+    functionName: r'onlyToJsonWithDefaults',
+  );
+
+  static const classesSuperFields =
+      _i1.CloudFunction<_i2.SuperFields, _i2.SuperFields>(
+    api: r'classes',
+    functionName: r'superFields',
+  );
+
   static const middlewareSayHello = _i1.CloudFunction<String, String>(
     api: r'middleware',
     functionName: r'sayHello',
@@ -100,54 +291,54 @@ abstract final class functions {
 
   static const parameterTypesComplex = _i1.CloudFunction<
       (
-        _i2.SimpleStruct,
-        _i2.ComplexStruct,
-        _i2.SimpleClass,
-        _i2.ComplexClass,
-        _i2.SimpleStruct?,
-        _i2.ComplexStruct?,
-        _i2.SimpleClass?,
-        _i2.ComplexClass?,
-        Iterable<_i2.SimpleStruct>,
-        Iterable<_i2.ComplexStruct>,
-        Iterable<_i2.SimpleClass>,
-        Iterable<_i2.ComplexClass>,
-        Iterable<_i2.SimpleStruct>?,
-        Iterable<_i2.ComplexStruct>?,
-        Iterable<_i2.SimpleClass>?,
-        Iterable<_i2.ComplexClass>?,
-        Iterable<_i2.SimpleStruct?>,
-        Iterable<_i2.ComplexStruct?>,
-        Iterable<_i2.SimpleClass?>,
-        Iterable<_i2.ComplexClass?>,
-        List<_i2.SimpleStruct>,
-        List<_i2.ComplexStruct>,
-        List<_i2.SimpleClass>,
-        List<_i2.ComplexClass>,
-        List<_i2.SimpleStruct>?,
-        List<_i2.ComplexStruct>?,
-        List<_i2.SimpleClass>?,
-        List<_i2.ComplexClass>?,
-        List<_i2.SimpleStruct?>,
-        List<_i2.ComplexStruct?>,
-        List<_i2.SimpleClass?>,
-        List<_i2.ComplexClass?>,
-        Map<String, _i2.SimpleStruct>,
-        Map<String, _i2.ComplexStruct>,
-        Map<String, _i2.SimpleClass>,
-        Map<String, _i2.ComplexClass>,
-        Map<String, _i2.SimpleStruct>?,
-        Map<String, _i2.ComplexStruct>?,
-        Map<String, _i2.SimpleClass>?,
-        Map<String, _i2.ComplexClass>?,
-        Map<String, _i2.SimpleStruct?>,
-        Map<String, _i2.ComplexStruct?>,
-        Map<String, _i2.SimpleClass?>,
-        Map<String, _i2.ComplexClass?>,
-        Map<String, _i2.SimpleStruct?>?,
-        Map<String, _i2.ComplexStruct?>?,
-        Map<String, _i2.SimpleClass?>?,
-        Map<String, _i2.ComplexClass?>?
+        _i3.SimpleStruct,
+        _i3.ComplexStruct,
+        _i3.SimpleClass,
+        _i3.ComplexClass,
+        _i3.SimpleStruct?,
+        _i3.ComplexStruct?,
+        _i3.SimpleClass?,
+        _i3.ComplexClass?,
+        Iterable<_i3.SimpleStruct>,
+        Iterable<_i3.ComplexStruct>,
+        Iterable<_i3.SimpleClass>,
+        Iterable<_i3.ComplexClass>,
+        Iterable<_i3.SimpleStruct>?,
+        Iterable<_i3.ComplexStruct>?,
+        Iterable<_i3.SimpleClass>?,
+        Iterable<_i3.ComplexClass>?,
+        Iterable<_i3.SimpleStruct?>,
+        Iterable<_i3.ComplexStruct?>,
+        Iterable<_i3.SimpleClass?>,
+        Iterable<_i3.ComplexClass?>,
+        List<_i3.SimpleStruct>,
+        List<_i3.ComplexStruct>,
+        List<_i3.SimpleClass>,
+        List<_i3.ComplexClass>,
+        List<_i3.SimpleStruct>?,
+        List<_i3.ComplexStruct>?,
+        List<_i3.SimpleClass>?,
+        List<_i3.ComplexClass>?,
+        List<_i3.SimpleStruct?>,
+        List<_i3.ComplexStruct?>,
+        List<_i3.SimpleClass?>,
+        List<_i3.ComplexClass?>,
+        Map<String, _i3.SimpleStruct>,
+        Map<String, _i3.ComplexStruct>,
+        Map<String, _i3.SimpleClass>,
+        Map<String, _i3.ComplexClass>,
+        Map<String, _i3.SimpleStruct>?,
+        Map<String, _i3.ComplexStruct>?,
+        Map<String, _i3.SimpleClass>?,
+        Map<String, _i3.ComplexClass>?,
+        Map<String, _i3.SimpleStruct?>,
+        Map<String, _i3.ComplexStruct?>,
+        Map<String, _i3.SimpleClass?>,
+        Map<String, _i3.ComplexClass?>,
+        Map<String, _i3.SimpleStruct?>?,
+        Map<String, _i3.ComplexStruct?>?,
+        Map<String, _i3.SimpleClass?>?,
+        Map<String, _i3.ComplexClass?>?
       ),
       void>(
     api: r'parameter_types',
@@ -160,7 +351,7 @@ abstract final class functions {
         int,
         double,
         bool,
-        _i2.MyEnum,
+        _i3.MyEnum,
         Null,
         BigInt,
         DateTime,
@@ -169,14 +360,14 @@ abstract final class functions {
         StackTrace,
         Uri,
         UriData,
-        _i3.Uint8List,
+        _i4.Uint8List,
         Iterable<String>,
-        Iterable<_i3.Uint8List>,
+        Iterable<_i4.Uint8List>,
         List<String>,
         List<int>,
         List<double>,
         List<bool>,
-        List<_i2.MyEnum>,
+        List<_i3.MyEnum>,
         List<Null>,
         List<BigInt>,
         List<DateTime>,
@@ -185,12 +376,12 @@ abstract final class functions {
         List<StackTrace>,
         List<Uri>,
         List<UriData>,
-        List<_i3.Uint8List>,
+        List<_i4.Uint8List>,
         Map<String, String>,
         Map<String, int>,
         Map<String, double>,
         Map<String, bool>,
-        Map<String, _i2.MyEnum>,
+        Map<String, _i3.MyEnum>,
         Map<String, Null>,
         Map<String, BigInt>,
         Map<String, DateTime>,
@@ -199,7 +390,7 @@ abstract final class functions {
         Map<String, StackTrace>,
         Map<String, Uri>,
         Map<String, UriData>,
-        Map<String, _i3.Uint8List>
+        Map<String, _i4.Uint8List>
       ),
       void>(
     api: r'parameter_types',
@@ -212,7 +403,7 @@ abstract final class functions {
         int?,
         double?,
         bool?,
-        _i2.MyEnum?,
+        _i3.MyEnum?,
         Null,
         BigInt?,
         DateTime?,
@@ -221,14 +412,14 @@ abstract final class functions {
         StackTrace?,
         Uri?,
         UriData?,
-        _i3.Uint8List?,
+        _i4.Uint8List?,
         Iterable<String>?,
-        Iterable<_i3.Uint8List>?,
+        Iterable<_i4.Uint8List>?,
         List<String>?,
         List<int>?,
         List<double>?,
         List<bool>?,
-        List<_i2.MyEnum>?,
+        List<_i3.MyEnum>?,
         List<Null>?,
         List<BigInt>?,
         List<DateTime>?,
@@ -237,12 +428,12 @@ abstract final class functions {
         List<StackTrace>?,
         List<Uri>?,
         List<UriData>?,
-        List<_i3.Uint8List>?,
+        List<_i4.Uint8List>?,
         Map<String, String>?,
         Map<String, int>?,
         Map<String, double>?,
         Map<String, bool>?,
-        Map<String, _i2.MyEnum>?,
+        Map<String, _i3.MyEnum>?,
         Map<String, Null>?,
         Map<String, BigInt>?,
         Map<String, DateTime>?,
@@ -251,7 +442,7 @@ abstract final class functions {
         Map<String, StackTrace>?,
         Map<String, Uri>?,
         Map<String, UriData>?,
-        Map<String, _i3.Uint8List>?
+        Map<String, _i4.Uint8List>?
       ),
       void>(
     api: r'parameter_types',
@@ -282,31 +473,183 @@ abstract final class functions {
     functionName: r'requiredPositional',
   );
 
+  static const recordsAliasedMixedFields =
+      _i1.CloudFunction<_i5.MixedFields, _i5.MixedFields>(
+    api: r'records',
+    functionName: r'aliasedMixedFields',
+  );
+
+  static const recordsAliasedNamedFields = _i1.CloudFunction<
+      ({String anotherField, String field}),
+      ({String anotherField, String field})>(
+    api: r'records',
+    functionName: r'aliasedNamedFields',
+  );
+
+  static const recordsAliasedPositionalFields =
+      _i1.CloudFunction<(String, String), (String, String)>(
+    api: r'records',
+    functionName: r'aliasedPositionalFields',
+  );
+
+  static const recordsAsyncAliasedMixedFields =
+      _i1.CloudFunction<_i5.MixedFields, _i5.MixedFields>(
+    api: r'records',
+    functionName: r'asyncAliasedMixedFields',
+  );
+
+  static const recordsAsyncAliasedNamedFields = _i1.CloudFunction<
+      ({String anotherField, String field}),
+      ({String anotherField, String field})>(
+    api: r'records',
+    functionName: r'asyncAliasedNamedFields',
+  );
+
+  static const recordsAsyncAliasedPositionalFields =
+      _i1.CloudFunction<(String, String), (String, String)>(
+    api: r'records',
+    functionName: r'asyncAliasedPositionalFields',
+  );
+
+  static const recordsAsyncMixedFields = _i1.CloudFunction<
+      (_i5.MixedFields, {_i5.MixedFields aliased}),
+      (_i5.MixedFields, {_i5.MixedFields aliased})>(
+    api: r'records',
+    functionName: r'asyncMixedFields',
+  );
+
+  static const recordsAsyncNamedFields = _i1.CloudFunction<
+      ({
+        ({String anotherField, String field}) nonAliased,
+        ({String anotherField, String field}) aliased
+      }),
+      ({
+        ({String anotherField, String field}) aliased,
+        ({String anotherField, String field}) nonAliased
+      })>(
+    api: r'records',
+    functionName: r'asyncNamedFields',
+  );
+
+  static const recordsAsyncNested = _i1.CloudFunction<_i5.Nested, _i5.Nested>(
+    api: r'records',
+    functionName: r'asyncNested',
+  );
+
+  static const recordsAsyncNonAliasedMixedFields =
+      _i1.CloudFunction<_i5.MixedFields, _i5.MixedFields>(
+    api: r'records',
+    functionName: r'asyncNonAliasedMixedFields',
+  );
+
+  static const recordsAsyncNonAliasedNamedFields = _i1.CloudFunction<
+      ({String anotherField, String field}),
+      ({String anotherField, String field})>(
+    api: r'records',
+    functionName: r'asyncNonAliasedNamedFields',
+  );
+
+  static const recordsAsyncNonAliasedPositionalFields =
+      _i1.CloudFunction<(String, String), (String, String)>(
+    api: r'records',
+    functionName: r'asyncNonAliasedPositionalFields',
+  );
+
+  static const recordsAsyncNullableNested =
+      _i1.CloudFunction<_i5.NullableNested?, _i5.NullableNested?>(
+    api: r'records',
+    functionName: r'asyncNullableNested',
+  );
+
+  static const recordsAsyncPositionalFields = _i1.CloudFunction<
+      ((String, String), (String, String)),
+      ((String, String), (String, String))>(
+    api: r'records',
+    functionName: r'asyncPositionalFields',
+  );
+
+  static const recordsMixedFields = _i1.CloudFunction<
+      (_i5.MixedFields, {_i5.MixedFields aliased}),
+      (_i5.MixedFields, {_i5.MixedFields aliased})>(
+    api: r'records',
+    functionName: r'mixedFields',
+  );
+
+  static const recordsNamedFields = _i1.CloudFunction<
+      ({
+        ({String anotherField, String field}) nonAliased,
+        ({String anotherField, String field}) aliased
+      }),
+      ({
+        ({String anotherField, String field}) aliased,
+        ({String anotherField, String field}) nonAliased
+      })>(
+    api: r'records',
+    functionName: r'namedFields',
+  );
+
+  static const recordsNested = _i1.CloudFunction<_i5.Nested, _i5.Nested>(
+    api: r'records',
+    functionName: r'nested',
+  );
+
+  static const recordsNonAliasedMixedFields =
+      _i1.CloudFunction<_i5.MixedFields, _i5.MixedFields>(
+    api: r'records',
+    functionName: r'nonAliasedMixedFields',
+  );
+
+  static const recordsNonAliasedNamedFields = _i1.CloudFunction<
+      ({String anotherField, String field}),
+      ({String anotherField, String field})>(
+    api: r'records',
+    functionName: r'nonAliasedNamedFields',
+  );
+
+  static const recordsNonAliasedPositionalFields =
+      _i1.CloudFunction<(String, String), (String, String)>(
+    api: r'records',
+    functionName: r'nonAliasedPositionalFields',
+  );
+
+  static const recordsNullableNested =
+      _i1.CloudFunction<_i5.NullableNested?, _i5.NullableNested?>(
+    api: r'records',
+    functionName: r'nullableNested',
+  );
+
+  static const recordsPositionalFields = _i1.CloudFunction<
+      ((String, String), (String, String)),
+      ((String, String), (String, String))>(
+    api: r'records',
+    functionName: r'positionalFields',
+  );
+
   static const returnTypesAsyncBoolReturn = _i1.CloudFunction<void, bool>(
     api: r'return_types',
     functionName: r'asyncBoolReturn',
   );
 
   static const returnTypesAsyncClassReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncClassReturnNullable',
   );
 
   static const returnTypesAsyncComplexClassReturn =
-      _i1.CloudFunction<void, _i2.ComplexClass>(
+      _i1.CloudFunction<void, _i3.ComplexClass>(
     api: r'return_types',
     functionName: r'asyncComplexClassReturn',
   );
 
   static const returnTypesAsyncComplexStructReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturn',
   );
 
   static const returnTypesAsyncComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturnNullable',
   );
@@ -351,19 +694,19 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexClass?>(
+      _i1.CloudFunction<void, _i3.ComplexClass?>(
     api: r'return_types',
     functionName: r'asyncOrComplexClassReturnNullable',
   );
 
   static const returnTypesAsyncOrComplexStructReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturn',
   );
 
   static const returnTypesAsyncOrComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturnNullable',
   );
@@ -427,7 +770,7 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncOrSimpleClassReturnNullable',
   );
@@ -444,13 +787,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
   static const returnTypesAsyncOrStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
@@ -472,13 +815,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
   static const returnTypesAsyncStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
@@ -499,25 +842,25 @@ abstract final class functions {
   );
 
   static const returnTypesComplexClassReturn =
-      _i1.CloudFunction<void, _i2.ComplexClass>(
+      _i1.CloudFunction<void, _i3.ComplexClass>(
     api: r'return_types',
     functionName: r'complexClassReturn',
   );
 
   static const returnTypesComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexClass?>(
+      _i1.CloudFunction<void, _i3.ComplexClass?>(
     api: r'return_types',
     functionName: r'complexClassReturnNullable',
   );
 
   static const returnTypesComplexReturn =
-      _i1.CloudFunction<void, _i2.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
   static const returnTypesComplexReturnNullable =
-      _i1.CloudFunction<void, _i2.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
@@ -579,13 +922,13 @@ abstract final class functions {
   );
 
   static const returnTypesSimpleClassReturn =
-      _i1.CloudFunction<void, _i2.SimpleClass>(
+      _i1.CloudFunction<void, _i3.SimpleClass>(
     api: r'return_types',
     functionName: r'simpleClassReturn',
   );
 
   static const returnTypesSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'simpleClassReturnNullable',
   );
@@ -602,13 +945,13 @@ abstract final class functions {
   );
 
   static const returnTypesStructReturn =
-      _i1.CloudFunction<void, _i2.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
   static const returnTypesStructReturnNullable =
-      _i1.CloudFunction<void, _i2.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
@@ -616,196 +959,6 @@ abstract final class functions {
   static const returnTypesVoidReturn = _i1.CloudFunction<void, void>(
     api: r'return_types',
     functionName: r'voidReturn',
-  );
-
-  static const serializationAsyncDefaultValues =
-      _i1.CloudFunction<_i4.DefaultValues, _i4.DefaultValues>(
-    api: r'serialization',
-    functionName: r'asyncDefaultValues',
-  );
-
-  static const serializationAsyncEmpty =
-      _i1.CloudFunction<_i4.Empty, _i4.Empty>(
-    api: r'serialization',
-    functionName: r'asyncEmpty',
-  );
-
-  static const serializationAsyncEmptySuper =
-      _i1.CloudFunction<_i4.EmptySuper, _i4.EmptySuper>(
-    api: r'serialization',
-    functionName: r'asyncEmptySuper',
-  );
-
-  static const serializationAsyncFields =
-      _i1.CloudFunction<_i4.Fields, _i4.Fields>(
-    api: r'serialization',
-    functionName: r'asyncFields',
-  );
-
-  static const serializationAsyncFromAndToJson =
-      _i1.CloudFunction<_i4.FromJsonAndToJson, _i4.FromJsonAndToJson>(
-    api: r'serialization',
-    functionName: r'asyncFromAndToJson',
-  );
-
-  static const serializationAsyncMixedFields =
-      _i1.CloudFunction<_i4.MixedFields, _i4.MixedFields>(
-    api: r'serialization',
-    functionName: r'asyncMixedFields',
-  );
-
-  static const serializationAsyncNamedFields =
-      _i1.CloudFunction<_i4.NamedFields, _i4.NamedFields>(
-    api: r'serialization',
-    functionName: r'asyncNamedFields',
-  );
-
-  static const serializationAsyncNestedClass =
-      _i1.CloudFunction<_i4.NestedClass, _i4.NestedClass>(
-    api: r'serialization',
-    functionName: r'asyncNestedClass',
-  );
-
-  static const serializationAsyncNonMapFromAndToJson =
-      _i1.CloudFunction<_i4.NonMapFromAndToJson, _i4.NonMapFromAndToJson>(
-    api: r'serialization',
-    functionName: r'asyncNonMapFromAndToJson',
-  );
-
-  static const serializationAsyncNonMapToJson =
-      _i1.CloudFunction<_i4.NonMapToJson, _i4.NonMapToJson>(
-    api: r'serialization',
-    functionName: r'asyncNonMapToJson',
-  );
-
-  static const serializationAsyncNonMapToJsonWithDefaults = _i1.CloudFunction<
-      _i4.NonMapToJsonWithDefaults, _i4.NonMapToJsonWithDefaults>(
-    api: r'serialization',
-    functionName: r'asyncNonMapToJsonWithDefaults',
-  );
-
-  static const serializationAsyncNullableFields =
-      _i1.CloudFunction<_i4.Fields?, _i4.Fields?>(
-    api: r'serialization',
-    functionName: r'asyncNullableFields',
-  );
-
-  static const serializationAsyncOnlyFromJson =
-      _i1.CloudFunction<_i4.OnlyFromJson, _i4.OnlyFromJson>(
-    api: r'serialization',
-    functionName: r'asyncOnlyFromJson',
-  );
-
-  static const serializationAsyncOnlyToJson =
-      _i1.CloudFunction<_i4.OnlyToJson, _i4.OnlyToJson>(
-    api: r'serialization',
-    functionName: r'asyncOnlyToJson',
-  );
-
-  static const serializationAsyncOnlyToJsonWithDefaults =
-      _i1.CloudFunction<_i4.OnlyToJsonWithDefaults, _i4.OnlyToJsonWithDefaults>(
-    api: r'serialization',
-    functionName: r'asyncOnlyToJsonWithDefaults',
-  );
-
-  static const serializationAsyncSuperFields =
-      _i1.CloudFunction<_i4.SuperFields, _i4.SuperFields>(
-    api: r'serialization',
-    functionName: r'asyncSuperFields',
-  );
-
-  static const serializationDefaultValues =
-      _i1.CloudFunction<_i4.DefaultValues, _i4.DefaultValues>(
-    api: r'serialization',
-    functionName: r'defaultValues',
-  );
-
-  static const serializationEmpty = _i1.CloudFunction<_i4.Empty, _i4.Empty>(
-    api: r'serialization',
-    functionName: r'empty',
-  );
-
-  static const serializationEmptySuper =
-      _i1.CloudFunction<_i4.EmptySuper, _i4.EmptySuper>(
-    api: r'serialization',
-    functionName: r'emptySuper',
-  );
-
-  static const serializationFields = _i1.CloudFunction<_i4.Fields, _i4.Fields>(
-    api: r'serialization',
-    functionName: r'fields',
-  );
-
-  static const serializationFromAndToJson =
-      _i1.CloudFunction<_i4.FromJsonAndToJson, _i4.FromJsonAndToJson>(
-    api: r'serialization',
-    functionName: r'fromAndToJson',
-  );
-
-  static const serializationMixedFields =
-      _i1.CloudFunction<_i4.MixedFields, _i4.MixedFields>(
-    api: r'serialization',
-    functionName: r'mixedFields',
-  );
-
-  static const serializationNamedFields =
-      _i1.CloudFunction<_i4.NamedFields, _i4.NamedFields>(
-    api: r'serialization',
-    functionName: r'namedFields',
-  );
-
-  static const serializationNestedClass =
-      _i1.CloudFunction<_i4.NestedClass, _i4.NestedClass>(
-    api: r'serialization',
-    functionName: r'nestedClass',
-  );
-
-  static const serializationNonMapFromAndToJson =
-      _i1.CloudFunction<_i4.NonMapFromAndToJson, _i4.NonMapFromAndToJson>(
-    api: r'serialization',
-    functionName: r'nonMapFromAndToJson',
-  );
-
-  static const serializationNonMapToJson =
-      _i1.CloudFunction<_i4.NonMapToJson, _i4.NonMapToJson>(
-    api: r'serialization',
-    functionName: r'nonMapToJson',
-  );
-
-  static const serializationNonMapToJsonWithDefaults = _i1.CloudFunction<
-      _i4.NonMapToJsonWithDefaults, _i4.NonMapToJsonWithDefaults>(
-    api: r'serialization',
-    functionName: r'nonMapToJsonWithDefaults',
-  );
-
-  static const serializationNullableFields =
-      _i1.CloudFunction<_i4.Fields?, _i4.Fields?>(
-    api: r'serialization',
-    functionName: r'nullableFields',
-  );
-
-  static const serializationOnlyFromJson =
-      _i1.CloudFunction<_i4.OnlyFromJson, _i4.OnlyFromJson>(
-    api: r'serialization',
-    functionName: r'onlyFromJson',
-  );
-
-  static const serializationOnlyToJson =
-      _i1.CloudFunction<_i4.OnlyToJson, _i4.OnlyToJson>(
-    api: r'serialization',
-    functionName: r'onlyToJson',
-  );
-
-  static const serializationOnlyToJsonWithDefaults =
-      _i1.CloudFunction<_i4.OnlyToJsonWithDefaults, _i4.OnlyToJsonWithDefaults>(
-    api: r'serialization',
-    functionName: r'onlyToJsonWithDefaults',
-  );
-
-  static const serializationSuperFields =
-      _i1.CloudFunction<_i4.SuperFields, _i4.SuperFields>(
-    api: r'serialization',
-    functionName: r'superFields',
   );
 }
 
@@ -815,11 +968,12 @@ List<_i1.CloudWidget> all = const [
   apis.apiAuthConstantVariables,
   apis.authenticatedApi,
   apis.authenticatedFunction,
+  apis.classes,
   apis.middleware,
   apis.parameterTypes,
   apis.parameters,
+  apis.records,
   apis.returnTypes,
-  apis.serialization,
   functions.anonymousApiSayHello,
   functions.anonymousApiSayHelloAuthenticated,
   functions.anonymousFunctionSayHello,
@@ -830,6 +984,38 @@ List<_i1.CloudWidget> all = const [
   functions.authenticatedApiSayHelloAuthenticated,
   functions.authenticatedFunctionSayHello,
   functions.authenticatedFunctionSayHelloAuthenticated,
+  functions.classesAsyncDefaultValues,
+  functions.classesAsyncEmpty,
+  functions.classesAsyncEmptySuper,
+  functions.classesAsyncFields,
+  functions.classesAsyncFromAndToJson,
+  functions.classesAsyncMixedFields,
+  functions.classesAsyncNamedFields,
+  functions.classesAsyncNestedClass,
+  functions.classesAsyncNonMapFromAndToJson,
+  functions.classesAsyncNonMapToJson,
+  functions.classesAsyncNonMapToJsonWithDefaults,
+  functions.classesAsyncNullableFields,
+  functions.classesAsyncOnlyFromJson,
+  functions.classesAsyncOnlyToJson,
+  functions.classesAsyncOnlyToJsonWithDefaults,
+  functions.classesAsyncSuperFields,
+  functions.classesDefaultValues,
+  functions.classesEmpty,
+  functions.classesEmptySuper,
+  functions.classesFields,
+  functions.classesFromAndToJson,
+  functions.classesMixedFields,
+  functions.classesNamedFields,
+  functions.classesNestedClass,
+  functions.classesNonMapFromAndToJson,
+  functions.classesNonMapToJson,
+  functions.classesNonMapToJsonWithDefaults,
+  functions.classesNullableFields,
+  functions.classesOnlyFromJson,
+  functions.classesOnlyToJson,
+  functions.classesOnlyToJsonWithDefaults,
+  functions.classesSuperFields,
   functions.middlewareSayHello,
   functions.parameterTypesComplex,
   functions.parameterTypesSimple,
@@ -838,6 +1024,28 @@ List<_i1.CloudWidget> all = const [
   functions.parametersOptionalPositional,
   functions.parametersRequiredNamed,
   functions.parametersRequiredPositional,
+  functions.recordsAliasedMixedFields,
+  functions.recordsAliasedNamedFields,
+  functions.recordsAliasedPositionalFields,
+  functions.recordsAsyncAliasedMixedFields,
+  functions.recordsAsyncAliasedNamedFields,
+  functions.recordsAsyncAliasedPositionalFields,
+  functions.recordsAsyncMixedFields,
+  functions.recordsAsyncNamedFields,
+  functions.recordsAsyncNested,
+  functions.recordsAsyncNonAliasedMixedFields,
+  functions.recordsAsyncNonAliasedNamedFields,
+  functions.recordsAsyncNonAliasedPositionalFields,
+  functions.recordsAsyncNullableNested,
+  functions.recordsAsyncPositionalFields,
+  functions.recordsMixedFields,
+  functions.recordsNamedFields,
+  functions.recordsNested,
+  functions.recordsNonAliasedMixedFields,
+  functions.recordsNonAliasedNamedFields,
+  functions.recordsNonAliasedPositionalFields,
+  functions.recordsNullableNested,
+  functions.recordsPositionalFields,
   functions.returnTypesAsyncBoolReturn,
   functions.returnTypesAsyncClassReturnNullable,
   functions.returnTypesAsyncComplexClassReturn,
@@ -897,36 +1105,4 @@ List<_i1.CloudWidget> all = const [
   functions.returnTypesStructReturn,
   functions.returnTypesStructReturnNullable,
   functions.returnTypesVoidReturn,
-  functions.serializationAsyncDefaultValues,
-  functions.serializationAsyncEmpty,
-  functions.serializationAsyncEmptySuper,
-  functions.serializationAsyncFields,
-  functions.serializationAsyncFromAndToJson,
-  functions.serializationAsyncMixedFields,
-  functions.serializationAsyncNamedFields,
-  functions.serializationAsyncNestedClass,
-  functions.serializationAsyncNonMapFromAndToJson,
-  functions.serializationAsyncNonMapToJson,
-  functions.serializationAsyncNonMapToJsonWithDefaults,
-  functions.serializationAsyncNullableFields,
-  functions.serializationAsyncOnlyFromJson,
-  functions.serializationAsyncOnlyToJson,
-  functions.serializationAsyncOnlyToJsonWithDefaults,
-  functions.serializationAsyncSuperFields,
-  functions.serializationDefaultValues,
-  functions.serializationEmpty,
-  functions.serializationEmptySuper,
-  functions.serializationFields,
-  functions.serializationFromAndToJson,
-  functions.serializationMixedFields,
-  functions.serializationNamedFields,
-  functions.serializationNestedClass,
-  functions.serializationNonMapFromAndToJson,
-  functions.serializationNonMapToJson,
-  functions.serializationNonMapToJsonWithDefaults,
-  functions.serializationNullableFields,
-  functions.serializationOnlyFromJson,
-  functions.serializationOnlyToJson,
-  functions.serializationOnlyToJsonWithDefaults,
-  functions.serializationSuperFields,
 ];

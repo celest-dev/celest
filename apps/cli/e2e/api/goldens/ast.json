@@ -86,157 +86,117 @@
           }
         }
       },
-      "serialization": {
-        "name": "serialization",
+      "records": {
+        "name": "records",
         "environmentName": "",
         "metadata": [],
         "functions": {
-          "emptySuper": {
-            "name": "emptySuper",
-            "apiName": "serialization",
+          "nonAliasedPositionalFields": {
+            "name": "nonAliasedPositionalFields",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
-                  "$": "TypeReference",
-                  "symbol": "EmptySuper",
-                  "url": "project:apis/serialization.dart",
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 9,
-                  "column": 33
+                  "uri": "project:apis/records.dart",
+                  "line": 11,
+                  "column": 38
                 }
               }
             ],
             "returnType": {
-              "$": "TypeReference",
-              "symbol": "EmptySuper",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "EmptySuper",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 9,
-              "column": 11
-            }
-          },
-          "asyncEmptySuper": {
-            "name": "asyncEmptySuper",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "EmptySuper",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 10,
-                  "column": 46
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
+              "$": "RecordType",
+              "positionalFieldTypes": [
                 {
                   "$": "TypeReference",
-                  "symbol": "EmptySuper",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
                   "isNullable": false
                 }
               ],
               "isNullable": false
             },
             "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "EmptySuper",
-              "url": "project:apis/serialization.dart",
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              ],
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
+              "uri": "project:apis/records.dart",
               "line": 10,
-              "column": 19
+              "column": 36
             }
           },
-          "empty": {
-            "name": "empty",
-            "apiName": "serialization",
+          "asyncNonAliasedPositionalFields": {
+            "name": "asyncNonAliasedPositionalFields",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
-                  "$": "TypeReference",
-                  "symbol": "Empty",
-                  "url": "project:apis/serialization.dart",
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 12,
-                  "column": 18
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Empty",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "Empty",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 12,
-              "column": 6
-            }
-          },
-          "asyncEmpty": {
-            "name": "asyncEmpty",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "Empty",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 13,
-                  "column": 31
+                  "uri": "project:apis/records.dart",
+                  "line": 15,
+                  "column": 38
                 }
               }
             ],
@@ -246,85 +206,1213 @@
               "url": "dart:async",
               "types": [
                 {
-                  "$": "TypeReference",
-                  "symbol": "Empty",
-                  "url": "project:apis/serialization.dart",
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
                   "isNullable": false
                 }
               ],
               "isNullable": false
             },
             "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "Empty",
-              "url": "project:apis/serialization.dart",
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              ],
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 13,
-              "column": 14
+              "uri": "project:apis/records.dart",
+              "line": 14,
+              "column": 44
             }
           },
-          "superFields": {
-            "name": "superFields",
-            "apiName": "serialization",
+          "aliasedPositionalFields": {
+            "name": "aliasedPositionalFields",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
-                  "$": "TypeReference",
-                  "symbol": "SuperFields",
-                  "url": "project:apis/serialization.dart",
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 45,
-                  "column": 36
+                  "uri": "project:apis/records.dart",
+                  "line": 19,
+                  "column": 58
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 19,
+              "column": 17
+            }
+          },
+          "asyncAliasedPositionalFields": {
+            "name": "asyncAliasedPositionalFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 21,
+                  "column": 19
                 }
               }
             ],
             "returnType": {
               "$": "TypeReference",
-              "symbol": "SuperFields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                }
+              ],
               "isNullable": false
             },
             "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "SuperFields",
-              "url": "project:apis/serialization.dart",
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              ],
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 45,
+              "uri": "project:apis/records.dart",
+              "line": 20,
+              "column": 25
+            }
+          },
+          "positionalFields": {
+            "name": "positionalFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 29,
+                  "column": 38
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 30,
+                  "column": 19
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 28,
+              "column": 2
+            }
+          },
+          "asyncPositionalFields": {
+            "name": "asyncPositionalFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 38,
+                  "column": 38
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 39,
+                  "column": 19
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "RecordType",
+                      "positionalFieldTypes": [
+                        {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        },
+                        {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        }
+                      ],
+                      "isNullable": false
+                    },
+                    {
+                      "$": "RecordType",
+                      "positionalFieldTypes": [
+                        {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        },
+                        {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        }
+                      ],
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                },
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  ],
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 37,
+              "column": 7
+            }
+          },
+          "nonAliasedNamedFields": {
+            "name": "nonAliasedNamedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 55,
+                  "column": 5
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 51,
+              "column": 3
+            }
+          },
+          "asyncNonAliasedNamedFields": {
+            "name": "asyncNonAliasedNamedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 66,
+                  "column": 5
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 62,
+              "column": 8
+            }
+          },
+          "aliasedNamedFields": {
+            "name": "aliasedNamedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 71,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 70,
               "column": 12
             }
           },
-          "asyncSuperFields": {
-            "name": "asyncSuperFields",
-            "apiName": "serialization",
+          "asyncAliasedNamedFields": {
+            "name": "asyncAliasedNamedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 75,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "anotherField": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                },
+                "field": {
+                  "$": "TypeReference",
+                  "symbol": "String",
+                  "url": "dart:core",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 74,
+              "column": 20
+            }
+          },
+          "namedFields": {
+            "name": "namedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 89,
+                  "column": 5
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 90,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "nonAliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "nonAliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 85,
+              "column": 3
+            }
+          },
+          "asyncNamedFields": {
+            "name": "asyncNamedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 107,
+                  "column": 5
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 108,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "aliased": {
+                      "$": "RecordType",
+                      "namedFieldTypes": {
+                        "anotherField": {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        },
+                        "field": {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "nonAliased": {
+                      "$": "RecordType",
+                      "namedFieldTypes": {
+                        "anotherField": {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        },
+                        "field": {
+                          "$": "TypeReference",
+                          "symbol": "String",
+                          "url": "dart:core",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "nonAliased": {
+                  "$": "RecordType",
+                  "namedFieldTypes": {
+                    "anotherField": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    },
+                    "field": {
+                      "$": "TypeReference",
+                      "symbol": "String",
+                      "url": "dart:core",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 103,
+              "column": 8
+            }
+          },
+          "aliasedMixedFields": {
+            "name": "aliasedMixedFields",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
                   "$": "TypeReference",
-                  "symbol": "SuperFields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 46,
-                  "column": 49
+                  "uri": "project:apis/records.dart",
+                  "line": 120,
+                  "column": 43
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 120,
+              "column": 12
+            }
+          },
+          "asyncAliasedMixedFields": {
+            "name": "asyncAliasedMixedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 121,
+                  "column": 56
                 }
               }
             ],
@@ -335,8 +1423,8 @@
               "types": [
                 {
                   "$": "TypeReference",
-                  "symbol": "SuperFields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
                   "isNullable": false
                 }
               ],
@@ -344,74 +1432,338 @@
             },
             "flattenedReturnType": {
               "$": "TypeReference",
-              "symbol": "SuperFields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 46,
+              "uri": "project:apis/records.dart",
+              "line": 121,
               "column": 20
             }
           },
-          "fields": {
-            "name": "fields",
-            "apiName": "serialization",
+          "nonAliasedMixedFields": {
+            "name": "nonAliasedMixedFields",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
                   "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 48,
+                  "uri": "project:apis/records.dart",
+                  "line": 124,
+                  "column": 14
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 123,
+              "column": 38
+            }
+          },
+          "asyncNonAliasedMixedFields": {
+            "name": "asyncNonAliasedMixedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 128,
+                  "column": 14
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/records.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 127,
+              "column": 46
+            }
+          },
+          "mixedFields": {
+            "name": "mixedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 142,
+                  "column": 5
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 143,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              ],
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              ],
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 138,
+              "column": 3
+            }
+          },
+          "asyncMixedFields": {
+            "name": "asyncMixedFields",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "nonAliased",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 157,
+                  "column": 5
+                }
+              },
+              {
+                "name": "aliased",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": true,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 158,
+                  "column": 23
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "RecordType",
+                  "positionalFieldTypes": [
+                    {
+                      "$": "TypeReference",
+                      "symbol": "MixedFields",
+                      "url": "project:apis/records.dart",
+                      "isNullable": false
+                    }
+                  ],
+                  "namedFieldTypes": {
+                    "aliased": {
+                      "$": "TypeReference",
+                      "symbol": "MixedFields",
+                      "url": "project:apis/records.dart",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "RecordType",
+              "positionalFieldTypes": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              ],
+              "namedFieldTypes": {
+                "aliased": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/records.dart",
+              "line": 153,
+              "column": 8
+            }
+          },
+          "nested": {
+            "name": "nested",
+            "apiName": "records",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Nested",
+                  "url": "project:apis/records.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/records.dart",
+                  "line": 164,
                   "column": 21
                 }
               }
             ],
             "returnType": {
               "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "Nested",
+              "url": "project:apis/records.dart",
               "isNullable": false
             },
             "flattenedReturnType": {
               "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "Nested",
+              "url": "project:apis/records.dart",
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 48,
+              "uri": "project:apis/records.dart",
+              "line": 164,
               "column": 7
             }
           },
-          "asyncFields": {
-            "name": "asyncFields",
-            "apiName": "serialization",
+          "asyncNested": {
+            "name": "asyncNested",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
                   "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "Nested",
+                  "url": "project:apis/records.dart",
                   "isNullable": false
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 49,
+                  "uri": "project:apis/records.dart",
+                  "line": 165,
                   "column": 34
                 }
               }
@@ -423,8 +1775,8 @@
               "types": [
                 {
                   "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "Nested",
+                  "url": "project:apis/records.dart",
                   "isNullable": false
                 }
               ],
@@ -432,779 +1784,75 @@
             },
             "flattenedReturnType": {
               "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "Nested",
+              "url": "project:apis/records.dart",
               "isNullable": false
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 49,
+              "uri": "project:apis/records.dart",
+              "line": 165,
               "column": 15
             }
           },
-          "nullableFields": {
-            "name": "nullableFields",
-            "apiName": "serialization",
+          "nullableNested": {
+            "name": "nullableNested",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
                   "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
+                  "symbol": "NullableNested",
+                  "url": "project:apis/records.dart",
                   "isNullable": true
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 51,
-                  "column": 31
+                  "uri": "project:apis/records.dart",
+                  "line": 169,
+                  "column": 47
                 }
               }
             ],
             "returnType": {
               "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "NullableNested",
+              "url": "project:apis/records.dart",
               "isNullable": true
             },
             "flattenedReturnType": {
               "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
+              "symbol": "NullableNested",
+              "url": "project:apis/records.dart",
               "isNullable": true
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 51,
-              "column": 8
-            }
-          },
-          "asyncNullableFields": {
-            "name": "asyncNullableFields",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": true
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 52,
-                  "column": 44
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "Fields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": true
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "Fields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": true
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 52,
+              "uri": "project:apis/records.dart",
+              "line": 169,
               "column": 16
             }
           },
-          "namedFields": {
-            "name": "namedFields",
-            "apiName": "serialization",
+          "asyncNullableNested": {
+            "name": "asyncNullableNested",
+            "apiName": "records",
             "parameters": [
               {
                 "name": "value",
                 "type": {
                   "$": "TypeReference",
-                  "symbol": "NamedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
+                  "symbol": "NullableNested",
+                  "url": "project:apis/records.dart",
+                  "isNullable": true
                 },
                 "required": true,
                 "named": false,
                 "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 54,
-                  "column": 36
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "NamedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NamedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 54,
-              "column": 12
-            }
-          },
-          "asyncNamedFields": {
-            "name": "asyncNamedFields",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NamedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 55,
-                  "column": 49
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "NamedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NamedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 55,
-              "column": 20
-            }
-          },
-          "mixedFields": {
-            "name": "mixedFields",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "MixedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 57,
-                  "column": 36
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "MixedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "MixedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 57,
-              "column": 12
-            }
-          },
-          "asyncMixedFields": {
-            "name": "asyncMixedFields",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "MixedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 58,
-                  "column": 49
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "MixedFields",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "MixedFields",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 58,
-              "column": 20
-            }
-          },
-          "defaultValues": {
-            "name": "defaultValues",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "DefaultValues",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 73,
-                  "column": 42
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "DefaultValues",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "DefaultValues",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 73,
-              "column": 14
-            }
-          },
-          "asyncDefaultValues": {
-            "name": "asyncDefaultValues",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "DefaultValues",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 74,
-                  "column": 55
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "DefaultValues",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "DefaultValues",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 74,
-              "column": 22
-            }
-          },
-          "nestedClass": {
-            "name": "nestedClass",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NestedClass",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 86,
-                  "column": 36
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "NestedClass",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NestedClass",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 86,
-              "column": 12
-            }
-          },
-          "asyncNestedClass": {
-            "name": "asyncNestedClass",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NestedClass",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 87,
-                  "column": 49
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "NestedClass",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NestedClass",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 87,
-              "column": 20
-            }
-          },
-          "onlyFromJson": {
-            "name": "onlyFromJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyFromJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 153,
-                  "column": 39
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyFromJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyFromJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 153,
-              "column": 13
-            }
-          },
-          "asyncOnlyFromJson": {
-            "name": "asyncOnlyFromJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyFromJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 154,
-                  "column": 52
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "OnlyFromJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyFromJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 154,
-              "column": 21
-            }
-          },
-          "onlyToJson": {
-            "name": "onlyToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 156,
-                  "column": 33
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 156,
-              "column": 11
-            }
-          },
-          "asyncOnlyToJson": {
-            "name": "asyncOnlyToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 157,
-                  "column": 46
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 157,
-              "column": 19
-            }
-          },
-          "onlyToJsonWithDefaults": {
-            "name": "onlyToJsonWithDefaults",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 160,
-                  "column": 25
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 159,
-              "column": 23
-            }
-          },
-          "asyncOnlyToJsonWithDefaults": {
-            "name": "asyncOnlyToJsonWithDefaults",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 164,
-                  "column": 25
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "OnlyToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "OnlyToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 163,
-              "column": 31
-            }
-          },
-          "fromAndToJson": {
-            "name": "fromAndToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "FromJsonAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 168,
-                  "column": 50
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "FromJsonAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "FromJsonAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 168,
-              "column": 18
-            }
-          },
-          "asyncFromAndToJson": {
-            "name": "asyncFromAndToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "FromJsonAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
+                  "uri": "project:apis/records.dart",
                   "line": 170,
-                  "column": 20
+                  "column": 60
                 }
               }
             ],
@@ -1215,288 +1863,24 @@
               "types": [
                 {
                   "$": "TypeReference",
-                  "symbol": "FromJsonAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
+                  "symbol": "NullableNested",
+                  "url": "project:apis/records.dart",
+                  "isNullable": true
                 }
               ],
               "isNullable": false
             },
             "flattenedReturnType": {
               "$": "TypeReference",
-              "symbol": "FromJsonAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
+              "symbol": "NullableNested",
+              "url": "project:apis/records.dart",
+              "isNullable": true
             },
             "metadata": [],
             "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 169,
-              "column": 26
-            }
-          },
-          "nonMapToJson": {
-            "name": "nonMapToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 174,
-                  "column": 39
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 174,
-              "column": 13
-            }
-          },
-          "asyncNonMapToJson": {
-            "name": "asyncNonMapToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 175,
-                  "column": 52
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 175,
-              "column": 21
-            }
-          },
-          "nonMapToJsonWithDefaults": {
-            "name": "nonMapToJsonWithDefaults",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 178,
-                  "column": 27
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 177,
-              "column": 25
-            }
-          },
-          "asyncNonMapToJsonWithDefaults": {
-            "name": "asyncNonMapToJsonWithDefaults",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 182,
-                  "column": 27
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "NonMapToJsonWithDefaults",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapToJsonWithDefaults",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 181,
-              "column": 33
-            }
-          },
-          "nonMapFromAndToJson": {
-            "name": "nonMapFromAndToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapFromAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 187,
-                  "column": 22
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapFromAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapFromAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 186,
-              "column": 20
-            }
-          },
-          "asyncNonMapFromAndToJson": {
-            "name": "asyncNonMapFromAndToJson",
-            "apiName": "serialization",
-            "parameters": [
-              {
-                "name": "value",
-                "type": {
-                  "$": "TypeReference",
-                  "symbol": "NonMapFromAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                },
-                "required": true,
-                "named": false,
-                "location": {
-                  "uri": "project:apis/serialization.dart",
-                  "line": 191,
-                  "column": 22
-                }
-              }
-            ],
-            "returnType": {
-              "$": "TypeReference",
-              "symbol": "Future",
-              "url": "dart:async",
-              "types": [
-                {
-                  "$": "TypeReference",
-                  "symbol": "NonMapFromAndToJson",
-                  "url": "project:apis/serialization.dart",
-                  "isNullable": false
-                }
-              ],
-              "isNullable": false
-            },
-            "flattenedReturnType": {
-              "$": "TypeReference",
-              "symbol": "NonMapFromAndToJson",
-              "url": "project:apis/serialization.dart",
-              "isNullable": false
-            },
-            "metadata": [],
-            "location": {
-              "uri": "project:apis/serialization.dart",
-              "line": 190,
-              "column": 28
+              "uri": "project:apis/records.dart",
+              "line": 170,
+              "column": 24
             }
           }
         }
@@ -8029,6 +8413,1421 @@
               "uri": "project:apis/middleware.dart",
               "line": 13,
               "column": 15
+            }
+          }
+        }
+      },
+      "classes": {
+        "name": "classes",
+        "environmentName": "",
+        "metadata": [],
+        "functions": {
+          "emptySuper": {
+            "name": "emptySuper",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "EmptySuper",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 9,
+                  "column": 33
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "EmptySuper",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "EmptySuper",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 9,
+              "column": 11
+            }
+          },
+          "asyncEmptySuper": {
+            "name": "asyncEmptySuper",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "EmptySuper",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 10,
+                  "column": 46
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "EmptySuper",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "EmptySuper",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 10,
+              "column": 19
+            }
+          },
+          "empty": {
+            "name": "empty",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Empty",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 12,
+                  "column": 18
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Empty",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Empty",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 12,
+              "column": 6
+            }
+          },
+          "asyncEmpty": {
+            "name": "asyncEmpty",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Empty",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 13,
+                  "column": 31
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "Empty",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Empty",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 13,
+              "column": 14
+            }
+          },
+          "superFields": {
+            "name": "superFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "SuperFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 45,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "SuperFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "SuperFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 45,
+              "column": 12
+            }
+          },
+          "asyncSuperFields": {
+            "name": "asyncSuperFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "SuperFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 46,
+                  "column": 49
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "SuperFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "SuperFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 46,
+              "column": 20
+            }
+          },
+          "fields": {
+            "name": "fields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 48,
+                  "column": 21
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 48,
+              "column": 7
+            }
+          },
+          "asyncFields": {
+            "name": "asyncFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 49,
+                  "column": 34
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 49,
+              "column": 15
+            }
+          },
+          "nullableFields": {
+            "name": "nullableFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": true
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 51,
+                  "column": 31
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": true
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": true
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 51,
+              "column": 8
+            }
+          },
+          "asyncNullableFields": {
+            "name": "asyncNullableFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": true
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 52,
+                  "column": 44
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "Fields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": true
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "Fields",
+              "url": "project:apis/classes.dart",
+              "isNullable": true
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 52,
+              "column": 16
+            }
+          },
+          "namedFields": {
+            "name": "namedFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NamedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 54,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NamedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NamedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 54,
+              "column": 12
+            }
+          },
+          "asyncNamedFields": {
+            "name": "asyncNamedFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NamedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 55,
+                  "column": 49
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NamedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NamedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 55,
+              "column": 20
+            }
+          },
+          "mixedFields": {
+            "name": "mixedFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 57,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 57,
+              "column": 12
+            }
+          },
+          "asyncMixedFields": {
+            "name": "asyncMixedFields",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 58,
+                  "column": 49
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "MixedFields",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "MixedFields",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 58,
+              "column": 20
+            }
+          },
+          "defaultValues": {
+            "name": "defaultValues",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "DefaultValues",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 73,
+                  "column": 42
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "DefaultValues",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "DefaultValues",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 73,
+              "column": 14
+            }
+          },
+          "asyncDefaultValues": {
+            "name": "asyncDefaultValues",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "DefaultValues",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 74,
+                  "column": 55
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "DefaultValues",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "DefaultValues",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 74,
+              "column": 22
+            }
+          },
+          "nestedClass": {
+            "name": "nestedClass",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NestedClass",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 86,
+                  "column": 36
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NestedClass",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NestedClass",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 86,
+              "column": 12
+            }
+          },
+          "asyncNestedClass": {
+            "name": "asyncNestedClass",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NestedClass",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 87,
+                  "column": 49
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NestedClass",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NestedClass",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 87,
+              "column": 20
+            }
+          },
+          "onlyFromJson": {
+            "name": "onlyFromJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 153,
+                  "column": 39
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 153,
+              "column": 13
+            }
+          },
+          "asyncOnlyFromJson": {
+            "name": "asyncOnlyFromJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 154,
+                  "column": 52
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyFromJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyFromJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 154,
+              "column": 21
+            }
+          },
+          "onlyToJson": {
+            "name": "onlyToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 156,
+                  "column": 33
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 156,
+              "column": 11
+            }
+          },
+          "asyncOnlyToJson": {
+            "name": "asyncOnlyToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 157,
+                  "column": 46
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 157,
+              "column": 19
+            }
+          },
+          "onlyToJsonWithDefaults": {
+            "name": "onlyToJsonWithDefaults",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 160,
+                  "column": 25
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 159,
+              "column": 23
+            }
+          },
+          "asyncOnlyToJsonWithDefaults": {
+            "name": "asyncOnlyToJsonWithDefaults",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 164,
+                  "column": 25
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "OnlyToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "OnlyToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 163,
+              "column": 31
+            }
+          },
+          "fromAndToJson": {
+            "name": "fromAndToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 168,
+                  "column": 50
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 168,
+              "column": 18
+            }
+          },
+          "asyncFromAndToJson": {
+            "name": "asyncFromAndToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 170,
+                  "column": 20
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "FromJsonAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "FromJsonAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 169,
+              "column": 26
+            }
+          },
+          "nonMapToJson": {
+            "name": "nonMapToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 174,
+                  "column": 39
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 174,
+              "column": 13
+            }
+          },
+          "asyncNonMapToJson": {
+            "name": "asyncNonMapToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 175,
+                  "column": 52
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 175,
+              "column": 21
+            }
+          },
+          "nonMapToJsonWithDefaults": {
+            "name": "nonMapToJsonWithDefaults",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 178,
+                  "column": 27
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 177,
+              "column": 25
+            }
+          },
+          "asyncNonMapToJsonWithDefaults": {
+            "name": "asyncNonMapToJsonWithDefaults",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 182,
+                  "column": 27
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapToJsonWithDefaults",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapToJsonWithDefaults",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 181,
+              "column": 33
+            }
+          },
+          "nonMapFromAndToJson": {
+            "name": "nonMapFromAndToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 187,
+                  "column": 22
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 186,
+              "column": 20
+            }
+          },
+          "asyncNonMapFromAndToJson": {
+            "name": "asyncNonMapFromAndToJson",
+            "apiName": "classes",
+            "parameters": [
+              {
+                "name": "value",
+                "type": {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                },
+                "required": true,
+                "named": false,
+                "location": {
+                  "uri": "project:apis/classes.dart",
+                  "line": 191,
+                  "column": 22
+                }
+              }
+            ],
+            "returnType": {
+              "$": "TypeReference",
+              "symbol": "Future",
+              "url": "dart:async",
+              "types": [
+                {
+                  "$": "TypeReference",
+                  "symbol": "NonMapFromAndToJson",
+                  "url": "project:apis/classes.dart",
+                  "isNullable": false
+                }
+              ],
+              "isNullable": false
+            },
+            "flattenedReturnType": {
+              "$": "TypeReference",
+              "symbol": "NonMapFromAndToJson",
+              "url": "project:apis/classes.dart",
+              "isNullable": false
+            },
+            "metadata": [],
+            "location": {
+              "uri": "project:apis/classes.dart",
+              "line": 190,
+              "column": 28
             }
           }
         }

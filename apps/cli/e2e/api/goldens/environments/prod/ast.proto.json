@@ -81,6 +81,13 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "classes.prod",
+      "cloudApi": {
+        "name": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "middleware.prod",
       "cloudApi": {
         "name": "middleware"
@@ -102,16 +109,16 @@
     },
     {
       "type": "Celest::CloudApi",
-      "id": "return_types.prod",
+      "id": "records.prod",
       "cloudApi": {
-        "name": "return_types"
+        "name": "records"
       }
     },
     {
       "type": "Celest::CloudApi",
-      "id": "serialization.prod",
+      "id": "return_types.prod",
       "cloudApi": {
-        "name": "serialization"
+        "name": "return_types"
       }
     },
     {
@@ -236,6 +243,262 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "classes.asyncDefaultValues.prod",
+      "cloudFunction": {
+        "name": "asyncDefaultValues",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncEmpty.prod",
+      "cloudFunction": {
+        "name": "asyncEmpty",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncEmptySuper.prod",
+      "cloudFunction": {
+        "name": "asyncEmptySuper",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncFields.prod",
+      "cloudFunction": {
+        "name": "asyncFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "asyncFromAndToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncMixedFields.prod",
+      "cloudFunction": {
+        "name": "asyncMixedFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNamedFields.prod",
+      "cloudFunction": {
+        "name": "asyncNamedFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNestedClass.prod",
+      "cloudFunction": {
+        "name": "asyncNestedClass",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNonMapFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapFromAndToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNonMapToJson.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNonMapToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "asyncNonMapToJsonWithDefaults",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncNullableFields.prod",
+      "cloudFunction": {
+        "name": "asyncNullableFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncOnlyFromJson.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyFromJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncOnlyToJson.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncOnlyToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "asyncOnlyToJsonWithDefaults",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.asyncSuperFields.prod",
+      "cloudFunction": {
+        "name": "asyncSuperFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.defaultValues.prod",
+      "cloudFunction": {
+        "name": "defaultValues",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.empty.prod",
+      "cloudFunction": {
+        "name": "empty",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.emptySuper.prod",
+      "cloudFunction": {
+        "name": "emptySuper",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.fields.prod",
+      "cloudFunction": {
+        "name": "fields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.fromAndToJson.prod",
+      "cloudFunction": {
+        "name": "fromAndToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.mixedFields.prod",
+      "cloudFunction": {
+        "name": "mixedFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.namedFields.prod",
+      "cloudFunction": {
+        "name": "namedFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.nestedClass.prod",
+      "cloudFunction": {
+        "name": "nestedClass",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.nonMapFromAndToJson.prod",
+      "cloudFunction": {
+        "name": "nonMapFromAndToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.nonMapToJson.prod",
+      "cloudFunction": {
+        "name": "nonMapToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.nonMapToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "nonMapToJsonWithDefaults",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.nullableFields.prod",
+      "cloudFunction": {
+        "name": "nullableFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.onlyFromJson.prod",
+      "cloudFunction": {
+        "name": "onlyFromJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.onlyToJson.prod",
+      "cloudFunction": {
+        "name": "onlyToJson",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.onlyToJsonWithDefaults.prod",
+      "cloudFunction": {
+        "name": "onlyToJsonWithDefaults",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "classes.superFields.prod",
+      "cloudFunction": {
+        "name": "superFields",
+        "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "middleware.sayHello.prod",
       "cloudFunction": {
         "name": "sayHello",
@@ -296,6 +559,182 @@
       "cloudFunction": {
         "name": "requiredPositional",
         "apiName": "parameters"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.aliasedMixedFields.prod",
+      "cloudFunction": {
+        "name": "aliasedMixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.aliasedNamedFields.prod",
+      "cloudFunction": {
+        "name": "aliasedNamedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.aliasedPositionalFields.prod",
+      "cloudFunction": {
+        "name": "aliasedPositionalFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncAliasedMixedFields.prod",
+      "cloudFunction": {
+        "name": "asyncAliasedMixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncAliasedNamedFields.prod",
+      "cloudFunction": {
+        "name": "asyncAliasedNamedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncAliasedPositionalFields.prod",
+      "cloudFunction": {
+        "name": "asyncAliasedPositionalFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncMixedFields.prod",
+      "cloudFunction": {
+        "name": "asyncMixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNamedFields.prod",
+      "cloudFunction": {
+        "name": "asyncNamedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNested.prod",
+      "cloudFunction": {
+        "name": "asyncNested",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNonAliasedMixedFields.prod",
+      "cloudFunction": {
+        "name": "asyncNonAliasedMixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNonAliasedNamedFields.prod",
+      "cloudFunction": {
+        "name": "asyncNonAliasedNamedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNonAliasedPositionalFields.prod",
+      "cloudFunction": {
+        "name": "asyncNonAliasedPositionalFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncNullableNested.prod",
+      "cloudFunction": {
+        "name": "asyncNullableNested",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.asyncPositionalFields.prod",
+      "cloudFunction": {
+        "name": "asyncPositionalFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.mixedFields.prod",
+      "cloudFunction": {
+        "name": "mixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.namedFields.prod",
+      "cloudFunction": {
+        "name": "namedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.nested.prod",
+      "cloudFunction": {
+        "name": "nested",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.nonAliasedMixedFields.prod",
+      "cloudFunction": {
+        "name": "nonAliasedMixedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.nonAliasedNamedFields.prod",
+      "cloudFunction": {
+        "name": "nonAliasedNamedFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.nonAliasedPositionalFields.prod",
+      "cloudFunction": {
+        "name": "nonAliasedPositionalFields",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.nullableNested.prod",
+      "cloudFunction": {
+        "name": "nullableNested",
+        "apiName": "records"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "records.positionalFields.prod",
+      "cloudFunction": {
+        "name": "positionalFields",
+        "apiName": "records"
       }
     },
     {
@@ -768,262 +1207,6 @@
       "cloudFunction": {
         "name": "voidReturn",
         "apiName": "return_types"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncDefaultValues.prod",
-      "cloudFunction": {
-        "name": "asyncDefaultValues",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncEmpty.prod",
-      "cloudFunction": {
-        "name": "asyncEmpty",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncEmptySuper.prod",
-      "cloudFunction": {
-        "name": "asyncEmptySuper",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncFields.prod",
-      "cloudFunction": {
-        "name": "asyncFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncFromAndToJson.prod",
-      "cloudFunction": {
-        "name": "asyncFromAndToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncMixedFields.prod",
-      "cloudFunction": {
-        "name": "asyncMixedFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNamedFields.prod",
-      "cloudFunction": {
-        "name": "asyncNamedFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNestedClass.prod",
-      "cloudFunction": {
-        "name": "asyncNestedClass",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNonMapFromAndToJson.prod",
-      "cloudFunction": {
-        "name": "asyncNonMapFromAndToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNonMapToJson.prod",
-      "cloudFunction": {
-        "name": "asyncNonMapToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNonMapToJsonWithDefaults.prod",
-      "cloudFunction": {
-        "name": "asyncNonMapToJsonWithDefaults",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncNullableFields.prod",
-      "cloudFunction": {
-        "name": "asyncNullableFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncOnlyFromJson.prod",
-      "cloudFunction": {
-        "name": "asyncOnlyFromJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncOnlyToJson.prod",
-      "cloudFunction": {
-        "name": "asyncOnlyToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncOnlyToJsonWithDefaults.prod",
-      "cloudFunction": {
-        "name": "asyncOnlyToJsonWithDefaults",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.asyncSuperFields.prod",
-      "cloudFunction": {
-        "name": "asyncSuperFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.defaultValues.prod",
-      "cloudFunction": {
-        "name": "defaultValues",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.empty.prod",
-      "cloudFunction": {
-        "name": "empty",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.emptySuper.prod",
-      "cloudFunction": {
-        "name": "emptySuper",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.fields.prod",
-      "cloudFunction": {
-        "name": "fields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.fromAndToJson.prod",
-      "cloudFunction": {
-        "name": "fromAndToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.mixedFields.prod",
-      "cloudFunction": {
-        "name": "mixedFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.namedFields.prod",
-      "cloudFunction": {
-        "name": "namedFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.nestedClass.prod",
-      "cloudFunction": {
-        "name": "nestedClass",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.nonMapFromAndToJson.prod",
-      "cloudFunction": {
-        "name": "nonMapFromAndToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.nonMapToJson.prod",
-      "cloudFunction": {
-        "name": "nonMapToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.nonMapToJsonWithDefaults.prod",
-      "cloudFunction": {
-        "name": "nonMapToJsonWithDefaults",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.nullableFields.prod",
-      "cloudFunction": {
-        "name": "nullableFields",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.onlyFromJson.prod",
-      "cloudFunction": {
-        "name": "onlyFromJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.onlyToJson.prod",
-      "cloudFunction": {
-        "name": "onlyToJson",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.onlyToJsonWithDefaults.prod",
-      "cloudFunction": {
-        "name": "onlyToJsonWithDefaults",
-        "apiName": "serialization"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "serialization.superFields.prod",
-      "cloudFunction": {
-        "name": "superFields",
-        "apiName": "serialization"
       }
     }
   ]

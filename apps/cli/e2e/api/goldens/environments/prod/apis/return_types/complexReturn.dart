@@ -377,94 +377,94 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
 
   @override
   Map<String, Object?> serialize(_i5.ComplexStruct value) => {
-        'aBigInt': _i4.Serializers.instance.serializeWithType(
+        r'aBigInt': _i4.Serializers.instance.serializeWithType(
           'dart:core#BigInt',
           value.aBigInt,
         ),
-        'aBool': value.aBool,
-        'aDateTime': _i4.Serializers.instance.serializeWithType(
+        r'aBool': value.aBool,
+        r'aDateTime': _i4.Serializers.instance.serializeWithType(
           'dart:core#DateTime',
           value.aDateTime,
         ),
-        'aDouble': value.aDouble,
-        'aDuration': _i4.Serializers.instance.serializeWithType(
+        r'aDouble': value.aDouble,
+        r'aDuration': _i4.Serializers.instance.serializeWithType(
           'dart:core#Duration',
           value.aDuration,
         ),
-        'aListOfBigInt': value.aListOfBigInt
+        r'aListOfBigInt': value.aListOfBigInt
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#BigInt',
                   el,
                 ))
             .toList(),
-        'aListOfBool': value.aListOfBool,
-        'aListOfDateTime': value.aListOfDateTime
+        r'aListOfBool': value.aListOfBool,
+        r'aListOfDateTime': value.aListOfDateTime
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#DateTime',
                   el,
                 ))
             .toList(),
-        'aListOfDouble': value.aListOfDouble,
-        'aListOfDuration': value.aListOfDuration
+        r'aListOfDouble': value.aListOfDouble,
+        r'aListOfDuration': value.aListOfDuration
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#Duration',
                   el,
                 ))
             .toList(),
-        'aListOfEnum': value.aListOfEnum
+        r'aListOfEnum': value.aListOfEnum
             .map((el) => _i4.Serializers.instance.serializeWithType<_i5.MyEnum>(
                   r'project:apis/parameter_types.dart#MyEnum',
                   el,
                 ))
             .toList(),
-        'aListOfInt': value.aListOfInt,
-        'aListOfNull': value.aListOfNull,
-        'aListOfRegExp': value.aListOfRegExp
+        r'aListOfInt': value.aListOfInt,
+        r'aListOfNull': value.aListOfNull,
+        r'aListOfRegExp': value.aListOfRegExp
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#RegExp',
                   el,
                 ))
             .toList(),
-        'aListOfSimpleClass': value.aListOfSimpleClass
+        r'aListOfSimpleClass': value.aListOfSimpleClass
             .map((el) =>
                 _i4.Serializers.instance.serializeWithType<_i5.SimpleClass>(
                   r'project:apis/parameter_types.dart#SimpleClass',
                   el,
                 ))
             .toList(),
-        'aListOfSimpleStruct': value.aListOfSimpleStruct
+        r'aListOfSimpleStruct': value.aListOfSimpleStruct
             .map((el) =>
                 _i4.Serializers.instance.serializeWithType<_i5.SimpleStruct>(
                   r'project:apis/parameter_types.dart#SimpleStruct',
                   el,
                 ))
             .toList(),
-        'aListOfStackTrace': value.aListOfStackTrace
+        r'aListOfStackTrace': value.aListOfStackTrace
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#StackTrace',
                   el,
                 ))
             .toList(),
-        'aListOfString': value.aListOfString,
-        'aListOfUint8List': value.aListOfUint8List
+        r'aListOfString': value.aListOfString,
+        r'aListOfUint8List': value.aListOfUint8List
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:typed_data#Uint8List',
                   el,
                 ))
             .toList(),
-        'aListOfUri': value.aListOfUri
+        r'aListOfUri': value.aListOfUri
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#Uri',
                   el,
                 ))
             .toList(),
-        'aListOfUriData': value.aListOfUriData
+        r'aListOfUriData': value.aListOfUriData
             .map((el) => _i4.Serializers.instance.serializeWithType(
                   'dart:core#UriData',
                   el,
                 ))
             .toList(),
-        'aMapOfBigInt': value.aMapOfBigInt.map((
+        r'aMapOfBigInt': value.aMapOfBigInt.map((
           key,
           value,
         ) =>
@@ -475,8 +475,8 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfBool': value.aMapOfBool,
-        'aMapOfDateTime': value.aMapOfDateTime.map((
+        r'aMapOfBool': value.aMapOfBool,
+        r'aMapOfDateTime': value.aMapOfDateTime.map((
           key,
           value,
         ) =>
@@ -487,8 +487,8 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfDouble': value.aMapOfDouble,
-        'aMapOfDuration': value.aMapOfDuration.map((
+        r'aMapOfDouble': value.aMapOfDouble,
+        r'aMapOfDuration': value.aMapOfDuration.map((
           key,
           value,
         ) =>
@@ -499,7 +499,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfEnum': value.aMapOfEnum.map((
+        r'aMapOfEnum': value.aMapOfEnum.map((
           key,
           value,
         ) =>
@@ -510,9 +510,9 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfInt': value.aMapOfInt,
-        'aMapOfNull': value.aMapOfNull,
-        'aMapOfRegExp': value.aMapOfRegExp.map((
+        r'aMapOfInt': value.aMapOfInt,
+        r'aMapOfNull': value.aMapOfNull,
+        r'aMapOfRegExp': value.aMapOfRegExp.map((
           key,
           value,
         ) =>
@@ -523,7 +523,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfSimpleClass': value.aMapOfSimpleClass.map((
+        r'aMapOfSimpleClass': value.aMapOfSimpleClass.map((
           key,
           value,
         ) =>
@@ -534,7 +534,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfSimpleStruct': value.aMapOfSimpleStruct.map((
+        r'aMapOfSimpleStruct': value.aMapOfSimpleStruct.map((
           key,
           value,
         ) =>
@@ -545,7 +545,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfStackTrace': value.aMapOfStackTrace.map((
+        r'aMapOfStackTrace': value.aMapOfStackTrace.map((
           key,
           value,
         ) =>
@@ -556,8 +556,8 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfString': value.aMapOfString,
-        'aMapOfUint8List': value.aMapOfUint8List.map((
+        r'aMapOfString': value.aMapOfString,
+        r'aMapOfUint8List': value.aMapOfUint8List.map((
           key,
           value,
         ) =>
@@ -568,7 +568,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfUri': value.aMapOfUri.map((
+        r'aMapOfUri': value.aMapOfUri.map((
           key,
           value,
         ) =>
@@ -579,7 +579,7 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aMapOfUriData': value.aMapOfUriData.map((
+        r'aMapOfUriData': value.aMapOfUriData.map((
           key,
           value,
         ) =>
@@ -590,44 +590,44 @@ final class ComplexStructSerializer extends _i4.Serializer<_i5.ComplexStruct> {
                 value,
               ),
             )),
-        'aNull': value.aNull,
-        'aRegExp': _i4.Serializers.instance.serializeWithType(
+        r'aNull': value.aNull,
+        r'aRegExp': _i4.Serializers.instance.serializeWithType(
           'dart:core#RegExp',
           value.aRegExp,
         ),
-        'aSimpleClass':
+        r'aSimpleClass':
             _i4.Serializers.instance.serializeWithType<_i5.SimpleClass>(
           r'project:apis/parameter_types.dart#SimpleClass',
           value.aSimpleClass,
         ),
-        'aSimpleStruct':
+        r'aSimpleStruct':
             _i4.Serializers.instance.serializeWithType<_i5.SimpleStruct>(
           r'project:apis/parameter_types.dart#SimpleStruct',
           value.aSimpleStruct,
         ),
-        'aStackTrace': _i4.Serializers.instance.serializeWithType(
+        r'aStackTrace': _i4.Serializers.instance.serializeWithType(
           'dart:core#StackTrace',
           value.aStackTrace,
         ),
-        'aString': value.aString,
-        'aUint8List': _i4.Serializers.instance.serializeWithType(
+        r'aString': value.aString,
+        r'aUint8List': _i4.Serializers.instance.serializeWithType(
           'dart:typed_data#Uint8List',
           value.aUint8List,
         ),
-        'aUri': _i4.Serializers.instance.serializeWithType(
+        r'aUri': _i4.Serializers.instance.serializeWithType(
           'dart:core#Uri',
           value.aUri,
         ),
-        'aUriData': _i4.Serializers.instance.serializeWithType(
+        r'aUriData': _i4.Serializers.instance.serializeWithType(
           'dart:core#UriData',
           value.aUriData,
         ),
-        'anEnum': _i4.Serializers.instance.serializeWithType<_i5.MyEnum>(
+        r'anEnum': _i4.Serializers.instance.serializeWithType<_i5.MyEnum>(
           r'project:apis/parameter_types.dart#MyEnum',
           value.anEnum,
         ),
-        'anInt': value.anInt,
-        'anIterableOfSimpleClass': value.anIterableOfSimpleClass
+        r'anInt': value.anInt,
+        r'anIterableOfSimpleClass': value.anIterableOfSimpleClass
             .map((el) =>
                 _i4.Serializers.instance.serializeWithType<_i5.SimpleClass>(
                   r'project:apis/parameter_types.dart#SimpleClass',

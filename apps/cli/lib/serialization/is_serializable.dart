@@ -367,22 +367,24 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     return verdict.withSpec(
       SerializationSpec(
-        uri: projectPaths
-            .normalizeUri(type.alias!.element.sourceLocation.uri)
-            .replace(fragment: type.alias!.element.name),
-        isNullable: typeHelper.typeSystem.isNullable(type),
+        uri: type.uri,
+        isNullable: switch (type.alias) {
+          final alias? => typeHelper.typeSystem.isNullable(type) ||
+              typeHelper.typeSystem.isNullable(alias.element.aliasedType),
+          _ => typeHelper.typeSystem.isNullable(type),
+        },
         type: type,
         wireType: jsonMapType,
         fields: [
           for (final (index, field) in type.positionalFields.indexed)
-            FieldSpec(name: '\$$index', type: field.type),
+            FieldSpec(name: '\$${index + 1}', type: field.type),
           for (final field in type.namedFields)
             FieldSpec(name: field.name, type: field.type),
         ],
         parameters: [
           for (final (index, field) in type.positionalFields.indexed)
             ParameterSpec(
-              name: '\$$index',
+              name: '\$${index + 1}',
               type: field.type,
               isPositional: true,
               isOptional: false,

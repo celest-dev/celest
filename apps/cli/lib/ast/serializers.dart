@@ -239,7 +239,7 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
       final value = iterator.moveNext() ? iterator.current : null;
       switch (name) {
         case 'symbol':
-          builder.symbol = value as String;
+          builder.symbol = value as String?;
         case 'url':
           builder.url = value as String?;
         case 'positionalFieldTypes':
@@ -278,10 +278,12 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
     RecordType object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = <Object?>[
-      'symbol',
-      object.symbol,
-    ];
+    final result = <Object?>[];
+    if (object.symbol case final symbol?) {
+      result
+        ..add('symbol')
+        ..add(symbol);
+    }
     if (object.url case final url?) {
       result
         ..add('url')

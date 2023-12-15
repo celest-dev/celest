@@ -10,6 +10,7 @@ import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 
 final class TypeHelper {
@@ -61,6 +62,10 @@ final class TypeHelper {
     final reference = type.accept(const _TypeToCodeBuilder());
     _dartTypeToReference[type] = reference;
     _referenceToDartType[reference] ??= type;
+    // TODO: Remove condition
+    if (type is! FunctionType) {
+      _referenceToDartType[reference.toTypeReference] ??= type;
+    }
     if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;
     }
@@ -214,7 +219,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
           ..url = alias.element.sourceLocation.uri.toString()
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
           // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,
-          ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
+          ..isNullable = typeHelper.typeSystem.isNullable(type),
       );
     }
     return recordType;

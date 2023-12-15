@@ -878,7 +878,7 @@ const Map<String, Test> tests = {
           ],
         },
       ),
-      'serialization': ApiTest(
+      'classes': ApiTest(
         functionTests: {
           ('empty', 'prod'): [
             FunctionTestSuccess(
@@ -1394,6 +1394,484 @@ const Map<String, Test> tests = {
                 'value': 'field',
               },
               output: 'field',
+            ),
+          ],
+        },
+      ),
+      'records': ApiTest(
+        functionTests: {
+          ('nonAliasedPositionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nonAliasedPositionalFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                r'$2': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncNonAliasedPositionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNonAliasedPositionalFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                r'$2': 'anotherField',
+              },
+            ),
+          ],
+          ('aliasedPositionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'aliasedPositionalFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                r'$2': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncAliasedPositionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncAliasedPositionalFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                r'$2': 'anotherField',
+              },
+            ),
+          ],
+          ('positionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'positionalFields',
+              input: {
+                'nonAliased': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                r'$2': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('asyncPositionalFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'positionalFields',
+              input: {
+                'nonAliased': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                r'$2': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('nonAliasedNamedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nonAliasedNamedFields',
+              input: {
+                'value': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'field': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncNonAliasedNamedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNonAliasedNamedFields',
+              input: {
+                'value': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'field': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('aliasedNamedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'aliasedNamedFields',
+              input: {
+                'value': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'field': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncAliasedNamedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncAliasedNamedFields',
+              input: {
+                'value': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'field': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('namedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'namedFields',
+              input: {
+                'nonAliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'nonAliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('asyncNamedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'namedFields',
+              input: {
+                'nonAliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                'nonAliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('aliasedMixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'aliasedMixedFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncAliasedMixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncAliasedMixedFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('nonAliasedMixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nonAliasedMixedFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('asyncNonAliasedMixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNonAliasedMixedFields',
+              input: {
+                'value': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': 'field',
+                'anotherField': 'anotherField',
+              },
+            ),
+          ],
+          ('mixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'mixedFields',
+              input: {
+                'nonAliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('asyncMixedFields', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncMixedFields',
+              input: {
+                'nonAliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+                'aliased': {
+                  r'$1': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('nested', 'prod'): [
+            FunctionTestSuccess(
+              name: 'nested',
+              input: {
+                'value': {
+                  r'$1': {
+                    r'$1': 'field',
+                    r'$2': 'anotherField',
+                  },
+                  'namedFields': {
+                    'field': 'field',
+                    'anotherField': 'anotherField',
+                  },
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'namedFields': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('asyncNested', 'prod'): [
+            FunctionTestSuccess(
+              name: 'asyncNested',
+              input: {
+                'value': {
+                  r'$1': {
+                    r'$1': 'field',
+                    r'$2': 'anotherField',
+                  },
+                  'namedFields': {
+                    'field': 'field',
+                    'anotherField': 'anotherField',
+                  },
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'namedFields': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('nullableNested', 'prod'): [
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: null,
+            ),
+            FunctionTestSuccess(
+              name: 'no value',
+              input: {
+                'value': {
+                  r'$1': null,
+                  'namedFields': null,
+                },
+              },
+              output: {
+                r'$1': null,
+                'namedFields': null,
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': {
+                  r'$1': {
+                    r'$1': 'field',
+                    r'$2': 'anotherField',
+                  },
+                  'namedFields': {
+                    'field': 'field',
+                    'anotherField': 'anotherField',
+                  },
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'namedFields': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
+            ),
+          ],
+          ('asyncNullableNested', 'prod'): [
+            FunctionTestSuccess(
+              name: 'null',
+              input: {},
+              output: null,
+            ),
+            FunctionTestSuccess(
+              name: 'no value',
+              input: {
+                'value': {
+                  r'$1': null,
+                  'namedFields': null,
+                },
+              },
+              output: {
+                r'$1': null,
+                'namedFields': null,
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'present',
+              input: {
+                'value': {
+                  r'$1': {
+                    r'$1': 'field',
+                    r'$2': 'anotherField',
+                  },
+                  'namedFields': {
+                    'field': 'field',
+                    'anotherField': 'anotherField',
+                  },
+                },
+              },
+              output: {
+                r'$1': {
+                  r'$1': 'field',
+                  r'$2': 'anotherField',
+                },
+                'namedFields': {
+                  'field': 'field',
+                  'anotherField': 'anotherField',
+                },
+              },
             ),
           ],
         },

@@ -1,4 +1,7 @@
+import 'package:analyzer/dart/element/type.dart' as ast;
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:code_builder/code_builder.dart';
 
 extension ReferenceHelper on Reference {
@@ -8,6 +11,15 @@ extension ReferenceHelper on Reference {
 
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
+        final RecordType recordType => TypeReference(
+            (t) => t
+              ..symbol =
+                  (typeHelper.fromReference(recordType) as ast.RecordType)
+                      .symbol
+              ..url =
+                  (typeHelper.fromReference(recordType) as ast.RecordType).url
+              ..isNullable = recordType.isNullable,
+          ),
         _ => TypeReference(
             (t) => t
               ..symbol = symbol
@@ -31,6 +43,7 @@ extension ReferenceHelper on Reference {
 
   bool get isNullableOrFalse => switch (this) {
         TypeReference(:final isNullable) => isNullable ?? false,
+        RecordType(:final isNullable) => isNullable ?? false,
         _ => false,
       };
 
