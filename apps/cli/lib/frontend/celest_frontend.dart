@@ -72,7 +72,7 @@ final class CelestFrontend {
       }),
     );
     final watcher = DirectoryWatcher(
-      projectPaths.projectRoot,
+      projectPaths.apisDir, // TODO: Watch all directories
     );
     try {
       while (true) {
