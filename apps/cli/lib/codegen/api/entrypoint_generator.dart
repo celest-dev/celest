@@ -5,8 +5,8 @@ import 'package:analyzer/dart/element/type.dart' hide RecordType;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
-import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
@@ -15,20 +15,18 @@ final class EntrypointGenerator {
   EntrypointGenerator({
     required this.api,
     required this.function,
-    required this.projectRoot,
     required this.outputDir,
-    required this.typeHelper,
   });
 
   final Api api;
   final CloudFunction function;
-  final String projectRoot;
   final String outputDir;
-  final TypeHelper typeHelper;
 
+  late final String projectRoot = projectPaths.projectRoot;
   late final JsonGenerator jsonGenerator = JsonGenerator(
     typeHelper: typeHelper,
   );
+  late final String targetName = '${function.name.pascalCase}Target';
   final _customSerializers = <Uri, Class>{};
   final _anonymousRecordTypes = <String, RecordType>{};
 
@@ -154,7 +152,7 @@ final class EntrypointGenerator {
     );
     final target = Class(
       (c) => c
-        ..name = '${function.name.pascalCase}Target'
+        ..name = targetName
         ..extend = DartTypes.functionsFramework.functionTarget
         ..fields.add(innerTarget)
         ..methods.add(

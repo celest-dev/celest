@@ -19,6 +19,9 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../packages/celest_core
+  celest_runtime_cloud:
+    path: ../../packages/celest_runtime_cloud
+  cli_util: ^0.4.0
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
@@ -29,13 +32,17 @@ dependencies:
   mason_logger: ^0.2.10
   meta: ^1.11.0
   os_detect: ^2.0.1
+  package_config: ^2.1.0
   path: ^1.8.3
+  pub_semver: ^2.1.4
   pubspec_parse: ^1.2.3
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ^1.0.4
   source_span: ^1.10.0
   stream_transform: ^2.1.0
+  uuid: ^4.3.1
+  vm_service: ^14.0.0
   watcher: ^1.1.0
   yaml: ^3.1.2
 
@@ -48,7 +55,6 @@ dev_dependencies:
   celest_lints:
     path: ../../packages/celest_lints
   json_serializable: ^6.7.1
-  package_config: ^2.1.0
   test: ^1.24.9
   test_descriptor: ^2.0.1
 

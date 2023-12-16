@@ -14,6 +14,8 @@ import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_core/celest_core.dart' as celest_core;
+import 'package:celest_runtime_cloud/celest_runtime_cloud.dart'
+    as celest_runtime_cloud;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:functions_framework/serve.dart' as functions_framework;
@@ -516,6 +518,8 @@ class _Celest {
 
   static const _url = 'package:celest/celest.dart';
   static const _coreUrl = 'package:celest_core/celest_core.dart';
+  static const _cloudRuntimeUrl =
+      'package:celest_runtime_cloud/celest_runtime_cloud.dart';
 
   /// Creates a [celest.BuildEnvironment] reference.
   DartTypeReference get buildEnvironment =>
@@ -571,6 +575,10 @@ class _Celest {
   /// Creates a [celest_core.Serializers] reference.
   DartTypeReference get serializers =>
       const DartTypeReference('Serializers', _coreUrl);
+
+  /// Creates a [celest_runtime_cloud.serve] reference.
+  DartTypeReference get serve =>
+      const DartTypeReference('serve', _cloudRuntimeUrl);
 }
 
 /// `dart:convert` types

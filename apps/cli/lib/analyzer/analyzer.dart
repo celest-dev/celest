@@ -19,6 +19,7 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:yaml/yaml.dart';
 
 typedef ErrorReporter = void Function(String message, SourceLocation location);
 
@@ -55,6 +56,35 @@ final class CelestAnalyzer {
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
   final TypeHelper typeHelper = TypeHelper();
+  late final enabledExperiments = _loadEnabledExperiments(
+    _projectPaths.analysisOptionsYaml,
+  );
+
+  List<String> _loadEnabledExperiments(String path) {
+    final analysisOptionsFile = File(path);
+    if (!analysisOptionsFile.existsSync()) {
+      _logger.detail('No analysis options file detected at $path');
+      return const [];
+    }
+    final analysisOptionsContent = analysisOptionsFile.readAsStringSync();
+    final analysisOptions = loadYamlDocument(analysisOptionsContent);
+    final analysisOptionsMap = analysisOptions.contents.value;
+    if (analysisOptionsMap is! YamlMap) {
+      _logger.detail('Invalid analysis options file: $analysisOptionsContent');
+      return const [];
+    }
+    final analyzerOptions = analysisOptionsMap.value['analyzer'];
+    if (analyzerOptions is! YamlMap) {
+      _logger.detail('No analyzer settings found');
+      return const [];
+    }
+    final enabledExperiments = analyzerOptions.value['enable-experiment'];
+    if (enabledExperiments is! YamlList) {
+      _logger.detail('No enabled experiments found');
+      return const [];
+    }
+    return enabledExperiments.value.cast<String>();
+  }
 
   void _reportError(String error, SourceLocation location) {
     _errors.add(

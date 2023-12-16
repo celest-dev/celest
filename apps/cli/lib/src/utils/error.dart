@@ -10,4 +10,5 @@ class _UnreachableError extends Error {
 Never unreachable([String message = 'Unreachable code reached']) =>
     throw _UnreachableError(message);
 
-Never todo() => throw UnimplementedError();
+// ignore: non_constant_identifier_names
+Never TODO() => throw UnimplementedError();

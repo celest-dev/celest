@@ -135,10 +135,7 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final codegen = CodeGenerator(
-        projectPaths: projectPaths,
-        typeHelper: analyzer.typeHelper,
-      );
+      final codegen = CodeGenerator();
       project!.accept(codegen);
 
       if (Platform.isWindows) {

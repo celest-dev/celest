@@ -8,5 +8,7 @@ dependencies:
     path: ../../../../packages/celest
   celest_core:
     path: ../../../../packages/celest_core
+  celest_runtime_cloud:
+    path: ../../../../packages/celest_runtime_cloud
   functions_framework: ^0.4.3+1
   shelf: ^1.4.1

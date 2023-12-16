@@ -1,15 +1,13 @@
-import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:code_builder/code_builder.dart';
 
 class ProjectBuildGenerator {
   ProjectBuildGenerator({
     required this.projectReference,
-    required this.projectPaths,
   });
 
   final Reference projectReference;
-  final ProjectPaths projectPaths;
 
   late final _allResourcesRef = refer('all', projectPaths.resourcesDart);
 

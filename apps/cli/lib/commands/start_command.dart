@@ -1,14 +1,10 @@
 import 'dart:io';
 
-import 'package:async/async.dart';
-import 'package:celest_cli/analyzer/analyzer.dart';
-import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
-import 'package:celest_cli/project/builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:watcher/watcher.dart';
 
 final class StartCommand extends CelestCommand {
   StartCommand();
@@ -18,14 +14,6 @@ final class StartCommand extends CelestCommand {
 
   @override
   String get name => 'start';
-
-  int _exitWithErrors(List<AnalysisException> errors) {
-    logger.err('Project has errors:');
-    for (final error in errors) {
-      logger.err(error.toString());
-    }
-    return 1;
-  }
 
   @override
   Future<int> run() async {
@@ -67,50 +55,17 @@ final class StartCommand extends CelestCommand {
       ).generate();
     }
 
-    final projectPaths = init(projectRoot: celestDir.path);
-
-    final analyzer = CelestAnalyzer(
-      projectPaths: projectPaths,
+    // Start the Celest Frontend Loop
+    final frontend = CelestFrontend(
+      projectRoot: celestDir.path,
       logger: logger,
+      verbose: verbose,
     );
-    final (:project, :errors) = await analyzer.analyzeProject();
-    if (project == null) {
-      return _exitWithErrors(errors);
+    try {
+      return await frontend.run();
+    } on Exception catch (e) {
+      logger.err('An error occurred while running Celest: $e');
+      return 1;
     }
-
-    final codeGenerator = CodeGenerator(
-      projectPaths: projectPaths,
-      typeHelper: analyzer.typeHelper,
-    );
-    project.accept(codeGenerator);
-    for (final MapEntry(key: path, value: contents)
-        in codeGenerator.fileOutputs.entries) {
-      assert(p.isAbsolute(path));
-      final file = File(path);
-      await file.create(recursive: true);
-      await file.writeAsString(contents);
-    }
-
-    final projectBuilder = ProjectBuilder(
-      project: project,
-      projectPaths: projectPaths,
-    );
-    final _ = await projectBuilder.build();
-
-    final events = StreamGroup.merge([
-      ProcessSignal.sigint.watch(),
-      ProcessSignal.sigterm.watch(),
-      DirectoryWatcher(celestDir.path).events,
-    ]);
-    await for (final event in events) {
-      if (event is ProcessSignal) {
-        print('Stopping Celest...');
-        break;
-      }
-      event as WatchEvent;
-      print('Files changed');
-    }
-
-    return 0;
   }
 }

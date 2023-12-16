@@ -24,6 +24,7 @@ final class ResourcesGenerator {
 
   // SplayTree ensures consistent ordering in output file which helps with
   // diffs.
+  // TODO(dnys1): Sort by API name, then definition order.
   final _allResources = SplayTreeSet<String>();
 
   final _classBuilders = <String, ClassBuilder>{};

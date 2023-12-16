@@ -210,7 +210,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
           for (final parameter in type.namedFields)
             parameter.name: typeHelper.toReference(parameter.type),
         })
-        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
+        ..isNullable = typeHelper.typeSystem.isNullable(type),
     );
     if (type.alias case final alias?) {
       return codegen.TypeReference(

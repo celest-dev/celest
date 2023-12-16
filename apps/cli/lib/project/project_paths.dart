@@ -14,8 +14,11 @@ final class ProjectPaths {
       p.canonicalize(p.normalize(p.join(projectRoot, '..')));
 
   late final String projectYaml = p.join(projectRoot, 'pubspec.yaml');
+  late final String analysisOptionsYaml =
+      p.join(projectRoot, 'analysis_options.yaml');
   late final String projectDart = p.join(projectRoot, 'project.dart');
   late final String projectBuildDart = p.join(outputsDir, 'project.build.dart');
+  late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
   late final String apisDir = p.join(projectRoot, 'apis');

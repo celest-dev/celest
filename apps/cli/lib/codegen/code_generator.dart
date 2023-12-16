@@ -2,20 +2,14 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
+import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/codegen/project/build.dart';
 import 'package:celest_cli/codegen/project/resources.dart';
-import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
 final class CodeGenerator extends AstVisitor<void> {
-  CodeGenerator({
-    required ProjectPaths projectPaths,
-    required this.typeHelper,
-  }) : _projectPaths = projectPaths;
-
   static const _ignoredRules = [
     'type=lint',
     'unused_local_variable',
@@ -31,7 +25,7 @@ final class CodeGenerator extends AstVisitor<void> {
       DartEmitter(
         allocator: CelestAllocator(
           forFile: forFile,
-          projectPaths: _projectPaths,
+          projectPaths: projectPaths,
         ),
         useNullSafetySyntax: true,
         orderDirectives: true,
@@ -50,43 +44,51 @@ final class CodeGenerator extends AstVisitor<void> {
     }
   }
 
-  final ProjectPaths _projectPaths;
-  final TypeHelper typeHelper;
-
   /// A map of generated files to their contents.
   final Map<String, String> fileOutputs = {};
 
+  /// A map of API routes to their target reference.
+  final Map<String, Reference> _targets = {};
+
   @override
   void visitProject(Project project) {
-    final projectBuildFile = _projectPaths.projectBuildDart;
+    final projectBuildFile = projectPaths.projectBuildDart;
     final projectBuild = ProjectBuildGenerator(
       projectReference: project.reference,
-      projectPaths: _projectPaths,
     ).generate();
     fileOutputs[projectBuildFile] =
         _emit(projectBuild, forFile: projectBuildFile);
 
-    final resourcesFile = _projectPaths.resourcesDart;
+    final resourcesFile = projectPaths.resourcesDart;
     final resources = ResourcesGenerator(project: project).generate();
     fileOutputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
 
     project.apis.values.forEach(visitApi);
+
+    if (project.apis.isNotEmpty) {
+      final localApiFile = projectPaths.localApiEntrypoint;
+      final localApi = LocalApiGenerator(targets: _targets).generate();
+      fileOutputs[localApiFile] = _emit(localApi, forFile: localApiFile);
+    }
   }
 
   @override
   void visitApi(Api api) {
     final outputDir = projectPaths.apiOutput(api.name);
     for (final function in api.functions.values) {
-      final entrypoint = EntrypointGenerator(
+      final generator = EntrypointGenerator(
         api: api,
         function: function,
-        projectRoot: _projectPaths.projectRoot,
         outputDir: outputDir,
-        typeHelper: typeHelper,
-      ).generate();
+      );
+      final entrypoint = generator.generate();
       final entrypointFile =
           projectPaths.functionEntrypoint(api.name, function.name);
       fileOutputs[entrypointFile] = _emit(entrypoint, forFile: entrypointFile);
+      _targets['/${api.name}/${function.name}'] = refer(
+        generator.targetName,
+        entrypointFile,
+      );
     }
   }
 
