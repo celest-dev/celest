@@ -20,6 +20,7 @@ final class LocalApiRunner implements Closeable {
     required this.logger,
     required this.verbose,
     required this.enabledExperiments,
+    required this.port,
     required FrontendServerClient client,
     required VmService vmService,
     required Process localApiProcess,
@@ -33,15 +34,17 @@ final class LocalApiRunner implements Closeable {
   final String path;
 
   /// The port that the local API is running on.
-  static late final int port;
-  static final Future<int> _port =
-      _findOpenPort().timeout(const Duration(seconds: 1));
+  final int port;
 
   static Future<int> _findOpenPort() async {
     var port = defaultCelestPort;
     while (true) {
       try {
-        await ServerSocket.bind(InternetAddress.loopbackIPv4, port);
+        final socket = await ServerSocket.bind(
+          InternetAddress.anyIPv4,
+          port,
+        );
+        await socket.close();
         return port;
       } on SocketException {
         port++;
@@ -82,7 +85,12 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
-    port = await _port;
+    final port = await _findOpenPort().timeout(
+      const Duration(seconds: 1),
+      onTimeout: () {
+        throw TimeoutException('Could not find an open port.');
+      },
+    );
     logger.detail('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
@@ -131,6 +139,7 @@ final class LocalApiRunner implements Closeable {
       logger: logger,
       verbose: verbose,
       enabledExperiments: enabledExperiments,
+      port: port,
       client: client,
       vmService: vmService,
       localApiProcess: localApiProcess,
@@ -146,16 +155,15 @@ final class LocalApiRunner implements Closeable {
       isolates = vm.isolates;
     }
     final isolateRef = isolates.first;
-    var isolate = await vmService.getIsolate(isolateRef.id!);
-    while (isolate.pauseEvent?.kind != EventKind.kPauseStart) {
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      isolate = await vmService.getIsolate(isolateRef.id!);
+    final isolate = await vmService.getIsolate(isolateRef.id!);
+    if (isolate.pauseEvent?.kind == EventKind.kPauseStart) {
+      await vmService.resume(isolate.id!);
     }
-    await vmService.resume(isolate.id!);
     return isolate;
   }
 
   Future<void> recompile(List<String> pathsToInvalidate) async {
+    logger.detail('Recompiling local API...');
     final result = await _client.compile([
       for (final path in pathsToInvalidate)
         Uri.parse('org-dartlang-root://$path'),
@@ -175,6 +183,7 @@ final class LocalApiRunner implements Closeable {
 
   @override
   Future<void> close() async {
+    logger.detail('Shutting down local API...');
     await _client.shutdown().timeout(
       const Duration(seconds: 1),
       onTimeout: () {

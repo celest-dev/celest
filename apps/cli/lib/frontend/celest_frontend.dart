@@ -84,23 +84,21 @@ final class CelestFrontend {
           final generatedOutputs = await _generateCode(project);
           final _ = await _buildProject(project);
           if (project.apis.isNotEmpty) {
-            await _startLocalApi([
+            final port = await _startLocalApi([
               ...generatedOutputs,
               ...project.apis.values.map(
                 (api) =>
                     // TODO: Make a property of the API
-                    p.join(
-                  projectPaths.projectRoot,
-                  'apis',
-                  '${api.name}.dart',
-                ),
+                    p.join(projectPaths.apisDir, '${api.name}.dart'),
               ),
             ]);
+            progress.complete(
+              'Celest is running at http://localhost:$port',
+            );
+          } else {
+            progress.complete('Celest is running');
           }
 
-          progress.complete(
-            'Celest is running at http://localhost:${LocalApiRunner.port}',
-          );
           _didFirstCompile = true;
         }
         // TODO: Future.any with stop signal
@@ -109,6 +107,7 @@ final class CelestFrontend {
     } on CancellationException {
       return 0;
     } finally {
+      print('Closing');
       await _localApiRunner?.close();
     }
   }
@@ -170,7 +169,7 @@ final class CelestFrontend {
     return projectProto;
   }
 
-  Future<void> _startLocalApi(List<String> additionalSources) async {
+  Future<int> _startLocalApi(List<String> additionalSources) async {
     if (_localApiRunner == null) {
       _localApiRunner = await LocalApiRunner.start(
         path: projectPaths.localApiEntrypoint,
@@ -182,6 +181,7 @@ final class CelestFrontend {
     } else {
       await _localApiRunner!.recompile(additionalSources);
     }
+    return _localApiRunner!.port;
   }
 }
 
