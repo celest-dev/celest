@@ -34,10 +34,6 @@ final class CelestAnalyzer {
     required ProjectPaths projectPaths,
     required Logger logger,
   }) {
-    init(
-      projectRoot: projectPaths.projectRoot,
-      outputsDir: projectPaths.outputsDir,
-    );
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
     );

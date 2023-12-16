@@ -55,6 +55,10 @@ final class StartCommand extends CelestCommand {
       ).generate();
     }
 
+    // Ensure all `Process.start` commands are performed from the Celest dir.
+    // TODO: Hacky, find a better way to do this.
+    Directory.current = celestDir;
+
     // Start the Celest Frontend Loop
     final frontend = CelestFrontend(
       projectRoot: celestDir.path,

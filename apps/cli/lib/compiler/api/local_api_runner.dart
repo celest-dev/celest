@@ -33,7 +33,8 @@ final class LocalApiRunner implements Closeable {
   final String path;
 
   /// The port that the local API is running on.
-  static final Future<int> port =
+  static late final int port;
+  static final Future<int> _port =
       _findOpenPort().timeout(const Duration(seconds: 1));
 
   static Future<int> _findOpenPort() async {
@@ -81,12 +82,13 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
+    port = await _port;
     logger.detail('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
       ['--enable-vm-service', dillOutput],
       environment: {
-        'PORT': Platform.environment['PORT'] ?? '${await port}',
+        'PORT': Platform.environment['PORT'] ?? '$port',
       },
     );
 
