@@ -6,6 +6,7 @@ import 'package:args/args.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
@@ -71,14 +72,17 @@ class TestRunner {
     outputsDir: goldensDir.path,
   );
   late Client client;
+  final logger = Logger(level: Level.verbose);
   late final analyzer = CelestAnalyzer(
     projectPaths: projectPaths,
-    logger: Logger(level: Level.verbose),
+    logger: logger,
   );
+  late final ResidentCompiler residentCompiler =
+      ResidentCompiler.start(logger: logger)!;
 
   void run() {
     group(testName, () {
-      setUpAll(() {
+      setUpAll(() async {
         final res = Process.runSync(
           Platform.executable,
           ['pub', 'get'],
@@ -92,8 +96,9 @@ class TestRunner {
         client = Client();
       });
 
-      tearDownAll(() {
+      tearDownAll(() async {
         client.close();
+        await residentCompiler.stop();
       });
 
       _testAnalyzer();
@@ -166,6 +171,7 @@ class TestRunner {
       final projectBuilder = ProjectBuilder(
         project: project!,
         projectPaths: projectPaths,
+        residentCompiler: residentCompiler,
       );
       final cloudAst = await projectBuilder.build();
       final cloudAstFile = File(

@@ -7,6 +7,7 @@ import 'package:celest/src/authz/policy.dart' as core;
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
+import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_core/protos.dart' as proto;
 import 'package:collection/collection.dart';
@@ -15,10 +16,12 @@ final class ProjectBuilder {
   ProjectBuilder({
     required this.project,
     required this.projectPaths,
+    required this.residentCompiler,
   });
 
   final ast.Project project;
   final ProjectPaths projectPaths;
+  final ResidentCompiler? residentCompiler;
 
   Future<proto.Project> build() async {
     // Cannot use `Isolate.spawnUri` in AOT mode unless the URI is an AOT
@@ -26,6 +29,11 @@ final class ProjectBuilder {
     final processResult = await Process.run(
       Sdk.current.dart,
       [
+        'run',
+        if (residentCompiler case final residentCompiler?) ...[
+          '--resident',
+          '--resident-server-info-file=${residentCompiler.infoFile.path}',
+        ],
         projectPaths.projectBuildDart,
         project.name,
         projectPaths.projectRoot,

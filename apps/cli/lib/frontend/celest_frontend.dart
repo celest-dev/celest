@@ -7,6 +7,7 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
+import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_core/protos.dart' as proto;
@@ -56,6 +57,7 @@ final class CelestFrontend implements Closeable {
   final _stopSignal = Completer<ProcessSignal>.sync();
   bool get stopped => _stopSignal.isCompleted;
 
+  ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
   var _didFirstCompile = false;
 
@@ -80,6 +82,9 @@ final class CelestFrontend implements Closeable {
       while (!stopped) {
         final progress = logger.progress(
           _didFirstCompile ? 'Reloading Celest...' : 'Starting Celest...',
+        );
+        _residentCompiler ??= ResidentCompiler.start(
+          logger: logger,
         );
         final project = await _analyzeProject();
         if (project != null) {
@@ -170,6 +175,7 @@ final class CelestFrontend implements Closeable {
     final projectBuilder = ProjectBuilder(
       project: project,
       projectPaths: projectPaths,
+      residentCompiler: _residentCompiler,
     );
     final projectProto = await projectBuilder.build();
     if (stopped) {
@@ -196,6 +202,7 @@ final class CelestFrontend implements Closeable {
   @override
   Future<void> close() async {
     await _localApiRunner?.close();
+    await _residentCompiler?.stop();
   }
 }
 

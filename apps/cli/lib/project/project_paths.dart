@@ -1,3 +1,4 @@
+import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 
@@ -12,6 +13,7 @@ final class ProjectPaths {
 
   late final String appRoot =
       p.canonicalize(p.normalize(p.join(projectRoot, '..')));
+  late final String celestConfig = CelestConfig.instance.configDir.path;
 
   late final String projectYaml = p.join(projectRoot, 'pubspec.yaml');
   late final String analysisOptionsYaml =
