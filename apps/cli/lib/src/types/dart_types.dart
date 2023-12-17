@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'dart:convert' as convert;
+import 'dart:io' as io;
 import 'dart:isolate' as isolate;
 import 'dart:typed_data';
 
@@ -108,6 +109,9 @@ abstract class DartTypes {
 
   /// `package:functions_framework` types.
   static const functionsFramework = _FunctionsFramework();
+
+  /// `dart:io` types.
+  static const io = _Io();
 
   /// `dart:isolate` types.
   static const isolate = _Isolate();
@@ -633,6 +637,16 @@ class _FunctionsFramework {
 
   /// Creates a [functions_framework.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _url);
+}
+
+/// `dart:io` types
+class _Io {
+  const _Io();
+
+  static const _url = 'dart:io';
+
+  /// Creates a [io.stdout] reference.
+  DartTypeReference get stdout => const DartTypeReference('stdout', _url);
 }
 
 /// `dart:isolate` types

@@ -1,9 +1,10 @@
-// Below is copied from Dart SDK `package:dartdev`
+// Below is modified from Dart SDK `package:dartdev`
 
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/error.dart';
+// ignore: implementation_imports
+import 'package:process/src/interface/common.dart';
 
 /// A utility class for finding and referencing paths within the Dart SDK.
 class Sdk {
@@ -17,10 +18,7 @@ class Sdk {
   /// The SDK's semantic versioning version (x.y.z-a.b.channel).
   final String version;
 
-  // Assume that we want to use the same Dart executable that we used to spawn
-  // DartDev. We should be able to run programs with out/ReleaseX64/dart even
-  // if the SDK isn't completely built.
-  String get dart => Platform.resolvedExecutable;
+  String get dart => p.join(sdkPath, 'bin', 'dart');
 
   String get dartAotRuntime => p.join(sdkPath, 'bin', 'dartaotruntime');
 
@@ -73,18 +71,40 @@ class Sdk {
         'devtools',
       );
 
+  String get vmPlatformDill => p.absolute(
+        sdkPath,
+        'lib',
+        '_internal',
+        'vm_platform_strong.dill',
+      );
+
   static Sdk _createSingleton() {
     // Find SDK path.
+
+    bool isValid(String sdkPath) =>
+        FileSystemEntity.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
 
     // The common case, and how cli_util.dart computes the Dart SDK directory,
     // [path.dirname] called twice on Platform.resolvedExecutable. We confirm by
     // asserting that the directory `./bin/snapshots/` exists in this directory:
-    final sdkPath =
-        p.absolute(p.dirname(p.dirname(Platform.resolvedExecutable)));
-    final snapshotsDir = p.join(sdkPath, 'bin', 'snapshots');
-    if (!Directory(snapshotsDir).existsSync()) {
-      // Otherwise, running in AOT mode, likely.
-      TODO();
+    var sdkPath = p.absolute(p.dirname(p.dirname(Platform.resolvedExecutable)));
+    if (!isValid(sdkPath)) {
+      // If the common case fails, we try to find the SDK path by looking for
+      // the `dart` executable in the PATH environment variable.
+      final dartPath = getExecutablePath('dart', Directory.current.path);
+      if (dartPath == null) {
+        throw Exception('Could not find Dart SDK.');
+      }
+      // `sdk/bin/dart` -> `sdk`
+      sdkPath = p.dirname(p.dirname(dartPath));
+      if (!isValid(sdkPath)) {
+        // Check if using Dart from Flutter SDK.
+        // `flutter/bin/dart` -> `flutter/bin/cache/dart-sdk`
+        sdkPath = p.join(p.dirname(dartPath), 'cache', 'dart-sdk');
+        if (!isValid(sdkPath)) {
+          throw Exception('Could not find Dart SDK.');
+        }
+      }
     }
 
     // Defer to [Runtime] for the version.

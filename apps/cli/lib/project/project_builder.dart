@@ -1,12 +1,13 @@
-import 'dart:isolate';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:celest/celest.dart';
 // ignore: implementation_imports
 import 'package:celest/src/authz/policy.dart' as core;
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';
+import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/project/project_paths.dart';
-import 'package:celest_cli/src/context.dart';
 import 'package:celest_core/protos.dart' as proto;
 import 'package:collection/collection.dart';
 
@@ -20,41 +21,30 @@ final class ProjectBuilder {
   final ProjectPaths projectPaths;
 
   Future<proto.Project> build() async {
-    final receivePort = ReceivePort();
-    final errorPort = ReceivePort();
-    final isolate = await Isolate.spawnUri(
-      p.toUri(projectPaths.projectBuildDart),
+    // Cannot use `Isolate.spawnUri` in AOT mode unless the URI is an AOT
+    // snapshot compiled with the same SDK.
+    final processResult = await Process.run(
+      Sdk.current.dart,
       [
+        projectPaths.projectBuildDart,
         project.name,
         projectPaths.projectRoot,
         projectPaths.outputsDir,
       ],
-      receivePort.sendPort,
-      onError: errorPort.sendPort,
-      automaticPackageResolution: true,
+      stdoutEncoding: null,
+      stderrEncoding: utf8,
     );
-    try {
-      final result = await Future.any([
-        receivePort.first,
-        errorPort.first.then((error) {
-          print('Error: $error');
-          if (error != null) {
-            throw '${error.runtimeType}: $error';
-          }
-        }),
-      ]);
-      if (result is! List<int>) {
-        throw StateError('Bad result: $result');
-      }
-      final cloudAst = proto.Project.fromBuffer(result);
-      final staticWidgetCollector = _StaticWidgetCollector(cloudAst: cloudAst);
-      project.accept(staticWidgetCollector);
-      return cloudAst;
-    } finally {
-      isolate.kill(priority: Isolate.immediate);
-      receivePort.close();
-      errorPort.close();
+    if (processResult.exitCode != 0) {
+      throw Exception(
+        'Failed to build project: ${processResult.stderr}',
+      );
     }
+    final cloudAst = proto.Project.fromBuffer(
+      processResult.stdout as List<int>,
+    );
+    final staticWidgetCollector = _StaticWidgetCollector(cloudAst: cloudAst);
+    project.accept(staticWidgetCollector);
+    return cloudAst;
   }
 }
 

@@ -64,8 +64,9 @@ class FrontendServerClient {
     bool printIncrementalDependencies = true,
     List<String> additionalSources = const [],
     String? nativeAssets,
+    List<String> additionalArgs = const [],
   }) async {
-    final feServer = await Process.start(Platform.resolvedExecutable, [
+    final feServer = await Process.start(Sdk.current.dartAotRuntime, [
       if (debug) '--observe',
       frontendServerPath ?? _feServerPath,
       '--sdk-root',
@@ -95,6 +96,7 @@ class FrontendServerClient {
         '--native-assets',
         nativeAssets,
       ],
+      ...additionalArgs,
     ]);
     final feServerStdoutLines = StreamQueue(
       feServer.stdout.transform(utf8.decoder).transform(const LineSplitter()),

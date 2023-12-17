@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:celest_cli/analyzer/analyzer.dart';
+import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:mason_logger/mason_logger.dart';

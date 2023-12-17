@@ -10,6 +10,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
@@ -36,6 +37,7 @@ final class CelestAnalyzer {
   }) {
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
+      sdkPath: Sdk.current.sdkPath,
     );
     final context = contextCollection.contexts.single;
     return CelestAnalyzer._(

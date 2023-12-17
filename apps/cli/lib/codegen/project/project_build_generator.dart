@@ -21,11 +21,6 @@ class ProjectBuildGenerator {
                 ..name = 'args'
                 ..type = DartTypes.core.list(DartTypes.core.string),
             ),
-            Parameter(
-              (p) => p
-                ..name = 'sendPort'
-                ..type = DartTypes.isolate.sendPort,
-            ),
           ])
           ..body = Code.scope(
             (alloc) => '''
@@ -37,7 +32,8 @@ final project = ${alloc(DartTypes.celest.runWithContext)}(context, () {
   final widgets = ${alloc(_allResourcesRef)}.map((widget) => widget.toProto());
   return ${alloc(projectReference)}.toProto()..widgets.addAll(widgets);
 });
-sendPort.send(project.writeToBuffer());
+${alloc(DartTypes.io.stdout)}.add(project.writeToBuffer());
+${alloc(DartTypes.io.stdout)}.flush();
 ''',
           ),
       );

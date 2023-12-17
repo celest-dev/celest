@@ -119,6 +119,7 @@ final class ResourcesGenerator {
     _library.body.add(
       Field(
         (f) => f
+          ..modifier = FieldModifier.constant
           ..type = DartTypes.core.list(DartTypes.celest.cloudWidget)
           ..name = 'all'
           ..assignment = literalConstList(

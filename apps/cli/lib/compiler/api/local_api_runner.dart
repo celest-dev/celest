@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
-import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -23,9 +22,11 @@ final class LocalApiRunner implements Closeable {
     required this.port,
     required FrontendServerClient client,
     required VmService vmService,
+    required String vmIsolateId,
     required Process localApiProcess,
   })  : _client = client,
         _vmService = vmService,
+        _vmIsolateId = vmIsolateId,
         _localApiProcess = localApiProcess;
 
   final Logger logger;
@@ -54,6 +55,7 @@ final class LocalApiRunner implements Closeable {
 
   final FrontendServerClient _client;
   final VmService _vmService;
+  final String _vmIsolateId;
   final Process _localApiProcess;
 
   static Future<LocalApiRunner> start({
@@ -66,19 +68,17 @@ final class LocalApiRunner implements Closeable {
     final client = await FrontendServerClient.start(
       'org-dartlang-root://$path', // entrypoint
       path.replaceFirst(RegExp(r'.dart$'), '.dill'), // dill
-      p.join(
-        Sdk.current.sdkPath,
-        'lib',
-        '_internal',
-        'vm_platform_strong.dill',
-      ),
+      Sdk.current.vmPlatformDill,
       target: 'vm',
       verbose: verbose,
       fileSystemRoots: ['/'],
       fileSystemScheme: 'org-dartlang-root',
       enabledExperiments: enabledExperiments,
-      frontendServerPath: Sdk.current.frontendServerSnapshot,
+      frontendServerPath: Sdk.current.frontendServerAotSnapshot,
       additionalSources: additionalSources,
+      additionalArgs: [
+        '--no-support-mirrors', // Since it won't be supported in the cloud.
+      ],
     );
     logger.detail('Compiling local API...');
 
@@ -88,14 +88,19 @@ final class LocalApiRunner implements Closeable {
     final port = await _findOpenPort().timeout(
       const Duration(seconds: 1),
       onTimeout: () {
-        throw TimeoutException('Could not find an open port.');
+        throw TimeoutException('Could not find an open port to run Celest.');
       },
     );
     logger.detail('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
-      ['--enable-vm-service', dillOutput],
+      [
+        // Start VM service on a random port.
+        '--enable-vm-service=0',
+        dillOutput,
+      ],
       environment: {
+        // The HTTP port to serve Celest on.
         'PORT': Platform.environment['PORT'] ?? '$port',
       },
     );
@@ -130,8 +135,7 @@ final class LocalApiRunner implements Closeable {
     logger.detail('Waiting for local API to report VM URI...');
     final vmService = await vmServiceCompleter.future;
 
-    // logger.detail('Waiting for isolate.');
-    // final isolate = await _waitForIsolatesAndResume(vmService);
+    final isolateId = await _waitForIsolate(vmService, logger);
     logger.detail('Connected to local API.');
 
     return LocalApiRunner._(
@@ -142,24 +146,31 @@ final class LocalApiRunner implements Closeable {
       port: port,
       client: client,
       vmService: vmService,
+      vmIsolateId: isolateId,
       localApiProcess: localApiProcess,
     );
   }
 
-  static Future<Isolate> _waitForIsolatesAndResume(VmService vmService) async {
+  /// Waits for the main Isolate to be available then returns its ID.
+  static Future<String> _waitForIsolate(
+    VmService vmService,
+    Logger logger,
+  ) async {
     var vm = await vmService.getVM();
     var isolates = vm.isolates;
+    final stopwatch = Stopwatch()..start();
+    const timeout = Duration(seconds: 5);
     while (isolates == null || isolates.isEmpty) {
+      if (stopwatch.elapsed > timeout) {
+        throw TimeoutException('Timed out waiting for VM to start.');
+      }
       await Future<void>.delayed(const Duration(milliseconds: 100));
       vm = await vmService.getVM();
       isolates = vm.isolates;
     }
-    final isolateRef = isolates.first;
-    final isolate = await vmService.getIsolate(isolateRef.id!);
-    if (isolate.pauseEvent?.kind == EventKind.kPauseStart) {
-      await vmService.resume(isolate.id!);
-    }
-    return isolate;
+    stopwatch.stop();
+    logger.detail('VM started in ${stopwatch.elapsedMilliseconds}ms.');
+    return isolates.single.id!;
   }
 
   Future<void> recompile(List<String> pathsToInvalidate) async {
@@ -169,14 +180,8 @@ final class LocalApiRunner implements Closeable {
         Uri.parse('org-dartlang-root://$path'),
     ]);
     final dillOutput = _client.expectOutput(result);
-    final vm = await _vmService.getVM();
-    final isolateId = vm.isolates?.first.id;
-    if (isolateId == null) {
-      unreachable('No isolate found.');
-    }
     await _vmService.reloadSources(
-      isolateId,
-      // force: true,
+      _vmIsolateId,
       rootLibUri: dillOutput,
     );
   }
@@ -184,15 +189,10 @@ final class LocalApiRunner implements Closeable {
   @override
   Future<void> close() async {
     logger.detail('Shutting down local API...');
-    await _client.shutdown().timeout(
-      const Duration(seconds: 1),
-      onTimeout: () {
-        _client.kill();
-        return 1;
-      },
-    );
+    _client.kill();
     await _vmService.dispose();
     _localApiProcess.kill();
+    logger.detail('Shut down local API.');
   }
 }
 
@@ -207,7 +207,8 @@ extension on FrontendServerClient {
         accept();
         return dillOutput;
       default:
-        throw StateError('An unknown error occurred compiling local API.');
+        // `dillOutput` should never be null (see its docs).
+        unreachable('An unknown error occurred compiling local API.');
     }
   }
 }

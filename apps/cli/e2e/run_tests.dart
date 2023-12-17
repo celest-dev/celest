@@ -4,9 +4,9 @@ import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:async/async.dart';
-import 'package:celest_cli/analyzer/analyzer.dart';
+import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
-import 'package:celest_cli/project/builder.dart';
+import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:http/http.dart';

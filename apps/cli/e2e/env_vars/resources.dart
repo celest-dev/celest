@@ -6,4 +6,4 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/celest.dart' as _i1;
 
-List<_i1.CloudWidget> all = const [];
+const List<_i1.CloudWidget> all = [];

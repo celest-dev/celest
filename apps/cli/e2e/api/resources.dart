@@ -962,7 +962,7 @@ abstract final class functions {
   );
 }
 
-List<_i1.CloudWidget> all = const [
+const List<_i1.CloudWidget> all = [
   apis.anonymousApi,
   apis.anonymousFunction,
   apis.apiAuthConstantVariables,
