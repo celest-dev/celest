@@ -11,7 +11,7 @@ final class CelestConfig {
     FileSystem fileSystem = const LocalFileSystem(),
   }) {
     final configHome = fileSystem.directory(
-      applicationConfigHome('celest'),
+      applicationConfigHome('Celest'),
     );
     if (!configHome.existsSync()) {
       configHome.createSync(

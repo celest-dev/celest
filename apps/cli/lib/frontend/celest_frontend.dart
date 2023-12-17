@@ -12,6 +12,7 @@ import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_core/protos.dart' as proto;
 import 'package:mason_logger/mason_logger.dart';
+import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
 
 final class CelestFrontend implements Closeable {
@@ -54,6 +55,14 @@ final class CelestFrontend implements Closeable {
     return 1;
   }
 
+  final _readyForChanges = StreamController<void>();
+  late final _watcher = StreamQueue(
+    StreamGroup.merge([
+      FileWatcher(projectPaths.projectDart).events,
+      DirectoryWatcher(projectPaths.apisDir).events,
+    ]).buffer(_readyForChanges.stream),
+  );
+
   final _stopSignal = Completer<ProcessSignal>.sync();
   bool get stopped => _stopSignal.isCompleted;
 
@@ -74,10 +83,6 @@ final class CelestFrontend implements Closeable {
         _stopSignal.complete(signal);
       }),
     );
-    final watcher = StreamGroup.mergeBroadcast([
-      FileWatcher(projectPaths.projectDart).events,
-      DirectoryWatcher(projectPaths.apisDir).events,
-    ]);
     try {
       while (!stopped) {
         final progress = logger.progress(
@@ -108,11 +113,14 @@ final class CelestFrontend implements Closeable {
 
           _didFirstCompile = true;
         }
-        final nextWatcherEvent = Completer<void>.sync();
-        final watcherSub = watcher.listen(nextWatcherEvent.complete);
+        _readyForChanges.add(null);
         await Future.any([
-          nextWatcherEvent.future,
-          _stopSignal.future.whenComplete(watcherSub.cancel),
+          _watcher.next.then(
+            (events) => logger.detail(
+              '${events.length} watcher events since last compile',
+            ),
+          ),
+          _stopSignal.future,
         ]);
       }
       return 0;
@@ -196,11 +204,16 @@ final class CelestFrontend implements Closeable {
     } else {
       await _localApiRunner!.recompile(additionalSources);
     }
+    if (stopped) {
+      throw const CancellationException('Celest was stopped');
+    }
     return _localApiRunner!.port;
   }
 
   @override
   Future<void> close() async {
+    await _watcher.cancel(immediate: true);
+    await _readyForChanges.close();
     await _localApiRunner?.close();
     await _residentCompiler?.stop();
   }
