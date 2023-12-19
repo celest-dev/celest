@@ -16,15 +16,9 @@ class AsyncNonMapToJsonWithDefaultsTarget extends _i1.FunctionTarget {
     ) async {
       final response = await _i2.asyncNonMapToJsonWithDefaults(_i3
           .Serializers.instance
-          .deserializeWithType<_i2.NonMapToJsonWithDefaults>(
-        r'project:apis/classes.dart#NonMapToJsonWithDefaults',
-        request[r'value'],
-      ));
+          .deserialize<_i2.NonMapToJsonWithDefaults>(request[r'value']));
       return _i3.Serializers.instance
-          .serializeWithType<_i2.NonMapToJsonWithDefaults>(
-        r'project:apis/classes.dart#NonMapToJsonWithDefaults',
-        response,
-      );
+          .serialize<_i2.NonMapToJsonWithDefaults>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

@@ -14,15 +14,9 @@ class AsyncOnlyFromJsonTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncOnlyFromJson(
-          _i3.Serializers.instance.deserializeWithType<_i2.OnlyFromJson>(
-        r'project:apis/classes.dart#OnlyFromJson',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.OnlyFromJson>(
-        r'project:apis/classes.dart#OnlyFromJson',
-        response,
-      );
+      final response = await _i2.asyncOnlyFromJson(_i3.Serializers.instance
+          .deserialize<_i2.OnlyFromJson>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.OnlyFromJson>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

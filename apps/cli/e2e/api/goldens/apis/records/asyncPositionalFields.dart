@@ -15,20 +15,13 @@ class AsyncPositionalFieldsTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final response = await _i2.asyncPositionalFields(
-        _i3.Serializers.instance.deserializeWithType<(String, String)>(
-          r'#Record$rh3gkz',
-          request[r'nonAliased'],
-        ),
-        _i3.Serializers.instance.deserializeWithType<(String, String)>(
-          r'#Record$rh3gkz',
-          request[r'aliased'],
-        ),
+        _i3.Serializers.instance
+            .deserialize<(String, String)>(request[r'nonAliased']),
+        _i3.Serializers.instance
+            .deserialize<_i2.PositionalFields>(request[r'aliased']),
       );
       return _i3.Serializers.instance
-          .serializeWithType<((String, String), (String, String))>(
-        r'#Record$8hbt4m',
-        response,
-      );
+          .serialize<((String, String), _i2.PositionalFields)>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -41,53 +34,17 @@ class AsyncPositionalFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$8hbt4mSerializer());
   _i3.Serializers.instance.put(const Record$rh3gkzSerializer());
+  _i3.Serializers.instance.put(const PositionalFieldsSerializer());
+  _i3.Serializers.instance.put(const Record$iymyrqSerializer());
   await _i1.serve(
     args,
     (_) => AsyncPositionalFieldsTarget(),
   );
 }
 
-typedef Record$8hbt4m = ((String, String), (String, String));
+typedef Record$iymyrq = ((String, String), _i2.PositionalFields);
 typedef Record$rh3gkz = (String, String);
-
-final class Record$8hbt4mSerializer extends _i3.Serializer<Record$8hbt4m> {
-  const Record$8hbt4mSerializer();
-
-  @override
-  String get dartType => r'#Record$8hbt4m';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  Record$8hbt4m deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (
-      _i3.Serializers.instance.deserializeWithType<Record$rh3gkz>(
-        r'#Record$rh3gkz',
-        serialized[r'$1'],
-      ),
-      _i3.Serializers.instance.deserializeWithType<Record$rh3gkz>(
-        r'#Record$rh3gkz',
-        serialized[r'$2'],
-      )
-    );
-  }
-
-  @override
-  Map<String, Object?> serialize(Record$8hbt4m value) => {
-        r'$1': _i3.Serializers.instance.serializeWithType<(String, String)>(
-          r'#Record$rh3gkz',
-          value.$1,
-        ),
-        r'$2': _i3.Serializers.instance.serializeWithType<(String, String)>(
-          r'#Record$rh3gkz',
-          value.$2,
-        ),
-      };
-}
 
 final class Record$rh3gkzSerializer extends _i3.Serializer<Record$rh3gkz> {
   const Record$rh3gkzSerializer();
@@ -108,5 +65,55 @@ final class Record$rh3gkzSerializer extends _i3.Serializer<Record$rh3gkz> {
   Map<String, Object?> serialize(Record$rh3gkz value) => {
         r'$1': value.$1,
         r'$2': value.$2,
+      };
+}
+
+final class PositionalFieldsSerializer
+    extends _i3.Serializer<_i2.PositionalFields> {
+  const PositionalFieldsSerializer();
+
+  @override
+  String get dartType => r'project:apis/records.dart#PositionalFields';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.PositionalFields deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ((serialized[r'$1'] as String), (serialized[r'$2'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.PositionalFields value) => {
+        r'$1': value.$1,
+        r'$2': value.$2,
+      };
+}
+
+final class Record$iymyrqSerializer extends _i3.Serializer<Record$iymyrq> {
+  const Record$iymyrqSerializer();
+
+  @override
+  String get dartType => r'#Record$iymyrq';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  Record$iymyrq deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (
+      _i3.Serializers.instance.deserialize<Record$rh3gkz>(serialized[r'$1']),
+      _i3.Serializers.instance
+          .deserialize<_i2.PositionalFields>(serialized[r'$2'])
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(Record$iymyrq value) => {
+        r'$1': _i3.Serializers.instance.serialize<(String, String)>(value.$1),
+        r'$2':
+            _i3.Serializers.instance.serialize<_i2.PositionalFields>(value.$2),
       };
 }

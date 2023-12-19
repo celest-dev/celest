@@ -14,15 +14,10 @@ class FromAndToJsonTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.fromAndToJson(
-          _i3.Serializers.instance.deserializeWithType<_i2.FromJsonAndToJson>(
-        r'project:apis/classes.dart#FromJsonAndToJson',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.FromJsonAndToJson>(
-        r'project:apis/classes.dart#FromJsonAndToJson',
-        response,
-      );
+      final response = _i2.fromAndToJson(_i3.Serializers.instance
+          .deserialize<_i2.FromJsonAndToJson>(request[r'value']));
+      return _i3.Serializers.instance
+          .serialize<_i2.FromJsonAndToJson>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

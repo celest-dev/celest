@@ -14,16 +14,11 @@ class AsyncNonMapFromAndToJsonTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncNonMapFromAndToJson(
-          _i3.Serializers.instance.deserializeWithType<_i2.NonMapFromAndToJson>(
-        r'project:apis/classes.dart#NonMapFromAndToJson',
-        request[r'value'],
-      ));
+      final response = await _i2.asyncNonMapFromAndToJson(_i3
+          .Serializers.instance
+          .deserialize<_i2.NonMapFromAndToJson>(request[r'value']));
       return _i3.Serializers.instance
-          .serializeWithType<_i2.NonMapFromAndToJson>(
-        r'project:apis/classes.dart#NonMapFromAndToJson',
-        response,
-      );
+          .serialize<_i2.NonMapFromAndToJson>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

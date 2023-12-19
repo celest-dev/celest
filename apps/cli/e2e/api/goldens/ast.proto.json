@@ -85,6 +85,13 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "generic_wrappers",
+      "cloudApi": {
+        "name": "generic_wrappers"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "middleware",
       "cloudApi": {
         "name": "middleware"
@@ -492,6 +499,30 @@
       "cloudFunction": {
         "name": "superFields",
         "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "generic_wrappers.genericWrapperParameters",
+      "cloudFunction": {
+        "name": "genericWrapperParameters",
+        "apiName": "generic_wrappers"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "generic_wrappers.genericWrappers",
+      "cloudFunction": {
+        "name": "genericWrappers",
+        "apiName": "generic_wrappers"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "generic_wrappers.genericWrappersAsync",
+      "cloudFunction": {
+        "name": "genericWrappersAsync",
+        "apiName": "generic_wrappers"
       }
     },
     {

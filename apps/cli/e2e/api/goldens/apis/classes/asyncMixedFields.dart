@@ -14,15 +14,9 @@ class AsyncMixedFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncMixedFields(
-          _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-        r'project:apis/classes.dart#MixedFields',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.MixedFields>(
-        r'project:apis/classes.dart#MixedFields',
-        response,
-      );
+      final response = await _i2.asyncMixedFields(_i3.Serializers.instance
+          .deserialize<_i2.MixedFields>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.MixedFields>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

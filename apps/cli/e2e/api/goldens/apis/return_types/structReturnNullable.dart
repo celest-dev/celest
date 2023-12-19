@@ -18,10 +18,7 @@ class StructReturnNullableTarget extends _i1.FunctionTarget {
     ) async {
       final celestContext = _i2.FunctionContext();
       final response = _i3.structReturnNullable(celestContext);
-      return _i4.Serializers.instance.serializeWithType<_i5.SimpleStruct?>(
-        r'project:apis/parameter_types.dart#SimpleStruct',
-        response,
-      );
+      return _i4.Serializers.instance.serialize<_i5.SimpleStruct?>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

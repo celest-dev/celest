@@ -14,15 +14,9 @@ class EmptySuperTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.emptySuper(
-          _i3.Serializers.instance.deserializeWithType<_i2.EmptySuper>(
-        r'project:apis/classes.dart#EmptySuper',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.EmptySuper>(
-        r'project:apis/classes.dart#EmptySuper',
-        response,
-      );
+      final response = _i2.emptySuper(_i3.Serializers.instance
+          .deserialize<_i2.EmptySuper>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.EmptySuper>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

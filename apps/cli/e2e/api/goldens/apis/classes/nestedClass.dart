@@ -14,15 +14,9 @@ class NestedClassTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.nestedClass(
-          _i3.Serializers.instance.deserializeWithType<_i2.NestedClass>(
-        r'project:apis/classes.dart#NestedClass',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.NestedClass>(
-        r'project:apis/classes.dart#NestedClass',
-        response,
-      );
+      final response = _i2.nestedClass(_i3.Serializers.instance
+          .deserialize<_i2.NestedClass>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.NestedClass>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -35,50 +29,12 @@ class NestedClassTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NestedClassSerializer());
   _i3.Serializers.instance.put(const FieldsSerializer());
+  _i3.Serializers.instance.put(const NestedClassSerializer());
   await _i1.serve(
     args,
     (_) => NestedClassTarget(),
   );
-}
-
-final class NestedClassSerializer extends _i3.Serializer<_i2.NestedClass> {
-  const NestedClassSerializer();
-
-  @override
-  String get dartType => r'project:apis/classes.dart#NestedClass';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.NestedClass deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.NestedClass(
-      _i3.Serializers.instance.deserializeWithType<_i2.Fields>(
-        r'project:apis/classes.dart#Fields',
-        serialized[r'fields'],
-      ),
-      _i3.Serializers.instance.deserializeWithType<_i2.Fields?>(
-        r'project:apis/classes.dart#Fields',
-        serialized[r'nullableFields'],
-      ),
-    );
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.NestedClass value) => {
-        r'fields': _i3.Serializers.instance.serializeWithType<_i2.Fields>(
-          r'project:apis/classes.dart#Fields',
-          value.fields,
-        ),
-        r'nullableFields':
-            _i3.Serializers.instance.serializeWithType<_i2.Fields?>(
-          r'project:apis/classes.dart#Fields',
-          value.nullableFields,
-        ),
-      };
 }
 
 final class FieldsSerializer extends _i3.Serializer<_i2.Fields> {
@@ -103,5 +59,32 @@ final class FieldsSerializer extends _i3.Serializer<_i2.Fields> {
   Map<String, Object?> serialize(_i2.Fields value) => {
         r'superField': value.superField,
         r'field': value.field,
+      };
+}
+
+final class NestedClassSerializer extends _i3.Serializer<_i2.NestedClass> {
+  const NestedClassSerializer();
+
+  @override
+  String get dartType => r'project:apis/classes.dart#NestedClass';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.NestedClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.NestedClass(
+      _i3.Serializers.instance.deserialize<_i2.Fields>(serialized[r'fields']),
+      _i3.Serializers.instance
+          .deserialize<_i2.Fields?>(serialized[r'nullableFields']),
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.NestedClass value) => {
+        r'fields': _i3.Serializers.instance.serialize<_i2.Fields>(value.fields),
+        r'nullableFields': _i3.Serializers.instance
+            .serialize<_i2.Fields?>(value.nullableFields),
       };
 }

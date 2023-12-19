@@ -2,145 +2,150 @@ import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
-import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class SerializerGenerator {
-  SerializerGenerator({
-    required this.typeHelper,
-    required this.serializationSpec,
-  });
+  SerializerGenerator(this.serializationSpec);
 
-  final TypeHelper typeHelper;
   final SerializationSpec serializationSpec;
 
   late final type = serializationSpec.type;
   late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
   late final typeReference = typeHelper.toReference(type).nonNullable;
-  late final uri = serializationSpec.uri.toString();
   late final wireType = typeHelper.toReference(serializationSpec.wireType);
+  late final castType = typeHelper.toReference(serializationSpec.castType);
 
-  (Class, Set<ast.DartType>) build() {
-    final clazz = Class((b) {
-      final className = switch (type) {
-        ast.InterfaceType() => type.element!.displayName,
-        ast.RecordType() => (type as ast.RecordType).symbol,
-        _ => unreachable('Unsupported type $type'),
-      };
-      b
-        ..modifier = ClassModifier.final$
-        ..name = '${className}Serializer'
-        ..extend = DartTypes.celest.serializer(typeReference);
+  Class build() => Class((b) {
+        b
+          ..modifier = ClassModifier.final$
+          ..name = '${type.classNamePrefix}Serializer'
+          ..extend = DartTypes.celest.serializer(typeReference);
 
-      // Create unnamed constant constructor
-      b.constructors.add(
-        Constructor((b) => b..constant = true),
-      );
+        // Create unnamed constant constructor
+        b.constructors.add(
+          Constructor((b) => b..constant = true),
+        );
 
-      // Create `dartType` and `wireType` overrides
-      b.methods.addAll([
-        Method(
-          (b) => b
-            ..name = 'dartType'
-            ..returns = DartTypes.core.string
-            ..type = MethodType.getter
-            ..annotations.add(DartTypes.core.override)
-            ..lambda = true
-            ..body = literalString(
-              uri.toString(),
-              raw: true,
-            ).code,
-        ),
-        Method(
-          (b) => b
-            ..name = 'wireType'
-            ..returns = DartTypes.core.string
-            ..type = MethodType.getter
-            ..annotations.add(DartTypes.core.override)
-            ..lambda = true
-            ..body = literalString(
-              'dart:core#Map',
-              raw: true,
-            ).code,
-        ),
-      ]);
+        // Create `dartType` and `wireType` overrides
+        b.methods.addAll([
+          Method(
+            (b) => b
+              ..name = 'dartType'
+              ..returns = DartTypes.core.string
+              ..type = MethodType.getter
+              ..annotations.add(DartTypes.core.override)
+              ..lambda = true
+              ..body = literalString(
+                type.instantiatedUri.toString(),
+                raw: true,
+              ).code,
+          ),
+          Method(
+            (b) => b
+              ..name = 'wireType'
+              ..returns = DartTypes.core.string
+              ..type = MethodType.getter
+              ..annotations.add(DartTypes.core.override)
+              ..lambda = true
+              ..body = literalString(
+                'dart:core#Map',
+                raw: true,
+              ).code,
+          ),
+        ]);
 
-      // Create `deserialize` and `serialize` overrides
-      b.methods.addAll([
-        Method(
-          (b) => b
-            ..name = 'deserialize'
-            ..returns = typeReference
-            ..requiredParameters.add(
-              Parameter(
-                (b) => b
-                  ..name = 'value'
-                  ..type = DartTypes.core.object.nullable,
-              ),
-            )
-            ..annotations.add(DartTypes.core.override)
-            ..body = Block((b) {
-              final mayBeAbsent =
-                  serializationSpec.parameters.every((p) => p.isOptional);
-              final (wireType, deserialized) = switch (type) {
-                ast.InterfaceType() when type.isEnum => (
-                    this.wireType,
-                    typeReference.nonNullable
-                        .property('values')
-                        .property('byName')
-                        .call([
-                      refer('serialized'),
+        // Create `deserialize` and `serialize` overrides
+        b.methods.addAll([
+          Method(
+            (b) => b
+              ..name = 'deserialize'
+              ..returns = typeReference
+              ..requiredParameters.add(
+                Parameter(
+                  (b) => b
+                    ..name = 'value'
+                    ..type = DartTypes.core.object.nullable,
+                ),
+              )
+              ..annotations.add(DartTypes.core.override)
+              ..body = Block((b) {
+                final mayBeAbsent =
+                    serializationSpec.parameters.every((p) => p.isOptional);
+                final (wireType, deserialized) = switch (type) {
+                  ast.InterfaceType() when type.isEnum => (
+                      this.wireType,
+                      typeReference.nonNullable
+                          .property('values')
+                          .property('byName')
+                          .call([
+                        refer('serialized'),
+                      ]),
+                    ),
+                  _ => (
+                      castType.withNullability(mayBeAbsent),
+                      _deserialize('serialized', mayBeAbsent: mayBeAbsent),
+                    ),
+                };
+                b.addExpression(
+                  declareFinal('serialized').assign(
+                    refer('assertWireType').call([
+                      refer('value'),
+                    ], {}, [
+                      wireType,
                     ]),
                   ),
-                _ => (
-                    this.wireType.withNullability(mayBeAbsent),
-                    _deserialize('serialized', mayBeAbsent: mayBeAbsent),
-                  ),
-              };
-              b.addExpression(
-                declareFinal('serialized').assign(
-                  refer('assertWireType').call([
-                    refer('value'),
-                  ], {}, [
-                    wireType,
-                  ]),
+                );
+                b.addExpression(deserialized.returned);
+              }),
+          ),
+          Method(
+            (b) => b
+              ..name = 'serialize'
+              ..returns = wireType
+              ..requiredParameters.add(
+                Parameter(
+                  (b) => b
+                    ..name = 'value'
+                    ..type = typeReference,
                 ),
-              );
-              b.addExpression(deserialized.returned);
-            }),
-        ),
-        Method(
-          (b) => b
-            ..name = 'serialize'
-            ..returns = wireType
-            ..requiredParameters.add(
-              Parameter(
-                (b) => b
-                  ..name = 'value'
-                  ..type = typeReference,
-              ),
-            )
-            ..annotations.add(DartTypes.core.override)
-            ..body = switch (type) {
-              ast.InterfaceType() when type.isEnum =>
-                refer('value').property('name').code,
-              _ => _serialize('value').code,
-            },
-        ),
-      ]);
-    });
-    return (clazz, jsonGenerator.referencedTypes);
-  }
+              )
+              ..annotations.add(DartTypes.core.override)
+              ..body = switch (type) {
+                ast.InterfaceType() when type.isEnum =>
+                  refer('value').property('name').code,
+                _ => _serialize('value').code,
+              },
+          ),
+        ]);
+      });
 
   Expression _serialize(String from) {
-    final ref = _reference(from, isNullable: false);
+    final Expression ref = _reference(from, isNullable: false);
     if (serializationSpec.hasToJson) {
-      return ref.property('toJson').call([]);
+      final genericSerializers = <Expression>[];
+      if (type case ast.InterfaceType(:final typeArguments)) {
+        for (final typeArgument in typeArguments) {
+          genericSerializers.add(
+            Method(
+              (m) => m
+                ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                ..body = jsonGenerator
+                    .toJson(
+                      typeHelper.toReference(typeArgument),
+                      refer('value'),
+                    )
+                    .code,
+            ).closure,
+          );
+        }
+      }
+      return ref.property('toJson').call(genericSerializers);
     }
     final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.fields) {
@@ -161,8 +166,26 @@ final class SerializerGenerator {
       if (mayBeAbsent) {
         ref = ref.ifNullThen(literalConstMap({}));
       }
+      final genericDeserializers = <Expression>[];
+      if (type case ast.InterfaceType(:final typeArguments)) {
+        for (final typeArgument in typeArguments) {
+          genericDeserializers.add(
+            Method(
+              (m) => m
+                ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                ..body = jsonGenerator
+                    .fromJson(
+                      typeHelper.toReference(typeArgument),
+                      refer('value'),
+                    )
+                    .code,
+            ).closure,
+          );
+        }
+      }
       return typeReference.nonNullable.property('fromJson').call([
         ref,
+        ...genericDeserializers,
       ]);
     }
     final ref = _reference(from, isNullable: mayBeAbsent);
@@ -214,6 +237,24 @@ final class SerializerGenerator {
     return switch (isNullable) {
       true => refer('$variable?'),
       false => refer(variable),
+    };
+  }
+}
+
+extension on ast.DartType {
+  String? get classNamePrefix {
+    return switch (this) {
+      ast.InterfaceType(:final typeArguments) => () {
+          final name = StringBuffer(element!.displayName);
+          if (typeArguments.isNotEmpty) {
+            name.writeAll(
+              typeArguments.map((t) => t.classNamePrefix).nonNulls,
+            );
+          }
+          return name.toString();
+        }(),
+      final ast.RecordType recordType => recordType.symbol,
+      _ => null,
     };
   }
 }

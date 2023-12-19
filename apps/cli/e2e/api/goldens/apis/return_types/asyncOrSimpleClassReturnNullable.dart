@@ -19,10 +19,7 @@ class AsyncOrSimpleClassReturnNullableTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
       final response =
           await _i3.asyncOrSimpleClassReturnNullable(celestContext);
-      return _i4.Serializers.instance.serializeWithType<_i5.SimpleClass?>(
-        r'project:apis/parameter_types.dart#SimpleClass',
-        response,
-      );
+      return _i4.Serializers.instance.serialize<_i5.SimpleClass?>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

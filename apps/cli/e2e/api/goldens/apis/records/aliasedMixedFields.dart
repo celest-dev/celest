@@ -14,15 +14,9 @@ class AliasedMixedFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.aliasedMixedFields(
-          _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        response,
-      );
+      final response = _i2.aliasedMixedFields(_i3.Serializers.instance
+          .deserialize<_i2.MixedFields>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.MixedFields>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

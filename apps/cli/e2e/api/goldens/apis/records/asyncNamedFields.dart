@@ -16,24 +16,16 @@ class AsyncNamedFieldsTarget extends _i1.FunctionTarget {
     ) async {
       final response = await _i2.asyncNamedFields(
         nonAliased: _i3.Serializers.instance
-            .deserializeWithType<({String anotherField, String field})>(
-          r'#Record$rmm4wt',
-          request[r'nonAliased'],
-        ),
+            .deserialize<({String anotherField, String field})>(
+                request[r'nonAliased']),
         aliased: _i3.Serializers.instance
-            .deserializeWithType<({String anotherField, String field})>(
-          r'#Record$rmm4wt',
-          request[r'aliased'],
-        ),
+            .deserialize<_i2.NamedFields>(request[r'aliased']),
       );
-      return _i3.Serializers.instance.serializeWithType<
+      return _i3.Serializers.instance.serialize<
           ({
-            ({String anotherField, String field}) aliased,
+            _i2.NamedFields aliased,
             ({String anotherField, String field}) nonAliased
-          })>(
-        r'#Record$3c6749',
-        response,
-      );
+          })>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -46,56 +38,43 @@ class AsyncNamedFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$3c6749Serializer());
+  _i3.Serializers.instance.put(const NamedFieldsSerializer());
   _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
+  _i3.Serializers.instance.put(const Record$3rbssxSerializer());
   await _i1.serve(
     args,
     (_) => AsyncNamedFieldsTarget(),
   );
 }
 
-typedef Record$3c6749 = ({
-  ({String anotherField, String field}) aliased,
+typedef Record$3rbssx = ({
+  _i2.NamedFields aliased,
   ({String anotherField, String field}) nonAliased
 });
 typedef Record$rmm4wt = ({String anotherField, String field});
 
-final class Record$3c6749Serializer extends _i3.Serializer<Record$3c6749> {
-  const Record$3c6749Serializer();
+final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
+  const NamedFieldsSerializer();
 
   @override
-  String get dartType => r'#Record$3c6749';
+  String get dartType => r'project:apis/records.dart#NamedFields';
 
   @override
   String get wireType => r'dart:core#Map';
 
   @override
-  Record$3c6749 deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
+  _i2.NamedFields deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      aliased: _i3.Serializers.instance.deserializeWithType<Record$rmm4wt>(
-        r'#Record$rmm4wt',
-        serialized?[r'aliased'],
-      ),
-      nonAliased: _i3.Serializers.instance.deserializeWithType<Record$rmm4wt>(
-        r'#Record$rmm4wt',
-        serialized?[r'nonAliased'],
-      )
+      anotherField: (serialized[r'anotherField'] as String),
+      field: (serialized[r'field'] as String)
     );
   }
 
   @override
-  Map<String, Object?> serialize(Record$3c6749 value) => {
-        r'aliased': _i3.Serializers.instance
-            .serializeWithType<({String anotherField, String field})>(
-          r'#Record$rmm4wt',
-          value.aliased,
-        ),
-        r'nonAliased': _i3.Serializers.instance
-            .serializeWithType<({String anotherField, String field})>(
-          r'#Record$rmm4wt',
-          value.nonAliased,
-        ),
+  Map<String, Object?> serialize(_i2.NamedFields value) => {
+        r'anotherField': value.anotherField,
+        r'field': value.field,
       };
 }
 
@@ -110,10 +89,10 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
 
   @override
   Record$rmm4wt deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
+    final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      anotherField: (serialized?[r'anotherField'] as String),
-      field: (serialized?[r'field'] as String)
+      anotherField: (serialized[r'anotherField'] as String),
+      field: (serialized[r'field'] as String)
     );
   }
 
@@ -121,5 +100,34 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
   Map<String, Object?> serialize(Record$rmm4wt value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
+      };
+}
+
+final class Record$3rbssxSerializer extends _i3.Serializer<Record$3rbssx> {
+  const Record$3rbssxSerializer();
+
+  @override
+  String get dartType => r'#Record$3rbssx';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  Record$3rbssx deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (
+      aliased: _i3.Serializers.instance
+          .deserialize<_i2.NamedFields>(serialized[r'aliased']),
+      nonAliased: _i3.Serializers.instance
+          .deserialize<Record$rmm4wt>(serialized[r'nonAliased'])
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(Record$3rbssx value) => {
+        r'aliased':
+            _i3.Serializers.instance.serialize<_i2.NamedFields>(value.aliased),
+        r'nonAliased': _i3.Serializers.instance
+            .serialize<({String anotherField, String field})>(value.nonAliased),
       };
 }

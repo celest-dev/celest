@@ -14,15 +14,11 @@ class AsyncNonAliasedMixedFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncNonAliasedMixedFields(
-          _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        response,
-      );
+      final response = await _i2.asyncNonAliasedMixedFields(_i3
+          .Serializers.instance
+          .deserialize<_i2.MixedFields>(request[r'value']));
+      return _i3.Serializers.instance
+          .serialize<(String, {String anotherField})>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -35,24 +31,26 @@ class AsyncNonAliasedMixedFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const MixedFieldsSerializer());
+  _i3.Serializers.instance.put(const Record$4z6fldSerializer());
   await _i1.serve(
     args,
     (_) => AsyncNonAliasedMixedFieldsTarget(),
   );
 }
 
-final class MixedFieldsSerializer extends _i3.Serializer<_i2.MixedFields> {
-  const MixedFieldsSerializer();
+typedef Record$4z6fld = (String, {String anotherField});
+
+final class Record$4z6fldSerializer extends _i3.Serializer<Record$4z6fld> {
+  const Record$4z6fldSerializer();
 
   @override
-  String get dartType => r'project:apis/records.dart#MixedFields';
+  String get dartType => r'#Record$4z6fld';
 
   @override
   String get wireType => r'dart:core#Map';
 
   @override
-  _i2.MixedFields deserialize(Object? value) {
+  Record$4z6fld deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       (serialized[r'$1'] as String),
@@ -61,7 +59,7 @@ final class MixedFieldsSerializer extends _i3.Serializer<_i2.MixedFields> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.MixedFields value) => {
+  Map<String, Object?> serialize(Record$4z6fld value) => {
         r'$1': value.$1,
         r'anotherField': value.anotherField,
       };

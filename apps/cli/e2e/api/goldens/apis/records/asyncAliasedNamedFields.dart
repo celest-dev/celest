@@ -16,15 +16,8 @@ class AsyncAliasedNamedFieldsTarget extends _i1.FunctionTarget {
     ) async {
       final response = await _i2.asyncAliasedNamedFields(
           value: _i3.Serializers.instance
-              .deserializeWithType<({String anotherField, String field})>(
-        r'#Record$rmm4wt',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance
-          .serializeWithType<({String anotherField, String field})>(
-        r'#Record$rmm4wt',
-        response,
-      );
+              .deserialize<_i2.NamedFields>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.NamedFields>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -37,35 +30,33 @@ class AsyncAliasedNamedFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
+  _i3.Serializers.instance.put(const NamedFieldsSerializer());
   await _i1.serve(
     args,
     (_) => AsyncAliasedNamedFieldsTarget(),
   );
 }
 
-typedef Record$rmm4wt = ({String anotherField, String field});
-
-final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
-  const Record$rmm4wtSerializer();
+final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
+  const NamedFieldsSerializer();
 
   @override
-  String get dartType => r'#Record$rmm4wt';
+  String get dartType => r'project:apis/records.dart#NamedFields';
 
   @override
   String get wireType => r'dart:core#Map';
 
   @override
-  Record$rmm4wt deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
+  _i2.NamedFields deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      anotherField: (serialized?[r'anotherField'] as String),
-      field: (serialized?[r'field'] as String)
+      anotherField: (serialized[r'anotherField'] as String),
+      field: (serialized[r'field'] as String)
     );
   }
 
   @override
-  Map<String, Object?> serialize(Record$rmm4wt value) => {
+  Map<String, Object?> serialize(_i2.NamedFields value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };

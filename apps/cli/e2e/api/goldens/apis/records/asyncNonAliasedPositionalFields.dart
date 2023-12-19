@@ -14,15 +14,10 @@ class AsyncNonAliasedPositionalFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncNonAliasedPositionalFields(
-          _i3.Serializers.instance.deserializeWithType<(String, String)>(
-        r'#Record$rh3gkz',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<(String, String)>(
-        r'#Record$rh3gkz',
-        response,
-      );
+      final response = await _i2.asyncNonAliasedPositionalFields(_i3
+          .Serializers.instance
+          .deserialize<(String, String)>(request[r'value']));
+      return _i3.Serializers.instance.serialize<(String, String)>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

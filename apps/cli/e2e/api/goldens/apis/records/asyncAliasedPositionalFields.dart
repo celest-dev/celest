@@ -14,15 +14,10 @@ class AsyncAliasedPositionalFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncAliasedPositionalFields(
-          _i3.Serializers.instance.deserializeWithType<(String, String)>(
-        r'#Record$rh3gkz',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<(String, String)>(
-        r'#Record$rh3gkz',
-        response,
-      );
+      final response = await _i2.asyncAliasedPositionalFields(_i3
+          .Serializers.instance
+          .deserialize<_i2.PositionalFields>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.PositionalFields>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -35,32 +30,31 @@ class AsyncAliasedPositionalFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$rh3gkzSerializer());
+  _i3.Serializers.instance.put(const PositionalFieldsSerializer());
   await _i1.serve(
     args,
     (_) => AsyncAliasedPositionalFieldsTarget(),
   );
 }
 
-typedef Record$rh3gkz = (String, String);
-
-final class Record$rh3gkzSerializer extends _i3.Serializer<Record$rh3gkz> {
-  const Record$rh3gkzSerializer();
+final class PositionalFieldsSerializer
+    extends _i3.Serializer<_i2.PositionalFields> {
+  const PositionalFieldsSerializer();
 
   @override
-  String get dartType => r'#Record$rh3gkz';
+  String get dartType => r'project:apis/records.dart#PositionalFields';
 
   @override
   String get wireType => r'dart:core#Map';
 
   @override
-  Record$rh3gkz deserialize(Object? value) {
+  _i2.PositionalFields deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return ((serialized[r'$1'] as String), (serialized[r'$2'] as String));
   }
 
   @override
-  Map<String, Object?> serialize(Record$rh3gkz value) => {
+  Map<String, Object?> serialize(_i2.PositionalFields value) => {
         r'$1': value.$1,
         r'$2': value.$2,
       };

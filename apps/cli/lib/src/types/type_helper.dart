@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_provider.dart';
@@ -49,10 +51,18 @@ final class TypeHelper {
     _typeProvider = typeProvider;
   }
 
-  final _dartTypeToReference = <DartType, codegen.Reference>{};
+  // TODO: File ticket with Dart team around hashcode/equality of DartType
+  final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
+    equals: const DartTypeEquality().equals,
+    hashCode: const DartTypeEquality().hash,
+  );
   final _referenceToDartType = <codegen.Reference, DartType>{};
   final _wireTypeToDartType = <String, DartType>{};
-  final _serializationVerdicts = <DartType, Verdict>{};
+  final _serializationVerdicts = HashMap<DartType, Verdict>(
+    equals: const DartTypeEquality().equals,
+    hashCode: const DartTypeEquality().hash,
+  );
+  // final _customSerializers = <SerializationSpec, codegen.Class>{};
 
   // TODO: Test types that are only referred to in nested fields/parameters
   codegen.Reference toReference(DartType type) {
@@ -60,12 +70,9 @@ final class TypeHelper {
       return reference;
     }
     final reference = type.accept(const _TypeToCodeBuilder());
-    _dartTypeToReference[type] = reference;
+    _dartTypeToReference[type] ??= reference;
     _referenceToDartType[reference] ??= type;
-    // TODO: Remove condition
-    if (type is! FunctionType) {
-      _referenceToDartType[reference.toTypeReference] ??= type;
-    }
+    _referenceToDartType[reference.toTypeReference] ??= type;
     if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;
     }
@@ -114,21 +121,13 @@ final class TypeHelper {
   Verdict isSerializable(DartType type) =>
       _serializationVerdicts[type] ??= type.accept(const IsSerializable());
 
-  (
-    Uri,
-    codegen.Class,
-    Set<DartType> referencedTypes,
-  )? customSerializer(DartType type) {
+  Iterable<codegen.Class> customSerializers(DartType type) sync* {
     final verdict = isSerializable(type);
-    if (verdict case VerdictYes(:final serializationSpec?)) {
-      final serializerGenerator = SerializerGenerator(
-        typeHelper: this,
-        serializationSpec: serializationSpec,
-      );
-      final (clazz, referencedTypes) = serializerGenerator.build();
-      return (serializationSpec.uri, clazz, referencedTypes);
+    if (verdict case VerdictYes(:final serializationSpecs)) {
+      for (final serializationSpec in serializationSpecs) {
+        yield SerializerGenerator(serializationSpec).build();
+      }
     }
-    return null;
   }
 }
 
@@ -200,18 +199,6 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 
   @override
   codegen.Reference visitRecordType(RecordType type) {
-    final recordType = codegen.RecordType(
-      (r) => r
-        ..positionalFieldTypes.addAll([
-          for (final parameter in type.positionalFields)
-            typeHelper.toReference(parameter.type),
-        ])
-        ..namedFieldTypes.addAll({
-          for (final parameter in type.namedFields)
-            parameter.name: typeHelper.toReference(parameter.type),
-        })
-        ..isNullable = typeHelper.typeSystem.isNullable(type),
-    );
     if (type.alias case final alias?) {
       return codegen.TypeReference(
         (b) => b
@@ -222,7 +209,18 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
           ..isNullable = typeHelper.typeSystem.isNullable(type),
       );
     }
-    return recordType;
+    return codegen.RecordType(
+      (r) => r
+        ..positionalFieldTypes.addAll([
+          for (final parameter in type.positionalFields)
+            typeHelper.toReference(parameter.type),
+        ])
+        ..namedFieldTypes.addAll({
+          for (final parameter in type.namedFields)
+            parameter.name: typeHelper.toReference(parameter.type),
+        })
+        ..isNullable = type.nullabilitySuffix == NullabilitySuffix.question,
+    );
   }
 
   @override

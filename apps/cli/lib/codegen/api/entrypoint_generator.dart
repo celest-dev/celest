@@ -1,7 +1,6 @@
 import 'dart:collection';
 
-import 'package:analyzer/dart/element/type.dart' as ast show RecordType;
-import 'package:analyzer/dart/element/type.dart' hide RecordType;
+import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
@@ -27,7 +26,10 @@ final class EntrypointGenerator {
     typeHelper: typeHelper,
   );
   late final String targetName = '${function.name.pascalCase}Target';
-  final _customSerializers = <Uri, Class>{};
+  final _customSerializers = LinkedHashSet<Class>(
+    equals: (a, b) => a.name == b.name,
+    hashCode: (a) => a.name.hashCode,
+  );
   final _anonymousRecordTypes = <String, RecordType>{};
 
   Library generate() {
@@ -179,25 +181,20 @@ final class EntrypointGenerator {
       [
         function.flattenedReturnType,
         ...function.parameters.map((p) => p.type),
-      ].where((type) => !type.isFunctionContext).map(typeHelper.fromReference),
+      ].where((type) => !type.isFunctionContext),
     );
 
-    final seen = <DartType>{};
-    void addCustomType(DartType type) {
-      if (!seen.add(type)) {
+    final seen = <ast.DartType>{};
+    void addCustomType(Reference type) {
+      final dartType = typeHelper.fromReference(type);
+      if (!seen.add(dartType)) {
         return;
       }
-      final customSerializer = typeHelper.customSerializer(type);
-      if (customSerializer
-          case (
-            final uri,
-            final serializer,
-            final referencedTypes,
-          )) {
-        _customSerializers[uri] = serializer;
-        queue.addAll(referencedTypes);
+      final customSerializers = typeHelper.customSerializers(dartType);
+      for (final customSerializer in customSerializers) {
+        _customSerializers.add(customSerializer);
       }
-      if ((type, typeHelper.toReference(type))
+      if ((dartType, type)
           case (final ast.RecordType dartType, final RecordType recordType)) {
         _anonymousRecordTypes[dartType.symbol] = recordType;
       }
@@ -219,7 +216,7 @@ final class EntrypointGenerator {
           ),
         )
         ..body = Block((b) {
-          for (final serializer in _customSerializers.values) {
+          for (final serializer in _customSerializers) {
             b.addExpression(
               DartTypes.celest.serializers
                   .property('instance')
@@ -252,7 +249,7 @@ final class EntrypointGenerator {
             ..definition = recordType.value,
         ),
       ),
-      ..._customSerializers.values,
+      ..._customSerializers,
     ]);
     return library.build();
   }

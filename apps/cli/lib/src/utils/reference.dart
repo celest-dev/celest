@@ -11,19 +11,29 @@ extension ReferenceHelper on Reference {
 
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
-        final RecordType recordType => TypeReference(
-            (t) => t
-              ..symbol =
-                  (typeHelper.fromReference(recordType) as ast.RecordType)
-                      .symbol
-              ..url =
-                  (typeHelper.fromReference(recordType) as ast.RecordType).url
-              ..isNullable = recordType.isNullable,
-          ),
+        final RecordType recordType => TypeReference((t) {
+            final dartType =
+                typeHelper.fromReference(recordType) as ast.RecordType;
+            t
+              ..symbol = dartType.symbol
+              ..url = dartType.sourceUri?.toString()
+              ..isNullable = recordType.isNullable;
+          }),
+        final FunctionType functionType => TypeReference((t) {
+            final dartType =
+                typeHelper.fromReference(functionType) as ast.FunctionType;
+            t
+              ..symbol = dartType.getDisplayString(withNullability: false)
+              ..url = dartType.sourceUri?.toString()
+              ..isNullable = functionType.isNullable;
+          }),
         _ => TypeReference(
-            (t) => t
-              ..symbol = symbol
-              ..url = url,
+            (t) {
+              assert(symbol != null);
+              t
+                ..symbol = symbol
+                ..url = url;
+            },
           ),
       };
 

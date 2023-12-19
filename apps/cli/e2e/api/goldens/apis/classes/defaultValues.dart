@@ -14,15 +14,9 @@ class DefaultValuesTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.defaultValues(
-          _i3.Serializers.instance.deserializeWithType<_i2.DefaultValues>(
-        r'project:apis/classes.dart#DefaultValues',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.DefaultValues>(
-        r'project:apis/classes.dart#DefaultValues',
-        response,
-      );
+      final response = _i2.defaultValues(_i3.Serializers.instance
+          .deserialize<_i2.DefaultValues>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.DefaultValues>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

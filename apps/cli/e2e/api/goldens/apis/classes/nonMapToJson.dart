@@ -14,15 +14,9 @@ class NonMapToJsonTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.nonMapToJson(
-          _i3.Serializers.instance.deserializeWithType<_i2.NonMapToJson>(
-        r'project:apis/classes.dart#NonMapToJson',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.NonMapToJson>(
-        r'project:apis/classes.dart#NonMapToJson',
-        response,
-      );
+      final response = _i2.nonMapToJson(_i3.Serializers.instance
+          .deserialize<_i2.NonMapToJson>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.NonMapToJson>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

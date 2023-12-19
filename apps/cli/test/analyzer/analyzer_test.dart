@@ -376,7 +376,7 @@ NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
         apis: {
           'greeting.dart': '''
 class FromJson {
-  FromJson.fromJson([Map<String, Object?> json]): 
+  FromJson.fromJson([Map<String, Object?>? json]): 
     field = json?['field'] as String? ?? 'default';
 
   final String field;
@@ -387,10 +387,10 @@ FromJson fromJson(FromJson value) => value;
         },
         errors: [
           'The type of a parameter must be serializable as JSON. The fromJson '
-              'constructor of type FromJson must have exactly one required, '
+              'constructor of type FromJson must have one required, '
               'positional parameter.',
           'The return type of a function must be serializable as JSON. The '
-              'fromJson constructor of type FromJson must have exactly one '
+              'fromJson constructor of type FromJson must have one '
               'required, positional parameter.',
         ],
       );

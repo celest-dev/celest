@@ -16,15 +16,9 @@ class AsyncOnlyToJsonWithDefaultsTarget extends _i1.FunctionTarget {
     ) async {
       final response = await _i2.asyncOnlyToJsonWithDefaults(_i3
           .Serializers.instance
-          .deserializeWithType<_i2.OnlyToJsonWithDefaults>(
-        r'project:apis/classes.dart#OnlyToJsonWithDefaults',
-        request[r'value'],
-      ));
+          .deserialize<_i2.OnlyToJsonWithDefaults>(request[r'value']));
       return _i3.Serializers.instance
-          .serializeWithType<_i2.OnlyToJsonWithDefaults>(
-        r'project:apis/classes.dart#OnlyToJsonWithDefaults',
-        response,
-      );
+          .serialize<_i2.OnlyToJsonWithDefaults>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

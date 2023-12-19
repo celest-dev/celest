@@ -14,15 +14,9 @@ class AsyncSuperFieldsTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = await _i2.asyncSuperFields(
-          _i3.Serializers.instance.deserializeWithType<_i2.SuperFields>(
-        r'project:apis/classes.dart#SuperFields',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.SuperFields>(
-        r'project:apis/classes.dart#SuperFields',
-        response,
-      );
+      final response = await _i2.asyncSuperFields(_i3.Serializers.instance
+          .deserialize<_i2.SuperFields>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.SuperFields>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

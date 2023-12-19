@@ -14,15 +14,9 @@ class NullableNestedTarget extends _i1.FunctionTarget {
       request,
       context,
     ) async {
-      final response = _i2.nullableNested(
-          _i3.Serializers.instance.deserializeWithType<_i2.NullableNested?>(
-        r'project:apis/records.dart#NullableNested',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.NullableNested?>(
-        r'project:apis/records.dart#NullableNested',
-        response,
-      );
+      final response = _i2.nullableNested(_i3.Serializers.instance
+          .deserialize<_i2.NullableNested?>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.NullableNested?>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -35,54 +29,13 @@ class NullableNestedTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NullableNestedSerializer());
   _i3.Serializers.instance.put(const PositionalFieldsSerializer());
   _i3.Serializers.instance.put(const NamedFieldsSerializer());
+  _i3.Serializers.instance.put(const NullableNestedSerializer());
   await _i1.serve(
     args,
     (_) => NullableNestedTarget(),
   );
-}
-
-final class NullableNestedSerializer
-    extends _i3.Serializer<_i2.NullableNested> {
-  const NullableNestedSerializer();
-
-  @override
-  String get dartType => r'project:apis/records.dart#NullableNested';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.NullableNested deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (
-      _i3.Serializers.instance.deserializeWithType<_i2.PositionalFields?>(
-        r'project:apis/records.dart#PositionalFields',
-        serialized[r'$1'],
-      ),
-      namedFields:
-          _i3.Serializers.instance.deserializeWithType<_i2.NamedFields?>(
-        r'project:apis/records.dart#NamedFields',
-        serialized[r'namedFields'],
-      )
-    );
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.NullableNested value) => {
-        r'$1':
-            _i3.Serializers.instance.serializeWithType<_i2.PositionalFields?>(
-          r'project:apis/records.dart#PositionalFields',
-          value.$1,
-        ),
-        r'namedFields':
-            _i3.Serializers.instance.serializeWithType<_i2.NamedFields?>(
-          r'project:apis/records.dart#NamedFields',
-          value.namedFields,
-        ),
-      };
 }
 
 final class PositionalFieldsSerializer
@@ -119,10 +72,10 @@ final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
 
   @override
   _i2.NamedFields deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
+    final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      anotherField: (serialized?[r'anotherField'] as String),
-      field: (serialized?[r'field'] as String)
+      anotherField: (serialized[r'anotherField'] as String),
+      field: (serialized[r'field'] as String)
     );
   }
 
@@ -130,5 +83,35 @@ final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
   Map<String, Object?> serialize(_i2.NamedFields value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
+      };
+}
+
+final class NullableNestedSerializer
+    extends _i3.Serializer<_i2.NullableNested> {
+  const NullableNestedSerializer();
+
+  @override
+  String get dartType => r'project:apis/records.dart#NullableNested';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  _i2.NullableNested deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (
+      _i3.Serializers.instance
+          .deserialize<_i2.PositionalFields?>(serialized[r'$1']),
+      namedFields: _i3.Serializers.instance
+          .deserialize<_i2.NamedFields?>(serialized[r'namedFields'])
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.NullableNested value) => {
+        r'$1':
+            _i3.Serializers.instance.serialize<_i2.PositionalFields?>(value.$1),
+        r'namedFields': _i3.Serializers.instance
+            .serialize<_i2.NamedFields?>(value.namedFields),
       };
 }

@@ -252,21 +252,9 @@
             {
               "name": "value",
               "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -279,39 +267,15 @@
             }
           ],
           "returnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "$": "TypeReference",
+            "symbol": "PositionalFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "$": "TypeReference",
+            "symbol": "PositionalFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -328,21 +292,9 @@
             {
               "name": "value",
               "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -381,21 +333,9 @@
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "$": "TypeReference",
+            "symbol": "PositionalFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -440,21 +380,9 @@
             {
               "name": "aliased",
               "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -488,21 +416,9 @@
                 "isNullable": false
               },
               {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               }
             ],
@@ -530,21 +446,9 @@
                 "isNullable": false
               },
               {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               }
             ],
@@ -592,21 +496,9 @@
             {
               "name": "aliased",
               "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -645,21 +537,9 @@
                     "isNullable": false
                   },
                   {
-                    "$": "RecordType",
-                    "positionalFieldTypes": [
-                      {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      },
-                      {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      }
-                    ],
+                    "$": "TypeReference",
+                    "symbol": "PositionalFields",
+                    "url": "project:apis/records.dart",
                     "isNullable": false
                   }
                 ],
@@ -690,21 +570,9 @@
                 "isNullable": false
               },
               {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
+                "$": "TypeReference",
+                "symbol": "PositionalFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               }
             ],
@@ -884,21 +752,9 @@
             {
               "name": "value",
               "type": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -911,39 +767,15 @@
             }
           ],
           "returnType": {
-            "$": "RecordType",
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              "field": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
+            "$": "TypeReference",
+            "symbol": "NamedFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "RecordType",
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              "field": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
+            "$": "TypeReference",
+            "symbol": "NamedFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -960,21 +792,9 @@
             {
               "name": "value",
               "type": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -1013,21 +833,9 @@
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "RecordType",
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              "field": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
+            "$": "TypeReference",
+            "symbol": "NamedFields",
+            "url": "project:apis/records.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -1072,21 +880,9 @@
             {
               "name": "aliased",
               "type": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -1102,21 +898,9 @@
             "$": "RecordType",
             "namedFieldTypes": {
               "aliased": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "nonAliased": {
@@ -1144,21 +928,9 @@
             "$": "RecordType",
             "namedFieldTypes": {
               "aliased": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "nonAliased": {
@@ -1224,21 +996,9 @@
             {
               "name": "aliased",
               "type": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "required": true,
@@ -1259,21 +1019,9 @@
                 "$": "RecordType",
                 "namedFieldTypes": {
                   "aliased": {
-                    "$": "RecordType",
-                    "namedFieldTypes": {
-                      "anotherField": {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      },
-                      "field": {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      }
-                    },
+                    "$": "TypeReference",
+                    "symbol": "NamedFields",
+                    "url": "project:apis/records.dart",
                     "isNullable": false
                   },
                   "nonAliased": {
@@ -1304,21 +1052,9 @@
             "$": "RecordType",
             "namedFieldTypes": {
               "aliased": {
-                "$": "RecordType",
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  "field": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
+                "$": "TypeReference",
+                "symbol": "NamedFields",
+                "url": "project:apis/records.dart",
                 "isNullable": false
               },
               "nonAliased": {
@@ -1459,15 +1195,43 @@
             }
           ],
           "returnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:apis/records.dart",
+            "$": "RecordType",
+            "positionalFieldTypes": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "namedFieldTypes": {
+              "anotherField": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            },
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:apis/records.dart",
+            "$": "RecordType",
+            "positionalFieldTypes": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "namedFieldTypes": {
+              "anotherField": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            },
             "isNullable": false
           },
           "metadata": [],
@@ -1513,9 +1277,23 @@
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:apis/records.dart",
+            "$": "RecordType",
+            "positionalFieldTypes": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "namedFieldTypes": {
+              "anotherField": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            },
             "isNullable": false
           },
           "metadata": [],
@@ -1532,9 +1310,23 @@
             {
               "name": "nonAliased",
               "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:apis/records.dart",
+                "$": "RecordType",
+                "positionalFieldTypes": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "namedFieldTypes": {
+                  "anotherField": {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                },
                 "isNullable": false
               },
               "required": true,
@@ -1566,9 +1358,23 @@
             "$": "RecordType",
             "positionalFieldTypes": [
               {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:apis/records.dart",
+                "$": "RecordType",
+                "positionalFieldTypes": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "namedFieldTypes": {
+                  "anotherField": {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                },
                 "isNullable": false
               }
             ],
@@ -1586,9 +1392,23 @@
             "$": "RecordType",
             "positionalFieldTypes": [
               {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:apis/records.dart",
+                "$": "RecordType",
+                "positionalFieldTypes": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "namedFieldTypes": {
+                  "anotherField": {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                },
                 "isNullable": false
               }
             ],
@@ -1616,9 +1436,23 @@
             {
               "name": "nonAliased",
               "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:apis/records.dart",
+                "$": "RecordType",
+                "positionalFieldTypes": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "namedFieldTypes": {
+                  "anotherField": {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                },
                 "isNullable": false
               },
               "required": true,
@@ -1655,9 +1489,23 @@
                 "$": "RecordType",
                 "positionalFieldTypes": [
                   {
-                    "$": "TypeReference",
-                    "symbol": "MixedFields",
-                    "url": "project:apis/records.dart",
+                    "$": "RecordType",
+                    "positionalFieldTypes": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "namedFieldTypes": {
+                      "anotherField": {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    },
                     "isNullable": false
                   }
                 ],
@@ -1678,9 +1526,23 @@
             "$": "RecordType",
             "positionalFieldTypes": [
               {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:apis/records.dart",
+                "$": "RecordType",
+                "positionalFieldTypes": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "namedFieldTypes": {
+                  "anotherField": {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                },
                 "isNullable": false
               }
             ],
@@ -10257,6 +10119,628 @@
             "uri": "project:apis/parameters.dart",
             "line": 21,
             "column": 13
+          }
+        }
+      }
+    },
+    "generic_wrappers": {
+      "name": "generic_wrappers",
+      "metadata": [],
+      "functions": {
+        "genericWrappers": {
+          "name": "genericWrappers",
+          "apiName": "generic_wrappers",
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "GenericWrappers",
+                "url": "project:apis/generic_wrappers.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 47,
+                "column": 48
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "GenericWrappers",
+            "url": "project:apis/generic_wrappers.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "GenericWrappers",
+            "url": "project:apis/generic_wrappers.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "location": {
+            "uri": "project:apis/generic_wrappers.dart",
+            "line": 47,
+            "column": 16
+          }
+        },
+        "genericWrappersAsync": {
+          "name": "genericWrappersAsync",
+          "apiName": "generic_wrappers",
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "GenericWrappers",
+                "url": "project:apis/generic_wrappers.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 48,
+                "column": 61
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "GenericWrappers",
+                "url": "project:apis/generic_wrappers.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "GenericWrappers",
+            "url": "project:apis/generic_wrappers.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "location": {
+            "uri": "project:apis/generic_wrappers.dart",
+            "line": 48,
+            "column": 24
+          }
+        },
+        "genericWrapperParameters": {
+          "name": "genericWrapperParameters",
+          "apiName": "generic_wrappers",
+          "parameters": [
+            {
+              "name": "listOfString",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 51,
+                "column": 25
+              }
+            },
+            {
+              "name": "listOfUri",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Uri",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 52,
+                "column": 22
+              }
+            },
+            {
+              "name": "listOfSimpleClass",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "project:apis/generic_wrappers.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 53,
+                "column": 30
+              }
+            },
+            {
+              "name": "listOfListOfString",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 54,
+                "column": 32
+              }
+            },
+            {
+              "name": "listOfListOfUri",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "Uri",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 55,
+                "column": 29
+              }
+            },
+            {
+              "name": "listOfListOfSimpleClass",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IList",
+                "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "SimpleClass",
+                        "url": "project:apis/generic_wrappers.dart",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 56,
+                "column": 37
+              }
+            },
+            {
+              "name": "mapOfString",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 57,
+                "column": 32
+              }
+            },
+            {
+              "name": "mapOfUri",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Uri",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 58,
+                "column": 29
+              }
+            },
+            {
+              "name": "mapOfSimpleClass",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "project:apis/generic_wrappers.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 59,
+                "column": 37
+              }
+            },
+            {
+              "name": "mapOfListOfString",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 60,
+                "column": 39
+              }
+            },
+            {
+              "name": "mapOfListOfUri",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "Uri",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 61,
+                "column": 36
+              }
+            },
+            {
+              "name": "mapOfListOfSimpleClass",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IList",
+                    "url": "package:fast_immutable_collections/src/ilist/ilist.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "SimpleClass",
+                        "url": "project:apis/generic_wrappers.dart",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 62,
+                "column": 44
+              }
+            },
+            {
+              "name": "mapOfMapOfString",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IMap",
+                    "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      },
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 63,
+                "column": 46
+              }
+            },
+            {
+              "name": "mapOfMapOfUri",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IMap",
+                    "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      },
+                      {
+                        "$": "TypeReference",
+                        "symbol": "Uri",
+                        "url": "dart:core",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 64,
+                "column": 43
+              }
+            },
+            {
+              "name": "mapOfMapOfSimpleClass",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "IMap",
+                "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "IMap",
+                    "url": "package:fast_immutable_collections/src/imap/imap.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "String",
+                        "url": "dart:core",
+                        "isNullable": false
+                      },
+                      {
+                        "$": "TypeReference",
+                        "symbol": "SimpleClass",
+                        "url": "project:apis/generic_wrappers.dart",
+                        "isNullable": false
+                      }
+                    ],
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/generic_wrappers.dart",
+                "line": 65,
+                "column": 51
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "GenericWrappers",
+            "url": "project:apis/generic_wrappers.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "GenericWrappers",
+            "url": "project:apis/generic_wrappers.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "location": {
+            "uri": "project:apis/generic_wrappers.dart",
+            "line": 50,
+            "column": 16
           }
         }
       }

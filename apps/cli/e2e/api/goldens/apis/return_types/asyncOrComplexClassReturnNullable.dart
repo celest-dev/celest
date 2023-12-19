@@ -19,10 +19,7 @@ class AsyncOrComplexClassReturnNullableTarget extends _i1.FunctionTarget {
       final celestContext = _i2.FunctionContext();
       final response =
           await _i3.asyncOrComplexClassReturnNullable(celestContext);
-      return _i4.Serializers.instance.serializeWithType<_i5.ComplexClass?>(
-        r'project:apis/parameter_types.dart#ComplexClass',
-        response,
-      );
+      return _i4.Serializers.instance.serialize<_i5.ComplexClass?>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

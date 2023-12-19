@@ -15,20 +15,16 @@ class MixedFieldsTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final response = _i2.mixedFields(
-        _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-          r'project:apis/records.dart#MixedFields',
-          request[r'nonAliased'],
-        ),
-        aliased: _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-          r'project:apis/records.dart#MixedFields',
-          request[r'aliased'],
-        ),
+        _i3.Serializers.instance.deserialize<(String, {String anotherField})>(
+            request[r'nonAliased']),
+        aliased: _i3.Serializers.instance
+            .deserialize<_i2.MixedFields>(request[r'aliased']),
       );
-      return _i3.Serializers.instance
-          .serializeWithType<(_i2.MixedFields, {_i2.MixedFields aliased})>(
-        r'#Record$w235bh',
-        response,
-      );
+      return _i3.Serializers.instance.serialize<
+          (
+            (String, {String anotherField}), {
+            _i2.MixedFields aliased
+          })>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -41,50 +37,43 @@ class MixedFieldsTarget extends _i1.FunctionTarget {
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$w235bhSerializer());
+  _i3.Serializers.instance.put(const Record$4z6fldSerializer());
   _i3.Serializers.instance.put(const MixedFieldsSerializer());
+  _i3.Serializers.instance.put(const Record$xsk343Serializer());
   await _i1.serve(
     args,
     (_) => MixedFieldsTarget(),
   );
 }
 
-typedef Record$w235bh = (_i2.MixedFields, {_i2.MixedFields aliased});
+typedef Record$xsk343 = (
+  (String, {String anotherField}), {
+  _i2.MixedFields aliased
+});
+typedef Record$4z6fld = (String, {String anotherField});
 
-final class Record$w235bhSerializer extends _i3.Serializer<Record$w235bh> {
-  const Record$w235bhSerializer();
+final class Record$4z6fldSerializer extends _i3.Serializer<Record$4z6fld> {
+  const Record$4z6fldSerializer();
 
   @override
-  String get dartType => r'#Record$w235bh';
+  String get dartType => r'#Record$4z6fld';
 
   @override
   String get wireType => r'dart:core#Map';
 
   @override
-  Record$w235bh deserialize(Object? value) {
+  Record$4z6fld deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        serialized[r'$1'],
-      ),
-      aliased: _i3.Serializers.instance.deserializeWithType<_i2.MixedFields>(
-        r'project:apis/records.dart#MixedFields',
-        serialized[r'aliased'],
-      )
+      (serialized[r'$1'] as String),
+      anotherField: (serialized[r'anotherField'] as String)
     );
   }
 
   @override
-  Map<String, Object?> serialize(Record$w235bh value) => {
-        r'$1': _i3.Serializers.instance.serializeWithType<_i2.MixedFields>(
-          r'project:apis/records.dart#MixedFields',
-          value.$1,
-        ),
-        r'aliased': _i3.Serializers.instance.serializeWithType<_i2.MixedFields>(
-          r'project:apis/records.dart#MixedFields',
-          value.aliased,
-        ),
+  Map<String, Object?> serialize(Record$4z6fld value) => {
+        r'$1': value.$1,
+        r'anotherField': value.anotherField,
       };
 }
 
@@ -110,5 +99,33 @@ final class MixedFieldsSerializer extends _i3.Serializer<_i2.MixedFields> {
   Map<String, Object?> serialize(_i2.MixedFields value) => {
         r'$1': value.$1,
         r'anotherField': value.anotherField,
+      };
+}
+
+final class Record$xsk343Serializer extends _i3.Serializer<Record$xsk343> {
+  const Record$xsk343Serializer();
+
+  @override
+  String get dartType => r'#Record$xsk343';
+
+  @override
+  String get wireType => r'dart:core#Map';
+
+  @override
+  Record$xsk343 deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (
+      _i3.Serializers.instance.deserialize<Record$4z6fld>(serialized[r'$1']),
+      aliased: _i3.Serializers.instance
+          .deserialize<_i2.MixedFields>(serialized[r'aliased'])
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(Record$xsk343 value) => {
+        r'$1': _i3.Serializers.instance
+            .serialize<(String, {String anotherField})>(value.$1),
+        r'aliased':
+            _i3.Serializers.instance.serialize<_i2.MixedFields>(value.aliased),
       };
 }

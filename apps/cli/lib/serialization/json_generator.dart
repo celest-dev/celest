@@ -1,5 +1,3 @@
-import 'package:analyzer/dart/element/type.dart';
-import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
@@ -13,7 +11,6 @@ final class JsonGenerator {
   });
 
   final TypeHelper typeHelper;
-  final Set<DartType> referencedTypes = {};
 
   Expression toJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
@@ -90,36 +87,19 @@ final class JsonGenerator {
         ).closure,
       ]);
     }
-    if (supportedDartSdkType.isExactlyType(dartType)) {
-      return DartTypes.celest.serializers
-          .property('instance')
-          .property('serializeWithType')
-          .call([
-        literalString(typeHelper.toUri(dartType)!),
-        ref,
-      ]);
-    }
     final serializationVerdict = typeHelper.isSerializable(dartType);
     assert(
       serializationVerdict is VerdictYes,
       'Should not have passed analyzer if no',
     );
-    final serializationSpec =
-        (serializationVerdict as VerdictYes).serializationSpec;
-    assert(
-      serializationSpec != null,
-      'Should not have passed analyzer if no',
-    );
-    referencedTypes.add(dartType);
     return DartTypes.celest.serializers
         .property('instance')
-        .property('serializeWithType')
-        .call([
-      literalString(serializationSpec!.uri.toString(), raw: true),
-      ref,
-    ], {}, [
-      type,
-    ]);
+        .property('serialize')
+        .call(
+      [ref],
+      {},
+      [type],
+    );
   }
 
   Expression fromJson(Reference type, Expression ref) {
@@ -203,39 +183,18 @@ final class JsonGenerator {
         ).closure,
       ]);
     }
-    if (supportedDartSdkType.isExactlyType(dartType)) {
-      return DartTypes.celest.serializers
-          .property('instance')
-          .property('deserializeWithType')
-          .call(
-        [
-          literalString(typeHelper.toUri(dartType)!),
-          ref,
-        ],
-        {},
-        [type], // <T>
-      );
-    }
     final serializationVerdict = typeHelper.isSerializable(dartType);
     assert(
       serializationVerdict is VerdictYes,
       'Should not have passed analyzer if no',
     );
-    final serializationSpec =
-        (serializationVerdict as VerdictYes).serializationSpec;
-    assert(
-      serializationSpec != null,
-      'Should not have passed analyzer if no',
-    );
-    referencedTypes.add(dartType);
     return DartTypes.celest.serializers
         .property('instance')
-        .property('deserializeWithType')
-        .call([
-      literalString(serializationSpec!.uri.toString(), raw: true),
-      ref,
-    ], {}, [
-      type,
-    ]);
+        .property('deserialize')
+        .call(
+      [ref],
+      {},
+      [type],
+    );
   }
 }

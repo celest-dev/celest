@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 // ignore: implementation_imports
@@ -9,6 +12,7 @@ import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
 
 enum _TypePosition { parameter, return$ }
 
@@ -16,7 +20,7 @@ sealed class Verdict {
   const Verdict();
 
   const factory Verdict.yes({
-    SerializationSpec? serializationSpec,
+    Set<SerializationSpec> serializationSpecs,
   }) = VerdictYes;
   factory Verdict.no(String reason) = VerdictNo.single;
 
@@ -25,11 +29,14 @@ sealed class Verdict {
 
   Verdict operator &(Verdict other) => switch ((this, other)) {
         (
-          VerdictYes(serializationSpec: final serializationSpecThis),
-          VerdictYes(serializationSpec: final serializationSpecOther)
+          VerdictYes(serializationSpecs: final serializationSpecsThis),
+          VerdictYes(serializationSpecs: final serializationSpecsOther)
         ) =>
           Verdict.yes(
-            serializationSpec: serializationSpecThis ?? serializationSpecOther,
+            serializationSpecs: {
+              ...serializationSpecsThis,
+              ...serializationSpecsOther,
+            },
           ),
         (VerdictYes(), final VerdictNo no) ||
         (final VerdictNo no, VerdictYes()) =>
@@ -46,17 +53,21 @@ sealed class Verdict {
 
 final class VerdictYes extends Verdict {
   const VerdictYes({
-    this.serializationSpec,
+    this.serializationSpecs = const {},
   });
 
   @override
   bool get isSerializable => true;
 
-  final SerializationSpec? serializationSpec;
+  final Set<SerializationSpec> serializationSpecs;
 
   @override
-  Verdict withSpec(SerializationSpec spec) =>
-      Verdict.yes(serializationSpec: spec);
+  Verdict withSpec(SerializationSpec spec) => Verdict.yes(
+        serializationSpecs: {
+          ...serializationSpecs,
+          spec,
+        },
+      );
 
   @override
   List<String> get reasons => const [];
@@ -79,40 +90,86 @@ final class VerdictNo extends Verdict {
   String toString() => reasons.join('; ');
 }
 
+@immutable
 final class SerializationSpec {
-  SerializationSpec({
-    required this.uri,
+  const SerializationSpec({
     required this.type,
     required this.wireType,
-    required this.isNullable,
+    DartType? castType,
     required this.fields,
     required this.parameters,
     required this.hasFromJson,
     required this.hasToJson,
-  });
+  }) : castType = castType ?? wireType;
 
-  final Uri uri;
   final DartType type;
+
+  /// The type returned by the `toJson` method.
   final DartType wireType;
-  final bool isNullable;
+
+  /// The type expected by the `fromJson` constructor, if a `fromJson`
+  /// constructor is provided.
+  ///
+  /// Otherwise, the class is constructed directly and this defaults to the
+  /// [wireType].
+  final DartType castType;
+
   final List<FieldSpec> fields;
   final List<ParameterSpec> parameters;
   final bool hasFromJson;
   final bool hasToJson;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is SerializationSpec &&
+        const DartTypeEquality().equals(type, other.type) &&
+        const DartTypeEquality().equals(wireType, other.wireType) &&
+        const DartTypeEquality().equals(castType, other.castType) &&
+        const ListEquality<FieldSpec>().equals(fields, other.fields) &&
+        const ListEquality<ParameterSpec>()
+            .equals(parameters, other.parameters) &&
+        hasFromJson == other.hasFromJson &&
+        hasToJson == other.hasToJson;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        const DartTypeEquality().hash(type),
+        const DartTypeEquality().hash(wireType),
+        const DartTypeEquality().hash(castType),
+        const ListEquality<FieldSpec>().hash(fields),
+        const ListEquality<ParameterSpec>().hash(parameters),
+        hasFromJson,
+        hasToJson,
+      );
 }
 
+@immutable
 final class FieldSpec {
-  FieldSpec({
+  const FieldSpec({
     required this.name,
     required this.type,
   });
 
   final String name;
   final DartType type;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is FieldSpec &&
+        name == other.name &&
+        const DartTypeEquality().equals(type, other.type);
+  }
+
+  @override
+  int get hashCode => Object.hash(name, const DartTypeEquality().hash(type));
 }
 
+@immutable
 final class ParameterSpec {
-  ParameterSpec({
+  const ParameterSpec({
     required this.name,
     required this.type,
     required this.isPositional,
@@ -127,6 +184,28 @@ final class ParameterSpec {
   final bool isOptional;
   final bool isNamed;
   final String? defaultValueCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is ParameterSpec &&
+        name == other.name &&
+        const DartTypeEquality().equals(type, other.type) &&
+        isPositional == other.isPositional &&
+        isOptional == other.isOptional &&
+        isNamed == other.isNamed &&
+        defaultValueCode == other.defaultValueCode;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        name,
+        const DartTypeEquality().hash(type),
+        isPositional,
+        isOptional,
+        isNamed,
+        defaultValueCode,
+      );
 }
 
 /// Determines whether a [DartType] can be serialized to/from JSON.
@@ -188,49 +267,146 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   Verdict visitFunctionType(FunctionType type) =>
       const VerdictNo(['Function types are not supported']);
 
-  Verdict _customParameterSerializability(
+  // Most logic for `_checkCustomDeserializer` and `_checkCustomSerializer` is
+  // pulled from `package:json_serializable/src/type_helpers/json_helper.dart`.
+
+  Verdict _checkCustomDeserializer(
     InterfaceType type,
     ConstructorElement fromJsonCtor,
     DartType wireType,
   ) {
-    final requiredParam = fromJsonCtor.parameters.singleOrNull;
-    if (requiredParam == null ||
-        !requiredParam.isPositional ||
-        requiredParam.isOptional) {
+    // Using the `declaration` here so we get the original definition –
+    // and not one with the generics already populated.
+    //
+    // For example, if `type` is `IList<String>`, then `fromJsonCtor` will
+    // have its parameter with type `Object Function(String) fromJsonT` and
+    // `fromJsonCtor.declaration` will have its parameter with type
+    // `Object Function(T) fromJsonT`.
+    fromJsonCtor = fromJsonCtor.declaration;
+
+    final positionalParameters = fromJsonCtor.parameters
+        .where((parameter) => parameter.isPositional)
+        .toList();
+    final namedParameters = fromJsonCtor.parameters
+        .where((parameter) => parameter.isNamed)
+        .toList();
+    if (positionalParameters.isEmpty || namedParameters.isNotEmpty) {
+      final functionSignature =
+          'factory ${type.element.name}.fromJson(${wireType.getDisplayString(withNullability: false)} json)';
       return Verdict.no(
         'The fromJson constructor of type ${type.element.name} must have '
-        'exactly one required, positional parameter.',
+        'one required, positional parameter whose type matches the return '
+        'type of its toJson method, e.g. $functionSignature',
       );
     }
-    if (!typeHelper.typeSystem.isAssignableTo(
-      wireType,
-      requiredParam.type,
-    )) {
+
+    String fromJsonForName(String genericType) => 'fromJson$genericType';
+
+    final parameters = Queue.of(fromJsonCtor.parameters);
+    final requiredParam = parameters.removeFirst();
+    if (requiredParam.isOptional) {
       return Verdict.no(
-        'The parameter type of ${type.element.name}\'s fromJson constructor '
-        'must be assignable to $wireType.',
+        'The fromJson constructor of type ${type.element.name} must have '
+        'one required, positional parameter.',
       );
     }
-    return const Verdict.yes();
+    switch (wireType) {
+      case DartType(isDartCoreObject: true) || DynamicType():
+      case _
+          when typeHelper.typeSystem.isAssignableTo(
+            wireType,
+            requiredParam.type,
+          ):
+        // OK, will cast in serializer.
+        break;
+      default:
+        return Verdict.no(
+          'The parameter type of ${type.element.name}\'s fromJson constructor '
+          'must be assignable to $wireType.',
+        );
+    }
+
+    var verdict = const Verdict.yes();
+    for (final parameter in parameters) {
+      switch (parameter.type) {
+        case FunctionType(
+            returnType: final TypeParameterType funcReturnType,
+            normalParameterTypes: [
+              DynamicType() ||
+                  DartType(
+                    isDartCoreObject: true,
+                    nullabilitySuffix: NullabilitySuffix.question
+                  )
+            ],
+          ):
+          final expectedCtorParamName =
+              fromJsonForName(funcReturnType.element.name);
+          if (parameter.name != expectedCtorParamName) {
+            verdict &= Verdict.no(
+              'The parameter "${parameter.name}" of ${type.element.name}\'s '
+              'fromJson constructor must be named "$expectedCtorParamName".',
+            );
+          }
+        default:
+          return Verdict.no(
+            'The fromJson constructor of ${type.element.name} has an unexpected '
+            'parameter: ${parameter.name}. The only extra parameters allowed are '
+            'functions of the form `T Function(Object?) fromJsonT` where `T` is '
+            'a type parameter of ${type.element.name}.',
+          );
+      }
+    }
+
+    return verdict;
   }
 
-  Verdict _customReturnSerializability(
+  Verdict _checkCustomSerializer(
     InterfaceType type,
     MethodElement toJsonMethod,
   ) {
-    if (toJsonMethod.parameters.any((param) => !param.isOptional)) {
-      return Verdict.no(
-        'The toJson method of type $type must not have any required parameters',
-      );
+    String toJsonForName(String genericType) => 'toJson$genericType';
+
+    // Using the `declaration` here so we get the original definition –
+    // and not one with the generics already populated.
+    //
+    // For example, if `type` is `IList<String>`, then `toJsonMethod` will
+    // be `Object Function(String) toJsonT` and `toJsonMethod.declaration`
+    // will be `Object Function(T) toJsonT`.
+    toJsonMethod = toJsonMethod.declaration;
+
+    var verdict = const Verdict.yes();
+    for (final parameter in toJsonMethod.parameters) {
+      switch (parameter.type) {
+        case FunctionType(
+            returnType: DartType(isDartCoreObject: true) || DynamicType(),
+            normalParameterTypes: [final TypeParameterType funcParameterType],
+          ):
+          final expectedFuncParamName =
+              toJsonForName(funcParameterType.element.name);
+          if (parameter.name != expectedFuncParamName) {
+            verdict &= Verdict.no(
+              'The parameter "${parameter.name}" of ${type.element.name}\'s '
+              'toJson method must be named "$expectedFuncParamName".',
+            );
+          }
+        default:
+          return Verdict.no(
+            'The toJson method of ${type.element.name} has an unexpected '
+            'parameter: ${parameter.name}. The only parameters allowed are '
+            'functions of the form `Object Function(T) toJsonT` where `T` is '
+            'a type parameter of ${type.element.name}.',
+          );
+      }
     }
     final returnType = toJsonMethod.returnType;
-    return switch (_isSimpleJson(returnType)) {
+    verdict &= switch (_isSimpleJson(returnType)) {
       VerdictYes() => const Verdict.yes(),
       _ => Verdict.no(
           'Invalid return type of ${type.element.name}\'s toJson method: '
           '$returnType. Only simple JSON types are allowed.',
         ),
     };
+    return verdict;
   }
 
   @override
@@ -250,18 +426,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
 
     if (type.isEnum) {
-      return Verdict.yes(
-        serializationSpec: SerializationSpec(
-          uri: projectPaths
-              .normalizeUri(type.element.sourceLocation.uri)
-              .replace(fragment: type.element.name),
-          isNullable: typeHelper.typeSystem.isNullable(type),
+      return const Verdict.yes().withSpec(
+        SerializationSpec(
           type: type,
           wireType: typeHelper.typeProvider.stringType,
           fields: const [],
           parameters: const [],
-          hasFromJson: true,
-          hasToJson: true,
+          hasFromJson: false,
+          hasToJson: false,
         ),
       );
     }
@@ -287,11 +459,17 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     // requirements needed to generate implementations.
     var verdict = const Verdict.yes();
 
+    // Check type arguments
+    // TODO: Check bad arguments
+    for (final typeArgument in type.typeArguments) {
+      verdict &= typeHelper.isSerializable(typeArgument);
+    }
+
     // Check toJson
     final toJsonMethod = type.getMethod('toJson');
     final hasToJson = toJsonMethod != null;
     if (hasToJson) {
-      verdict &= _customReturnSerializability(type, toJsonMethod);
+      verdict &= _checkCustomSerializer(type, toJsonMethod);
     } else {
       verdict &= type.accept(
         const _IsSerializableClass(_TypePosition.return$),
@@ -305,7 +483,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     );
     final hasFromJson = fromJsonCtor != null;
     if (hasFromJson) {
-      verdict &= _customParameterSerializability(
+      verdict &= _checkCustomDeserializer(
         type,
         fromJsonCtor,
         wireType,
@@ -318,15 +496,11 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     final wireConstructor = fromJsonCtor ??
         type.constructors.singleWhere((ctor) => ctor.name.isEmpty);
 
-    final dartTypeUri = projectPaths
-        .normalizeUri(element.library.source.uri)
-        .replace(fragment: element.name);
     return verdict.withSpec(
       SerializationSpec(
-        uri: dartTypeUri,
-        isNullable: typeHelper.typeSystem.isNullable(type),
         type: type,
         wireType: wireType,
+        castType: fromJsonCtor?.parameters.first.type,
         fields: [
           for (final field in element.sortedFields)
             FieldSpec(name: field.displayName, type: field.type),
@@ -342,8 +516,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
               defaultValueCode: parameter.defaultValueCode,
             ),
         ],
-        hasFromJson: hasFromJson,
-        hasToJson: hasToJson,
+        hasFromJson: fromJsonCtor != null,
+        hasToJson: toJsonMethod != null,
       ),
     );
   }
@@ -367,12 +541,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     return verdict.withSpec(
       SerializationSpec(
-        uri: type.uri,
-        isNullable: switch (type.alias) {
-          final alias? => typeHelper.typeSystem.isNullable(type) ||
-              typeHelper.typeSystem.isNullable(alias.element.aliasedType),
-          _ => typeHelper.typeSystem.isNullable(type),
-        },
         type: type,
         wireType: jsonMapType,
         fields: [
@@ -387,8 +555,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
               name: '\$${index + 1}',
               type: field.type,
               isPositional: true,
-              isOptional: false,
               isNamed: false,
+              isOptional: false,
               defaultValueCode: null,
             ),
           for (final field in type.namedFields)
@@ -396,8 +564,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
               name: field.name,
               type: field.type,
               isPositional: false,
-              isOptional: true,
               isNamed: true,
+              isOptional: false,
               defaultValueCode: null,
             ),
         ],
@@ -453,12 +621,13 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         continue;
       }
       final fieldVerdict = field.type.accept(const IsSerializable());
-      if (fieldVerdict is VerdictNo) {
-        fieldsVerdict &= Verdict.no(
-          'Field "${field.displayName}" of type "${element.displayName}" is '
-          'not serializable: $fieldVerdict',
-        );
-      }
+      fieldsVerdict &= switch (fieldVerdict) {
+        VerdictYes() => fieldVerdict,
+        _ => Verdict.no(
+            'Field "${field.displayName}" of type "${element.displayName}" is '
+            'not serializable: $fieldVerdict',
+          ),
+      };
     }
     if (position == _TypePosition.return$) {
       verdict &= fieldsVerdict;

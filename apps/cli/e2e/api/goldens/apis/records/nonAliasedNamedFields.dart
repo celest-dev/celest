@@ -16,15 +16,10 @@ class NonAliasedNamedFieldsTarget extends _i1.FunctionTarget {
     ) async {
       final response = _i2.nonAliasedNamedFields(
           value: _i3.Serializers.instance
-              .deserializeWithType<({String anotherField, String field})>(
-        r'#Record$rmm4wt',
-        request[r'value'],
-      ));
+              .deserialize<({String anotherField, String field})>(
+                  request[r'value']));
       return _i3.Serializers.instance
-          .serializeWithType<({String anotherField, String field})>(
-        r'#Record$rmm4wt',
-        response,
-      );
+          .serialize<({String anotherField, String field})>(response);
     },
     (json) => json as Map<String, dynamic>,
   );
@@ -57,10 +52,10 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
 
   @override
   Record$rmm4wt deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
+    final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      anotherField: (serialized?[r'anotherField'] as String),
-      field: (serialized?[r'field'] as String)
+      anotherField: (serialized[r'anotherField'] as String),
+      field: (serialized[r'field'] as String)
     );
   }
 

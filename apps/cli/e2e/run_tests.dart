@@ -300,7 +300,7 @@ class TestRunner {
                 }
             }
             if (test.logs case final expectedLogs?) {
-              expect(logs, containsAllInOrder(expectedLogs));
+              expect(logs, containsAllInOrder(expectedLogs.map(contains)));
             }
           }
         });
@@ -1873,6 +1873,113 @@ const Map<String, Test> tests = {
           ],
         },
       ),
+      'generic_wrappers': ApiTest(
+        functionTests: {
+          'genericWrappers': [
+            FunctionTestSuccess(
+              name: 'genericWrappers',
+              input: {
+                'value': _genericWrappers,
+              },
+              output: _genericWrappers,
+            ),
+          ],
+          'genericWrappersAsync': [
+            FunctionTestSuccess(
+              name: 'genericWrappers',
+              input: {
+                'value': _genericWrappers,
+              },
+              output: _genericWrappers,
+            ),
+          ],
+          'genericWrapperParameters': [
+            FunctionTestSuccess(
+              name: 'genericWrappers',
+              input: _genericWrappers,
+              output: _genericWrappers,
+            ),
+          ],
+        },
+      ),
     },
   ),
+};
+
+const _genericWrappers = {
+  'listOfString': ['one', 'two', 'three'],
+  'listOfUri': ['https://google.com', 'https://example.com'],
+  'listOfSimpleClass': [simpleStruct, simpleStruct],
+  'listOfListOfString': [
+    ['one', 'two', 'three'],
+    ['four', 'five', 'six'],
+  ],
+  'listOfListOfUri': [
+    ['https://google.com', 'https://example.com'],
+    ['https://dart.dev', 'https://pub.dev'],
+  ],
+  'listOfListOfSimpleClass': [
+    [simpleStruct, simpleStruct],
+    [simpleStruct, simpleStruct],
+  ],
+  'mapOfString': {
+    'one': 'one',
+    'two': 'two',
+    'three': 'three',
+  },
+  'mapOfUri': {
+    'one': 'https://google.com',
+    'two': 'https://example.com',
+  },
+  'mapOfSimpleClass': {
+    'one': simpleStruct,
+    'two': simpleStruct,
+    'three': simpleStruct,
+  },
+  'mapOfListOfString': {
+    'one': ['one', 'two', 'three'],
+    'two': ['four', 'five', 'six'],
+  },
+  'mapOfListOfUri': {
+    'one': ['https://google.com', 'https://example.com'],
+    'two': ['https://dart.dev', 'https://pub.dev'],
+  },
+  'mapOfListOfSimpleClass': {
+    'one': [simpleStruct, simpleStruct],
+    'two': [simpleStruct, simpleStruct],
+  },
+  'mapOfMapOfString': {
+    'a': {
+      'a': 'a',
+      'b': 'b',
+      'c': 'c',
+    },
+    'b': {
+      'a': 'a',
+      'b': 'b',
+      'c': 'c',
+    },
+  },
+  'mapOfMapOfUri': {
+    'one': {
+      'one': 'https://google.com',
+      'two': 'https://example.com',
+    },
+    'two': {
+      'one': 'https://dart.dev',
+      'two': 'https://pub.dev',
+    },
+  },
+  'mapOfMapOfSimpleClass': {
+    'one': {
+      'one': simpleStruct,
+      'two': simpleStruct,
+      'three': simpleStruct,
+    },
+    'two': {
+      'one': simpleStruct,
+      'two': simpleStruct,
+      'three': simpleStruct,
+    },
+  },
 };

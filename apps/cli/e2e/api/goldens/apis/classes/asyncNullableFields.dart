@@ -15,14 +15,8 @@ class AsyncNullableFieldsTarget extends _i1.FunctionTarget {
       context,
     ) async {
       final response = await _i2.asyncNullableFields(
-          _i3.Serializers.instance.deserializeWithType<_i2.Fields?>(
-        r'project:apis/classes.dart#Fields',
-        request[r'value'],
-      ));
-      return _i3.Serializers.instance.serializeWithType<_i2.Fields?>(
-        r'project:apis/classes.dart#Fields',
-        response,
-      );
+          _i3.Serializers.instance.deserialize<_i2.Fields?>(request[r'value']));
+      return _i3.Serializers.instance.serialize<_i2.Fields?>(response);
     },
     (json) => json as Map<String, dynamic>,
   );

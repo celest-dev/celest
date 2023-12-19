@@ -108,6 +108,47 @@ extension DartTypeHelper on DartType {
       isDartCoreObject ||
       isDartCoreNull ||
       isEnum;
+
+  Uri? get sourceUri => switch (alias) {
+        final alias? => alias.element.sourceLocation.uri,
+        _ => element?.sourceLocation.uri,
+      };
+
+  Uri get uri {
+    if (this is DynamicType) {
+      return Uri.parse('dart:core#dynamic');
+    }
+    return sourceUri!;
+  }
+
+  Uri get instantiatedUri {
+    final type = this;
+    final symbol = switch (type) {
+      final RecordType type => type.symbol,
+      _ => element?.name,
+    };
+    assert(symbol != null, 'Symbol is null for $type');
+    final symbolizedUri = switch (sourceUri) {
+      final sourceUri? => sourceUri.replace(fragment: symbol),
+      _ => Uri(fragment: symbol),
+    };
+    switch (type) {
+      case InterfaceType(
+            :final typeArguments,
+            element: InterfaceElement(:final typeParameters)
+          )
+          when typeParameters.isNotEmpty:
+        return symbolizedUri.replace(
+          queryParameters: {
+            for (final (index, typeParameter) in typeParameters.indexed)
+              typeParameter.name:
+                  typeArguments[index].instantiatedUri.toString(),
+          },
+        );
+      default:
+        return symbolizedUri;
+    }
+  }
 }
 
 extension RecordTypeHelper on RecordType {
@@ -126,16 +167,6 @@ extension RecordTypeHelper on RecordType {
         return 'Record\$${uniqueHash.toRadixString(36)}';
     }
   }
-
-  String? get url => switch (alias) {
-        final alias? => alias.element.sourceLocation.uri.toString(),
-        _ => null,
-      };
-
-  Uri get uri => switch (url) {
-        final url? => Uri.parse(url).replace(fragment: symbol),
-        _ => Uri(fragment: symbol),
-      };
 }
 
 extension ElementSourceLocation on Element {
@@ -183,12 +214,91 @@ extension SourceLineCol on Source {
   }
 }
 
-extension DartTypeUri on DartType {
-  Uri? get uri {
-    final sourceUri = element?.library?.source.uri;
-    if (sourceUri == null) {
-      return null;
+// TODO: File ticket with Dart team around hashcode/equality of DartType
+// == of RecordType does not take into account alias.
+// hashCode only takes into account the length of positionalFields and namedFields.
+final class DartTypeEquality implements Equality<DartType> {
+  const DartTypeEquality();
+
+  @override
+  bool equals(DartType e1, DartType e2) {
+    if (e1 is RecordType && e2 is RecordType) {
+      return const RecordTypeEquality().equals(e1, e2);
     }
-    return projectPaths.normalizeUri(sourceUri);
+    return e1 == e2;
   }
+
+  @override
+  int hash(DartType e) {
+    if (e is RecordType) {
+      return const RecordTypeEquality().hash(e);
+    }
+    return e.hashCode;
+  }
+
+  @override
+  bool isValidKey(Object? o) => o is DartType;
+}
+
+// TODO: File ticket with Dart team around hashcode/equality of DartType
+final class RecordTypeEquality implements Equality<RecordType> {
+  const RecordTypeEquality();
+
+  @override
+  bool equals(RecordType e1, RecordType e2) {
+    if (identical(e1, e2)) {
+      return true;
+    }
+    if (e1.nullabilitySuffix != e2.nullabilitySuffix) {
+      return false;
+    }
+    if (e1.alias != e2.alias) {
+      return false;
+    }
+
+    final thisPositional = e1.positionalFields;
+    final otherPositional = e2.positionalFields;
+    if (thisPositional.length != otherPositional.length) {
+      return false;
+    }
+    for (var i = 0; i < thisPositional.length; i++) {
+      final thisField = thisPositional[i];
+      final otherField = otherPositional[i];
+      if (!const DartTypeEquality().equals(thisField.type, otherField.type)) {
+        return false;
+      }
+    }
+
+    final thisNamed = e1.namedFields;
+    final otherNamed = e2.namedFields;
+    if (thisNamed.length != otherNamed.length) {
+      return false;
+    }
+    for (var i = 0; i < thisNamed.length; i++) {
+      final thisField = thisNamed[i];
+      final otherField = otherNamed[i];
+      if (thisField.name != otherField.name ||
+          !const DartTypeEquality().equals(thisField.type, otherField.type)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  @override
+  int hash(RecordType e) => const DeepCollectionEquality().hash([
+        e.nullabilitySuffix,
+        e.alias,
+        e.positionalFields.map(
+          (field) => const DartTypeEquality().hash(field.type),
+        ),
+        e.namedFields.map((field) => field.name),
+        e.namedFields.map(
+          (field) => const DartTypeEquality().hash(field.type),
+        ),
+      ]);
+
+  @override
+  bool isValidKey(Object? o) => o is RecordType;
 }
