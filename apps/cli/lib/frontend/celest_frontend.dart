@@ -17,32 +17,8 @@ import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
 
 final class CelestFrontend implements Closeable {
-  factory CelestFrontend({
-    required String projectRoot,
-    String? outputsDir,
-    required bool verbose,
-  }) {
-    final projectPaths = init(
-      projectRoot: projectRoot,
-      outputsDir: outputsDir,
-    );
-    final analyzer = CelestAnalyzer(
-      projectPaths: projectPaths,
-    );
-    return CelestFrontend._(
-      analyzer: analyzer,
-      verbose: verbose,
-    );
-  }
-
-  CelestFrontend._({
-    required this.analyzer,
-    required this.verbose,
-  });
-
   static final Logger logger = Logger('CelestFrontend');
-  final CelestAnalyzer analyzer;
-  final bool verbose;
+  final CelestAnalyzer analyzer = CelestAnalyzer();
 
   int _logErrors(List<AnalysisException> errors) {
     logger.severe('Project has errors:');
@@ -161,9 +137,10 @@ final class CelestFrontend implements Closeable {
     for (final MapEntry(key: path, value: contents)
         in codeGenerator.fileOutputs.entries) {
       assert(p.isAbsolute(path));
-      final file = File(path);
-      await file.create(recursive: true);
-      await file.writeAsString(contents);
+      await fileSystem.transactFile(p.basename(path), path, (file) async {
+        await file.create(recursive: true);
+        await file.writeAsString(contents);
+      });
     }
     if (stopped) {
       throw const CancellationException('Celest was stopped');

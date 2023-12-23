@@ -1,18 +1,13 @@
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
-import 'package:file/local.dart';
 import 'package:logging/logging.dart';
-import 'package:process/process.dart';
 
 final class ResidentCompiler {
-  ResidentCompiler._(
-    this.infoFile, {
-    required ProcessManager processManager,
-  }) : _processManager = processManager;
+  ResidentCompiler._(this.infoFile);
 
   static final Logger logger = Logger('ResidentCompiler');
-  final ProcessManager _processManager;
 
   static final _infoFilePath = p.join(
     projectPaths.celestConfig,
@@ -20,17 +15,11 @@ final class ResidentCompiler {
   );
   final File infoFile;
 
-  static ResidentCompiler? start({
-    ProcessManager processManager = const LocalProcessManager(),
-    FileSystem fileSystem = const LocalFileSystem(),
-  }) {
+  static ResidentCompiler? start() {
     final infoFile = fileSystem.file(_infoFilePath);
     if (infoFile.existsSync()) {
       logger.finer('Resident compiler server already running.');
-      return ResidentCompiler._(
-        infoFile,
-        processManager: processManager,
-      );
+      return ResidentCompiler._(infoFile);
     }
     logger.fine('Starting resident compiler server...');
     final startResult = processManager.runSync([
@@ -47,16 +36,13 @@ final class ResidentCompiler {
       );
       return null;
     }
-    return ResidentCompiler._(
-      infoFile,
-      processManager: processManager,
-    );
+    return ResidentCompiler._(infoFile);
   }
 
   Future<void> stop() async {
     logger.finer('Stopping resident compiler server...');
     try {
-      final stopResult = await _processManager.run([
+      final stopResult = await processManager.run([
         Sdk.current.dart,
         'compilation-server',
         'shutdown',

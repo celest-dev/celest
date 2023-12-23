@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:logging/logging.dart';
+import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -91,15 +91,13 @@ void testErrors({
   required List<String> errors,
 }) {
   test(name, skip: skip, () async {
-    final projectPaths = await newProject(
+    projectPaths = await newProject(
       name: name,
       projectDart: projectDart,
       apis: apis,
       config: config,
     );
-    final analyzer = CelestAnalyzer(
-      projectPaths: projectPaths,
-    );
+    final analyzer = CelestAnalyzer();
     final (project: _, errors: actual) = await analyzer.analyzeProject();
     expect(
       actual.map((e) => e.message),
@@ -109,7 +107,7 @@ void testErrors({
 }
 
 void main() {
-  Logger.root.level = Level.ALL;
+  initTests();
 
   group('Analyzer Errors', () {
     group('project.dart', () {

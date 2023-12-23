@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:package_config/package_config.dart';
 
@@ -79,7 +80,7 @@ final class EntrypointCompiler {
       String? packageConfigPath;
       if (entrypoint.packageConfig case final packageConfig?) {
         packageConfigPath = '$pathWithoutDart.packages.json';
-        final packageConfigFile = File(packageConfigPath);
+        final packageConfigFile = fileSystem.file(packageConfigPath);
         logger.detail('Writing package config to ${packageConfigFile.path}');
         final packageConfigString = StringBuffer();
         PackageConfig.writeString(packageConfig, packageConfigString);

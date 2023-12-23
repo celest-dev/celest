@@ -9,9 +9,9 @@ import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:http/http.dart';
-import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -20,7 +20,7 @@ import 'test.dart';
 int nextPort() => Random().nextInt(10000) + 30000;
 
 Future<void> main(List<String> args) async {
-  Logger.root.level = Level.ALL;
+  initTests();
 
   final argParser = ArgParser()
     ..addFlag(
@@ -50,9 +50,11 @@ Future<void> main(List<String> args) async {
   });
   for (final testDir in allTests) {
     final projectRoot = testDir.path;
+    final goldensDir = Directory(p.join(projectRoot, 'goldens'));
     TestRunner(
       updateGoldens: updateGoldens,
       projectRoot: projectRoot,
+      goldensDir: goldensDir,
     ).run();
   }
 }
@@ -61,27 +63,27 @@ class TestRunner {
   TestRunner({
     required this.projectRoot,
     required this.updateGoldens,
+    required this.goldensDir,
   });
 
   final String projectRoot;
   final bool updateGoldens;
+  final Directory goldensDir;
 
   late final testCases = tests[testName];
   late final testName = p.basename(projectRoot);
-  late final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-  late final projectPaths = init(
-    projectRoot: projectRoot,
-    outputsDir: goldensDir.path,
-  );
+
   late Client client;
-  late final analyzer = CelestAnalyzer(
-    projectPaths: projectPaths,
-  );
+  late final CelestAnalyzer analyzer = CelestAnalyzer();
   late final ResidentCompiler residentCompiler = ResidentCompiler.start()!;
 
   void run() {
     group(testName, () {
       setUpAll(() async {
+        init(
+          projectRoot: projectRoot,
+          outputsDir: goldensDir.path,
+        );
         final res = Process.runSync(
           Platform.executable,
           ['pub', 'get'],

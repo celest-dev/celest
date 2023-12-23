@@ -20,7 +20,9 @@ final class StartCommand extends CelestCommand {
     await super.run();
 
     final currentDir = Directory.current;
-    final pubspecFile = File(p.join(currentDir.path, 'pubspec.yaml'));
+    final pubspecFile = fileSystem.file(
+      p.join(currentDir.path, 'pubspec.yaml'),
+    );
     if (!pubspecFile.existsSync()) {
       logger.shout('No pubspec.yaml file found in the current directory.');
       return 1;
@@ -37,6 +39,9 @@ final class StartCommand extends CelestCommand {
         }(),
     };
 
+    final projectRoot = celestDir.path;
+    init(projectRoot: projectRoot);
+
     if (!isExistingProject) {
       if (!pubspec.dependencies.containsKey('flutter')) {
         logger.shout('Only Flutter projects are supported at this time.');
@@ -51,7 +56,7 @@ final class StartCommand extends CelestCommand {
       await ProjectGenerator(
         projectName: projectName,
         appRoot: currentDir.path,
-        projectRoot: celestDir.path,
+        projectRoot: projectRoot,
       ).generate();
     }
 
@@ -59,13 +64,9 @@ final class StartCommand extends CelestCommand {
     // TODO: Hacky, find a better way to do this.
     Directory.current = celestDir;
 
-    // Start the Celest Frontend Loop
-    final frontend = CelestFrontend(
-      projectRoot: celestDir.path,
-      verbose: verbose,
-    );
     try {
-      return await frontend.run();
+      // Start the Celest Frontend Loop
+      return await CelestFrontend().run();
     } on Exception catch (e) {
       logger.shout('An error occurred while running Celest: $e');
       return 1;

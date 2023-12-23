@@ -7,16 +7,17 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
-import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
@@ -26,37 +27,32 @@ typedef ErrorReporter = void Function(String message, SourceLocation location);
 
 final class CelestAnalyzer {
   CelestAnalyzer._(
-    this._projectPaths,
     this._context,
   );
 
-  factory CelestAnalyzer({
-    required ProjectPaths projectPaths,
-  }) {
+  factory CelestAnalyzer() {
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
       sdkPath: Sdk.current.sdkPath,
+      // TODO(dnys1): Custom resource provider with Sentry integration and mock support?
+      resourceProvider: PhysicalResourceProvider.INSTANCE,
     );
     final context = contextCollection.contexts.single;
-    return CelestAnalyzer._(
-      projectPaths,
-      context,
-    );
+    return CelestAnalyzer._(context);
   }
 
   static final Logger _logger = Logger('CelestAnalyzer');
-  final ProjectPaths _projectPaths;
   final AnalysisContext _context;
   final List<AnalysisException> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
   final TypeHelper typeHelper = TypeHelper();
   late final enabledExperiments = _loadEnabledExperiments(
-    _projectPaths.analysisOptionsYaml,
+    projectPaths.analysisOptionsYaml,
   );
 
   List<String> _loadEnabledExperiments(String path) {
-    final analysisOptionsFile = File(path);
+    final analysisOptionsFile = fileSystem.file(path);
     if (!analysisOptionsFile.existsSync()) {
       _logger.finest('No analysis options file detected at $path');
       return const [];
@@ -108,8 +104,8 @@ final class CelestAnalyzer {
 
   Future<ast.ProjectBuilder?> _findProject() async {
     _logger.fine('Analyzing project...');
-    final projectFilePath = _projectPaths.projectDart;
-    if (!File(projectFilePath).existsSync()) {
+    final projectFilePath = projectPaths.projectDart;
+    if (!fileSystem.file(projectFilePath).existsSync()) {
       _reportError(
         'No project file found at $projectFilePath',
         SourceLocation(
@@ -233,7 +229,7 @@ final class CelestAnalyzer {
       ..name = projectName
       ..reference = refer(
         projectDefinitionElement.name,
-        _projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
+        projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       )
       ..location.replace(projectDefineLocation);
   }
@@ -282,7 +278,7 @@ final class CelestAnalyzer {
   }
 
   Future<void> _collectApis() async {
-    final apiDir = Directory(_projectPaths.apisDir);
+    final apiDir = Directory(projectPaths.apisDir);
     if (!apiDir.existsSync()) {
       return;
     }
@@ -402,7 +398,7 @@ final class CelestAnalyzer {
   }
 
   Future<void> _collectEnv() async {
-    final envDir = Directory(_projectPaths.configDir);
+    final envDir = Directory(projectPaths.configDir);
     if (!envDir.existsSync()) {
       _logger.finer('No config directory found. Skipping env collection.');
       return;
