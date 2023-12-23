@@ -19,7 +19,7 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:yaml/yaml.dart';
 
 typedef ErrorReporter = void Function(String message, SourceLocation location);
@@ -27,13 +27,11 @@ typedef ErrorReporter = void Function(String message, SourceLocation location);
 final class CelestAnalyzer {
   CelestAnalyzer._(
     this._projectPaths,
-    this._context, {
-    required Logger logger,
-  }) : _logger = logger;
+    this._context,
+  );
 
   factory CelestAnalyzer({
     required ProjectPaths projectPaths,
-    required Logger logger,
   }) {
     final contextCollection = AnalysisContextCollection(
       includedPaths: [projectPaths.projectRoot],
@@ -43,11 +41,10 @@ final class CelestAnalyzer {
     return CelestAnalyzer._(
       projectPaths,
       context,
-      logger: logger,
     );
   }
 
-  final Logger _logger;
+  static final Logger _logger = Logger('CelestAnalyzer');
   final ProjectPaths _projectPaths;
   final AnalysisContext _context;
   final List<AnalysisException> _errors = [];
@@ -61,24 +58,24 @@ final class CelestAnalyzer {
   List<String> _loadEnabledExperiments(String path) {
     final analysisOptionsFile = File(path);
     if (!analysisOptionsFile.existsSync()) {
-      _logger.detail('No analysis options file detected at $path');
+      _logger.finest('No analysis options file detected at $path');
       return const [];
     }
     final analysisOptionsContent = analysisOptionsFile.readAsStringSync();
     final analysisOptions = loadYamlDocument(analysisOptionsContent);
     final analysisOptionsMap = analysisOptions.contents.value;
     if (analysisOptionsMap is! YamlMap) {
-      _logger.detail('Invalid analysis options file: $analysisOptionsContent');
+      _logger.finer('Invalid analysis options file: $analysisOptionsContent');
       return const [];
     }
     final analyzerOptions = analysisOptionsMap.value['analyzer'];
     if (analyzerOptions is! YamlMap) {
-      _logger.detail('No analyzer settings found');
+      _logger.finer('No analyzer settings found');
       return const [];
     }
     final enabledExperiments = analyzerOptions.value['enable-experiment'];
     if (enabledExperiments is! YamlList) {
-      _logger.detail('No enabled experiments found');
+      _logger.finer('No enabled experiments found');
       return const [];
     }
     return enabledExperiments.value.cast<String>();
@@ -110,7 +107,7 @@ final class CelestAnalyzer {
   }
 
   Future<ast.ProjectBuilder?> _findProject() async {
-    _logger.detail('Analyzing project');
+    _logger.fine('Analyzing project...');
     final projectFilePath = _projectPaths.projectDart;
     if (!File(projectFilePath).existsSync()) {
       _reportError(
@@ -123,7 +120,7 @@ final class CelestAnalyzer {
       );
       return null;
     }
-    _logger.detail('Found project file at $projectFilePath');
+    _logger.finer('Found project file at $projectFilePath');
     final projectFile =
         await _context.currentSession.getResolvedUnit(projectFilePath);
     if (projectFile is! ResolvedUnitResult || !projectFile.exists) {
@@ -137,7 +134,7 @@ final class CelestAnalyzer {
       );
       return null;
     }
-    _logger.detail('Resolved project file');
+    _logger.finer('Resolved project file');
     typeHelper
       ..typeSystem = projectFile.typeSystem
       ..typeProvider = projectFile.typeProvider;
@@ -181,8 +178,8 @@ final class CelestAnalyzer {
           hasConstantEvalErrors = true;
       }
     }
-    _logger.detail(
-      'Resolved top-level constants: ${prettyPrintJson({
+    _logger.finest(
+      () => 'Resolved top-level constants: ${prettyPrintJson({
             'hasConstantEvalErrors': '$hasConstantEvalErrors',
             'constants': {
               for (final constant in topLevelConstants)
@@ -217,7 +214,7 @@ final class CelestAnalyzer {
     // Validate `project` variable
     final projectDefineLocation = projectDefinitionElement.sourceLocation;
     _logger
-        .detail('Resolved project definition location: $projectDefineLocation');
+        .finer('Resolved project definition location: $projectDefineLocation');
     final projectName =
         projectDefinitionValue.getField('name')?.toStringValue();
     assert(
@@ -230,7 +227,7 @@ final class CelestAnalyzer {
         projectDefineLocation,
       );
     }
-    _logger.detail('Resolved project name: $projectName');
+    _logger.finer('Resolved project name: $projectName');
 
     return ast.ProjectBuilder()
       ..name = projectName
@@ -407,7 +404,7 @@ final class CelestAnalyzer {
   Future<void> _collectEnv() async {
     final envDir = Directory(_projectPaths.configDir);
     if (!envDir.existsSync()) {
-      _logger.detail('No config directory found. Skipping env collection.');
+      _logger.finer('No config directory found. Skipping env collection.');
       return;
     }
 
@@ -420,7 +417,7 @@ final class CelestAnalyzer {
               p.basename(path).startsWith('env') && path.endsWith('.dart'),
         )
         .toList();
-    _logger.detail('Found ${envFiles.length} env files: $envFiles');
+    _logger.finest('Found ${envFiles.length} env files: $envFiles');
     final envDeclarations = _widgetCollector.collect(
       envFiles,
       scope: 'Environment variable',
@@ -432,9 +429,9 @@ final class CelestAnalyzer {
       'environment overridees.',
     );
     for (final path in envDeclarations.values) {
-      _logger.detail('Collecting base env from $path');
+      _logger.finer('Collecting base env from $path');
       final envVars = await _collectEnvironmentVariables(path);
-      _logger.detail('Collected base env vars: $envVars');
+      _logger.finer('Collected base env vars: $envVars');
       _project.envVars.addAll(envVars);
     }
   }

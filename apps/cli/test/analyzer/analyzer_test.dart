@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -99,7 +99,6 @@ void testErrors({
     );
     final analyzer = CelestAnalyzer(
       projectPaths: projectPaths,
-      logger: Logger(level: Level.verbose),
     );
     final (project: _, errors: actual) = await analyzer.analyzeProject();
     expect(
@@ -110,6 +109,8 @@ void testErrors({
 }
 
 void main() {
+  Logger.root.level = Level.ALL;
+
   group('Analyzer Errors', () {
     group('project.dart', () {
       testNoErrors(

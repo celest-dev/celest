@@ -96,7 +96,7 @@ final class DeployCommand extends CelestCommand {
     }
 
     // Generate client
-    final clientProg = logger.progress('Generating client');
+    final clientProg = cliLogger.progress('Generating client');
     if (!clientDir.existsSync()) {
       clientDir.createSync(recursive: true);
     }
@@ -114,7 +114,7 @@ final class DeployCommand extends CelestCommand {
       await exitSignal.future;
     }
 
-    logger
+    cliLogger
       ..info('')
       ..info('Outputs', style: (msg) => styleBold.wrap(lightCyan.wrap(msg)))
       ..info('')
@@ -124,7 +124,7 @@ final class DeployCommand extends CelestCommand {
       )
       ..info('');
 
-    logger.success('All resources deployed! 🚀');
+    cliLogger.success('All resources deployed! 🚀');
 
     exit(0);
   }

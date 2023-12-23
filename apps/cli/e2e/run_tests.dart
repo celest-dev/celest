@@ -11,7 +11,7 @@ import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:http/http.dart';
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -20,6 +20,8 @@ import 'test.dart';
 int nextPort() => Random().nextInt(10000) + 30000;
 
 Future<void> main(List<String> args) async {
+  Logger.root.level = Level.ALL;
+
   final argParser = ArgParser()
     ..addFlag(
       'update-goldens',
@@ -72,13 +74,10 @@ class TestRunner {
     outputsDir: goldensDir.path,
   );
   late Client client;
-  final logger = Logger(level: Level.verbose);
   late final analyzer = CelestAnalyzer(
     projectPaths: projectPaths,
-    logger: logger,
   );
-  late final ResidentCompiler residentCompiler =
-      ResidentCompiler.start(logger: logger)!;
+  late final ResidentCompiler residentCompiler = ResidentCompiler.start()!;
 
   void run() {
     group(testName, () {

@@ -7,7 +7,7 @@ import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:vm_service/vm_service.dart';
 import 'package:vm_service/vm_service_io.dart';
 
@@ -16,7 +16,6 @@ import 'package:vm_service/vm_service_io.dart';
 final class LocalApiRunner implements Closeable {
   LocalApiRunner._({
     required this.path,
-    required this.logger,
     required this.verbose,
     required this.enabledExperiments,
     required this.port,
@@ -29,7 +28,7 @@ final class LocalApiRunner implements Closeable {
         _vmIsolateId = vmIsolateId,
         _localApiProcess = localApiProcess;
 
-  final Logger logger;
+  static final Logger logger = Logger('LocalApiRunner');
   final bool verbose;
   final List<String> enabledExperiments;
   final String path;
@@ -60,7 +59,6 @@ final class LocalApiRunner implements Closeable {
 
   static Future<LocalApiRunner> start({
     required String path,
-    required Logger logger,
     required bool verbose,
     required List<String> enabledExperiments,
     List<String> additionalSources = const [],
@@ -80,7 +78,7 @@ final class LocalApiRunner implements Closeable {
         '--no-support-mirrors', // Since it won't be supported in the cloud.
       ],
     );
-    logger.detail('Compiling local API...');
+    logger.fine('Compiling local API...');
 
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
@@ -91,7 +89,7 @@ final class LocalApiRunner implements Closeable {
         throw TimeoutException('Could not find an open port to run Celest.');
       },
     );
-    logger.detail('Starting local API...');
+    logger.finer('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
       [
@@ -115,7 +113,7 @@ final class LocalApiRunner implements Closeable {
       )) {
         final observatoryUri =
             '${line.split(' ').last.replaceFirst('http', 'ws')}ws';
-        logger.detail('Connecting to local API at: $observatoryUri');
+        logger.finer('Connecting to local API at: $observatoryUri');
         vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
       } else if (line.startsWith('The Dart VM service is listening on')) {
         // Ignore
@@ -132,15 +130,14 @@ final class LocalApiRunner implements Closeable {
       stderr.writeln('APP -> $line');
     });
 
-    logger.detail('Waiting for local API to report VM URI...');
+    logger.finer('Waiting for local API to report VM URI...');
     final vmService = await vmServiceCompleter.future;
 
     final isolateId = await _waitForIsolate(vmService, logger);
-    logger.detail('Connected to local API.');
+    logger.fine('Connected to local API.');
 
     return LocalApiRunner._(
       path: path,
-      logger: logger,
       verbose: verbose,
       enabledExperiments: enabledExperiments,
       port: port,
@@ -169,12 +166,12 @@ final class LocalApiRunner implements Closeable {
       isolates = vm.isolates;
     }
     stopwatch.stop();
-    logger.detail('VM started in ${stopwatch.elapsedMilliseconds}ms.');
+    logger.finest('VM started in ${stopwatch.elapsedMilliseconds}ms.');
     return isolates.single.id!;
   }
 
   Future<void> recompile(List<String> pathsToInvalidate) async {
-    logger.detail('Recompiling local API...');
+    logger.fine('Recompiling local API...');
     final result = await _client.compile([
       for (final path in pathsToInvalidate)
         Uri.parse('org-dartlang-root://$path'),
@@ -188,11 +185,11 @@ final class LocalApiRunner implements Closeable {
 
   @override
   Future<void> close() async {
-    logger.detail('Shutting down local API...');
+    logger.finer('Shutting down local API...');
     _client.kill();
     await _vmService.dispose();
     _localApiProcess.kill();
-    logger.detail('Shut down local API.');
+    logger.finer('Shut down local API.');
   }
 }
 

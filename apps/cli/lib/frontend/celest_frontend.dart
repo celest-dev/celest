@@ -10,8 +10,9 @@ import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/protos.dart' as proto;
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
 
@@ -19,7 +20,6 @@ final class CelestFrontend implements Closeable {
   factory CelestFrontend({
     required String projectRoot,
     String? outputsDir,
-    required Logger logger,
     required bool verbose,
   }) {
     final projectPaths = init(
@@ -28,29 +28,26 @@ final class CelestFrontend implements Closeable {
     );
     final analyzer = CelestAnalyzer(
       projectPaths: projectPaths,
-      logger: logger,
     );
     return CelestFrontend._(
       analyzer: analyzer,
-      logger: logger,
       verbose: verbose,
     );
   }
 
   CelestFrontend._({
     required this.analyzer,
-    required this.logger,
     required this.verbose,
   });
 
+  static final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer;
-  final Logger logger;
   final bool verbose;
 
   int _logErrors(List<AnalysisException> errors) {
-    logger.err('Project has errors:');
+    logger.severe('Project has errors:');
     for (final error in errors) {
-      logger.err(error.toString());
+      logger.severe(error.toString());
     }
     return 1;
   }
@@ -79,18 +76,16 @@ final class CelestFrontend implements Closeable {
         // handler raises an exception.
         if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
       ]).first.then((signal) {
-        logger.detail('Got exit signal: $signal');
+        logger.finer('Got exit signal: $signal');
         _stopSignal.complete(signal);
       }),
     );
     try {
       while (!stopped) {
-        final progress = logger.progress(
+        final progress = cliLogger.progress(
           _didFirstCompile ? 'Reloading Celest...' : 'Starting Celest...',
         );
-        _residentCompiler ??= ResidentCompiler.start(
-          logger: logger,
-        );
+        _residentCompiler ??= ResidentCompiler.start();
         final project = await _analyzeProject();
         if (project != null) {
           final generatedOutputs = await _generateBackendCode(project);
@@ -116,7 +111,7 @@ final class CelestFrontend implements Closeable {
         _readyForChanges.add(null);
         await Future.any([
           _watcher.next.then(
-            (events) => logger.detail(
+            (events) => logger.finer(
               '${events.length} watcher events since last compile',
             ),
           ),
@@ -133,7 +128,7 @@ final class CelestFrontend implements Closeable {
 
   /// Analyzes the project and reports if there are any errors.
   Future<ast.Project?> _analyzeProject() async {
-    logger.detail('Analyzing project...');
+    logger.fine('Analyzing project...');
     final (:project, :errors) = await analyzer.analyzeProject();
     if (stopped) {
       throw const CancellationException('Celest was stopped');
@@ -153,7 +148,7 @@ final class CelestFrontend implements Closeable {
   ///
   /// Returns the list of paths generated.
   Future<List<String>> _generateBackendCode(ast.Project project) async {
-    logger.detail('Generating backend code...');
+    logger.fine('Generating backend code...');
     final codeGenerator = CodeGenerator();
     project.accept(codeGenerator);
     final outputsDir = Directory(projectPaths.outputsDir);
@@ -179,7 +174,7 @@ final class CelestFrontend implements Closeable {
   /// Builds the project into Protobuf format, applying transformations for
   /// things such as authorization.
   Future<proto.Project> _buildProject(ast.Project project) async {
-    logger.detail('Building project...');
+    logger.fine('Building project...');
     final projectBuilder = ProjectBuilder(
       project: project,
       projectPaths: projectPaths,
@@ -196,7 +191,6 @@ final class CelestFrontend implements Closeable {
     if (_localApiRunner == null) {
       _localApiRunner = await LocalApiRunner.start(
         path: projectPaths.localApiEntrypoint,
-        logger: logger,
         verbose: verbose,
         enabledExperiments: analyzer.enabledExperiments,
         // additionalSources: generatedOutputs,

@@ -2,19 +2,17 @@ import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
 import 'package:process/process.dart';
 
 final class ResidentCompiler {
   ResidentCompiler._(
     this.infoFile, {
-    required Logger logger,
     required ProcessManager processManager,
-  })  : _logger = logger,
-        _processManager = processManager;
+  }) : _processManager = processManager;
 
+  static final Logger logger = Logger('ResidentCompiler');
   final ProcessManager _processManager;
-  final Logger _logger;
 
   static final _infoFilePath = p.join(
     projectPaths.celestConfig,
@@ -25,18 +23,16 @@ final class ResidentCompiler {
   static ResidentCompiler? start({
     ProcessManager processManager = const LocalProcessManager(),
     FileSystem fileSystem = const LocalFileSystem(),
-    required Logger logger,
   }) {
     final infoFile = fileSystem.file(_infoFilePath);
     if (infoFile.existsSync()) {
-      logger.detail('Resident compiler server already running.');
+      logger.finer('Resident compiler server already running.');
       return ResidentCompiler._(
         infoFile,
-        logger: logger,
         processManager: processManager,
       );
     }
-    logger.detail('Starting resident compiler server...');
+    logger.fine('Starting resident compiler server...');
     final startResult = processManager.runSync([
       Sdk.current.dart,
       'compilation-server',
@@ -44,19 +40,21 @@ final class ResidentCompiler {
       '--resident-server-info-file=${infoFile.path}',
     ]);
     if (startResult.exitCode != 0) {
-      logger.err('Failed to start resident compiler server.');
-      logger.err(startResult.stderr.toString());
+      logger.fine(
+        'Failed to start resident compiler server.',
+        startResult.stderr.toString(),
+        StackTrace.current,
+      );
       return null;
     }
     return ResidentCompiler._(
       infoFile,
-      logger: logger,
       processManager: processManager,
     );
   }
 
   Future<void> stop() async {
-    _logger.detail('Stopping resident compiler server...');
+    logger.finer('Stopping resident compiler server...');
     try {
       final stopResult = await _processManager.run([
         Sdk.current.dart,
@@ -65,11 +63,16 @@ final class ResidentCompiler {
         '--resident-server-info-file=${infoFile.path}',
       ]);
       if (stopResult.exitCode != 0) {
-        _logger.err('Failed to stop resident compiler server.');
-        _logger.err(stopResult.stderr.toString());
+        logger.fine(
+          'Failed to stop resident compiler server.',
+          stopResult.stderr.toString(),
+          StackTrace.current,
+        );
       }
     } finally {
-      if (infoFile.existsSync()) {
+      final infoFileExists = infoFile.existsSync();
+      logger.finest('Deleting info file. Exists: $infoFileExists');
+      if (infoFileExists) {
         infoFile.deleteSync();
       }
     }

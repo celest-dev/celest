@@ -22,7 +22,7 @@ final class StartCommand extends CelestCommand {
     final currentDir = Directory.current;
     final pubspecFile = File(p.join(currentDir.path, 'pubspec.yaml'));
     if (!pubspecFile.existsSync()) {
-      logger.err('No pubspec.yaml file found in the current directory.');
+      logger.shout('No pubspec.yaml file found in the current directory.');
       return 1;
     }
     final pubspecYaml = pubspecFile.readAsStringSync();
@@ -39,12 +39,12 @@ final class StartCommand extends CelestCommand {
 
     if (!isExistingProject) {
       if (!pubspec.dependencies.containsKey('flutter')) {
-        logger.err('Only Flutter projects are supported at this time.');
+        logger.shout('Only Flutter projects are supported at this time.');
         return 1;
       }
 
       final appName = pubspec.name;
-      final projectName = logger.prompt(
+      final projectName = cliLogger.prompt(
         'Enter a name for your project',
         defaultValue: appName,
       );
@@ -62,13 +62,12 @@ final class StartCommand extends CelestCommand {
     // Start the Celest Frontend Loop
     final frontend = CelestFrontend(
       projectRoot: celestDir.path,
-      logger: logger,
       verbose: verbose,
     );
     try {
       return await frontend.run();
     } on Exception catch (e) {
-      logger.err('An error occurred while running Celest: $e');
+      logger.shout('An error occurred while running Celest: $e');
       return 1;
     }
   }
