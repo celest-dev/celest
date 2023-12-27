@@ -51,6 +51,7 @@ dependencies:
   yaml: ^3.1.2
 
 dev_dependencies:
+  archive: ^3.4.9
   build: ^2.4.1
   build_runner: ^2.4.7
   build_test: ^2.2.1
