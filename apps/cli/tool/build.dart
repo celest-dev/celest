@@ -73,11 +73,9 @@ Future<void> main() async {
     throw StateError('GitHub output file does not exist: $ghOutput');
   }
   ghOutput.writeAsStringSync(
-    'filepath=$filename${Platform.lineTerminator}',
-    mode: FileMode.append,
-  );
-  ghOutput.writeAsStringSync(
-    'filename=${p.basenameWithoutExtension(filename)}${Platform.lineTerminator}',
+    'version=$version${Platform.lineTerminator}'
+    'filepath=$filename${Platform.lineTerminator}'
+    'filename=${p.basename(filename)}${Platform.lineTerminator}',
     mode: FileMode.append,
     flush: true,
   );
@@ -95,12 +93,11 @@ Future<void> _codesignAndNotarize(Directory buildDir) async {
   await entitlementsPlist.writeAsString(entitlements);
 
   // Codesign all files in the build directory.
-  String? keychain, keychainPassword;
+  String? keychain;
   if (Platform.environment['CI'] == 'true') {
     keychain = Platform.environment['KEYCHAIN_NAME'];
-    keychainPassword = Platform.environment['KEYCHAIN_PASS'];
 
-    if (keychain.isNullOrEmpty || keychainPassword.isNullOrEmpty) {
+    if (keychain.isNullOrEmpty) {
       throw StateError('Keychain or keychain password is empty');
     }
   }
