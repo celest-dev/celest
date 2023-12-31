@@ -82,6 +82,11 @@ Future<void> main() async {
   if (!isCI) {
     return;
   }
+
+  final latestFilename = outputFilepath.replaceAll(version, 'latest');
+  File(outputFilepath).copySync(latestFilename);
+  print('Successfully wrote $latestFilename');
+
   final ghOutputPath = Platform.environment['GITHUB_OUTPUT'];
   if (ghOutputPath == null) {
     throw StateError('GITHUB_OUTPUT environment variable is not set');
@@ -93,6 +98,7 @@ Future<void> main() async {
   ghOutput.writeAsStringSync(
     'version=$version${Platform.lineTerminator}'
     'filepath=$outputFilepath${Platform.lineTerminator}'
+    'filepath-latest=$latestFilename${Platform.lineTerminator}'
     'filename=${p.basename(outputFilepath)}${Platform.lineTerminator}',
     mode: FileMode.append,
     flush: true,
