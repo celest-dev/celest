@@ -11,6 +11,9 @@ final class UpdateCommand extends CelestCommand {
   String get name => 'update';
 
   @override
+  String get category => 'Tools';
+
+  @override
   Future<int> run() async {
     await super.run();
 

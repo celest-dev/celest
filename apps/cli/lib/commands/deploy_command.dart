@@ -36,6 +36,9 @@ final class DeployCommand extends CelestCommand {
   @override
   String get name => 'deploy';
 
+  @override
+  String get category => 'Project';
+
   late final bool watch = argResults!['watch'] as bool;
   late final bool local = argResults!['local'] as bool;
 

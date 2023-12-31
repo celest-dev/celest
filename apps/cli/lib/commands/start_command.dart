@@ -16,6 +16,9 @@ final class StartCommand extends CelestCommand {
   String get name => 'start';
 
   @override
+  String get category => 'Project';
+
+  @override
   Future<int> run() async {
     await super.run();
 

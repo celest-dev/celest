@@ -11,6 +11,9 @@ final class UninstallCommand extends CelestCommand {
   String get name => 'uninstall';
 
   @override
+  String get category => 'Tools';
+
+  @override
   Future<int> run() async {
     await super.run();
 
