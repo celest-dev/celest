@@ -66,9 +66,9 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isApiAnonymous => switch (element) {
+  bool get isApiPublic => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'anonymous' && library.isCelestApi,
+          name == 'public' && library.isCelestApi,
         _ => false,
       };
 

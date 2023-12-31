@@ -248,7 +248,7 @@ final class CelestAnalyzer {
           void assertSingleAuth() {
             if (hasAuth) {
               _reportError(
-                'Only one `api.authenticated` or `api.anonymous` annotation '
+                'Only one `api.authenticated` or `api.public` annotation '
                 'may be specified on the same function or API library.',
                 location,
               );
@@ -260,9 +260,9 @@ final class CelestAnalyzer {
             case _ when type.isApiAuthenticated:
               assertSingleAuth();
               return ast.ApiAuthenticated(location: location);
-            case _ when type.isApiAnonymous:
+            case _ when type.isApiPublic:
               assertSingleAuth();
-              return ast.ApiAnonymous(location: location);
+              return ast.ApiPublic(location: location);
             case _ when type.isMiddleware:
               return ast.ApiMiddleware(
                 type: typeHelper.toReference(type),

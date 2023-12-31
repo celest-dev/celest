@@ -6,7 +6,7 @@ abstract class AstVisitor<T> {
         final Api api => visitApi(api),
         final CloudFunction function => visitFunction(function),
         final CloudFunctionParameter parameter => visitParameter(parameter),
-        final ApiAnonymous apiAnonymous => visitApiAnonymous(apiAnonymous),
+        final ApiPublic apiPublic => visitApiPublic(apiPublic),
         final ApiAuthenticated apiAuthenticated =>
           visitApiAuthenticated(apiAuthenticated),
         final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
@@ -24,7 +24,7 @@ abstract class AstVisitor<T> {
 
   T visitApiAuthenticated(ApiAuthenticated annotation);
 
-  T visitApiAnonymous(ApiAnonymous annotation);
+  T visitApiPublic(ApiPublic annotation);
 
   T visitApiMiddleware(ApiMiddleware annotation);
 

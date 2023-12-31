@@ -1,10 +1,10 @@
-@anonymous
+@public
 library;
 
 import 'package:celest/api.dart' as api;
 
 // Annotations can be constructor invocations or variables.
-const anonymous = api.anonymous();
+const public = api.public();
 const authenticated = api.authenticated();
 
 @authenticated

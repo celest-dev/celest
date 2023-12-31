@@ -10,7 +10,7 @@ part 'serializers.g.dart';
   Project,
   Api,
   ApiAuthenticated,
-  ApiAnonymous,
+  ApiPublic,
   ApiMiddleware,
   CloudFunction,
   CloudFunctionParameter,

@@ -42,7 +42,7 @@
           },
           "metadata": [
             {
-              "$": "ApiAnonymous",
+              "$": "ApiPublic",
               "location": {
                 "uri": "project:apis/anonymous_function.dart",
                 "line": 6,
@@ -5136,7 +5136,7 @@
       "name": "api_auth_constant_variables",
       "metadata": [
         {
-          "$": "ApiAnonymous",
+          "$": "ApiPublic",
           "location": {
             "uri": "project:apis/api_auth_constant_variables.dart",
             "line": 1,
@@ -9747,7 +9747,7 @@
       "name": "anonymous_api",
       "metadata": [
         {
-          "$": "ApiAnonymous",
+          "$": "ApiPublic",
           "location": {
             "uri": "project:apis/anonymous_api.dart",
             "line": 1,

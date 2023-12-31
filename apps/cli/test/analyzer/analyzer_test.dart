@@ -459,10 +459,10 @@ String sayHello() => 'Hello, World!';
       );
 
       testNoErrors(
-        name: 'api_anonymous',
+        name: 'api_public',
         apis: {
           'greeting.dart': '''
-@api.anonymous()
+@api.public()
 library;
 
 import 'package:celest/api.dart' as api;
@@ -476,11 +476,11 @@ String sayHello() => 'Hello, World!';
         name: 'const_variable_annotations',
         apis: {
           'greeting.dart': '''
-@anonymous
+@public
 @logRequests
 library;
 
-const anonymous = api.anonymous();
+const public = api.public();
 const logRequests = middleware.logRequests();
 const logResponses = middleware.logResponses();
 
@@ -497,7 +497,7 @@ String sayHello() => 'Hello, World!';
         name: 'multiple_api_auth',
         apis: {
           'greeting.dart': '''
-@api.anonymous()
+@api.public()
 @api.authenticated()
 library;
 
@@ -507,7 +507,7 @@ String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+          'Only one `api.authenticated` or `api.public` annotation may be '
               'specified on the same function or API library',
         ],
       );
@@ -516,8 +516,8 @@ String sayHello() => 'Hello, World!';
         name: 'multiple_api_auth_same_type',
         apis: {
           'greeting.dart': '''
-@api.anonymous()
-@api.anonymous()
+@api.public()
+@api.public()
 library;
 
 import 'package:celest/api.dart' as api;
@@ -526,7 +526,7 @@ String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+          'Only one `api.authenticated` or `api.public` annotation may be '
               'specified on the same function or API library',
         ],
       );
@@ -544,12 +544,12 @@ String sayHello() => 'Hello, World!';
       );
 
       testNoErrors(
-        name: 'function_anonymous',
+        name: 'function_public',
         apis: {
           'greeting.dart': '''
 import 'package:celest/api.dart' as api;
 
-@api.anonymous()
+@api.public()
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -561,13 +561,13 @@ String sayHello() => 'Hello, World!';
           'greeting.dart': '''
 import 'package:celest/api.dart' as api;
 
-@api.anonymous()
+@api.public()
 @api.authenticated()
 String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          'Only one `api.authenticated` or `api.anonymous` annotation may be '
+          'Only one `api.authenticated` or `api.public` annotation may be '
               'specified on the same function or API library',
         ],
       );

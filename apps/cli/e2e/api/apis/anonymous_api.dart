@@ -1,4 +1,4 @@
-@api.anonymous()
+@api.public()
 library;
 
 import 'package:celest/api.dart' as api;

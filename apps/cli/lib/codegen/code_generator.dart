@@ -96,7 +96,7 @@ final class CodeGenerator extends AstVisitor<void> {
   void visitApiAuthenticated(ApiAuthenticated annotation) {}
 
   @override
-  void visitApiAnonymous(ApiAnonymous annotation) {}
+  void visitApiPublic(ApiPublic annotation) {}
 
   @override
   void visitApiMiddleware(ApiMiddleware annotation) {}

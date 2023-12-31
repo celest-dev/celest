@@ -8,8 +8,7 @@ part of 'ast.dart';
 
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
-Serializer<ApiAnonymous> _$apiAnonymousSerializer =
-    new _$ApiAnonymousSerializer();
+Serializer<ApiPublic> _$apiPublicSerializer = new _$ApiPublicSerializer();
 Serializer<ApiAuthenticated> _$apiAuthenticatedSerializer =
     new _$ApiAuthenticatedSerializer();
 Serializer<ApiMiddleware> _$apiMiddlewareSerializer =
@@ -156,14 +155,14 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
   }
 }
 
-class _$ApiAnonymousSerializer implements StructuredSerializer<ApiAnonymous> {
+class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
   @override
-  final Iterable<Type> types = const [ApiAnonymous, _$ApiAnonymous];
+  final Iterable<Type> types = const [ApiPublic, _$ApiPublic];
   @override
-  final String wireName = 'ApiAnonymous';
+  final String wireName = 'ApiPublic';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiAnonymous object,
+  Iterable<Object?> serialize(Serializers serializers, ApiPublic object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'location',
@@ -175,10 +174,9 @@ class _$ApiAnonymousSerializer implements StructuredSerializer<ApiAnonymous> {
   }
 
   @override
-  ApiAnonymous deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
+  ApiPublic deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ApiAnonymousBuilder();
+    final result = new ApiPublicBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -851,29 +849,28 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   }
 }
 
-class _$ApiAnonymous extends ApiAnonymous {
+class _$ApiPublic extends ApiPublic {
   @override
   final SourceLocation location;
 
-  factory _$ApiAnonymous([void Function(ApiAnonymousBuilder)? updates]) =>
-      (new ApiAnonymousBuilder()..update(updates))._build();
+  factory _$ApiPublic([void Function(ApiPublicBuilder)? updates]) =>
+      (new ApiPublicBuilder()..update(updates))._build();
 
-  _$ApiAnonymous._({required this.location}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiAnonymous', 'location');
+  _$ApiPublic._({required this.location}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(location, r'ApiPublic', 'location');
   }
 
   @override
-  ApiAnonymous rebuild(void Function(ApiAnonymousBuilder) updates) =>
+  ApiPublic rebuild(void Function(ApiPublicBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiAnonymousBuilder toBuilder() => new ApiAnonymousBuilder()..replace(this);
+  ApiPublicBuilder toBuilder() => new ApiPublicBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ApiAnonymous && location == other.location;
+    return other is ApiPublic && location == other.location;
   }
 
   @override
@@ -886,24 +883,23 @@ class _$ApiAnonymous extends ApiAnonymous {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ApiAnonymous')
+    return (newBuiltValueToStringHelper(r'ApiPublic')
           ..add('location', location))
         .toString();
   }
 }
 
-class ApiAnonymousBuilder
-    implements Builder<ApiAnonymous, ApiAnonymousBuilder> {
-  _$ApiAnonymous? _$v;
+class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
+  _$ApiPublic? _$v;
 
   SourceLocationBuilder? _location;
   SourceLocationBuilder get location =>
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
-  ApiAnonymousBuilder();
+  ApiPublicBuilder();
 
-  ApiAnonymousBuilder get _$this {
+  ApiPublicBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _location = $v.location.toBuilder();
@@ -913,23 +909,23 @@ class ApiAnonymousBuilder
   }
 
   @override
-  void replace(ApiAnonymous other) {
+  void replace(ApiPublic other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ApiAnonymous;
+    _$v = other as _$ApiPublic;
   }
 
   @override
-  void update(void Function(ApiAnonymousBuilder)? updates) {
+  void update(void Function(ApiPublicBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  ApiAnonymous build() => _build();
+  ApiPublic build() => _build();
 
-  _$ApiAnonymous _build() {
-    _$ApiAnonymous _$result;
+  _$ApiPublic _build() {
+    _$ApiPublic _$result;
     try {
-      _$result = _$v ?? new _$ApiAnonymous._(location: location.build());
+      _$result = _$v ?? new _$ApiPublic._(location: location.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -937,7 +933,7 @@ class ApiAnonymousBuilder
         location.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'ApiAnonymous', _$failedField, e.toString());
+            r'ApiPublic', _$failedField, e.toString());
       }
       rethrow;
     }

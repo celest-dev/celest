@@ -83,27 +83,27 @@ sealed class ApiMetadata implements Node {}
 
 sealed class ApiAuth implements ApiMetadata {}
 
-abstract class ApiAnonymous
-    implements Built<ApiAnonymous, ApiAnonymousBuilder>, ApiAuth {
-  factory ApiAnonymous({
+abstract class ApiPublic
+    implements Built<ApiPublic, ApiPublicBuilder>, ApiAuth {
+  factory ApiPublic({
     required SourceLocation location,
-  }) = _$ApiAnonymous._;
+  }) = _$ApiPublic._;
 
-  factory ApiAnonymous.build([void Function(ApiAnonymousBuilder) updates]) =
-      _$ApiAnonymous;
+  factory ApiPublic.build([void Function(ApiPublicBuilder) updates]) =
+      _$ApiPublic;
 
-  factory ApiAnonymous.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(ApiAnonymous.serializer, json)!;
+  factory ApiPublic.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(ApiPublic.serializer, json)!;
 
-  ApiAnonymous._();
+  ApiPublic._();
 
   SourceLocation get location;
 
   Map<String, dynamic> toJson() =>
-      serializers.serializeWith(ApiAnonymous.serializer, this)
+      serializers.serializeWith(ApiPublic.serializer, this)
           as Map<String, dynamic>;
 
-  static Serializer<ApiAnonymous> get serializer => _$apiAnonymousSerializer;
+  static Serializer<ApiPublic> get serializer => _$apiPublicSerializer;
 }
 
 abstract class ApiAuthenticated

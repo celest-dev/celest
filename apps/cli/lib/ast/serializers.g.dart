@@ -8,9 +8,9 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Api.serializer)
-      ..add(ApiAnonymous.serializer)
       ..add(ApiAuthenticated.serializer)
       ..add(ApiMiddleware.serializer)
+      ..add(ApiPublic.serializer)
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionParameter.serializer)
       ..add(EnvironmentVariable.serializer)

@@ -9,7 +9,7 @@
         "policy": {
           "statements": [
             {
-              "grantee": "Celest::Role::$anonymous",
+              "grantee": "Celest::Role::$public",
               "actions": [
                 "CloudFunctionAction::\"invoke\""
               ]
@@ -43,7 +43,7 @@
         "policy": {
           "statements": [
             {
-              "grantee": "Celest::Role::$anonymous",
+              "grantee": "Celest::Role::$public",
               "actions": [
                 "CloudFunctionAction::\"invoke\""
               ]
@@ -160,7 +160,7 @@
         "policy": {
           "statements": [
             {
-              "grantee": "Celest::Role::$anonymous",
+              "grantee": "Celest::Role::$public",
               "actions": [
                 "CloudFunctionAction::\"invoke\""
               ]

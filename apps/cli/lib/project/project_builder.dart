@@ -84,7 +84,7 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
           core.PolicyStatement(
             grantee: switch (apiAuth) {
               ast.ApiAuthenticated() => const Role.authenticated(),
-              ast.ApiAnonymous() => const Role.anonymous(),
+              ast.ApiPublic() => const Role.public(),
             },
             actions: [CloudFunctionAction.invoke],
           ).toProto(),
@@ -98,7 +98,7 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   void visitApiAuthenticated(ast.ApiAuthenticated annotation) {}
 
   @override
-  void visitApiAnonymous(ast.ApiAnonymous annotation) {}
+  void visitApiPublic(ast.ApiPublic annotation) {}
 
   @override
   void visitApiMiddleware(ast.ApiMiddleware annotation) {}
@@ -123,7 +123,7 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
           core.PolicyStatement(
             grantee: switch (functionAuth) {
               ast.ApiAuthenticated() => const Role.authenticated(),
-              ast.ApiAnonymous() => const Role.anonymous(),
+              ast.ApiPublic() => const Role.public(),
             },
             actions: [CloudFunctionAction.invoke],
           ).toProto(),

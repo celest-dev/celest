@@ -3,6 +3,6 @@ library;
 
 import 'package:celest/api.dart' as api;
 
-@api.anonymous()
+@api.public()
 String sayHello() => 'Hello, World!';
 String sayHelloAuthenticated() => 'Hello, World!';
