@@ -61,6 +61,7 @@ final class StartCommand extends CelestCommand {
         appRoot: currentDir.path,
         projectRoot: projectRoot,
       ).generate();
+      cliLogger.success('Project generated successfully.');
     }
 
     // Ensure all `Process.start` commands are performed from the Celest dir.
