@@ -12,9 +12,9 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 final Directory toolDir = Directory.fromUri(Platform.script.resolve('.'));
 
 /// The directory with the built CLI.
+final String buildPath = Platform.environment['BUILD_DIR'] ?? 'celest';
 final Directory buildDir = Directory.fromUri(
-  Platform.script
-      .resolve('../${Platform.environment['BUILD_DIR'] ?? 'celest'}'),
+  Platform.script.resolve('../$buildPath'),
 );
 
 /// The directory to use for temporary (non-bundled) files.
@@ -55,11 +55,14 @@ Future<void> main() async {
     [
       '--enable-experiment=native-assets',
       'build',
-      '--output=${buildDir.path}',
+      '--output=$buildPath',
       'bin/celest.dart',
     ],
-    workingDirectory: Platform.script.resolve('..').path,
+    workingDirectory: Platform.script.resolve('..').toFilePath(),
   );
+  if (!buildDir.existsSync()) {
+    throw StateError('Build directory does not exist');
+  }
 
   if (!Platform.isWindows) {
     final exeUri = Platform.script.resolve('../celest/celest.exe');
@@ -69,11 +72,6 @@ Future<void> main() async {
       throw StateError('Executable does not exist: $exe');
     }
     exe.renameSync(destExe);
-  }
-  if (!buildDir.existsSync()) {
-    throw StateError(
-      'Build directory does not exist: $buildDir. Did you run `dart build`?',
-    );
   }
 
   await bundler.bundle();
@@ -120,19 +118,31 @@ abstract class Bundler {
 }
 
 final class MacOSBundler implements Bundler {
+  static final String? keychainName = () {
+    final isCI = Platform.environment['CI'] == 'true';
+    if (isCI) {
+      final keychainName = Platform.environment['KEYCHAIN_NAME'];
+      if (keychainName.isNullOrEmpty) {
+        throw StateError('KEYCHAIN_NAME environment variable is not set');
+      }
+      return keychainName;
+    }
+    return null;
+  }();
+
   /// The Apple ID to use for notarization.
-  static final appleId = Platform.environment['APPLE_ID']!;
+  static final String appleId = Platform.environment['APPLE_ID']!;
 
   /// The app-specific password for the Apple ID to use for notarization.
-  static final appleIdPass = Platform.environment['APPLE_ID_PASS']!;
+  static final String appleIdPass = Platform.environment['APPLE_ID_PASS']!;
 
   /// The Apple Team ID to use for notarization.
-  static final appleTeamId = Platform.environment['APPLE_TEAM_ID']!;
+  static final String appleTeamId = Platform.environment['APPLE_TEAM_ID']!;
 
   /// Codesigning identities for macOS.
-  static final developerApplicationIdentity =
+  static final String developerApplicationIdentity =
       'Developer ID Application: Teo, Inc. ($appleTeamId)';
-  static final developerInstallerIdentity =
+  static final String developerInstallerIdentity =
       'Developer ID Installer: Teo, Inc. ($appleTeamId)';
 
   @override
@@ -166,6 +176,10 @@ final class MacOSBundler implements Bundler {
           '--options=runtime',
           '--sign',
           developerApplicationIdentity,
+          if (keychainName case final keychain?) ...[
+            '--keychain',
+            keychain,
+          ],
           '--identifier',
           'dev.celest.cli',
           '--entitlements',
@@ -253,6 +267,10 @@ final class MacOSBundler implements Bundler {
         p.join(toolDir.path, 'macos', 'resources'),
         '--sign',
         developerInstallerIdentity,
+        if (keychainName case final keychain?) ...[
+          '--keychain',
+          keychain,
+        ],
         '--timestamp',
         outputFilepath,
       ],
