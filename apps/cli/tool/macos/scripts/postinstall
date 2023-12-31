@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Create symlinks
+ln -sf /opt/celest/celest /usr/local/bin/celest

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <title>Celest</title>
+    <background file="logo.png" alignment="bottomleft" mime-type="image/png" scaling="none" />
+    <background-darkAqua file="logo.png" alignment="bottomleft" mime-type="image/png" scaling="none" />
+    <welcome file="welcome.html" mime-type="text/html" />
+    <conclusion file="conclusion.html" mime-type="text/html" />
+    <domains enable_anywhere="false" />
+    <options customize="never" require-scripts="false" hostArchitectures="{{ hostArchitectures }}"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="12.0.0"/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice="default">
+            <line choice="dev.celest.cli"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="dev.celest.cli" visible="false">
+        <pkg-ref id="dev.celest.cli"/>
+    </choice>
+    <pkg-ref id="dev.celest.cli" onConclusion="none">{{ filename }}</pkg-ref>
+</installer-gui-script>

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:http/http.dart' as http;
+import 'package:mustache_template/mustache.dart';
 import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 
@@ -11,8 +12,10 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 final Directory toolDir = Directory.fromUri(Platform.script.resolve('.'));
 
 /// The directory with the built CLI.
-final Directory buildDir =
-    Directory.fromUri(Platform.script.resolve('../celest'));
+final Directory buildDir = Directory.fromUri(
+  Platform.script
+      .resolve('../${Platform.environment['BUILD_DIR'] ?? 'celest'}'),
+);
 
 /// The directory to use for temporary (non-bundled) files.
 final Directory tempDir = Directory.systemTemp.createTempSync('celest_build_');
@@ -47,13 +50,25 @@ final String outputFilepath = p.canonicalize(
 Future<void> main() async {
   print('Bundling CLI version $version for $osArch...');
 
+  await _runProcess(
+    'dart',
+    [
+      '--enable-experiment=native-assets',
+      'build',
+      '--output=${buildDir.path}',
+      'bin/celest.dart',
+    ],
+    workingDirectory: Platform.script.resolve('..').path,
+  );
+
   if (!Platform.isWindows) {
     final exeUri = Platform.script.resolve('../celest/celest.exe');
     final exe = File.fromUri(exeUri);
-    if (!exe.existsSync()) {
+    final destExe = p.withoutExtension(p.absolute(exeUri.path));
+    if (!exe.existsSync() && !File(destExe).existsSync()) {
       throw StateError('Executable does not exist: $exe');
     }
-    exe.renameSync(p.withoutExtension(p.absolute(exeUri.path)));
+    exe.renameSync(destExe);
   }
   if (!buildDir.existsSync()) {
     throw StateError(
@@ -138,22 +153,8 @@ final class MacOSBundler implements Bundler {
   Future<void> _codesign() async {
     // Matches the entitlements needed by `dartaotruntime`:
     // https://github.com/dart-lang/sdk/blob/7e5ce1f688e036dbe4b417f7fd92bbced67b5ec5/runtime/tools/entitlements/dart_precompiled_runtime_product.plist
-    const entitlements = '''
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
-  <true/>
-  <key>com.apple.security.cs.disable-library-validation</key>
-  <true/>
-</dict>
-</plist>
-''';
-
-    print('Writing entitlements file...');
-    final entitlementsPlist = File(p.join(tempDir.path, 'entitlements.plist'));
-    await entitlementsPlist.writeAsString(entitlements);
+    final entitlementsPlistPath =
+        p.join(toolDir.path, 'macos', 'entitlements.xml');
 
     // Codesign all files in the build directory.
     for (final file in buildDir.listSync(recursive: true).whereType<File>()) {
@@ -168,7 +169,7 @@ final class MacOSBundler implements Bundler {
           '--identifier',
           'dev.celest.cli',
           '--entitlements',
-          entitlementsPlist.path,
+          entitlementsPlistPath,
           '--timestamp',
           '--verbose',
           file.path,
@@ -194,24 +195,7 @@ final class MacOSBundler implements Bundler {
   /// Uses `pkgbuild`, `productbuild` and `notarytool` to package and notarize
   /// the CLI as a macOS installer package.
   Future<void> _createPkg() async {
-    // Create temp scripts directory
-    final scriptsDir = Directory(p.join(tempDir.path, 'scripts'));
-    scriptsDir.createSync(recursive: true);
-
-    // Create postinstall script
-    final postinstall = File(p.join(scriptsDir.path, 'postinstall'));
-    print('Writing postinstall script...');
-    await postinstall.writeAsString(
-      '''
-#!/bin/bash
-set -e
-
-# Create symlinks
-ln -s /opt/celest/celest /usr/local/bin/celest
-''',
-      flush: true,
-    );
-    await _runProcess('chmod', ['+x', postinstall.path]);
+    final scriptsPath = p.join(toolDir.path, 'macos', 'scripts');
 
     // Create a temp, unsigned PKG installer using pkgbuild
     final tmpPkgPath = p.join(tempDir.path, p.basename(outputFilepath));
@@ -230,7 +214,7 @@ ln -s /opt/celest/celest /usr/local/bin/celest
         '--install-location',
         '/opt/celest',
         '--scripts',
-        scriptsDir.path,
+        scriptsPath,
         // Dart minimum OS version is 12.0
         // https://dart.dev/get-dart#macos
         '--min-os-version',
@@ -239,13 +223,34 @@ ln -s /opt/celest/celest /usr/local/bin/celest
       ],
     );
 
+    // Create distribution XML file
+    // See: https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html
+    // `TODO`: enable_currentUserHome="true"? https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html#//apple_ref/doc/uid/TP40005370-CH100-SW35
+    final distributionTmpl =
+        File(p.join(toolDir.path, 'macos', 'distribution.xml'))
+            .readAsStringSync();
+    final distributionFile = File(p.join(tempDir.path, 'distribution.xml'));
+    final distributionXml = Template(distributionTmpl).renderString({
+      'filename': p.basename(tmpPkgPath),
+      'hostArchitectures': osArch == Abi.macosArm64 ? 'arm64' : 'x86_64',
+    });
+    print('Writing distribution.xml contents:\n\n$distributionXml\n');
+    await distributionFile.writeAsString(
+      distributionXml,
+      flush: true,
+    );
+
     // Create a product archive using productbuild
     print('Creating signed product archive...');
     await _runProcess(
       'productbuild',
       [
-        '--package',
-        tmpPkgPath,
+        '--distribution',
+        distributionFile.path,
+        '--package-path',
+        tempDir.path,
+        '--resources',
+        p.join(toolDir.path, 'macos', 'resources'),
         '--sign',
         developerInstallerIdentity,
         '--timestamp',
@@ -568,12 +573,14 @@ final class LinuxBundler implements Bundler {
 Future<String> _runProcess(
   String executable,
   List<String> args, {
+  String? workingDirectory,
   Future<void> Function(String logs)? onError,
 }) async {
   print('Running process "$executable ${args.join(' ')}"...');
   final proc = await Process.start(
     executable,
     args,
+    workingDirectory: workingDirectory,
   );
 
   // For logging
