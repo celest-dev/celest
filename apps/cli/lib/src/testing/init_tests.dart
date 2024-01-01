@@ -12,5 +12,6 @@ void initTests({
     fileSystem: fileSystem,
     httpClient: httpClient,
     processManager: processManager,
+    storage: MemoryStorage(),
   );
 }
