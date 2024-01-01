@@ -87,8 +87,14 @@ final class CelestAnalyzer {
   }
 
   Future<({ast.Project? project, List<AnalysisException> errors})>
-      analyzeProject() async {
+      analyzeProject([List<String>? invalidatedFiles]) async {
     _errors.clear();
+    if (invalidatedFiles != null) {
+      for (final file in invalidatedFiles) {
+        _context.changeFile(file);
+      }
+      await _context.applyPendingFileChanges();
+    }
     final project = await _findProject();
     if (project == null) {
       return (project: null, errors: _errors);

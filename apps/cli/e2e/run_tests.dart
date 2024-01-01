@@ -11,6 +11,7 @@ import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_cli/src/utils/port.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -223,13 +224,13 @@ class TestRunner {
     String functionName,
     List<FunctionTest> tests,
   ) {
-    final port = nextPort();
     group(functionName, () {
       late Process functionProc;
       late Uri apiUri;
       final logs = <String>[];
 
       setUpAll(() async {
+        final port = await findOpenPort();
         apiUri = Uri.parse('http://localhost:$port');
         final entrypoint = projectPaths.functionEntrypoint(
           apiName,

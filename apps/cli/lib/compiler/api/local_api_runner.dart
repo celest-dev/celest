@@ -6,7 +6,7 @@ import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
+import 'package:celest_cli/src/utils/port.dart';
 import 'package:logging/logging.dart';
 import 'package:vm_service/vm_service.dart';
 import 'package:vm_service/vm_service_io.dart';
@@ -35,22 +35,6 @@ final class LocalApiRunner implements Closeable {
 
   /// The port that the local API is running on.
   final int port;
-
-  static Future<int> _findOpenPort() async {
-    var port = defaultCelestPort;
-    while (true) {
-      try {
-        final socket = await ServerSocket.bind(
-          InternetAddress.anyIPv4,
-          port,
-        );
-        await socket.close();
-        return port;
-      } on SocketException {
-        port++;
-      }
-    }
-  }
 
   final FrontendServerClient _client;
   final VmService _vmService;
@@ -83,12 +67,7 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
-    final port = await _findOpenPort().timeout(
-      const Duration(seconds: 1),
-      onTimeout: () {
-        throw TimeoutException('Could not find an open port to run Celest.');
-      },
-    );
+    final port = await findOpenPort();
     logger.finer('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
@@ -170,8 +149,8 @@ final class LocalApiRunner implements Closeable {
     return isolates.single.id!;
   }
 
-  Future<void> recompile(List<String> pathsToInvalidate) async {
-    logger.fine('Recompiling local API...');
+  Future<void> hotReload(List<String> pathsToInvalidate) async {
+    logger.fine('Hot reloading local API...');
     final result = await _client.compile([
       for (final path in pathsToInvalidate)
         Uri.parse('org-dartlang-root://$path'),
