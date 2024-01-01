@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Remove previous installation
+rm -r /opt/celest

@@ -151,6 +151,15 @@ final class MacOSBundler implements Bundler {
   static final String developerInstallerIdentity =
       'Developer ID Installer: Teo, Inc. ($appleTeamId)';
 
+  /// The directory containing the built CLI, bundled as a dummy .app so that
+  /// we can embedded the provisioning profile which is needed for Keychain
+  /// entitlements.
+  ///
+  /// See:
+  /// - https://developer.apple.com/documentation/Xcode/signing-a-daemon-with-a-restricted-entitlement
+  /// - https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles#Entitlements-on-macOS
+  final appDir = Directory(p.join(tempDir.path, 'celest.app'))..createSync();
+
   @override
   String get extension => 'pkg';
 
@@ -167,47 +176,94 @@ final class MacOSBundler implements Bundler {
   /// - https://scriptingosx.com/2021/07/notarize-a-command-line-tool-with-notarytool/
   /// - https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow
   Future<void> _codesign() async {
+    Directory(p.join(appDir.path, 'Contents', 'MacOS'))
+        .createSync(recursive: true);
+    File(p.join(buildDir.path, 'celest')).copySync(
+      p.join(appDir.path, 'Contents', 'MacOS', 'celest'),
+    );
+
     // Matches the entitlements needed by `dartaotruntime`:
     // https://github.com/dart-lang/sdk/blob/7e5ce1f688e036dbe4b417f7fd92bbced67b5ec5/runtime/tools/entitlements/dart_precompiled_runtime_product.plist
-    final entitlementsPlistPath =
-        p.join(toolDir.path, 'macos', 'entitlements.xml');
+    final entitlementsPlistPath = p.join(tempDir.path, 'entitlements.xml');
+    final entitlementsPlist = Template(
+      File(p.join(toolDir.path, 'macos', 'entitlements.xml'))
+          .readAsStringSync(),
+    ).renderString({
+      'teamId': appleTeamId,
+    });
+    print('Rendered entitlements.xml:\n\n$entitlementsPlist\n');
+    File(entitlementsPlistPath)
+      ..createSync()
+      ..writeAsStringSync(
+        entitlementsPlist,
+        flush: true,
+      );
+
+    final infoPlist = Template(
+      File(p.join(toolDir.path, 'macos', 'Info.plist')).readAsStringSync(),
+    ).renderString({
+      'version': version,
+      'teamId': appleTeamId,
+    });
+    print('Rendered Info.plist:\n\n$infoPlist\n');
+    File(p.join(appDir.path, 'Contents', 'Info.plist'))
+      ..createSync()
+      ..writeAsStringSync(infoPlist);
+
+    File(p.join(toolDir.path, 'macos', 'embedded.provisionprofile')).copySync(
+      p.join(appDir.path, 'Contents', 'embedded.provisionprofile'),
+    );
 
     // Codesign all files in the build directory.
-    for (final file in buildDir.listSync(recursive: true).whereType<File>()) {
-      print('Codesigning ${file.path}...');
-      await _runProcess(
-        'codesign',
-        [
-          '--force',
-          '--options=runtime',
-          '--sign',
-          developerApplicationIdentity,
-          if (keychainName case final keychain?) ...[
-            '--keychain',
-            keychain,
-          ],
-          '--identifier',
-          'dev.celest.cli',
-          '--entitlements',
-          entitlementsPlistPath,
-          '--timestamp',
-          '--verbose',
-          file.path,
+    print('Codesigning ${appDir.path}...');
+    await _runProcess(
+      'codesign',
+      [
+        '--generate-entitlement-der',
+        '--entitlements',
+        entitlementsPlistPath,
+        '--sign',
+        developerApplicationIdentity,
+        if (keychainName case final keychain?) ...[
+          '--keychain',
+          keychain,
         ],
-      );
+        '--force',
+        '--identifier',
+        'dev.celest.cli',
+        '--options=runtime',
+        '--timestamp',
+        '--file-list',
+        '-',
+        '--verbose',
+        appDir.path,
+      ],
+    );
 
-      print('Verifying code signature for ${file.path}...');
-      await _runProcess(
-        'codesign',
-        ['--verify', '--verbose', file.path],
-        onError: (_) async {
-          print('Could not verify code signature. Code-signing results:');
-          await _runProcess('codesign', ['--display', '--verbose=4']);
-          print('Entitlement results:');
-          await _runProcess('codesign', ['--display', '--entitlements=-']);
-        },
-      );
+    Future<void> dumpCodesignResults() async {
+      await _runProcess('codesign', [
+        '--display',
+        '--verbose=4',
+        appDir.path,
+      ]);
+      print('Entitlement results:');
+      await _runProcess('codesign', [
+        '--display',
+        '--entitlements=-',
+        appDir.path,
+      ]);
     }
+
+    print('Verifying code signature for ${appDir.path}...');
+    await _runProcess(
+      'codesign',
+      ['--verify', '--verbose', appDir.path],
+      onError: (_) async {
+        print('Could not verify code signature. Code-signing results:');
+        await dumpCodesignResults();
+      },
+    );
+    await dumpCodesignResults();
 
     print('Codesigning complete.');
   }
@@ -224,7 +280,7 @@ final class MacOSBundler implements Bundler {
       'pkgbuild',
       [
         '--root',
-        buildDir.path,
+        appDir.path,
         '--identifier',
         'dev.celest.cli',
         '--version',
@@ -232,7 +288,7 @@ final class MacOSBundler implements Bundler {
         // https://www.pathname.com/fhs/pub/fhs-2.3.html#OPTADDONAPPLICATIONSOFTWAREPACKAGES
         // TODO: /usr/local/lib + /usr/local/bin?
         '--install-location',
-        '/opt/celest',
+        '/opt/celest/celest.app',
         '--scripts',
         scriptsPath,
         // Dart minimum OS version is 12.0

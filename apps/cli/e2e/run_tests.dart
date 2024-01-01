@@ -99,7 +99,7 @@ class TestRunner {
 
       tearDownAll(() async {
         client.close();
-        await residentCompiler.stop();
+        residentCompiler.stop();
       });
 
       _testAnalyzer();

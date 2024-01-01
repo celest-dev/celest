@@ -39,10 +39,10 @@ final class ResidentCompiler {
     return ResidentCompiler._(infoFile);
   }
 
-  Future<void> stop() async {
-    logger.finer('Stopping resident compiler server...');
+  void stop() {
+    logger.fine('Stopping resident compiler server...');
     try {
-      final stopResult = await processManager.run([
+      final stopResult = processManager.runSync([
         Sdk.current.dart,
         'compilation-server',
         'shutdown',

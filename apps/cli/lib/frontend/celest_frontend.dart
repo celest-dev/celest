@@ -32,10 +32,22 @@ final class CelestFrontend implements Closeable {
   late final _watcher = StreamQueue(
     StreamGroup.merge([
       FileWatcher(projectPaths.projectDart).events,
-      DirectoryWatcher(projectPaths.apisDir).events,
+      if (FileSystemEntity.isDirectorySync(projectPaths.apisDir))
+        DirectoryWatcher(projectPaths.apisDir).events,
     ]).buffer(_readyForChanges.stream),
   );
 
+  late final _stopSub = StreamGroup.merge([
+    ProcessSignal.sigint.watch(),
+    // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
+    // handler raises an exception.
+    if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+  ]).listen((signal) {
+    logger.fine('Got exit signal: $signal');
+    if (!_stopSignal.isCompleted) {
+      _stopSignal.complete(signal);
+    }
+  });
   final _stopSignal = Completer<ProcessSignal>.sync();
   bool get stopped => _stopSignal.isCompleted;
 
@@ -45,17 +57,6 @@ final class CelestFrontend implements Closeable {
 
   Future<int> run() async {
     // TODO: Queue changed paths and only recompile changes
-    unawaited(
-      StreamGroup.merge([
-        ProcessSignal.sigint.watch(),
-        // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
-        // handler raises an exception.
-        if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
-      ]).first.then((signal) {
-        logger.finer('Got exit signal: $signal');
-        _stopSignal.complete(signal);
-      }),
-    );
     try {
       while (!stopped) {
         final progress = cliLogger.progress(
@@ -84,6 +85,7 @@ final class CelestFrontend implements Closeable {
 
           _didFirstCompile = true;
         }
+        logger.finer('Waiting for changes...');
         _readyForChanges.add(null);
         await Future.any([
           _watcher.next.then(
@@ -103,89 +105,97 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Analyzes the project and reports if there are any errors.
-  Future<ast.Project?> _analyzeProject() async {
-    logger.fine('Analyzing project...');
-    final (:project, :errors) = await analyzer.analyzeProject();
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    if (errors.isNotEmpty) {
-      _logErrors(errors);
-    } else {
-      assert(
-        project != null,
-        'Project should not be null if there are no errors',
-      );
-    }
-    return project;
-  }
+  Future<ast.Project?> _analyzeProject() =>
+      performance.trace('CelestFrontend', 'analyzeProject', () async {
+        logger.fine('Analyzing project...');
+        final (:project, :errors) = await analyzer.analyzeProject();
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        if (errors.isNotEmpty) {
+          _logErrors(errors);
+        } else {
+          assert(
+            project != null,
+            'Project should not be null if there are no errors',
+          );
+        }
+        return project;
+      });
 
   /// Generates code for [project] and writes to the output directory.
   ///
   /// Returns the list of paths generated.
-  Future<List<String>> _generateBackendCode(ast.Project project) async {
-    logger.fine('Generating backend code...');
-    final codeGenerator = CodeGenerator();
-    project.accept(codeGenerator);
-    final outputsDir = Directory(projectPaths.outputsDir);
-    if (outputsDir.existsSync() && !_didFirstCompile) {
-      await outputsDir.delete(recursive: true);
-    }
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    for (final MapEntry(key: path, value: contents)
-        in codeGenerator.fileOutputs.entries) {
-      assert(p.isAbsolute(path));
-      await fileSystem.transactFile(p.basename(path), path, (file) async {
-        await file.create(recursive: true);
-        await file.writeAsString(contents);
+  Future<List<String>> _generateBackendCode(ast.Project project) =>
+      performance.trace('CelestFrontend', 'generateBackendCode', () async {
+        logger.fine('Generating backend code...');
+        final codeGenerator = CodeGenerator();
+        project.accept(codeGenerator);
+        final outputsDir = Directory(projectPaths.outputsDir);
+        if (outputsDir.existsSync() && !_didFirstCompile) {
+          await outputsDir.delete(recursive: true);
+        }
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        for (final MapEntry(key: path, value: contents)
+            in codeGenerator.fileOutputs.entries) {
+          assert(p.isAbsolute(path));
+          await fileSystem.transactFile(p.basename(path), path, (file) async {
+            await file.create(recursive: true);
+            await file.writeAsString(contents);
+          });
+        }
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        return codeGenerator.fileOutputs.keys.toList();
       });
-    }
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    return codeGenerator.fileOutputs.keys.toList();
-  }
 
   /// Builds the project into Protobuf format, applying transformations for
   /// things such as authorization.
-  Future<proto.Project> _buildProject(ast.Project project) async {
-    logger.fine('Building project...');
-    final projectBuilder = ProjectBuilder(
-      project: project,
-      projectPaths: projectPaths,
-      residentCompiler: _residentCompiler,
-    );
-    final projectProto = await projectBuilder.build();
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    return projectProto;
-  }
+  Future<proto.Project> _buildProject(ast.Project project) =>
+      performance.trace('CelestFrontend', 'buildProject', () async {
+        logger.fine('Building project...');
+        final projectBuilder = ProjectBuilder(
+          project: project,
+          projectPaths: projectPaths,
+          residentCompiler: _residentCompiler,
+        );
+        final projectProto = await projectBuilder.build();
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        return projectProto;
+      });
 
-  Future<int> _startLocalApi(List<String> additionalSources) async {
-    if (_localApiRunner == null) {
-      _localApiRunner = await LocalApiRunner.start(
-        path: projectPaths.localApiEntrypoint,
-        verbose: verbose,
-        enabledExperiments: analyzer.enabledExperiments,
-        // additionalSources: generatedOutputs,
-      );
-    } else {
-      await _localApiRunner!.recompile(additionalSources);
-    }
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    return _localApiRunner!.port;
-  }
+  Future<int> _startLocalApi(List<String> additionalSources) =>
+      performance.trace('CelestFrontend', 'startLocalApi', () async {
+        if (_localApiRunner == null) {
+          _localApiRunner = await LocalApiRunner.start(
+            path: projectPaths.localApiEntrypoint,
+            verbose: verbose,
+            enabledExperiments: analyzer.enabledExperiments,
+            // additionalSources: generatedOutputs,
+          );
+        } else {
+          await _localApiRunner!.recompile(additionalSources);
+        }
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        return _localApiRunner!.port;
+      });
 
   @override
-  Future<void> close() async {
-    await _watcher.cancel(immediate: true);
-    await _readyForChanges.close();
-    await _localApiRunner?.close();
-    await _residentCompiler?.stop();
-  }
+  Future<void> close() =>
+      performance.trace('CelestFrontend', 'close', () async {
+        logger.finest('Stopping Celest frontend...');
+        await _stopSub.cancel();
+        await _watcher.cancel(immediate: true);
+        await _readyForChanges.close();
+        await _localApiRunner?.close();
+        _residentCompiler?.stop();
+        logger.finest('Stopped Celest frontend');
+      });
 }

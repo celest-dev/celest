@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Create symlinks
-ln -sf /opt/celest/celest /usr/local/bin/celest
+ln -sf /opt/celest/celest.app/Contents/MacOS/celest /usr/local/bin/celest
