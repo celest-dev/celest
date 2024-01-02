@@ -184,14 +184,16 @@ final class CelestFrontend implements Closeable {
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
-        for (final MapEntry(key: path, value: contents)
-            in codeGenerator.fileOutputs.entries) {
-          assert(p.isAbsolute(path));
-          await fileSystem.transactFile(p.basename(path), path, (file) async {
-            await file.create(recursive: true);
-            await file.writeAsString(contents);
-          });
-        }
+        await Future.wait([
+          for (final MapEntry(key: path, value: contents)
+              in codeGenerator.fileOutputs.entries)
+            Future<void>(() async {
+              assert(p.isAbsolute(path));
+              final file = File(path);
+              await file.create(recursive: true);
+              await file.writeAsString(contents);
+            }),
+        ]);
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
