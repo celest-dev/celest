@@ -6,4 +6,46 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/celest.dart' as _i1;
 
-const List<_i1.CloudWidget> all = [];
+import 'apis/injected.dart' as _i2;
+
+abstract final class apis {
+  static const injected = _i1.CloudApi(name: r'injected');
+}
+
+abstract final class functions {
+  static const injectedSayHello =
+      _i1.CloudFunction<({String name, int age}), String>(
+    api: r'injected',
+    functionName: r'sayHello',
+  );
+
+  static const injectedSayHelloPerson = _i1.CloudFunction<
+      ({String name, int age, double height, num weight, bool isCool}),
+      _i2.Person>(
+    api: r'injected',
+    functionName: r'sayHelloPerson',
+  );
+}
+
+abstract final class env {
+  static const myName = _i1.EnvironmentVariable(name: r'MY_NAME');
+
+  static const myAge = _i1.EnvironmentVariable(name: r'MY_AGE');
+
+  static const myHeight = _i1.EnvironmentVariable(name: r'MY_HEIGHT');
+
+  static const myWeight = _i1.EnvironmentVariable(name: r'MY_WEIGHT');
+
+  static const imCool = _i1.EnvironmentVariable(name: r'IM_COOL');
+}
+
+const List<_i1.CloudWidget> all = [
+  apis.injected,
+  env.imCool,
+  env.myAge,
+  env.myHeight,
+  env.myName,
+  env.myWeight,
+  functions.injectedSayHello,
+  functions.injectedSayHelloPerson,
+];

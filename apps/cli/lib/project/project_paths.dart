@@ -1,4 +1,5 @@
 import 'package:celest_cli/config/celest_config.dart';
+import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 
@@ -25,6 +26,9 @@ final class ProjectPaths {
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
   late final String apisDir = p.join(projectRoot, 'apis');
   late final String configDir = p.join(projectRoot, 'config');
+  late final String envFile = p.join(projectRoot, 'config', '.env');
+
+  late final EnvManager envManager = EnvManager(envFile);
 
   String apiOutput(String apiName) => p.join(outputsDir, 'apis', apiName);
   String functionEntrypoint(String apiName, String functionName) => p.join(

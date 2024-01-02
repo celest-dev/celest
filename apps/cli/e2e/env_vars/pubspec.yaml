@@ -6,3 +6,7 @@ environment:
 dependencies:
   celest:
     path: ../../../../packages/celest
+  celest_core:
+    path: ../../../../packages/celest_core
+  celest_runtime_cloud:
+    path: ../../../../packages/celest_runtime_cloud

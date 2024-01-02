@@ -14,6 +14,7 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -103,8 +104,10 @@ final class CelestAnalyzer {
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: _reportError,
     );
+    _project.envVars.replace(
+      projectPaths.envManager.env.keys.map(ast.EnvironmentVariable.new),
+    );
     await _collectApis();
-    await _collectEnv();
     return (project: _project.build(), errors: _errors);
   }
 
@@ -283,6 +286,75 @@ final class CelestAnalyzer {
         .toList();
   }
 
+  ast.NodeReference? _parameterReference(ParameterElement parameter) {
+    final annotations = parameter.metadata;
+    if (annotations.isEmpty) {
+      return null;
+    }
+    if (annotations.length > 1) {
+      _reportError(
+        'Only one annotation may be specified on a parameter',
+        annotations[1].sourceLocation(parameter.source!),
+      );
+      return null;
+    }
+    final annotation = annotations.single;
+    final location = annotation.sourceLocation(parameter.source!);
+    final value = annotation.computeConstantValue();
+    final annotationType = value?.type;
+    if (annotationType == null) {
+      _reportError('Could not resolve annotation', location);
+      return null;
+    }
+    if (annotationType.isEnvironmentVariable) {
+      final typeProvider = parameter.library!.typeProvider;
+      final validEnvTypes = TypeChecker.any([
+        TypeChecker.fromStatic(typeProvider.stringType),
+        TypeChecker.fromStatic(typeProvider.numType),
+        TypeChecker.fromStatic(typeProvider.intType),
+        TypeChecker.fromStatic(typeProvider.doubleType),
+        TypeChecker.fromStatic(typeProvider.boolType),
+      ]);
+      if (!validEnvTypes.isExactlyType(parameter.type)) {
+        _reportError(
+          'The type of an environment variable parameter must be one of: '
+          '`String`, `int`, `double`, `num`, or `bool`',
+          location,
+        );
+        return null;
+      }
+      final name = value?.getField('name')?.toStringValue();
+      if (name == null) {
+        _reportError(
+          'The `name` field is required on `EnvironmentVariable` annotations',
+          location,
+        );
+        return null;
+      }
+      const reservedEnvVars = ['PORT'];
+      if (reservedEnvVars.contains(name)) {
+        _reportError(
+          'The environment variable name `$name` is reserved by Celest',
+          location,
+        );
+        return null;
+      }
+      if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
+        _reportError(
+          'The environment variable `$name` does not exist',
+          location,
+        );
+        return null;
+      }
+      return ast.NodeReference(
+        type: ast.NodeType.environmentVariable,
+        name: name,
+      );
+    }
+    _reportError('Invalid parameter annotation', location);
+    return null;
+  }
+
   Future<void> _collectApis() async {
     final apiDir = Directory(projectPaths.apisDir);
     if (!apiDir.existsSync()) {
@@ -346,6 +418,7 @@ final class CelestAnalyzer {
               required: param.isRequired,
               named: param.isNamed,
               location: param.sourceLocation,
+              references: _parameterReference(param),
             );
             if (parameter.type.isFunctionContext) {
               return parameter;
@@ -401,123 +474,6 @@ final class CelestAnalyzer {
       metadata: libraryMetdata,
       functions: functions,
     );
-  }
-
-  Future<void> _collectEnv() async {
-    final envDir = Directory(projectPaths.configDir);
-    if (!envDir.existsSync()) {
-      _logger.finer('No config directory found. Skipping env collection.');
-      return;
-    }
-
-    final envFiles = envDir
-        .listSync()
-        .whereType<File>()
-        .map((file) => file.path)
-        .where(
-          (path) =>
-              p.basename(path).startsWith('env') && path.endsWith('.dart'),
-        )
-        .toList();
-    _logger.finest('Found ${envFiles.length} env files: $envFiles');
-    final envDeclarations = _widgetCollector.collect(
-      envFiles,
-      scope: 'Environment variable',
-      placeholder: 'env',
-    );
-    assert(
-      envDeclarations.length == 1,
-      'There should only ever be one env collected, even with multiple '
-      'environment overridees.',
-    );
-    for (final path in envDeclarations.values) {
-      _logger.finer('Collecting base env from $path');
-      final envVars = await _collectEnvironmentVariables(path);
-      _logger.finer('Collected base env vars: $envVars');
-      _project.envVars.addAll(envVars);
-    }
-  }
-
-  Future<List<ast.EnvironmentVariable>> _collectEnvironmentVariables(
-    String path,
-  ) async {
-    final envLibraryResult =
-        await _context.currentSession.getResolvedLibrary(path);
-    if (envLibraryResult is! ResolvedLibraryResult) {
-      _reportError(
-        'Could not resolve environment variable file',
-        SourceLocation(uri: path, line: 0, column: 0),
-      );
-      return [];
-    }
-    final library = envLibraryResult.element;
-    final topLevelVariables = library.definingCompilationUnit.topLevelVariables
-        .where((variable) => !variable.isPrivate);
-    final topLevelConstants =
-        <({TopLevelVariableElement element, DartObject value})>[];
-    for (final topLevelVariable in topLevelVariables) {
-      if (!topLevelVariable.isConst) {
-        _reportError(
-          'Environment variables must be declared as `const`',
-          topLevelVariable.sourceLocation,
-        );
-        continue;
-      }
-      switch (topLevelVariable.computeConstantValue()) {
-        case final DartObject constantValue:
-          topLevelConstants.add(
-            (element: topLevelVariable, value: constantValue),
-          );
-        default:
-          _reportError(
-            'Top-level constant could not be evaluated',
-            topLevelVariable.sourceLocation,
-          );
-      }
-    }
-    final envVars = <ast.EnvironmentVariable>[];
-    final seenEnvNames = <String>{};
-    for (final topLevelConstant in topLevelConstants) {
-      if (!topLevelConstant.element.type.isEnvironmentVariable) {
-        _reportError(
-          'Only environment variables can be declared in this file.',
-          topLevelConstant.element.sourceLocation,
-        );
-        continue;
-      }
-      final location = topLevelConstant.element.sourceLocation;
-      final dartName = topLevelConstant.element.name;
-      final envName = topLevelConstant.value.getField('name')?.toStringValue();
-      if (envName == null) {
-        _reportError(
-          'Environment variable value could not be evaluated',
-          location,
-        );
-        continue;
-      }
-      if (envName.isEmpty) {
-        _reportError(
-          'The environment variable name cannot be empty.',
-          location,
-        );
-        continue;
-      }
-      if (!seenEnvNames.add(envName)) {
-        _reportError(
-          'Duplicate environment variable name: "$envName"',
-          location,
-        );
-        continue;
-      }
-      envVars.add(
-        ast.EnvironmentVariable(
-          dartName: dartName,
-          envName: envName,
-          location: location,
-        ),
-      );
-    }
-    return envVars;
   }
 }
 

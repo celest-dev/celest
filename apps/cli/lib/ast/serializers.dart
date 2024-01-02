@@ -15,6 +15,8 @@ part 'serializers.g.dart';
   CloudFunction,
   CloudFunctionParameter,
   EnvironmentVariable,
+  NodeReference,
+  NodeType,
   SourceLocation,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

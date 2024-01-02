@@ -106,17 +106,22 @@ final class CelestFrontend implements Closeable {
           final generatedOutputs = await _generateBackendCode(project);
           final _ = await _buildProject(project);
           if (project.apis.isNotEmpty) {
-            final port = await _startLocalApi(restartMode: restartMode, [
-              ...generatedOutputs,
-              if (changedPaths != null)
-                ...changedPaths!
-              else
-                ...project.apis.values.map(
-                  (api) =>
-                      // TODO: Make a property of the API
-                      p.join(projectPaths.apisDir, '${api.name}.dart'),
-                ),
-            ]);
+            final envVars = project.envVars.map((envVar) => envVar.envName);
+            final port = await _startLocalApi(
+              [
+                ...generatedOutputs,
+                if (changedPaths != null)
+                  ...changedPaths!
+                else
+                  ...project.apis.values.map(
+                    (api) =>
+                        // TODO: Make a property of the API
+                        p.join(projectPaths.apisDir, '${api.name}.dart'),
+                  ),
+              ],
+              envVars: envVars,
+              restartMode: restartMode,
+            );
             currentProgress.complete(
               'Celest is running at http://localhost:$port',
             );
@@ -150,7 +155,7 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Analyzes the project and reports if there are any errors.
-  Future<ast.Project?> _analyzeProject(List<String>? invalidatedFiles) =>
+  Future<ast.Project?> _analyzeProject([List<String>? invalidatedFiles]) =>
       performance.trace('CelestFrontend', 'analyzeProject', () async {
         logger.fine('Analyzing project...');
         final (:project, :errors) =
@@ -219,12 +224,14 @@ final class CelestFrontend implements Closeable {
 
   Future<int> _startLocalApi(
     List<String> invalidatedPaths, {
+    required Iterable<String> envVars,
     RestartMode restartMode = RestartMode.hotReload,
   }) async {
     if (_localApiRunner == null) {
       await performance.trace('LocalApiRunner', 'start', () async {
         _localApiRunner = await LocalApiRunner.start(
           path: projectPaths.localApiEntrypoint,
+          envVars: envVars,
           verbose: verbose,
           enabledExperiments: analyzer.enabledExperiments,
         );
@@ -241,6 +248,7 @@ final class CelestFrontend implements Closeable {
             await _localApiRunner!.close();
             _localApiRunner = await LocalApiRunner.start(
               path: projectPaths.localApiEntrypoint,
+              envVars: envVars,
               verbose: verbose,
               enabledExperiments: analyzer.enabledExperiments,
             );

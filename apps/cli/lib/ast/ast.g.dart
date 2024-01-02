@@ -6,6 +6,50 @@ part of 'ast.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const NodeType _$project = const NodeType._('project');
+const NodeType _$api = const NodeType._('api');
+const NodeType _$apiPublic = const NodeType._('apiPublic');
+const NodeType _$apiAuthenticated = const NodeType._('apiAuthenticated');
+const NodeType _$apiMiddleware = const NodeType._('apiMiddleware');
+const NodeType _$cloudFunction = const NodeType._('cloudFunction');
+const NodeType _$cloudFunctionParameter =
+    const NodeType._('cloudFunctionParameter');
+const NodeType _$environmentVariable = const NodeType._('environmentVariable');
+
+NodeType _$valueOf(String name) {
+  switch (name) {
+    case 'project':
+      return _$project;
+    case 'api':
+      return _$api;
+    case 'apiPublic':
+      return _$apiPublic;
+    case 'apiAuthenticated':
+      return _$apiAuthenticated;
+    case 'apiMiddleware':
+      return _$apiMiddleware;
+    case 'cloudFunction':
+      return _$cloudFunction;
+    case 'cloudFunctionParameter':
+      return _$cloudFunctionParameter;
+    case 'environmentVariable':
+      return _$environmentVariable;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<NodeType> _$values = new BuiltSet<NodeType>(const <NodeType>[
+  _$project,
+  _$api,
+  _$apiPublic,
+  _$apiAuthenticated,
+  _$apiMiddleware,
+  _$cloudFunction,
+  _$cloudFunctionParameter,
+  _$environmentVariable,
+]);
+
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
 Serializer<ApiPublic> _$apiPublicSerializer = new _$ApiPublicSerializer();
@@ -19,6 +63,9 @@ Serializer<CloudFunction> _$cloudFunctionSerializer =
     new _$CloudFunctionSerializer();
 Serializer<EnvironmentVariable> _$environmentVariableSerializer =
     new _$EnvironmentVariableSerializer();
+Serializer<NodeType> _$nodeTypeSerializer = new _$NodeTypeSerializer();
+Serializer<NodeReference> _$nodeReferenceSerializer =
+    new _$NodeReferenceSerializer();
 Serializer<SourceLocation> _$sourceLocationSerializer =
     new _$SourceLocationSerializer();
 
@@ -317,7 +364,14 @@ class _$CloudFunctionParameterSerializer
       serializers.serialize(object.location,
           specifiedType: const FullType(SourceLocation)),
     ];
-
+    Object? value;
+    value = object.references;
+    if (value != null) {
+      result
+        ..add('references')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(NodeReference)));
+    }
     return result;
   }
 
@@ -353,6 +407,10 @@ class _$CloudFunctionParameterSerializer
           result.location.replace(serializers.deserialize(value,
                   specifiedType: const FullType(SourceLocation))!
               as SourceLocation);
+          break;
+        case 'references':
+          result.references.replace(serializers.deserialize(value,
+              specifiedType: const FullType(NodeReference))! as NodeReference);
           break;
       }
     }
@@ -465,15 +523,9 @@ class _$EnvironmentVariableSerializer
       Serializers serializers, EnvironmentVariable object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'dartName',
-      serializers.serialize(object.dartName,
-          specifiedType: const FullType(String)),
       'envName',
       serializers.serialize(object.envName,
           specifiedType: const FullType(String)),
-      'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
     ];
 
     return result;
@@ -491,18 +543,73 @@ class _$EnvironmentVariableSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'dartName':
-          result.dartName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
         case 'envName':
           result.envName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$NodeTypeSerializer implements PrimitiveSerializer<NodeType> {
+  @override
+  final Iterable<Type> types = const <Type>[NodeType];
+  @override
+  final String wireName = 'NodeType';
+
+  @override
+  Object serialize(Serializers serializers, NodeType object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  NodeType deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      NodeType.valueOf(serialized as String);
+}
+
+class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
+  @override
+  final Iterable<Type> types = const [NodeReference, _$NodeReference];
+  @override
+  final String wireName = 'NodeReference';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, NodeReference object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(NodeType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  NodeReference deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new NodeReferenceBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(NodeType))! as NodeType;
           break;
       }
     }
@@ -1161,6 +1268,8 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
   final bool named;
   @override
   final SourceLocation location;
+  @override
+  final NodeReference? references;
 
   factory _$CloudFunctionParameter(
           [void Function(CloudFunctionParameterBuilder)? updates]) =>
@@ -1171,7 +1280,8 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
       required this.type,
       required this.required,
       required this.named,
-      required this.location})
+      required this.location,
+      this.references})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         name, r'CloudFunctionParameter', 'name');
@@ -1202,7 +1312,8 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
         type == other.type &&
         required == other.required &&
         named == other.named &&
-        location == other.location;
+        location == other.location &&
+        references == other.references;
   }
 
   @override
@@ -1213,6 +1324,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, named.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jc(_$hash, references.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1224,7 +1336,8 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
           ..add('type', type)
           ..add('required', required)
           ..add('named', named)
-          ..add('location', location))
+          ..add('location', location)
+          ..add('references', references))
         .toString();
   }
 }
@@ -1254,6 +1367,12 @@ class CloudFunctionParameterBuilder
       _$this._location ??= new SourceLocationBuilder();
   set location(SourceLocationBuilder? location) => _$this._location = location;
 
+  NodeReferenceBuilder? _references;
+  NodeReferenceBuilder get references =>
+      _$this._references ??= new NodeReferenceBuilder();
+  set references(NodeReferenceBuilder? references) =>
+      _$this._references = references;
+
   CloudFunctionParameterBuilder();
 
   CloudFunctionParameterBuilder get _$this {
@@ -1264,6 +1383,7 @@ class CloudFunctionParameterBuilder
       _required = $v.required;
       _named = $v.named;
       _location = $v.location.toBuilder();
+      _references = $v.references?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1296,12 +1416,15 @@ class CloudFunctionParameterBuilder
                   required, r'CloudFunctionParameter', 'required'),
               named: BuiltValueNullFieldError.checkNotNull(
                   named, r'CloudFunctionParameter', 'named'),
-              location: location.build());
+              location: location.build(),
+              references: _references?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'location';
         location.build();
+        _$failedField = 'references';
+        _references?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CloudFunctionParameter', _$failedField, e.toString());
@@ -1511,25 +1634,15 @@ class CloudFunctionBuilder
 
 class _$EnvironmentVariable extends EnvironmentVariable {
   @override
-  final String dartName;
-  @override
   final String envName;
-  @override
-  final SourceLocation location;
 
   factory _$EnvironmentVariable(
           [void Function(EnvironmentVariableBuilder)? updates]) =>
       (new EnvironmentVariableBuilder()..update(updates))._build();
 
-  _$EnvironmentVariable._(
-      {required this.dartName, required this.envName, required this.location})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        dartName, r'EnvironmentVariable', 'dartName');
+  _$EnvironmentVariable._({required this.envName}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         envName, r'EnvironmentVariable', 'envName');
-    BuiltValueNullFieldError.checkNotNull(
-        location, r'EnvironmentVariable', 'location');
   }
 
   @override
@@ -1544,18 +1657,13 @@ class _$EnvironmentVariable extends EnvironmentVariable {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is EnvironmentVariable &&
-        dartName == other.dartName &&
-        envName == other.envName &&
-        location == other.location;
+    return other is EnvironmentVariable && envName == other.envName;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, dartName.hashCode);
     _$hash = $jc(_$hash, envName.hashCode);
-    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1563,9 +1671,7 @@ class _$EnvironmentVariable extends EnvironmentVariable {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'EnvironmentVariable')
-          ..add('dartName', dartName)
-          ..add('envName', envName)
-          ..add('location', location))
+          ..add('envName', envName))
         .toString();
   }
 }
@@ -1574,27 +1680,16 @@ class EnvironmentVariableBuilder
     implements Builder<EnvironmentVariable, EnvironmentVariableBuilder> {
   _$EnvironmentVariable? _$v;
 
-  String? _dartName;
-  String? get dartName => _$this._dartName;
-  set dartName(String? dartName) => _$this._dartName = dartName;
-
   String? _envName;
   String? get envName => _$this._envName;
   set envName(String? envName) => _$this._envName = envName;
-
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
 
   EnvironmentVariableBuilder();
 
   EnvironmentVariableBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _dartName = $v.dartName;
       _envName = $v.envName;
-      _location = $v.location.toBuilder();
       _$v = null;
     }
     return this;
@@ -1615,26 +1710,105 @@ class EnvironmentVariableBuilder
   EnvironmentVariable build() => _build();
 
   _$EnvironmentVariable _build() {
-    _$EnvironmentVariable _$result;
-    try {
-      _$result = _$v ??
-          new _$EnvironmentVariable._(
-              dartName: BuiltValueNullFieldError.checkNotNull(
-                  dartName, r'EnvironmentVariable', 'dartName'),
-              envName: BuiltValueNullFieldError.checkNotNull(
-                  envName, r'EnvironmentVariable', 'envName'),
-              location: location.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'location';
-        location.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'EnvironmentVariable', _$failedField, e.toString());
-      }
-      rethrow;
+    final _$result = _$v ??
+        new _$EnvironmentVariable._(
+            envName: BuiltValueNullFieldError.checkNotNull(
+                envName, r'EnvironmentVariable', 'envName'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$NodeReference extends NodeReference {
+  @override
+  final String name;
+  @override
+  final NodeType type;
+
+  factory _$NodeReference([void Function(NodeReferenceBuilder)? updates]) =>
+      (new NodeReferenceBuilder()..update(updates))._build();
+
+  _$NodeReference._({required this.name, required this.type}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'NodeReference', 'name');
+    BuiltValueNullFieldError.checkNotNull(type, r'NodeReference', 'type');
+  }
+
+  @override
+  NodeReference rebuild(void Function(NodeReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  NodeReferenceBuilder toBuilder() => new NodeReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is NodeReference && name == other.name && type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'NodeReference')
+          ..add('name', name)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class NodeReferenceBuilder
+    implements Builder<NodeReference, NodeReferenceBuilder> {
+  _$NodeReference? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  NodeType? _type;
+  NodeType? get type => _$this._type;
+  set type(NodeType? type) => _$this._type = type;
+
+  NodeReferenceBuilder();
+
+  NodeReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _type = $v.type;
+      _$v = null;
     }
+    return this;
+  }
+
+  @override
+  void replace(NodeReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$NodeReference;
+  }
+
+  @override
+  void update(void Function(NodeReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  NodeReference build() => _build();
+
+  _$NodeReference _build() {
+    final _$result = _$v ??
+        new _$NodeReference._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'NodeReference', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'NodeReference', 'type'));
     replace(_$result);
     return _$result;
   }

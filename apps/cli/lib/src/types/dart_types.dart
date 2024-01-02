@@ -219,6 +219,9 @@ class _Core {
   /// Creates a [Null] reference.
   DartTypeReference get null$ => const DartTypeReference('Null', _url);
 
+  /// Creates a [num] reference.
+  DartTypeReference get num => const DartTypeReference('num', _url);
+
   /// Creates an [Object] reference.
   DartTypeReference get object => const DartTypeReference('Object', _url);
 
@@ -552,6 +555,10 @@ class _Celest {
   DartTypeReference get cloudWidgetSet =>
       const DartTypeReference('CloudWidgetSet', _url);
 
+  /// Creates a [celest.EnvironmentVariable] reference.
+  DartTypeReference get environmentVariable =>
+      const DartTypeReference('EnvironmentVariable', _url);
+
   /// Creates a [celest.FunctionContext] reference.
   DartTypeReference get functionContext =>
       const DartTypeReference('FunctionContext', _url);
@@ -644,6 +651,9 @@ class _Io {
   const _Io();
 
   static const _url = 'dart:io';
+
+  /// Creates a [io.Platform] reference.
+  DartTypeReference get platform => const DartTypeReference('Platform', _url);
 
   /// Creates a [io.stdout] reference.
   DartTypeReference get stdout => const DartTypeReference('stdout', _url);

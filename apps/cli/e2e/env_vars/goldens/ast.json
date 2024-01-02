@@ -10,16 +10,217 @@
     "line": 3,
     "column": 6
   },
-  "apis": {},
+  "apis": {
+    "injected": {
+      "name": "injected",
+      "metadata": [],
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "apiName": "injected",
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 4,
+                "column": 40
+              },
+              "references": {
+                "name": "MY_NAME",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "age",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "int",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 5,
+                "column": 36
+              },
+              "references": {
+                "name": "MY_AGE",
+                "type": "environmentVariable"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "location": {
+            "uri": "project:apis/injected.dart",
+            "line": 3,
+            "column": 7
+          }
+        },
+        "sayHelloPerson": {
+          "name": "sayHelloPerson",
+          "apiName": "injected",
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 27,
+                "column": 40
+              },
+              "references": {
+                "name": "MY_NAME",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "age",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "int",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 28,
+                "column": 36
+              },
+              "references": {
+                "name": "MY_AGE",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "height",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "double",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 29,
+                "column": 42
+              },
+              "references": {
+                "name": "MY_HEIGHT",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "weight",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "num",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 30,
+                "column": 39
+              },
+              "references": {
+                "name": "MY_WEIGHT",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "isCool",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "bool",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:apis/injected.dart",
+                "line": 31,
+                "column": 38
+              },
+              "references": {
+                "name": "IM_COOL",
+                "type": "environmentVariable"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Person",
+            "url": "project:apis/injected.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Person",
+            "url": "project:apis/injected.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "location": {
+            "uri": "project:apis/injected.dart",
+            "line": 26,
+            "column": 7
+          }
+        }
+      }
+    }
+  },
   "envVars": [
     {
-      "dartName": "myEnv",
-      "envName": "MY_ENV",
-      "location": {
-        "uri": "project:config/env.dart",
-        "line": 3,
-        "column": 26
-      }
+      "envName": "MY_NAME"
+    },
+    {
+      "envName": "MY_AGE"
+    },
+    {
+      "envName": "MY_HEIGHT"
+    },
+    {
+      "envName": "MY_WEIGHT"
+    },
+    {
+      "envName": "IM_COOL"
     }
   ]
 }

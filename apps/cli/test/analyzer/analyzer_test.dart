@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/testing/init_tests.dart';
@@ -18,6 +19,7 @@ const project = Project(name: '$name');
 Future<ProjectPaths> newProject({
   required String name,
   String? projectDart,
+  String? resourcesDart,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
 }) async {
@@ -49,6 +51,7 @@ dependencies:
   celest: any
 '''),
     d.file('project.dart', projectDart),
+    if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     if (apis.isNotEmpty)
       d.dir('apis', [
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
@@ -69,16 +72,20 @@ void testNoErrors({
   required String name,
   String? skip,
   String? projectDart,
+  String? resourcesDart,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
+  void Function(Project)? expectProject,
 }) {
   testErrors(
     name: name,
     skip: skip,
     errors: [],
     projectDart: projectDart,
+    resourcesDart: resourcesDart,
     apis: apis,
     config: config,
+    expectProject: expectProject,
   );
 }
 
@@ -86,23 +93,29 @@ void testErrors({
   required String name,
   String? skip,
   String? projectDart,
+  String? resourcesDart,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   required List<String> errors,
+  void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
     projectPaths = await newProject(
       name: name,
       projectDart: projectDart,
+      resourcesDart: resourcesDart,
       apis: apis,
       config: config,
     );
     final analyzer = CelestAnalyzer();
-    final (project: _, errors: actual) = await analyzer.analyzeProject();
+    final (:project, errors: actual) = await analyzer.analyzeProject();
     expect(
       actual.map((e) => e.message),
       unorderedEquals(errors.map(contains)),
     );
+    if (actual.isEmpty) {
+      expectProject?.call(project!);
+    }
   });
 }
 
@@ -577,72 +590,127 @@ String sayHello() => 'Hello, World!';
       testNoErrors(
         name: 'good_envs',
         config: {
-          'env.dart': '''
+          '.env': '''
+MY_NAME=Celest
+MY_AGE=28
+''',
+        },
+        resourcesDart: '''
 import 'package:celest/celest.dart';
 
-const EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
-const EnvironmentVariable anotherEnv = EnvironmentVariable(name: 'ANOTHER_ENV');
+abstract final class env {
+  static const myName = EnvironmentVariable(name: r'MY_NAME');
+  static const myAge = EnvironmentVariable(name: r'MY_AGE');
+}
 ''',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+import '../resources.dart' as resources;
+
+void sayHelloPositional(
+  @resources.env.myName String name,
+  @resources.env.myAge int age,
+) => 'Hello, $name. I am $age years old.';
+
+void sayHelloNamed({
+  @resources.env.myName required String name,
+  @resources.env.myAge required int age,  
+}) => 'Hello, $name. I am $age years old.';
+''',
+        },
+        expectProject: (project) {
+          expect(
+            project.envVars.map((env) => env.envName),
+            unorderedEquals(['MY_NAME', 'MY_AGE']),
+          );
+          expect(
+            project
+                .apis['greeting']!.functions['sayHelloPositional']!.parameters
+                .map((param) => param.references),
+            unorderedEquals([
+              NodeReference(
+                name: 'MY_NAME',
+                type: NodeType.environmentVariable,
+              ),
+              NodeReference(
+                name: 'MY_AGE',
+                type: NodeType.environmentVariable,
+              ),
+            ]),
+          );
+          expect(
+            project.apis['greeting']!.functions['sayHelloNamed']!.parameters
+                .map((param) => param.references),
+            unorderedEquals([
+              NodeReference(
+                name: 'MY_NAME',
+                type: NodeType.environmentVariable,
+              ),
+              NodeReference(
+                name: 'MY_AGE',
+                type: NodeType.environmentVariable,
+              ),
+            ]),
+          );
         },
       );
 
       testErrors(
-        name: 'bad_envs',
+        name: 'bad_parameter_type',
         config: {
-          'env.dart': '''
+          '.env': '''
+MY_NAME=Celest
+''',
+        },
+        resourcesDart: '''
 import 'package:celest/celest.dart';
 
-const EnvironmentVariable myEnv = EnvironmentVariable(name: '');
+abstract final class env {
+  static const myName = EnvironmentVariable(name: r'MY_NAME');
+}
+''',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+import '../resources.dart' as resources;
+
+void sayHello(@resources.env.myName List<String> name) => 'Hello, $name';
 ''',
         },
         errors: [
-          'The environment variable name cannot be empty.',
+          'The type of an environment variable parameter must be one of: '
+              '`String`, `int`, `double`, `num`, or `bool`',
         ],
       );
 
       testErrors(
-        name: 'duplicate_envs',
+        name: 'reserved_name',
         config: {
-          'env.dart': '''
+          '.env': '''
+PORT=8080
+''',
+        },
+        resourcesDart: '''
 import 'package:celest/celest.dart';
 
-const EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
-const EnvironmentVariable anotherEnv = EnvironmentVariable(name: 'MY_ENV');
+abstract final class env {
+  static const port = EnvironmentVariable(name: r'PORT');
+}
+''',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+import '../resources.dart' as resources;
+
+void sayHello(@resources.env.port int port) => 'Hello, $port';
 ''',
         },
         errors: [
-          'Duplicate environment variable name: "MY_ENV"',
-        ],
-      );
-
-      testErrors(
-        name: 'non_const_env',
-        config: {
-          'env.dart': '''
-import 'package:celest/celest.dart';
-
-final EnvironmentVariable myEnv = EnvironmentVariable(name: 'MY_ENV');
-''',
-        },
-        errors: [
-          'Environment variables must be declared as `const`',
-        ],
-      );
-
-      testErrors(
-        name: 'non_env_var_const',
-        config: {
-          'env.dart': '''
-import 'package:celest/celest.dart';
-
-const Project project = Project(
-  name: 'my_project', 
-  environments: ['prod', 'dev'],
-);
-''',
-        },
-        errors: [
-          'Only environment variables can be declared in this file.',
+          'The environment variable name `PORT` is reserved by Celest',
         ],
       );
     });

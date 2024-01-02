@@ -241,6 +241,7 @@ class TestRunner {
           [entrypoint],
           environment: {
             'PORT': '$port',
+            ...projectPaths.envManager.env,
           },
         );
         functionProc
@@ -1900,6 +1901,37 @@ const Map<String, Test> tests = {
               name: 'genericWrappers',
               input: _genericWrappers,
               output: _genericWrappers,
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'env_vars': Test(
+    apis: {
+      'injected': ApiTest(
+        functionTests: {
+          'sayHello': [
+            FunctionTestSuccess(
+              name: 'sayHello',
+              input: {},
+              output: 'Hello, Dillon! I am 28 years old.',
+            ),
+          ],
+          'sayHelloPerson': [
+            FunctionTestSuccess(
+              name: 'sayHelloPerson',
+              input: {},
+              output: {
+                'name': 'Dillon',
+                'age': 28,
+                'height': 5.83,
+                'weight': 130,
+                'isCool': true,
+              },
+              logs: [
+                'Dillon is 28 years old, 5.83ft tall, 130 lbs, and is cool.',
+              ],
             ),
           ],
         },

@@ -14,6 +14,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionParameter.serializer)
       ..add(EnvironmentVariable.serializer)
+      ..add(NodeReference.serializer)
+      ..add(NodeType.serializer)
       ..add(Project.serializer)
       ..add(SourceLocation.serializer)
       ..addBuilderFactory(

@@ -167,6 +167,7 @@ abstract class CloudFunctionParameter
     required bool required,
     required bool named,
     required SourceLocation location,
+    required NodeReference? references,
   }) = _$CloudFunctionParameter._;
 
   factory CloudFunctionParameter.build([
@@ -183,6 +184,7 @@ abstract class CloudFunctionParameter
   bool get required;
   bool get named;
   SourceLocation get location;
+  NodeReference? get references;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(CloudFunctionParameter.serializer, this)
@@ -239,23 +241,16 @@ abstract class CloudFunction
 
 abstract class EnvironmentVariable
     implements Built<EnvironmentVariable, EnvironmentVariableBuilder>, Node {
-  factory EnvironmentVariable({
-    required String dartName,
-    required String envName,
-    required SourceLocation location,
-  }) = _$EnvironmentVariable._;
+  factory EnvironmentVariable(String envName) =>
+      _$EnvironmentVariable._(envName: envName);
 
   factory EnvironmentVariable.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(EnvironmentVariable.serializer, json)!;
 
   EnvironmentVariable._();
 
-  /// The name of the variable in Dart, e.g. `myEnv`.
-  String get dartName;
-
   /// The name of the variable in the environment, e.g. `MY_ENV`.
   String get envName;
-  SourceLocation get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(EnvironmentVariable.serializer, this)
@@ -263,6 +258,54 @@ abstract class EnvironmentVariable
 
   static Serializer<EnvironmentVariable> get serializer =>
       _$environmentVariableSerializer;
+}
+
+class NodeType extends EnumClass {
+  const NodeType._(super.name);
+
+  static const NodeType project = _$project;
+  static const NodeType api = _$api;
+  static const NodeType apiPublic = _$apiPublic;
+  static const NodeType apiAuthenticated = _$apiAuthenticated;
+  static const NodeType apiMiddleware = _$apiMiddleware;
+  static const NodeType cloudFunction = _$cloudFunction;
+  static const NodeType cloudFunctionParameter = _$cloudFunctionParameter;
+  static const NodeType environmentVariable = _$environmentVariable;
+
+  static BuiltSet<NodeType> get values => _$values;
+  static NodeType valueOf(String name) => _$valueOf(name);
+
+  static Serializer<NodeType> get serializer => _$nodeTypeSerializer;
+}
+
+abstract class NodeReference
+    implements Built<NodeReference, NodeReferenceBuilder> {
+  factory NodeReference({
+    required String name,
+    required NodeType type,
+  }) {
+    return _$NodeReference._(
+      name: name,
+      type: type,
+    );
+  }
+
+  factory NodeReference.build([void Function(NodeReferenceBuilder) updates]) =
+      _$NodeReference;
+
+  factory NodeReference.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(NodeReference.serializer, json)!;
+
+  NodeReference._();
+
+  String get name;
+  NodeType get type;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(NodeReference.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<NodeReference> get serializer => _$nodeReferenceSerializer;
 }
 
 abstract class SourceLocation

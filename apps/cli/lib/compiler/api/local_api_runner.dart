@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:logging/logging.dart';
@@ -43,10 +44,20 @@ final class LocalApiRunner implements Closeable {
 
   static Future<LocalApiRunner> start({
     required String path,
+    required Iterable<String> envVars,
     required bool verbose,
     required List<String> enabledExperiments,
     List<String> additionalSources = const [],
   }) async {
+    final env = <String, String>{};
+    for (final envVar in envVars) {
+      final value =
+          Platform.environment[envVar] ?? projectPaths.envManager.get(envVar);
+      if (value == null) {
+        throw StateError('Missing value for environment variable: $envVar');
+      }
+      env[envVar] = value;
+    }
     final client = await FrontendServerClient.start(
       'org-dartlang-root://$path', // entrypoint
       path.replaceFirst(RegExp(r'.dart$'), '.dill'), // dill
@@ -79,6 +90,7 @@ final class LocalApiRunner implements Closeable {
       environment: {
         // The HTTP port to serve Celest on.
         'PORT': Platform.environment['PORT'] ?? '$port',
+        ...env,
       },
     );
 

@@ -9,6 +9,7 @@ import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_core/protos.dart' as proto;
 import 'package:collection/collection.dart';
 
@@ -136,5 +137,17 @@ final class _StaticWidgetCollector extends AstVisitor<void> {
   void visitParameter(ast.CloudFunctionParameter parameter) {}
 
   @override
-  void visitEnvironmentVariable(ast.EnvironmentVariable variable) {}
+  void visitEnvironmentVariable(ast.EnvironmentVariable variable) {
+    final envName = variable.envName;
+    final envValue = projectPaths.envManager.get(envName);
+    assert(envValue != null, 'Should have been caught before this');
+    cloudAst.widgets.add(
+      proto.CloudWidget(
+        environmentVariable: proto.EnvironmentVariable(
+          name: envName,
+          value: envValue,
+        ),
+      ),
+    );
+  }
 }

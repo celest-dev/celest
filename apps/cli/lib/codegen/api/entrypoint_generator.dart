@@ -7,6 +7,7 @@ import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -99,6 +100,29 @@ final class EntrypointGenerator {
                   Expression paramExp;
                   if (param.type.isFunctionContext) {
                     paramExp = refer('celestContext');
+                  } else if (param.references case final reference?) {
+                    switch (reference.type) {
+                      case NodeType.environmentVariable:
+                        paramExp = DartTypes.io.platform
+                            .property('environment')
+                            .index(literalString(reference.name, raw: true))
+                            .nullChecked;
+                        final toType = switch (param.type.symbol) {
+                          'int' => DartTypes.core.int,
+                          'double' => DartTypes.core.double,
+                          'bool' => DartTypes.core.bool,
+                          'num' => DartTypes.core.num,
+                          'String' => null,
+                          _ => unreachable(),
+                        };
+                        if (toType != null) {
+                          paramExp = toType.property('parse').call([paramExp]);
+                        }
+                      default:
+                        unreachable(
+                          'Invalid reference type: ${reference.type}',
+                        );
+                    }
                   } else {
                     final fromMap = refer('request').index(
                       literalString(param.name, raw: true),

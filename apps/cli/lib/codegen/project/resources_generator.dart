@@ -100,6 +100,26 @@ final class ResourcesGenerator {
     }
   }
 
+  void _generateEnv(Iterable<EnvironmentVariable> envVars) {
+    final env = _beginClass('env');
+    for (final envVar in envVars) {
+      final fieldName = envVar.envName.camelCase;
+      env.fields.add(
+        Field(
+          (f) => f
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..name = fieldName
+            ..assignment =
+                DartTypes.celest.environmentVariable.constInstance([], {
+              'name': literalString(envVar.envName, raw: true),
+            }).code,
+        ),
+      );
+      _allResources.add('env.$fieldName');
+    }
+  }
+
   Library generate() {
     final allApis = project.apis.values;
     if (allApis.isNotEmpty) {
@@ -115,6 +135,9 @@ final class ResourcesGenerator {
       }
       _beginClass('apis').fields.addAll(apis.build().values);
       _beginClass('functions').fields.addAll(functions.build().values);
+    }
+    if (project.envVars.isNotEmpty) {
+      _generateEnv(project.envVars);
     }
     _library.body.add(
       Field(

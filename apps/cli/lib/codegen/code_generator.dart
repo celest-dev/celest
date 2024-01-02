@@ -19,7 +19,7 @@ final class CodeGenerator extends AstVisitor<void> {
   static final _formatter = DartFormatter(
     fixes: StyleFix.all,
   );
-  DartEmitter _emitter({
+  static DartEmitter _emitter({
     required String forFile,
   }) =>
       DartEmitter(
@@ -31,7 +31,7 @@ final class CodeGenerator extends AstVisitor<void> {
         orderDirectives: true,
       );
 
-  String _emit(
+  static String _emit(
     Spec spec, {
     required String forFile,
   }) {
@@ -50,6 +50,12 @@ final class CodeGenerator extends AstVisitor<void> {
   /// A map of API routes to their target reference.
   final Map<String, Reference> _targets = {};
 
+  static String generateResourcesDart(Project project) {
+    final resourcesFile = projectPaths.resourcesDart;
+    final resources = ResourcesGenerator(project: project).generate();
+    return _emit(resources, forFile: resourcesFile);
+  }
+
   @override
   void visitProject(Project project) {
     final projectBuildFile = projectPaths.projectBuildDart;
@@ -59,9 +65,7 @@ final class CodeGenerator extends AstVisitor<void> {
     fileOutputs[projectBuildFile] =
         _emit(projectBuild, forFile: projectBuildFile);
 
-    final resourcesFile = projectPaths.resourcesDart;
-    final resources = ResourcesGenerator(project: project).generate();
-    fileOutputs[resourcesFile] = _emit(resources, forFile: resourcesFile);
+    fileOutputs[projectPaths.resourcesDart] = generateResourcesDart(project);
 
     project.apis.values.forEach(visitApi);
 

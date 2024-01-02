@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest/celest.dart';
+import 'package:celest_cli/commands/project_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -13,7 +14,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_static/shelf_static.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-final class DeployCommand extends CelestCommand {
+final class DeployCommand extends ProjectCommand {
   DeployCommand() {
     argParser
       ..addFlag(
@@ -35,9 +36,6 @@ final class DeployCommand extends CelestCommand {
 
   @override
   String get name => 'deploy';
-
-  @override
-  String get category => 'Project';
 
   late final bool watch = argResults!['watch'] as bool;
   late final bool local = argResults!['local'] as bool;
