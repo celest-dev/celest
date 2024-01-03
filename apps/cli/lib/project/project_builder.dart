@@ -10,8 +10,10 @@ import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/protos.dart' as proto;
 import 'package:collection/collection.dart';
+import 'package:package_config/package_config.dart';
 
 final class ProjectBuilder {
   ProjectBuilder({
@@ -25,6 +27,45 @@ final class ProjectBuilder {
   final ResidentCompiler? residentCompiler;
 
   Future<proto.Project> build() async {
+    // Rewrite package_config.json to allow running in resident mode from a
+    // temporary directory (it will search for `executable_path`/.dart_tool/package_config.json).
+    final packagesFile = fileSystem.file(projectPaths.packagesConfig);
+    final packageConfig = await loadPackageConfig(packagesFile);
+    final packages = packageConfig.packages.map((package) {
+      final packageRoot = p.fromUri(package.root);
+      final packageRootRelativeToTemp = p.relative(
+        packageRoot,
+        from: p.dirname(projectPaths.projectBuildDart),
+      );
+      return Package(
+        package.name,
+        p.isAbsolute(package.root.toFilePath())
+            ? package.root
+            : p.toUri(packageRootRelativeToTemp),
+        packageUriRoot: package.packageUriRoot,
+        extraData: package.extraData,
+        languageVersion: package.languageVersion,
+        relativeRoot: true,
+      );
+    });
+    final tempPackagesConfig = PackageConfig(
+      packages,
+      extraData: packageConfig.extraData,
+    );
+    final tempPackagesConfigFile = fileSystem.file(
+      p.join(
+        p.dirname(projectPaths.projectBuildDart),
+        '.dart_tool',
+        'package_config.json',
+      ),
+    )..createSync(recursive: true);
+    final tempPackagesConfigFileSink = tempPackagesConfigFile.openWrite();
+    PackageConfig.writeString(
+      tempPackagesConfig,
+      tempPackagesConfigFileSink,
+    );
+    await tempPackagesConfigFileSink.flush();
+    await tempPackagesConfigFileSink.close();
     // Cannot use `Isolate.spawnUri` in AOT mode unless the URI is an AOT
     // snapshot compiled with the same SDK.
     final processResult = await Process.run(
@@ -35,6 +76,8 @@ final class ProjectBuilder {
           '--resident',
           '--resident-server-info-file=${residentCompiler.infoFile.path}',
         ],
+        '--packages',
+        tempPackagesConfigFile.path,
         projectPaths.projectBuildDart,
         project.name,
         projectPaths.projectRoot,

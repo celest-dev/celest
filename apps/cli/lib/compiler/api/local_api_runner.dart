@@ -64,6 +64,7 @@ final class LocalApiRunner implements Closeable {
       Sdk.current.vmPlatformDill,
       target: 'vm',
       verbose: verbose,
+      packagesJson: projectPaths.packagesConfig,
       fileSystemRoots: ['/'],
       fileSystemScheme: 'org-dartlang-root',
       enabledExperiments: enabledExperiments,
@@ -83,8 +84,11 @@ final class LocalApiRunner implements Closeable {
     final localApiProcess = await Process.start(
       Sdk.current.dart,
       [
+        'run',
         // Start VM service on a random port.
         '--enable-vm-service=0',
+        '--packages',
+        projectPaths.packagesConfig,
         dillOutput,
       ],
       workingDirectory: projectPaths.projectRoot,
@@ -123,7 +127,15 @@ final class LocalApiRunner implements Closeable {
     });
 
     logger.finer('Waiting for local API to report VM URI...');
-    final vmService = await vmServiceCompleter.future;
+    final vmService = await vmServiceCompleter.future.timeout(
+      const Duration(seconds: 15),
+      onTimeout: () {
+        throw TimeoutException(
+          'Could not connect to local API VM service.',
+          const Duration(seconds: 15),
+        );
+      },
+    );
 
     final isolateId = await _waitForIsolate(vmService, logger);
     logger.fine('Connected to local API.');

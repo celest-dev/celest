@@ -2,12 +2,14 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 
 final class ProjectPaths {
   ProjectPaths(
     this.projectRoot, {
     String? outputsDir,
-  }) : outputsDir = outputsDir ?? p.join(projectRoot, '.dart_tool', 'celest');
+  }) : outputsDir =
+            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
 
   final String projectRoot;
   final String outputsDir;
@@ -16,6 +18,8 @@ final class ProjectPaths {
       p.canonicalize(p.normalize(p.join(projectRoot, '..')));
   late final String celestConfig = CelestConfig.instance.configDir.path;
 
+  late final String packagesConfig =
+      p.join(projectRoot, '.dart_tool', 'package_config.json');
   late final String projectYaml = p.join(projectRoot, 'pubspec.yaml');
   late final String analysisOptionsYaml =
       p.join(projectRoot, 'analysis_options.yaml');

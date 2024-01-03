@@ -1,9 +1,10 @@
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:process/process.dart';
 
 void initTests({
-  CelestFileSystem? fileSystem,
+  FileSystem? fileSystem,
   http.Client? httpClient,
   ProcessManager? processManager,
 }) {

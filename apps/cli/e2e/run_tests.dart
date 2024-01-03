@@ -239,7 +239,13 @@ class TestRunner {
         );
         functionProc = await Process.start(
           Platform.executable,
-          [entrypoint],
+          [
+            'run',
+            '--packages',
+            projectPaths.packagesConfig,
+            entrypoint,
+          ],
+          workingDirectory: projectPaths.projectRoot,
           environment: {
             'PORT': '$port',
             ...projectPaths.envManager.env,
