@@ -46,6 +46,19 @@ final class CelestFrontend implements Closeable {
           .where((event) => !p.equals(projectPaths.resourcesDart, event.path))
           .buffer(_readyForChanges.stream),
     );
+    // Initialize immediately instead of lazily since _stopSub is never accessed
+    // directly until `close`.
+    _stopSub = StreamGroup.merge([
+      ProcessSignal.sigint.watch(),
+      // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
+      // handler raises an exception.
+      if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+    ]).listen((signal) {
+      logger.fine('Got exit signal: $signal');
+      if (!_stopSignal.isCompleted) {
+        _stopSignal.complete(signal);
+      }
+    });
   }
 
   static final Logger logger = Logger('CelestFrontend');
@@ -59,22 +72,25 @@ final class CelestFrontend implements Closeable {
     return 1;
   }
 
+  /// Signals that Celest is ready for the next batch of [_watcher] changes.
+  ///
+  /// Used to buffer [_watcher] in the time while a project is being (re-)built.
   final _readyForChanges = StreamController<void>.broadcast();
+
+  /// Watches for filesystem changes in the project root.
   late final StreamQueue<List<WatchEvent>> _watcher;
 
-  late final _stopSub = StreamGroup.merge([
-    ProcessSignal.sigint.watch(),
-    // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
-    // handler raises an exception.
-    if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
-  ]).listen((signal) {
-    logger.fine('Got exit signal: $signal');
-    if (!_stopSignal.isCompleted) {
-      _stopSignal.complete(signal);
-    }
-  });
+  /// Signals that a SIGINT or SIGTERM event has fired and the CLI needs to
+  /// shutdown.
   final _stopSignal = Completer<ProcessSignal>.sync();
+
+  /// Whether a SIGINT or SIGTERM signal has been received and the frontend
+  /// is no longer operational.
   bool get stopped => _stopSignal.isCompleted;
+
+  /// Subscription to [ProcessSignal.sigint] and [ProcessSignal.sigterm] which
+  /// forwards to [_stopSignal] when triggered.
+  late final StreamSubscription<ProcessSignal> _stopSub;
 
   ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
