@@ -165,7 +165,8 @@ class TestRunner {
   }
 
   void _testBuild() {
-    test('build', () async {
+    // Increase timeout since builder runs native-assets compilation.
+    test('build', timeout: const Timeout.factor(10), () async {
       final (:project, :errors) = await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);

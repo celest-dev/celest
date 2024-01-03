@@ -30,6 +30,7 @@ final class ProjectBuilder {
     final processResult = await Process.run(
       Sdk.current.dart,
       [
+        '--enable-experiment=native-assets',
         'run',
         if (residentCompiler case final residentCompiler?) ...[
           '--resident',

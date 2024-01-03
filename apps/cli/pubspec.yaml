@@ -4,7 +4,7 @@ version: 0.1.0
 publish_to: none
 
 environment:
-  sdk: ^3.2.0
+  sdk: ^3.3.0-235.0.dev
 
 dependencies:
   analyzer: ^6.3.0
@@ -25,6 +25,7 @@ dependencies:
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
+  drift: ^2.14.1
   file: ^7.0.0
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1
@@ -44,11 +45,18 @@ dependencies:
   shelf_static: ^1.1.2
   shelf_web_socket: ^1.0.4
   source_span: ^1.10.0
+  sqlite3:
+    path: ../../packages/sqlite3/sqlite3
   stream_transform: ^2.1.0
   uuid: ^4.3.1
   vm_service: ^14.0.0
   watcher: ^1.1.0
   yaml: ^3.1.2
+
+dependency_overrides:
+  # Use vendored sqlite3 to make use of native-assets
+  sqlite3:
+    path: ../../packages/sqlite3/sqlite3
 
 dev_dependencies:
   archive: ^3.4.9
@@ -59,6 +67,7 @@ dev_dependencies:
   built_value_generator: ^8.8.0
   celest_lints:
     path: ../../packages/celest_lints
+  drift_dev: ^2.14.1
   fast_immutable_collections: ^9.2.0
   json_serializable: ^6.7.1
   mustache_template: ^2.0.0

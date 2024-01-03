@@ -178,9 +178,41 @@ final class MacOSBundler implements Bundler {
   Future<void> _codesign() async {
     Directory(p.join(appDir.path, 'Contents', 'MacOS'))
         .createSync(recursive: true);
-    File(p.join(buildDir.path, 'celest')).copySync(
+    Directory(p.join(appDir.path, 'Contents', 'Frameworks', 'celest'))
+        .createSync(recursive: true);
+    final exe = File(p.join(buildDir.path, 'celest'));
+    final toSign = [exe.path];
+
+    // Updates the LC_RPATH of `celest` to match .app directory structure.
+    // https://developer.apple.com/documentation/xcode/embedding-nonstandard-code-structures-in-a-bundle#Adopt-rpath-relative-references
+    // TODO(dnys1): File a bug with Dart to fix this. They include @executable_path/Frameworks which is wrong.
+    await _runProcess(
+      'install_name_tool',
+      ['-add_rpath', '@executable_path/../Frameworks', exe.path],
+    );
+
+    exe.copySync(
       p.join(appDir.path, 'Contents', 'MacOS', 'celest'),
     );
+
+    for (final dylib in buildDir
+        .listSync()
+        .whereType<File>()
+        .where((f) => p.extension(f.path) == '.dylib')) {
+      // Even though rpath is Frameworks/ in the binary, the runtime searches
+      // at Frameworks/celest/<dylib>.
+      final appDylibPath = p.join(
+        appDir.path,
+        'Contents',
+        'Frameworks',
+        'celest',
+        p.basename(dylib.path),
+      );
+      dylib.copySync(appDylibPath);
+      toSign.add(appDylibPath);
+    }
+
+    toSign.add(appDir.path);
 
     // Matches the entitlements needed by `dartaotruntime`:
     // https://github.com/dart-lang/sdk/blob/7e5ce1f688e036dbe4b417f7fd92bbced67b5ec5/runtime/tools/entitlements/dart_precompiled_runtime_product.plist
@@ -215,55 +247,66 @@ final class MacOSBundler implements Bundler {
     );
 
     // Codesign all files in the build directory.
-    print('Codesigning ${appDir.path}...');
-    await _runProcess(
-      'codesign',
-      [
-        '--generate-entitlement-der',
-        '--entitlements',
-        entitlementsPlistPath,
-        '--sign',
-        developerApplicationIdentity,
-        if (keychainName case final keychain?) ...[
-          '--keychain',
-          keychain,
+    // TODO(dnys1): Currently we must sign everything in the app directory
+    /// individually because Dart's native-assets support requires the wrong
+    /// structure, e.g. searching `Frameworks/celest/<dylib>` instead of
+    /// `Frameworks/<dylib>` as expected.
+    ///
+    /// We must also sign the app directory itself because the provisioning
+    /// profile is embedded in the app directory.
+    for (final pathToSign in toSign) {
+      print('Codesigning $pathToSign...');
+      await _runProcess(
+        'codesign',
+        [
+          '--sign',
+          developerApplicationIdentity,
+          if (keychainName case final keychain?) ...[
+            '--keychain',
+            keychain,
+          ],
+          if (p.extension(pathToSign) != '.dylib') ...[
+            '--generate-entitlement-der',
+            '--entitlements',
+            entitlementsPlistPath,
+            '--identifier',
+            'dev.celest.cli',
+            '--options=runtime',
+          ],
+          '--force',
+          '--timestamp',
+          '--file-list',
+          '-',
+          '--verbose',
+          pathToSign,
         ],
-        '--force',
-        '--identifier',
-        'dev.celest.cli',
-        '--options=runtime',
-        '--timestamp',
-        '--file-list',
-        '-',
-        '--verbose',
-        appDir.path,
-      ],
-    );
+      );
 
-    Future<void> dumpCodesignResults() async {
-      await _runProcess('codesign', [
-        '--display',
-        '--verbose=4',
-        appDir.path,
-      ]);
-      print('Entitlement results:');
-      await _runProcess('codesign', [
-        '--display',
-        '--entitlements=-',
-        appDir.path,
-      ]);
+      Future<void> dumpCodesignResults() async {
+        await _runProcess('codesign', [
+          '--display',
+          '--verbose=4',
+          pathToSign,
+        ]);
+        print('Entitlement results:');
+        await _runProcess('codesign', [
+          '--display',
+          '--entitlements=-',
+          pathToSign,
+        ]);
+      }
+
+      print('Verifying code signature for $pathToSign...');
+      await _runProcess(
+        'codesign',
+        ['--verify', '--verbose', pathToSign],
+        onError: (_) async {
+          print('Could not verify code signature. Code-signing results:');
+          await dumpCodesignResults();
+        },
+      );
+      await dumpCodesignResults();
     }
-
-    print('Verifying code signature for ${appDir.path}...');
-    await _runProcess(
-      'codesign',
-      ['--verify', '--verbose', appDir.path],
-      onError: (_) async {
-        print('Could not verify code signature. Code-signing results:');
-        await dumpCodesignResults();
-      },
-    );
-    await dumpCodesignResults();
 
     print('Codesigning complete.');
   }
