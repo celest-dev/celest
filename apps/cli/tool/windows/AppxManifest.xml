@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+         xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
+         IgnorableNamespaces="uap uap3 uap5 rescap">
+  <Identity Name="Celest.CLI"
+            Version="{{ version }}.0"
+            Publisher="CN=Teo Inc., O=Teo Inc., C=US" />
+  <Properties>
+    <DisplayName>Celest</DisplayName>
+    <PublisherDisplayName>Celest</PublisherDisplayName>
+    <Description>The CLI for Celest, the Flutter cloud platform.</Description>
+    <Logo>logo-full.png</Logo>
+    <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
+    <desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <!-- Minimum supported version is 1809 (October 2018 Update, aka RS5) -->
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19033.0" />
+  </Dependencies>
+  <Applications>
+    <Application Id="celest" Executable="celest.exe" EntryPoint="Windows.FullTrustApplication" >
+      <uap:VisualElements DisplayName="NoUIEntryPoints"
+                          Description="The CLI for Celest, the Flutter cloud platform." 
+                          Square150x150Logo="logo-150x150.png" 
+                          Square44x44Logo="logo-44x44.png" 
+                          BackgroundColor="#FFFFFF"
+                          AppListEntry="none">
+        <uap:DefaultTile/>
+      </uap:VisualElements>
+      <Extensions>
+      <uap5:Extension Category="windows.appExecutionAlias">
+        <uap5:AppExecutionAlias>
+          <uap5:ExecutionAlias Alias="celest.exe" />
+        </uap5:AppExecutionAlias>
+      </uap5:Extension>
+    </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="unvirtualizedResources" />
+
+    <!-- See https://learn.microsoft.com/en-us/previous-versions/windows/apps/hh464936(v=win.10) -->
+    <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+</Package>
