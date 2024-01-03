@@ -2,13 +2,6 @@
   "name": "env_vars",
   "widgets": [
     {
-      "type": "Celest::CloudApi",
-      "id": "injected",
-      "cloudApi": {
-        "name": "injected"
-      }
-    },
-    {
       "environmentVariable": {
         "name": "IM_COOL"
       }
@@ -31,22 +24,6 @@
     {
       "environmentVariable": {
         "name": "MY_WEIGHT"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "injected.sayHello",
-      "cloudFunction": {
-        "name": "sayHello",
-        "apiName": "injected"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "injected.sayHelloPerson",
-      "cloudFunction": {
-        "name": "sayHelloPerson",
-        "apiName": "injected"
       }
     }
   ]

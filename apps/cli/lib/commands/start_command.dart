@@ -50,10 +50,6 @@ final class StartCommand extends ProjectCommand {
       cliLogger.success('Project generated successfully.');
     }
 
-    // Ensure all `Process.start` commands are performed from the Celest dir.
-    // TODO: Hacky, find a better way to do this.
-    Directory.current = projectPaths.projectRoot;
-
     try {
       // Start the Celest Frontend Loop
       return await CelestFrontend().run();

@@ -30,7 +30,6 @@ final class ProjectBuilder {
     final processResult = await Process.run(
       Sdk.current.dart,
       [
-        '--enable-experiment=native-assets',
         'run',
         if (residentCompiler case final residentCompiler?) ...[
           '--resident',
@@ -41,6 +40,7 @@ final class ProjectBuilder {
         projectPaths.projectRoot,
         projectPaths.outputsDir,
       ],
+      workingDirectory: projectPaths.projectRoot,
       stdoutEncoding: null,
       stderrEncoding: utf8,
     );

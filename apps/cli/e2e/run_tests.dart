@@ -107,7 +107,7 @@ class TestRunner {
       _testCodegen();
       _testBuild();
 
-      final apisDir = Directory(p.join(projectRoot, 'apis'));
+      final apisDir = Directory(p.join(projectRoot, 'functions'));
       if (apisDir.existsSync()) {
         _testApis(apisDir);
       }

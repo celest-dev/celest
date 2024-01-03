@@ -53,7 +53,7 @@ dependencies:
     d.file('project.dart', projectDart),
     if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     if (apis.isNotEmpty)
-      d.dir('apis', [
+      d.dir('functions', [
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
           d.file(fileName, contents),
       ]),
@@ -461,10 +461,10 @@ String sayHello() => 'Hello, World!';
         name: 'api_authenticated',
         apis: {
           'greeting.dart': '''
-@api.authenticated()
+@functions.authenticated()
 library;
 
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
 String sayHello() => 'Hello, World!';
 ''',
@@ -475,10 +475,10 @@ String sayHello() => 'Hello, World!';
         name: 'api_public',
         apis: {
           'greeting.dart': '''
-@api.public()
+@functions.public()
 library;
 
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
 String sayHello() => 'Hello, World!';
 ''',
@@ -493,12 +493,12 @@ String sayHello() => 'Hello, World!';
 @logRequests
 library;
 
-const public = api.public();
+const public = functions.public();
 const logRequests = middleware.logRequests();
 const logResponses = middleware.logResponses();
 
-import 'package:celest/api.dart' as api;
-import 'package:celest/api/middleware.dart' as middleware;
+import 'package:celest/functions.dart' as functions;
+import 'package:celest/functions/middleware.dart' as middleware;
 
 @logResponses
 String sayHello() => 'Hello, World!';
@@ -510,11 +510,11 @@ String sayHello() => 'Hello, World!';
         name: 'multiple_api_auth',
         apis: {
           'greeting.dart': '''
-@api.public()
-@api.authenticated()
+@functions.public()
+@functions.authenticated()
 library;
 
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
 String sayHello() => 'Hello, World!';
 ''',
@@ -529,11 +529,11 @@ String sayHello() => 'Hello, World!';
         name: 'multiple_api_auth_same_type',
         apis: {
           'greeting.dart': '''
-@api.public()
-@api.public()
+@functions.public()
+@functions.public()
 library;
 
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
 String sayHello() => 'Hello, World!';
 ''',
@@ -548,9 +548,9 @@ String sayHello() => 'Hello, World!';
         name: 'function_authenticated',
         apis: {
           'greeting.dart': '''
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
-@api.authenticated()
+@functions.authenticated()
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -560,9 +560,9 @@ String sayHello() => 'Hello, World!';
         name: 'function_public',
         apis: {
           'greeting.dart': '''
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
-@api.public()
+@functions.public()
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -572,10 +572,10 @@ String sayHello() => 'Hello, World!';
         name: 'multiple_function_auth',
         apis: {
           'greeting.dart': '''
-import 'package:celest/api.dart' as api;
+import 'package:celest/functions.dart' as functions;
 
-@api.public()
-@api.authenticated()
+@functions.public()
+@functions.authenticated()
 String sayHello() => 'Hello, World!';
 ''',
         },

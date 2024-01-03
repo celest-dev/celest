@@ -87,6 +87,7 @@ final class LocalApiRunner implements Closeable {
         '--enable-vm-service=0',
         dillOutput,
       ],
+      workingDirectory: projectPaths.projectRoot,
       environment: {
         // The HTTP port to serve Celest on.
         'PORT': Platform.environment['PORT'] ?? '$port',

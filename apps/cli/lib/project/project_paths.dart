@@ -24,13 +24,13 @@ final class ProjectPaths {
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
-  late final String apisDir = p.join(projectRoot, 'apis');
+  late final String apisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
   late final String envFile = p.join(projectRoot, 'config', '.env');
 
   late final EnvManager envManager = EnvManager(envFile);
 
-  String apiOutput(String apiName) => p.join(outputsDir, 'apis', apiName);
+  String apiOutput(String apiName) => p.join(outputsDir, 'functions', apiName);
   String functionEntrypoint(String apiName, String functionName) => p.join(
         apiOutput(apiName),
         '$functionName.dart',

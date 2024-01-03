@@ -10,10 +10,10 @@ import 'package:celest/celest.dart' as _i1;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i3;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i5;
 
-import 'apis/classes.dart' as _i2;
-import 'apis/generic_wrappers.dart' as _i4;
-import 'apis/parameter_types.dart' as _i6;
-import 'apis/records.dart' as _i8;
+import 'functions/classes.dart' as _i2;
+import 'functions/generic_wrappers.dart' as _i4;
+import 'functions/parameter_types.dart' as _i6;
+import 'functions/records.dart' as _i8;
 
 abstract final class apis {
   static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
