@@ -495,6 +495,30 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     final wireConstructor = fromJsonCtor ??
         type.constructors.singleWhere((ctor) => ctor.name.isEmpty);
+    final isErrorType =
+        typeHelper.typeSystem.isSubtypeOf(type, typeHelper.coreErrorType);
+
+    // Do not serialize stack trace in the error object unless it is needed
+    // to later deserialize the type (e.g. it's in the constructor).
+    bool serializeField(FieldElement field) {
+      if (!isErrorType) {
+        return true;
+      }
+      if (field.name != 'stackTrace') {
+        return true;
+      }
+      if (wireConstructor.parameters.any(
+        (p) =>
+            p.name == 'stackTrace' &&
+            typeHelper.typeSystem.isSubtypeOf(
+              field.type,
+              typeHelper.typeProvider.stackTraceType,
+            ),
+      )) {
+        return true;
+      }
+      return false;
+    }
 
     return verdict.withSpec(
       SerializationSpec(
@@ -503,7 +527,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         castType: fromJsonCtor?.parameters.first.type,
         fields: [
           for (final field in element.sortedFields)
-            FieldSpec(name: field.displayName, type: field.type),
+            if (serializeField(field))
+              FieldSpec(name: field.displayName, type: field.type),
         ],
         parameters: [
           for (final parameter in wireConstructor.parameters)

@@ -448,6 +448,10 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
       serializers.serialize(object.metadata,
           specifiedType:
               const FullType(BuiltList, const [const FullType(ApiMetadata)])),
+      'exceptionTypes',
+      serializers.serialize(object.exceptionTypes,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Reference)])),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(SourceLocation)),
@@ -494,6 +498,12 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
           result.metadata.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ApiMetadata)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'exceptionTypes':
+          result.exceptionTypes.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Reference)]))!
               as BuiltList<Object?>);
           break;
         case 'location':
@@ -1450,6 +1460,8 @@ class _$CloudFunction extends CloudFunction {
   @override
   final BuiltList<ApiMetadata> metadata;
   @override
+  final BuiltList<Reference> exceptionTypes;
+  @override
   final SourceLocation location;
 
   factory _$CloudFunction([void Function(CloudFunctionBuilder)? updates]) =>
@@ -1462,6 +1474,7 @@ class _$CloudFunction extends CloudFunction {
       required this.returnType,
       required this.flattenedReturnType,
       required this.metadata,
+      required this.exceptionTypes,
       required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CloudFunction', 'name');
@@ -1474,6 +1487,8 @@ class _$CloudFunction extends CloudFunction {
         flattenedReturnType, r'CloudFunction', 'flattenedReturnType');
     BuiltValueNullFieldError.checkNotNull(
         metadata, r'CloudFunction', 'metadata');
+    BuiltValueNullFieldError.checkNotNull(
+        exceptionTypes, r'CloudFunction', 'exceptionTypes');
     BuiltValueNullFieldError.checkNotNull(
         location, r'CloudFunction', 'location');
   }
@@ -1495,6 +1510,7 @@ class _$CloudFunction extends CloudFunction {
         returnType == other.returnType &&
         flattenedReturnType == other.flattenedReturnType &&
         metadata == other.metadata &&
+        exceptionTypes == other.exceptionTypes &&
         location == other.location;
   }
 
@@ -1507,6 +1523,7 @@ class _$CloudFunction extends CloudFunction {
     _$hash = $jc(_$hash, returnType.hashCode);
     _$hash = $jc(_$hash, flattenedReturnType.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
+    _$hash = $jc(_$hash, exceptionTypes.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1521,6 +1538,7 @@ class _$CloudFunction extends CloudFunction {
           ..add('returnType', returnType)
           ..add('flattenedReturnType', flattenedReturnType)
           ..add('metadata', metadata)
+          ..add('exceptionTypes', exceptionTypes)
           ..add('location', location))
         .toString();
   }
@@ -1559,6 +1577,12 @@ class CloudFunctionBuilder
   set metadata(ListBuilder<ApiMetadata>? metadata) =>
       _$this._metadata = metadata;
 
+  ListBuilder<Reference>? _exceptionTypes;
+  ListBuilder<Reference> get exceptionTypes =>
+      _$this._exceptionTypes ??= new ListBuilder<Reference>();
+  set exceptionTypes(ListBuilder<Reference>? exceptionTypes) =>
+      _$this._exceptionTypes = exceptionTypes;
+
   SourceLocationBuilder? _location;
   SourceLocationBuilder get location =>
       _$this._location ??= new SourceLocationBuilder();
@@ -1575,6 +1599,7 @@ class CloudFunctionBuilder
       _returnType = $v.returnType;
       _flattenedReturnType = $v.flattenedReturnType;
       _metadata = $v.metadata.toBuilder();
+      _exceptionTypes = $v.exceptionTypes.toBuilder();
       _location = $v.location.toBuilder();
       _$v = null;
     }
@@ -1610,6 +1635,7 @@ class CloudFunctionBuilder
               flattenedReturnType: BuiltValueNullFieldError.checkNotNull(
                   flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
               metadata: metadata.build(),
+              exceptionTypes: exceptionTypes.build(),
               location: location.build());
     } catch (_) {
       late String _$failedField;
@@ -1619,6 +1645,8 @@ class CloudFunctionBuilder
 
         _$failedField = 'metadata';
         metadata.build();
+        _$failedField = 'exceptionTypes';
+        exceptionTypes.build();
         _$failedField = 'location';
         location.build();
       } catch (e) {

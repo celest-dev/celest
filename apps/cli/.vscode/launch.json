@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CLI / E2E (--update-goldens)",
+      "request": "launch",
+      "type": "dart",
+      "program": "e2e/run_tests.dart",
+      "args": ["--update-goldens"]
+    }
+  ]
+}

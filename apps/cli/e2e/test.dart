@@ -38,13 +38,14 @@ class FunctionTestSuccess extends FunctionTest {
   final Object? output;
 }
 
-class FunctionTestError extends FunctionTest {
+class FunctionTestError extends FunctionTestSuccess {
   const FunctionTestError({
     required super.name,
     required super.input,
-    required this.error,
+    required super.output,
+    this.statusCode = 400,
     super.logs,
   });
 
-  final String error;
+  final int statusCode;
 }

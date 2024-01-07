@@ -3,281 +3,303 @@
 import 'dart:async' as _i4;
 import 'dart:typed_data' as _i6;
 
+import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i5;
+import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/parameter_types.dart' as _i2;
 
-class ComplexTarget extends _i1.FunctionTarget {
-  final _inner = _i1.JsonWithContextFunctionTarget(
-    (
-      request,
-      context,
-    ) async {
-      return _i2.complex(
-        _i3.Serializers.instance
-            .deserialize<_i2.SimpleStruct>(request[r'aSimpleStruct']),
-        _i3.Serializers.instance
-            .deserialize<_i2.ComplexStruct>(request[r'aComplexStruct']),
-        _i3.Serializers.instance
-            .deserialize<_i2.SimpleClass>(request[r'aSimpleClass']),
-        _i3.Serializers.instance
-            .deserialize<_i2.ComplexClass>(request[r'aComplexClass']),
-        _i3.Serializers.instance
-            .deserialize<_i2.SimpleStruct?>(request[r'aNullableSimpleStruct']),
-        _i3.Serializers.instance.deserialize<_i2.ComplexStruct?>(
-            request[r'aNullableComplexStruct']),
-        _i3.Serializers.instance
-            .deserialize<_i2.SimpleClass?>(request[r'aNullableSimpleClass']),
-        _i3.Serializers.instance
-            .deserialize<_i2.ComplexClass?>(request[r'aNullableComplexClass']),
-        (request[r'anIterableOfSimpleStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(el))
-            .toList(),
-        (request[r'anIterableOfComplexStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct>(el))
-            .toList(),
-        (request[r'anIterableOfSimpleClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
-            .toList(),
-        (request[r'anIterableOfComplexClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass>(el))
-            .toList(),
-        (request[r'aNullableIterableOfSimpleStruct'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(el))
-            .toList(),
-        (request[r'aNullableIterableOfComplexStruct'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct>(el))
-            .toList(),
-        (request[r'aNullableIterableOfSimpleClass'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
-            .toList(),
-        (request[r'aNullableIterableOfComplexClass'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass>(el))
-            .toList(),
-        (request[r'anIterableOfNullableSimpleStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct?>(el))
-            .toList(),
-        (request[r'anIterableOfNullableComplexStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct?>(el))
-            .toList(),
-        (request[r'anIterableOfNullableSimpleClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass?>(el))
-            .toList(),
-        (request[r'anIterableOfNullableComplexClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass?>(el))
-            .toList(),
-        (request[r'aListOfSimpleStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(el))
-            .toList(),
-        (request[r'aListOfComplexStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct>(el))
-            .toList(),
-        (request[r'aListOfSimpleClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
-            .toList(),
-        (request[r'aListOfComplexClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass>(el))
-            .toList(),
-        (request[r'aNullableListOfSimpleStruct'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(el))
-            .toList(),
-        (request[r'aNullableListOfComplexStruct'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct>(el))
-            .toList(),
-        (request[r'aNullableListOfSimpleClass'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
-            .toList(),
-        (request[r'aNullableListOfComplexClass'] as Iterable<Object?>?)
-            ?.map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass>(el))
-            .toList(),
-        (request[r'aListOfNullableSimpleStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleStruct?>(el))
-            .toList(),
-        (request[r'aListOfNullableComplexStruct'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexStruct?>(el))
-            .toList(),
-        (request[r'aListOfNullableSimpleClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.SimpleClass?>(el))
-            .toList(),
-        (request[r'aListOfNullableComplexClass'] as Iterable<Object?>)
-            .map((el) =>
-                _i3.Serializers.instance.deserialize<_i2.ComplexClass?>(el))
-            .toList(),
-        (request[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(value),
-            )),
-        (request[r'aMapOfComplexStruct'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.ComplexStruct>(value),
-            )),
-        (request[r'aMapOfSimpleClass'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleClass>(value),
-            )),
-        (request[r'aMapOfComplexClass'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.ComplexClass>(value),
-            )),
-        (request[r'aNullableMapOfSimpleStruct'] as Map<String, Object?>?)?.map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleStruct>(value),
-            )),
-        (request[r'aNullableMapOfComplexStruct'] as Map<String, Object?>?)
-            ?.map((
-          key,
-          value,
-        ) =>
-                MapEntry(
-                  key,
-                  _i3.Serializers.instance
-                      .deserialize<_i2.ComplexStruct>(value),
-                )),
-        (request[r'aNullableMapOfSimpleClass'] as Map<String, Object?>?)?.map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleClass>(value),
-            )),
-        (request[r'aNullableMapOfComplexClass'] as Map<String, Object?>?)?.map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.ComplexClass>(value),
-            )),
-        (request[r'aMapOfNullableSimpleStruct'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleStruct?>(value),
-            )),
-        (request[r'aMapOfNullableComplexStruct'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.ComplexStruct?>(value),
-            )),
-        (request[r'aMapOfNullableSimpleClass'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.SimpleClass?>(value),
-            )),
-        (request[r'aMapOfNullableComplexClass'] as Map<String, Object?>).map((
-          key,
-          value,
-        ) =>
-            MapEntry(
-              key,
-              _i3.Serializers.instance.deserialize<_i2.ComplexClass?>(value),
-            )),
-        (request[r'aNullableMapOfNullableSimpleStruct']
-                as Map<String, Object?>?)
-            ?.map((
-          key,
-          value,
-        ) =>
-                MapEntry(
-                  key,
-                  _i3.Serializers.instance
-                      .deserialize<_i2.SimpleStruct?>(value),
-                )),
-        (request[r'aNullableMapOfNullableComplexStruct']
-                as Map<String, Object?>?)
-            ?.map((
-          key,
-          value,
-        ) =>
-                MapEntry(
-                  key,
-                  _i3.Serializers.instance
-                      .deserialize<_i2.ComplexStruct?>(value),
-                )),
-        (request[r'aNullableMapOfNullableSimpleClass'] as Map<String, Object?>?)
-            ?.map((
-          key,
-          value,
-        ) =>
-                MapEntry(
-                  key,
-                  _i3.Serializers.instance.deserialize<_i2.SimpleClass?>(value),
-                )),
-        (request[r'aNullableMapOfNullableComplexClass']
-                as Map<String, Object?>?)
-            ?.map((
-          key,
-          value,
-        ) =>
-                MapEntry(
-                  key,
-                  _i3.Serializers.instance
-                      .deserialize<_i2.ComplexClass?>(value),
-                )),
-      );
-    },
-    (json) => json as Map<String, dynamic>,
-  );
-
-  @override
-  _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
-    final handler = _i5.Pipeline().addHandler(_inner.handler);
-    return handler(request);
-  }
+final class ComplexTarget extends _i1.CelestFunctionTarget {
+  ComplexTarget()
+      : super(
+          (
+            request,
+            context,
+          ) async {
+            _i2.complex(
+              _i3.Serializers.instance
+                  .deserialize<_i2.SimpleStruct>(request[r'aSimpleStruct']),
+              _i3.Serializers.instance
+                  .deserialize<_i2.ComplexStruct>(request[r'aComplexStruct']),
+              _i3.Serializers.instance
+                  .deserialize<_i2.SimpleClass>(request[r'aSimpleClass']),
+              _i3.Serializers.instance
+                  .deserialize<_i2.ComplexClass>(request[r'aComplexClass']),
+              _i3.Serializers.instance.deserialize<_i2.SimpleStruct?>(
+                  request[r'aNullableSimpleStruct']),
+              _i3.Serializers.instance.deserialize<_i2.ComplexStruct?>(
+                  request[r'aNullableComplexStruct']),
+              _i3.Serializers.instance.deserialize<_i2.SimpleClass?>(
+                  request[r'aNullableSimpleClass']),
+              _i3.Serializers.instance.deserialize<_i2.ComplexClass?>(
+                  request[r'aNullableComplexClass']),
+              (request[r'anIterableOfSimpleStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct>(el))
+                  .toList(),
+              (request[r'anIterableOfComplexStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct>(el))
+                  .toList(),
+              (request[r'anIterableOfSimpleClass'] as Iterable<Object?>)
+                  .map((el) =>
+                      _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
+                  .toList(),
+              (request[r'anIterableOfComplexClass'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass>(el))
+                  .toList(),
+              (request[r'aNullableIterableOfSimpleStruct']
+                      as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct>(el))
+                  .toList(),
+              (request[r'aNullableIterableOfComplexStruct']
+                      as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct>(el))
+                  .toList(),
+              (request[r'aNullableIterableOfSimpleClass'] as Iterable<Object?>?)
+                  ?.map((el) =>
+                      _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
+                  .toList(),
+              (request[r'aNullableIterableOfComplexClass']
+                      as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass>(el))
+                  .toList(),
+              (request[r'anIterableOfNullableSimpleStruct']
+                      as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct?>(el))
+                  .toList(),
+              (request[r'anIterableOfNullableComplexStruct']
+                      as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct?>(el))
+                  .toList(),
+              (request[r'anIterableOfNullableSimpleClass'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleClass?>(el))
+                  .toList(),
+              (request[r'anIterableOfNullableComplexClass']
+                      as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass?>(el))
+                  .toList(),
+              (request[r'aListOfSimpleStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct>(el))
+                  .toList(),
+              (request[r'aListOfComplexStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct>(el))
+                  .toList(),
+              (request[r'aListOfSimpleClass'] as Iterable<Object?>)
+                  .map((el) =>
+                      _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
+                  .toList(),
+              (request[r'aListOfComplexClass'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass>(el))
+                  .toList(),
+              (request[r'aNullableListOfSimpleStruct'] as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct>(el))
+                  .toList(),
+              (request[r'aNullableListOfComplexStruct'] as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct>(el))
+                  .toList(),
+              (request[r'aNullableListOfSimpleClass'] as Iterable<Object?>?)
+                  ?.map((el) =>
+                      _i3.Serializers.instance.deserialize<_i2.SimpleClass>(el))
+                  .toList(),
+              (request[r'aNullableListOfComplexClass'] as Iterable<Object?>?)
+                  ?.map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass>(el))
+                  .toList(),
+              (request[r'aListOfNullableSimpleStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleStruct?>(el))
+                  .toList(),
+              (request[r'aListOfNullableComplexStruct'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexStruct?>(el))
+                  .toList(),
+              (request[r'aListOfNullableSimpleClass'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.SimpleClass?>(el))
+                  .toList(),
+              (request[r'aListOfNullableComplexClass'] as Iterable<Object?>)
+                  .map((el) => _i3.Serializers.instance
+                      .deserialize<_i2.ComplexClass?>(el))
+                  .toList(),
+              (request[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
+                key,
+                value,
+              ) =>
+                  MapEntry(
+                    key,
+                    _i3.Serializers.instance
+                        .deserialize<_i2.SimpleStruct>(value),
+                  )),
+              (request[r'aMapOfComplexStruct'] as Map<String, Object?>).map((
+                key,
+                value,
+              ) =>
+                  MapEntry(
+                    key,
+                    _i3.Serializers.instance
+                        .deserialize<_i2.ComplexStruct>(value),
+                  )),
+              (request[r'aMapOfSimpleClass'] as Map<String, Object?>).map((
+                key,
+                value,
+              ) =>
+                  MapEntry(
+                    key,
+                    _i3.Serializers.instance
+                        .deserialize<_i2.SimpleClass>(value),
+                  )),
+              (request[r'aMapOfComplexClass'] as Map<String, Object?>).map((
+                key,
+                value,
+              ) =>
+                  MapEntry(
+                    key,
+                    _i3.Serializers.instance
+                        .deserialize<_i2.ComplexClass>(value),
+                  )),
+              (request[r'aNullableMapOfSimpleStruct'] as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleStruct>(value),
+                      )),
+              (request[r'aNullableMapOfComplexStruct'] as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexStruct>(value),
+                      )),
+              (request[r'aNullableMapOfSimpleClass'] as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleClass>(value),
+                      )),
+              (request[r'aNullableMapOfComplexClass'] as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexClass>(value),
+                      )),
+              (request[r'aMapOfNullableSimpleStruct'] as Map<String, Object?>)
+                  .map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleStruct?>(value),
+                      )),
+              (request[r'aMapOfNullableComplexStruct'] as Map<String, Object?>)
+                  .map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexStruct?>(value),
+                      )),
+              (request[r'aMapOfNullableSimpleClass'] as Map<String, Object?>)
+                  .map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleClass?>(value),
+                      )),
+              (request[r'aMapOfNullableComplexClass'] as Map<String, Object?>)
+                  .map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexClass?>(value),
+                      )),
+              (request[r'aNullableMapOfNullableSimpleStruct']
+                      as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleStruct?>(value),
+                      )),
+              (request[r'aNullableMapOfNullableComplexStruct']
+                      as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexStruct?>(value),
+                      )),
+              (request[r'aNullableMapOfNullableSimpleClass']
+                      as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.SimpleClass?>(value),
+                      )),
+              (request[r'aNullableMapOfNullableComplexClass']
+                      as Map<String, Object?>?)
+                  ?.map((
+                key,
+                value,
+              ) =>
+                      MapEntry(
+                        key,
+                        _i3.Serializers.instance
+                            .deserialize<_i2.ComplexClass?>(value),
+                      )),
+            );
+            return (statusCode: 200, body: null);
+          },
+          middleware: [],
+        );
 }
 
 _i4.Future<void> main(List<String> args) async {
@@ -286,7 +308,7 @@ _i4.Future<void> main(List<String> args) async {
   _i3.Serializers.instance.put(const SimpleClassSerializer());
   _i3.Serializers.instance.put(const ComplexStructSerializer());
   _i3.Serializers.instance.put(const ComplexClassSerializer());
-  await _i1.serve(
+  await _i5.serve(
     args,
     (_) => ComplexTarget(),
   );

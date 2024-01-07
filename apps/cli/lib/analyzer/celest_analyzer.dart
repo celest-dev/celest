@@ -1,13 +1,20 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/analysis/uri_converter.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
+// ignore: implementation_imports
+import 'package:analyzer/src/dart/ast/ast.dart';
+// ignore: implementation_imports
+import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
@@ -87,6 +94,21 @@ final class CelestAnalyzer {
     );
   }
 
+  late final DartType _coreErrorType;
+  late final DartType _coreExceptionType;
+
+  late final _loadedCoreTypes = _loadCoreTypes();
+  Future<void> _loadCoreTypes() async {
+    final dartCore = await _context.currentSession.getLibraryByUri('dart:core')
+        as LibraryElementResult;
+    _coreExceptionType =
+        (dartCore.element.exportNamespace.get('Exception') as ClassElement)
+            .thisType;
+    _coreErrorType =
+        (dartCore.element.exportNamespace.get('Error') as ClassElement)
+            .thisType;
+  }
+
   Future<({ast.Project? project, List<AnalysisException> errors})>
       analyzeProject([List<String>? invalidatedFiles]) async {
     _errors.clear();
@@ -96,6 +118,7 @@ final class CelestAnalyzer {
       }
       await _context.applyPendingFileChanges();
     }
+    await _loadedCoreTypes;
     final project = await _findProject();
     if (project == null) {
       return (project: null, errors: _errors);
@@ -142,7 +165,9 @@ final class CelestAnalyzer {
     _logger.finer('Resolved project file');
     typeHelper
       ..typeSystem = projectFile.typeSystem
-      ..typeProvider = projectFile.typeProvider;
+      ..typeProvider = projectFile.typeProvider
+      ..coreErrorType = _coreErrorType
+      ..coreExceptionType = _coreExceptionType;
     // TODO: Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
@@ -401,11 +426,39 @@ final class CelestAnalyzer {
       return null;
     }
     final library = apiLibraryResult.element;
+    final libraryUnit = apiLibraryResult.units.single;
     final libraryMetdata = _collectApiMetadata(library);
     final functions = Map.fromEntries(
       library.topLevelElements.whereType<FunctionElement>().map((func) {
         if (func.isPrivate) {
           return null;
+        }
+
+        final funcNode = libraryUnit.unit.declarations
+            .firstWhere((node) => node.declaredElement == func);
+        final exceptionCollector = ExceptionTypeCollector(
+          source: library.source,
+          uriConverter: _context.currentSession.uriConverter,
+          errorReporter: _reportError,
+        );
+        funcNode.accept(exceptionCollector);
+        final exceptionTypes = exceptionCollector.exceptionTypes;
+        // These are supported but are handled by the common runtime.
+        exceptionTypes.removeAll([
+          _coreErrorType,
+          _coreExceptionType,
+        ]);
+        for (final exceptionType in exceptionTypes) {
+          final isSerializable = typeHelper.isSerializable(exceptionType);
+          if (!isSerializable.isSerializable) {
+            for (final reason in isSerializable.reasons) {
+              _reportError(
+                'The type of a thrown exception must be serializable as JSON. '
+                '$exceptionType is not serializable: $reason',
+                exceptionCollector.exceptionTypeLocations[exceptionType]!,
+              );
+            }
+          }
         }
 
         final function = ast.CloudFunction(
@@ -437,6 +490,7 @@ final class CelestAnalyzer {
           returnType: typeHelper.toReference(func.returnType),
           flattenedReturnType:
               typeHelper.toReference(func.returnType.flattened),
+          exceptionTypes: exceptionTypes.map(typeHelper.toReference).toList(),
           location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
         );
@@ -518,5 +572,87 @@ final class _ScopedWidgetCollector {
       }
     }
     return declarations;
+  }
+}
+
+final class ExceptionTypeCollector extends RecursiveAstVisitor<void> {
+  ExceptionTypeCollector({
+    required this.source,
+    required this.uriConverter,
+    required this.errorReporter,
+  });
+
+  final Source source;
+  final UriConverter uriConverter;
+  final Set<DartType> exceptionTypes = {};
+  final Map<DartType, SourceLocation> exceptionTypeLocations = {};
+  final ErrorReporter errorReporter;
+
+  static final _logger = Logger('ExceptionTypeCollector');
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    // TODO(dnys1): Support recursion into methods outside the library.
+    super.visitMethodInvocation(node);
+    // final functionElement = switch (node.function) {
+    //   final SimpleIdentifier identifier => identifier.staticElement,
+    //   _ => null,
+    // } as ExecutableElement?;
+    // if (functionElement == null) {
+    //   print('Unknown function element: ${node.function.runtimeType}');
+    //   return;
+    // }
+    // if (functionElement.librarySource.uri !=
+    //     unit.declaredElement!.librarySource.uri) {
+    //   final resolvedLibrary =
+    //       await session.getResolvedLibraryByElement(functionElement.library)
+    //           as ResolvedLibraryResult;
+    //   await resolvedLibrary
+    //       .getElementDeclaration(functionElement)!
+    //       .node
+    //       .accept(this);
+    // }
+  }
+
+  @override
+  void visitThrowExpression(ThrowExpression node) {
+    super.visitThrowExpression(node);
+    final staticType = node.expression.staticType;
+    if (staticType == null) {
+      errorReporter(
+        'Could not resolve thrown type',
+        node.sourceLocation(source),
+      );
+      return;
+    }
+    if (!staticType.isThrowable) {
+      errorReporter(
+        'The type of a thrown expression must be a subtype of `Error` or `Exception`',
+        node.sourceLocation(source),
+      );
+      return;
+    }
+    final staticTypeString =
+        staticType.getDisplayString(withNullability: false);
+    final libraryUri = staticType.element?.librarySource?.uri;
+    if (libraryUri == null) {
+      _logger.finest(
+        'Could not resolve library URI of type: $staticTypeString',
+      );
+      return;
+    }
+    final libraryPath = uriConverter.uriToPath(libraryUri);
+    if (libraryPath == null) {
+      _logger.finest(
+        'Could not resolve library path of type: $staticTypeString',
+      );
+      return;
+    }
+    if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
+      _logger.finest('Skipping non-custom error type: $staticTypeString');
+      return;
+    }
+    exceptionTypeLocations[staticType] = node.sourceLocation(source);
+    exceptionTypes.add(staticType);
   }
 }

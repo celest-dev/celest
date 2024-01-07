@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 // ignore: implementation_imports
@@ -109,6 +110,11 @@ extension DartTypeHelper on DartType {
       isDartCoreNull ||
       isEnum;
 
+  bool get isThrowable {
+    return typeHelper.typeSystem.isSubtypeOf(this, typeHelper.coreErrorType) ||
+        typeHelper.typeSystem.isSubtypeOf(this, typeHelper.coreExceptionType);
+  }
+
   Uri? get sourceUri => switch (alias) {
         final alias? => alias.element.sourceLocation.uri,
         _ => element?.sourceLocation.uri,
@@ -166,6 +172,17 @@ extension RecordTypeHelper on RecordType {
         ]);
         return 'Record\$${uniqueHash.toRadixString(36)}';
     }
+  }
+}
+
+extension NodeSourceLocation on AstNode {
+  ast.SourceLocation sourceLocation(Source source) {
+    final (lineNo, column) = source.offsetToLineCol(offset);
+    return ast.SourceLocation(
+      uri: source.uri,
+      line: lineNo,
+      column: column,
+    );
   }
 }
 

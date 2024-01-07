@@ -19,7 +19,6 @@ import 'package:celest_runtime_cloud/celest_runtime_cloud.dart'
     as celest_runtime_cloud;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:functions_framework/serve.dart' as functions_framework;
 import 'package:meta/meta.dart' as meta;
 import 'package:shelf/shelf.dart' as shelf;
 
@@ -138,6 +137,14 @@ class _Core {
 
   static const _url = 'dart:core';
 
+  /// Creates a [ArgumentError] reference.
+  DartTypeReference get argumentError =>
+      const DartTypeReference('ArgumentError', _url);
+
+  /// Creates a [AssertionError] reference.
+  DartTypeReference get assertionError =>
+      const DartTypeReference('AssertionError', _url);
+
   /// Creates a [BigInt] reference.
   DartTypeReference get bigInt => const DartTypeReference(
         'BigInt',
@@ -147,6 +154,10 @@ class _Core {
 
   /// Creates a [bool] reference.
   DartTypeReference get bool => const DartTypeReference('bool', _url);
+
+  /// Creates a [ConcurrentModificationError] reference.
+  DartTypeReference get concurrentModificationError =>
+      const DartTypeReference('ConcurrentModificationError', _url);
 
   /// Creates a [DateTime] reference.
   DartTypeReference get dateTime => const DartTypeReference(
@@ -172,11 +183,22 @@ class _Core {
   /// Creates a [dynamic] reference.
   DartTypeReference get dynamic => const DartTypeReference('dynamic', _url);
 
+  /// Creates a [Error] reference.
+  DartTypeReference get error => const DartTypeReference('Error', _url);
+
   /// Creates a [Exception] reference.
   DartTypeReference get exception => const DartTypeReference('Exception', _url);
 
+  /// Creates a [FormatException] reference.
+  DartTypeReference get formatException =>
+      const DartTypeReference('FormatException', _url);
+
   /// Creates a [Function] reference.
   DartTypeReference get function => const DartTypeReference('Function', _url);
+
+  /// Creates a [IndexError] reference.
+  DartTypeReference get indexError =>
+      const DartTypeReference('IndexError', _url);
 
   /// Creates an [int] reference.
   DartTypeReference get int => const DartTypeReference('int', _url);
@@ -213,8 +235,16 @@ class _Core {
   /// Creates an [MapEntry] reference.
   DartTypeReference get mapEntry => const DartTypeReference('MapEntry', _url);
 
+  /// Creates a [OutOfMemoryError] reference.
+  DartTypeReference get outOfMemoryError =>
+      const DartTypeReference('OutOfMemoryError', _url);
+
   /// Creates an [Never] reference.
   DartTypeReference get never => const DartTypeReference('Never', _url);
+
+  /// Creates a [NoSuchMethodError] reference.
+  DartTypeReference get noSuchMethodError =>
+      const DartTypeReference('NoSuchMethodError', _url);
 
   /// Creates a [Null] reference.
   DartTypeReference get null$ => const DartTypeReference('Null', _url);
@@ -227,6 +257,10 @@ class _Core {
 
   /// Creates a [override] reference.
   DartTypeReference get override => const DartTypeReference('override', _url);
+
+  /// Creates a [RangeError] reference.
+  DartTypeReference get rangeError =>
+      const DartTypeReference('RangeError', _url);
 
   /// Creates a [RegExp] reference.
   DartTypeReference get regExp => const DartTypeReference(
@@ -242,6 +276,10 @@ class _Core {
           ..url = _url
           ..types.add(ref),
       );
+
+  /// Creates a [StackOverflowError] reference.
+  DartTypeReference get stackOverflowError =>
+      const DartTypeReference('StackOverflowError', _url);
 
   /// Creates a [StackTrace] reference.
   DartTypeReference get stackTrace => const DartTypeReference(
@@ -259,6 +297,17 @@ class _Core {
 
   /// Creates a [Type] reference.
   DartTypeReference get type => const DartTypeReference('Type', _url);
+
+  /// Creates a [TypeError] reference.
+  DartTypeReference get typeError => const DartTypeReference('TypeError', _url);
+
+  /// Create a [UnimplementedError] reference.
+  DartTypeReference get unimplementedError =>
+      const DartTypeReference('UnimplementedError', _url);
+
+  /// Create a [UnsupportedError] reference.
+  DartTypeReference get unsupportedError =>
+      const DartTypeReference('UnsupportedError', _url);
 
   /// Creates a [Uri] reference.
   DartTypeReference get uri => const DartTypeReference(
@@ -525,12 +574,19 @@ class _Celest {
 
   static const _url = 'package:celest/celest.dart';
   static const _coreUrl = 'package:celest_core/celest_core.dart';
-  static const _cloudRuntimeUrl =
-      'package:celest_runtime_cloud/celest_runtime_cloud.dart';
+  static const _cloudRuntimeUrl = 'package:celest/src/runtime.dart';
 
   /// Creates a [celest.BuildEnvironment] reference.
   DartTypeReference get buildEnvironment =>
       const DartTypeReference('BuildEnvironment', _url);
+
+  /// Creates a [celest_runtime_cloud.celestEnv] reference.
+  DartTypeReference get celestEnv =>
+      const DartTypeReference('celestEnv', _cloudRuntimeUrl);
+
+  /// Creates a [celest_core.CelestEnvironment] reference.
+  DartTypeReference get celestEnvironment =>
+      const DartTypeReference('CelestEnvironment', _coreUrl);
 
   /// Creates a [celest.CloudApi] reference.
   DartTypeReference get cloudApi => const DartTypeReference('CloudApi', _url);
@@ -590,6 +646,10 @@ class _Celest {
   /// Creates a [celest_runtime_cloud.serve] reference.
   DartTypeReference get serve =>
       const DartTypeReference('serve', _cloudRuntimeUrl);
+
+  /// Creates a [celest_runtime_cloud.CelestFunctionTarget] reference.
+  DartTypeReference get functionTarget =>
+      const DartTypeReference('CelestFunctionTarget', _cloudRuntimeUrl);
 }
 
 /// `dart:convert` types
@@ -633,14 +693,6 @@ class _FunctionsFramework {
   const _FunctionsFramework();
 
   static const _url = 'package:functions_framework/serve.dart';
-
-  /// Creates a [functions_framework.FunctionTarget] reference.
-  DartTypeReference get functionTarget =>
-      const DartTypeReference('FunctionTarget', _url);
-
-  /// Creates a [functions_framework.JsonWithContextFunctionTarget] reference.
-  DartTypeReference get jsonWithContextFunctionTarget =>
-      const DartTypeReference('JsonWithContextFunctionTarget', _url);
 
   /// Creates a [functions_framework.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _url);

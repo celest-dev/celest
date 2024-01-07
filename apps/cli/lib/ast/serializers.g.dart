@@ -33,6 +33,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Reference)]),
+          () => new ListBuilder<Reference>())
+      ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(Api)]),
           () => new MapBuilder<String, Api>())

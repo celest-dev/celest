@@ -85,6 +85,13 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "exceptions",
+      "cloudApi": {
+        "name": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "generic_wrappers",
       "cloudApi": {
         "name": "generic_wrappers"
@@ -499,6 +506,62 @@
       "cloudFunction": {
         "name": "superFields",
         "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsCustomError",
+      "cloudFunction": {
+        "name": "throwsCustomError",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsCustomErrorToFromJson",
+      "cloudFunction": {
+        "name": "throwsCustomErrorToFromJson",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsCustomErrorWithStackTrace",
+      "cloudFunction": {
+        "name": "throwsCustomErrorWithStackTrace",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsCustomException",
+      "cloudFunction": {
+        "name": "throwsCustomException",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsCustomExceptionToFromJson",
+      "cloudFunction": {
+        "name": "throwsCustomExceptionToFromJson",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsError",
+      "cloudFunction": {
+        "name": "throwsError",
+        "apiName": "exceptions"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "exceptions.throwsException",
+      "cloudFunction": {
+        "name": "throwsException",
+        "apiName": "exceptions"
       }
     },
     {

@@ -2,73 +2,73 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
+import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i4;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i5;
-import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i7;
+import 'package:functions_framework/serve.dart' as _i7;
 
 import '../../../functions/generic_wrappers.dart' as _i2;
 
-class GenericWrapperParametersTarget extends _i1.FunctionTarget {
-  final _inner = _i1.JsonWithContextFunctionTarget(
-    (
-      request,
-      context,
-    ) async {
-      final response = _i2.genericWrapperParameters(
-        listOfString: _i3.Serializers.instance
-            .deserialize<_i4.IList<String>>(request[r'listOfString']),
-        listOfUri: _i3.Serializers.instance
-            .deserialize<_i4.IList<Uri>>(request[r'listOfUri']),
-        listOfSimpleClass: _i3.Serializers.instance
-            .deserialize<_i4.IList<_i2.SimpleClass>>(
-                request[r'listOfSimpleClass']),
-        listOfListOfString: _i3.Serializers.instance
-            .deserialize<_i4.IList<_i4.IList<String>>>(
-                request[r'listOfListOfString']),
-        listOfListOfUri: _i3.Serializers.instance
-            .deserialize<_i4.IList<_i4.IList<Uri>>>(
-                request[r'listOfListOfUri']),
-        listOfListOfSimpleClass: _i3.Serializers.instance
-            .deserialize<_i4.IList<_i4.IList<_i2.SimpleClass>>>(
-                request[r'listOfListOfSimpleClass']),
-        mapOfString: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, String>>(request[r'mapOfString']),
-        mapOfUri: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, Uri>>(request[r'mapOfUri']),
-        mapOfSimpleClass: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i2.SimpleClass>>(
-                request[r'mapOfSimpleClass']),
-        mapOfListOfString: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i4.IList<String>>>(
-                request[r'mapOfListOfString']),
-        mapOfListOfUri: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i4.IList<Uri>>>(
-                request[r'mapOfListOfUri']),
-        mapOfListOfSimpleClass: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i4.IList<_i2.SimpleClass>>>(
-                request[r'mapOfListOfSimpleClass']),
-        mapOfMapOfString: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i5.IMap<String, String>>>(
-                request[r'mapOfMapOfString']),
-        mapOfMapOfUri: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i5.IMap<String, Uri>>>(
-                request[r'mapOfMapOfUri']),
-        mapOfMapOfSimpleClass: _i3.Serializers.instance
-            .deserialize<_i5.IMap<String, _i5.IMap<String, _i2.SimpleClass>>>(
-                request[r'mapOfMapOfSimpleClass']),
-      );
-      return _i3.Serializers.instance.serialize<_i2.GenericWrappers>(response);
-    },
-    (json) => json as Map<String, dynamic>,
-  );
-
-  @override
-  _i6.FutureOr<_i7.Response> handler(_i7.Request request) {
-    final handler = _i7.Pipeline().addHandler(_inner.handler);
-    return handler(request);
-  }
+final class GenericWrapperParametersTarget extends _i1.CelestFunctionTarget {
+  GenericWrapperParametersTarget()
+      : super(
+          (
+            request,
+            context,
+          ) async {
+            final response = _i2.genericWrapperParameters(
+              listOfString: _i3.Serializers.instance
+                  .deserialize<_i4.IList<String>>(request[r'listOfString']),
+              listOfUri: _i3.Serializers.instance
+                  .deserialize<_i4.IList<Uri>>(request[r'listOfUri']),
+              listOfSimpleClass: _i3.Serializers.instance
+                  .deserialize<_i4.IList<_i2.SimpleClass>>(
+                      request[r'listOfSimpleClass']),
+              listOfListOfString: _i3.Serializers.instance
+                  .deserialize<_i4.IList<_i4.IList<String>>>(
+                      request[r'listOfListOfString']),
+              listOfListOfUri: _i3.Serializers.instance
+                  .deserialize<_i4.IList<_i4.IList<Uri>>>(
+                      request[r'listOfListOfUri']),
+              listOfListOfSimpleClass: _i3.Serializers.instance
+                  .deserialize<_i4.IList<_i4.IList<_i2.SimpleClass>>>(
+                      request[r'listOfListOfSimpleClass']),
+              mapOfString: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, String>>(
+                      request[r'mapOfString']),
+              mapOfUri: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, Uri>>(request[r'mapOfUri']),
+              mapOfSimpleClass: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i2.SimpleClass>>(
+                      request[r'mapOfSimpleClass']),
+              mapOfListOfString: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i4.IList<String>>>(
+                      request[r'mapOfListOfString']),
+              mapOfListOfUri: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i4.IList<Uri>>>(
+                      request[r'mapOfListOfUri']),
+              mapOfListOfSimpleClass: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i4.IList<_i2.SimpleClass>>>(
+                      request[r'mapOfListOfSimpleClass']),
+              mapOfMapOfString: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i5.IMap<String, String>>>(
+                      request[r'mapOfMapOfString']),
+              mapOfMapOfUri: _i3.Serializers.instance
+                  .deserialize<_i5.IMap<String, _i5.IMap<String, Uri>>>(
+                      request[r'mapOfMapOfUri']),
+              mapOfMapOfSimpleClass: _i3.Serializers.instance.deserialize<
+                      _i5.IMap<String, _i5.IMap<String, _i2.SimpleClass>>>(
+                  request[r'mapOfMapOfSimpleClass']),
+            );
+            return (
+              statusCode: 200,
+              body: _i3.Serializers.instance
+                  .serialize<_i2.GenericWrappers>(response)
+            );
+          },
+          middleware: [],
+        );
 }
 
 _i6.Future<void> main(List<String> args) async {
@@ -90,7 +90,7 @@ _i6.Future<void> main(List<String> args) async {
   _i3.Serializers.instance
       .put(const IMapStringIMapStringSimpleClassSerializer());
   _i3.Serializers.instance.put(const GenericWrappersSerializer());
-  await _i1.serve(
+  await _i7.serve(
     args,
     (_) => GenericWrapperParametersTarget(),
   );

@@ -77,8 +77,15 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
 }
 
 class Project extends DataClass implements Insertable<Project> {
+  /// A unique identifier of the project.
+  ///
+  /// By default, this is a UUID v7.
   final String id;
+
+  /// The name of the project.
   final String name;
+
+  /// The absolute, canonical path to the project in the user's FS.
   final String path;
   const Project({required this.id, required this.name, required this.path});
   @override

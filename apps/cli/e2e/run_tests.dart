@@ -248,6 +248,7 @@ class TestRunner {
           workingDirectory: projectPaths.projectRoot,
           environment: {
             'PORT': '$port',
+            'CELEST_ENV': 'local',
             ...projectPaths.envManager.env,
           },
         );
@@ -291,23 +292,21 @@ class TestRunner {
               ),
             );
             switch (test) {
+              case FunctionTestError(:final output):
+                switch (result) {
+                  case ErrorResult(error: final e):
+                    fail('Unexpected error: $e');
+                  case ValueResult(value: final resp):
+                    expect(resp.statusCode, test.statusCode);
+                    final respJson = jsonDecode(resp.body);
+                    expect(respJson, output);
+                }
               case FunctionTestSuccess(:final output):
                 expect(result.isValue, isTrue);
                 final resp = result.asValue!.value;
                 expect(resp.statusCode, 200);
                 final respJson = jsonDecode(resp.body);
                 expect(respJson, output);
-              case FunctionTestError(:final error):
-                switch (result) {
-                  case ErrorResult(error: final e):
-                    expect(
-                      e.toString(),
-                      contains(error.toString()),
-                    );
-                  case ValueResult(value: final resp):
-                    expect(resp.statusCode, greaterThanOrEqualTo(300));
-                    expect(resp.body, contains(error));
-                }
             }
             if (test.logs case final expectedLogs?) {
               expect(logs, containsAllInOrder(expectedLogs.map(contains)));
@@ -1908,6 +1907,156 @@ const Map<String, Test> tests = {
               name: 'genericWrappers',
               input: _genericWrappers,
               output: _genericWrappers,
+            ),
+          ],
+        },
+      ),
+      'exceptions': ApiTest(
+        functionTests: {
+          'throwsException': [
+            FunctionTestError(
+              name: 'deserializes std exception',
+              input: {
+                'type': 'Exception',
+              },
+              output: {
+                'error': {
+                  'code': '_Exception',
+                  'message': 'Exception: Something bad happened',
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'deserializes format exception',
+              input: {
+                'type': 'FormatException',
+              },
+              output: {
+                'error': {
+                  'code': 'FormatException',
+                  'message': 'FormatException: Bad format',
+                },
+              },
+            ),
+          ],
+          'throwsError': [
+            FunctionTestError(
+              name: 'deserializes std error',
+              statusCode: 500,
+              input: {
+                'type': 'Error',
+              },
+              output: {
+                'error': {
+                  'code': 'Error',
+                  'message': "Instance of 'Error'",
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'deserializes argument error',
+              statusCode: 500,
+              input: {
+                'type': 'ArgumentError',
+              },
+              output: {
+                'error': {
+                  'code': 'ArgumentError',
+                  'message': 'Invalid argument(s) (someArg): Bad argument',
+                },
+              },
+            ),
+          ],
+          'throwsCustomException': [
+            FunctionTestError(
+              name: 'deserializes custom exception',
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomException',
+                  'message': 'CustomException: This is a custom exception',
+                  'details': {
+                    'message': 'This is a custom exception',
+                    'additionalInfo': {
+                      'hello': 'world',
+                    },
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomExceptionToFromJson': [
+            FunctionTestError(
+              name: 'deserializes custom exception w/ custom serializer',
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomExceptionToFromJson',
+                  'message': 'CustomException: This is a custom exception',
+                  'details': {
+                    'message': 'This is a custom exception',
+                    'hello': 'world',
+                    'another': 'value',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomError': [
+            FunctionTestError(
+              name: 'deserializes custom error',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomError',
+                  'message': 'CustomError: This is a custom error',
+                  'details': {
+                    'message': 'This is a custom error',
+                    'additionalInfo': {
+                      'hello': 'world',
+                    },
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomErrorToFromJson': [
+            FunctionTestError(
+              name: 'deserializes custom error w/ custom serializer',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomErrorToFromJson',
+                  'message': 'CustomError: This is a custom error',
+                  'details': {
+                    'message': 'This is a custom error',
+                    'hello': 'world',
+                    'another': 'value',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomErrorWithStackTrace': [
+            FunctionTestError(
+              name: 'deserializes custom error w/ stack traace',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomErrorWithStackTrace',
+                  'message': 'CustomError: This is a custom error',
+                  'details': {
+                    'message': 'This is a custom error',
+                    'additionalInfo': {
+                      'hello': 'world',
+                    },
+                    'stackTrace': '',
+                  },
+                },
+              },
             ),
           ],
         },

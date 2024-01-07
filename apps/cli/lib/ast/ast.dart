@@ -202,6 +202,7 @@ abstract class CloudFunction
     required List<CloudFunctionParameter> parameters,
     required Reference returnType,
     required Reference flattenedReturnType,
+    required List<Reference> exceptionTypes,
     List<ApiMetadata> metadata = const [],
     required SourceLocation location,
   }) {
@@ -212,6 +213,7 @@ abstract class CloudFunction
       returnType: returnType,
       flattenedReturnType: flattenedReturnType,
       metadata: metadata.build(),
+      exceptionTypes: exceptionTypes.build(),
       location: location,
     );
   }
@@ -230,6 +232,7 @@ abstract class CloudFunction
   Reference get returnType;
   Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;
+  BuiltList<Reference> get exceptionTypes;
   SourceLocation get location;
 
   Map<String, dynamic> toJson() =>

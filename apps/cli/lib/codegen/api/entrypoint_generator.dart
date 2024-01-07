@@ -35,9 +35,6 @@ final class EntrypointGenerator {
 
   Library generate() {
     final library = LibraryBuilder();
-    final body = BlockBuilder();
-    var pipeline = DartTypes.shelf.pipeline.newInstance([]);
-
     // TODO(dnys1): To Set (when removed element)
     // Actually, throw for duplicate values?
     final middleware = [
@@ -48,185 +45,212 @@ final class EntrypointGenerator {
         .reversed
         .whereType<ApiMiddleware>()
         .toList();
-    for (final middleware in middleware) {
-      pipeline = pipeline.property('addMiddleware').call([
-        middleware.type.constInstance([]).property('handle'),
-      ]);
-    }
-    pipeline = pipeline.property('addHandler').call([
-      refer('_inner').property('handler'),
-    ]);
-    body
-      ..addExpression(
-        declareFinal('handler').assign(pipeline),
-      )
-      ..addExpression(
-        refer('handler').call([refer('request')]).returned,
-      );
-    final innerTarget = Field(
-      (f) => f
-        ..name = '_inner'
-        ..modifier = FieldModifier.final$
-        ..assignment = DartTypes
-            .functionsFramework.jsonWithContextFunctionTarget
-            .newInstance([
-          Method(
-            (m) => m
-              ..requiredParameters.addAll([
-                Parameter(
-                  (p) => p..name = 'request',
-                ),
-                Parameter(
-                  (p) => p..name = 'context',
-                ),
-              ])
-              ..modifier = MethodModifier.async
-              ..body = Block((b) {
-                final functionReference = refer(
-                  function.name,
-                  function.location.uri.toString(),
-                );
-                if (function.parameters
-                    .any((param) => param.type.isFunctionContext)) {
-                  b.addExpression(
-                    declareFinal('celestContext').assign(
-                      DartTypes.celest.functionContext.newInstance([]),
-                    ),
+    final body = Method(
+      (m) => m
+        ..requiredParameters.addAll([
+          Parameter(
+            (p) => p..name = 'request',
+          ),
+          Parameter(
+            (p) => p..name = 'context',
+          ),
+        ])
+        ..modifier = MethodModifier.async
+        ..body = Block((b) {
+          final functionReference = refer(
+            function.name,
+            function.location.uri.toString(),
+          );
+          if (function.parameters
+              .any((param) => param.type.isFunctionContext)) {
+            b.addExpression(
+              declareFinal('celestContext').assign(
+                DartTypes.celest.functionContext.newInstance([]),
+              ),
+            );
+          }
+          final positionalParams = <Expression>[];
+          final namedParams = <String, Expression>{};
+          for (final param in function.parameters) {
+            Expression paramExp;
+            if (param.type.isFunctionContext) {
+              paramExp = refer('celestContext');
+            } else if (param.references case final reference?) {
+              switch (reference.type) {
+                case NodeType.environmentVariable:
+                  paramExp = DartTypes.io.platform
+                      .property('environment')
+                      .index(literalString(reference.name, raw: true))
+                      .nullChecked;
+                  final toType = switch (param.type.symbol) {
+                    'int' => DartTypes.core.int,
+                    'double' => DartTypes.core.double,
+                    'bool' => DartTypes.core.bool,
+                    'num' => DartTypes.core.num,
+                    'String' => null,
+                    _ => unreachable(),
+                  };
+                  if (toType != null) {
+                    paramExp = toType.property('parse').call([paramExp]);
+                  }
+                default:
+                  unreachable(
+                    'Invalid reference type: ${reference.type}',
                   );
-                }
-                final positionalParams = <Expression>[];
-                final namedParams = <String, Expression>{};
-                for (final param in function.parameters) {
-                  Expression paramExp;
-                  if (param.type.isFunctionContext) {
-                    paramExp = refer('celestContext');
-                  } else if (param.references case final reference?) {
-                    switch (reference.type) {
-                      case NodeType.environmentVariable:
-                        paramExp = DartTypes.io.platform
-                            .property('environment')
-                            .index(literalString(reference.name, raw: true))
-                            .nullChecked;
-                        final toType = switch (param.type.symbol) {
-                          'int' => DartTypes.core.int,
-                          'double' => DartTypes.core.double,
-                          'bool' => DartTypes.core.bool,
-                          'num' => DartTypes.core.num,
-                          'String' => null,
-                          _ => unreachable(),
-                        };
-                        if (toType != null) {
-                          paramExp = toType.property('parse').call([paramExp]);
-                        }
-                      default:
-                        unreachable(
-                          'Invalid reference type: ${reference.type}',
-                        );
-                    }
-                  } else {
-                    final fromMap = refer('request').index(
-                      literalString(param.name, raw: true),
-                    );
-                    final deserialized =
-                        jsonGenerator.fromJson(param.type, fromMap);
-                    paramExp = deserialized;
-                  }
-                  if (param.named) {
-                    namedParams[param.name] = paramExp;
-                  } else {
-                    positionalParams.add(paramExp);
-                  }
-                }
-                var response = functionReference.newInstance(
-                  positionalParams,
-                  namedParams,
-                );
-                final returnType = function.returnType;
-                final flattenedReturnTyep = function.flattenedReturnType;
-                switch (flattenedReturnTyep.symbol) {
-                  case 'void':
-                    b.addExpression(response.returned);
-                  default:
-                    final dartReturnType = typeHelper.fromReference(returnType);
-                    if (dartReturnType.isDartAsyncFuture ||
-                        dartReturnType.isDartAsyncFutureOr) {
-                      response = response.awaited;
-                    }
-                    b.addExpression(
-                      declareFinal('response').assign(response),
-                    );
-                    final result = jsonGenerator.toJson(
-                      flattenedReturnTyep,
-                      refer('response'),
-                    );
-                    b.addExpression(result.returned);
-                }
-              }),
-          ).closure,
-          Method(
-            (m) => m
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'json',
+              }
+            } else {
+              final fromMap = refer('request').index(
+                literalString(param.name, raw: true),
+              );
+              final deserialized = jsonGenerator.fromJson(param.type, fromMap);
+              paramExp = deserialized;
+            }
+            if (param.named) {
+              namedParams[param.name] = paramExp;
+            } else {
+              positionalParams.add(paramExp);
+            }
+          }
+          if (function.exceptionTypes.isNotEmpty) {
+            b.statements.add(const Code('try {'));
+          }
+          var response = functionReference.call(
+            positionalParams,
+            namedParams,
+          );
+          final returnType = function.returnType;
+          final flattenedReturnTyep = function.flattenedReturnType;
+          switch (flattenedReturnTyep.symbol) {
+            case 'void':
+              b.addExpression(response);
+              b.addExpression(
+                literalRecord([], {
+                  'statusCode': literalNum(200),
+                  // TODO(dnys1): Should `void` be represented as null or empty map?
+                  // 'body': literalConstMap(
+                  //   {},
+                  //   DartTypes.core.string,
+                  //   DartTypes.core.object.nullable,
+                  // ),
+                  'body': literalNull,
+                }).returned,
+              );
+            default:
+              final dartReturnType = typeHelper.fromReference(returnType);
+              if (dartReturnType.isDartAsyncFuture ||
+                  dartReturnType.isDartAsyncFutureOr) {
+                response = response.awaited;
+              }
+              b.addExpression(
+                declareFinal('response').assign(response),
+              );
+              final result = jsonGenerator.toJson(
+                flattenedReturnTyep,
+                refer('response'),
+              );
+              b.addExpression(
+                literalRecord([], {
+                  'statusCode': literalNum(200),
+                  'body': result,
+                }).returned,
+              );
+          }
+          final exceptionTypes = List.of(function.exceptionTypes)
+            ..sort((a, b) {
+              final dtA = typeHelper.fromReference(a);
+              final dtB = typeHelper.fromReference(b);
+              // Subtypes rank before supertypes so that switch/try-catch blocks
+              // are in order of decreasing specificity. That is, more general
+              // catch blocks should come after more specific catch blocks.
+              return typeHelper.typeSystem.isSubtypeOf(dtA, dtB) ? -1 : 1;
+            });
+          for (final exceptionType in exceptionTypes) {
+            b.statements.add(
+              Code.scope(
+                (alloc) => '} on ${alloc(exceptionType)} catch (e, st) {',
+              ),
+            );
+            b.addExpression(
+              refer('print').call([
+                literalString(r'$e\n$st'),
+              ]),
+            );
+            b.addExpression(
+              declareFinal('error').assign(
+                jsonGenerator.toJson(
+                  exceptionType,
+                  refer('e'),
                 ),
-              )
-              // All requests are JSON maps
-              ..body = const Code('json as Map<String, dynamic>')
-              ..lambda = true,
-          ).closure,
-        ]).code,
+              ),
+            );
+            b.addExpression(
+              literalRecord([], {
+                'statusCode': typeHelper.typeSystem.isSubtypeOf(
+                  typeHelper.fromReference(exceptionType),
+                  typeHelper.coreErrorType,
+                )
+                    ? literalNum(500)
+                    : literalNum(400),
+                'body': literalMap({
+                  // TODO(dnys1): Should the payload be different depending
+                  // on the environment? Or is it up to developers to protect
+                  // which data is sent via `toJson`?
+                  'error': literalMap({
+                    'code': literalString(exceptionType.symbol!, raw: true),
+                    'message': refer('e').property('toString').call([]),
+                    'details': refer('error'),
+                  }),
+                }),
+              }).returned,
+            );
+          }
+          if (function.exceptionTypes.isNotEmpty) {
+            b.statements.add(const Code('}'));
+          }
+        }),
     );
     final target = Class(
       (c) => c
         ..name = targetName
-        ..extend = DartTypes.functionsFramework.functionTarget
-        ..fields.add(innerTarget)
-        ..methods.add(
-          Method(
-            (m) => m
-              ..annotations.add(DartTypes.core.override)
-              ..name = 'handler'
-              ..returns = DartTypes.async.futureOr(
-                DartTypes.shelf.response,
-              )
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p
-                    ..name = 'request'
-                    ..type = DartTypes.shelf.request,
+        ..modifier = ClassModifier.final$
+        ..extend = DartTypes.celest.functionTarget
+        ..constructors.add(
+          Constructor((c) {
+            c.initializers.add(
+              refer('super').call([
+                body.closure,
+              ], {
+                'middleware': literalList(
+                  middleware
+                      .map(
+                        (m) => m.type.constInstance([]).property('handle'),
+                      )
+                      .toList(),
                 ),
-              )
-              ..body = body.build(),
-          ),
+              }).code,
+            );
+          }),
         ),
     );
 
-    final queue = Queue.of(
+    final allTypes = Set.of(
       [
         function.flattenedReturnType,
         ...function.parameters.map((p) => p.type),
+        ...function.exceptionTypes,
       ].where((type) => !type.isFunctionContext),
     );
-
-    final seen = <ast.DartType>{};
-    void addCustomType(Reference type) {
+    for (final type in allTypes) {
       final dartType = typeHelper.fromReference(type);
-      if (!seen.add(dartType)) {
-        return;
-      }
-      final customSerializers = typeHelper.customSerializers(dartType);
-      for (final customSerializer in customSerializers) {
-        _customSerializers.add(customSerializer);
-      }
+      _customSerializers.addAll(
+        typeHelper.customSerializers(dartType),
+      );
       if ((dartType, type)
           case (final ast.RecordType dartType, final RecordType recordType)) {
         _anonymousRecordTypes[dartType.symbol] = recordType;
       }
     }
 
-    while (queue.isNotEmpty) {
-      addCustomType(queue.removeFirst());
-    }
     final entrypoint = Method(
       (m) => m
         ..name = 'main'

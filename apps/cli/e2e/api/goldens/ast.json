@@ -50,6 +50,7 @@
               }
             }
           ],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_function.dart",
             "line": 7,
@@ -73,6 +74,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_function.dart",
             "line": 8,
@@ -155,6 +157,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 10,
@@ -239,6 +242,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 14,
@@ -279,6 +283,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 19,
@@ -339,6 +344,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 20,
@@ -455,6 +461,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 28,
@@ -579,6 +586,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 37,
@@ -655,6 +663,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 51,
@@ -739,6 +748,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 62,
@@ -779,6 +789,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 70,
@@ -839,6 +850,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 74,
@@ -955,6 +967,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 85,
@@ -1079,6 +1092,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 103,
@@ -1119,6 +1133,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 120,
@@ -1167,6 +1182,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 121,
@@ -1235,6 +1251,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 123,
@@ -1297,6 +1314,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 127,
@@ -1423,6 +1441,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 138,
@@ -1557,6 +1576,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 153,
@@ -1597,6 +1617,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 164,
@@ -1645,6 +1666,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 165,
@@ -1685,6 +1707,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 169,
@@ -1733,6 +1756,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
             "line": 170,
@@ -2795,6 +2819,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
             "line": 7,
@@ -3851,6 +3876,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
             "line": 55,
@@ -5063,6 +5089,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
             "line": 520,
@@ -5101,6 +5128,7 @@
               }
             }
           ],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_function.dart",
             "line": 4,
@@ -5124,6 +5152,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_function.dart",
             "line": 5,
@@ -5171,6 +5200,7 @@
               }
             }
           ],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/api_auth_constant_variables.dart",
             "line": 11,
@@ -5194,6 +5224,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/api_auth_constant_variables.dart",
             "line": 12,
@@ -5244,6 +5275,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 11,
@@ -5292,6 +5324,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 13,
@@ -5340,6 +5373,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 17,
@@ -5388,6 +5422,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 21,
@@ -5436,6 +5471,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 25,
@@ -5500,6 +5536,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 29,
@@ -5564,6 +5601,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 33,
@@ -5640,6 +5678,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 37,
@@ -5688,6 +5727,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 41,
@@ -5736,6 +5776,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 45,
@@ -5784,6 +5825,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 49,
@@ -5832,6 +5874,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 112,
@@ -5880,6 +5923,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 118,
@@ -5928,6 +5972,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 181,
@@ -5972,6 +6017,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 185,
@@ -6020,6 +6066,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 187,
@@ -6068,6 +6115,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 191,
@@ -6116,6 +6164,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 195,
@@ -6164,6 +6213,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 199,
@@ -6228,6 +6278,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 203,
@@ -6292,6 +6343,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 208,
@@ -6368,6 +6420,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 212,
@@ -6416,6 +6469,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 216,
@@ -6464,6 +6518,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 220,
@@ -6508,6 +6563,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 285,
@@ -6556,6 +6612,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 289,
@@ -6604,6 +6661,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 293,
@@ -6652,6 +6710,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 297,
@@ -6700,6 +6759,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 301,
@@ -6764,6 +6824,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 305,
@@ -6828,6 +6889,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 310,
@@ -6904,6 +6966,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 314,
@@ -6952,6 +7015,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 319,
@@ -7000,6 +7064,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 323,
@@ -7048,6 +7113,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 328,
@@ -7096,6 +7162,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 333,
@@ -7132,6 +7199,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 338,
@@ -7172,6 +7240,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 340,
@@ -7212,6 +7281,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 344,
@@ -7252,6 +7322,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 348,
@@ -7292,6 +7363,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 352,
@@ -7348,6 +7420,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 356,
@@ -7404,6 +7477,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 360,
@@ -7472,6 +7546,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 364,
@@ -7512,6 +7587,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 368,
@@ -7552,6 +7628,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 372,
@@ -7592,6 +7669,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 435,
@@ -7632,6 +7710,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 439,
@@ -7672,6 +7751,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 502,
@@ -7712,6 +7792,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 506,
@@ -7752,6 +7833,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 510,
@@ -7792,6 +7874,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 514,
@@ -7848,6 +7931,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 518,
@@ -7904,6 +7988,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 522,
@@ -7972,6 +8057,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 526,
@@ -8012,6 +8098,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 530,
@@ -8052,6 +8139,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 534,
@@ -8092,6 +8180,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 538,
@@ -8132,6 +8221,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 542,
@@ -8260,6 +8350,7 @@
               }
             }
           ],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/middleware.dart",
             "line": 13,
@@ -8306,6 +8397,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 9,
@@ -8354,6 +8446,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 10,
@@ -8394,6 +8487,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 12,
@@ -8442,6 +8536,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 13,
@@ -8482,6 +8577,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 45,
@@ -8530,6 +8626,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 46,
@@ -8570,6 +8667,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 48,
@@ -8618,6 +8716,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 49,
@@ -8658,6 +8757,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 51,
@@ -8706,6 +8806,7 @@
             "isNullable": true
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 52,
@@ -8746,6 +8847,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 54,
@@ -8794,6 +8896,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 55,
@@ -8834,6 +8937,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 57,
@@ -8882,6 +8986,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 58,
@@ -8922,6 +9027,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 73,
@@ -8970,6 +9076,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 74,
@@ -9010,6 +9117,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 86,
@@ -9058,6 +9166,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 87,
@@ -9098,6 +9207,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 153,
@@ -9146,6 +9256,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 154,
@@ -9186,6 +9297,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 156,
@@ -9234,6 +9346,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 157,
@@ -9274,6 +9387,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 159,
@@ -9322,6 +9436,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 163,
@@ -9362,6 +9477,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 168,
@@ -9410,6 +9526,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 169,
@@ -9450,6 +9567,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 174,
@@ -9498,6 +9616,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 175,
@@ -9538,6 +9657,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 177,
@@ -9586,6 +9706,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 181,
@@ -9626,6 +9747,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 186,
@@ -9674,10 +9796,226 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
             "line": 190,
             "column": 28
+          }
+        }
+      }
+    },
+    "exceptions": {
+      "name": "exceptions",
+      "metadata": [],
+      "functions": {
+        "throwsException": {
+          "name": "throwsException",
+          "apiName": "exceptions",
+          "parameters": [
+            {
+              "name": "type",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "SupportedExceptionType",
+                "url": "project:functions/exceptions.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/exceptions.dart",
+                "line": 7,
+                "column": 34
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 6,
+            "column": 5
+          }
+        },
+        "throwsError": {
+          "name": "throwsError",
+          "apiName": "exceptions",
+          "parameters": [
+            {
+              "name": "type",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "SupportedErrorType",
+                "url": "project:functions/exceptions.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/exceptions.dart",
+                "line": 23,
+                "column": 30
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 22,
+            "column": 5
+          }
+        },
+        "throwsCustomException": {
+          "name": "throwsCustomException",
+          "apiName": "exceptions",
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [
+            {
+              "$": "TypeReference",
+              "symbol": "CustomException",
+              "url": "project:functions/exceptions.dart",
+              "isNullable": false
+            }
+          ],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 33,
+            "column": 5
+          }
+        },
+        "throwsCustomExceptionToFromJson": {
+          "name": "throwsCustomExceptionToFromJson",
+          "apiName": "exceptions",
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [
+            {
+              "$": "TypeReference",
+              "symbol": "CustomExceptionToFromJson",
+              "url": "project:functions/exceptions.dart",
+              "isNullable": false
+            }
+          ],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 37,
+            "column": 5
+          }
+        },
+        "throwsCustomError": {
+          "name": "throwsCustomError",
+          "apiName": "exceptions",
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [
+            {
+              "$": "TypeReference",
+              "symbol": "CustomError",
+              "url": "project:functions/exceptions.dart",
+              "isNullable": false
+            }
+          ],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 41,
+            "column": 5
+          }
+        },
+        "throwsCustomErrorToFromJson": {
+          "name": "throwsCustomErrorToFromJson",
+          "apiName": "exceptions",
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [
+            {
+              "$": "TypeReference",
+              "symbol": "CustomErrorToFromJson",
+              "url": "project:functions/exceptions.dart",
+              "isNullable": false
+            }
+          ],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 45,
+            "column": 5
+          }
+        },
+        "throwsCustomErrorWithStackTrace": {
+          "name": "throwsCustomErrorWithStackTrace",
+          "apiName": "exceptions",
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [
+            {
+              "$": "TypeReference",
+              "symbol": "CustomErrorWithStackTrace",
+              "url": "project:functions/exceptions.dart",
+              "isNullable": false
+            }
+          ],
+          "location": {
+            "uri": "project:functions/exceptions.dart",
+            "line": 49,
+            "column": 5
           }
         }
       }
@@ -9712,6 +10050,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_api.dart",
             "line": 6,
@@ -9735,6 +10074,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_api.dart",
             "line": 7,
@@ -9782,6 +10122,7 @@
               }
             }
           ],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_api.dart",
             "line": 7,
@@ -9805,6 +10146,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_api.dart",
             "line": 8,
@@ -9887,6 +10229,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
             "line": 3,
@@ -9963,6 +10306,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
             "line": 9,
@@ -10039,6 +10383,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
             "line": 15,
@@ -10115,6 +10460,7 @@
             "symbol": "void"
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
             "line": 21,
@@ -10161,6 +10507,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
             "line": 47,
@@ -10209,6 +10556,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
             "line": 48,
@@ -10737,6 +11085,7 @@
             "isNullable": false
           },
           "metadata": [],
+          "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
             "line": 50,

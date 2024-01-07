@@ -51,6 +51,36 @@ final class TypeHelper {
     _typeProvider = typeProvider;
   }
 
+  DartType? _coreExceptionType;
+  DartType get coreExceptionType {
+    if (_coreExceptionType == null) {
+      throw StateError(
+        'TypeHelper.coreExceptionType was accessed before it was initialized. '
+        'The core exception type is only available after analysis.',
+      );
+    }
+    return _coreExceptionType!;
+  }
+
+  set coreExceptionType(DartType coreExceptionType) {
+    _coreExceptionType = coreExceptionType;
+  }
+
+  DartType? _coreErrorType;
+  DartType get coreErrorType {
+    if (_coreErrorType == null) {
+      throw StateError(
+        'TypeHelper.coreErrorType was accessed before it was initialized. '
+        'The core error type is only available after analysis.',
+      );
+    }
+    return _coreErrorType!;
+  }
+
+  set coreErrorType(DartType coreErrorType) {
+    _coreErrorType = coreErrorType;
+  }
+
   // TODO: File ticket with Dart team around hashcode/equality of DartType
   final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
     equals: const DartTypeEquality().equals,

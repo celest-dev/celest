@@ -4,32 +4,32 @@ import 'dart:async' as _i6;
 import 'dart:typed_data' as _i8;
 
 import 'package:celest/celest.dart' as _i2;
+import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i4;
-import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i7;
+import 'package:functions_framework/serve.dart' as _i7;
 
 import '../../../functions/parameter_types.dart' as _i5;
 import '../../../functions/return_types.dart' as _i3;
 
-class AsyncOrComplexStructReturnNullableTarget extends _i1.FunctionTarget {
-  final _inner = _i1.JsonWithContextFunctionTarget(
-    (
-      request,
-      context,
-    ) async {
-      final celestContext = _i2.FunctionContext();
-      final response =
-          await _i3.asyncOrComplexStructReturnNullable(celestContext);
-      return _i4.Serializers.instance.serialize<_i5.ComplexStruct?>(response);
-    },
-    (json) => json as Map<String, dynamic>,
-  );
-
-  @override
-  _i6.FutureOr<_i7.Response> handler(_i7.Request request) {
-    final handler = _i7.Pipeline().addHandler(_inner.handler);
-    return handler(request);
-  }
+final class AsyncOrComplexStructReturnNullableTarget
+    extends _i1.CelestFunctionTarget {
+  AsyncOrComplexStructReturnNullableTarget()
+      : super(
+          (
+            request,
+            context,
+          ) async {
+            final celestContext = _i2.FunctionContext();
+            final response =
+                await _i3.asyncOrComplexStructReturnNullable(celestContext);
+            return (
+              statusCode: 200,
+              body: _i4.Serializers.instance
+                  .serialize<_i5.ComplexStruct?>(response)
+            );
+          },
+          middleware: [],
+        );
 }
 
 _i6.Future<void> main(List<String> args) async {
@@ -37,7 +37,7 @@ _i6.Future<void> main(List<String> args) async {
   _i4.Serializers.instance.put(const SimpleClassSerializer());
   _i4.Serializers.instance.put(const SimpleStructSerializer());
   _i4.Serializers.instance.put(const ComplexStructSerializer());
-  await _i1.serve(
+  await _i7.serve(
     args,
     (_) => AsyncOrComplexStructReturnNullableTarget(),
   );

@@ -3,32 +3,28 @@
 import 'dart:async' as _i4;
 
 import 'package:celest/celest.dart' as _i2;
-import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i5;
+import 'package:celest/src/runtime.dart' as _i1;
+import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/return_types.dart' as _i3;
 
-class VoidReturnTarget extends _i1.FunctionTarget {
-  final _inner = _i1.JsonWithContextFunctionTarget(
-    (
-      request,
-      context,
-    ) async {
-      final celestContext = _i2.FunctionContext();
-      return _i3.voidReturn(celestContext);
-    },
-    (json) => json as Map<String, dynamic>,
-  );
-
-  @override
-  _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
-    final handler = _i5.Pipeline().addHandler(_inner.handler);
-    return handler(request);
-  }
+final class VoidReturnTarget extends _i1.CelestFunctionTarget {
+  VoidReturnTarget()
+      : super(
+          (
+            request,
+            context,
+          ) async {
+            final celestContext = _i2.FunctionContext();
+            _i3.voidReturn(celestContext);
+            return (statusCode: 200, body: null);
+          },
+          middleware: [],
+        );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  await _i1.serve(
+  await _i5.serve(
     args,
     (_) => VoidReturnTarget(),
   );

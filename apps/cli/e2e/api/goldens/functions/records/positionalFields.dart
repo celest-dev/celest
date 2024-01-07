@@ -2,42 +2,40 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
+import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i1;
-import 'package:shelf/shelf.dart' as _i5;
+import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/records.dart' as _i2;
 
-class PositionalFieldsTarget extends _i1.FunctionTarget {
-  final _inner = _i1.JsonWithContextFunctionTarget(
-    (
-      request,
-      context,
-    ) async {
-      final response = _i2.positionalFields(
-        _i3.Serializers.instance
-            .deserialize<(String, String)>(request[r'nonAliased']),
-        _i3.Serializers.instance
-            .deserialize<_i2.PositionalFields>(request[r'aliased']),
-      );
-      return _i3.Serializers.instance
-          .serialize<((String, String), _i2.PositionalFields)>(response);
-    },
-    (json) => json as Map<String, dynamic>,
-  );
-
-  @override
-  _i4.FutureOr<_i5.Response> handler(_i5.Request request) {
-    final handler = _i5.Pipeline().addHandler(_inner.handler);
-    return handler(request);
-  }
+final class PositionalFieldsTarget extends _i1.CelestFunctionTarget {
+  PositionalFieldsTarget()
+      : super(
+          (
+            request,
+            context,
+          ) async {
+            final response = _i2.positionalFields(
+              _i3.Serializers.instance
+                  .deserialize<(String, String)>(request[r'nonAliased']),
+              _i3.Serializers.instance
+                  .deserialize<_i2.PositionalFields>(request[r'aliased']),
+            );
+            return (
+              statusCode: 200,
+              body: _i3.Serializers.instance
+                  .serialize<((String, String), _i2.PositionalFields)>(response)
+            );
+          },
+          middleware: [],
+        );
 }
 
 _i4.Future<void> main(List<String> args) async {
   _i3.Serializers.instance.put(const Record$rh3gkzSerializer());
   _i3.Serializers.instance.put(const PositionalFieldsSerializer());
   _i3.Serializers.instance.put(const Record$sh7p4bSerializer());
-  await _i1.serve(
+  await _i5.serve(
     args,
     (_) => PositionalFieldsTarget(),
   );
