@@ -16,25 +16,27 @@ final class AsyncPositionalFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = await _i2.asyncPositionalFields(
-              _i3.Serializers.instance
+              _i3.Serializers.scoped
                   .deserialize<(String, String)>(request[r'nonAliased']),
-              _i3.Serializers.instance
+              _i3.Serializers.scoped
                   .deserialize<_i2.PositionalFields>(request[r'aliased']),
             );
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<((String, String), _i2.PositionalFields)>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const Record$rh3gkzSerializer());
+            serializers.put(const PositionalFieldsSerializer());
+            serializers.put(const Record$sh7p4bSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$rh3gkzSerializer());
-  _i3.Serializers.instance.put(const PositionalFieldsSerializer());
-  _i3.Serializers.instance.put(const Record$sh7p4bSerializer());
   await _i5.serve(
     args,
     (_) => AsyncPositionalFieldsTarget(),
@@ -102,16 +104,15 @@ final class Record$sh7p4bSerializer extends _i3.Serializer<Record$sh7p4b> {
   Record$sh7p4b deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      _i3.Serializers.instance.deserialize<Record$rh3gkz>(serialized[r'$1']),
-      _i3.Serializers.instance
+      _i3.Serializers.scoped.deserialize<Record$rh3gkz>(serialized[r'$1']),
+      _i3.Serializers.scoped
           .deserialize<_i2.PositionalFields>(serialized[r'$2'])
     );
   }
 
   @override
   Map<String, Object?> serialize(Record$sh7p4b value) => {
-        r'$1': _i3.Serializers.instance.serialize<(String, String)>(value.$1),
-        r'$2':
-            _i3.Serializers.instance.serialize<_i2.PositionalFields>(value.$2),
+        r'$1': _i3.Serializers.scoped.serialize<(String, String)>(value.$1),
+        r'$2': _i3.Serializers.scoped.serialize<_i2.PositionalFields>(value.$2),
       };
 }

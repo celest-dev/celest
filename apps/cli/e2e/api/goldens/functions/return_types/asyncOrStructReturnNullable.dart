@@ -22,16 +22,18 @@ final class AsyncOrStructReturnNullableTarget extends _i1.CelestFunctionTarget {
                 await _i3.asyncOrStructReturnNullable(celestContext);
             return (
               statusCode: 200,
-              body: _i4.Serializers.instance
-                  .serialize<_i5.SimpleStruct?>(response)
+              body:
+                  _i4.Serializers.scoped.serialize<_i5.SimpleStruct?>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const SimpleStructSerializer());
           },
           middleware: [],
         );
 }
 
 _i6.Future<void> main(List<String> args) async {
-  _i4.Serializers.instance.put(const SimpleStructSerializer());
   await _i7.serve(
     args,
     (_) => AsyncOrStructReturnNullableTarget(),

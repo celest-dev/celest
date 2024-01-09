@@ -15,21 +15,22 @@ final class AliasedPositionalFieldsTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.aliasedPositionalFields(_i3
-                .Serializers.instance
+            final response = _i2.aliasedPositionalFields(_i3.Serializers.scoped
                 .deserialize<_i2.PositionalFields>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.PositionalFields>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const PositionalFieldsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const PositionalFieldsSerializer());
   await _i5.serve(
     args,
     (_) => AliasedPositionalFieldsTarget(),

@@ -1765,6 +1765,200 @@
         }
       }
     },
+    "sealed_classes": {
+      "name": "sealed_classes",
+      "metadata": [],
+      "functions": {
+        "area": {
+          "name": "area",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "shape",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 4,
+                "column": 18
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 4,
+            "column": 7
+          }
+        },
+        "sealedClass": {
+          "name": "sealedClass",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "shapes",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Shape",
+                    "url": "project:functions/sealed_classes.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 8,
+                "column": 23
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 7,
+            "column": 12
+          }
+        },
+        "rectangle": {
+          "name": "rectangle",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "rectangle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Rectangle",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 14,
+                "column": 30
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Rectangle",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Rectangle",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 14,
+            "column": 10
+          }
+        },
+        "circle": {
+          "name": "circle",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "circle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Circle",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 15,
+                "column": 21
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Circle",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Circle",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 15,
+            "column": 7
+          }
+        }
+      }
+    },
     "parameter_types": {
       "name": "parameter_types",
       "metadata": [],
@@ -8363,96 +8557,6 @@
       "name": "classes",
       "metadata": [],
       "functions": {
-        "emptySuper": {
-          "name": "emptySuper",
-          "apiName": "classes",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "EmptySuper",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/classes.dart",
-                "line": 9,
-                "column": 33
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "EmptySuper",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "EmptySuper",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/classes.dart",
-            "line": 9,
-            "column": 11
-          }
-        },
-        "asyncEmptySuper": {
-          "name": "asyncEmptySuper",
-          "apiName": "classes",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "EmptySuper",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/classes.dart",
-                "line": 10,
-                "column": 46
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "EmptySuper",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "EmptySuper",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/classes.dart",
-            "line": 10,
-            "column": 19
-          }
-        },
         "empty": {
           "name": "empty",
           "apiName": "classes",
@@ -8469,7 +8573,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 12,
+                "line": 9,
                 "column": 18
               }
             }
@@ -8490,7 +8594,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 12,
+            "line": 9,
             "column": 6
           }
         },
@@ -8510,7 +8614,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 13,
+                "line": 10,
                 "column": 31
               }
             }
@@ -8539,98 +8643,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 13,
+            "line": 10,
             "column": 14
-          }
-        },
-        "superFields": {
-          "name": "superFields",
-          "apiName": "classes",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "SuperFields",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/classes.dart",
-                "line": 45,
-                "column": 36
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "SuperFields",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "SuperFields",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/classes.dart",
-            "line": 45,
-            "column": 12
-          }
-        },
-        "asyncSuperFields": {
-          "name": "asyncSuperFields",
-          "apiName": "classes",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "SuperFields",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/classes.dart",
-                "line": 46,
-                "column": 49
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "SuperFields",
-                "url": "project:functions/classes.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "SuperFields",
-            "url": "project:functions/classes.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/classes.dart",
-            "line": 46,
-            "column": 20
           }
         },
         "fields": {
@@ -8649,7 +8663,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 48,
+                "line": 42,
                 "column": 21
               }
             }
@@ -8670,7 +8684,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 48,
+            "line": 42,
             "column": 7
           }
         },
@@ -8690,7 +8704,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 49,
+                "line": 43,
                 "column": 34
               }
             }
@@ -8719,7 +8733,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 49,
+            "line": 43,
             "column": 15
           }
         },
@@ -8739,7 +8753,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 51,
+                "line": 45,
                 "column": 31
               }
             }
@@ -8760,7 +8774,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 51,
+            "line": 45,
             "column": 8
           }
         },
@@ -8780,7 +8794,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 52,
+                "line": 46,
                 "column": 44
               }
             }
@@ -8809,7 +8823,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 52,
+            "line": 46,
             "column": 16
           }
         },
@@ -8829,7 +8843,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 54,
+                "line": 48,
                 "column": 36
               }
             }
@@ -8850,7 +8864,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 54,
+            "line": 48,
             "column": 12
           }
         },
@@ -8870,7 +8884,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 55,
+                "line": 49,
                 "column": 49
               }
             }
@@ -8899,7 +8913,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 55,
+            "line": 49,
             "column": 20
           }
         },
@@ -8919,7 +8933,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 57,
+                "line": 51,
                 "column": 36
               }
             }
@@ -8940,7 +8954,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 57,
+            "line": 51,
             "column": 12
           }
         },
@@ -8960,7 +8974,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 58,
+                "line": 52,
                 "column": 49
               }
             }
@@ -8989,7 +9003,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 58,
+            "line": 52,
             "column": 20
           }
         },
@@ -9009,7 +9023,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 73,
+                "line": 67,
                 "column": 42
               }
             }
@@ -9030,7 +9044,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 73,
+            "line": 67,
             "column": 14
           }
         },
@@ -9050,7 +9064,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 74,
+                "line": 68,
                 "column": 55
               }
             }
@@ -9079,7 +9093,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 74,
+            "line": 68,
             "column": 22
           }
         },
@@ -9099,7 +9113,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 86,
+                "line": 80,
                 "column": 36
               }
             }
@@ -9120,7 +9134,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 86,
+            "line": 80,
             "column": 12
           }
         },
@@ -9140,7 +9154,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 87,
+                "line": 81,
                 "column": 49
               }
             }
@@ -9169,7 +9183,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 87,
+            "line": 81,
             "column": 20
           }
         },
@@ -9189,7 +9203,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 153,
+                "line": 147,
                 "column": 39
               }
             }
@@ -9210,7 +9224,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 153,
+            "line": 147,
             "column": 13
           }
         },
@@ -9230,7 +9244,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 154,
+                "line": 148,
                 "column": 52
               }
             }
@@ -9259,7 +9273,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 154,
+            "line": 148,
             "column": 21
           }
         },
@@ -9279,7 +9293,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 156,
+                "line": 150,
                 "column": 33
               }
             }
@@ -9300,7 +9314,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 156,
+            "line": 150,
             "column": 11
           }
         },
@@ -9320,7 +9334,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 157,
+                "line": 151,
                 "column": 46
               }
             }
@@ -9349,7 +9363,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 157,
+            "line": 151,
             "column": 19
           }
         },
@@ -9369,7 +9383,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 160,
+                "line": 154,
                 "column": 25
               }
             }
@@ -9390,7 +9404,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 159,
+            "line": 153,
             "column": 23
           }
         },
@@ -9410,7 +9424,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 164,
+                "line": 158,
                 "column": 25
               }
             }
@@ -9439,7 +9453,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 163,
+            "line": 157,
             "column": 31
           }
         },
@@ -9459,7 +9473,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 168,
+                "line": 162,
                 "column": 50
               }
             }
@@ -9480,7 +9494,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 168,
+            "line": 162,
             "column": 18
           }
         },
@@ -9500,7 +9514,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 170,
+                "line": 164,
                 "column": 20
               }
             }
@@ -9529,7 +9543,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 169,
+            "line": 163,
             "column": 26
           }
         },
@@ -9549,7 +9563,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 174,
+                "line": 168,
                 "column": 39
               }
             }
@@ -9570,7 +9584,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 174,
+            "line": 168,
             "column": 13
           }
         },
@@ -9590,7 +9604,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 175,
+                "line": 169,
                 "column": 52
               }
             }
@@ -9619,7 +9633,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 175,
+            "line": 169,
             "column": 21
           }
         },
@@ -9639,7 +9653,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 178,
+                "line": 172,
                 "column": 27
               }
             }
@@ -9660,7 +9674,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 177,
+            "line": 171,
             "column": 25
           }
         },
@@ -9680,7 +9694,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 182,
+                "line": 176,
                 "column": 27
               }
             }
@@ -9709,7 +9723,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 181,
+            "line": 175,
             "column": 33
           }
         },
@@ -9729,7 +9743,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 187,
+                "line": 181,
                 "column": 22
               }
             }
@@ -9750,7 +9764,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 186,
+            "line": 180,
             "column": 20
           }
         },
@@ -9770,7 +9784,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 191,
+                "line": 185,
                 "column": 22
               }
             }
@@ -9799,7 +9813,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 190,
+            "line": 184,
             "column": 28
           }
         }

@@ -21,16 +21,18 @@ final class ComplexClassReturnNullableTarget extends _i1.CelestFunctionTarget {
             final response = _i3.complexClassReturnNullable(celestContext);
             return (
               statusCode: 200,
-              body: _i4.Serializers.instance
-                  .serialize<_i5.ComplexClass?>(response)
+              body:
+                  _i4.Serializers.scoped.serialize<_i5.ComplexClass?>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const ComplexClassSerializer());
           },
           middleware: [],
         );
 }
 
 _i6.Future<void> main(List<String> args) async {
-  _i4.Serializers.instance.put(const ComplexClassSerializer());
   await _i7.serve(
     args,
     (_) => ComplexClassReturnNullableTarget(),

@@ -16,19 +16,21 @@ final class AsyncNullableFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = await _i2.asyncNullableFields(_i3
-                .Serializers.instance
+                .Serializers.scoped
                 .deserialize<_i2.Fields?>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance.serialize<_i2.Fields?>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.Fields?>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const FieldsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const FieldsSerializer());
   await _i5.serve(
     args,
     (_) => AsyncNullableFieldsTarget(),

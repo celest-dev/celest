@@ -21,7 +21,7 @@ final class ThrowsCustomErrorWithStackTraceTarget
               return (statusCode: 200, body: null);
             } on _i2.CustomErrorWithStackTrace catch (e, st) {
               print('$e\n$st');
-              final error = _i3.Serializers.instance
+              final error = _i3.Serializers.scoped
                   .serialize<_i2.CustomErrorWithStackTrace>(e);
               return (
                 statusCode: 500,
@@ -35,12 +35,14 @@ final class ThrowsCustomErrorWithStackTraceTarget
               );
             }
           },
+          installSerializers: (serializers) {
+            serializers.put(const CustomErrorWithStackTraceSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const CustomErrorWithStackTraceSerializer());
   await _i5.serve(
     args,
     (_) => ThrowsCustomErrorWithStackTraceTarget(),
@@ -62,14 +64,14 @@ final class CustomErrorWithStackTraceSerializer
   _i2.CustomErrorWithStackTrace deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return _i2.CustomErrorWithStackTrace(
-        stackTrace: _i3.Serializers.instance
+        stackTrace: _i3.Serializers.scoped
             .deserialize<StackTrace?>(serialized?[r'stackTrace']));
   }
 
   @override
   Map<String, Object?> serialize(_i2.CustomErrorWithStackTrace value) => {
         r'stackTrace':
-            _i3.Serializers.instance.serialize<StackTrace>(value.stackTrace),
+            _i3.Serializers.scoped.serialize<StackTrace>(value.stackTrace),
         r'message': value.message,
         r'additionalInfo': value.additionalInfo,
       };

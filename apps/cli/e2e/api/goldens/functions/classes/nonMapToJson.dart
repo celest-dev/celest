@@ -15,20 +15,21 @@ final class NonMapToJsonTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.nonMapToJson(_i3.Serializers.instance
+            final response = _i2.nonMapToJson(_i3.Serializers.scoped
                 .deserialize<_i2.NonMapToJson>(request[r'value']));
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.instance.serialize<_i2.NonMapToJson>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.NonMapToJson>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const NonMapToJsonSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NonMapToJsonSerializer());
   await _i5.serve(
     args,
     (_) => NonMapToJsonTarget(),

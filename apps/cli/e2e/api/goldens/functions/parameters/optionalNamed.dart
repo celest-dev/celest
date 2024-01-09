@@ -19,7 +19,7 @@ final class OptionalNamedTarget extends _i1.CelestFunctionTarget {
             _i3.optionalNamed(
               celestContext,
               namedString: (request[r'namedString'] as String?),
-              namedInt: (request[r'namedInt'] as int?),
+              namedInt: (request[r'namedInt'] as num?)?.toInt(),
             );
             return (statusCode: 200, body: null);
           },

@@ -16,29 +16,31 @@ final class NamedFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = _i2.namedFields(
-              nonAliased: _i3.Serializers.instance
+              nonAliased: _i3.Serializers.scoped
                   .deserialize<({String anotherField, String field})>(
                       request[r'nonAliased']),
-              aliased: _i3.Serializers.instance
+              aliased: _i3.Serializers.scoped
                   .deserialize<_i2.NamedFields>(request[r'aliased']),
             );
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance.serialize<
+              body: _i3.Serializers.scoped.serialize<
                   ({
                     _i2.NamedFields aliased,
                     ({String anotherField, String field}) nonAliased
                   })>(response)
             );
           },
+          installSerializers: (serializers) {
+            serializers.put(const NamedFieldsSerializer());
+            serializers.put(const Record$rmm4wtSerializer());
+            serializers.put(const Record$sxv9hgSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NamedFieldsSerializer());
-  _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
-  _i3.Serializers.instance.put(const Record$sxv9hgSerializer());
   await _i5.serve(
     args,
     (_) => NamedFieldsTarget(),
@@ -114,9 +116,9 @@ final class Record$sxv9hgSerializer extends _i3.Serializer<Record$sxv9hg> {
   Record$sxv9hg deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      aliased: _i3.Serializers.instance
+      aliased: _i3.Serializers.scoped
           .deserialize<_i2.NamedFields>(serialized[r'aliased']),
-      nonAliased: _i3.Serializers.instance
+      nonAliased: _i3.Serializers.scoped
           .deserialize<Record$rmm4wt>(serialized[r'nonAliased'])
     );
   }
@@ -124,8 +126,8 @@ final class Record$sxv9hgSerializer extends _i3.Serializer<Record$sxv9hg> {
   @override
   Map<String, Object?> serialize(Record$sxv9hg value) => {
         r'aliased':
-            _i3.Serializers.instance.serialize<_i2.NamedFields>(value.aliased),
-        r'nonAliased': _i3.Serializers.instance
+            _i3.Serializers.scoped.serialize<_i2.NamedFields>(value.aliased),
+        r'nonAliased': _i3.Serializers.scoped
             .serialize<({String anotherField, String field})>(value.nonAliased),
       };
 }

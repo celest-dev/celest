@@ -900,20 +900,6 @@ const Map<String, Test> tests = {
               output: {},
             ),
           ],
-          'emptySuper': [
-            FunctionTestSuccess(
-              name: 'emptySuper',
-              input: {},
-              output: {},
-            ),
-          ],
-          'asyncEmptySuper': [
-            FunctionTestSuccess(
-              name: 'asyncEmptySuper',
-              input: {},
-              output: {},
-            ),
-          ],
           'fields': [
             FunctionTestSuccess(
               name: 'fields',
@@ -981,32 +967,6 @@ const Map<String, Test> tests = {
               output: {
                 'superField': 'superField',
                 'field': 'field',
-              },
-            ),
-          ],
-          'superFields': [
-            FunctionTestSuccess(
-              name: 'superFields',
-              input: {
-                'value': {
-                  'superField': 'superField',
-                },
-              },
-              output: {
-                'superField': 'superField',
-              },
-            ),
-          ],
-          'asyncSuperFields': [
-            FunctionTestSuccess(
-              name: 'asyncSuperFields',
-              input: {
-                'value': {
-                  'superField': 'superField',
-                },
-              },
-              output: {
-                'superField': 'superField',
               },
             ),
           ],
@@ -2056,6 +2016,90 @@ const Map<String, Test> tests = {
                     'stackTrace': '',
                   },
                 },
+              },
+            ),
+          ],
+        },
+      ),
+      'sealed_classes': ApiTest(
+        functionTests: {
+          'sealedClass': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5,
+                    'height': 5,
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'Circle',
+                  'radius': 5,
+                },
+                {
+                  r'$type': 'Rectangle',
+                  'width': 5,
+                  'height': 5,
+                },
+              ],
+            ),
+          ],
+          'area': [
+            FunctionTestSuccess(
+              name: 'circle',
+              input: {
+                'shape': {
+                  r'$type': 'Circle',
+                  'radius': 5,
+                },
+              },
+              output: pi * 5 * 5,
+            ),
+            FunctionTestSuccess(
+              name: 'rectangle',
+              input: {
+                'shape': {
+                  r'$type': 'Rectangle',
+                  'width': 5,
+                  'height': 5,
+                },
+              },
+              output: 25,
+            ),
+          ],
+          'rectangle': [
+            FunctionTestSuccess(
+              name: 'rectangle',
+              input: {
+                'rectangle': {
+                  'width': 5,
+                  'height': 5,
+                },
+              },
+              output: {
+                'width': 5.0,
+                'height': 5.0,
+              },
+            ),
+          ],
+          'circle': [
+            FunctionTestSuccess(
+              name: 'circle',
+              input: {
+                'circle': {
+                  'radius': 5,
+                },
+              },
+              output: {
+                'radius': 5.0,
               },
             ),
           ],

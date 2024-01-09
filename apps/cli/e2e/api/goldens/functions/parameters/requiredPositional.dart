@@ -19,7 +19,7 @@ final class RequiredPositionalTarget extends _i1.CelestFunctionTarget {
             _i3.requiredPositional(
               celestContext,
               (request[r'requiredString'] as String),
-              (request[r'requiredInt'] as int),
+              (request[r'requiredInt'] as num).toInt(),
             );
             return (statusCode: 200, body: null);
           },

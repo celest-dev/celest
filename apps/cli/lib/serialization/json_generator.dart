@@ -93,7 +93,7 @@ final class JsonGenerator {
       'Should not have passed analyzer if no',
     );
     return DartTypes.celest.serializers
-        .property('instance')
+        .property('scoped')
         .property('serialize')
         .call(
       [ref],
@@ -105,12 +105,24 @@ final class JsonGenerator {
   Expression fromJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartCoreBool ||
-        dartType.isDartCoreDouble ||
-        dartType.isDartCoreInt ||
         dartType.isDartCoreNum ||
         dartType.isDartCoreString ||
         dartType.isDartCoreNull) {
       return ref.asA(type);
+    }
+    // JSON numbers get confused between int/double. We always deserialize as
+    // num and cast to the correct type.
+    if (dartType.isDartCoreDouble) {
+      return ref
+          .asA(DartTypes.core.num.withNullability(type.isNullableOrFalse))
+          .nullableProperty('toDouble', type.isNullableOrFalse)
+          .call([]);
+    }
+    if (dartType.isDartCoreInt) {
+      return ref
+          .asA(DartTypes.core.num.withNullability(type.isNullableOrFalse))
+          .nullableProperty('toInt', type.isNullableOrFalse)
+          .call([]);
     }
     if (dartType.isDartCoreEnum || dartType.isDartCoreSet) {
       throw unreachable('Should have been caught in checker');
@@ -189,7 +201,7 @@ final class JsonGenerator {
       'Should not have passed analyzer if no',
     );
     return DartTypes.celest.serializers
-        .property('instance')
+        .property('scoped')
         .property('deserialize')
         .call(
       [ref],

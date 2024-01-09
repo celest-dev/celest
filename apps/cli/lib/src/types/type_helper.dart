@@ -156,9 +156,14 @@ final class TypeHelper {
     if (verdict case VerdictYes(:final serializationSpecs)) {
       for (final serializationSpec in serializationSpecs) {
         yield SerializerGenerator(serializationSpec).build();
+        for (final subtype in serializationSpec.subtypes) {
+          yield SerializerGenerator(subtype, isSubtype: true).build();
+        }
       }
     }
   }
+
+  final Map<DartType, List<DartType>> subtypes = {};
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {

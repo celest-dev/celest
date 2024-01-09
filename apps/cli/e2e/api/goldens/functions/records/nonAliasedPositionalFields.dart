@@ -16,20 +16,21 @@ final class NonAliasedPositionalFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = _i2.nonAliasedPositionalFields(_i3
-                .Serializers.instance
+                .Serializers.scoped
                 .deserialize<(String, String)>(request[r'value']));
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.instance.serialize<(String, String)>(response)
+              body: _i3.Serializers.scoped.serialize<(String, String)>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const Record$rh3gkzSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$rh3gkzSerializer());
   await _i5.serve(
     args,
     (_) => NonAliasedPositionalFieldsTarget(),

@@ -11,9 +11,13 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class SerializerGenerator {
-  SerializerGenerator(this.serializationSpec);
+  SerializerGenerator(
+    this.serializationSpec, {
+    this.isSubtype = false,
+  });
 
   final SerializationSpec serializationSpec;
+  final bool isSubtype;
 
   late final type = serializationSpec.type;
   late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
@@ -76,7 +80,8 @@ final class SerializerGenerator {
               ..annotations.add(DartTypes.core.override)
               ..body = Block((b) {
                 final mayBeAbsent =
-                    serializationSpec.parameters.every((p) => p.isOptional);
+                    serializationSpec.parameters.every((p) => p.isOptional) &&
+                        serializationSpec.subtypes.isEmpty;
                 final (wireType, deserialized) = switch (type) {
                   ast.InterfaceType() when type.isEnum => (
                       this.wireType,
@@ -116,6 +121,7 @@ final class SerializerGenerator {
                 ),
               )
               ..annotations.add(DartTypes.core.override)
+              ..lambda = true
               ..body = switch (type) {
                 ast.InterfaceType() when type.isEnum =>
                   refer('value').property('name').code,
@@ -147,11 +153,46 @@ final class SerializerGenerator {
       }
       return ref.property('toJson').call(genericSerializers);
     }
+    if (serializationSpec.subtypes.isNotEmpty) {
+      final serialize =
+          DartTypes.celest.serializers.property('scoped').property('serialize');
+      return CodeExpression(
+        Block((b) {
+          b.statements.addAll([
+            const Code('switch ('),
+            ref.code,
+            const Code(') {'),
+          ]);
+          for (final subtype in serializationSpec.subtypes) {
+            final subtypeRef = typeHelper.toReference(subtype.type);
+            final subtypeCase = serialize(
+              [ref],
+              {},
+              [subtypeRef],
+            );
+            b.statements.addAll([
+              Code.scope((alloc) => '${alloc(subtypeRef)}() => '),
+              subtypeCase.code,
+              const Code(','),
+            ]);
+          }
+          b.statements.add(
+            const Code('}'),
+          );
+        }),
+      ).asA(wireType);
+    }
     final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.fields) {
       serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
         typeHelper.toReference(field.type),
         ref.property(field.name),
+      );
+    }
+    if (isSubtype) {
+      serialized[literalString(r'$type', raw: true)] = literalString(
+        type.element!.name!,
+        raw: true,
       );
     }
     return literalMap(serialized);
@@ -187,6 +228,58 @@ final class SerializerGenerator {
         ref,
         ...genericDeserializers,
       ]);
+    }
+    if (serializationSpec.subtypes.isNotEmpty) {
+      assert(!mayBeAbsent, 'Classes with subtypes must have a map');
+      final ref = _reference(from, isNullable: false);
+      final deserialize = DartTypes.celest.serializers
+          .property('scoped')
+          .property('deserialize');
+      return CodeExpression(
+        Block((b) {
+          final type = ref.index(literalString(r'$type', raw: true));
+          b.statements.addAll([
+            const Code('switch ('),
+            type.code,
+            const Code(') {'),
+          ]);
+          for (final subtype in serializationSpec.subtypes) {
+            final subtypeName = subtype.type.element!.name;
+            final subtypeCase = deserialize(
+              [ref],
+              {},
+              [typeHelper.toReference(subtype.type)],
+            );
+            b.statements.addAll([
+              Code("r'$subtypeName' => "),
+              subtypeCase.code,
+              const Code(','),
+            ]);
+          }
+          b.statements.addAll([
+            const Code('final unknownType => '),
+            DartTypes.celest.serializationException
+                .newInstance([
+                  DartTypes.core.stringBuffer
+                      .newInstance([
+                        literalString('Unknown subtype of '),
+                      ])
+                      .cascade('write')
+                      .call(
+                        [literalString(this.type.element!.name!, raw: true)],
+                      )
+                      .cascade('write')
+                      .call([literalString(r': $unknownType')])
+                      .parenthesized
+                      .property('toString')
+                      .call([]),
+                ])
+                .thrown
+                .code,
+            const Code(', }'),
+          ]);
+        }),
+      );
     }
     final ref = _reference(from, isNullable: mayBeAbsent);
     final deserializedPositional = <Expression>[];

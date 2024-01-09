@@ -209,29 +209,6 @@ final class EntrypointGenerator {
           }
         }),
     );
-    final target = Class(
-      (c) => c
-        ..name = targetName
-        ..modifier = ClassModifier.final$
-        ..extend = DartTypes.celest.functionTarget
-        ..constructors.add(
-          Constructor((c) {
-            c.initializers.add(
-              refer('super').call([
-                body.closure,
-              ], {
-                'middleware': literalList(
-                  middleware
-                      .map(
-                        (m) => m.type.constInstance([]).property('handle'),
-                      )
-                      .toList(),
-                ),
-              }).code,
-            );
-          }),
-        ),
-    );
 
     final allTypes = Set.of(
       [
@@ -251,6 +228,45 @@ final class EntrypointGenerator {
       }
     }
 
+    final target = Class(
+      (c) => c
+        ..name = targetName
+        ..modifier = ClassModifier.final$
+        ..extend = DartTypes.celest.functionTarget
+        ..constructors.add(
+          Constructor((c) {
+            c.initializers.add(
+              refer('super').call([
+                body.closure,
+              ], {
+                if (_customSerializers.isNotEmpty)
+                  'installSerializers': Method(
+                    (m) => m
+                      ..requiredParameters
+                          .add(Parameter((p) => p.name = 'serializers'))
+                      ..body = Block((b) {
+                        for (final serializer in _customSerializers) {
+                          b.addExpression(
+                            refer('serializers').property('put').call([
+                              refer(serializer.name).constInstance([]),
+                            ]),
+                          );
+                        }
+                      }),
+                  ).closure,
+                'middleware': literalList(
+                  middleware
+                      .map(
+                        (m) => m.type.constInstance([]).property('handle'),
+                      )
+                      .toList(),
+                ),
+              }).code,
+            );
+          }),
+        ),
+    );
+
     final entrypoint = Method(
       (m) => m
         ..name = 'main'
@@ -263,29 +279,14 @@ final class EntrypointGenerator {
               ..type = DartTypes.core.list(DartTypes.core.string),
           ),
         )
-        ..body = Block((b) {
-          for (final serializer in _customSerializers) {
-            b.addExpression(
-              DartTypes.celest.serializers
-                  .property('instance')
-                  .property('put')
-                  .call([
-                refer(serializer.name).constInstance([]),
-              ]),
-            );
-          }
-
-          b.statements.add(
-            Code.scope(
-              (alloc) => '''
+        ..body = Code.scope(
+          (alloc) => '''
   await ${alloc(DartTypes.functionsFramework.serve)}(
     args,
     (_) => ${target.name}(),
   );
 ''',
-            ),
-          );
-        }),
+        ),
     );
     library.body.addAll([
       target,

@@ -16,22 +16,24 @@ final class AsyncNullableNestedTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = await _i2.asyncNullableNested(_i3
-                .Serializers.instance
+                .Serializers.scoped
                 .deserialize<_i2.NullableNested?>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.NullableNested?>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const PositionalFieldsSerializer());
+            serializers.put(const NamedFieldsSerializer());
+            serializers.put(const NullableNestedSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const PositionalFieldsSerializer());
-  _i3.Serializers.instance.put(const NamedFieldsSerializer());
-  _i3.Serializers.instance.put(const NullableNestedSerializer());
   await _i5.serve(
     args,
     (_) => AsyncNullableNestedTarget(),
@@ -100,9 +102,9 @@ final class NullableNestedSerializer
   _i2.NullableNested deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      _i3.Serializers.instance
+      _i3.Serializers.scoped
           .deserialize<_i2.PositionalFields?>(serialized[r'$1']),
-      namedFields: _i3.Serializers.instance
+      namedFields: _i3.Serializers.scoped
           .deserialize<_i2.NamedFields?>(serialized[r'namedFields'])
     );
   }
@@ -110,8 +112,8 @@ final class NullableNestedSerializer
   @override
   Map<String, Object?> serialize(_i2.NullableNested value) => {
         r'$1':
-            _i3.Serializers.instance.serialize<_i2.PositionalFields?>(value.$1),
-        r'namedFields': _i3.Serializers.instance
+            _i3.Serializers.scoped.serialize<_i2.PositionalFields?>(value.$1),
+        r'namedFields': _i3.Serializers.scoped
             .serialize<_i2.NamedFields?>(value.namedFields),
       };
 }

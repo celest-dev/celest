@@ -15,20 +15,22 @@ final class FromAndToJsonTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.fromAndToJson(_i3.Serializers.instance
+            final response = _i2.fromAndToJson(_i3.Serializers.scoped
                 .deserialize<_i2.FromJsonAndToJson>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.FromJsonAndToJson>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const FromJsonAndToJsonSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const FromJsonAndToJsonSerializer());
   await _i5.serve(
     args,
     (_) => FromAndToJsonTarget(),

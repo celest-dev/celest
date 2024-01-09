@@ -17,20 +17,22 @@ final class AsyncNonMapToJsonWithDefaultsTarget
             context,
           ) async {
             final response = await _i2.asyncNonMapToJsonWithDefaults(_i3
-                .Serializers.instance
+                .Serializers.scoped
                 .deserialize<_i2.NonMapToJsonWithDefaults>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.NonMapToJsonWithDefaults>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const NonMapToJsonWithDefaultsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NonMapToJsonWithDefaultsSerializer());
   await _i5.serve(
     args,
     (_) => AsyncNonMapToJsonWithDefaultsTarget(),

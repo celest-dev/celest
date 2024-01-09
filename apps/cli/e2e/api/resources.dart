@@ -15,6 +15,7 @@ import 'functions/exceptions.dart' as _i3;
 import 'functions/generic_wrappers.dart' as _i5;
 import 'functions/parameter_types.dart' as _i7;
 import 'functions/records.dart' as _i9;
+import 'functions/sealed_classes.dart' as _i10;
 
 abstract final class apis {
   static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
@@ -44,6 +45,8 @@ abstract final class apis {
   static const records = _i1.CloudApi(name: r'records');
 
   static const returnTypes = _i1.CloudApi(name: r'return_types');
+
+  static const sealedClasses = _i1.CloudApi(name: r'sealed_classes');
 }
 
 abstract final class functions {
@@ -113,12 +116,6 @@ abstract final class functions {
   static const classesAsyncEmpty = _i1.CloudFunction<_i2.Empty, _i2.Empty>(
     api: r'classes',
     functionName: r'asyncEmpty',
-  );
-
-  static const classesAsyncEmptySuper =
-      _i1.CloudFunction<_i2.EmptySuper, _i2.EmptySuper>(
-    api: r'classes',
-    functionName: r'asyncEmptySuper',
   );
 
   static const classesAsyncFields = _i1.CloudFunction<_i2.Fields, _i2.Fields>(
@@ -192,12 +189,6 @@ abstract final class functions {
     functionName: r'asyncOnlyToJsonWithDefaults',
   );
 
-  static const classesAsyncSuperFields =
-      _i1.CloudFunction<_i2.SuperFields, _i2.SuperFields>(
-    api: r'classes',
-    functionName: r'asyncSuperFields',
-  );
-
   static const classesDefaultValues =
       _i1.CloudFunction<_i2.DefaultValues, _i2.DefaultValues>(
     api: r'classes',
@@ -207,12 +198,6 @@ abstract final class functions {
   static const classesEmpty = _i1.CloudFunction<_i2.Empty, _i2.Empty>(
     api: r'classes',
     functionName: r'empty',
-  );
-
-  static const classesEmptySuper =
-      _i1.CloudFunction<_i2.EmptySuper, _i2.EmptySuper>(
-    api: r'classes',
-    functionName: r'emptySuper',
   );
 
   static const classesFields = _i1.CloudFunction<_i2.Fields, _i2.Fields>(
@@ -284,12 +269,6 @@ abstract final class functions {
       _i1.CloudFunction<_i2.OnlyToJsonWithDefaults, _i2.OnlyToJsonWithDefaults>(
     api: r'classes',
     functionName: r'onlyToJsonWithDefaults',
-  );
-
-  static const classesSuperFields =
-      _i1.CloudFunction<_i2.SuperFields, _i2.SuperFields>(
-    api: r'classes',
-    functionName: r'superFields',
   );
 
   static const exceptionsThrowsCustomError = _i1.CloudFunction<void, void>(
@@ -1042,6 +1021,29 @@ abstract final class functions {
     api: r'return_types',
     functionName: r'voidReturn',
   );
+
+  static const sealedClassesArea = _i1.CloudFunction<_i10.Shape, double>(
+    api: r'sealed_classes',
+    functionName: r'area',
+  );
+
+  static const sealedClassesCircle =
+      _i1.CloudFunction<_i10.Circle, _i10.Circle>(
+    api: r'sealed_classes',
+    functionName: r'circle',
+  );
+
+  static const sealedClassesRectangle =
+      _i1.CloudFunction<_i10.Rectangle, _i10.Rectangle>(
+    api: r'sealed_classes',
+    functionName: r'rectangle',
+  );
+
+  static const sealedClassesSealedClass =
+      _i1.CloudFunction<List<_i10.Shape>, List<_i10.Shape>>(
+    api: r'sealed_classes',
+    functionName: r'sealedClass',
+  );
 }
 
 const List<_i1.CloudWidget> all = [
@@ -1058,6 +1060,7 @@ const List<_i1.CloudWidget> all = [
   apis.parameters,
   apis.records,
   apis.returnTypes,
+  apis.sealedClasses,
   functions.anonymousApiSayHello,
   functions.anonymousApiSayHelloAuthenticated,
   functions.anonymousFunctionSayHello,
@@ -1070,7 +1073,6 @@ const List<_i1.CloudWidget> all = [
   functions.authenticatedFunctionSayHelloAuthenticated,
   functions.classesAsyncDefaultValues,
   functions.classesAsyncEmpty,
-  functions.classesAsyncEmptySuper,
   functions.classesAsyncFields,
   functions.classesAsyncFromAndToJson,
   functions.classesAsyncMixedFields,
@@ -1083,10 +1085,8 @@ const List<_i1.CloudWidget> all = [
   functions.classesAsyncOnlyFromJson,
   functions.classesAsyncOnlyToJson,
   functions.classesAsyncOnlyToJsonWithDefaults,
-  functions.classesAsyncSuperFields,
   functions.classesDefaultValues,
   functions.classesEmpty,
-  functions.classesEmptySuper,
   functions.classesFields,
   functions.classesFromAndToJson,
   functions.classesMixedFields,
@@ -1099,7 +1099,6 @@ const List<_i1.CloudWidget> all = [
   functions.classesOnlyFromJson,
   functions.classesOnlyToJson,
   functions.classesOnlyToJsonWithDefaults,
-  functions.classesSuperFields,
   functions.exceptionsThrowsCustomError,
   functions.exceptionsThrowsCustomErrorToFromJson,
   functions.exceptionsThrowsCustomErrorWithStackTrace,
@@ -1199,4 +1198,8 @@ const List<_i1.CloudWidget> all = [
   functions.returnTypesStructReturn,
   functions.returnTypesStructReturnNullable,
   functions.returnTypesVoidReturn,
+  functions.sealedClassesArea,
+  functions.sealedClassesCircle,
+  functions.sealedClassesRectangle,
+  functions.sealedClassesSealedClass,
 ];

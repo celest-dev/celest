@@ -21,7 +21,7 @@ final class ThrowsCustomExceptionTarget extends _i1.CelestFunctionTarget {
             } on _i2.CustomException catch (e, st) {
               print('$e\n$st');
               final error =
-                  _i3.Serializers.instance.serialize<_i2.CustomException>(e);
+                  _i3.Serializers.scoped.serialize<_i2.CustomException>(e);
               return (
                 statusCode: 400,
                 body: {
@@ -34,12 +34,14 @@ final class ThrowsCustomExceptionTarget extends _i1.CelestFunctionTarget {
               );
             }
           },
+          installSerializers: (serializers) {
+            serializers.put(const CustomExceptionSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const CustomExceptionSerializer());
   await _i5.serve(
     args,
     (_) => ThrowsCustomExceptionTarget(),

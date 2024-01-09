@@ -16,21 +16,23 @@ final class AsyncNonAliasedNamedFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = await _i2.asyncNonAliasedNamedFields(
-                value: _i3.Serializers.instance
+                value: _i3.Serializers.scoped
                     .deserialize<({String anotherField, String field})>(
                         request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<({String anotherField, String field})>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const Record$rmm4wtSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
   await _i5.serve(
     args,
     (_) => AsyncNonAliasedNamedFieldsTarget(),

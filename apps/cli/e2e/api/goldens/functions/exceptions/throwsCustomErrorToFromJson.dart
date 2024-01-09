@@ -20,7 +20,7 @@ final class ThrowsCustomErrorToFromJsonTarget extends _i1.CelestFunctionTarget {
               return (statusCode: 200, body: null);
             } on _i2.CustomErrorToFromJson catch (e, st) {
               print('$e\n$st');
-              final error = _i3.Serializers.instance
+              final error = _i3.Serializers.scoped
                   .serialize<_i2.CustomErrorToFromJson>(e);
               return (
                 statusCode: 500,
@@ -34,12 +34,14 @@ final class ThrowsCustomErrorToFromJsonTarget extends _i1.CelestFunctionTarget {
               );
             }
           },
+          installSerializers: (serializers) {
+            serializers.put(const CustomErrorToFromJsonSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const CustomErrorToFromJsonSerializer());
   await _i5.serve(
     args,
     (_) => ThrowsCustomErrorToFromJsonTarget(),

@@ -17,37 +17,38 @@ final class GenericWrappersTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.genericWrappers(_i3.Serializers.instance
+            final response = _i2.genericWrappers(_i3.Serializers.scoped
                 .deserialize<_i2.GenericWrappers>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.GenericWrappers>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const IListStringSerializer());
+            serializers.put(const IListUriSerializer());
+            serializers.put(const SimpleClassSerializer());
+            serializers.put(const IListSimpleClassSerializer());
+            serializers.put(const IListIListStringSerializer());
+            serializers.put(const IListIListUriSerializer());
+            serializers.put(const IListIListSimpleClassSerializer());
+            serializers.put(const IMapStringStringSerializer());
+            serializers.put(const IMapStringUriSerializer());
+            serializers.put(const IMapStringSimpleClassSerializer());
+            serializers.put(const IMapStringIListStringSerializer());
+            serializers.put(const IMapStringIListUriSerializer());
+            serializers.put(const IMapStringIListSimpleClassSerializer());
+            serializers.put(const IMapStringIMapStringStringSerializer());
+            serializers.put(const IMapStringIMapStringUriSerializer());
+            serializers.put(const IMapStringIMapStringSimpleClassSerializer());
+            serializers.put(const GenericWrappersSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const IListStringSerializer());
-  _i3.Serializers.instance.put(const IListUriSerializer());
-  _i3.Serializers.instance.put(const SimpleClassSerializer());
-  _i3.Serializers.instance.put(const IListSimpleClassSerializer());
-  _i3.Serializers.instance.put(const IListIListStringSerializer());
-  _i3.Serializers.instance.put(const IListIListUriSerializer());
-  _i3.Serializers.instance.put(const IListIListSimpleClassSerializer());
-  _i3.Serializers.instance.put(const IMapStringStringSerializer());
-  _i3.Serializers.instance.put(const IMapStringUriSerializer());
-  _i3.Serializers.instance.put(const IMapStringSimpleClassSerializer());
-  _i3.Serializers.instance.put(const IMapStringIListStringSerializer());
-  _i3.Serializers.instance.put(const IMapStringIListUriSerializer());
-  _i3.Serializers.instance.put(const IMapStringIListSimpleClassSerializer());
-  _i3.Serializers.instance.put(const IMapStringIMapStringStringSerializer());
-  _i3.Serializers.instance.put(const IMapStringIMapStringUriSerializer());
-  _i3.Serializers.instance
-      .put(const IMapStringIMapStringSimpleClassSerializer());
-  _i3.Serializers.instance.put(const GenericWrappersSerializer());
   await _i5.serve(
     args,
     (_) => GenericWrappersTarget(),
@@ -92,13 +93,13 @@ final class IListUriSerializer extends _i3.Serializer<_i6.IList<Uri>> {
     final serialized = assertWireType<dynamic>(value);
     return _i6.IList<Uri>.fromJson(
       serialized,
-      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
+      (value) => _i3.Serializers.scoped.deserialize<Uri>(value),
     );
   }
 
   @override
   Object serialize(_i6.IList<Uri> value) =>
-      value.toJson((value) => _i3.Serializers.instance.serialize<Uri>(value));
+      value.toJson((value) => _i3.Serializers.scoped.serialize<Uri>(value));
 }
 
 final class SimpleClassSerializer extends _i3.Serializer<_i2.SimpleClass> {
@@ -136,13 +137,13 @@ final class IListSimpleClassSerializer
     final serialized = assertWireType<dynamic>(value);
     return _i6.IList<_i2.SimpleClass>.fromJson(
       serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i2.SimpleClass>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i2.SimpleClass>(value),
     );
   }
 
   @override
   Object serialize(_i6.IList<_i2.SimpleClass> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i2.SimpleClass>(value));
+      (value) => _i3.Serializers.scoped.serialize<_i2.SimpleClass>(value));
 }
 
 final class IListIListStringSerializer
@@ -161,13 +162,13 @@ final class IListIListStringSerializer
     final serialized = assertWireType<dynamic>(value);
     return _i6.IList<_i6.IList<String>>.fromJson(
       serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i6.IList<String>>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i6.IList<String>>(value),
     );
   }
 
   @override
   Object serialize(_i6.IList<_i6.IList<String>> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i6.IList<String>>(value));
+      (value) => _i3.Serializers.scoped.serialize<_i6.IList<String>>(value));
 }
 
 final class IListIListUriSerializer
@@ -186,13 +187,13 @@ final class IListIListUriSerializer
     final serialized = assertWireType<dynamic>(value);
     return _i6.IList<_i6.IList<Uri>>.fromJson(
       serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i6.IList<Uri>>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i6.IList<Uri>>(value),
     );
   }
 
   @override
   Object serialize(_i6.IList<_i6.IList<Uri>> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i6.IList<Uri>>(value));
+      (value) => _i3.Serializers.scoped.serialize<_i6.IList<Uri>>(value));
 }
 
 final class IListIListSimpleClassSerializer
@@ -211,15 +212,15 @@ final class IListIListSimpleClassSerializer
     final serialized = assertWireType<dynamic>(value);
     return _i6.IList<_i6.IList<_i2.SimpleClass>>.fromJson(
       serialized,
-      (value) => _i3.Serializers.instance
-          .deserialize<_i6.IList<_i2.SimpleClass>>(value),
+      (value) =>
+          _i3.Serializers.scoped.deserialize<_i6.IList<_i2.SimpleClass>>(value),
     );
   }
 
   @override
   Object serialize(_i6.IList<_i6.IList<_i2.SimpleClass>> value) =>
-      value.toJson((value) => _i3.Serializers.instance
-          .serialize<_i6.IList<_i2.SimpleClass>>(value));
+      value.toJson((value) =>
+          _i3.Serializers.scoped.serialize<_i6.IList<_i2.SimpleClass>>(value));
 }
 
 final class IMapStringStringSerializer
@@ -267,14 +268,14 @@ final class IMapStringUriSerializer
     return _i7.IMap<String, Uri>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
+      (value) => _i3.Serializers.scoped.deserialize<Uri>(value),
     );
   }
 
   @override
   Object serialize(_i7.IMap<String, Uri> value) => value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance.serialize<Uri>(value),
+        (value) => _i3.Serializers.scoped.serialize<Uri>(value),
       );
 }
 
@@ -295,14 +296,14 @@ final class IMapStringSimpleClassSerializer
     return _i7.IMap<String, _i2.SimpleClass>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i2.SimpleClass>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i2.SimpleClass>(value),
     );
   }
 
   @override
   Object serialize(_i7.IMap<String, _i2.SimpleClass> value) => value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i2.SimpleClass>(value),
+        (value) => _i3.Serializers.scoped.serialize<_i2.SimpleClass>(value),
       );
 }
 
@@ -323,14 +324,14 @@ final class IMapStringIListStringSerializer
     return _i7.IMap<String, _i6.IList<String>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i6.IList<String>>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i6.IList<String>>(value),
     );
   }
 
   @override
   Object serialize(_i7.IMap<String, _i6.IList<String>> value) => value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i6.IList<String>>(value),
+        (value) => _i3.Serializers.scoped.serialize<_i6.IList<String>>(value),
       );
 }
 
@@ -351,14 +352,14 @@ final class IMapStringIListUriSerializer
     return _i7.IMap<String, _i6.IList<Uri>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i6.IList<Uri>>(value),
+      (value) => _i3.Serializers.scoped.deserialize<_i6.IList<Uri>>(value),
     );
   }
 
   @override
   Object serialize(_i7.IMap<String, _i6.IList<Uri>> value) => value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i6.IList<Uri>>(value),
+        (value) => _i3.Serializers.scoped.serialize<_i6.IList<Uri>>(value),
       );
 }
 
@@ -379,8 +380,8 @@ final class IMapStringIListSimpleClassSerializer
     return _i7.IMap<String, _i6.IList<_i2.SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance
-          .deserialize<_i6.IList<_i2.SimpleClass>>(value),
+      (value) =>
+          _i3.Serializers.scoped.deserialize<_i6.IList<_i2.SimpleClass>>(value),
     );
   }
 
@@ -388,8 +389,8 @@ final class IMapStringIListSimpleClassSerializer
   Object serialize(_i7.IMap<String, _i6.IList<_i2.SimpleClass>> value) =>
       value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance
-            .serialize<_i6.IList<_i2.SimpleClass>>(value),
+        (value) =>
+            _i3.Serializers.scoped.serialize<_i6.IList<_i2.SimpleClass>>(value),
       );
 }
 
@@ -411,7 +412,7 @@ final class IMapStringIMapStringStringSerializer
       serialized,
       (value) => (value as String),
       (value) =>
-          _i3.Serializers.instance.deserialize<_i7.IMap<String, String>>(value),
+          _i3.Serializers.scoped.deserialize<_i7.IMap<String, String>>(value),
     );
   }
 
@@ -420,7 +421,7 @@ final class IMapStringIMapStringStringSerializer
       value.toJson(
         (value) => value,
         (value) =>
-            _i3.Serializers.instance.serialize<_i7.IMap<String, String>>(value),
+            _i3.Serializers.scoped.serialize<_i7.IMap<String, String>>(value),
       );
 }
 
@@ -442,7 +443,7 @@ final class IMapStringIMapStringUriSerializer
       serialized,
       (value) => (value as String),
       (value) =>
-          _i3.Serializers.instance.deserialize<_i7.IMap<String, Uri>>(value),
+          _i3.Serializers.scoped.deserialize<_i7.IMap<String, Uri>>(value),
     );
   }
 
@@ -451,7 +452,7 @@ final class IMapStringIMapStringUriSerializer
       value.toJson(
         (value) => value,
         (value) =>
-            _i3.Serializers.instance.serialize<_i7.IMap<String, Uri>>(value),
+            _i3.Serializers.scoped.serialize<_i7.IMap<String, Uri>>(value),
       );
 }
 
@@ -473,7 +474,7 @@ final class IMapStringIMapStringSimpleClassSerializer extends _i3
     return _i7.IMap<String, _i7.IMap<String, _i2.SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => _i3.Serializers.instance
+      (value) => _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i2.SimpleClass>>(value),
     );
   }
@@ -482,7 +483,7 @@ final class IMapStringIMapStringSimpleClassSerializer extends _i3
   Object serialize(_i7.IMap<String, _i7.IMap<String, _i2.SimpleClass>> value) =>
       value.toJson(
         (value) => value,
-        (value) => _i3.Serializers.instance
+        (value) => _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i2.SimpleClass>>(value),
       );
 }
@@ -502,45 +503,45 @@ final class GenericWrappersSerializer
   _i2.GenericWrappers deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.GenericWrappers(
-      listOfString: _i3.Serializers.instance
+      listOfString: _i3.Serializers.scoped
           .deserialize<_i6.IList<String>>(serialized[r'listOfString']),
-      listOfUri: _i3.Serializers.instance
+      listOfUri: _i3.Serializers.scoped
           .deserialize<_i6.IList<Uri>>(serialized[r'listOfUri']),
-      listOfSimpleClass: _i3.Serializers.instance
+      listOfSimpleClass: _i3.Serializers.scoped
           .deserialize<_i6.IList<_i2.SimpleClass>>(
               serialized[r'listOfSimpleClass']),
-      listOfListOfString: _i3.Serializers.instance
+      listOfListOfString: _i3.Serializers.scoped
           .deserialize<_i6.IList<_i6.IList<String>>>(
               serialized[r'listOfListOfString']),
-      listOfListOfUri: _i3.Serializers.instance
+      listOfListOfUri: _i3.Serializers.scoped
           .deserialize<_i6.IList<_i6.IList<Uri>>>(
               serialized[r'listOfListOfUri']),
-      listOfListOfSimpleClass: _i3.Serializers.instance
+      listOfListOfSimpleClass: _i3.Serializers.scoped
           .deserialize<_i6.IList<_i6.IList<_i2.SimpleClass>>>(
               serialized[r'listOfListOfSimpleClass']),
-      mapOfString: _i3.Serializers.instance
+      mapOfString: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, String>>(serialized[r'mapOfString']),
-      mapOfUri: _i3.Serializers.instance
+      mapOfUri: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, Uri>>(serialized[r'mapOfUri']),
-      mapOfSimpleClass: _i3.Serializers.instance
+      mapOfSimpleClass: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i2.SimpleClass>>(
               serialized[r'mapOfSimpleClass']),
-      mapOfListOfString: _i3.Serializers.instance
+      mapOfListOfString: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i6.IList<String>>>(
               serialized[r'mapOfListOfString']),
-      mapOfListOfUri: _i3.Serializers.instance
+      mapOfListOfUri: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i6.IList<Uri>>>(
               serialized[r'mapOfListOfUri']),
-      mapOfListOfSimpleClass: _i3.Serializers.instance
+      mapOfListOfSimpleClass: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i6.IList<_i2.SimpleClass>>>(
               serialized[r'mapOfListOfSimpleClass']),
-      mapOfMapOfString: _i3.Serializers.instance
+      mapOfMapOfString: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i7.IMap<String, String>>>(
               serialized[r'mapOfMapOfString']),
-      mapOfMapOfUri: _i3.Serializers.instance
+      mapOfMapOfUri: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i7.IMap<String, Uri>>>(
               serialized[r'mapOfMapOfUri']),
-      mapOfMapOfSimpleClass: _i3.Serializers.instance
+      mapOfMapOfSimpleClass: _i3.Serializers.scoped
           .deserialize<_i7.IMap<String, _i7.IMap<String, _i2.SimpleClass>>>(
               serialized[r'mapOfMapOfSimpleClass']),
     );
@@ -548,41 +549,41 @@ final class GenericWrappersSerializer
 
   @override
   Map<String, Object?> serialize(_i2.GenericWrappers value) => {
-        r'listOfString': _i3.Serializers.instance
+        r'listOfString': _i3.Serializers.scoped
             .serialize<_i6.IList<String>>(value.listOfString),
         r'listOfUri':
-            _i3.Serializers.instance.serialize<_i6.IList<Uri>>(value.listOfUri),
-        r'listOfSimpleClass': _i3.Serializers.instance
+            _i3.Serializers.scoped.serialize<_i6.IList<Uri>>(value.listOfUri),
+        r'listOfSimpleClass': _i3.Serializers.scoped
             .serialize<_i6.IList<_i2.SimpleClass>>(value.listOfSimpleClass),
-        r'listOfListOfString': _i3.Serializers.instance
+        r'listOfListOfString': _i3.Serializers.scoped
             .serialize<_i6.IList<_i6.IList<String>>>(value.listOfListOfString),
-        r'listOfListOfUri': _i3.Serializers.instance
+        r'listOfListOfUri': _i3.Serializers.scoped
             .serialize<_i6.IList<_i6.IList<Uri>>>(value.listOfListOfUri),
-        r'listOfListOfSimpleClass': _i3.Serializers.instance
+        r'listOfListOfSimpleClass': _i3.Serializers.scoped
             .serialize<_i6.IList<_i6.IList<_i2.SimpleClass>>>(
                 value.listOfListOfSimpleClass),
-        r'mapOfString': _i3.Serializers.instance
+        r'mapOfString': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, String>>(value.mapOfString),
-        r'mapOfUri': _i3.Serializers.instance
+        r'mapOfUri': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, Uri>>(value.mapOfUri),
-        r'mapOfSimpleClass': _i3.Serializers.instance
+        r'mapOfSimpleClass': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i2.SimpleClass>>(
                 value.mapOfSimpleClass),
-        r'mapOfListOfString': _i3.Serializers.instance
+        r'mapOfListOfString': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i6.IList<String>>>(
                 value.mapOfListOfString),
-        r'mapOfListOfUri': _i3.Serializers.instance
+        r'mapOfListOfUri': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i6.IList<Uri>>>(value.mapOfListOfUri),
-        r'mapOfListOfSimpleClass': _i3.Serializers.instance
+        r'mapOfListOfSimpleClass': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i6.IList<_i2.SimpleClass>>>(
                 value.mapOfListOfSimpleClass),
-        r'mapOfMapOfString': _i3.Serializers.instance
+        r'mapOfMapOfString': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i7.IMap<String, String>>>(
                 value.mapOfMapOfString),
-        r'mapOfMapOfUri': _i3.Serializers.instance
+        r'mapOfMapOfUri': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i7.IMap<String, Uri>>>(
                 value.mapOfMapOfUri),
-        r'mapOfMapOfSimpleClass': _i3.Serializers.instance
+        r'mapOfMapOfSimpleClass': _i3.Serializers.scoped
             .serialize<_i7.IMap<String, _i7.IMap<String, _i2.SimpleClass>>>(
                 value.mapOfMapOfSimpleClass),
       };

@@ -15,21 +15,22 @@ final class AsyncNestedClassTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = await _i2.asyncNestedClass(_i3.Serializers.instance
+            final response = await _i2.asyncNestedClass(_i3.Serializers.scoped
                 .deserialize<_i2.NestedClass>(request[r'value']));
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.instance.serialize<_i2.NestedClass>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.NestedClass>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const FieldsSerializer());
+            serializers.put(const NestedClassSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const FieldsSerializer());
-  _i3.Serializers.instance.put(const NestedClassSerializer());
   await _i5.serve(
     args,
     (_) => AsyncNestedClassTarget(),
@@ -74,16 +75,16 @@ final class NestedClassSerializer extends _i3.Serializer<_i2.NestedClass> {
   _i2.NestedClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.NestedClass(
-      _i3.Serializers.instance.deserialize<_i2.Fields>(serialized[r'fields']),
-      _i3.Serializers.instance
+      _i3.Serializers.scoped.deserialize<_i2.Fields>(serialized[r'fields']),
+      _i3.Serializers.scoped
           .deserialize<_i2.Fields?>(serialized[r'nullableFields']),
     );
   }
 
   @override
   Map<String, Object?> serialize(_i2.NestedClass value) => {
-        r'fields': _i3.Serializers.instance.serialize<_i2.Fields>(value.fields),
-        r'nullableFields': _i3.Serializers.instance
-            .serialize<_i2.Fields?>(value.nullableFields),
+        r'fields': _i3.Serializers.scoped.serialize<_i2.Fields>(value.fields),
+        r'nullableFields':
+            _i3.Serializers.scoped.serialize<_i2.Fields?>(value.nullableFields),
       };
 }

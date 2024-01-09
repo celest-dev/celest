@@ -133,6 +133,13 @@
       }
     },
     {
+      "type": "Celest::CloudApi",
+      "id": "sealed_classes",
+      "cloudApi": {
+        "name": "sealed_classes"
+      }
+    },
+    {
       "type": "Celest::CloudFunction",
       "id": "anonymous_api.sayHello",
       "cloudFunction": {
@@ -270,14 +277,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "classes.asyncEmptySuper",
-      "cloudFunction": {
-        "name": "asyncEmptySuper",
-        "apiName": "classes"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "classes.asyncFields",
       "cloudFunction": {
         "name": "asyncFields",
@@ -374,14 +373,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "classes.asyncSuperFields",
-      "cloudFunction": {
-        "name": "asyncSuperFields",
-        "apiName": "classes"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "classes.defaultValues",
       "cloudFunction": {
         "name": "defaultValues",
@@ -393,14 +384,6 @@
       "id": "classes.empty",
       "cloudFunction": {
         "name": "empty",
-        "apiName": "classes"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "classes.emptySuper",
-      "cloudFunction": {
-        "name": "emptySuper",
         "apiName": "classes"
       }
     },
@@ -497,14 +480,6 @@
       "id": "classes.onlyToJsonWithDefaults",
       "cloudFunction": {
         "name": "onlyToJsonWithDefaults",
-        "apiName": "classes"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "classes.superFields",
-      "cloudFunction": {
-        "name": "superFields",
         "apiName": "classes"
       }
     },
@@ -1298,6 +1273,38 @@
       "cloudFunction": {
         "name": "voidReturn",
         "apiName": "return_types"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.area",
+      "cloudFunction": {
+        "name": "area",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.circle",
+      "cloudFunction": {
+        "name": "circle",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.rectangle",
+      "cloudFunction": {
+        "name": "rectangle",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.sealedClass",
+      "cloudFunction": {
+        "name": "sealedClass",
+        "apiName": "sealed_classes"
       }
     }
   ]

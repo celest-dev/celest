@@ -16,29 +16,31 @@ final class MixedFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = _i2.mixedFields(
-              _i3.Serializers.instance
+              _i3.Serializers.scoped
                   .deserialize<(String, {String anotherField})>(
                       request[r'nonAliased']),
-              aliased: _i3.Serializers.instance
+              aliased: _i3.Serializers.scoped
                   .deserialize<_i2.MixedFields>(request[r'aliased']),
             );
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance.serialize<
+              body: _i3.Serializers.scoped.serialize<
                   (
                     (String, {String anotherField}), {
                     _i2.MixedFields aliased
                   })>(response)
             );
           },
+          installSerializers: (serializers) {
+            serializers.put(const Record$4z6fldSerializer());
+            serializers.put(const MixedFieldsSerializer());
+            serializers.put(const Record$ag2zgiSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$4z6fldSerializer());
-  _i3.Serializers.instance.put(const MixedFieldsSerializer());
-  _i3.Serializers.instance.put(const Record$ag2zgiSerializer());
   await _i5.serve(
     args,
     (_) => MixedFieldsTarget(),
@@ -114,17 +116,17 @@ final class Record$ag2zgiSerializer extends _i3.Serializer<Record$ag2zgi> {
   Record$ag2zgi deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      _i3.Serializers.instance.deserialize<Record$4z6fld>(serialized[r'$1']),
-      aliased: _i3.Serializers.instance
+      _i3.Serializers.scoped.deserialize<Record$4z6fld>(serialized[r'$1']),
+      aliased: _i3.Serializers.scoped
           .deserialize<_i2.MixedFields>(serialized[r'aliased'])
     );
   }
 
   @override
   Map<String, Object?> serialize(Record$ag2zgi value) => {
-        r'$1': _i3.Serializers.instance
+        r'$1': _i3.Serializers.scoped
             .serialize<(String, {String anotherField})>(value.$1),
         r'aliased':
-            _i3.Serializers.instance.serialize<_i2.MixedFields>(value.aliased),
+            _i3.Serializers.scoped.serialize<_i2.MixedFields>(value.aliased),
       };
 }

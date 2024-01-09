@@ -19,7 +19,7 @@ final class OptionalPositionalTarget extends _i1.CelestFunctionTarget {
             _i3.optionalPositional(
               celestContext,
               (request[r'optionalString'] as String?),
-              (request[r'optionalInt'] as int?),
+              (request[r'optionalInt'] as num?)?.toInt(),
             );
             return (statusCode: 200, body: null);
           },

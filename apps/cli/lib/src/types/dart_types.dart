@@ -295,6 +295,10 @@ class _Core {
   /// Creates a [String] reference.
   DartTypeReference get string => const DartTypeReference('String', _url);
 
+  /// Creates a [StringBuffer] reference.
+  DartTypeReference get stringBuffer =>
+      const DartTypeReference('StringBuffer', _url);
+
   /// Creates a [Type] reference.
   DartTypeReference get type => const DartTypeReference('Type', _url);
 
@@ -638,6 +642,10 @@ class _Celest {
             if (dartType != null) dartType,
           ]),
       );
+
+  /// Creates a [celest_core.SerializationException] reference.
+  DartTypeReference get serializationException =>
+      const DartTypeReference('SerializationException', _coreUrl);
 
   /// Creates a [celest_core.Serializers] reference.
   DartTypeReference get serializers =>

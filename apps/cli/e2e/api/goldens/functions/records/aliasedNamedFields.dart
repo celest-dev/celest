@@ -16,20 +16,21 @@ final class AliasedNamedFieldsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = _i2.aliasedNamedFields(
-                value: _i3.Serializers.instance
+                value: _i3.Serializers.scoped
                     .deserialize<_i2.NamedFields>(request[r'value']));
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.instance.serialize<_i2.NamedFields>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.NamedFields>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const NamedFieldsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const NamedFieldsSerializer());
   await _i5.serve(
     args,
     (_) => AliasedNamedFieldsTarget(),

@@ -6,9 +6,6 @@ class EmptySuper {}
 
 class Empty extends EmptySuper {}
 
-EmptySuper emptySuper(EmptySuper value) => value;
-Future<EmptySuper> asyncEmptySuper(EmptySuper value) async => value;
-
 Empty empty(Empty value) => value;
 Future<Empty> asyncEmpty(Empty value) async => value;
 
@@ -41,9 +38,6 @@ class MixedFields extends SuperFields {
 
   final String field;
 }
-
-SuperFields superFields(SuperFields value) => value;
-Future<SuperFields> asyncSuperFields(SuperFields value) async => value;
 
 Fields fields(Fields value) => value;
 Future<Fields> asyncFields(Fields value) async => value;

@@ -16,16 +16,18 @@ final class ThrowsExceptionTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             _i2.throwsException(
-                type: _i3.Serializers.instance
+                type: _i3.Serializers.scoped
                     .deserialize<_i2.SupportedExceptionType>(request[r'type']));
             return (statusCode: 200, body: null);
+          },
+          installSerializers: (serializers) {
+            serializers.put(const SupportedExceptionTypeSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const SupportedExceptionTypeSerializer());
   await _i5.serve(
     args,
     (_) => ThrowsExceptionTarget(),

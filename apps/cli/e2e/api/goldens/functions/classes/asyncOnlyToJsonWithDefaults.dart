@@ -16,20 +16,22 @@ final class AsyncOnlyToJsonWithDefaultsTarget extends _i1.CelestFunctionTarget {
             context,
           ) async {
             final response = await _i2.asyncOnlyToJsonWithDefaults(_i3
-                .Serializers.instance
+                .Serializers.scoped
                 .deserialize<_i2.OnlyToJsonWithDefaults>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<_i2.OnlyToJsonWithDefaults>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const OnlyToJsonWithDefaultsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const OnlyToJsonWithDefaultsSerializer());
   await _i5.serve(
     args,
     (_) => AsyncOnlyToJsonWithDefaultsTarget(),

@@ -15,19 +15,21 @@ final class AsyncEmptyTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = await _i2.asyncEmpty(_i3.Serializers.instance
+            final response = await _i2.asyncEmpty(_i3.Serializers.scoped
                 .deserialize<_i2.Empty>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance.serialize<_i2.Empty>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.Empty>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const EmptySerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const EmptySerializer());
   await _i5.serve(
     args,
     (_) => AsyncEmptyTarget(),

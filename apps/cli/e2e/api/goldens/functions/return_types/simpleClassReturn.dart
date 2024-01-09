@@ -21,16 +21,17 @@ final class SimpleClassReturnTarget extends _i1.CelestFunctionTarget {
             final response = _i3.simpleClassReturn(celestContext);
             return (
               statusCode: 200,
-              body:
-                  _i4.Serializers.instance.serialize<_i5.SimpleClass>(response)
+              body: _i4.Serializers.scoped.serialize<_i5.SimpleClass>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const SimpleClassSerializer());
           },
           middleware: [],
         );
 }
 
 _i6.Future<void> main(List<String> args) async {
-  _i4.Serializers.instance.put(const SimpleClassSerializer());
   await _i7.serve(
     args,
     (_) => SimpleClassReturnTarget(),

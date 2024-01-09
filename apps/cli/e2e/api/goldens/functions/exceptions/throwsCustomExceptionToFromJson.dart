@@ -21,7 +21,7 @@ final class ThrowsCustomExceptionToFromJsonTarget
               return (statusCode: 200, body: null);
             } on _i2.CustomExceptionToFromJson catch (e, st) {
               print('$e\n$st');
-              final error = _i3.Serializers.instance
+              final error = _i3.Serializers.scoped
                   .serialize<_i2.CustomExceptionToFromJson>(e);
               return (
                 statusCode: 400,
@@ -35,12 +35,14 @@ final class ThrowsCustomExceptionToFromJsonTarget
               );
             }
           },
+          installSerializers: (serializers) {
+            serializers.put(const CustomExceptionToFromJsonSerializer());
+          },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const CustomExceptionToFromJsonSerializer());
   await _i5.serve(
     args,
     (_) => ThrowsCustomExceptionToFromJsonTarget(),

@@ -15,20 +15,21 @@ final class AsyncMixedFieldsTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = await _i2.asyncMixedFields(_i3.Serializers.instance
+            final response = await _i2.asyncMixedFields(_i3.Serializers.scoped
                 .deserialize<_i2.MixedFields>(request[r'value']));
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.instance.serialize<_i2.MixedFields>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.MixedFields>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const MixedFieldsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const MixedFieldsSerializer());
   await _i5.serve(
     args,
     (_) => AsyncMixedFieldsTarget(),

@@ -285,8 +285,38 @@ String sayHello(NotJsonable _) => 'Hello, World!';
         },
         errors: [
           'The type of a parameter must be serializable as JSON. '
-              'Class NotJsonable is abstract and must have an unnamed or '
+              'Class NotJsonable is abstract and must have an unnamed factory or '
               'fromJson factory constructor to be used.',
+        ],
+      );
+
+      testErrors(
+        name: 'parameter_with_subtypes',
+        apis: {
+          'greeting.dart': '''
+class Base {}
+final class Actual extends Base {}
+
+String sayHello(Base _) => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Classes with subtypes (which are not sealed classes) are not currently supported as parameters',
+        ],
+      );
+
+      testErrors(
+        name: 'return_type_with_subtypes',
+        apis: {
+          'greeting.dart': '''
+class Base {}
+final class Actual extends Base {}
+
+Base sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Classes with subtypes (which are not sealed classes) are not currently supported as return types',
         ],
       );
 

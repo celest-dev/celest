@@ -15,21 +15,23 @@ final class NonAliasedMixedFieldsTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.nonAliasedMixedFields(_i3.Serializers.instance
+            final response = _i2.nonAliasedMixedFields(_i3.Serializers.scoped
                 .deserialize<_i2.MixedFields>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance
+              body: _i3.Serializers.scoped
                   .serialize<(String, {String anotherField})>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const Record$4z6fldSerializer());
+            serializers.put(const MixedFieldsSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const Record$4z6fldSerializer());
-  _i3.Serializers.instance.put(const MixedFieldsSerializer());
   await _i5.serve(
     args,
     (_) => NonAliasedMixedFieldsTarget(),

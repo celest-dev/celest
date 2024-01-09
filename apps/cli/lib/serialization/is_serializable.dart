@@ -90,9 +90,8 @@ final class VerdictNo extends Verdict {
   String toString() => reasons.join('; ');
 }
 
-@immutable
 final class SerializationSpec {
-  const SerializationSpec({
+  SerializationSpec({
     required this.type,
     required this.wireType,
     DartType? castType,
@@ -118,6 +117,7 @@ final class SerializationSpec {
   final List<ParameterSpec> parameters;
   final bool hasFromJson;
   final bool hasToJson;
+  final List<SerializationSpec> subtypes = [];
 
   @override
   bool operator ==(Object other) {
@@ -130,7 +130,9 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>()
             .equals(parameters, other.parameters) &&
         hasFromJson == other.hasFromJson &&
-        hasToJson == other.hasToJson;
+        hasToJson == other.hasToJson &&
+        const ListEquality<SerializationSpec>()
+            .equals(subtypes, other.subtypes);
   }
 
   @override
@@ -142,6 +144,7 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>().hash(parameters),
         hasFromJson,
         hasToJson,
+        const ListEquality<SerializationSpec>().hash(subtypes),
       );
 }
 
@@ -495,56 +498,49 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     final wireConstructor = fromJsonCtor ??
         type.constructors.singleWhere((ctor) => ctor.name.isEmpty);
-    final isErrorType =
-        typeHelper.typeSystem.isSubtypeOf(type, typeHelper.coreErrorType);
 
-    // Do not serialize stack trace in the error object unless it is needed
-    // to later deserialize the type (e.g. it's in the constructor).
-    bool serializeField(FieldElement field) {
-      if (!isErrorType) {
-        return true;
+    final spec = SerializationSpec(
+      type: type,
+      wireType: wireType,
+      castType: fromJsonCtor?.parameters.first.type,
+      fields: [
+        for (final field in element.sortedFields)
+          FieldSpec(name: field.displayName, type: field.type),
+      ],
+      parameters: [
+        for (final parameter in wireConstructor.parameters)
+          ParameterSpec(
+            name: parameter.displayName,
+            type: parameter.type,
+            isPositional: parameter.isPositional,
+            isOptional: parameter.isOptional,
+            isNamed: parameter.isNamed,
+            defaultValueCode: parameter.defaultValueCode,
+          ),
+      ],
+      hasFromJson: fromJsonCtor != null,
+      hasToJson: toJsonMethod != null,
+    );
+    verdict = verdict.withSpec(spec);
+
+    final subtypes = typeHelper.subtypes[type] ?? const <DartType>[];
+    for (final subtype in subtypes) {
+      final subtypeVerdict = subtype.accept(this);
+      switch (subtypeVerdict) {
+        case VerdictNo():
+          verdict &= subtypeVerdict;
+        case VerdictYes(:final serializationSpecs):
+          for (final subtypeSpec in serializationSpecs) {
+            if (subtypes.contains(subtypeSpec.type)) {
+              spec.subtypes.add(subtypeSpec);
+            } else {
+              verdict = verdict.withSpec(subtypeSpec);
+            }
+          }
       }
-      if (field.name != 'stackTrace') {
-        return true;
-      }
-      if (wireConstructor.parameters.any(
-        (p) =>
-            p.name == 'stackTrace' &&
-            typeHelper.typeSystem.isSubtypeOf(
-              field.type,
-              typeHelper.typeProvider.stackTraceType,
-            ),
-      )) {
-        return true;
-      }
-      return false;
     }
 
-    return verdict.withSpec(
-      SerializationSpec(
-        type: type,
-        wireType: wireType,
-        castType: fromJsonCtor?.parameters.first.type,
-        fields: [
-          for (final field in element.sortedFields)
-            if (serializeField(field))
-              FieldSpec(name: field.displayName, type: field.type),
-        ],
-        parameters: [
-          for (final parameter in wireConstructor.parameters)
-            ParameterSpec(
-              name: parameter.displayName,
-              type: parameter.type,
-              isPositional: parameter.isPositional,
-              isOptional: parameter.isOptional,
-              isNamed: parameter.isNamed,
-              defaultValueCode: parameter.defaultValueCode,
-            ),
-        ],
-        hasFromJson: fromJsonCtor != null,
-        hasToJson: toJsonMethod != null,
-      ),
-    );
+    return verdict;
   }
 
   @override
@@ -696,9 +692,11 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         'Class ${element.displayName} must have an unnamed constructor with '
         'the same number of parameters as fields.',
       );
-    } else if (element.isAbstract && !unnamedConstructor.isFactory) {
+    } else if (element.isAbstract &&
+        !element.isSealed &&
+        !unnamedConstructor.isFactory) {
       constructorVerdict &= Verdict.no(
-        'Class ${element.displayName} is abstract and must have an unnamed '
+        'Class ${element.displayName} is abstract and must have an unnamed factory '
         'or fromJson factory constructor to be used.',
       );
     }
@@ -734,7 +732,10 @@ extension on ClassElement {
   List<FieldElement> get sortedFields {
     // Get all of the fields that need to be assigned
     final elementInstanceFields = Map.fromEntries(
-      this.fields.where((e) => !e.isStatic).map((e) => MapEntry(e.name, e)),
+      this
+          .fields
+          .where((e) => !e.isStatic && !e.isSynthetic)
+          .map((e) => MapEntry(e.name, e)),
     );
 
     final inheritedFields = <String, FieldElement>{};
@@ -751,6 +752,9 @@ extension on ClassElement {
       if (v is PropertyAccessorElement && v.isGetter) {
         assert(v.variable is FieldElement);
         final variable = v.variable as FieldElement;
+        if (variable.isSynthetic) {
+          continue;
+        }
         assert(!inheritedFields.containsKey(variable.name));
         inheritedFields[variable.name] = variable;
       }

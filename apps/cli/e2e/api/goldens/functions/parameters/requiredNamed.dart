@@ -19,7 +19,7 @@ final class RequiredNamedTarget extends _i1.CelestFunctionTarget {
             _i3.requiredNamed(
               celestContext,
               requiredString: (request[r'requiredString'] as String),
-              requiredInt: (request[r'requiredInt'] as int),
+              requiredInt: (request[r'requiredInt'] as num).toInt(),
             );
             return (statusCode: 200, body: null);
           },

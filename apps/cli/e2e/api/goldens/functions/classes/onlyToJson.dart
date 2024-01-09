@@ -15,19 +15,21 @@ final class OnlyToJsonTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final response = _i2.onlyToJson(_i3.Serializers.instance
+            final response = _i2.onlyToJson(_i3.Serializers.scoped
                 .deserialize<_i2.OnlyToJson>(request[r'value']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.instance.serialize<_i2.OnlyToJson>(response)
+              body: _i3.Serializers.scoped.serialize<_i2.OnlyToJson>(response)
             );
+          },
+          installSerializers: (serializers) {
+            serializers.put(const OnlyToJsonSerializer());
           },
           middleware: [],
         );
 }
 
 _i4.Future<void> main(List<String> args) async {
-  _i3.Serializers.instance.put(const OnlyToJsonSerializer());
   await _i5.serve(
     args,
     (_) => OnlyToJsonTarget(),

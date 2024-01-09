@@ -1,9 +1,10 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/uri_converter.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
@@ -11,9 +12,11 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
-// ignore: implementation_imports
+import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/src/dart/analysis/driver.dart';
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
+import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
-// ignore: implementation_imports
 import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
@@ -22,8 +25,8 @@ import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
-import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
@@ -39,11 +42,13 @@ final class CelestAnalyzer {
   );
 
   factory CelestAnalyzer() {
-    final contextCollection = AnalysisContextCollection(
+    final contextCollection = AnalysisContextCollectionImpl(
       includedPaths: [projectPaths.projectRoot],
       sdkPath: Sdk.current.sdkPath,
       // TODO(dnys1): Custom resource provider with Sentry integration and mock support?
       resourceProvider: PhysicalResourceProvider.INSTANCE,
+      // Needed for [_collectSubtypes].
+      enableIndex: true,
     );
     final context = contextCollection.contexts.single;
     return CelestAnalyzer._(context);
@@ -51,10 +56,10 @@ final class CelestAnalyzer {
 
   static final Logger _logger = Logger('CelestAnalyzer');
   final AnalysisContext _context;
+  AnalysisDriver get _driver => (_context as DriverBasedAnalysisContext).driver;
   final List<AnalysisException> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
-  final TypeHelper typeHelper = TypeHelper();
   late final enabledExperiments = _loadEnabledExperiments(
     projectPaths.analysisOptionsYaml,
   );
@@ -412,6 +417,61 @@ final class CelestAnalyzer {
     }
   }
 
+  /// Collects all subtypes of the given [type].
+  Future<List<DartType>> _collectSubtypes(InterfaceElement element) async {
+    final searchedFiles = SearchedFiles();
+    final subtypes = await _driver.search.subTypes(element, searchedFiles);
+    return subtypes
+        .where((res) {
+          return switch (res.kind) {
+            SearchResultKind.REFERENCE_IN_EXTENDS_CLAUSE ||
+            SearchResultKind.REFERENCE_IN_IMPLEMENTS_CLAUSE ||
+            SearchResultKind.REFERENCE_IN_ON_CLAUSE ||
+            SearchResultKind.REFERENCE_IN_WITH_CLAUSE =>
+              true,
+            _ => false,
+          };
+        })
+        .map((res) => (res.enclosingElement as InterfaceElement).thisType)
+        .toList();
+  }
+
+  /// Ensures custom [type]s (e.g. those defined in the current project), have
+  /// allowed subtypes.
+  ///
+  /// Currently, only `sealed` classes are allowed to have subtypes.
+  Future<bool> _hasAllowedSubtypes(DartType type) async {
+    if (type is! InterfaceType) {
+      return true;
+    }
+    final element = type.element;
+    var hasAllowedSubtypes = true;
+    // Recurse into type arguments before processing this wrapper, e.g. [type]
+    // could be List<T> where T is of interest.
+    for (final typeArgument in type.typeArguments) {
+      hasAllowedSubtypes &= await _hasAllowedSubtypes(typeArgument);
+    }
+    final libraryUri = type.element.librarySource.uri;
+    final libraryPath =
+        _context.currentSession.uriConverter.uriToPath(libraryUri);
+    if (libraryPath == null) {
+      _logger.finest('Could not resolve path for URI: $libraryUri');
+      return true;
+    }
+    if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
+      return true;
+    }
+    final subtypes =
+        typeHelper.subtypes[type] ??= await _collectSubtypes(element);
+    for (final subtype in subtypes) {
+      hasAllowedSubtypes &= await _hasAllowedSubtypes(subtype);
+    }
+    if (element is ClassElement && element.isSealed) {
+      return hasAllowedSubtypes && subtypes.isNotEmpty;
+    }
+    return hasAllowedSubtypes && subtypes.isEmpty;
+  }
+
   Future<ast.Api?> _collectApi({
     required String apiName,
     required String apiFile,
@@ -426,16 +486,16 @@ final class CelestAnalyzer {
       return null;
     }
     final library = apiLibraryResult.element;
-    final libraryUnit = apiLibraryResult.units.single;
     final libraryMetdata = _collectApiMetadata(library);
     final functions = Map.fromEntries(
-      library.topLevelElements.whereType<FunctionElement>().map((func) {
+      (await library.topLevelElements
+              .whereType<FunctionElement>()
+              .asyncMap((func) async {
         if (func.isPrivate) {
           return null;
         }
 
-        final funcNode = libraryUnit.unit.declarations
-            .firstWhere((node) => node.declaredElement == func);
+        final funcNode = apiLibraryResult.getElementDeclaration(func)!.node;
         final exceptionCollector = ExceptionTypeCollector(
           source: library.source,
           uriConverter: _context.currentSession.uriConverter,
@@ -464,7 +524,7 @@ final class CelestAnalyzer {
         final function = ast.CloudFunction(
           name: func.name,
           apiName: apiName,
-          parameters: func.parameters.map((param) {
+          parameters: await func.parameters.asyncMap((param) async {
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
               type: typeHelper.toReference(param.type),
@@ -476,6 +536,14 @@ final class CelestAnalyzer {
             if (parameter.type.isFunctionContext) {
               return parameter;
             }
+            // Check must happen before `isSerializable`
+            if (!await _hasAllowedSubtypes(param.type)) {
+              _reportError(
+                'Classes with subtypes (which are not sealed classes) are not '
+                'currently supported as parameters',
+                parameter.location,
+              );
+            }
             final parameterTypeVerdict = typeHelper.isSerializable(param.type);
             if (!parameterTypeVerdict.isSerializable) {
               for (final reason in parameterTypeVerdict.reasons) {
@@ -486,7 +554,7 @@ final class CelestAnalyzer {
               }
             }
             return parameter;
-          }).toList(),
+          }),
           returnType: typeHelper.toReference(func.returnType),
           flattenedReturnType:
               typeHelper.toReference(func.returnType.flattened),
@@ -508,6 +576,14 @@ final class CelestAnalyzer {
           }
         }
         final returnType = func.returnType;
+        // Check must happen before `isSerializable`
+        if (!await _hasAllowedSubtypes(returnType.flattened)) {
+          _reportError(
+            'Classes with subtypes (which are not sealed classes) are not '
+            'currently supported as return types',
+            function.location,
+          );
+        }
         final returnTypeVerdict = switch (returnType.flattened) {
           VoidType() => const Verdict.yes(),
           final flattened => typeHelper.isSerializable(flattened),
@@ -521,7 +597,8 @@ final class CelestAnalyzer {
           }
         }
         return MapEntry(function.name, function);
-      }).nonNulls,
+      }))
+          .nonNulls,
     );
     return ast.Api(
       name: apiName,
