@@ -98,8 +98,9 @@ final class SerializationSpec {
     required this.fields,
     required this.parameters,
     required this.hasFromJson,
-    required this.hasToJson,
-  }) : castType = castType ?? wireType;
+    required bool hasToJson,
+  })  : castType = castType ?? wireType,
+        _hasToJson = hasToJson;
 
   final DartType type;
 
@@ -116,7 +117,19 @@ final class SerializationSpec {
   final List<FieldSpec> fields;
   final List<ParameterSpec> parameters;
   final bool hasFromJson;
-  final bool hasToJson;
+  final bool _hasToJson;
+
+  bool get hasToJson {
+    var hasToJson = _hasToJson;
+    var parent = this.parent;
+    while (parent != null) {
+      hasToJson |= parent.hasToJson;
+      parent = parent.parent;
+    }
+    return hasToJson;
+  }
+
+  SerializationSpec? parent;
   final List<SerializationSpec> subtypes = [];
 
   @override
@@ -130,7 +143,8 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>()
             .equals(parameters, other.parameters) &&
         hasFromJson == other.hasFromJson &&
-        hasToJson == other.hasToJson &&
+        _hasToJson == other._hasToJson &&
+        parent == other.parent &&
         const ListEquality<SerializationSpec>()
             .equals(subtypes, other.subtypes);
   }
@@ -143,7 +157,8 @@ final class SerializationSpec {
         const ListEquality<FieldSpec>().hash(fields),
         const ListEquality<ParameterSpec>().hash(parameters),
         hasFromJson,
-        hasToJson,
+        _hasToJson,
+        parent,
         const ListEquality<SerializationSpec>().hash(subtypes),
       );
 }
@@ -532,7 +547,17 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         case VerdictYes(:final serializationSpecs):
           for (final subtypeSpec in serializationSpecs) {
             if (subtypes.contains(subtypeSpec.type)) {
-              spec.subtypes.add(subtypeSpec);
+              if (!TypeChecker.fromStatic(jsonMapType)
+                  .isExactlyType(subtypeSpec.wireType)) {
+                // TODO: Test
+                verdict &= Verdict.no(
+                  'All classes in a sealed class hierarchy must use '
+                  'Map<String, Object?> as their wire type but '
+                  '${subtypeSpec.type.element!.name!} uses '
+                  '${subtypeSpec.wireType.getDisplayString(withNullability: false)}',
+                );
+              }
+              spec.subtypes.add(subtypeSpec..parent = spec);
             } else {
               verdict = verdict.withSpec(subtypeSpec);
             }

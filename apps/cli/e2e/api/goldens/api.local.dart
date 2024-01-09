@@ -142,8 +142,16 @@ import 'functions/return_types/structReturnNullable.dart' as _i137;
 import 'functions/return_types/voidReturn.dart' as _i138;
 import 'functions/sealed_classes/area.dart' as _i139;
 import 'functions/sealed_classes/circle.dart' as _i140;
-import 'functions/sealed_classes/rectangle.dart' as _i141;
-import 'functions/sealed_classes/sealedClass.dart' as _i142;
+import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i141;
+import 'functions/sealed_classes/rectangle.dart' as _i142;
+import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
+    as _i143;
+import 'functions/sealed_classes/sealedClass.dart' as _i144;
+import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i145;
+import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
+    as _i146;
+import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
+    as _i147;
 
 void main() {
   _i1.serve(targets: {
@@ -323,7 +331,17 @@ void main() {
     '/return_types/voidReturn': _i138.VoidReturnTarget(),
     '/sealed_classes/area': _i139.AreaTarget(),
     '/sealed_classes/circle': _i140.CircleTarget(),
-    '/sealed_classes/rectangle': _i141.RectangleTarget(),
-    '/sealed_classes/sealedClass': _i142.SealedClassTarget(),
+    '/sealed_classes/circleWithOverriddenCustomJson':
+        _i141.CircleWithOverriddenCustomJsonTarget(),
+    '/sealed_classes/rectangle': _i142.RectangleTarget(),
+    '/sealed_classes/rectangleWithOverriddenCustomJson':
+        _i143.RectangleWithOverriddenCustomJsonTarget(),
+    '/sealed_classes/sealedClass': _i144.SealedClassTarget(),
+    '/sealed_classes/sealedClassWithCustomJson':
+        _i145.SealedClassWithCustomJsonTarget(),
+    '/sealed_classes/sealedClassWithInheritedCustomJson':
+        _i146.SealedClassWithInheritedCustomJsonTarget(),
+    '/sealed_classes/sealedClassWithOverriddenCustomJson':
+        _i147.SealedClassWithOverriddenCustomJsonTarget(),
   });
 }

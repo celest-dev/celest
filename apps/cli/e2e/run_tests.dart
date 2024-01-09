@@ -2103,6 +2103,184 @@ const Map<String, Test> tests = {
               },
             ),
           ],
+          'sealedClassWithInheritedCustomJson': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'CircleWithInheritedCustomJson',
+                    'size': {
+                      'radius': 5,
+                    },
+                  },
+                  {
+                    r'$type': 'RectangleWithInheritedCustomJson',
+                    'size': {
+                      'width': 5,
+                      'height': 5,
+                    },
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'CircleWithInheritedCustomJson',
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+                {
+                  r'$type': 'RectangleWithInheritedCustomJson',
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+              ],
+            ),
+          ],
+          'sealedClassWithCustomJson': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'CircleWithCustomJson',
+                    'size': {
+                      'radius': 5,
+                    },
+                  },
+                  {
+                    r'$type': 'RectangleWithCustomJson',
+                    'size': {
+                      'width': 5,
+                      'height': 5,
+                    },
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'CircleWithCustomJson',
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+                {
+                  r'$type': 'RectangleWithCustomJson',
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+              ],
+            ),
+          ],
+          'sealedClassWithOverriddenCustomJson': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                // discriminator is not needed since it should be routed directly
+                // to the circle's fromJson ctor.
+                'circle': {
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+                // discriminator is not needed since it should be routed directly
+                // to the rectangle's fromJson ctor.
+                'rectangle': {
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+                // discriminator is needed when static type is the base class.
+                'other': [
+                  {
+                    r'$type': 'CircleWithOverriddenCustomJson',
+                    'size': {
+                      'radius': 5,
+                    },
+                  },
+                  {
+                    r'$type': 'RectangleWithOverriddenCustomJson',
+                    'size': {
+                      'width': 5,
+                      'height': 5,
+                    },
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'CircleWithOverriddenCustomJson',
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+                {
+                  r'$type': 'RectangleWithOverriddenCustomJson',
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+                {
+                  r'$type': 'CircleWithOverriddenCustomJson',
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+                {
+                  r'$type': 'RectangleWithOverriddenCustomJson',
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+              ],
+            ),
+          ],
+          'rectangleWithOverriddenCustomJson': [
+            FunctionTestSuccess(
+              name: '',
+              input: {
+                'rectangle': {
+                  'size': {
+                    'width': 5,
+                    'height': 5,
+                  },
+                },
+              },
+              output: {
+                r'$type': 'RectangleWithOverriddenCustomJson',
+                'size': {
+                  'width': 5,
+                  'height': 5,
+                },
+              },
+            ),
+          ],
+          'circleWithOverriddenCustomJson': [
+            FunctionTestSuccess(
+              name: '',
+              input: {
+                'circle': {
+                  r'$type': 'CircleWithOverriddenCustomJson',
+                  'size': {
+                    'radius': 5,
+                  },
+                },
+              },
+              output: {
+                'size': {
+                  'radius': 5,
+                },
+              },
+            ),
+          ],
         },
       ),
     },

@@ -1956,6 +1956,315 @@
             "line": 15,
             "column": 7
           }
+        },
+        "sealedClassWithInheritedCustomJson": {
+          "name": "sealedClassWithInheritedCustomJson",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "shapes",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "ShapeWithInheritedCustomJson",
+                    "url": "project:functions/sealed_classes.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 42,
+                "column": 46
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithInheritedCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithInheritedCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 41,
+            "column": 35
+          }
+        },
+        "sealedClassWithCustomJson": {
+          "name": "sealedClassWithCustomJson",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "shapes",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "ShapeWithCustomJson",
+                    "url": "project:functions/sealed_classes.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 101,
+                "column": 37
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 100,
+            "column": 26
+          }
+        },
+        "sealedClassWithOverriddenCustomJson": {
+          "name": "sealedClassWithOverriddenCustomJson",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "circle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "CircleWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 151,
+                "column": 42
+              }
+            },
+            {
+              "name": "rectangle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "RectangleWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 152,
+                "column": 45
+              }
+            },
+            {
+              "name": "other",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "ShapeWithOverriddenCustomJson",
+                    "url": "project:functions/sealed_classes.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 153,
+                "column": 47
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "ShapeWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 150,
+            "column": 36
+          }
+        },
+        "rectangleWithOverriddenCustomJson": {
+          "name": "rectangleWithOverriddenCustomJson",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "rectangle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "RectangleWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 163,
+                "column": 36
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ShapeWithOverriddenCustomJson",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ShapeWithOverriddenCustomJson",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 162,
+            "column": 30
+          }
+        },
+        "circleWithOverriddenCustomJson": {
+          "name": "circleWithOverriddenCustomJson",
+          "apiName": "sealed_classes",
+          "parameters": [
+            {
+              "name": "circle",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ShapeWithOverriddenCustomJson",
+                "url": "project:functions/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/sealed_classes.dart",
+                "line": 169,
+                "column": 32
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "CircleWithOverriddenCustomJson",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "CircleWithOverriddenCustomJson",
+            "url": "project:functions/sealed_classes.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/sealed_classes.dart",
+            "line": 168,
+            "column": 31
+          }
         }
       }
     },

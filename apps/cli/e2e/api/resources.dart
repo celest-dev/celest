@@ -1033,16 +1033,54 @@ abstract final class functions {
     functionName: r'circle',
   );
 
+  static const sealedClassesCircleWithOverriddenCustomJson = _i1.CloudFunction<
+      _i10.ShapeWithOverriddenCustomJson, _i10.CircleWithOverriddenCustomJson>(
+    api: r'sealed_classes',
+    functionName: r'circleWithOverriddenCustomJson',
+  );
+
   static const sealedClassesRectangle =
       _i1.CloudFunction<_i10.Rectangle, _i10.Rectangle>(
     api: r'sealed_classes',
     functionName: r'rectangle',
   );
 
+  static const sealedClassesRectangleWithOverriddenCustomJson =
+      _i1.CloudFunction<_i10.RectangleWithOverriddenCustomJson,
+          _i10.ShapeWithOverriddenCustomJson>(
+    api: r'sealed_classes',
+    functionName: r'rectangleWithOverriddenCustomJson',
+  );
+
   static const sealedClassesSealedClass =
       _i1.CloudFunction<List<_i10.Shape>, List<_i10.Shape>>(
     api: r'sealed_classes',
     functionName: r'sealedClass',
+  );
+
+  static const sealedClassesSealedClassWithCustomJson = _i1.CloudFunction<
+      List<_i10.ShapeWithCustomJson>, List<_i10.ShapeWithCustomJson>>(
+    api: r'sealed_classes',
+    functionName: r'sealedClassWithCustomJson',
+  );
+
+  static const sealedClassesSealedClassWithInheritedCustomJson =
+      _i1.CloudFunction<List<_i10.ShapeWithInheritedCustomJson>,
+          List<_i10.ShapeWithInheritedCustomJson>>(
+    api: r'sealed_classes',
+    functionName: r'sealedClassWithInheritedCustomJson',
+  );
+
+  static const sealedClassesSealedClassWithOverriddenCustomJson =
+      _i1.CloudFunction<
+          ({
+            _i10.CircleWithOverriddenCustomJson circle,
+            _i10.RectangleWithOverriddenCustomJson rectangle,
+            List<_i10.ShapeWithOverriddenCustomJson> other
+          }),
+          List<_i10.ShapeWithOverriddenCustomJson>>(
+    api: r'sealed_classes',
+    functionName: r'sealedClassWithOverriddenCustomJson',
   );
 }
 
@@ -1200,6 +1238,11 @@ const List<_i1.CloudWidget> all = [
   functions.returnTypesVoidReturn,
   functions.sealedClassesArea,
   functions.sealedClassesCircle,
+  functions.sealedClassesCircleWithOverriddenCustomJson,
   functions.sealedClassesRectangle,
+  functions.sealedClassesRectangleWithOverriddenCustomJson,
   functions.sealedClassesSealedClass,
+  functions.sealedClassesSealedClassWithCustomJson,
+  functions.sealedClassesSealedClassWithInheritedCustomJson,
+  functions.sealedClassesSealedClassWithOverriddenCustomJson,
 ];

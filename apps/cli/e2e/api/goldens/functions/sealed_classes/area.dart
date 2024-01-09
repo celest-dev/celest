@@ -60,11 +60,18 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Shape value) => (switch (value) {
-        _i2.Rectangle() =>
-          _i3.Serializers.scoped.serialize<_i2.Rectangle>(value),
-        _i2.Circle() => _i3.Serializers.scoped.serialize<_i2.Circle>(value),
-      } as Map<String, Object?>);
+  Map<String, Object?> serialize(_i2.Shape value) => switch (value) {
+        _i2.Rectangle() => {
+            ...(_i3.Serializers.scoped.serialize<_i2.Rectangle>(value)
+                as Map<String, Object?>),
+            r'$type': r'Rectangle',
+          },
+        _i2.Circle() => {
+            ...(_i3.Serializers.scoped.serialize<_i2.Circle>(value)
+                as Map<String, Object?>),
+            r'$type': r'Circle',
+          },
+      };
 }
 
 final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
@@ -89,7 +96,6 @@ final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
   Map<String, Object?> serialize(_i2.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
-        r'$type': r'Rectangle',
       };
 }
 
@@ -109,8 +115,5 @@ final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Circle value) => {
-        r'radius': value.radius,
-        r'$type': r'Circle',
-      };
+  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
 }

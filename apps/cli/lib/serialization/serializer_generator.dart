@@ -13,11 +13,34 @@ import 'package:code_builder/code_builder.dart';
 final class SerializerGenerator {
   SerializerGenerator(
     this.serializationSpec, {
-    this.isSubtype = false,
-  });
+    SerializationSpec? parent,
+  }) : _parent = parent;
 
   final SerializationSpec serializationSpec;
-  final bool isSubtype;
+  final SerializationSpec? _parent;
+
+  bool get isSubtype => _parent != null;
+
+  /// The `fromJson` method to use and whether it is inherited from a parent.
+  (Expression fromJson, bool usesParent)? get fromJson {
+    Reference? typeReference;
+    var usesParent = false;
+    if (serializationSpec.hasFromJson) {
+      typeReference = this.typeReference;
+    }
+    var parent = serializationSpec.parent;
+    while (typeReference == null && parent != null) {
+      if (parent.hasFromJson) {
+        typeReference = typeHelper.toReference(parent.type);
+        usesParent = true;
+      }
+      parent = parent.parent;
+    }
+    if (typeReference == null) {
+      return null;
+    }
+    return (typeReference.property('fromJson'), usesParent);
+  }
 
   late final type = serializationSpec.type;
   late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
@@ -151,7 +174,44 @@ final class SerializerGenerator {
           );
         }
       }
-      return ref.property('toJson').call(genericSerializers);
+      final serialized = ref.property('toJson').call(genericSerializers);
+
+      // If we're using a base class's custom toJson method, then we
+      // always inject the type discriminator regardless if it also
+      // has a custom fromJson. By always providing the discriminator,
+      // devs can rely on its presence even when writing custom fromJson
+      // constructors and just focus on the logic of serialization, not
+      // discrimination.
+      if (serializationSpec.subtypes.isNotEmpty) {
+        return literalMap({
+          literalSpread(): serialized,
+          // TODO: Ensure subclasses are not private
+          literalString(r'$type', raw: true): CodeExpression(
+            Block((b) {
+              b.statements.addAll([
+                const Code('switch ('),
+                ref.code,
+                const Code(') {'),
+              ]);
+              for (final subtype in serializationSpec.subtypes) {
+                final subtypeRef = typeHelper.toReference(subtype.type);
+                b.statements.addAll([
+                  Code.scope((alloc) => '${alloc(subtypeRef)}() => '),
+                  literalString(
+                    subtype.type.element!.name!,
+                    raw: true,
+                  ).code,
+                  const Code(','),
+                ]);
+              }
+              b.statements.add(
+                const Code('}'),
+              );
+            }),
+          ),
+        });
+      }
+      return serialized;
     }
     if (serializationSpec.subtypes.isNotEmpty) {
       final serialize =
@@ -169,10 +229,16 @@ final class SerializerGenerator {
               [ref],
               {},
               [subtypeRef],
-            );
+            ).asA(wireType);
             b.statements.addAll([
               Code.scope((alloc) => '${alloc(subtypeRef)}() => '),
-              subtypeCase.code,
+              literalMap({
+                literalSpread(): subtypeCase,
+                literalString(r'$type', raw: true): literalString(
+                  subtype.type.element!.name!,
+                  raw: true,
+                ),
+              }).code,
               const Code(','),
             ]);
           }
@@ -180,19 +246,13 @@ final class SerializerGenerator {
             const Code('}'),
           );
         }),
-      ).asA(wireType);
+      );
     }
     final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.fields) {
       serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
         typeHelper.toReference(field.type),
         ref.property(field.name),
-      );
-    }
-    if (isSubtype) {
-      serialized[literalString(r'$type', raw: true)] = literalString(
-        type.element!.name!,
-        raw: true,
       );
     }
     return literalMap(serialized);
@@ -202,7 +262,7 @@ final class SerializerGenerator {
     String from, {
     required bool mayBeAbsent,
   }) {
-    if (serializationSpec.hasFromJson) {
+    if (fromJson case (final fromJson, final usesParent)?) {
       Expression ref = _reference(from, isNullable: false);
       if (mayBeAbsent) {
         ref = ref.ifNullThen(literalConstMap({}));
@@ -224,10 +284,26 @@ final class SerializerGenerator {
           );
         }
       }
-      return typeReference.nonNullable.property('fromJson').call([
-        ref,
+      final deserialized = fromJson([
+        // If a subtype uses a parent's fromJson method, then the discriminator
+        // key is needed so that the parent's fromJson method can distinguish the
+        // map.
+        if (usesParent)
+          literalMap({
+            literalString(r'$type', raw: true): literalString(
+              typeReference.symbol,
+              raw: true,
+            ),
+            literalSpread(): ref,
+          })
+        else
+          ref,
         ...genericDeserializers,
       ]);
+      if (usesParent) {
+        return deserialized.asA(typeReference);
+      }
+      return deserialized;
     }
     if (serializationSpec.subtypes.isNotEmpty) {
       assert(!mayBeAbsent, 'Classes with subtypes must have a map');

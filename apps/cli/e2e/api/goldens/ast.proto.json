@@ -1293,6 +1293,14 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "sealed_classes.circleWithOverriddenCustomJson",
+      "cloudFunction": {
+        "name": "circleWithOverriddenCustomJson",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "sealed_classes.rectangle",
       "cloudFunction": {
         "name": "rectangle",
@@ -1301,9 +1309,41 @@
     },
     {
       "type": "Celest::CloudFunction",
+      "id": "sealed_classes.rectangleWithOverriddenCustomJson",
+      "cloudFunction": {
+        "name": "rectangleWithOverriddenCustomJson",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
       "id": "sealed_classes.sealedClass",
       "cloudFunction": {
         "name": "sealedClass",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.sealedClassWithCustomJson",
+      "cloudFunction": {
+        "name": "sealedClassWithCustomJson",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.sealedClassWithInheritedCustomJson",
+      "cloudFunction": {
+        "name": "sealedClassWithInheritedCustomJson",
+        "apiName": "sealed_classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "sealed_classes.sealedClassWithOverriddenCustomJson",
+      "cloudFunction": {
+        "name": "sealedClassWithOverriddenCustomJson",
         "apiName": "sealed_classes"
       }
     }

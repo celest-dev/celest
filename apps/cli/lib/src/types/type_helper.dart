@@ -157,7 +157,10 @@ final class TypeHelper {
       for (final serializationSpec in serializationSpecs) {
         yield SerializerGenerator(serializationSpec).build();
         for (final subtype in serializationSpec.subtypes) {
-          yield SerializerGenerator(subtype, isSubtype: true).build();
+          yield SerializerGenerator(
+            subtype,
+            parent: serializationSpec,
+          ).build();
         }
       }
     }
