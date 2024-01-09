@@ -462,7 +462,7 @@ final class CelestAnalyzer {
       return true;
     }
     final subtypes =
-        typeHelper.subtypes[type] ??= await _collectSubtypes(element);
+        typeHelper.subtypes[element] ??= await _collectSubtypes(element);
     for (final subtype in subtypes) {
       hasAllowedSubtypes &= await _hasAllowedSubtypes(subtype);
     }

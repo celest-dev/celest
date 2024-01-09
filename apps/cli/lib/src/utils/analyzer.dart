@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
@@ -48,6 +49,10 @@ extension DartTypeHelper on DartType {
         return this;
     }
   }
+
+  DartType get nonNullable => (this as TypeImpl).withNullability(
+        NullabilitySuffix.none,
+      );
 
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -235,12 +240,19 @@ extension SourceLineCol on Source {
 // == of RecordType does not take into account alias.
 // hashCode only takes into account the length of positionalFields and namedFields.
 final class DartTypeEquality implements Equality<DartType> {
-  const DartTypeEquality();
+  const DartTypeEquality({this.ignoreNullability = false});
+
+  final bool ignoreNullability;
 
   @override
   bool equals(DartType e1, DartType e2) {
     if (e1 is RecordType && e2 is RecordType) {
-      return const RecordTypeEquality().equals(e1, e2);
+      return RecordTypeEquality(ignoreNullability: ignoreNullability)
+          .equals(e1, e2);
+    }
+    if (ignoreNullability) {
+      e1 = (e1 as TypeImpl).withNullability(NullabilitySuffix.none);
+      e2 = (e2 as TypeImpl).withNullability(NullabilitySuffix.none);
     }
     return e1 == e2;
   }
@@ -248,7 +260,10 @@ final class DartTypeEquality implements Equality<DartType> {
   @override
   int hash(DartType e) {
     if (e is RecordType) {
-      return const RecordTypeEquality().hash(e);
+      return RecordTypeEquality(ignoreNullability: ignoreNullability).hash(e);
+    }
+    if (ignoreNullability) {
+      e = (e as TypeImpl).withNullability(NullabilitySuffix.none);
     }
     return e.hashCode;
   }
@@ -259,15 +274,19 @@ final class DartTypeEquality implements Equality<DartType> {
 
 // TODO: File ticket with Dart team around hashcode/equality of DartType
 final class RecordTypeEquality implements Equality<RecordType> {
-  const RecordTypeEquality();
+  const RecordTypeEquality({this.ignoreNullability = false});
+
+  final bool ignoreNullability;
 
   @override
   bool equals(RecordType e1, RecordType e2) {
     if (identical(e1, e2)) {
       return true;
     }
-    if (e1.nullabilitySuffix != e2.nullabilitySuffix) {
-      return false;
+    if (!ignoreNullability) {
+      if (e1.nullabilitySuffix != e2.nullabilitySuffix) {
+        return false;
+      }
     }
     if (e1.alias != e2.alias) {
       return false;

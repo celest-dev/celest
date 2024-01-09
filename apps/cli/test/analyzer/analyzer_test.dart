@@ -375,6 +375,47 @@ ValidCustomJson sayHello(ValidCustomJson param) => param;
       );
 
       testErrors(
+        name: 'direct_cycle',
+        apis: {
+          'greeting.dart': '''
+class ValidJsonable {
+  const ValidJsonable(this.value);
+
+  final ValidJsonable value;
+}
+
+void sayHello(ValidJsonable param) => param;
+''',
+        },
+        errors: [
+          'Classes are not allowed to have fields of their own type',
+        ],
+      );
+
+      testNoErrors(
+        name: 'indirect_cycle',
+        apis: {
+          'greeting.dart': '''
+class ValidJsonable {
+  const ValidJsonable(this.value, this.values, this.wrapper);
+
+  final ValidJsonable? value;
+  final List<ValidJsonable> values;
+  final ValidJsonableWrapper wrapper;
+}
+
+class ValidJsonableWrapper {
+  const ValidJsonableWrapper(this.value);
+
+  final ValidJsonable value;
+}
+
+void sayHello(ValidJsonable param) => param;
+''',
+        },
+      );
+
+      testErrors(
         name: 'bad_json_return',
         apis: {
           'greeting.dart': '''

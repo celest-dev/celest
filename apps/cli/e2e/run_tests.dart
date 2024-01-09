@@ -2027,6 +2027,245 @@ const Map<String, Test> tests = {
           ],
         },
       ),
+      'cycles': ApiTest(
+        functionTests: {
+          'createTree': [
+            FunctionTestSuccess(
+              name: '',
+              input: {},
+              output: {
+                r'$type': 'Parent',
+                'name': 'root',
+                'children': [
+                  {
+                    r'$type': 'Parent',
+                    'name': 'parentA',
+                    'children': [
+                      {
+                        r'$type': 'Child',
+                        'name': 'childA',
+                      },
+                      {
+                        r'$type': 'Child',
+                        'name': 'childB',
+                      }
+                    ],
+                  },
+                  {
+                    r'$type': 'Parent',
+                    'name': 'parentB',
+                    'children': [
+                      {
+                        r'$type': 'Child',
+                        'name': 'childC',
+                      },
+                      {
+                        r'$type': 'Child',
+                        'name': 'childD',
+                      }
+                    ],
+                  }
+                ],
+              },
+            ),
+          ],
+          'printTree': [
+            FunctionTestSuccess(
+              name: '',
+              input: {
+                'node': {
+                  r'$type': 'Parent',
+                  'name': 'root',
+                  'children': [
+                    {
+                      r'$type': 'Parent',
+                      'name': 'parentA',
+                      'children': [
+                        {
+                          r'$type': 'Child',
+                          'name': 'childA',
+                        },
+                        {
+                          r'$type': 'Child',
+                          'name': 'childB',
+                        }
+                      ],
+                    },
+                    {
+                      r'$type': 'Parent',
+                      'name': 'parentB',
+                      'children': [
+                        {
+                          r'$type': 'Child',
+                          'name': 'childC',
+                        },
+                        {
+                          r'$type': 'Child',
+                          'name': 'childD',
+                        }
+                      ],
+                    }
+                  ],
+                },
+              },
+              output: null,
+              logs: [
+                'root',
+                '  parentA',
+                '    childA',
+                '    childB',
+                '  parentB',
+                '    childC',
+                '    childD',
+              ],
+            ),
+          ],
+          'combineTrees': [
+            FunctionTestSuccess(
+              name: '',
+              input: {
+                'tree1': {
+                  r'$type': 'Parent',
+                  'name': 'parentA',
+                  'children': [
+                    {
+                      r'$type': 'Child',
+                      'name': 'childA',
+                    },
+                    {
+                      r'$type': 'Child',
+                      'name': 'childB',
+                    }
+                  ],
+                },
+                'tree2': {
+                  'name': 'parentB',
+                  'children': [
+                    {
+                      r'$type': 'Child',
+                      'name': 'childC',
+                    },
+                    {
+                      r'$type': 'Child',
+                      'name': 'childD',
+                    }
+                  ],
+                },
+                'additionalChildren': [
+                  null,
+                  {
+                    r'$type': 'Child',
+                    'name': 'childE',
+                  },
+                  {
+                    r'$type': 'Child',
+                    'name': 'childF',
+                  }
+                ],
+              },
+              output: {
+                r'$type': 'Parent',
+                'name': 'root',
+                'children': [
+                  {
+                    r'$type': 'Parent',
+                    'name': 'parentA',
+                    'children': [
+                      {
+                        r'$type': 'Child',
+                        'name': 'childA',
+                      },
+                      {
+                        r'$type': 'Child',
+                        'name': 'childB',
+                      }
+                    ],
+                  },
+                  {
+                    r'$type': 'Parent',
+                    'name': 'parentB',
+                    'children': [
+                      {
+                        r'$type': 'Child',
+                        'name': 'childC',
+                      },
+                      {
+                        r'$type': 'Child',
+                        'name': 'childD',
+                      }
+                    ],
+                  },
+                  {
+                    r'$type': 'Child',
+                    'name': 'childE',
+                  },
+                  {
+                    r'$type': 'Child',
+                    'name': 'childF',
+                  }
+                ],
+              },
+            ),
+          ],
+          'selfReferencing': [
+            FunctionTestSuccess(
+              name: '',
+              input: {
+                'selfReferencing': {
+                  'value': {
+                    'value': null,
+                    'wrapper': null,
+                    'list': <Map<String, Object?>>[],
+                  },
+                  'wrapper': {
+                    'value': {
+                      'value': {
+                        'value': null,
+                        'wrapper': null,
+                        'list': <Map<String, Object?>>[],
+                      },
+                      'wrapper': null,
+                      'list': <Map<String, Object?>>[],
+                    },
+                  },
+                  'list': [
+                    {
+                      'value': null,
+                      'wrapper': null,
+                      'list': <Map<String, Object?>>[],
+                    },
+                  ],
+                },
+              },
+              output: {
+                'value': {
+                  'value': null,
+                  'wrapper': null,
+                  'list': <Map<String, Object?>>[],
+                },
+                'wrapper': {
+                  'value': {
+                    'value': {
+                      'value': null,
+                      'wrapper': null,
+                      'list': <Map<String, Object?>>[],
+                    },
+                    'wrapper': null,
+                    'list': <Map<String, Object?>>[],
+                  },
+                },
+                'list': [
+                  {
+                    'value': null,
+                    'wrapper': null,
+                    'list': <Map<String, Object?>>[],
+                  },
+                ],
+              },
+            ),
+          ],
+        },
+      ),
     },
   ),
   'env_vars': Test(

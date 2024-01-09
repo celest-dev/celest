@@ -4611,6 +4611,211 @@
         }
       }
     },
+    "cycles": {
+      "name": "cycles",
+      "metadata": [],
+      "functions": {
+        "createTree": {
+          "name": "createTree",
+          "apiName": "cycles",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Node",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Node",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/cycles.dart",
+            "line": 25,
+            "column": 5
+          }
+        },
+        "printTree": {
+          "name": "printTree",
+          "apiName": "cycles",
+          "parameters": [
+            {
+              "name": "node",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Node",
+                "url": "project:functions/cycles.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 47,
+                "column": 20
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/cycles.dart",
+            "line": 47,
+            "column": 5
+          }
+        },
+        "combineTrees": {
+          "name": "combineTrees",
+          "apiName": "cycles",
+          "parameters": [
+            {
+              "name": "tree1",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Node",
+                "url": "project:functions/cycles.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 60,
+                "column": 7
+              }
+            },
+            {
+              "name": "tree2",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Parent",
+                "url": "project:functions/cycles.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 61,
+                "column": 10
+              }
+            },
+            {
+              "name": "tree3",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Node",
+                "url": "project:functions/cycles.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 62,
+                "column": 8
+              }
+            },
+            {
+              "name": "additionalChildren",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Node",
+                    "url": "project:functions/cycles.dart",
+                    "isNullable": true
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": false,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 63,
+                "column": 14
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Node",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Node",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/cycles.dart",
+            "line": 59,
+            "column": 5
+          }
+        },
+        "selfReferencing": {
+          "name": "selfReferencing",
+          "apiName": "cycles",
+          "parameters": [
+            {
+              "name": "selfReferencing",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "SelfReferencing",
+                "url": "project:functions/cycles.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "uri": "project:functions/cycles.dart",
+                "line": 78,
+                "column": 48
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "SelfReferencing",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "SelfReferencing",
+            "url": "project:functions/cycles.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/cycles.dart",
+            "line": 78,
+            "column": 16
+          }
+        }
+      }
+    },
     "authenticated_function": {
       "name": "authenticated_function",
       "metadata": [],

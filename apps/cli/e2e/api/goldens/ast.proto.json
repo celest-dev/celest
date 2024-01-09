@@ -85,6 +85,13 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "cycles",
+      "cloudApi": {
+        "name": "cycles"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "exceptions",
       "cloudApi": {
         "name": "exceptions"
@@ -481,6 +488,38 @@
       "cloudFunction": {
         "name": "onlyToJsonWithDefaults",
         "apiName": "classes"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "cycles.combineTrees",
+      "cloudFunction": {
+        "name": "combineTrees",
+        "apiName": "cycles"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "cycles.createTree",
+      "cloudFunction": {
+        "name": "createTree",
+        "apiName": "cycles"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "cycles.printTree",
+      "cloudFunction": {
+        "name": "printTree",
+        "apiName": "cycles"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "cycles.selfReferencing",
+      "cloudFunction": {
+        "name": "selfReferencing",
+        "apiName": "cycles"
       }
     },
     {

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_provider.dart';
@@ -149,7 +151,21 @@ final class TypeHelper {
   ///   all fields present. For these classes, we generate custom serialization
   ///   code.
   Verdict isSerializable(DartType type) =>
-      _serializationVerdicts[type] ??= type.accept(const IsSerializable());
+      _serializationVerdicts[type] ??= runZoned(
+        () => type.accept(const IsSerializable()),
+        zoneValues: {
+          _seenKey: Zone.current[_seenKey] ??
+              HashSet(
+                equals: const DartTypeEquality(ignoreNullability: true).equals,
+                hashCode: const DartTypeEquality(ignoreNullability: true).hash,
+              ),
+        },
+      );
+
+  static const _seenKey = #seen;
+
+  /// The set of types seen by the current [isSerializable] check.
+  Set<DartType> get seen => Zone.current[_seenKey] as Set<DartType>;
 
   Iterable<codegen.Class> customSerializers(DartType type) sync* {
     final verdict = isSerializable(type);
@@ -166,7 +182,7 @@ final class TypeHelper {
     }
   }
 
-  final Map<DartType, List<DartType>> subtypes = {};
+  final Map<InterfaceElement, List<DartType>> subtypes = {};
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {

@@ -144,7 +144,7 @@ final class SerializationSpec {
             .equals(parameters, other.parameters) &&
         hasFromJson == other.hasFromJson &&
         _hasToJson == other._hasToJson &&
-        parent == other.parent &&
+        parent?.type == other.parent?.type &&
         const ListEquality<SerializationSpec>()
             .equals(subtypes, other.subtypes);
   }
@@ -158,7 +158,7 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>().hash(parameters),
         hasFromJson,
         _hasToJson,
-        parent,
+        parent == null ? null : const DartTypeEquality().hash(parent!.type),
         const ListEquality<SerializationSpec>().hash(subtypes),
       );
 }
@@ -238,7 +238,6 @@ final class ParameterSpec {
 ///   all fields present. For these classes, we generate custom serialization
 ///   code.
 final class IsSerializable extends TypeVisitor<Verdict> {
-  // TODO(dnys1): Detect cycles
   const IsSerializable();
 
   Verdict? _isSimpleJson(DartType type) {
@@ -463,6 +462,13 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return const Verdict.yes();
     }
 
+    if (!typeHelper.seen.add(type)) {
+      // Cycle detected. If there is a level of indirection, this is okay.
+      // We have this check to prevent stack overflow, and ensure a proper level
+      // of indirection in [_IsSerializableClass] below.
+      return const Verdict.yes();
+    }
+
     final element = type.element;
     if (element is! ClassElement) {
       return Verdict.no(
@@ -538,9 +544,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     );
     verdict = verdict.withSpec(spec);
 
-    final subtypes = typeHelper.subtypes[type] ?? const <DartType>[];
+    final subtypes = typeHelper.subtypes[type.element] ?? const <DartType>[];
     for (final subtype in subtypes) {
-      final subtypeVerdict = subtype.accept(this);
+      final subtypeVerdict = typeHelper.isSerializable(subtype);
       switch (subtypeVerdict) {
         case VerdictNo():
           verdict &= subtypeVerdict;
@@ -624,7 +630,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 }
 
 final class _IsSerializableClass extends TypeVisitor<Verdict> {
-  // TODO(dnys1): Detect cycles
   const _IsSerializableClass(this.position);
 
   final _TypePosition position;
@@ -657,7 +662,13 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         );
         continue;
       }
-      final fieldVerdict = field.type.accept(const IsSerializable());
+      if (const DartTypeEquality().equals(type, field.type)) {
+        fieldsVerdict &= Verdict.no(
+          'Classes are not allowed to have fields of their own type.',
+        );
+        continue;
+      }
+      final fieldVerdict = typeHelper.isSerializable(field.type);
       fieldsVerdict &= switch (fieldVerdict) {
         VerdictYes() => fieldVerdict,
         _ => Verdict.no(
@@ -742,7 +753,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
 // Below is copied from `package:json_serializable`.
 
 extension on ClassElement {
-  /// Returns a [List] of all instance [FieldElement] items for [element] and
+  /// Returns a [List] of all instance [FieldElement] items for this class and
   /// super classes, sorted first by their location in the inheritance hierarchy
   /// (super first) and then by their location in the source file.
   List<FieldElement> get sortedFields {
@@ -750,6 +761,8 @@ extension on ClassElement {
     final elementInstanceFields = Map.fromEntries(
       this
           .fields
+          // Note: Unlike `json_serializable` we do not support synthetic fields,
+          // i.e. those fields which are synthesized from getters/setters.
           .where((e) => !e.isStatic && !e.isSynthetic)
           .map((e) => MapEntry(e.name, e)),
     );
@@ -768,6 +781,8 @@ extension on ClassElement {
       if (v is PropertyAccessorElement && v.isGetter) {
         assert(v.variable is FieldElement);
         final variable = v.variable as FieldElement;
+        // Note: Unlike `json_serializable` we do not support synthetic fields,
+        // i.e. those fields which are synthesized from getters/setters.
         if (variable.isSynthetic) {
           continue;
         }
