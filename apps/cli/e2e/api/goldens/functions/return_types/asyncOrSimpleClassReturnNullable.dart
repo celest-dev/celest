@@ -1,14 +1,13 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i5;
 
-import 'package:celest/celest.dart' as _i2;
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:celest_core/celest_core.dart' as _i4;
-import 'package:functions_framework/serve.dart' as _i7;
+import 'package:celest_core/celest_core.dart' as _i3;
+import 'package:functions_framework/serve.dart' as _i6;
 
-import '../../../functions/parameter_types.dart' as _i5;
-import '../../../functions/return_types.dart' as _i3;
+import '../../../functions/parameter_types.dart' as _i4;
+import '../../../functions/return_types.dart' as _i2;
 
 final class AsyncOrSimpleClassReturnNullableTarget
     extends _i1.CelestFunctionTarget {
@@ -18,12 +17,10 @@ final class AsyncOrSimpleClassReturnNullableTarget
             request,
             context,
           ) async {
-            final celestContext = _i2.FunctionContext();
-            final response =
-                await _i3.asyncOrSimpleClassReturnNullable(celestContext);
+            final response = await _i2.asyncOrSimpleClassReturnNullable();
             return (
               statusCode: 200,
-              body: _i4.Serializers.scoped.serialize<_i5.SimpleClass?>(response)
+              body: _i3.Serializers.scoped.serialize<_i4.SimpleClass?>(response)
             );
           },
           installSerializers: (serializers) {
@@ -33,14 +30,14 @@ final class AsyncOrSimpleClassReturnNullableTarget
         );
 }
 
-_i6.Future<void> main(List<String> args) async {
-  await _i7.serve(
+_i5.Future<void> main(List<String> args) async {
+  await _i6.serve(
     args,
     (_) => AsyncOrSimpleClassReturnNullableTarget(),
   );
 }
 
-final class SimpleClassSerializer extends _i4.Serializer<_i5.SimpleClass> {
+final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
   const SimpleClassSerializer();
 
   @override
@@ -50,11 +47,11 @@ final class SimpleClassSerializer extends _i4.Serializer<_i5.SimpleClass> {
   String get wireType => r'dart:core#Map';
 
   @override
-  _i5.SimpleClass deserialize(Object? value) {
+  _i4.SimpleClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, dynamic>>(value);
-    return _i5.SimpleClass.fromJson(serialized);
+    return _i4.SimpleClass.fromJson(serialized);
   }
 
   @override
-  Map<String, dynamic> serialize(_i5.SimpleClass value) => value.toJson();
+  Map<String, dynamic> serialize(_i4.SimpleClass value) => value.toJson();
 }

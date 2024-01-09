@@ -1,12 +1,11 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:celest/celest.dart' as _i2;
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:functions_framework/serve.dart' as _i5;
+import 'package:functions_framework/serve.dart' as _i4;
 
-import '../../../functions/parameters.dart' as _i3;
+import '../../../functions/parameters.dart' as _i2;
 
 final class RequiredNamedTarget extends _i1.CelestFunctionTarget {
   RequiredNamedTarget()
@@ -15,9 +14,7 @@ final class RequiredNamedTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final celestContext = _i2.FunctionContext();
-            _i3.requiredNamed(
-              celestContext,
+            _i2.requiredNamed(
               requiredString: (request[r'requiredString'] as String),
               requiredInt: (request[r'requiredInt'] as num).toInt(),
             );
@@ -27,8 +24,8 @@ final class RequiredNamedTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i4.Future<void> main(List<String> args) async {
-  await _i5.serve(
+_i3.Future<void> main(List<String> args) async {
+  await _i4.serve(
     args,
     (_) => RequiredNamedTarget(),
   );

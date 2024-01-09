@@ -1,14 +1,13 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i5;
 
-import 'package:celest/celest.dart' as _i2;
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:celest_core/celest_core.dart' as _i4;
-import 'package:functions_framework/serve.dart' as _i7;
+import 'package:celest_core/celest_core.dart' as _i3;
+import 'package:functions_framework/serve.dart' as _i6;
 
-import '../../../functions/parameter_types.dart' as _i5;
-import '../../../functions/return_types.dart' as _i3;
+import '../../../functions/parameter_types.dart' as _i4;
+import '../../../functions/return_types.dart' as _i2;
 
 final class AsyncComplexClassReturnTarget extends _i1.CelestFunctionTarget {
   AsyncComplexClassReturnTarget()
@@ -17,11 +16,10 @@ final class AsyncComplexClassReturnTarget extends _i1.CelestFunctionTarget {
             request,
             context,
           ) async {
-            final celestContext = _i2.FunctionContext();
-            final response = await _i3.asyncComplexClassReturn(celestContext);
+            final response = await _i2.asyncComplexClassReturn();
             return (
               statusCode: 200,
-              body: _i4.Serializers.scoped.serialize<_i5.ComplexClass>(response)
+              body: _i3.Serializers.scoped.serialize<_i4.ComplexClass>(response)
             );
           },
           installSerializers: (serializers) {
@@ -31,14 +29,14 @@ final class AsyncComplexClassReturnTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i6.Future<void> main(List<String> args) async {
-  await _i7.serve(
+_i5.Future<void> main(List<String> args) async {
+  await _i6.serve(
     args,
     (_) => AsyncComplexClassReturnTarget(),
   );
 }
 
-final class ComplexClassSerializer extends _i4.Serializer<_i5.ComplexClass> {
+final class ComplexClassSerializer extends _i3.Serializer<_i4.ComplexClass> {
   const ComplexClassSerializer();
 
   @override
@@ -48,11 +46,11 @@ final class ComplexClassSerializer extends _i4.Serializer<_i5.ComplexClass> {
   String get wireType => r'dart:core#Map';
 
   @override
-  _i5.ComplexClass deserialize(Object? value) {
+  _i4.ComplexClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, dynamic>>(value);
-    return _i5.ComplexClass.fromJson(serialized);
+    return _i4.ComplexClass.fromJson(serialized);
   }
 
   @override
-  Map<String, dynamic> serialize(_i5.ComplexClass value) => value.toJson();
+  Map<String, dynamic> serialize(_i4.ComplexClass value) => value.toJson();
 }

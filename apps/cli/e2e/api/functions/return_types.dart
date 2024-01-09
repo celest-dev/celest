@@ -4,49 +4,47 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:celest/celest.dart';
-
 import 'parameter_types.dart';
 
-Future<void> asyncVoidReturn(FunctionContext context) async {}
+Future<void> asyncVoidReturn() async {}
 
-Future<String> asyncStringReturn(FunctionContext context) async {
+Future<String> asyncStringReturn() async {
   return 'Hello, world!';
 }
 
-Future<int> asyncIntReturn(FunctionContext context) async {
+Future<int> asyncIntReturn() async {
   return 42;
 }
 
-Future<double> asyncDoubleReturn(FunctionContext context) async {
+Future<double> asyncDoubleReturn() async {
   return 3.14;
 }
 
-Future<bool> asyncBoolReturn(FunctionContext context) async {
+Future<bool> asyncBoolReturn() async {
   return true;
 }
 
-Future<Iterable<String>> asyncIterableReturn(FunctionContext context) async {
+Future<Iterable<String>> asyncIterableReturn() async {
   return ['Hello', 'world'];
 }
 
-Future<List<String>> asyncListReturn(FunctionContext context) async {
+Future<List<String>> asyncListReturn() async {
   return ['Hello', 'world'];
 }
 
-Future<Map<String, String>> asyncMapReturn(FunctionContext context) async {
+Future<Map<String, String>> asyncMapReturn() async {
   return {'Hello': 'world'};
 }
 
-Future<SimpleStruct> asyncStructReturn(FunctionContext context) async {
+Future<SimpleStruct> asyncStructReturn() async {
   return ();
 }
 
-Future<SimpleStruct?> asyncStructReturnNullable(FunctionContext context) async {
+Future<SimpleStruct?> asyncStructReturnNullable() async {
   return null;
 }
 
-Future<ComplexStruct> asyncComplexStructReturn(FunctionContext context) async {
+Future<ComplexStruct> asyncComplexStructReturn() async {
   return (
     aString: 'Hello',
     anInt: 42,
@@ -109,13 +107,11 @@ Future<ComplexStruct> asyncComplexStructReturn(FunctionContext context) async {
   );
 }
 
-Future<ComplexStruct?> asyncComplexStructReturnNullable(
-  FunctionContext context,
-) async {
+Future<ComplexStruct?> asyncComplexStructReturnNullable() async {
   return null;
 }
 
-Future<ComplexClass> asyncComplexClassReturn(FunctionContext context) async {
+Future<ComplexClass> asyncComplexClassReturn() async {
   return ComplexClass(
     aString: 'Hello',
     anInt: 42,
@@ -178,48 +174,45 @@ Future<ComplexClass> asyncComplexClassReturn(FunctionContext context) async {
   );
 }
 
-Future<SimpleClass?> asyncClassReturnNullable(FunctionContext context) async {
+Future<SimpleClass?> asyncClassReturnNullable() async {
   return null;
 }
 
-FutureOr<void> asyncOrVoidReturn(FunctionContext context) async {}
+FutureOr<void> asyncOrVoidReturn() async {}
 
-FutureOr<String> asyncOrStringReturn(FunctionContext context) async {
+FutureOr<String> asyncOrStringReturn() async {
   return 'Hello, world!';
 }
 
-FutureOr<int> asyncOrIntReturn(FunctionContext context) async {
+FutureOr<int> asyncOrIntReturn() async {
   return 42;
 }
 
-FutureOr<double> asyncOrDoubleReturn(FunctionContext context) async {
+FutureOr<double> asyncOrDoubleReturn() async {
   return 3.14;
 }
 
-FutureOr<bool> asyncOrBoolReturn(FunctionContext context) async {
+FutureOr<bool> asyncOrBoolReturn() async {
   return true;
 }
 
-FutureOr<Iterable<String>> asyncOrIterableReturn(
-    FunctionContext context) async {
+FutureOr<Iterable<String>> asyncOrIterableReturn() async {
   return ['Hello', 'world'];
 }
 
-FutureOr<List<String>> asyncOrListReturn(FunctionContext context) async {
+FutureOr<List<String>> asyncOrListReturn() async {
   return ['Hello', 'world'];
 }
 
-FutureOr<Map<String, String>> asyncOrMapReturn(FunctionContext context) async {
+FutureOr<Map<String, String>> asyncOrMapReturn() async {
   return {'Hello': 'world'};
 }
 
-FutureOr<SimpleStruct> asyncOrStructReturn(FunctionContext context) async {
+FutureOr<SimpleStruct> asyncOrStructReturn() async {
   return ();
 }
 
-FutureOr<ComplexStruct> asyncOrComplexStructReturn(
-  FunctionContext context,
-) async {
+FutureOr<ComplexStruct> asyncOrComplexStructReturn() async {
   return (
     aString: 'Hello',
     anInt: 42,
@@ -282,94 +275,89 @@ FutureOr<ComplexStruct> asyncOrComplexStructReturn(
   );
 }
 
-FutureOr<void>? asyncOrVoidReturnNullable(FunctionContext context) {
+FutureOr<void>? asyncOrVoidReturnNullable() {
   return null;
 }
 
-FutureOr<String>? asyncOrStringReturnNullable(FunctionContext context) {
+FutureOr<String>? asyncOrStringReturnNullable() {
   return null;
 }
 
-FutureOr<int>? asyncOrIntReturnNullable(FunctionContext context) {
+FutureOr<int>? asyncOrIntReturnNullable() {
   return null;
 }
 
-FutureOr<double>? asyncOrDoubleReturnNullable(FunctionContext context) {
+FutureOr<double>? asyncOrDoubleReturnNullable() {
   return null;
 }
 
-FutureOr<bool>? asyncOrBoolReturnNullable(FunctionContext context) {
+FutureOr<bool>? asyncOrBoolReturnNullable() {
   return null;
 }
 
-FutureOr<Iterable<String>>? asyncOrIterableReturnNullable(
-    FunctionContext context) {
+FutureOr<Iterable<String>>? asyncOrIterableReturnNullable() {
   return null;
 }
 
-FutureOr<List<String>>? asyncOrListReturnNullable(FunctionContext context) {
+FutureOr<List<String>>? asyncOrListReturnNullable() {
   return null;
 }
 
-FutureOr<Map<String, String>>? asyncOrMapReturnNullable(
-    FunctionContext context) {
+FutureOr<Map<String, String>>? asyncOrMapReturnNullable() {
   return null;
 }
 
-FutureOr<SimpleStruct>? asyncOrStructReturnNullable(FunctionContext context) {
+FutureOr<SimpleStruct>? asyncOrStructReturnNullable() {
   return null;
 }
 
-FutureOr<ComplexStruct>? asyncOrComplexStructReturnNullable(
-    FunctionContext context) {
+FutureOr<ComplexStruct>? asyncOrComplexStructReturnNullable() {
   return null;
 }
 
-FutureOr<SimpleClass>? asyncOrSimpleClassReturnNullable(
-    FunctionContext context) {
+FutureOr<SimpleClass>? asyncOrSimpleClassReturnNullable() {
   return null;
 }
 
-FutureOr<ComplexClass>? asyncOrComplexClassReturnNullable(
-    FunctionContext context) {
+FutureOr<ComplexClass>? asyncOrComplexClassReturnNullable() {
   return null;
 }
 
-void voidReturn(FunctionContext context) {}
+void voidReturn() {}
 
-String stringReturn(FunctionContext context) {
+String stringReturn() {
   return 'Hello, world!';
 }
 
-int intReturn(FunctionContext context) {
+int intReturn() {
   return 42;
 }
 
-double doubleReturn(FunctionContext context) {
+double doubleReturn() {
   return 3.14;
 }
 
-bool boolReturn(FunctionContext context) {
+bool boolReturn() {
   return true;
 }
 
-Iterable<String> iterableReturn(FunctionContext context) {
+Iterable<String> iterableReturn() {
   return ['Hello', 'world'];
 }
 
-List<String> listReturn(FunctionContext context) {
+List<String> listReturn() {
   return ['Hello', 'world'];
 }
 
-Map<String, String> mapReturn(FunctionContext context) {
+Map<String, String> mapReturn() {
   return {'Hello': 'world'};
 }
 
-SimpleStruct structReturn(FunctionContext context) {
+SimpleStruct structReturn() {
   return ();
 }
 
-ComplexStruct complexReturn(FunctionContext context) {
+ComplexStruct complexReturn() {
   return (
     aString: 'Hello',
     anInt: 42,
@@ -432,11 +420,11 @@ ComplexStruct complexReturn(FunctionContext context) {
   );
 }
 
-SimpleClass simpleClassReturn(FunctionContext context) {
+SimpleClass simpleClassReturn() {
   return SimpleClass();
 }
 
-ComplexClass complexClassReturn(FunctionContext context) {
+ComplexClass complexClassReturn() {
   return ComplexClass(
     aString: 'Hello',
     anInt: 42,
@@ -499,46 +487,46 @@ ComplexClass complexClassReturn(FunctionContext context) {
   );
 }
 
-String? stringReturnNullable(FunctionContext context) {
+String? stringReturnNullable() {
   return null;
 }
 
-int? intReturnNullable(FunctionContext context) {
+int? intReturnNullable() {
   return null;
 }
 
-double? doubleReturnNullable(FunctionContext context) {
+double? doubleReturnNullable() {
   return null;
 }
 
-bool? boolReturnNullable(FunctionContext context) {
+bool? boolReturnNullable() {
   return null;
 }
 
-Iterable<String>? iterableReturnNullable(FunctionContext context) {
+Iterable<String>? iterableReturnNullable() {
   return null;
 }
 
-List<String>? listReturnNullable(FunctionContext context) {
+List<String>? listReturnNullable() {
   return null;
 }
 
-Map<String, String>? mapReturnNullable(FunctionContext context) {
+Map<String, String>? mapReturnNullable() {
   return null;
 }
 
-SimpleStruct? structReturnNullable(FunctionContext context) {
+SimpleStruct? structReturnNullable() {
   return null;
 }
 
-ComplexStruct? complexReturnNullable(FunctionContext context) {
+ComplexStruct? complexReturnNullable() {
   return null;
 }
 
-SimpleClass? simpleClassReturnNullable(FunctionContext context) {
+SimpleClass? simpleClassReturnNullable() {
   return null;
 }
 
-ComplexClass? complexClassReturnNullable(FunctionContext context) {
+ComplexClass? complexClassReturnNullable() {
   return null;
 }

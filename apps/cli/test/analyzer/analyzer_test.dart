@@ -438,20 +438,6 @@ FromJson fromJson(FromJson value) => value;
       );
 
       testErrors(
-        name: 'multiple_function_contexts',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-String sayHello(FunctionContext a, FunctionContext b) => 'Hello, World!';
-''',
-        },
-        errors: [
-          'A FunctionContext parameter may only be specified once',
-        ],
-      );
-
-      testErrors(
         name: 'bad_middleware_class',
         apis: {
           'greeting.dart': '''

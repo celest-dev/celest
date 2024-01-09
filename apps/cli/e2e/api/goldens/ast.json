@@ -5743,24 +5743,7 @@
         "asyncVoidReturn": {
           "name": "asyncVoidReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 11,
-                "column": 45
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -5781,31 +5764,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 11,
+            "line": 9,
             "column": 13
           }
         },
         "asyncStringReturn": {
           "name": "asyncStringReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 13,
-                "column": 49
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -5830,31 +5796,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 13,
+            "line": 11,
             "column": 15
           }
         },
         "asyncIntReturn": {
           "name": "asyncIntReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 17,
-                "column": 43
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -5879,31 +5828,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 17,
+            "line": 15,
             "column": 12
           }
         },
         "asyncDoubleReturn": {
           "name": "asyncDoubleReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 21,
-                "column": 49
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -5928,31 +5860,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 21,
+            "line": 19,
             "column": 15
           }
         },
         "asyncBoolReturn": {
           "name": "asyncBoolReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 25,
-                "column": 45
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -5977,31 +5892,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 25,
+            "line": 23,
             "column": 13
           }
         },
         "asyncIterableReturn": {
           "name": "asyncIterableReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 29,
-                "column": 61
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6042,31 +5940,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 29,
+            "line": 27,
             "column": 25
           }
         },
         "asyncListReturn": {
           "name": "asyncListReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 33,
-                "column": 53
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6107,31 +5988,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 33,
+            "line": 31,
             "column": 21
           }
         },
         "asyncMapReturn": {
           "name": "asyncMapReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 37,
-                "column": 59
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6184,31 +6048,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 37,
+            "line": 35,
             "column": 28
           }
         },
         "asyncStructReturn": {
           "name": "asyncStructReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 41,
-                "column": 55
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6233,31 +6080,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 41,
+            "line": 39,
             "column": 21
           }
         },
         "asyncStructReturnNullable": {
           "name": "asyncStructReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 45,
-                "column": 64
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6282,31 +6112,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 45,
+            "line": 43,
             "column": 22
           }
         },
         "asyncComplexStructReturn": {
           "name": "asyncComplexStructReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 49,
-                "column": 63
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6331,31 +6144,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 49,
+            "line": 47,
             "column": 22
           }
         },
         "asyncComplexStructReturnNullable": {
           "name": "asyncComplexStructReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 113,
-                "column": 18
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6380,31 +6176,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 112,
+            "line": 110,
             "column": 23
           }
         },
         "asyncComplexClassReturn": {
           "name": "asyncComplexClassReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 118,
-                "column": 61
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6429,31 +6208,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 118,
+            "line": 114,
             "column": 21
           }
         },
         "asyncClassReturnNullable": {
           "name": "asyncClassReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 181,
-                "column": 62
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -6478,31 +6240,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 181,
+            "line": 177,
             "column": 21
           }
         },
         "asyncOrVoidReturn": {
           "name": "asyncOrVoidReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 185,
-                "column": 49
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6523,31 +6268,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 185,
+            "line": 181,
             "column": 15
           }
         },
         "asyncOrStringReturn": {
           "name": "asyncOrStringReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 187,
-                "column": 53
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6572,31 +6300,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 187,
+            "line": 183,
             "column": 17
           }
         },
         "asyncOrIntReturn": {
           "name": "asyncOrIntReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 191,
-                "column": 47
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6621,31 +6332,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 191,
+            "line": 187,
             "column": 14
           }
         },
         "asyncOrDoubleReturn": {
           "name": "asyncOrDoubleReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 195,
-                "column": 53
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6670,31 +6364,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 195,
+            "line": 191,
             "column": 17
           }
         },
         "asyncOrBoolReturn": {
           "name": "asyncOrBoolReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 199,
-                "column": 49
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6719,31 +6396,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 199,
+            "line": 195,
             "column": 15
           }
         },
         "asyncOrIterableReturn": {
           "name": "asyncOrIterableReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 204,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6769,6 +6429,54 @@
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "Iterable",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 199,
+            "column": 27
+          }
+        },
+        "asyncOrListReturn": {
+          "name": "asyncOrListReturn",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "FutureOr",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
             "url": "dart:core",
             "types": [
               {
@@ -6785,95 +6493,13 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 203,
-            "column": 27
-          }
-        },
-        "asyncOrListReturn": {
-          "name": "asyncOrListReturn",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 208,
-                "column": 57
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "FutureOr",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "List",
-                "url": "dart:core",
-                "types": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "List",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 208,
             "column": 23
           }
         },
         "asyncOrMapReturn": {
           "name": "asyncOrMapReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 212,
-                "column": 63
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6926,31 +6552,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 212,
+            "line": 207,
             "column": 30
           }
         },
         "asyncOrStructReturn": {
           "name": "asyncOrStructReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 216,
-                "column": 59
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -6975,31 +6584,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 216,
+            "line": 211,
             "column": 23
           }
         },
         "asyncOrComplexStructReturn": {
           "name": "asyncOrComplexStructReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 221,
-                "column": 18
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7024,31 +6616,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 220,
+            "line": 215,
             "column": 24
           }
         },
         "asyncOrVoidReturnNullable": {
           "name": "asyncOrVoidReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 285,
-                "column": 58
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7069,31 +6644,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 285,
+            "line": 278,
             "column": 16
           }
         },
         "asyncOrStringReturnNullable": {
           "name": "asyncOrStringReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 289,
-                "column": 62
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7118,31 +6676,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 289,
+            "line": 282,
             "column": 18
           }
         },
         "asyncOrIntReturnNullable": {
           "name": "asyncOrIntReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 293,
-                "column": 56
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7167,31 +6708,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 293,
+            "line": 286,
             "column": 15
           }
         },
         "asyncOrDoubleReturnNullable": {
           "name": "asyncOrDoubleReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 297,
-                "column": 62
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7216,31 +6740,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 297,
+            "line": 290,
             "column": 18
           }
         },
         "asyncOrBoolReturnNullable": {
           "name": "asyncOrBoolReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 301,
-                "column": 58
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7265,31 +6772,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 301,
+            "line": 294,
             "column": 16
           }
         },
         "asyncOrIterableReturnNullable": {
           "name": "asyncOrIterableReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 306,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7330,31 +6820,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 305,
+            "line": 298,
             "column": 28
           }
         },
         "asyncOrListReturnNullable": {
           "name": "asyncOrListReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 310,
-                "column": 66
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7395,31 +6868,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 310,
+            "line": 302,
             "column": 24
           }
         },
         "asyncOrMapReturnNullable": {
           "name": "asyncOrMapReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 315,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7472,31 +6928,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 314,
+            "line": 306,
             "column": 31
           }
         },
         "asyncOrStructReturnNullable": {
           "name": "asyncOrStructReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 319,
-                "column": 68
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7521,31 +6960,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 319,
+            "line": 310,
             "column": 24
           }
         },
         "asyncOrComplexStructReturnNullable": {
           "name": "asyncOrComplexStructReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 324,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7570,31 +6992,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 323,
+            "line": 314,
             "column": 25
           }
         },
         "asyncOrSimpleClassReturnNullable": {
           "name": "asyncOrSimpleClassReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 329,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7619,31 +7024,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 328,
+            "line": 318,
             "column": 23
           }
         },
         "asyncOrComplexClassReturnNullable": {
           "name": "asyncOrComplexClassReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 334,
-                "column": 20
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "FutureOr",
@@ -7668,31 +7056,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 333,
+            "line": 322,
             "column": 24
           }
         },
         "voidReturn": {
           "name": "voidReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 338,
-                "column": 32
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "Reference",
             "symbol": "void"
@@ -7705,31 +7076,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 338,
+            "line": 326,
             "column": 5
           }
         },
         "stringReturn": {
           "name": "stringReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 340,
-                "column": 36
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "String",
@@ -7739,6 +7093,78 @@
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 328,
+            "column": 7
+          }
+        },
+        "intReturn": {
+          "name": "intReturn",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "int",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "int",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 332,
+            "column": 4
+          }
+        },
+        "doubleReturn": {
+          "name": "doubleReturn",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 336,
+            "column": 7
+          }
+        },
+        "boolReturn": {
+          "name": "boolReturn",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
             "url": "dart:core",
             "isNullable": false
           },
@@ -7747,40 +7173,39 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 340,
-            "column": 7
+            "column": 5
           }
         },
-        "intReturn": {
-          "name": "intReturn",
+        "iterableReturn": {
+          "name": "iterableReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 344,
-                "column": 30
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "int",
+            "symbol": "Iterable",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "int",
+            "symbol": "Iterable",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "metadata": [],
@@ -7788,40 +7213,39 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 344,
-            "column": 4
+            "column": 17
           }
         },
-        "doubleReturn": {
-          "name": "doubleReturn",
+        "listReturn": {
+          "name": "listReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 348,
-                "column": 36
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "double",
+            "symbol": "List",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "double",
+            "symbol": "List",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "metadata": [],
@@ -7829,40 +7253,51 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 348,
-            "column": 7
+            "column": 13
           }
         },
-        "boolReturn": {
-          "name": "boolReturn",
+        "mapReturn": {
+          "name": "mapReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 352,
-                "column": 32
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "bool",
+            "symbol": "Map",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "bool",
+            "symbol": "Map",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": false
           },
           "metadata": [],
@@ -7870,56 +7305,23 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 352,
-            "column": 5
+            "column": 20
           }
         },
-        "iterableReturn": {
-          "name": "iterableReturn",
+        "structReturn": {
+          "name": "structReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 356,
-                "column": 48
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "Iterable",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "symbol": "SimpleStruct",
+            "url": "project:functions/parameter_types.dart",
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "Iterable",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "symbol": "SimpleStruct",
+            "url": "project:functions/parameter_types.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -7927,56 +7329,23 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 356,
-            "column": 17
+            "column": 13
           }
         },
-        "listReturn": {
-          "name": "listReturn",
+        "complexReturn": {
+          "name": "complexReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 360,
-                "column": 40
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "List",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "symbol": "ComplexStruct",
+            "url": "project:functions/parameter_types.dart",
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "List",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
+            "symbol": "ComplexStruct",
+            "url": "project:functions/parameter_types.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -7984,181 +7353,13 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 360,
-            "column": 13
-          }
-        },
-        "mapReturn": {
-          "name": "mapReturn",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 364,
-                "column": 46
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Map",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "Map",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 364,
-            "column": 20
-          }
-        },
-        "structReturn": {
-          "name": "structReturn",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 368,
-                "column": 42
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "SimpleStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "SimpleStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 368,
-            "column": 13
-          }
-        },
-        "complexReturn": {
-          "name": "complexReturn",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 372,
-                "column": 44
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 372,
             "column": 14
           }
         },
         "simpleClassReturn": {
           "name": "simpleClassReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 435,
-                "column": 46
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "SimpleClass",
@@ -8175,31 +7376,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 435,
+            "line": 423,
             "column": 12
           }
         },
         "complexClassReturn": {
           "name": "complexClassReturn",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 439,
-                "column": 48
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "ComplexClass",
@@ -8216,31 +7400,14 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 439,
+            "line": 427,
             "column": 13
           }
         },
         "stringReturnNullable": {
           "name": "stringReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 502,
-                "column": 45
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "String",
@@ -8250,6 +7417,78 @@
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "String",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 490,
+            "column": 8
+          }
+        },
+        "intReturnNullable": {
+          "name": "intReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "int",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "int",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 494,
+            "column": 5
+          }
+        },
+        "doubleReturnNullable": {
+          "name": "doubleReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "double",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 498,
+            "column": 8
+          }
+        },
+        "boolReturnNullable": {
+          "name": "boolReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
+            "url": "dart:core",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
             "url": "dart:core",
             "isNullable": true
           },
@@ -8258,40 +7497,39 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 502,
-            "column": 8
+            "column": 6
           }
         },
-        "intReturnNullable": {
-          "name": "intReturnNullable",
+        "iterableReturnNullable": {
+          "name": "iterableReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 506,
-                "column": 39
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "int",
+            "symbol": "Iterable",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "int",
+            "symbol": "Iterable",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "metadata": [],
@@ -8299,40 +7537,39 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 506,
-            "column": 5
+            "column": 18
           }
         },
-        "doubleReturnNullable": {
-          "name": "doubleReturnNullable",
+        "listReturnNullable": {
+          "name": "listReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 510,
-                "column": 45
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "double",
+            "symbol": "List",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "double",
+            "symbol": "List",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "metadata": [],
@@ -8340,40 +7577,51 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 510,
-            "column": 8
+            "column": 14
           }
         },
-        "boolReturnNullable": {
-          "name": "boolReturnNullable",
+        "mapReturnNullable": {
+          "name": "mapReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 514,
-                "column": 41
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
-            "symbol": "bool",
+            "symbol": "Map",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "flattenedReturnType": {
             "$": "TypeReference",
-            "symbol": "bool",
+            "symbol": "Map",
             "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
             "isNullable": true
           },
           "metadata": [],
@@ -8381,213 +7629,13 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 514,
-            "column": 6
-          }
-        },
-        "iterableReturnNullable": {
-          "name": "iterableReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 518,
-                "column": 57
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Iterable",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "Iterable",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 518,
-            "column": 18
-          }
-        },
-        "listReturnNullable": {
-          "name": "listReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 522,
-                "column": 49
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "List",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "List",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 522,
-            "column": 14
-          }
-        },
-        "mapReturnNullable": {
-          "name": "mapReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 526,
-                "column": 55
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Map",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "Map",
-            "url": "dart:core",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 526,
             "column": 21
           }
         },
         "structReturnNullable": {
           "name": "structReturnNullable",
           "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 530,
-                "column": 51
-              }
-            }
-          ],
+          "parameters": [],
           "returnType": {
             "$": "TypeReference",
             "symbol": "SimpleStruct",
@@ -8597,6 +7645,78 @@
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "SimpleStruct",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 518,
+            "column": 14
+          }
+        },
+        "complexReturnNullable": {
+          "name": "complexReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ComplexStruct",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ComplexStruct",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 522,
+            "column": 15
+          }
+        },
+        "simpleClassReturnNullable": {
+          "name": "simpleClassReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "SimpleClass",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "SimpleClass",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "location": {
+            "uri": "project:functions/return_types.dart",
+            "line": 526,
+            "column": 13
+          }
+        },
+        "complexClassReturnNullable": {
+          "name": "complexClassReturnNullable",
+          "apiName": "return_types",
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ComplexClass",
+            "url": "project:functions/parameter_types.dart",
+            "isNullable": true
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ComplexClass",
             "url": "project:functions/parameter_types.dart",
             "isNullable": true
           },
@@ -8605,129 +7725,6 @@
           "location": {
             "uri": "project:functions/return_types.dart",
             "line": 530,
-            "column": 14
-          }
-        },
-        "complexReturnNullable": {
-          "name": "complexReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 534,
-                "column": 53
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexStruct",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 534,
-            "column": 15
-          }
-        },
-        "simpleClassReturnNullable": {
-          "name": "simpleClassReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 538,
-                "column": 55
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "SimpleClass",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "SimpleClass",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 538,
-            "column": 13
-          }
-        },
-        "complexClassReturnNullable": {
-          "name": "complexClassReturnNullable",
-          "apiName": "return_types",
-          "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/return_types.dart",
-                "line": 542,
-                "column": 57
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexClass",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ComplexClass",
-            "url": "project:functions/parameter_types.dart",
-            "isNullable": true
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/return_types.dart",
-            "line": 542,
             "column": 14
           }
         }
@@ -8771,22 +7768,6 @@
           "apiName": "middleware",
           "parameters": [
             {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/middleware.dart",
-                "line": 13,
-                "column": 40
-              }
-            },
-            {
               "name": "name",
               "type": {
                 "$": "TypeReference",
@@ -8799,7 +7780,7 @@
               "location": {
                 "uri": "project:functions/middleware.dart",
                 "line": 13,
-                "column": 56
+                "column": 31
               }
             }
           ],
@@ -10487,22 +9468,6 @@
           "apiName": "parameters",
           "parameters": [
             {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/parameters.dart",
-                "line": 4,
-                "column": 18
-              }
-            },
-            {
               "name": "optionalString",
               "type": {
                 "$": "TypeReference",
@@ -10514,7 +9479,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 5,
+                "line": 2,
                 "column": 10
               }
             },
@@ -10530,7 +9495,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 6,
+                "line": 3,
                 "column": 7
               }
             }
@@ -10555,7 +9520,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 3,
+            "line": 1,
             "column": 13
           }
         },
@@ -10563,22 +9528,6 @@
           "name": "optionalNamed",
           "apiName": "parameters",
           "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/parameters.dart",
-                "line": 10,
-                "column": 18
-              }
-            },
             {
               "name": "namedString",
               "type": {
@@ -10591,7 +9540,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 11,
+                "line": 7,
                 "column": 10
               }
             },
@@ -10607,7 +9556,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 12,
+                "line": 8,
                 "column": 7
               }
             }
@@ -10632,7 +9581,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 9,
+            "line": 6,
             "column": 13
           }
         },
@@ -10640,22 +9589,6 @@
           "name": "requiredPositional",
           "apiName": "parameters",
           "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/parameters.dart",
-                "line": 16,
-                "column": 18
-              }
-            },
             {
               "name": "requiredString",
               "type": {
@@ -10668,7 +9601,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 17,
+                "line": 12,
                 "column": 9
               }
             },
@@ -10684,7 +9617,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 18,
+                "line": 13,
                 "column": 6
               }
             }
@@ -10709,7 +9642,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 15,
+            "line": 11,
             "column": 13
           }
         },
@@ -10717,22 +9650,6 @@
           "name": "requiredNamed",
           "apiName": "parameters",
           "parameters": [
-            {
-              "name": "context",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "FunctionContext",
-                "url": "package:celest/src/functions/function_context.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/parameters.dart",
-                "line": 22,
-                "column": 18
-              }
-            },
             {
               "name": "requiredString",
               "type": {
@@ -10745,7 +9662,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 23,
+                "line": 17,
                 "column": 18
               }
             },
@@ -10761,7 +9678,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 24,
+                "line": 18,
                 "column": 15
               }
             }
@@ -10786,7 +9703,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 21,
+            "line": 16,
             "column": 13
           }
         }

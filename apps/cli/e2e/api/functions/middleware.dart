@@ -10,7 +10,7 @@ const _second = second();
 
 @third()
 @fourth()
-Future<String> sayHello(FunctionContext context, String name) async {
+Future<String> sayHello(String name) async {
   return 'Hello, $name!';
 }
 

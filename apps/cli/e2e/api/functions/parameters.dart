@@ -1,25 +1,19 @@
-import 'package:celest/celest.dart';
-
-Future<void> optionalPositional(
-  FunctionContext context, [
+Future<void> optionalPositional([
   String? optionalString,
   int? optionalInt,
 ]) async {}
 
-Future<void> optionalNamed(
-  FunctionContext context, {
+Future<void> optionalNamed({
   String? namedString,
   int? namedInt,
 }) async {}
 
 Future<void> requiredPositional(
-  FunctionContext context,
   String requiredString,
   int requiredInt,
 ) async {}
 
-Future<void> requiredNamed(
-  FunctionContext context, {
+Future<void> requiredNamed({
   required String requiredString,
   required int requiredInt,
 }) async {}
