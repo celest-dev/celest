@@ -87,512 +87,6 @@
       "name": "records",
       "metadata": [],
       "functions": {
-        "nonAliasedPositionalFields": {
-          "name": "nonAliasedPositionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 11,
-                "column": 38
-              }
-            }
-          ],
-          "returnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 10,
-            "column": 36
-          }
-        },
-        "asyncNonAliasedPositionalFields": {
-          "name": "asyncNonAliasedPositionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 15,
-                "column": 38
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 14,
-            "column": 44
-          }
-        },
-        "aliasedPositionalFields": {
-          "name": "aliasedPositionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 19,
-                "column": 58
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "PositionalFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "PositionalFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 19,
-            "column": 17
-          }
-        },
-        "asyncAliasedPositionalFields": {
-          "name": "asyncAliasedPositionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 21,
-                "column": 19
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "PositionalFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 20,
-            "column": 25
-          }
-        },
-        "positionalFields": {
-          "name": "positionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "nonAliased",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 29,
-                "column": 38
-              }
-            },
-            {
-              "name": "aliased",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 30,
-                "column": 19
-              }
-            }
-          ],
-          "returnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 28,
-            "column": 2
-          }
-        },
-        "asyncPositionalFields": {
-          "name": "asyncPositionalFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "nonAliased",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 38,
-                "column": 38
-              }
-            },
-            {
-              "name": "aliased",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 39,
-                "column": 19
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "RecordType",
-                    "positionalFieldTypes": [
-                      {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      },
-                      {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      }
-                    ],
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "PositionalFields",
-                    "url": "project:functions/records.dart",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  },
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "isNullable": false
-              },
-              {
-                "$": "TypeReference",
-                "symbol": "PositionalFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 37,
-            "column": 7
-          }
-        },
         "nonAliasedNamedFields": {
           "name": "nonAliasedNamedFields",
           "apiName": "records",
@@ -621,7 +115,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 55,
+                "line": 17,
                 "column": 5
               }
             }
@@ -666,7 +160,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 51,
+            "line": 13,
             "column": 3
           }
         },
@@ -698,7 +192,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 66,
+                "line": 28,
                 "column": 5
               }
             }
@@ -751,7 +245,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 62,
+            "line": 24,
             "column": 8
           }
         },
@@ -771,7 +265,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 71,
+                "line": 33,
                 "column": 23
               }
             }
@@ -792,7 +286,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 70,
+            "line": 32,
             "column": 12
           }
         },
@@ -812,7 +306,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 75,
+                "line": 37,
                 "column": 23
               }
             }
@@ -853,7 +347,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 74,
+            "line": 36,
             "column": 20
           }
         },
@@ -885,7 +379,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 89,
+                "line": 51,
                 "column": 5
               }
             },
@@ -901,7 +395,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 90,
+                "line": 52,
                 "column": 23
               }
             }
@@ -970,7 +464,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 85,
+            "line": 47,
             "column": 3
           }
         },
@@ -1002,7 +496,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 107,
+                "line": 69,
                 "column": 5
               }
             },
@@ -1018,7 +512,7 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 108,
+                "line": 70,
                 "column": 23
               }
             }
@@ -1095,491 +589,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 103,
-            "column": 8
-          }
-        },
-        "aliasedMixedFields": {
-          "name": "aliasedMixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 120,
-                "column": 43
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 120,
-            "column": 12
-          }
-        },
-        "asyncAliasedMixedFields": {
-          "name": "asyncAliasedMixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 121,
-                "column": 56
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "MixedFields",
-            "url": "project:functions/records.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 121,
-            "column": 20
-          }
-        },
-        "nonAliasedMixedFields": {
-          "name": "nonAliasedMixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 124,
-                "column": 14
-              }
-            }
-          ],
-          "returnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 123,
-            "column": 38
-          }
-        },
-        "asyncNonAliasedMixedFields": {
-          "name": "asyncNonAliasedMixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "value",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 128,
-                "column": 14
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "anotherField": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 127,
-            "column": 46
-          }
-        },
-        "mixedFields": {
-          "name": "mixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "nonAliased",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 142,
-                "column": 5
-              }
-            },
-            {
-              "name": "aliased",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": true,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 143,
-                "column": 23
-              }
-            }
-          ],
-          "returnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "aliased": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "aliased": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 138,
-            "column": 3
-          }
-        },
-        "asyncMixedFields": {
-          "name": "asyncMixedFields",
-          "apiName": "records",
-          "parameters": [
-            {
-              "name": "nonAliased",
-              "type": {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 157,
-                "column": 5
-              }
-            },
-            {
-              "name": "aliased",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": true,
-              "location": {
-                "uri": "project:functions/records.dart",
-                "line": 158,
-                "column": 23
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "Future",
-            "url": "dart:async",
-            "types": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "RecordType",
-                    "positionalFieldTypes": [
-                      {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      }
-                    ],
-                    "namedFieldTypes": {
-                      "anotherField": {
-                        "$": "TypeReference",
-                        "symbol": "String",
-                        "url": "dart:core",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "aliased": {
-                    "$": "TypeReference",
-                    "symbol": "MixedFields",
-                    "url": "project:functions/records.dart",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            ],
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "RecordType",
-            "positionalFieldTypes": [
-              {
-                "$": "RecordType",
-                "positionalFieldTypes": [
-                  {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                ],
-                "namedFieldTypes": {
-                  "anotherField": {
-                    "$": "TypeReference",
-                    "symbol": "String",
-                    "url": "dart:core",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            ],
-            "namedFieldTypes": {
-              "aliased": {
-                "$": "TypeReference",
-                "symbol": "MixedFields",
-                "url": "project:functions/records.dart",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "metadata": [],
-          "exceptionTypes": [],
-          "location": {
-            "uri": "project:functions/records.dart",
-            "line": 153,
+            "line": 65,
             "column": 8
           }
         },
@@ -1599,7 +609,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 164,
+                "line": 79,
                 "column": 21
               }
             }
@@ -1620,7 +630,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 164,
+            "line": 79,
             "column": 7
           }
         },
@@ -1640,7 +650,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 165,
+                "line": 80,
                 "column": 34
               }
             }
@@ -1669,7 +679,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 165,
+            "line": 80,
             "column": 15
           }
         },
@@ -1689,7 +699,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 169,
+                "line": 84,
                 "column": 47
               }
             }
@@ -1710,7 +720,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 169,
+            "line": 84,
             "column": 16
           }
         },
@@ -1730,7 +740,7 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 170,
+                "line": 85,
                 "column": 60
               }
             }
@@ -1759,7 +769,7 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 170,
+            "line": 85,
             "column": 24
           }
         }

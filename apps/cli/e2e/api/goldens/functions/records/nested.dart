@@ -23,7 +23,6 @@ final class NestedTarget extends _i1.CelestFunctionTarget {
             );
           },
           installSerializers: (serializers) {
-            serializers.put(const PositionalFieldsSerializer());
             serializers.put(const NamedFieldsSerializer());
             serializers.put(const NestedSerializer());
           },
@@ -36,29 +35,6 @@ _i4.Future<void> main(List<String> args) async {
     args,
     (_) => NestedTarget(),
   );
-}
-
-final class PositionalFieldsSerializer
-    extends _i3.Serializer<_i2.PositionalFields> {
-  const PositionalFieldsSerializer();
-
-  @override
-  String get dartType => r'project:functions/records.dart#PositionalFields';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.PositionalFields deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return ((serialized[r'$1'] as String), (serialized[r'$2'] as String));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.PositionalFields value) => {
-        r'$1': value.$1,
-        r'$2': value.$2,
-      };
 }
 
 final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
@@ -99,8 +75,6 @@ final class NestedSerializer extends _i3.Serializer<_i2.Nested> {
   _i2.Nested deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      _i3.Serializers.scoped
-          .deserialize<_i2.PositionalFields>(serialized[r'$1']),
       namedFields: _i3.Serializers.scoped
           .deserialize<_i2.NamedFields>(serialized[r'namedFields'])
     );
@@ -108,8 +82,7 @@ final class NestedSerializer extends _i3.Serializer<_i2.Nested> {
 
   @override
   Map<String, Object?> serialize(_i2.Nested value) => {
-        r'$1': _i3.Serializers.scoped.serialize<_i2.PositionalFields>(value.$1),
-        r'namedFields': _i3.Serializers.scoped
-            .serialize<_i2.NamedFields>(value.namedFields),
+        r'namedFields':
+            _i3.Serializers.scoped.serialize<_i2.NamedFields>(value.namedFields)
       };
 }

@@ -578,10 +578,12 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitRecordType(RecordType type) {
-    var verdict = const Verdict.yes();
-    for (final field in type.positionalFields) {
-      verdict &= typeHelper.isSerializable(field.type);
+    if (type.positionalFields.isNotEmpty) {
+      return const VerdictNo([
+        'Positional fields are not supported in record types',
+      ]);
     }
+    var verdict = const Verdict.yes();
     for (final field in type.namedFields) {
       verdict &= typeHelper.isSerializable(field.type);
     }
@@ -590,21 +592,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         type: type,
         wireType: jsonMapType,
         fields: [
-          for (final (index, field) in type.positionalFields.indexed)
-            FieldSpec(name: '\$${index + 1}', type: field.type),
           for (final field in type.namedFields)
             FieldSpec(name: field.name, type: field.type),
         ],
         parameters: [
-          for (final (index, field) in type.positionalFields.indexed)
-            ParameterSpec(
-              name: '\$${index + 1}',
-              type: field.type,
-              isPositional: true,
-              isNamed: false,
-              isOptional: false,
-              defaultValueCode: null,
-            ),
           for (final field in type.namedFields)
             ParameterSpec(
               name: field.name,

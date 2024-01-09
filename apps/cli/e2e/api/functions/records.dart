@@ -2,44 +2,6 @@
 /// deserializable.
 library;
 
-typedef PositionalFields = (
-  String field,
-  String anotherField,
-);
-
-(String field, String anotherField) nonAliasedPositionalFields(
-  (String field, String anotherField) value,
-) =>
-    value;
-Future<(String field, String anotherField)> asyncNonAliasedPositionalFields(
-  (String field, String anotherField) value,
-) async =>
-    value;
-
-PositionalFields aliasedPositionalFields(PositionalFields value) => value;
-Future<PositionalFields> asyncAliasedPositionalFields(
-  PositionalFields value,
-) async =>
-    value;
-
-(
-  (String field, String anotherField) nonAliased,
-  PositionalFields aliased,
-) positionalFields(
-  (String field, String anotherField) nonAliased,
-  PositionalFields aliased,
-) =>
-    (nonAliased, aliased);
-Future<
-    (
-      (String field, String anotherField) nonAliased,
-      PositionalFields aliased,
-    )> asyncPositionalFields(
-  (String field, String anotherField) nonAliased,
-  PositionalFields aliased,
-) async =>
-    (nonAliased, aliased);
-
 typedef NamedFields = ({
   String field,
   String anotherField,
@@ -112,59 +74,12 @@ Future<
       aliased: aliased,
     );
 
-typedef MixedFields = (
-  String field, {
-  String anotherField,
-});
-
-MixedFields aliasedMixedFields(MixedFields value) => value;
-Future<MixedFields> asyncAliasedMixedFields(MixedFields value) async => value;
-
-(String field, {String anotherField}) nonAliasedMixedFields(
-  MixedFields value,
-) =>
-    value;
-Future<(String field, {String anotherField})> asyncNonAliasedMixedFields(
-  MixedFields value,
-) async =>
-    value;
-
-(
-  (
-    String field, {
-    String anotherField,
-  }) nonAliased, {
-  MixedFields aliased,
-}) mixedFields(
-  (
-    String field, {
-    String anotherField,
-  }) nonAliased, {
-  required MixedFields aliased,
-}) =>
-    (nonAliased, aliased: aliased);
-Future<
-    (
-      (
-        String field, {
-        String anotherField,
-      }) nonAliased, {
-      MixedFields aliased,
-    })> asyncMixedFields(
-  (
-    String field, {
-    String anotherField,
-  }) nonAliased, {
-  required MixedFields aliased,
-}) async =>
-    (nonAliased, aliased: aliased);
-
-typedef Nested = (PositionalFields fields, {NamedFields namedFields});
+typedef Nested = ({NamedFields namedFields});
 
 Nested nested(Nested value) => value;
 Future<Nested> asyncNested(Nested value) async => value;
 
-typedef NullableNested = (PositionalFields? fields, {NamedFields? namedFields});
+typedef NullableNested = ({NamedFields? namedFields});
 
 NullableNested? nullableNested(NullableNested? value) => value;
 Future<NullableNested?> asyncNullableNested(NullableNested? value) async =>

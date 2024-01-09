@@ -59,99 +59,87 @@ import 'functions/parameters/optionalNamed.dart' as _i54;
 import 'functions/parameters/optionalPositional.dart' as _i55;
 import 'functions/parameters/requiredNamed.dart' as _i56;
 import 'functions/parameters/requiredPositional.dart' as _i57;
-import 'functions/records/aliasedMixedFields.dart' as _i58;
-import 'functions/records/aliasedNamedFields.dart' as _i59;
-import 'functions/records/aliasedPositionalFields.dart' as _i60;
-import 'functions/records/asyncAliasedMixedFields.dart' as _i61;
-import 'functions/records/asyncAliasedNamedFields.dart' as _i62;
-import 'functions/records/asyncAliasedPositionalFields.dart' as _i63;
-import 'functions/records/asyncMixedFields.dart' as _i64;
-import 'functions/records/asyncNamedFields.dart' as _i65;
-import 'functions/records/asyncNested.dart' as _i66;
-import 'functions/records/asyncNonAliasedMixedFields.dart' as _i67;
-import 'functions/records/asyncNonAliasedNamedFields.dart' as _i68;
-import 'functions/records/asyncNonAliasedPositionalFields.dart' as _i69;
-import 'functions/records/asyncNullableNested.dart' as _i70;
-import 'functions/records/asyncPositionalFields.dart' as _i71;
-import 'functions/records/mixedFields.dart' as _i72;
-import 'functions/records/namedFields.dart' as _i73;
-import 'functions/records/nested.dart' as _i74;
-import 'functions/records/nonAliasedMixedFields.dart' as _i75;
-import 'functions/records/nonAliasedNamedFields.dart' as _i76;
-import 'functions/records/nonAliasedPositionalFields.dart' as _i77;
-import 'functions/records/nullableNested.dart' as _i78;
-import 'functions/records/positionalFields.dart' as _i79;
-import 'functions/return_types/asyncBoolReturn.dart' as _i80;
-import 'functions/return_types/asyncClassReturnNullable.dart' as _i81;
-import 'functions/return_types/asyncComplexClassReturn.dart' as _i82;
-import 'functions/return_types/asyncComplexStructReturn.dart' as _i83;
-import 'functions/return_types/asyncComplexStructReturnNullable.dart' as _i84;
-import 'functions/return_types/asyncDoubleReturn.dart' as _i85;
-import 'functions/return_types/asyncIntReturn.dart' as _i86;
-import 'functions/return_types/asyncIterableReturn.dart' as _i87;
-import 'functions/return_types/asyncListReturn.dart' as _i88;
-import 'functions/return_types/asyncMapReturn.dart' as _i89;
-import 'functions/return_types/asyncOrBoolReturn.dart' as _i90;
-import 'functions/return_types/asyncOrBoolReturnNullable.dart' as _i91;
-import 'functions/return_types/asyncOrComplexClassReturnNullable.dart' as _i92;
-import 'functions/return_types/asyncOrComplexStructReturn.dart' as _i93;
-import 'functions/return_types/asyncOrComplexStructReturnNullable.dart' as _i94;
-import 'functions/return_types/asyncOrDoubleReturn.dart' as _i95;
-import 'functions/return_types/asyncOrDoubleReturnNullable.dart' as _i96;
-import 'functions/return_types/asyncOrIntReturn.dart' as _i97;
-import 'functions/return_types/asyncOrIntReturnNullable.dart' as _i98;
-import 'functions/return_types/asyncOrIterableReturn.dart' as _i99;
-import 'functions/return_types/asyncOrIterableReturnNullable.dart' as _i100;
-import 'functions/return_types/asyncOrListReturn.dart' as _i101;
-import 'functions/return_types/asyncOrListReturnNullable.dart' as _i102;
-import 'functions/return_types/asyncOrMapReturn.dart' as _i103;
-import 'functions/return_types/asyncOrMapReturnNullable.dart' as _i104;
-import 'functions/return_types/asyncOrSimpleClassReturnNullable.dart' as _i105;
-import 'functions/return_types/asyncOrStringReturn.dart' as _i106;
-import 'functions/return_types/asyncOrStringReturnNullable.dart' as _i107;
-import 'functions/return_types/asyncOrStructReturn.dart' as _i108;
-import 'functions/return_types/asyncOrStructReturnNullable.dart' as _i109;
-import 'functions/return_types/asyncOrVoidReturn.dart' as _i110;
-import 'functions/return_types/asyncOrVoidReturnNullable.dart' as _i111;
-import 'functions/return_types/asyncStringReturn.dart' as _i112;
-import 'functions/return_types/asyncStructReturn.dart' as _i113;
-import 'functions/return_types/asyncStructReturnNullable.dart' as _i114;
-import 'functions/return_types/asyncVoidReturn.dart' as _i115;
-import 'functions/return_types/boolReturn.dart' as _i116;
-import 'functions/return_types/boolReturnNullable.dart' as _i117;
-import 'functions/return_types/complexClassReturn.dart' as _i118;
-import 'functions/return_types/complexClassReturnNullable.dart' as _i119;
-import 'functions/return_types/complexReturn.dart' as _i120;
-import 'functions/return_types/complexReturnNullable.dart' as _i121;
-import 'functions/return_types/doubleReturn.dart' as _i122;
-import 'functions/return_types/doubleReturnNullable.dart' as _i123;
-import 'functions/return_types/intReturn.dart' as _i124;
-import 'functions/return_types/intReturnNullable.dart' as _i125;
-import 'functions/return_types/iterableReturn.dart' as _i126;
-import 'functions/return_types/iterableReturnNullable.dart' as _i127;
-import 'functions/return_types/listReturn.dart' as _i128;
-import 'functions/return_types/listReturnNullable.dart' as _i129;
-import 'functions/return_types/mapReturn.dart' as _i130;
-import 'functions/return_types/mapReturnNullable.dart' as _i131;
-import 'functions/return_types/simpleClassReturn.dart' as _i132;
-import 'functions/return_types/simpleClassReturnNullable.dart' as _i133;
-import 'functions/return_types/stringReturn.dart' as _i134;
-import 'functions/return_types/stringReturnNullable.dart' as _i135;
-import 'functions/return_types/structReturn.dart' as _i136;
-import 'functions/return_types/structReturnNullable.dart' as _i137;
-import 'functions/return_types/voidReturn.dart' as _i138;
-import 'functions/sealed_classes/area.dart' as _i139;
-import 'functions/sealed_classes/circle.dart' as _i140;
-import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i141;
-import 'functions/sealed_classes/rectangle.dart' as _i142;
+import 'functions/records/aliasedNamedFields.dart' as _i58;
+import 'functions/records/asyncAliasedNamedFields.dart' as _i59;
+import 'functions/records/asyncNamedFields.dart' as _i60;
+import 'functions/records/asyncNested.dart' as _i61;
+import 'functions/records/asyncNonAliasedNamedFields.dart' as _i62;
+import 'functions/records/asyncNullableNested.dart' as _i63;
+import 'functions/records/namedFields.dart' as _i64;
+import 'functions/records/nested.dart' as _i65;
+import 'functions/records/nonAliasedNamedFields.dart' as _i66;
+import 'functions/records/nullableNested.dart' as _i67;
+import 'functions/return_types/asyncBoolReturn.dart' as _i68;
+import 'functions/return_types/asyncClassReturnNullable.dart' as _i69;
+import 'functions/return_types/asyncComplexClassReturn.dart' as _i70;
+import 'functions/return_types/asyncComplexStructReturn.dart' as _i71;
+import 'functions/return_types/asyncComplexStructReturnNullable.dart' as _i72;
+import 'functions/return_types/asyncDoubleReturn.dart' as _i73;
+import 'functions/return_types/asyncIntReturn.dart' as _i74;
+import 'functions/return_types/asyncIterableReturn.dart' as _i75;
+import 'functions/return_types/asyncListReturn.dart' as _i76;
+import 'functions/return_types/asyncMapReturn.dart' as _i77;
+import 'functions/return_types/asyncOrBoolReturn.dart' as _i78;
+import 'functions/return_types/asyncOrBoolReturnNullable.dart' as _i79;
+import 'functions/return_types/asyncOrComplexClassReturnNullable.dart' as _i80;
+import 'functions/return_types/asyncOrComplexStructReturn.dart' as _i81;
+import 'functions/return_types/asyncOrComplexStructReturnNullable.dart' as _i82;
+import 'functions/return_types/asyncOrDoubleReturn.dart' as _i83;
+import 'functions/return_types/asyncOrDoubleReturnNullable.dart' as _i84;
+import 'functions/return_types/asyncOrIntReturn.dart' as _i85;
+import 'functions/return_types/asyncOrIntReturnNullable.dart' as _i86;
+import 'functions/return_types/asyncOrIterableReturn.dart' as _i87;
+import 'functions/return_types/asyncOrIterableReturnNullable.dart' as _i88;
+import 'functions/return_types/asyncOrListReturn.dart' as _i89;
+import 'functions/return_types/asyncOrListReturnNullable.dart' as _i90;
+import 'functions/return_types/asyncOrMapReturn.dart' as _i91;
+import 'functions/return_types/asyncOrMapReturnNullable.dart' as _i92;
+import 'functions/return_types/asyncOrSimpleClassReturnNullable.dart' as _i93;
+import 'functions/return_types/asyncOrStringReturn.dart' as _i94;
+import 'functions/return_types/asyncOrStringReturnNullable.dart' as _i95;
+import 'functions/return_types/asyncOrStructReturn.dart' as _i96;
+import 'functions/return_types/asyncOrStructReturnNullable.dart' as _i97;
+import 'functions/return_types/asyncOrVoidReturn.dart' as _i98;
+import 'functions/return_types/asyncOrVoidReturnNullable.dart' as _i99;
+import 'functions/return_types/asyncStringReturn.dart' as _i100;
+import 'functions/return_types/asyncStructReturn.dart' as _i101;
+import 'functions/return_types/asyncStructReturnNullable.dart' as _i102;
+import 'functions/return_types/asyncVoidReturn.dart' as _i103;
+import 'functions/return_types/boolReturn.dart' as _i104;
+import 'functions/return_types/boolReturnNullable.dart' as _i105;
+import 'functions/return_types/complexClassReturn.dart' as _i106;
+import 'functions/return_types/complexClassReturnNullable.dart' as _i107;
+import 'functions/return_types/complexReturn.dart' as _i108;
+import 'functions/return_types/complexReturnNullable.dart' as _i109;
+import 'functions/return_types/doubleReturn.dart' as _i110;
+import 'functions/return_types/doubleReturnNullable.dart' as _i111;
+import 'functions/return_types/intReturn.dart' as _i112;
+import 'functions/return_types/intReturnNullable.dart' as _i113;
+import 'functions/return_types/iterableReturn.dart' as _i114;
+import 'functions/return_types/iterableReturnNullable.dart' as _i115;
+import 'functions/return_types/listReturn.dart' as _i116;
+import 'functions/return_types/listReturnNullable.dart' as _i117;
+import 'functions/return_types/mapReturn.dart' as _i118;
+import 'functions/return_types/mapReturnNullable.dart' as _i119;
+import 'functions/return_types/simpleClassReturn.dart' as _i120;
+import 'functions/return_types/simpleClassReturnNullable.dart' as _i121;
+import 'functions/return_types/stringReturn.dart' as _i122;
+import 'functions/return_types/stringReturnNullable.dart' as _i123;
+import 'functions/return_types/structReturn.dart' as _i124;
+import 'functions/return_types/structReturnNullable.dart' as _i125;
+import 'functions/return_types/voidReturn.dart' as _i126;
+import 'functions/sealed_classes/area.dart' as _i127;
+import 'functions/sealed_classes/circle.dart' as _i128;
+import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i129;
+import 'functions/sealed_classes/rectangle.dart' as _i130;
 import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
-    as _i143;
-import 'functions/sealed_classes/sealedClass.dart' as _i144;
-import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i145;
+    as _i131;
+import 'functions/sealed_classes/sealedClass.dart' as _i132;
+import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i133;
 import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
-    as _i146;
+    as _i134;
 import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
-    as _i147;
+    as _i135;
 
 void main() {
   _i1.serve(targets: {
@@ -222,126 +210,110 @@ void main() {
     '/parameters/optionalPositional': _i55.OptionalPositionalTarget(),
     '/parameters/requiredNamed': _i56.RequiredNamedTarget(),
     '/parameters/requiredPositional': _i57.RequiredPositionalTarget(),
-    '/records/aliasedMixedFields': _i58.AliasedMixedFieldsTarget(),
-    '/records/aliasedNamedFields': _i59.AliasedNamedFieldsTarget(),
-    '/records/aliasedPositionalFields': _i60.AliasedPositionalFieldsTarget(),
-    '/records/asyncAliasedMixedFields': _i61.AsyncAliasedMixedFieldsTarget(),
-    '/records/asyncAliasedNamedFields': _i62.AsyncAliasedNamedFieldsTarget(),
-    '/records/asyncAliasedPositionalFields':
-        _i63.AsyncAliasedPositionalFieldsTarget(),
-    '/records/asyncMixedFields': _i64.AsyncMixedFieldsTarget(),
-    '/records/asyncNamedFields': _i65.AsyncNamedFieldsTarget(),
-    '/records/asyncNested': _i66.AsyncNestedTarget(),
-    '/records/asyncNonAliasedMixedFields':
-        _i67.AsyncNonAliasedMixedFieldsTarget(),
+    '/records/aliasedNamedFields': _i58.AliasedNamedFieldsTarget(),
+    '/records/asyncAliasedNamedFields': _i59.AsyncAliasedNamedFieldsTarget(),
+    '/records/asyncNamedFields': _i60.AsyncNamedFieldsTarget(),
+    '/records/asyncNested': _i61.AsyncNestedTarget(),
     '/records/asyncNonAliasedNamedFields':
-        _i68.AsyncNonAliasedNamedFieldsTarget(),
-    '/records/asyncNonAliasedPositionalFields':
-        _i69.AsyncNonAliasedPositionalFieldsTarget(),
-    '/records/asyncNullableNested': _i70.AsyncNullableNestedTarget(),
-    '/records/asyncPositionalFields': _i71.AsyncPositionalFieldsTarget(),
-    '/records/mixedFields': _i72.MixedFieldsTarget(),
-    '/records/namedFields': _i73.NamedFieldsTarget(),
-    '/records/nested': _i74.NestedTarget(),
-    '/records/nonAliasedMixedFields': _i75.NonAliasedMixedFieldsTarget(),
-    '/records/nonAliasedNamedFields': _i76.NonAliasedNamedFieldsTarget(),
-    '/records/nonAliasedPositionalFields':
-        _i77.NonAliasedPositionalFieldsTarget(),
-    '/records/nullableNested': _i78.NullableNestedTarget(),
-    '/records/positionalFields': _i79.PositionalFieldsTarget(),
-    '/return_types/asyncBoolReturn': _i80.AsyncBoolReturnTarget(),
+        _i62.AsyncNonAliasedNamedFieldsTarget(),
+    '/records/asyncNullableNested': _i63.AsyncNullableNestedTarget(),
+    '/records/namedFields': _i64.NamedFieldsTarget(),
+    '/records/nested': _i65.NestedTarget(),
+    '/records/nonAliasedNamedFields': _i66.NonAliasedNamedFieldsTarget(),
+    '/records/nullableNested': _i67.NullableNestedTarget(),
+    '/return_types/asyncBoolReturn': _i68.AsyncBoolReturnTarget(),
     '/return_types/asyncClassReturnNullable':
-        _i81.AsyncClassReturnNullableTarget(),
+        _i69.AsyncClassReturnNullableTarget(),
     '/return_types/asyncComplexClassReturn':
-        _i82.AsyncComplexClassReturnTarget(),
+        _i70.AsyncComplexClassReturnTarget(),
     '/return_types/asyncComplexStructReturn':
-        _i83.AsyncComplexStructReturnTarget(),
+        _i71.AsyncComplexStructReturnTarget(),
     '/return_types/asyncComplexStructReturnNullable':
-        _i84.AsyncComplexStructReturnNullableTarget(),
-    '/return_types/asyncDoubleReturn': _i85.AsyncDoubleReturnTarget(),
-    '/return_types/asyncIntReturn': _i86.AsyncIntReturnTarget(),
-    '/return_types/asyncIterableReturn': _i87.AsyncIterableReturnTarget(),
-    '/return_types/asyncListReturn': _i88.AsyncListReturnTarget(),
-    '/return_types/asyncMapReturn': _i89.AsyncMapReturnTarget(),
-    '/return_types/asyncOrBoolReturn': _i90.AsyncOrBoolReturnTarget(),
+        _i72.AsyncComplexStructReturnNullableTarget(),
+    '/return_types/asyncDoubleReturn': _i73.AsyncDoubleReturnTarget(),
+    '/return_types/asyncIntReturn': _i74.AsyncIntReturnTarget(),
+    '/return_types/asyncIterableReturn': _i75.AsyncIterableReturnTarget(),
+    '/return_types/asyncListReturn': _i76.AsyncListReturnTarget(),
+    '/return_types/asyncMapReturn': _i77.AsyncMapReturnTarget(),
+    '/return_types/asyncOrBoolReturn': _i78.AsyncOrBoolReturnTarget(),
     '/return_types/asyncOrBoolReturnNullable':
-        _i91.AsyncOrBoolReturnNullableTarget(),
+        _i79.AsyncOrBoolReturnNullableTarget(),
     '/return_types/asyncOrComplexClassReturnNullable':
-        _i92.AsyncOrComplexClassReturnNullableTarget(),
+        _i80.AsyncOrComplexClassReturnNullableTarget(),
     '/return_types/asyncOrComplexStructReturn':
-        _i93.AsyncOrComplexStructReturnTarget(),
+        _i81.AsyncOrComplexStructReturnTarget(),
     '/return_types/asyncOrComplexStructReturnNullable':
-        _i94.AsyncOrComplexStructReturnNullableTarget(),
-    '/return_types/asyncOrDoubleReturn': _i95.AsyncOrDoubleReturnTarget(),
+        _i82.AsyncOrComplexStructReturnNullableTarget(),
+    '/return_types/asyncOrDoubleReturn': _i83.AsyncOrDoubleReturnTarget(),
     '/return_types/asyncOrDoubleReturnNullable':
-        _i96.AsyncOrDoubleReturnNullableTarget(),
-    '/return_types/asyncOrIntReturn': _i97.AsyncOrIntReturnTarget(),
+        _i84.AsyncOrDoubleReturnNullableTarget(),
+    '/return_types/asyncOrIntReturn': _i85.AsyncOrIntReturnTarget(),
     '/return_types/asyncOrIntReturnNullable':
-        _i98.AsyncOrIntReturnNullableTarget(),
-    '/return_types/asyncOrIterableReturn': _i99.AsyncOrIterableReturnTarget(),
+        _i86.AsyncOrIntReturnNullableTarget(),
+    '/return_types/asyncOrIterableReturn': _i87.AsyncOrIterableReturnTarget(),
     '/return_types/asyncOrIterableReturnNullable':
-        _i100.AsyncOrIterableReturnNullableTarget(),
-    '/return_types/asyncOrListReturn': _i101.AsyncOrListReturnTarget(),
+        _i88.AsyncOrIterableReturnNullableTarget(),
+    '/return_types/asyncOrListReturn': _i89.AsyncOrListReturnTarget(),
     '/return_types/asyncOrListReturnNullable':
-        _i102.AsyncOrListReturnNullableTarget(),
-    '/return_types/asyncOrMapReturn': _i103.AsyncOrMapReturnTarget(),
+        _i90.AsyncOrListReturnNullableTarget(),
+    '/return_types/asyncOrMapReturn': _i91.AsyncOrMapReturnTarget(),
     '/return_types/asyncOrMapReturnNullable':
-        _i104.AsyncOrMapReturnNullableTarget(),
+        _i92.AsyncOrMapReturnNullableTarget(),
     '/return_types/asyncOrSimpleClassReturnNullable':
-        _i105.AsyncOrSimpleClassReturnNullableTarget(),
-    '/return_types/asyncOrStringReturn': _i106.AsyncOrStringReturnTarget(),
+        _i93.AsyncOrSimpleClassReturnNullableTarget(),
+    '/return_types/asyncOrStringReturn': _i94.AsyncOrStringReturnTarget(),
     '/return_types/asyncOrStringReturnNullable':
-        _i107.AsyncOrStringReturnNullableTarget(),
-    '/return_types/asyncOrStructReturn': _i108.AsyncOrStructReturnTarget(),
+        _i95.AsyncOrStringReturnNullableTarget(),
+    '/return_types/asyncOrStructReturn': _i96.AsyncOrStructReturnTarget(),
     '/return_types/asyncOrStructReturnNullable':
-        _i109.AsyncOrStructReturnNullableTarget(),
-    '/return_types/asyncOrVoidReturn': _i110.AsyncOrVoidReturnTarget(),
+        _i97.AsyncOrStructReturnNullableTarget(),
+    '/return_types/asyncOrVoidReturn': _i98.AsyncOrVoidReturnTarget(),
     '/return_types/asyncOrVoidReturnNullable':
-        _i111.AsyncOrVoidReturnNullableTarget(),
-    '/return_types/asyncStringReturn': _i112.AsyncStringReturnTarget(),
-    '/return_types/asyncStructReturn': _i113.AsyncStructReturnTarget(),
+        _i99.AsyncOrVoidReturnNullableTarget(),
+    '/return_types/asyncStringReturn': _i100.AsyncStringReturnTarget(),
+    '/return_types/asyncStructReturn': _i101.AsyncStructReturnTarget(),
     '/return_types/asyncStructReturnNullable':
-        _i114.AsyncStructReturnNullableTarget(),
-    '/return_types/asyncVoidReturn': _i115.AsyncVoidReturnTarget(),
-    '/return_types/boolReturn': _i116.BoolReturnTarget(),
-    '/return_types/boolReturnNullable': _i117.BoolReturnNullableTarget(),
-    '/return_types/complexClassReturn': _i118.ComplexClassReturnTarget(),
+        _i102.AsyncStructReturnNullableTarget(),
+    '/return_types/asyncVoidReturn': _i103.AsyncVoidReturnTarget(),
+    '/return_types/boolReturn': _i104.BoolReturnTarget(),
+    '/return_types/boolReturnNullable': _i105.BoolReturnNullableTarget(),
+    '/return_types/complexClassReturn': _i106.ComplexClassReturnTarget(),
     '/return_types/complexClassReturnNullable':
-        _i119.ComplexClassReturnNullableTarget(),
-    '/return_types/complexReturn': _i120.ComplexReturnTarget(),
-    '/return_types/complexReturnNullable': _i121.ComplexReturnNullableTarget(),
-    '/return_types/doubleReturn': _i122.DoubleReturnTarget(),
-    '/return_types/doubleReturnNullable': _i123.DoubleReturnNullableTarget(),
-    '/return_types/intReturn': _i124.IntReturnTarget(),
-    '/return_types/intReturnNullable': _i125.IntReturnNullableTarget(),
-    '/return_types/iterableReturn': _i126.IterableReturnTarget(),
+        _i107.ComplexClassReturnNullableTarget(),
+    '/return_types/complexReturn': _i108.ComplexReturnTarget(),
+    '/return_types/complexReturnNullable': _i109.ComplexReturnNullableTarget(),
+    '/return_types/doubleReturn': _i110.DoubleReturnTarget(),
+    '/return_types/doubleReturnNullable': _i111.DoubleReturnNullableTarget(),
+    '/return_types/intReturn': _i112.IntReturnTarget(),
+    '/return_types/intReturnNullable': _i113.IntReturnNullableTarget(),
+    '/return_types/iterableReturn': _i114.IterableReturnTarget(),
     '/return_types/iterableReturnNullable':
-        _i127.IterableReturnNullableTarget(),
-    '/return_types/listReturn': _i128.ListReturnTarget(),
-    '/return_types/listReturnNullable': _i129.ListReturnNullableTarget(),
-    '/return_types/mapReturn': _i130.MapReturnTarget(),
-    '/return_types/mapReturnNullable': _i131.MapReturnNullableTarget(),
-    '/return_types/simpleClassReturn': _i132.SimpleClassReturnTarget(),
+        _i115.IterableReturnNullableTarget(),
+    '/return_types/listReturn': _i116.ListReturnTarget(),
+    '/return_types/listReturnNullable': _i117.ListReturnNullableTarget(),
+    '/return_types/mapReturn': _i118.MapReturnTarget(),
+    '/return_types/mapReturnNullable': _i119.MapReturnNullableTarget(),
+    '/return_types/simpleClassReturn': _i120.SimpleClassReturnTarget(),
     '/return_types/simpleClassReturnNullable':
-        _i133.SimpleClassReturnNullableTarget(),
-    '/return_types/stringReturn': _i134.StringReturnTarget(),
-    '/return_types/stringReturnNullable': _i135.StringReturnNullableTarget(),
-    '/return_types/structReturn': _i136.StructReturnTarget(),
-    '/return_types/structReturnNullable': _i137.StructReturnNullableTarget(),
-    '/return_types/voidReturn': _i138.VoidReturnTarget(),
-    '/sealed_classes/area': _i139.AreaTarget(),
-    '/sealed_classes/circle': _i140.CircleTarget(),
+        _i121.SimpleClassReturnNullableTarget(),
+    '/return_types/stringReturn': _i122.StringReturnTarget(),
+    '/return_types/stringReturnNullable': _i123.StringReturnNullableTarget(),
+    '/return_types/structReturn': _i124.StructReturnTarget(),
+    '/return_types/structReturnNullable': _i125.StructReturnNullableTarget(),
+    '/return_types/voidReturn': _i126.VoidReturnTarget(),
+    '/sealed_classes/area': _i127.AreaTarget(),
+    '/sealed_classes/circle': _i128.CircleTarget(),
     '/sealed_classes/circleWithOverriddenCustomJson':
-        _i141.CircleWithOverriddenCustomJsonTarget(),
-    '/sealed_classes/rectangle': _i142.RectangleTarget(),
+        _i129.CircleWithOverriddenCustomJsonTarget(),
+    '/sealed_classes/rectangle': _i130.RectangleTarget(),
     '/sealed_classes/rectangleWithOverriddenCustomJson':
-        _i143.RectangleWithOverriddenCustomJsonTarget(),
-    '/sealed_classes/sealedClass': _i144.SealedClassTarget(),
+        _i131.RectangleWithOverriddenCustomJsonTarget(),
+    '/sealed_classes/sealedClass': _i132.SealedClassTarget(),
     '/sealed_classes/sealedClassWithCustomJson':
-        _i145.SealedClassWithCustomJsonTarget(),
+        _i133.SealedClassWithCustomJsonTarget(),
     '/sealed_classes/sealedClassWithInheritedCustomJson':
-        _i146.SealedClassWithInheritedCustomJsonTarget(),
+        _i134.SealedClassWithInheritedCustomJsonTarget(),
     '/sealed_classes/sealedClassWithOverriddenCustomJson':
-        _i147.SealedClassWithOverriddenCustomJsonTarget(),
+        _i135.SealedClassWithOverriddenCustomJsonTarget(),
   });
 }

@@ -629,14 +629,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.aliasedMixedFields",
-      "cloudFunction": {
-        "name": "aliasedMixedFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.aliasedNamedFields",
       "cloudFunction": {
         "name": "aliasedNamedFields",
@@ -645,41 +637,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.aliasedPositionalFields",
-      "cloudFunction": {
-        "name": "aliasedPositionalFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.asyncAliasedMixedFields",
-      "cloudFunction": {
-        "name": "asyncAliasedMixedFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.asyncAliasedNamedFields",
       "cloudFunction": {
         "name": "asyncAliasedNamedFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.asyncAliasedPositionalFields",
-      "cloudFunction": {
-        "name": "asyncAliasedPositionalFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.asyncMixedFields",
-      "cloudFunction": {
-        "name": "asyncMixedFields",
         "apiName": "records"
       }
     },
@@ -701,14 +661,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.asyncNonAliasedMixedFields",
-      "cloudFunction": {
-        "name": "asyncNonAliasedMixedFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.asyncNonAliasedNamedFields",
       "cloudFunction": {
         "name": "asyncNonAliasedNamedFields",
@@ -717,33 +669,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.asyncNonAliasedPositionalFields",
-      "cloudFunction": {
-        "name": "asyncNonAliasedPositionalFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.asyncNullableNested",
       "cloudFunction": {
         "name": "asyncNullableNested",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.asyncPositionalFields",
-      "cloudFunction": {
-        "name": "asyncPositionalFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.mixedFields",
-      "cloudFunction": {
-        "name": "mixedFields",
         "apiName": "records"
       }
     },
@@ -765,14 +693,6 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.nonAliasedMixedFields",
-      "cloudFunction": {
-        "name": "nonAliasedMixedFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.nonAliasedNamedFields",
       "cloudFunction": {
         "name": "nonAliasedNamedFields",
@@ -781,25 +701,9 @@
     },
     {
       "type": "Celest::CloudFunction",
-      "id": "records.nonAliasedPositionalFields",
-      "cloudFunction": {
-        "name": "nonAliasedPositionalFields",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
       "id": "records.nullableNested",
       "cloudFunction": {
         "name": "nullableNested",
-        "apiName": "records"
-      }
-    },
-    {
-      "type": "Celest::CloudFunction",
-      "id": "records.positionalFields",
-      "cloudFunction": {
-        "name": "positionalFields",
         "apiName": "records"
       }
     },

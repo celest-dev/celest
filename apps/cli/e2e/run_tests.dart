@@ -1366,116 +1366,6 @@ const Map<String, Test> tests = {
       ),
       'records': ApiTest(
         functionTests: {
-          'nonAliasedPositionalFields': [
-            FunctionTestSuccess(
-              name: 'nonAliasedPositionalFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                r'$2': 'anotherField',
-              },
-            ),
-          ],
-          'asyncNonAliasedPositionalFields': [
-            FunctionTestSuccess(
-              name: 'asyncNonAliasedPositionalFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                r'$2': 'anotherField',
-              },
-            ),
-          ],
-          'aliasedPositionalFields': [
-            FunctionTestSuccess(
-              name: 'aliasedPositionalFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                r'$2': 'anotherField',
-              },
-            ),
-          ],
-          'asyncAliasedPositionalFields': [
-            FunctionTestSuccess(
-              name: 'asyncAliasedPositionalFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                r'$2': 'anotherField',
-              },
-            ),
-          ],
-          'positionalFields': [
-            FunctionTestSuccess(
-              name: 'positionalFields',
-              input: {
-                'nonAliased': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-                r'$2': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-            ),
-          ],
-          'asyncPositionalFields': [
-            FunctionTestSuccess(
-              name: 'positionalFields',
-              input: {
-                'nonAliased': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-                r'$2': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
-              },
-            ),
-          ],
           'nonAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'nonAliasedNamedFields',
@@ -1586,125 +1476,11 @@ const Map<String, Test> tests = {
               },
             ),
           ],
-          'aliasedMixedFields': [
-            FunctionTestSuccess(
-              name: 'aliasedMixedFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                'anotherField': 'anotherField',
-              },
-            ),
-          ],
-          'asyncAliasedMixedFields': [
-            FunctionTestSuccess(
-              name: 'asyncAliasedMixedFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                'anotherField': 'anotherField',
-              },
-            ),
-          ],
-          'nonAliasedMixedFields': [
-            FunctionTestSuccess(
-              name: 'nonAliasedMixedFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                'anotherField': 'anotherField',
-              },
-            ),
-          ],
-          'asyncNonAliasedMixedFields': [
-            FunctionTestSuccess(
-              name: 'asyncNonAliasedMixedFields',
-              input: {
-                'value': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': 'field',
-                'anotherField': 'anotherField',
-              },
-            ),
-          ],
-          'mixedFields': [
-            FunctionTestSuccess(
-              name: 'mixedFields',
-              input: {
-                'nonAliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-            ),
-          ],
-          'asyncMixedFields': [
-            FunctionTestSuccess(
-              name: 'asyncMixedFields',
-              input: {
-                'nonAliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-              output: {
-                r'$1': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-                'aliased': {
-                  r'$1': 'field',
-                  'anotherField': 'anotherField',
-                },
-              },
-            ),
-          ],
           'nested': [
             FunctionTestSuccess(
               name: 'nested',
               input: {
                 'value': {
-                  r'$1': {
-                    r'$1': 'field',
-                    r'$2': 'anotherField',
-                  },
                   'namedFields': {
                     'field': 'field',
                     'anotherField': 'anotherField',
@@ -1712,10 +1488,6 @@ const Map<String, Test> tests = {
                 },
               },
               output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
                 'namedFields': {
                   'field': 'field',
                   'anotherField': 'anotherField',
@@ -1728,10 +1500,6 @@ const Map<String, Test> tests = {
               name: 'asyncNested',
               input: {
                 'value': {
-                  r'$1': {
-                    r'$1': 'field',
-                    r'$2': 'anotherField',
-                  },
                   'namedFields': {
                     'field': 'field',
                     'anotherField': 'anotherField',
@@ -1739,10 +1507,6 @@ const Map<String, Test> tests = {
                 },
               },
               output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
                 'namedFields': {
                   'field': 'field',
                   'anotherField': 'anotherField',
@@ -1760,12 +1524,10 @@ const Map<String, Test> tests = {
               name: 'no value',
               input: {
                 'value': {
-                  r'$1': null,
                   'namedFields': null,
                 },
               },
               output: {
-                r'$1': null,
                 'namedFields': null,
               },
             ),
@@ -1773,10 +1535,6 @@ const Map<String, Test> tests = {
               name: 'present',
               input: {
                 'value': {
-                  r'$1': {
-                    r'$1': 'field',
-                    r'$2': 'anotherField',
-                  },
                   'namedFields': {
                     'field': 'field',
                     'anotherField': 'anotherField',
@@ -1784,10 +1542,6 @@ const Map<String, Test> tests = {
                 },
               },
               output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
                 'namedFields': {
                   'field': 'field',
                   'anotherField': 'anotherField',
@@ -1805,12 +1559,10 @@ const Map<String, Test> tests = {
               name: 'no value',
               input: {
                 'value': {
-                  r'$1': null,
                   'namedFields': null,
                 },
               },
               output: {
-                r'$1': null,
                 'namedFields': null,
               },
             ),
@@ -1818,10 +1570,6 @@ const Map<String, Test> tests = {
               name: 'present',
               input: {
                 'value': {
-                  r'$1': {
-                    r'$1': 'field',
-                    r'$2': 'anotherField',
-                  },
                   'namedFields': {
                     'field': 'field',
                     'anotherField': 'anotherField',
@@ -1829,10 +1577,6 @@ const Map<String, Test> tests = {
                 },
               },
               output: {
-                r'$1': {
-                  r'$1': 'field',
-                  r'$2': 'anotherField',
-                },
                 'namedFields': {
                   'field': 'field',
                   'anotherField': 'anotherField',

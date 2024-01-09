@@ -536,47 +536,16 @@ abstract final class functions {
     functionName: r'requiredPositional',
   );
 
-  static const recordsAliasedMixedFields =
-      _i1.CloudFunction<_i9.MixedFields, _i9.MixedFields>(
-    api: r'records',
-    functionName: r'aliasedMixedFields',
-  );
-
   static const recordsAliasedNamedFields =
       _i1.CloudFunction<_i9.NamedFields, _i9.NamedFields>(
     api: r'records',
     functionName: r'aliasedNamedFields',
   );
 
-  static const recordsAliasedPositionalFields =
-      _i1.CloudFunction<_i9.PositionalFields, _i9.PositionalFields>(
-    api: r'records',
-    functionName: r'aliasedPositionalFields',
-  );
-
-  static const recordsAsyncAliasedMixedFields =
-      _i1.CloudFunction<_i9.MixedFields, _i9.MixedFields>(
-    api: r'records',
-    functionName: r'asyncAliasedMixedFields',
-  );
-
   static const recordsAsyncAliasedNamedFields =
       _i1.CloudFunction<_i9.NamedFields, _i9.NamedFields>(
     api: r'records',
     functionName: r'asyncAliasedNamedFields',
-  );
-
-  static const recordsAsyncAliasedPositionalFields =
-      _i1.CloudFunction<_i9.PositionalFields, _i9.PositionalFields>(
-    api: r'records',
-    functionName: r'asyncAliasedPositionalFields',
-  );
-
-  static const recordsAsyncMixedFields = _i1.CloudFunction<
-      ((String, {String anotherField}), {_i9.MixedFields aliased}),
-      ((String, {String anotherField}), {_i9.MixedFields aliased})>(
-    api: r'records',
-    functionName: r'asyncMixedFields',
   );
 
   static const recordsAsyncNamedFields = _i1.CloudFunction<
@@ -597,12 +566,6 @@ abstract final class functions {
     functionName: r'asyncNested',
   );
 
-  static const recordsAsyncNonAliasedMixedFields =
-      _i1.CloudFunction<_i9.MixedFields, (String, {String anotherField})>(
-    api: r'records',
-    functionName: r'asyncNonAliasedMixedFields',
-  );
-
   static const recordsAsyncNonAliasedNamedFields = _i1.CloudFunction<
       ({String anotherField, String field}),
       ({String anotherField, String field})>(
@@ -610,30 +573,10 @@ abstract final class functions {
     functionName: r'asyncNonAliasedNamedFields',
   );
 
-  static const recordsAsyncNonAliasedPositionalFields =
-      _i1.CloudFunction<(String, String), (String, String)>(
-    api: r'records',
-    functionName: r'asyncNonAliasedPositionalFields',
-  );
-
   static const recordsAsyncNullableNested =
       _i1.CloudFunction<_i9.NullableNested?, _i9.NullableNested?>(
     api: r'records',
     functionName: r'asyncNullableNested',
-  );
-
-  static const recordsAsyncPositionalFields = _i1.CloudFunction<
-      ((String, String), _i9.PositionalFields),
-      ((String, String), _i9.PositionalFields)>(
-    api: r'records',
-    functionName: r'asyncPositionalFields',
-  );
-
-  static const recordsMixedFields = _i1.CloudFunction<
-      ((String, {String anotherField}), {_i9.MixedFields aliased}),
-      ((String, {String anotherField}), {_i9.MixedFields aliased})>(
-    api: r'records',
-    functionName: r'mixedFields',
   );
 
   static const recordsNamedFields = _i1.CloudFunction<
@@ -654,12 +597,6 @@ abstract final class functions {
     functionName: r'nested',
   );
 
-  static const recordsNonAliasedMixedFields =
-      _i1.CloudFunction<_i9.MixedFields, (String, {String anotherField})>(
-    api: r'records',
-    functionName: r'nonAliasedMixedFields',
-  );
-
   static const recordsNonAliasedNamedFields = _i1.CloudFunction<
       ({String anotherField, String field}),
       ({String anotherField, String field})>(
@@ -667,23 +604,10 @@ abstract final class functions {
     functionName: r'nonAliasedNamedFields',
   );
 
-  static const recordsNonAliasedPositionalFields =
-      _i1.CloudFunction<(String, String), (String, String)>(
-    api: r'records',
-    functionName: r'nonAliasedPositionalFields',
-  );
-
   static const recordsNullableNested =
       _i1.CloudFunction<_i9.NullableNested?, _i9.NullableNested?>(
     api: r'records',
     functionName: r'nullableNested',
-  );
-
-  static const recordsPositionalFields = _i1.CloudFunction<
-      ((String, String), _i9.PositionalFields),
-      ((String, String), _i9.PositionalFields)>(
-    api: r'records',
-    functionName: r'positionalFields',
   );
 
   static const returnTypesAsyncBoolReturn = _i1.CloudFunction<void, bool>(
@@ -1155,28 +1079,16 @@ const List<_i1.CloudWidget> all = [
   functions.parametersOptionalPositional,
   functions.parametersRequiredNamed,
   functions.parametersRequiredPositional,
-  functions.recordsAliasedMixedFields,
   functions.recordsAliasedNamedFields,
-  functions.recordsAliasedPositionalFields,
-  functions.recordsAsyncAliasedMixedFields,
   functions.recordsAsyncAliasedNamedFields,
-  functions.recordsAsyncAliasedPositionalFields,
-  functions.recordsAsyncMixedFields,
   functions.recordsAsyncNamedFields,
   functions.recordsAsyncNested,
-  functions.recordsAsyncNonAliasedMixedFields,
   functions.recordsAsyncNonAliasedNamedFields,
-  functions.recordsAsyncNonAliasedPositionalFields,
   functions.recordsAsyncNullableNested,
-  functions.recordsAsyncPositionalFields,
-  functions.recordsMixedFields,
   functions.recordsNamedFields,
   functions.recordsNested,
-  functions.recordsNonAliasedMixedFields,
   functions.recordsNonAliasedNamedFields,
-  functions.recordsNonAliasedPositionalFields,
   functions.recordsNullableNested,
-  functions.recordsPositionalFields,
   functions.returnTypesAsyncBoolReturn,
   functions.returnTypesAsyncClassReturnNullable,
   functions.returnTypesAsyncComplexClassReturn,

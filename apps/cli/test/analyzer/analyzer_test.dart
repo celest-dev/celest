@@ -291,6 +291,35 @@ String sayHello(NotJsonable _) => 'Hello, World!';
       );
 
       testErrors(
+        name: 'positional_record_fields',
+        apis: {
+          'greeting.dart': '''
+
+(String positionalField) sayHello((String positionalField) _) => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Positional fields are not supported in record types',
+          'Positional fields are not supported in record types',
+        ],
+      );
+
+      testErrors(
+        name: 'positional_record_fields_aliased',
+        apis: {
+          'greeting.dart': '''
+typedef PositionalFields = (String positionalField);
+
+PositionalFields sayHello(PositionalFields _) => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Positional fields are not supported in record types',
+          'Positional fields are not supported in record types',
+        ],
+      );
+
+      testErrors(
         name: 'parameter_with_subtypes',
         apis: {
           'greeting.dart': '''
