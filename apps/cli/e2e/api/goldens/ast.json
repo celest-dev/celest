@@ -7,8 +7,8 @@
   },
   "location": {
     "uri": "project:project.dart",
-    "line": 3,
-    "column": 6
+    "start": 44,
+    "end": 51
   },
   "apis": {
     "anonymous_function": {
@@ -18,8 +18,8 @@
           "$": "ApiAuthenticated",
           "location": {
             "uri": "project:functions/anonymous_function.dart",
-            "line": 1,
-            "column": 0
+            "start": 0,
+            "end": 26
           }
         }
       ],
@@ -45,16 +45,16 @@
               "$": "ApiPublic",
               "location": {
                 "uri": "project:functions/anonymous_function.dart",
-                "line": 6,
-                "column": 0
+                "start": 91,
+                "end": 110
               }
             }
           ],
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_function.dart",
-            "line": 7,
-            "column": 7
+            "start": 118,
+            "end": 126
           }
         },
         "sayHelloAuthenticated": {
@@ -77,8 +77,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_function.dart",
-            "line": 8,
-            "column": 7
+            "start": 156,
+            "end": 177
           }
         }
       }
@@ -115,8 +115,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 17,
-                "column": 5
+                "start": 299,
+                "end": 304
               }
             }
           ],
@@ -160,8 +160,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 13,
-            "column": 3
+            "start": 213,
+            "end": 234
           }
         },
         "asyncNonAliasedNamedFields": {
@@ -192,8 +192,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 28,
-                "column": 5
+                "start": 484,
+                "end": 489
               }
             }
           ],
@@ -245,8 +245,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 24,
-            "column": 8
+            "start": 393,
+            "end": 419
           }
         },
         "aliasedNamedFields": {
@@ -265,8 +265,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 33,
-                "column": 23
+                "start": 571,
+                "end": 576
               }
             }
           ],
@@ -286,8 +286,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 32,
-            "column": 12
+            "start": 527,
+            "end": 545
           }
         },
         "asyncAliasedNamedFields": {
@@ -306,8 +306,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 37,
-                "column": 23
+                "start": 664,
+                "end": 669
               }
             }
           ],
@@ -347,8 +347,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 36,
-            "column": 20
+            "start": 615,
+            "end": 638
           }
         },
         "namedFields": {
@@ -379,8 +379,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 51,
-                "column": 5
+                "start": 865,
+                "end": 875
               }
             },
             {
@@ -395,8 +395,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 52,
-                "column": 23
+                "start": 900,
+                "end": 907
               }
             }
           ],
@@ -464,8 +464,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 47,
-            "column": 3
+            "start": 789,
+            "end": 800
           }
         },
         "asyncNamedFields": {
@@ -496,8 +496,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 69,
-                "column": 5
+                "start": 1194,
+                "end": 1204
               }
             },
             {
@@ -512,8 +512,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 70,
-                "column": 23
+                "start": 1229,
+                "end": 1236
               }
             }
           ],
@@ -589,8 +589,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 65,
-            "column": 8
+            "start": 1113,
+            "end": 1129
           }
         },
         "nested": {
@@ -609,8 +609,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 79,
-                "column": 21
+                "start": 1386,
+                "end": 1391
               }
             }
           ],
@@ -630,8 +630,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 79,
-            "column": 7
+            "start": 1372,
+            "end": 1378
           }
         },
         "asyncNested": {
@@ -650,8 +650,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 80,
-                "column": 34
+                "start": 1437,
+                "end": 1442
               }
             }
           ],
@@ -679,8 +679,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 80,
-            "column": 15
+            "start": 1418,
+            "end": 1429
           }
         },
         "nullableNested": {
@@ -699,8 +699,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 84,
-                "column": 47
+                "start": 1564,
+                "end": 1569
               }
             }
           ],
@@ -720,8 +720,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 84,
-            "column": 16
+            "start": 1533,
+            "end": 1547
           }
         },
         "asyncNullableNested": {
@@ -740,8 +740,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/records.dart",
-                "line": 85,
-                "column": 60
+                "start": 1641,
+                "end": 1646
               }
             }
           ],
@@ -769,8 +769,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/records.dart",
-            "line": 85,
-            "column": 24
+            "start": 1605,
+            "end": 1624
           }
         }
       }
@@ -795,8 +795,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 4,
-                "column": 18
+                "start": 79,
+                "end": 84
               }
             }
           ],
@@ -816,8 +816,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 4,
-            "column": 7
+            "start": 68,
+            "end": 72
           }
         },
         "sealedClass": {
@@ -844,8 +844,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 8,
-                "column": 23
+                "start": 207,
+                "end": 213
               }
             }
           ],
@@ -881,8 +881,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 7,
-            "column": 12
+            "start": 170,
+            "end": 181
           }
         },
         "rectangle": {
@@ -901,8 +901,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 14,
-                "column": 30
+                "start": 316,
+                "end": 325
               }
             }
           ],
@@ -922,8 +922,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 14,
-            "column": 10
+            "start": 296,
+            "end": 305
           }
         },
         "circle": {
@@ -942,8 +942,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 15,
-                "column": 21
+                "start": 362,
+                "end": 368
               }
             }
           ],
@@ -963,8 +963,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 15,
-            "column": 7
+            "start": 348,
+            "end": 354
           }
         },
         "sealedClassWithInheritedCustomJson": {
@@ -991,8 +991,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 42,
-                "column": 46
+                "start": 907,
+                "end": 913
               }
             }
           ],
@@ -1028,8 +1028,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 41,
-            "column": 35
+            "start": 824,
+            "end": 858
           }
         },
         "sealedClassWithCustomJson": {
@@ -1056,8 +1056,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 101,
-                "column": 37
+                "start": 2566,
+                "end": 2572
               }
             }
           ],
@@ -1093,8 +1093,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 100,
-            "column": 26
+            "start": 2501,
+            "end": 2526
           }
         },
         "sealedClassWithOverriddenCustomJson": {
@@ -1113,8 +1113,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 151,
-                "column": 42
+                "start": 3804,
+                "end": 3810
               }
             },
             {
@@ -1129,8 +1129,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 152,
-                "column": 45
+                "start": 3857,
+                "end": 3866
               }
             },
             {
@@ -1153,8 +1153,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 153,
-                "column": 47
+                "start": 3915,
+                "end": 3920
               }
             }
           ],
@@ -1190,8 +1190,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 150,
-            "column": 36
+            "start": 3724,
+            "end": 3759
           }
         },
         "rectangleWithOverriddenCustomJson": {
@@ -1210,8 +1210,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 163,
-                "column": 36
+                "start": 4088,
+                "end": 4097
               }
             }
           ],
@@ -1231,8 +1231,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 162,
-            "column": 30
+            "start": 4017,
+            "end": 4050
           }
         },
         "circleWithOverriddenCustomJson": {
@@ -1251,8 +1251,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/sealed_classes.dart",
-                "line": 169,
-                "column": 32
+                "start": 4221,
+                "end": 4227
               }
             }
           ],
@@ -1272,8 +1272,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/sealed_classes.dart",
-            "line": 168,
-            "column": 31
+            "start": 4157,
+            "end": 4187
           }
         }
       }
@@ -1298,8 +1298,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 8,
-                "column": 9
+                "start": 130,
+                "end": 137
               }
             },
             {
@@ -1314,8 +1314,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 9,
-                "column": 6
+                "start": 145,
+                "end": 150
               }
             },
             {
@@ -1330,8 +1330,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 10,
-                "column": 9
+                "start": 161,
+                "end": 168
               }
             },
             {
@@ -1346,8 +1346,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 11,
-                "column": 7
+                "start": 177,
+                "end": 182
               }
             },
             {
@@ -1362,8 +1362,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 12,
-                "column": 9
+                "start": 193,
+                "end": 199
               }
             },
             {
@@ -1378,8 +1378,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 13,
-                "column": 7
+                "start": 208,
+                "end": 213
               }
             },
             {
@@ -1394,8 +1394,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 14,
-                "column": 9
+                "start": 224,
+                "end": 231
               }
             },
             {
@@ -1410,8 +1410,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 15,
-                "column": 11
+                "start": 244,
+                "end": 253
               }
             },
             {
@@ -1426,8 +1426,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 16,
-                "column": 11
+                "start": 266,
+                "end": 275
               }
             },
             {
@@ -1442,8 +1442,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 17,
-                "column": 9
+                "start": 286,
+                "end": 293
               }
             },
             {
@@ -1458,8 +1458,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 18,
-                "column": 13
+                "start": 308,
+                "end": 319
               }
             },
             {
@@ -1474,8 +1474,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 19,
-                "column": 6
+                "start": 327,
+                "end": 331
               }
             },
             {
@@ -1490,8 +1490,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 20,
-                "column": 10
+                "start": 343,
+                "end": 351
               }
             },
             {
@@ -1506,8 +1506,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 21,
-                "column": 12
+                "start": 365,
+                "end": 375
               }
             },
             {
@@ -1530,8 +1530,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 22,
-                "column": 19
+                "start": 396,
+                "end": 414
               }
             },
             {
@@ -1554,8 +1554,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 23,
-                "column": 22
+                "start": 438,
+                "end": 459
               }
             },
             {
@@ -1578,8 +1578,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 24,
-                "column": 15
+                "start": 476,
+                "end": 489
               }
             },
             {
@@ -1602,8 +1602,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 25,
-                "column": 12
+                "start": 503,
+                "end": 513
               }
             },
             {
@@ -1626,8 +1626,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 26,
-                "column": 15
+                "start": 530,
+                "end": 543
               }
             },
             {
@@ -1650,8 +1650,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 27,
-                "column": 13
+                "start": 558,
+                "end": 569
               }
             },
             {
@@ -1674,8 +1674,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 28,
-                "column": 15
+                "start": 586,
+                "end": 597
               }
             },
             {
@@ -1698,8 +1698,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 29,
-                "column": 13
+                "start": 612,
+                "end": 623
               }
             },
             {
@@ -1722,8 +1722,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 30,
-                "column": 15
+                "start": 640,
+                "end": 653
               }
             },
             {
@@ -1746,8 +1746,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 31,
-                "column": 17
+                "start": 672,
+                "end": 687
               }
             },
             {
@@ -1770,8 +1770,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 32,
-                "column": 17
+                "start": 706,
+                "end": 721
               }
             },
             {
@@ -1794,8 +1794,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 33,
-                "column": 15
+                "start": 738,
+                "end": 751
               }
             },
             {
@@ -1818,8 +1818,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 34,
-                "column": 19
+                "start": 772,
+                "end": 789
               }
             },
             {
@@ -1842,8 +1842,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 35,
-                "column": 12
+                "start": 803,
+                "end": 813
               }
             },
             {
@@ -1866,8 +1866,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 36,
-                "column": 16
+                "start": 831,
+                "end": 845
               }
             },
             {
@@ -1890,8 +1890,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 37,
-                "column": 18
+                "start": 865,
+                "end": 881
               }
             },
             {
@@ -1920,8 +1920,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 38,
-                "column": 22
+                "start": 905,
+                "end": 917
               }
             },
             {
@@ -1950,8 +1950,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 39,
-                "column": 19
+                "start": 938,
+                "end": 947
               }
             },
             {
@@ -1980,8 +1980,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 40,
-                "column": 22
+                "start": 971,
+                "end": 983
               }
             },
             {
@@ -2010,8 +2010,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 41,
-                "column": 20
+                "start": 1005,
+                "end": 1015
               }
             },
             {
@@ -2040,8 +2040,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 42,
-                "column": 22
+                "start": 1039,
+                "end": 1049
               }
             },
             {
@@ -2070,8 +2070,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 43,
-                "column": 20
+                "start": 1071,
+                "end": 1081
               }
             },
             {
@@ -2100,8 +2100,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 44,
-                "column": 22
+                "start": 1105,
+                "end": 1117
               }
             },
             {
@@ -2130,8 +2130,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 45,
-                "column": 24
+                "start": 1143,
+                "end": 1157
               }
             },
             {
@@ -2160,8 +2160,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 46,
-                "column": 24
+                "start": 1183,
+                "end": 1197
               }
             },
             {
@@ -2190,8 +2190,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 47,
-                "column": 22
+                "start": 1221,
+                "end": 1233
               }
             },
             {
@@ -2220,8 +2220,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 48,
-                "column": 26
+                "start": 1261,
+                "end": 1277
               }
             },
             {
@@ -2250,8 +2250,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 49,
-                "column": 19
+                "start": 1298,
+                "end": 1307
               }
             },
             {
@@ -2280,8 +2280,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 50,
-                "column": 23
+                "start": 1332,
+                "end": 1345
               }
             },
             {
@@ -2310,8 +2310,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 51,
-                "column": 25
+                "start": 1372,
+                "end": 1387
               }
             }
           ],
@@ -2335,8 +2335,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
-            "line": 7,
-            "column": 13
+            "start": 113,
+            "end": 119
           }
         },
         "simpleOptional": {
@@ -2355,8 +2355,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 56,
-                "column": 10
+                "start": 1495,
+                "end": 1502
               }
             },
             {
@@ -2371,8 +2371,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 57,
-                "column": 7
+                "start": 1511,
+                "end": 1516
               }
             },
             {
@@ -2387,8 +2387,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 58,
-                "column": 10
+                "start": 1528,
+                "end": 1535
               }
             },
             {
@@ -2403,8 +2403,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 59,
-                "column": 8
+                "start": 1545,
+                "end": 1550
               }
             },
             {
@@ -2419,8 +2419,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 60,
-                "column": 10
+                "start": 1562,
+                "end": 1568
               }
             },
             {
@@ -2435,8 +2435,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 61,
-                "column": 7
+                "start": 1577,
+                "end": 1582
               }
             },
             {
@@ -2451,8 +2451,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 62,
-                "column": 10
+                "start": 1594,
+                "end": 1601
               }
             },
             {
@@ -2467,8 +2467,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 63,
-                "column": 12
+                "start": 1615,
+                "end": 1624
               }
             },
             {
@@ -2483,8 +2483,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 64,
-                "column": 12
+                "start": 1638,
+                "end": 1647
               }
             },
             {
@@ -2499,8 +2499,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 65,
-                "column": 10
+                "start": 1659,
+                "end": 1666
               }
             },
             {
@@ -2515,8 +2515,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 66,
-                "column": 14
+                "start": 1682,
+                "end": 1693
               }
             },
             {
@@ -2531,8 +2531,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 67,
-                "column": 7
+                "start": 1702,
+                "end": 1706
               }
             },
             {
@@ -2547,8 +2547,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 68,
-                "column": 11
+                "start": 1719,
+                "end": 1727
               }
             },
             {
@@ -2563,8 +2563,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 69,
-                "column": 13
+                "start": 1742,
+                "end": 1752
               }
             },
             {
@@ -2587,8 +2587,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 70,
-                "column": 20
+                "start": 1774,
+                "end": 1792
               }
             },
             {
@@ -2611,8 +2611,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 71,
-                "column": 23
+                "start": 1817,
+                "end": 1838
               }
             },
             {
@@ -2635,8 +2635,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 72,
-                "column": 16
+                "start": 1856,
+                "end": 1869
               }
             },
             {
@@ -2659,8 +2659,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 73,
-                "column": 13
+                "start": 1884,
+                "end": 1894
               }
             },
             {
@@ -2683,8 +2683,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 74,
-                "column": 16
+                "start": 1912,
+                "end": 1925
               }
             },
             {
@@ -2707,8 +2707,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 75,
-                "column": 14
+                "start": 1941,
+                "end": 1952
               }
             },
             {
@@ -2731,8 +2731,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 76,
-                "column": 16
+                "start": 1970,
+                "end": 1981
               }
             },
             {
@@ -2755,8 +2755,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 77,
-                "column": 14
+                "start": 1997,
+                "end": 2008
               }
             },
             {
@@ -2779,8 +2779,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 78,
-                "column": 16
+                "start": 2026,
+                "end": 2039
               }
             },
             {
@@ -2803,8 +2803,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 79,
-                "column": 18
+                "start": 2059,
+                "end": 2074
               }
             },
             {
@@ -2827,8 +2827,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 80,
-                "column": 18
+                "start": 2094,
+                "end": 2109
               }
             },
             {
@@ -2851,8 +2851,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 81,
-                "column": 16
+                "start": 2127,
+                "end": 2140
               }
             },
             {
@@ -2875,8 +2875,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 82,
-                "column": 20
+                "start": 2162,
+                "end": 2179
               }
             },
             {
@@ -2899,8 +2899,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 83,
-                "column": 13
+                "start": 2194,
+                "end": 2204
               }
             },
             {
@@ -2923,8 +2923,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 84,
-                "column": 17
+                "start": 2223,
+                "end": 2237
               }
             },
             {
@@ -2947,8 +2947,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 85,
-                "column": 19
+                "start": 2258,
+                "end": 2274
               }
             },
             {
@@ -2977,8 +2977,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 86,
-                "column": 23
+                "start": 2299,
+                "end": 2311
               }
             },
             {
@@ -3007,8 +3007,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 87,
-                "column": 20
+                "start": 2333,
+                "end": 2342
               }
             },
             {
@@ -3037,8 +3037,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 88,
-                "column": 23
+                "start": 2367,
+                "end": 2379
               }
             },
             {
@@ -3067,8 +3067,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 89,
-                "column": 21
+                "start": 2402,
+                "end": 2412
               }
             },
             {
@@ -3097,8 +3097,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 90,
-                "column": 23
+                "start": 2437,
+                "end": 2447
               }
             },
             {
@@ -3127,8 +3127,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 91,
-                "column": 21
+                "start": 2470,
+                "end": 2480
               }
             },
             {
@@ -3157,8 +3157,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 92,
-                "column": 23
+                "start": 2505,
+                "end": 2517
               }
             },
             {
@@ -3187,8 +3187,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 93,
-                "column": 25
+                "start": 2544,
+                "end": 2558
               }
             },
             {
@@ -3217,8 +3217,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 94,
-                "column": 25
+                "start": 2585,
+                "end": 2599
               }
             },
             {
@@ -3247,8 +3247,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 95,
-                "column": 23
+                "start": 2624,
+                "end": 2636
               }
             },
             {
@@ -3277,8 +3277,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 96,
-                "column": 27
+                "start": 2665,
+                "end": 2681
               }
             },
             {
@@ -3307,8 +3307,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 97,
-                "column": 20
+                "start": 2703,
+                "end": 2712
               }
             },
             {
@@ -3337,8 +3337,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 98,
-                "column": 24
+                "start": 2738,
+                "end": 2751
               }
             },
             {
@@ -3367,8 +3367,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 99,
-                "column": 26
+                "start": 2779,
+                "end": 2794
               }
             }
           ],
@@ -3392,8 +3392,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
-            "line": 55,
-            "column": 13
+            "start": 1469,
+            "end": 1483
           }
         },
         "complex": {
@@ -3412,8 +3412,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 521,
-                "column": 15
+                "start": 19760,
+                "end": 19773
               }
             },
             {
@@ -3428,8 +3428,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 522,
-                "column": 16
+                "start": 19791,
+                "end": 19805
               }
             },
             {
@@ -3444,8 +3444,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 523,
-                "column": 14
+                "start": 19821,
+                "end": 19833
               }
             },
             {
@@ -3460,8 +3460,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 524,
-                "column": 15
+                "start": 19850,
+                "end": 19863
               }
             },
             {
@@ -3476,8 +3476,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 525,
-                "column": 16
+                "start": 19881,
+                "end": 19902
               }
             },
             {
@@ -3492,8 +3492,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 526,
-                "column": 17
+                "start": 19921,
+                "end": 19943
               }
             },
             {
@@ -3508,8 +3508,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 527,
-                "column": 15
+                "start": 19960,
+                "end": 19980
               }
             },
             {
@@ -3524,8 +3524,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 528,
-                "column": 16
+                "start": 19998,
+                "end": 20019
               }
             },
             {
@@ -3548,8 +3548,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 529,
-                "column": 25
+                "start": 20046,
+                "end": 20070
               }
             },
             {
@@ -3572,8 +3572,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 530,
-                "column": 26
+                "start": 20098,
+                "end": 20123
               }
             },
             {
@@ -3596,8 +3596,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 531,
-                "column": 24
+                "start": 20149,
+                "end": 20172
               }
             },
             {
@@ -3620,8 +3620,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 532,
-                "column": 25
+                "start": 20199,
+                "end": 20223
               }
             },
             {
@@ -3644,8 +3644,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 533,
-                "column": 26
+                "start": 20251,
+                "end": 20282
               }
             },
             {
@@ -3668,8 +3668,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 534,
-                "column": 27
+                "start": 20311,
+                "end": 20343
               }
             },
             {
@@ -3692,8 +3692,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 535,
-                "column": 25
+                "start": 20370,
+                "end": 20400
               }
             },
             {
@@ -3716,8 +3716,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 536,
-                "column": 26
+                "start": 20428,
+                "end": 20459
               }
             },
             {
@@ -3740,8 +3740,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 537,
-                "column": 26
+                "start": 20487,
+                "end": 20519
               }
             },
             {
@@ -3764,8 +3764,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 538,
-                "column": 27
+                "start": 20548,
+                "end": 20581
               }
             },
             {
@@ -3788,8 +3788,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 539,
-                "column": 25
+                "start": 20608,
+                "end": 20639
               }
             },
             {
@@ -3812,8 +3812,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 540,
-                "column": 26
+                "start": 20667,
+                "end": 20699
               }
             },
             {
@@ -3836,8 +3836,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 541,
-                "column": 21
+                "start": 20722,
+                "end": 20741
               }
             },
             {
@@ -3860,8 +3860,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 542,
-                "column": 22
+                "start": 20765,
+                "end": 20785
               }
             },
             {
@@ -3884,8 +3884,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 543,
-                "column": 20
+                "start": 20807,
+                "end": 20825
               }
             },
             {
@@ -3908,8 +3908,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 544,
-                "column": 21
+                "start": 20848,
+                "end": 20867
               }
             },
             {
@@ -3932,8 +3932,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 545,
-                "column": 22
+                "start": 20891,
+                "end": 20918
               }
             },
             {
@@ -3956,8 +3956,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 546,
-                "column": 23
+                "start": 20943,
+                "end": 20971
               }
             },
             {
@@ -3980,8 +3980,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 547,
-                "column": 21
+                "start": 20994,
+                "end": 21020
               }
             },
             {
@@ -4004,8 +4004,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 548,
-                "column": 22
+                "start": 21044,
+                "end": 21071
               }
             },
             {
@@ -4028,8 +4028,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 549,
-                "column": 22
+                "start": 21095,
+                "end": 21122
               }
             },
             {
@@ -4052,8 +4052,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 550,
-                "column": 23
+                "start": 21147,
+                "end": 21175
               }
             },
             {
@@ -4076,8 +4076,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 551,
-                "column": 21
+                "start": 21198,
+                "end": 21224
               }
             },
             {
@@ -4100,8 +4100,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 552,
-                "column": 22
+                "start": 21248,
+                "end": 21275
               }
             },
             {
@@ -4130,8 +4130,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 553,
-                "column": 28
+                "start": 21305,
+                "end": 21323
               }
             },
             {
@@ -4160,8 +4160,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 554,
-                "column": 29
+                "start": 21354,
+                "end": 21373
               }
             },
             {
@@ -4190,8 +4190,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 555,
-                "column": 27
+                "start": 21402,
+                "end": 21419
               }
             },
             {
@@ -4220,8 +4220,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 556,
-                "column": 28
+                "start": 21449,
+                "end": 21467
               }
             },
             {
@@ -4250,8 +4250,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 557,
-                "column": 29
+                "start": 21498,
+                "end": 21524
               }
             },
             {
@@ -4280,8 +4280,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 558,
-                "column": 30
+                "start": 21556,
+                "end": 21583
               }
             },
             {
@@ -4310,8 +4310,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 559,
-                "column": 28
+                "start": 21613,
+                "end": 21638
               }
             },
             {
@@ -4340,8 +4340,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 560,
-                "column": 29
+                "start": 21669,
+                "end": 21695
               }
             },
             {
@@ -4370,8 +4370,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 561,
-                "column": 29
+                "start": 21726,
+                "end": 21752
               }
             },
             {
@@ -4400,8 +4400,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 562,
-                "column": 30
+                "start": 21784,
+                "end": 21811
               }
             },
             {
@@ -4430,8 +4430,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 563,
-                "column": 28
+                "start": 21841,
+                "end": 21866
               }
             },
             {
@@ -4460,8 +4460,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 564,
-                "column": 29
+                "start": 21897,
+                "end": 21923
               }
             },
             {
@@ -4490,8 +4490,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 565,
-                "column": 30
+                "start": 21955,
+                "end": 21989
               }
             },
             {
@@ -4520,8 +4520,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 566,
-                "column": 31
+                "start": 22022,
+                "end": 22057
               }
             },
             {
@@ -4550,8 +4550,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 567,
-                "column": 29
+                "start": 22088,
+                "end": 22121
               }
             },
             {
@@ -4580,8 +4580,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameter_types.dart",
-                "line": 568,
-                "column": 30
+                "start": 22153,
+                "end": 22187
               }
             }
           ],
@@ -4605,8 +4605,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameter_types.dart",
-            "line": 520,
-            "column": 13
+            "start": 19736,
+            "end": 19743
           }
         }
       }
@@ -4635,8 +4635,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/cycles.dart",
-            "line": 25,
-            "column": 5
+            "start": 423,
+            "end": 433
           }
         },
         "printTree": {
@@ -4655,8 +4655,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 47,
-                "column": 20
+                "start": 748,
+                "end": 752
               }
             }
           ],
@@ -4672,8 +4672,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/cycles.dart",
-            "line": 47,
-            "column": 5
+            "start": 733,
+            "end": 742
           }
         },
         "combineTrees": {
@@ -4692,8 +4692,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 60,
-                "column": 7
+                "start": 1040,
+                "end": 1045
               }
             },
             {
@@ -4708,8 +4708,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 61,
-                "column": 10
+                "start": 1059,
+                "end": 1064
               }
             },
             {
@@ -4724,8 +4724,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 62,
-                "column": 8
+                "start": 1074,
+                "end": 1079
               }
             },
             {
@@ -4748,8 +4748,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 63,
-                "column": 14
+                "start": 1095,
+                "end": 1113
               }
             }
           ],
@@ -4769,8 +4769,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/cycles.dart",
-            "line": 59,
-            "column": 5
+            "start": 1019,
+            "end": 1031
           }
         },
         "selfReferencing": {
@@ -4789,8 +4789,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/cycles.dart",
-                "line": 78,
-                "column": 48
+                "start": 1471,
+                "end": 1486
               }
             }
           ],
@@ -4810,8 +4810,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/cycles.dart",
-            "line": 78,
-            "column": 16
+            "start": 1439,
+            "end": 1454
           }
         }
       }
@@ -4841,16 +4841,16 @@
               "$": "ApiAuthenticated",
               "location": {
                 "uri": "project:functions/authenticated_function.dart",
-                "line": 3,
-                "column": 0
+                "start": 54,
+                "end": 80
               }
             }
           ],
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_function.dart",
-            "line": 4,
-            "column": 7
+            "start": 88,
+            "end": 109
           }
         },
         "sayHello": {
@@ -4873,8 +4873,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_function.dart",
-            "line": 5,
-            "column": 7
+            "start": 139,
+            "end": 147
           }
         }
       }
@@ -4886,8 +4886,8 @@
           "$": "ApiPublic",
           "location": {
             "uri": "project:functions/api_auth_constant_variables.dart",
-            "line": 1,
-            "column": 0
+            "start": 0,
+            "end": 7
           }
         }
       ],
@@ -4913,16 +4913,16 @@
               "$": "ApiAuthenticated",
               "location": {
                 "uri": "project:functions/api_auth_constant_variables.dart",
-                "line": 10,
-                "column": 0
+                "start": 217,
+                "end": 231
               }
             }
           ],
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/api_auth_constant_variables.dart",
-            "line": 11,
-            "column": 7
+            "start": 239,
+            "end": 260
           }
         },
         "sayHello": {
@@ -4945,8 +4945,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/api_auth_constant_variables.dart",
-            "line": 12,
-            "column": 7
+            "start": 290,
+            "end": 298
           }
         }
       }
@@ -4979,8 +4979,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 9,
-            "column": 13
+            "start": 148,
+            "end": 163
           }
         },
         "asyncStringReturn": {
@@ -5011,8 +5011,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 11,
-            "column": 15
+            "start": 191,
+            "end": 208
           }
         },
         "asyncIntReturn": {
@@ -5043,8 +5043,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 15,
-            "column": 12
+            "start": 260,
+            "end": 274
           }
         },
         "asyncDoubleReturn": {
@@ -5075,8 +5075,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 19,
-            "column": 15
+            "start": 316,
+            "end": 333
           }
         },
         "asyncBoolReturn": {
@@ -5107,8 +5107,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 23,
-            "column": 13
+            "start": 375,
+            "end": 390
           }
         },
         "asyncIterableReturn": {
@@ -5155,8 +5155,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 27,
-            "column": 25
+            "start": 444,
+            "end": 463
           }
         },
         "asyncListReturn": {
@@ -5203,8 +5203,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 31,
-            "column": 21
+            "start": 527,
+            "end": 542
           }
         },
         "asyncMapReturn": {
@@ -5263,8 +5263,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 35,
-            "column": 28
+            "start": 613,
+            "end": 627
           }
         },
         "asyncStructReturn": {
@@ -5295,8 +5295,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 39,
-            "column": 21
+            "start": 691,
+            "end": 708
           }
         },
         "asyncStructReturnNullable": {
@@ -5327,8 +5327,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 43,
-            "column": 22
+            "start": 757,
+            "end": 782
           }
         },
         "asyncComplexStructReturn": {
@@ -5359,8 +5359,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 47,
-            "column": 22
+            "start": 833,
+            "end": 857
           }
         },
         "asyncComplexStructReturnNullable": {
@@ -5391,8 +5391,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 110,
-            "column": 23
+            "start": 3156,
+            "end": 3188
           }
         },
         "asyncComplexClassReturn": {
@@ -5423,8 +5423,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 114,
-            "column": 21
+            "start": 3238,
+            "end": 3261
           }
         },
         "asyncClassReturnNullable": {
@@ -5455,8 +5455,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 177,
-            "column": 21
+            "start": 5570,
+            "end": 5594
           }
         },
         "asyncOrVoidReturn": {
@@ -5483,8 +5483,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 181,
-            "column": 15
+            "start": 5638,
+            "end": 5655
           }
         },
         "asyncOrStringReturn": {
@@ -5515,8 +5515,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 183,
-            "column": 17
+            "start": 5685,
+            "end": 5704
           }
         },
         "asyncOrIntReturn": {
@@ -5547,8 +5547,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 187,
-            "column": 14
+            "start": 5758,
+            "end": 5774
           }
         },
         "asyncOrDoubleReturn": {
@@ -5579,8 +5579,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 191,
-            "column": 17
+            "start": 5818,
+            "end": 5837
           }
         },
         "asyncOrBoolReturn": {
@@ -5611,8 +5611,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 195,
-            "column": 15
+            "start": 5881,
+            "end": 5898
           }
         },
         "asyncOrIterableReturn": {
@@ -5659,8 +5659,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 199,
-            "column": 27
+            "start": 5954,
+            "end": 5975
           }
         },
         "asyncOrListReturn": {
@@ -5707,8 +5707,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 203,
-            "column": 23
+            "start": 6041,
+            "end": 6058
           }
         },
         "asyncOrMapReturn": {
@@ -5767,8 +5767,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 207,
-            "column": 30
+            "start": 6131,
+            "end": 6147
           }
         },
         "asyncOrStructReturn": {
@@ -5799,8 +5799,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 211,
-            "column": 23
+            "start": 6213,
+            "end": 6232
           }
         },
         "asyncOrComplexStructReturn": {
@@ -5831,8 +5831,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 215,
-            "column": 24
+            "start": 6283,
+            "end": 6309
           }
         },
         "asyncOrVoidReturnNullable": {
@@ -5859,8 +5859,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 278,
-            "column": 16
+            "start": 8601,
+            "end": 8626
           }
         },
         "asyncOrStringReturnNullable": {
@@ -5891,8 +5891,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 282,
-            "column": 18
+            "start": 8667,
+            "end": 8694
           }
         },
         "asyncOrIntReturnNullable": {
@@ -5923,8 +5923,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 286,
-            "column": 15
+            "start": 8732,
+            "end": 8756
           }
         },
         "asyncOrDoubleReturnNullable": {
@@ -5955,8 +5955,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 290,
-            "column": 18
+            "start": 8797,
+            "end": 8824
           }
         },
         "asyncOrBoolReturnNullable": {
@@ -5987,8 +5987,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 294,
-            "column": 16
+            "start": 8863,
+            "end": 8888
           }
         },
         "asyncOrIterableReturnNullable": {
@@ -6035,8 +6035,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 298,
-            "column": 28
+            "start": 8939,
+            "end": 8968
           }
         },
         "asyncOrListReturnNullable": {
@@ -6083,8 +6083,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 302,
-            "column": 24
+            "start": 9015,
+            "end": 9040
           }
         },
         "asyncOrMapReturnNullable": {
@@ -6143,8 +6143,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 306,
-            "column": 31
+            "start": 9094,
+            "end": 9118
           }
         },
         "asyncOrStructReturnNullable": {
@@ -6175,8 +6175,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 310,
-            "column": 24
+            "start": 9165,
+            "end": 9192
           }
         },
         "asyncOrComplexStructReturnNullable": {
@@ -6207,8 +6207,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 314,
-            "column": 25
+            "start": 9240,
+            "end": 9274
           }
         },
         "asyncOrSimpleClassReturnNullable": {
@@ -6239,8 +6239,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 318,
-            "column": 23
+            "start": 9320,
+            "end": 9352
           }
         },
         "asyncOrComplexClassReturnNullable": {
@@ -6271,8 +6271,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 322,
-            "column": 24
+            "start": 9399,
+            "end": 9432
           }
         },
         "voidReturn": {
@@ -6291,8 +6291,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 326,
-            "column": 5
+            "start": 9460,
+            "end": 9470
           }
         },
         "stringReturn": {
@@ -6315,8 +6315,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 328,
-            "column": 7
+            "start": 9484,
+            "end": 9496
           }
         },
         "intReturn": {
@@ -6339,8 +6339,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 332,
-            "column": 4
+            "start": 9534,
+            "end": 9543
           }
         },
         "doubleReturn": {
@@ -6363,8 +6363,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 336,
-            "column": 7
+            "start": 9571,
+            "end": 9583
           }
         },
         "boolReturn": {
@@ -6387,8 +6387,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 340,
-            "column": 5
+            "start": 9611,
+            "end": 9621
           }
         },
         "iterableReturn": {
@@ -6427,8 +6427,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 344,
-            "column": 17
+            "start": 9661,
+            "end": 9675
           }
         },
         "listReturn": {
@@ -6467,8 +6467,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 348,
-            "column": 13
+            "start": 9725,
+            "end": 9735
           }
         },
         "mapReturn": {
@@ -6519,8 +6519,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 352,
-            "column": 20
+            "start": 9792,
+            "end": 9801
           }
         },
         "structReturn": {
@@ -6543,8 +6543,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 356,
-            "column": 13
+            "start": 9851,
+            "end": 9863
           }
         },
         "complexReturn": {
@@ -6567,8 +6567,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 360,
-            "column": 14
+            "start": 9898,
+            "end": 9911
           }
         },
         "simpleClassReturn": {
@@ -6591,8 +6591,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 423,
-            "column": 12
+            "start": 12193,
+            "end": 12210
           }
         },
         "complexClassReturn": {
@@ -6615,8 +6615,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 427,
-            "column": 13
+            "start": 12255,
+            "end": 12273
           }
         },
         "stringReturnNullable": {
@@ -6639,8 +6639,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 490,
-            "column": 8
+            "start": 14563,
+            "end": 14583
           }
         },
         "intReturnNullable": {
@@ -6663,8 +6663,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 494,
-            "column": 5
+            "start": 14611,
+            "end": 14628
           }
         },
         "doubleReturnNullable": {
@@ -6687,8 +6687,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 498,
-            "column": 8
+            "start": 14659,
+            "end": 14679
           }
         },
         "boolReturnNullable": {
@@ -6711,8 +6711,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 502,
-            "column": 6
+            "start": 14708,
+            "end": 14726
           }
         },
         "iterableReturnNullable": {
@@ -6751,8 +6751,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 506,
-            "column": 18
+            "start": 14767,
+            "end": 14789
           }
         },
         "listReturnNullable": {
@@ -6791,8 +6791,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 510,
-            "column": 14
+            "start": 14826,
+            "end": 14844
           }
         },
         "mapReturnNullable": {
@@ -6843,8 +6843,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 514,
-            "column": 21
+            "start": 14888,
+            "end": 14905
           }
         },
         "structReturnNullable": {
@@ -6867,8 +6867,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 518,
-            "column": 14
+            "start": 14942,
+            "end": 14962
           }
         },
         "complexReturnNullable": {
@@ -6891,8 +6891,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 522,
-            "column": 15
+            "start": 15000,
+            "end": 15021
           }
         },
         "simpleClassReturnNullable": {
@@ -6915,8 +6915,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 526,
-            "column": 13
+            "start": 15057,
+            "end": 15082
           }
         },
         "complexClassReturnNullable": {
@@ -6939,8 +6939,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/return_types.dart",
-            "line": 530,
-            "column": 14
+            "start": 15119,
+            "end": 15145
           }
         }
       }
@@ -6958,8 +6958,8 @@
           },
           "location": {
             "uri": "project:functions/middleware.dart",
-            "line": 1,
-            "column": 0
+            "start": 0,
+            "end": 7
           }
         },
         {
@@ -6972,8 +6972,8 @@
           },
           "location": {
             "uri": "project:functions/middleware.dart",
-            "line": 2,
-            "column": 0
+            "start": 8,
+            "end": 16
           }
         }
       ],
@@ -6994,8 +6994,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/middleware.dart",
-                "line": 13,
-                "column": 31
+                "start": 226,
+                "end": 230
               }
             }
           ],
@@ -7030,8 +7030,8 @@
               },
               "location": {
                 "uri": "project:functions/middleware.dart",
-                "line": 11,
-                "column": 0
+                "start": 176,
+                "end": 184
               }
             },
             {
@@ -7044,16 +7044,16 @@
               },
               "location": {
                 "uri": "project:functions/middleware.dart",
-                "line": 12,
-                "column": 0
+                "start": 185,
+                "end": 194
               }
             }
           ],
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/middleware.dart",
-            "line": 13,
-            "column": 15
+            "start": 210,
+            "end": 218
           }
         }
       }
@@ -7078,8 +7078,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 9,
-                "column": 18
+                "start": 198,
+                "end": 203
               }
             }
           ],
@@ -7099,8 +7099,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 9,
-            "column": 6
+            "start": 186,
+            "end": 191
           }
         },
         "asyncEmpty": {
@@ -7119,8 +7119,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 10,
-                "column": 31
+                "start": 246,
+                "end": 251
               }
             }
           ],
@@ -7148,8 +7148,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 10,
-            "column": 14
+            "start": 229,
+            "end": 239
           }
         },
         "fields": {
@@ -7168,8 +7168,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 42,
-                "column": 21
+                "start": 776,
+                "end": 781
               }
             }
           ],
@@ -7189,8 +7189,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 42,
-            "column": 7
+            "start": 762,
+            "end": 768
           }
         },
         "asyncFields": {
@@ -7209,8 +7209,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 43,
-                "column": 34
+                "start": 827,
+                "end": 832
               }
             }
           ],
@@ -7238,8 +7238,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 43,
-            "column": 15
+            "start": 808,
+            "end": 819
           }
         },
         "nullableFields": {
@@ -7258,8 +7258,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 45,
-                "column": 31
+                "start": 882,
+                "end": 887
               }
             }
           ],
@@ -7279,8 +7279,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 45,
-            "column": 8
+            "start": 859,
+            "end": 873
           }
         },
         "asyncNullableFields": {
@@ -7299,8 +7299,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 46,
-                "column": 44
+                "start": 943,
+                "end": 948
               }
             }
           ],
@@ -7328,8 +7328,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 46,
-            "column": 16
+            "start": 915,
+            "end": 934
           }
         },
         "namedFields": {
@@ -7348,8 +7348,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 48,
-                "column": 36
+                "start": 1003,
+                "end": 1008
               }
             }
           ],
@@ -7369,8 +7369,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 48,
-            "column": 12
+            "start": 979,
+            "end": 990
           }
         },
         "asyncNamedFields": {
@@ -7389,8 +7389,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 49,
-                "column": 49
+                "start": 1069,
+                "end": 1074
               }
             }
           ],
@@ -7418,8 +7418,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 49,
-            "column": 20
+            "start": 1040,
+            "end": 1056
           }
         },
         "mixedFields": {
@@ -7438,8 +7438,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 51,
-                "column": 36
+                "start": 1129,
+                "end": 1134
               }
             }
           ],
@@ -7459,8 +7459,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 51,
-            "column": 12
+            "start": 1105,
+            "end": 1116
           }
         },
         "asyncMixedFields": {
@@ -7479,8 +7479,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 52,
-                "column": 49
+                "start": 1195,
+                "end": 1200
               }
             }
           ],
@@ -7508,8 +7508,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 52,
-            "column": 20
+            "start": 1166,
+            "end": 1182
           }
         },
         "defaultValues": {
@@ -7528,8 +7528,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 67,
-                "column": 42
+                "start": 1557,
+                "end": 1562
               }
             }
           ],
@@ -7549,8 +7549,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 67,
-            "column": 14
+            "start": 1529,
+            "end": 1542
           }
         },
         "asyncDefaultValues": {
@@ -7569,8 +7569,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 68,
-                "column": 55
+                "start": 1629,
+                "end": 1634
               }
             }
           ],
@@ -7598,8 +7598,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 68,
-            "column": 22
+            "start": 1596,
+            "end": 1614
           }
         },
         "nestedClass": {
@@ -7618,8 +7618,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 80,
-                "column": 36
+                "start": 1830,
+                "end": 1835
               }
             }
           ],
@@ -7639,8 +7639,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 80,
-            "column": 12
+            "start": 1806,
+            "end": 1817
           }
         },
         "asyncNestedClass": {
@@ -7659,8 +7659,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 81,
-                "column": 49
+                "start": 1896,
+                "end": 1901
               }
             }
           ],
@@ -7688,8 +7688,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 81,
-            "column": 20
+            "start": 1867,
+            "end": 1883
           }
         },
         "onlyFromJson": {
@@ -7708,8 +7708,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 147,
-                "column": 39
+                "start": 3095,
+                "end": 3100
               }
             }
           ],
@@ -7729,8 +7729,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 147,
-            "column": 13
+            "start": 3069,
+            "end": 3081
           }
         },
         "asyncOnlyFromJson": {
@@ -7749,8 +7749,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 148,
-                "column": 52
+                "start": 3164,
+                "end": 3169
               }
             }
           ],
@@ -7778,8 +7778,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 148,
-            "column": 21
+            "start": 3133,
+            "end": 3150
           }
         },
         "onlyToJson": {
@@ -7798,8 +7798,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 150,
-                "column": 33
+                "start": 3221,
+                "end": 3226
               }
             }
           ],
@@ -7819,8 +7819,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 150,
-            "column": 11
+            "start": 3199,
+            "end": 3209
           }
         },
         "asyncOnlyToJson": {
@@ -7839,8 +7839,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 151,
-                "column": 46
+                "start": 3284,
+                "end": 3289
               }
             }
           ],
@@ -7868,8 +7868,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 151,
-            "column": 19
+            "start": 3257,
+            "end": 3272
           }
         },
         "onlyToJsonWithDefaults": {
@@ -7888,8 +7888,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 154,
-                "column": 25
+                "start": 3380,
+                "end": 3385
               }
             }
           ],
@@ -7909,8 +7909,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 153,
-            "column": 23
+            "start": 3331,
+            "end": 3353
           }
         },
         "asyncOnlyToJsonWithDefaults": {
@@ -7929,8 +7929,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 158,
-                "column": 25
+                "start": 3488,
+                "end": 3493
               }
             }
           ],
@@ -7958,8 +7958,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 157,
-            "column": 31
+            "start": 3434,
+            "end": 3461
           }
         },
         "fromAndToJson": {
@@ -7978,8 +7978,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 162,
-                "column": 50
+                "start": 3568,
+                "end": 3573
               }
             }
           ],
@@ -7999,8 +7999,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 162,
-            "column": 18
+            "start": 3536,
+            "end": 3549
           }
         },
         "asyncFromAndToJson": {
@@ -8019,8 +8019,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 164,
-                "column": 20
+                "start": 3651,
+                "end": 3656
               }
             }
           ],
@@ -8048,8 +8048,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 163,
-            "column": 26
+            "start": 3611,
+            "end": 3629
           }
         },
         "nonMapToJson": {
@@ -8068,8 +8068,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 168,
-                "column": 39
+                "start": 3720,
+                "end": 3725
               }
             }
           ],
@@ -8089,8 +8089,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 168,
-            "column": 13
+            "start": 3694,
+            "end": 3706
           }
         },
         "asyncNonMapToJson": {
@@ -8109,8 +8109,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 169,
-                "column": 52
+                "start": 3789,
+                "end": 3794
               }
             }
           ],
@@ -8138,8 +8138,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 169,
-            "column": 21
+            "start": 3758,
+            "end": 3775
           }
         },
         "nonMapToJsonWithDefaults": {
@@ -8158,8 +8158,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 172,
-                "column": 27
+                "start": 3891,
+                "end": 3896
               }
             }
           ],
@@ -8179,8 +8179,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 171,
-            "column": 25
+            "start": 3838,
+            "end": 3862
           }
         },
         "asyncNonMapToJsonWithDefaults": {
@@ -8199,8 +8199,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 176,
-                "column": 27
+                "start": 4005,
+                "end": 4010
               }
             }
           ],
@@ -8228,8 +8228,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 175,
-            "column": 33
+            "start": 3947,
+            "end": 3976
           }
         },
         "nonMapFromAndToJson": {
@@ -8248,8 +8248,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 181,
-                "column": 22
+                "start": 4098,
+                "end": 4103
               }
             }
           ],
@@ -8269,8 +8269,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 180,
-            "column": 20
+            "start": 4055,
+            "end": 4074
           }
         },
         "asyncNonMapFromAndToJson": {
@@ -8289,8 +8289,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/classes.dart",
-                "line": 185,
-                "column": 22
+                "start": 4197,
+                "end": 4202
               }
             }
           ],
@@ -8318,8 +8318,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/classes.dart",
-            "line": 184,
-            "column": 28
+            "start": 4149,
+            "end": 4173
           }
         }
       }
@@ -8344,8 +8344,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/exceptions.dart",
-                "line": 7,
-                "column": 34
+                "start": 122,
+                "end": 126
               }
             }
           ],
@@ -8361,8 +8361,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 6,
-            "column": 5
+            "start": 70,
+            "end": 85
           }
         },
         "throwsError": {
@@ -8381,8 +8381,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/exceptions.dart",
-                "line": 23,
-                "column": 30
+                "start": 446,
+                "end": 450
               }
             }
           ],
@@ -8398,8 +8398,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 22,
-            "column": 5
+            "start": 402,
+            "end": 413
           }
         },
         "throwsCustomException": {
@@ -8425,8 +8425,8 @@
           ],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 33,
-            "column": 5
+            "start": 640,
+            "end": 661
           }
         },
         "throwsCustomExceptionToFromJson": {
@@ -8452,8 +8452,8 @@
           ],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 37,
-            "column": 5
+            "start": 701,
+            "end": 732
           }
         },
         "throwsCustomError": {
@@ -8479,8 +8479,8 @@
           ],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 41,
-            "column": 5
+            "start": 782,
+            "end": 799
           }
         },
         "throwsCustomErrorToFromJson": {
@@ -8506,8 +8506,8 @@
           ],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 45,
-            "column": 5
+            "start": 835,
+            "end": 862
           }
         },
         "throwsCustomErrorWithStackTrace": {
@@ -8533,8 +8533,8 @@
           ],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "line": 49,
-            "column": 5
+            "start": 908,
+            "end": 939
           }
         }
       }
@@ -8546,8 +8546,8 @@
           "$": "ApiAuthenticated",
           "location": {
             "uri": "project:functions/authenticated_api.dart",
-            "line": 1,
-            "column": 0
+            "start": 0,
+            "end": 26
           }
         }
       ],
@@ -8572,8 +8572,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_api.dart",
-            "line": 6,
-            "column": 7
+            "start": 98,
+            "end": 119
           }
         },
         "sayGoodbyeAuthenticated": {
@@ -8596,8 +8596,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/authenticated_api.dart",
-            "line": 7,
-            "column": 7
+            "start": 149,
+            "end": 172
           }
         }
       }
@@ -8609,8 +8609,8 @@
           "$": "ApiPublic",
           "location": {
             "uri": "project:functions/anonymous_api.dart",
-            "line": 1,
-            "column": 0
+            "start": 0,
+            "end": 19
           }
         }
       ],
@@ -8636,16 +8636,16 @@
               "$": "ApiAuthenticated",
               "location": {
                 "uri": "project:functions/anonymous_api.dart",
-                "line": 6,
-                "column": 0
+                "start": 84,
+                "end": 110
               }
             }
           ],
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_api.dart",
-            "line": 7,
-            "column": 7
+            "start": 118,
+            "end": 139
           }
         },
         "sayHello": {
@@ -8668,8 +8668,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/anonymous_api.dart",
-            "line": 8,
-            "column": 7
+            "start": 169,
+            "end": 177
           }
         }
       }
@@ -8694,8 +8694,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 2,
-                "column": 10
+                "start": 44,
+                "end": 58
               }
             },
             {
@@ -8710,8 +8710,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 3,
-                "column": 7
+                "start": 67,
+                "end": 78
               }
             }
           ],
@@ -8735,8 +8735,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 1,
-            "column": 13
+            "start": 13,
+            "end": 31
           }
         },
         "optionalNamed": {
@@ -8755,8 +8755,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 7,
-                "column": 10
+                "start": 132,
+                "end": 143
               }
             },
             {
@@ -8771,8 +8771,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 8,
-                "column": 7
+                "start": 152,
+                "end": 160
               }
             }
           ],
@@ -8796,8 +8796,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 6,
-            "column": 13
+            "start": 106,
+            "end": 119
           }
         },
         "requiredPositional": {
@@ -8816,8 +8816,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 12,
-                "column": 9
+                "start": 217,
+                "end": 231
               }
             },
             {
@@ -8832,8 +8832,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 13,
-                "column": 6
+                "start": 239,
+                "end": 250
               }
             }
           ],
@@ -8857,8 +8857,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 11,
-            "column": 13
+            "start": 188,
+            "end": 206
           }
         },
         "requiredNamed": {
@@ -8877,8 +8877,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 17,
-                "column": 18
+                "start": 311,
+                "end": 325
               }
             },
             {
@@ -8893,8 +8893,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/parameters.dart",
-                "line": 18,
-                "column": 15
+                "start": 342,
+                "end": 353
               }
             }
           ],
@@ -8918,8 +8918,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/parameters.dart",
-            "line": 16,
-            "column": 13
+            "start": 277,
+            "end": 290
           }
         }
       }
@@ -8944,8 +8944,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 47,
-                "column": 48
+                "start": 1778,
+                "end": 1783
               }
             }
           ],
@@ -8965,8 +8965,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "line": 47,
-            "column": 16
+            "start": 1746,
+            "end": 1761
           }
         },
         "genericWrappersAsync": {
@@ -8985,8 +8985,8 @@
               "named": false,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 48,
-                "column": 61
+                "start": 1856,
+                "end": 1861
               }
             }
           ],
@@ -9014,8 +9014,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "line": 48,
-            "column": 24
+            "start": 1819,
+            "end": 1839
           }
         },
         "genericWrapperParameters": {
@@ -9042,8 +9042,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 51,
-                "column": 25
+                "start": 1951,
+                "end": 1963
               }
             },
             {
@@ -9066,8 +9066,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 52,
-                "column": 22
+                "start": 1987,
+                "end": 1996
               }
             },
             {
@@ -9090,8 +9090,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 53,
-                "column": 30
+                "start": 2028,
+                "end": 2045
               }
             },
             {
@@ -9122,8 +9122,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 54,
-                "column": 32
+                "start": 2079,
+                "end": 2097
               }
             },
             {
@@ -9154,8 +9154,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 55,
-                "column": 29
+                "start": 2128,
+                "end": 2143
               }
             },
             {
@@ -9186,8 +9186,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 56,
-                "column": 37
+                "start": 2182,
+                "end": 2205
               }
             },
             {
@@ -9216,8 +9216,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 57,
-                "column": 32
+                "start": 2239,
+                "end": 2250
               }
             },
             {
@@ -9246,8 +9246,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 58,
-                "column": 29
+                "start": 2281,
+                "end": 2289
               }
             },
             {
@@ -9276,8 +9276,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 59,
-                "column": 37
+                "start": 2328,
+                "end": 2344
               }
             },
             {
@@ -9314,8 +9314,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 60,
-                "column": 39
+                "start": 2385,
+                "end": 2402
               }
             },
             {
@@ -9352,8 +9352,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 61,
-                "column": 36
+                "start": 2440,
+                "end": 2454
               }
             },
             {
@@ -9390,8 +9390,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 62,
-                "column": 44
+                "start": 2500,
+                "end": 2522
               }
             },
             {
@@ -9434,8 +9434,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 63,
-                "column": 46
+                "start": 2570,
+                "end": 2586
               }
             },
             {
@@ -9478,8 +9478,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 64,
-                "column": 43
+                "start": 2631,
+                "end": 2644
               }
             },
             {
@@ -9522,8 +9522,8 @@
               "named": true,
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "line": 65,
-                "column": 51
+                "start": 2697,
+                "end": 2718
               }
             }
           ],
@@ -9543,8 +9543,8 @@
           "exceptionTypes": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "line": 50,
-            "column": 16
+            "start": 1899,
+            "end": 1923
           }
         }
       }

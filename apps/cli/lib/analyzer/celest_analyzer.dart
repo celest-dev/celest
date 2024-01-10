@@ -19,6 +19,7 @@ import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/compiler/dart_sdk.dart';
@@ -34,8 +35,6 @@ import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:yaml/yaml.dart';
 
-typedef ErrorReporter = void Function(String message, SourceLocation location);
-
 final class CelestAnalyzer {
   CelestAnalyzer._(
     this._context,
@@ -50,14 +49,14 @@ final class CelestAnalyzer {
       // Needed for [_collectSubtypes].
       enableIndex: true,
     );
-    final context = contextCollection.contexts.single;
+    final context = contextCollection.contexts.first;
     return CelestAnalyzer._(context);
   }
 
   static final Logger _logger = Logger('CelestAnalyzer');
   final AnalysisContext _context;
   AnalysisDriver get _driver => (_context as DriverBasedAnalysisContext).driver;
-  final List<AnalysisException> _errors = [];
+  final List<AnalysisError> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
   late final enabledExperiments = _loadEnabledExperiments(
@@ -90,11 +89,16 @@ final class CelestAnalyzer {
     return enabledExperiments.value.cast<String>();
   }
 
-  void _reportError(String error, SourceLocation location) {
+  void _reportError(
+    String error, {
+    AnalysisErrorSeverity? severity,
+    FileSpan? location,
+  }) {
     _errors.add(
-      AnalysisException(
+      AnalysisError(
         message: error,
         location: location,
+        severity: severity,
       ),
     );
   }
@@ -114,8 +118,9 @@ final class CelestAnalyzer {
             .thisType;
   }
 
-  Future<({ast.Project? project, List<AnalysisException> errors})>
-      analyzeProject([List<String>? invalidatedFiles]) async {
+  Future<({ast.Project? project, List<AnalysisError> errors})> analyzeProject([
+    List<String>? invalidatedFiles,
+  ]) async {
     _errors.clear();
     if (invalidatedFiles != null) {
       for (final file in invalidatedFiles) {
@@ -139,37 +144,39 @@ final class CelestAnalyzer {
     return (project: _project.build(), errors: _errors);
   }
 
+  Future<ResolvedLibraryResult> _resolveLibrary(String path) async {
+    final library = await _context.currentSession.getResolvedLibrary(path);
+    switch (library) {
+      case ResolvedLibraryResult():
+        return library;
+      case UriOfExternalLibraryResult():
+      case CannotResolveUriResult():
+      case DisposedAnalysisContextResult():
+      case InvalidPathResult():
+      case NotElementOfThisSessionResult():
+      case NotLibraryButAugmentationResult():
+      case NotLibraryButPartResult():
+      case NotPathOfUriResult():
+      case InvalidResult():
+      case _:
+        throw StateError(
+          'Could not resolve library at "$path": ${library.runtimeType}',
+        );
+    }
+  }
+
   Future<ast.ProjectBuilder?> _findProject() async {
     _logger.fine('Analyzing project...');
     final projectFilePath = projectPaths.projectDart;
     if (!fileSystem.file(projectFilePath).existsSync()) {
-      _reportError(
-        'No project file found at $projectFilePath',
-        SourceLocation(
-          uri: projectFilePath,
-          line: 0,
-          column: 0,
-        ),
-      );
+      _reportError('No project file found at $projectFilePath');
       return null;
     }
     _logger.finer('Found project file at $projectFilePath');
-    final projectFile =
-        await _context.currentSession.getResolvedUnit(projectFilePath);
-    if (projectFile is! ResolvedUnitResult || !projectFile.exists) {
-      _reportError(
-        'Could not resolve project file',
-        SourceLocation(
-          uri: projectFilePath,
-          line: 0,
-          column: 0,
-        ),
-      );
-      return null;
-    }
+    final projectFile = await _resolveLibrary(projectFilePath);
     _logger.finer('Resolved project file');
     typeHelper
-      ..typeSystem = projectFile.typeSystem
+      ..typeSystem = projectFile.element.typeSystem
       ..typeProvider = projectFile.typeProvider
       ..coreErrorType = _coreErrorType
       ..coreExceptionType = _coreExceptionType;
@@ -185,8 +192,8 @@ final class CelestAnalyzer {
     //     ),
     //   );
     // }
-    final topLevelVariables = projectFile
-        .unit.declaredElement!.topLevelVariables
+    final topLevelVariables = projectFile.element.topLevelElements
+        .whereType<TopLevelVariableElement>()
         .where((variable) => !variable.isPrivate);
     var hasConstantEvalErrors = false;
     final topLevelConstants =
@@ -195,7 +202,7 @@ final class CelestAnalyzer {
       if (!topLevelVariable.isConst) {
         _reportError(
           'All top-level variables must be `const`',
-          topLevelVariable.sourceLocation,
+          location: topLevelVariable.sourceLocation,
         );
         hasConstantEvalErrors = true;
         continue;
@@ -208,7 +215,7 @@ final class CelestAnalyzer {
         default:
           _reportError(
             'Top-level constant could not be evaluated',
-            topLevelVariable.sourceLocation,
+            location: topLevelVariable.sourceLocation,
           );
           hasConstantEvalErrors = true;
       }
@@ -231,14 +238,7 @@ final class CelestAnalyzer {
     final projectDefinition =
         topLevelConstants.firstWhereOrNull((el) => el.element.type.isProject);
     if (projectDefinition == null) {
-      _reportError(
-        'No `Project` type found',
-        SourceLocation(
-          uri: projectFilePath,
-          line: 0,
-          column: 0,
-        ),
-      );
+      _reportError('$projectFilePath: No `Project` type found');
       return null;
     }
     final (
@@ -259,7 +259,7 @@ final class CelestAnalyzer {
     if (projectName!.isEmpty) {
       _reportError(
         'The project name cannot be empty.',
-        projectDefineLocation,
+        location: projectDefineLocation,
       );
     }
     _logger.finer('Resolved project name: $projectName');
@@ -270,7 +270,7 @@ final class CelestAnalyzer {
         projectDefinitionElement.name,
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       )
-      ..location.replace(projectDefineLocation);
+      ..location = projectDefineLocation;
   }
 
   List<ast.ApiMetadata> _collectApiMetadata(Element element) {
@@ -280,7 +280,7 @@ final class CelestAnalyzer {
           final location = annotation.sourceLocation(element.source!);
           final type = annotation.computeConstantValue()?.type;
           if (type == null) {
-            _reportError('Could not resolve annotation', location);
+            _reportError('Could not resolve annotation', location: location);
             return null;
           }
 
@@ -289,7 +289,7 @@ final class CelestAnalyzer {
               _reportError(
                 'Only one `api.authenticated` or `api.public` annotation '
                 'may be specified on the same function or API library.',
-                location,
+                location: location,
               );
             }
             hasAuth = true;
@@ -308,7 +308,7 @@ final class CelestAnalyzer {
                 location: location,
               );
             default:
-              _reportError('Invalid API annotation', location);
+              _reportError('Invalid API annotation', location: location);
               return null;
           }
         })
@@ -324,7 +324,7 @@ final class CelestAnalyzer {
     if (annotations.length > 1) {
       _reportError(
         'Only one annotation may be specified on a parameter',
-        annotations[1].sourceLocation(parameter.source!),
+        location: annotations[1].sourceLocation(parameter.source!),
       );
       return null;
     }
@@ -333,7 +333,7 @@ final class CelestAnalyzer {
     final value = annotation.computeConstantValue();
     final annotationType = value?.type;
     if (annotationType == null) {
-      _reportError('Could not resolve annotation', location);
+      _reportError('Could not resolve annotation', location: location);
       return null;
     }
     if (annotationType.isEnvironmentVariable) {
@@ -349,7 +349,7 @@ final class CelestAnalyzer {
         _reportError(
           'The type of an environment variable parameter must be one of: '
           '`String`, `int`, `double`, `num`, or `bool`',
-          location,
+          location: location,
         );
         return null;
       }
@@ -357,7 +357,7 @@ final class CelestAnalyzer {
       if (name == null) {
         _reportError(
           'The `name` field is required on `EnvironmentVariable` annotations',
-          location,
+          location: location,
         );
         return null;
       }
@@ -365,14 +365,14 @@ final class CelestAnalyzer {
       if (reservedEnvVars.contains(name)) {
         _reportError(
           'The environment variable name `$name` is reserved by Celest',
-          location,
+          location: location,
         );
         return null;
       }
       if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
         _reportError(
           'The environment variable `$name` does not exist',
-          location,
+          location: location,
         );
         return null;
       }
@@ -381,7 +381,7 @@ final class CelestAnalyzer {
         name: name,
       );
     }
-    _reportError('Invalid parameter annotation', location);
+    _reportError('Invalid parameter annotation', location: location);
     return null;
   }
 
@@ -476,15 +476,7 @@ final class CelestAnalyzer {
     required String apiName,
     required String apiFile,
   }) async {
-    final apiLibraryResult =
-        await _context.currentSession.getResolvedLibrary(apiFile);
-    if (apiLibraryResult is! ResolvedLibraryResult) {
-      _reportError(
-        'Could not resolve API file',
-        SourceLocation(uri: apiFile, line: 0, column: 0),
-      );
-      return null;
-    }
+    final apiLibraryResult = await _resolveLibrary(apiFile);
     final library = apiLibraryResult.element;
     final libraryMetdata = _collectApiMetadata(library);
     final functions = Map.fromEntries(
@@ -515,7 +507,8 @@ final class CelestAnalyzer {
               _reportError(
                 'The type of a thrown exception must be serializable as JSON. '
                 '$exceptionType is not serializable: $reason',
-                exceptionCollector.exceptionTypeLocations[exceptionType]!,
+                location:
+                    exceptionCollector.exceptionTypeLocations[exceptionType],
               );
             }
           }
@@ -541,7 +534,7 @@ final class CelestAnalyzer {
               _reportError(
                 'Classes with subtypes (which are not sealed classes) are not '
                 'currently supported as parameters',
-                parameter.location,
+                location: parameter.location,
               );
             }
             final parameterTypeVerdict = typeHelper.isSerializable(param.type);
@@ -549,7 +542,7 @@ final class CelestAnalyzer {
               for (final reason in parameterTypeVerdict.reasons) {
                 _reportError(
                   'The type of a parameter must be serializable as JSON. $reason',
-                  parameter.location,
+                  location: parameter.location,
                 );
               }
             }
@@ -569,7 +562,7 @@ final class CelestAnalyzer {
             if (hasContext) {
               _reportError(
                 'A FunctionContext parameter may only be specified once',
-                param.location,
+                location: param.location,
               );
             }
             hasContext = true;
@@ -581,7 +574,7 @@ final class CelestAnalyzer {
           _reportError(
             'Classes with subtypes (which are not sealed classes) are not '
             'currently supported as return types',
-            function.location,
+            location: function.location,
           );
         }
         final returnTypeVerdict = switch (returnType.flattened) {
@@ -592,7 +585,7 @@ final class CelestAnalyzer {
           for (final reason in returnTypeVerdict.reasons) {
             _reportError(
               'The return type of a function must be serializable as JSON. $reason',
-              function.location,
+              location: function.location,
             );
           }
         }
@@ -608,27 +601,12 @@ final class CelestAnalyzer {
   }
 }
 
-final class AnalysisException implements Exception {
-  const AnalysisException({
-    required this.message,
-    required this.location,
-  });
-
-  final String message;
-  final SourceLocation location;
-
-  @override
-  String toString() {
-    return '${location.uri}:${location.line}:${location.column}: $message';
-  }
-}
-
 final class _ScopedWidgetCollector {
   _ScopedWidgetCollector({
     required this.errorReporter,
   });
 
-  final ErrorReporter errorReporter;
+  final AnalysisErrorReporter errorReporter;
 
   Map<String, String> collect(
     List<String> files, {
@@ -643,7 +621,6 @@ final class _ScopedWidgetCollector {
         default:
           errorReporter(
             '$scope files must be named as follows: $placeholder.dart',
-            SourceLocation(uri: file, line: 0, column: 0),
           );
           continue;
       }
@@ -662,8 +639,8 @@ final class ExceptionTypeCollector extends RecursiveAstVisitor<void> {
   final Source source;
   final UriConverter uriConverter;
   final Set<DartType> exceptionTypes = {};
-  final Map<DartType, SourceLocation> exceptionTypeLocations = {};
-  final ErrorReporter errorReporter;
+  final Map<DartType, FileSpan> exceptionTypeLocations = {};
+  final AnalysisErrorReporter errorReporter;
 
   static final _logger = Logger('ExceptionTypeCollector');
 
@@ -698,14 +675,14 @@ final class ExceptionTypeCollector extends RecursiveAstVisitor<void> {
     if (staticType == null) {
       errorReporter(
         'Could not resolve thrown type',
-        node.sourceLocation(source),
+        location: node.sourceLocation(source),
       );
       return;
     }
     if (!staticType.isThrowable) {
       errorReporter(
         'The type of a thrown expression must be a subtype of `Error` or `Exception`',
-        node.sourceLocation(source),
+        location: node.sourceLocation(source),
       );
       return;
     }

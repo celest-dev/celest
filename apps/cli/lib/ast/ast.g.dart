@@ -66,8 +66,6 @@ Serializer<EnvironmentVariable> _$environmentVariableSerializer =
 Serializer<NodeType> _$nodeTypeSerializer = new _$NodeTypeSerializer();
 Serializer<NodeReference> _$nodeReferenceSerializer =
     new _$NodeReferenceSerializer();
-Serializer<SourceLocation> _$sourceLocationSerializer =
-    new _$SourceLocationSerializer();
 
 class _$ProjectSerializer implements StructuredSerializer<Project> {
   @override
@@ -86,7 +84,7 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
           specifiedType: const FullType(Reference)),
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
       'apis',
       serializers.serialize(object.apis,
           specifiedType: const FullType(
@@ -120,9 +118,8 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
               specifiedType: const FullType(Reference))! as Reference;
           break;
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
         case 'apis':
           result.apis.replace(serializers.deserialize(value,
@@ -214,7 +211,7 @@ class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
     final result = <Object?>[
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -232,9 +229,8 @@ class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
       final Object? value = iterator.current;
       switch (key) {
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -256,7 +252,7 @@ class _$ApiAuthenticatedSerializer
     final result = <Object?>[
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -275,9 +271,8 @@ class _$ApiAuthenticatedSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -301,7 +296,7 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
           specifiedType: const FullType(Reference)),
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -324,9 +319,8 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
               specifiedType: const FullType(Reference))! as Reference;
           break;
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -362,7 +356,7 @@ class _$CloudFunctionParameterSerializer
       serializers.serialize(object.named, specifiedType: const FullType(bool)),
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
     ];
     Object? value;
     value = object.references;
@@ -404,9 +398,8 @@ class _$CloudFunctionParameterSerializer
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
         case 'references':
           result.references.replace(serializers.deserialize(value,
@@ -454,7 +447,7 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
               const FullType(BuiltList, const [const FullType(Reference)])),
       'location',
       serializers.serialize(object.location,
-          specifiedType: const FullType(SourceLocation)),
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -507,9 +500,8 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
               as BuiltList<Object?>);
           break;
         case 'location':
-          result.location.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SourceLocation))!
-              as SourceLocation);
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -628,66 +620,13 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
   }
 }
 
-class _$SourceLocationSerializer
-    implements StructuredSerializer<SourceLocation> {
-  @override
-  final Iterable<Type> types = const [SourceLocation, _$SourceLocation];
-  @override
-  final String wireName = 'SourceLocation';
-
-  @override
-  Iterable<Object?> serialize(Serializers serializers, SourceLocation object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'uri',
-      serializers.serialize(object.uri, specifiedType: const FullType(Uri)),
-      'line',
-      serializers.serialize(object.line, specifiedType: const FullType(int)),
-      'column',
-      serializers.serialize(object.column, specifiedType: const FullType(int)),
-    ];
-
-    return result;
-  }
-
-  @override
-  SourceLocation deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new SourceLocationBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current! as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case 'uri':
-          result.uri = serializers.deserialize(value,
-              specifiedType: const FullType(Uri))! as Uri;
-          break;
-        case 'line':
-          result.line = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
-          break;
-        case 'column':
-          result.column = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
 class _$Project extends Project {
   @override
   final String name;
   @override
   final Reference reference;
   @override
-  final SourceLocation location;
+  final FileSpan location;
   @override
   final BuiltMap<String, Api> apis;
   @override
@@ -763,10 +702,9 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   Reference? get reference => _$this._reference;
   set reference(Reference? reference) => _$this._reference = reference;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   MapBuilder<String, Api>? _apis;
   MapBuilder<String, Api> get apis =>
@@ -786,7 +724,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
     if ($v != null) {
       _name = $v.name;
       _reference = $v.reference;
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _apis = $v.apis.toBuilder();
       _envVars = $v.envVars.toBuilder();
       _$v = null;
@@ -817,14 +755,13 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
                   name, r'Project', 'name'),
               reference: BuiltValueNullFieldError.checkNotNull(
                   reference, r'Project', 'reference'),
-              location: location.build(),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'Project', 'location'),
               apis: apis.build(),
               envVars: envVars.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'location';
-        location.build();
         _$failedField = 'apis';
         apis.build();
         _$failedField = 'envVars';
@@ -968,7 +905,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
 
 class _$ApiPublic extends ApiPublic {
   @override
-  final SourceLocation location;
+  final FileSpan location;
 
   factory _$ApiPublic([void Function(ApiPublicBuilder)? updates]) =>
       (new ApiPublicBuilder()..update(updates))._build();
@@ -1009,17 +946,16 @@ class _$ApiPublic extends ApiPublic {
 class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
   _$ApiPublic? _$v;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   ApiPublicBuilder();
 
   ApiPublicBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -1040,20 +976,10 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
   ApiPublic build() => _build();
 
   _$ApiPublic _build() {
-    _$ApiPublic _$result;
-    try {
-      _$result = _$v ?? new _$ApiPublic._(location: location.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'location';
-        location.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'ApiPublic', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$ApiPublic._(
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'ApiPublic', 'location'));
     replace(_$result);
     return _$result;
   }
@@ -1061,7 +987,7 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
 
 class _$ApiAuthenticated extends ApiAuthenticated {
   @override
-  final SourceLocation location;
+  final FileSpan location;
 
   factory _$ApiAuthenticated(
           [void Function(ApiAuthenticatedBuilder)? updates]) =>
@@ -1106,17 +1032,16 @@ class ApiAuthenticatedBuilder
     implements Builder<ApiAuthenticated, ApiAuthenticatedBuilder> {
   _$ApiAuthenticated? _$v;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   ApiAuthenticatedBuilder();
 
   ApiAuthenticatedBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -1137,20 +1062,10 @@ class ApiAuthenticatedBuilder
   ApiAuthenticated build() => _build();
 
   _$ApiAuthenticated _build() {
-    _$ApiAuthenticated _$result;
-    try {
-      _$result = _$v ?? new _$ApiAuthenticated._(location: location.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'location';
-        location.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'ApiAuthenticated', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$ApiAuthenticated._(
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'ApiAuthenticated', 'location'));
     replace(_$result);
     return _$result;
   }
@@ -1160,7 +1075,7 @@ class _$ApiMiddleware extends ApiMiddleware {
   @override
   final Reference type;
   @override
-  final SourceLocation location;
+  final FileSpan location;
 
   factory _$ApiMiddleware([void Function(ApiMiddlewareBuilder)? updates]) =>
       (new ApiMiddlewareBuilder()..update(updates))._build();
@@ -1212,10 +1127,9 @@ class ApiMiddlewareBuilder
   Reference? get type => _$this._type;
   set type(Reference? type) => _$this._type = type;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   ApiMiddlewareBuilder();
 
@@ -1223,7 +1137,7 @@ class ApiMiddlewareBuilder
     final $v = _$v;
     if ($v != null) {
       _type = $v.type;
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -1244,24 +1158,12 @@ class ApiMiddlewareBuilder
   ApiMiddleware build() => _build();
 
   _$ApiMiddleware _build() {
-    _$ApiMiddleware _$result;
-    try {
-      _$result = _$v ??
-          new _$ApiMiddleware._(
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ApiMiddleware', 'type'),
-              location: location.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'location';
-        location.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'ApiMiddleware', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$ApiMiddleware._(
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ApiMiddleware', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'ApiMiddleware', 'location'));
     replace(_$result);
     return _$result;
   }
@@ -1277,7 +1179,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
   @override
   final bool named;
   @override
-  final SourceLocation location;
+  final FileSpan location;
   @override
   final NodeReference? references;
 
@@ -1372,10 +1274,9 @@ class CloudFunctionParameterBuilder
   bool? get named => _$this._named;
   set named(bool? named) => _$this._named = named;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   NodeReferenceBuilder? _references;
   NodeReferenceBuilder get references =>
@@ -1392,7 +1293,7 @@ class CloudFunctionParameterBuilder
       _type = $v.type;
       _required = $v.required;
       _named = $v.named;
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _references = $v.references?.toBuilder();
       _$v = null;
     }
@@ -1426,13 +1327,12 @@ class CloudFunctionParameterBuilder
                   required, r'CloudFunctionParameter', 'required'),
               named: BuiltValueNullFieldError.checkNotNull(
                   named, r'CloudFunctionParameter', 'named'),
-              location: location.build(),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'CloudFunctionParameter', 'location'),
               references: _references?.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'location';
-        location.build();
         _$failedField = 'references';
         _references?.build();
       } catch (e) {
@@ -1462,7 +1362,7 @@ class _$CloudFunction extends CloudFunction {
   @override
   final BuiltList<Reference> exceptionTypes;
   @override
-  final SourceLocation location;
+  final FileSpan location;
 
   factory _$CloudFunction([void Function(CloudFunctionBuilder)? updates]) =>
       (new CloudFunctionBuilder()..update(updates))._build();
@@ -1583,10 +1483,9 @@ class CloudFunctionBuilder
   set exceptionTypes(ListBuilder<Reference>? exceptionTypes) =>
       _$this._exceptionTypes = exceptionTypes;
 
-  SourceLocationBuilder? _location;
-  SourceLocationBuilder get location =>
-      _$this._location ??= new SourceLocationBuilder();
-  set location(SourceLocationBuilder? location) => _$this._location = location;
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
 
   CloudFunctionBuilder();
 
@@ -1600,7 +1499,7 @@ class CloudFunctionBuilder
       _flattenedReturnType = $v.flattenedReturnType;
       _metadata = $v.metadata.toBuilder();
       _exceptionTypes = $v.exceptionTypes.toBuilder();
-      _location = $v.location.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -1636,7 +1535,8 @@ class CloudFunctionBuilder
                   flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
               metadata: metadata.build(),
               exceptionTypes: exceptionTypes.build(),
-              location: location.build());
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'CloudFunction', 'location'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -1647,8 +1547,6 @@ class CloudFunctionBuilder
         metadata.build();
         _$failedField = 'exceptionTypes';
         exceptionTypes.build();
-        _$failedField = 'location';
-        location.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CloudFunction', _$failedField, e.toString());
@@ -1837,119 +1735,6 @@ class NodeReferenceBuilder
                 name, r'NodeReference', 'name'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'NodeReference', 'type'));
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$SourceLocation extends SourceLocation {
-  @override
-  final Uri uri;
-  @override
-  final int line;
-  @override
-  final int column;
-
-  factory _$SourceLocation([void Function(SourceLocationBuilder)? updates]) =>
-      (new SourceLocationBuilder()..update(updates))._build();
-
-  _$SourceLocation._(
-      {required this.uri, required this.line, required this.column})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(uri, r'SourceLocation', 'uri');
-    BuiltValueNullFieldError.checkNotNull(line, r'SourceLocation', 'line');
-    BuiltValueNullFieldError.checkNotNull(column, r'SourceLocation', 'column');
-  }
-
-  @override
-  SourceLocation rebuild(void Function(SourceLocationBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  SourceLocationBuilder toBuilder() =>
-      new SourceLocationBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is SourceLocation &&
-        uri == other.uri &&
-        line == other.line &&
-        column == other.column;
-  }
-
-  @override
-  int get hashCode {
-    var _$hash = 0;
-    _$hash = $jc(_$hash, uri.hashCode);
-    _$hash = $jc(_$hash, line.hashCode);
-    _$hash = $jc(_$hash, column.hashCode);
-    _$hash = $jf(_$hash);
-    return _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'SourceLocation')
-          ..add('uri', uri)
-          ..add('line', line)
-          ..add('column', column))
-        .toString();
-  }
-}
-
-class SourceLocationBuilder
-    implements Builder<SourceLocation, SourceLocationBuilder> {
-  _$SourceLocation? _$v;
-
-  Uri? _uri;
-  Uri? get uri => _$this._uri;
-  set uri(Uri? uri) => _$this._uri = uri;
-
-  int? _line;
-  int? get line => _$this._line;
-  set line(int? line) => _$this._line = line;
-
-  int? _column;
-  int? get column => _$this._column;
-  set column(int? column) => _$this._column = column;
-
-  SourceLocationBuilder();
-
-  SourceLocationBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _uri = $v.uri;
-      _line = $v.line;
-      _column = $v.column;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(SourceLocation other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$SourceLocation;
-  }
-
-  @override
-  void update(void Function(SourceLocationBuilder)? updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  SourceLocation build() => _build();
-
-  _$SourceLocation _build() {
-    final _$result = _$v ??
-        new _$SourceLocation._(
-            uri: BuiltValueNullFieldError.checkNotNull(
-                uri, r'SourceLocation', 'uri'),
-            line: BuiltValueNullFieldError.checkNotNull(
-                line, r'SourceLocation', 'line'),
-            column: BuiltValueNullFieldError.checkNotNull(
-                column, r'SourceLocation', 'column'));
     replace(_$result);
     return _$result;
   }

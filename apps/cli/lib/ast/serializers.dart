@@ -2,7 +2,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:source_span/source_span.dart';
 
 part 'serializers.g.dart';
 
@@ -17,13 +20,15 @@ part 'serializers.g.dart';
   EnvironmentVariable,
   NodeReference,
   NodeType,
-  SourceLocation,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..addPlugin(_CustomJsonPlugin())
       ..add(const ReferenceSerializer())
       ..add(const TypeReferenceSerializer())
       ..add(const RecordTypeSerializer())
+      ..add(const SourceLocationSerializer())
+      ..add(const SourceSpanSerializer())
+      ..add(const FileSpanSerializer())
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Reference)]),
         BuiltList<Reference>.new,
@@ -351,5 +356,193 @@ final class _CustomJsonPlugin extends StandardJsonPlugin {
       specifiedType = FullType.unspecified;
     }
     return super.beforeDeserialize(object, specifiedType);
+  }
+}
+
+final class SourceLocationSerializer
+    implements StructuredSerializer<SourceLocation> {
+  const SourceLocationSerializer();
+
+  @override
+  Iterable<Type> get types => const [
+        SourceLocation,
+        SourceLocationBase,
+      ];
+
+  @override
+  String get wireName => 'SourceLocation';
+
+  @override
+  SourceLocation deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    late final int offset;
+    Uri? sourceUrl;
+    late final int line;
+    late final int column;
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final name = iterator.current as String;
+      final value = iterator.moveNext() ? iterator.current : null;
+      switch (name) {
+        case 'offset':
+          offset = value as int;
+        case 'uri':
+          sourceUrl = value == null ? null : Uri.parse(value as String);
+        case 'line':
+          line = value as int;
+        case 'column':
+          column = value as int;
+      }
+    }
+    return SourceLocation(
+      offset,
+      sourceUrl: sourceUrl,
+      line: line,
+      column: column,
+    );
+  }
+
+  @override
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    SourceLocation object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return <Object?>[
+      'offset',
+      object.offset,
+      if (object.sourceUrl case final sourceUrl?) ...[
+        'uri',
+        sourceUrl.toString(),
+      ],
+      'line',
+      object.line,
+      'column',
+      object.column,
+    ];
+  }
+}
+
+final class SourceSpanSerializer implements StructuredSerializer<SourceSpan> {
+  const SourceSpanSerializer();
+
+  @override
+  Iterable<Type> get types => const [
+        SourceSpan,
+        SourceSpanBase,
+      ];
+
+  @override
+  String get wireName => 'SourceSpan';
+
+  @override
+  SourceSpan deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    late final SourceLocation start;
+    late final SourceLocation end;
+    late final String text;
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final name = iterator.current as String;
+      final value = iterator.moveNext() ? iterator.current : null;
+      switch (name) {
+        case 'start':
+          start = serializers.deserialize(
+            value as Map<String, dynamic>,
+            specifiedType: const FullType(SourceLocation),
+          ) as SourceLocation;
+        case 'end':
+          end = serializers.deserialize(
+            value as Map<String, dynamic>,
+            specifiedType: const FullType(SourceLocation),
+          ) as SourceLocation;
+        case 'text':
+          text = value as String;
+      }
+    }
+    return SourceSpanBase(start, end, text);
+  }
+
+  @override
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    SourceSpan object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return <Object?>[
+      'start',
+      serializers.serialize(
+        object.start,
+        specifiedType: const FullType(SourceLocation),
+      ),
+      'end',
+      serializers.serialize(
+        object.end,
+        specifiedType: const FullType(SourceLocation),
+      ),
+      'text',
+      object.text,
+    ];
+  }
+}
+
+final class FileSpanSerializer implements StructuredSerializer<FileSpan> {
+  const FileSpanSerializer();
+
+  @override
+  Iterable<Type> get types => const [FileSpan];
+
+  @override
+  String get wireName => 'FileSpan';
+
+  @override
+  FileSpan deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    late final Uri uri;
+    late final int start;
+    late final int end;
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final name = iterator.current as String;
+      final value = iterator.moveNext() ? iterator.current : null;
+      switch (name) {
+        case 'uri':
+          uri = Uri.parse(value as String);
+        case 'start':
+          start = value as int;
+        case 'end':
+          end = value as int;
+      }
+    }
+    final sourceFile = SourceFile.fromString(
+      fileSystem.file(projectPaths.denormalizeUri(uri)).readAsStringSync(),
+      url: uri,
+    );
+    return sourceFile.span(start, end);
+  }
+
+  @override
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    FileSpan object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return <Object>[
+      'uri',
+      projectPaths.normalizeUri(object.file.url!).toString(),
+      'start',
+      object.start.offset,
+      'end',
+      object.end.offset,
+    ];
   }
 }

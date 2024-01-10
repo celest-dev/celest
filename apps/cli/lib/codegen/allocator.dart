@@ -18,10 +18,10 @@ final class CelestAllocator implements Allocator {
 
   @override
   String allocate(Reference reference) {
-    final symbol = reference.symbol;
+    final symbol = reference.symbol!;
     var url = reference.url;
     if (url == null || _doNotPrefix.contains(url)) {
-      return symbol!;
+      return symbol;
     }
     // Fix `file://` and root-relative paths to be relative to the current file.
     final uri = Uri.parse(url);

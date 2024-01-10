@@ -7,8 +7,8 @@
   },
   "location": {
     "uri": "project:project.dart",
-    "line": 3,
-    "column": 6
+    "start": 44,
+    "end": 51
   },
   "apis": {},
   "envVars": [

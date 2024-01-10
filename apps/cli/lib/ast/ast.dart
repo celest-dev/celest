@@ -3,8 +3,10 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:celest_cli/ast/serializers.dart';
 import 'package:celest_cli/ast/visitor.dart';
-import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:source_span/source_span.dart';
+
+export 'package:source_span/source_span.dart' show FileSpan;
 
 part 'ast.g.dart';
 
@@ -14,7 +16,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   factory Project({
     required String name,
     required Reference reference,
-    required SourceLocation location,
+    required FileSpan location,
     Map<String, Api> apis = const {},
     List<EnvironmentVariable> envVars = const [],
   }) {
@@ -36,7 +38,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
 
   String get name;
   Reference get reference;
-  SourceLocation get location;
+  FileSpan get location;
   BuiltMap<String, Api> get apis;
   BuiltList<EnvironmentVariable> get envVars;
 
@@ -86,7 +88,7 @@ sealed class ApiAuth implements ApiMetadata {}
 abstract class ApiPublic
     implements Built<ApiPublic, ApiPublicBuilder>, ApiAuth {
   factory ApiPublic({
-    required SourceLocation location,
+    required FileSpan location,
   }) = _$ApiPublic._;
 
   factory ApiPublic.build([void Function(ApiPublicBuilder) updates]) =
@@ -97,7 +99,7 @@ abstract class ApiPublic
 
   ApiPublic._();
 
-  SourceLocation get location;
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(ApiPublic.serializer, this)
@@ -109,7 +111,7 @@ abstract class ApiPublic
 abstract class ApiAuthenticated
     implements Built<ApiAuthenticated, ApiAuthenticatedBuilder>, ApiAuth {
   factory ApiAuthenticated({
-    required SourceLocation location,
+    required FileSpan location,
   }) = _$ApiAuthenticated._;
 
   factory ApiAuthenticated.build([
@@ -121,7 +123,7 @@ abstract class ApiAuthenticated
 
   ApiAuthenticated._();
 
-  SourceLocation get location;
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(ApiAuthenticated.serializer, this)
@@ -135,7 +137,7 @@ abstract class ApiMiddleware
     implements Built<ApiMiddleware, ApiMiddlewareBuilder>, ApiMetadata {
   factory ApiMiddleware({
     required Reference type,
-    required SourceLocation location,
+    required FileSpan location,
   }) = _$ApiMiddleware._;
 
   factory ApiMiddleware.build([
@@ -148,7 +150,7 @@ abstract class ApiMiddleware
   ApiMiddleware._();
 
   Reference get type;
-  SourceLocation get location;
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(ApiMiddleware.serializer, this)
@@ -166,7 +168,7 @@ abstract class CloudFunctionParameter
     required Reference type,
     required bool required,
     required bool named,
-    required SourceLocation location,
+    required FileSpan location,
     required NodeReference? references,
   }) = _$CloudFunctionParameter._;
 
@@ -183,7 +185,7 @@ abstract class CloudFunctionParameter
   Reference get type;
   bool get required;
   bool get named;
-  SourceLocation get location;
+  FileSpan get location;
   NodeReference? get references;
 
   Map<String, dynamic> toJson() =>
@@ -204,7 +206,7 @@ abstract class CloudFunction
     required Reference flattenedReturnType,
     required List<Reference> exceptionTypes,
     List<ApiMetadata> metadata = const [],
-    required SourceLocation location,
+    required FileSpan location,
   }) {
     return _$CloudFunction._(
       name: name,
@@ -233,7 +235,7 @@ abstract class CloudFunction
   Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;
   BuiltList<Reference> get exceptionTypes;
-  SourceLocation get location;
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(CloudFunction.serializer, this)
@@ -309,47 +311,4 @@ abstract class NodeReference
           as Map<String, dynamic>;
 
   static Serializer<NodeReference> get serializer => _$nodeReferenceSerializer;
-}
-
-abstract class SourceLocation
-    implements Built<SourceLocation, SourceLocationBuilder> {
-  factory SourceLocation({
-    required Object /* String | Uri */ uri,
-    required int line,
-    required int column,
-  }) {
-    return _$SourceLocation._(
-      uri: switch (uri) {
-        String() => projectPaths.normalizeUri(p.toUri(uri)),
-        Uri() => projectPaths.normalizeUri(uri),
-        _ => throw ArgumentError.value(
-            uri,
-            'uri',
-            'Must be a String or Uri.',
-          ),
-      },
-      line: line,
-      column: column,
-    );
-  }
-
-  factory SourceLocation.build([void Function(SourceLocationBuilder) updates]) =
-      _$SourceLocation;
-
-  factory SourceLocation.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(SourceLocation.serializer, json)!;
-
-  SourceLocation._();
-
-  /// The path to the source file, relative to the project root.
-  Uri get uri;
-  int get line;
-  int get column;
-
-  Map<String, dynamic> toJson() =>
-      serializers.serializeWith(SourceLocation.serializer, this)
-          as Map<String, dynamic>;
-
-  static Serializer<SourceLocation> get serializer =>
-      _$sourceLocationSerializer;
 }

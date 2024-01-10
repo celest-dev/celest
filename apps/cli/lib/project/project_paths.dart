@@ -42,14 +42,21 @@ final class ProjectPaths {
 
   Uri normalizeUri(Uri uri) {
     return switch (uri.scheme) {
-      'file' || '' => _fileToAssetUri(uri),
+      'file' || '' => _fileToProjectUri(uri),
       'dart' => normalizeDartUrl(uri),
       'package' => uri,
       _ => uri,
     };
   }
 
-  Uri _fileToAssetUri(Uri uri) {
+  Uri denormalizeUri(Uri uri) {
+    return switch (uri.scheme) {
+      'project' => _projectToFileUri(uri),
+      _ => uri,
+    };
+  }
+
+  Uri _fileToProjectUri(Uri uri) {
     // Store relative location in posix format for convenience and easier
     // cross-platform testing.
     final relativePath = p.relative(
@@ -57,5 +64,9 @@ final class ProjectPaths {
       from: projectRoot,
     );
     return Uri(scheme: 'project', path: relativePath);
+  }
+
+  Uri _projectToFileUri(Uri uri) {
+    return Uri.file(p.join(projectRoot, uri.path));
   }
 }

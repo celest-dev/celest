@@ -17,7 +17,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(NodeReference.serializer)
       ..add(NodeType.serializer)
       ..add(Project.serializer)
-      ..add(SourceLocation.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())

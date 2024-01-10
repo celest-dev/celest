@@ -257,7 +257,9 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
       return codegen.TypeReference(
         (b) => b
           ..symbol = alias.element.displayName
-          ..url = alias.element.sourceLocation.uri.toString()
+          ..url = projectPaths
+              .normalizeUri(alias.element.sourceLocation.sourceUrl!)
+              .toString()
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
           // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,
           ..isNullable = typeHelper.typeSystem.isNullable(type),

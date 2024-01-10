@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -14,6 +12,7 @@ import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 import 'package:collection/collection.dart';
+import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
@@ -120,10 +119,16 @@ extension DartTypeHelper on DartType {
         typeHelper.typeSystem.isSubtypeOf(this, typeHelper.coreExceptionType);
   }
 
-  Uri? get sourceUri => switch (alias) {
-        final alias? => alias.element.sourceLocation.uri,
-        _ => element?.sourceLocation.uri,
-      };
+  Uri? get sourceUri {
+    final sourceUri = switch (alias) {
+      final alias? => alias.element.sourceLocation.sourceUrl,
+      _ => element?.sourceLocation.sourceUrl,
+    };
+    if (sourceUri == null) {
+      return null;
+    }
+    return projectPaths.normalizeUri(sourceUri);
+  }
 
   Uri get uri {
     if (this is DynamicType) {
@@ -181,58 +186,33 @@ extension RecordTypeHelper on RecordType {
 }
 
 extension NodeSourceLocation on AstNode {
-  ast.SourceLocation sourceLocation(Source source) {
-    final (lineNo, column) = source.offsetToLineCol(offset);
-    return ast.SourceLocation(
-      uri: source.uri,
-      line: lineNo,
-      column: column,
-    );
+  ast.FileSpan sourceLocation(Source source) {
+    return source.toSpan(offset, end);
   }
 }
 
 extension ElementSourceLocation on Element {
-  ast.SourceLocation get sourceLocation {
-    final uri = source!.uri;
-    final (lineNo, column) = source!.offsetToLineCol(nameOffset);
-    return ast.SourceLocation(
-      uri: uri,
-      line: lineNo,
-      column: column,
-    );
+  ast.FileSpan get sourceLocation {
+    return source!.toSpan(nameOffset, nameOffset + nameLength);
   }
 }
 
 extension ElementAnnotationSourceLocation on ElementAnnotation {
-  ast.SourceLocation sourceLocation(Source source) {
+  ast.FileSpan sourceLocation(Source source) {
     final impl = this as ElementAnnotationImpl;
-    final offset = impl.annotationAst.offset;
-    final (lineNo, column) = source.offsetToLineCol(offset);
-    return ast.SourceLocation(
-      uri: source.uri,
-      line: lineNo,
-      column: column,
-    );
+    return source.toSpan(impl.annotationAst.offset, impl.annotationAst.end);
   }
 }
 
-extension SourceLineCol on Source {
-  /// Finds the line and column number corresponding to [offset].
-  (int line, int col) offsetToLineCol(int offset) {
-    final source = this;
-    final lines = LineSplitter.split(source.contents.data);
-    var currOffset = 0;
-    var lineNo = 1;
-    var column = 1;
-    for (final line in lines) {
-      if (currOffset + line.length >= offset) {
-        column = offset - currOffset;
-        break;
-      }
-      currOffset += line.length + 1;
-      lineNo++;
-    }
-    return (lineNo, column);
+extension SourceToSpan on Source {
+  static final _sourceFiles = <Source, SourceFile>{};
+
+  FileSpan toSpan(int start, [int? end]) {
+    final sourceFile = _sourceFiles[this] ??= SourceFile.fromString(
+      contents.data,
+      url: uri,
+    );
+    return sourceFile.span(start, end);
   }
 }
 

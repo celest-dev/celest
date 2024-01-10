@@ -109,6 +109,9 @@ void testErrors({
     );
     final analyzer = CelestAnalyzer();
     final (:project, errors: actual) = await analyzer.analyzeProject();
+    for (final error in actual) {
+      print(error);
+    }
     expect(
       actual.map((e) => e.message),
       unorderedEquals(errors.map(contains)),
