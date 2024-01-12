@@ -33,6 +33,7 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
+import 'package:source_span/source_span.dart';
 import 'package:yaml/yaml.dart';
 
 final class CelestAnalyzer {
@@ -92,7 +93,7 @@ final class CelestAnalyzer {
   void _reportError(
     String error, {
     AnalysisErrorSeverity? severity,
-    FileSpan? location,
+    SourceSpan? location,
   }) {
     _errors.add(
       AnalysisError(
@@ -324,7 +325,14 @@ final class CelestAnalyzer {
     if (annotations.length > 1) {
       _reportError(
         'Only one annotation may be specified on a parameter',
-        location: annotations[1].sourceLocation(parameter.source!),
+        location: parameter.sourceLocation.safeExpand(
+          annotations.fold<FileSpan>(
+            annotations[0].sourceLocation(parameter.source!),
+            (span, el) {
+              return span.safeExpand(el.sourceLocation(parameter.source!));
+            },
+          ),
+        ),
       );
       return null;
     }
@@ -332,57 +340,57 @@ final class CelestAnalyzer {
     final location = annotation.sourceLocation(parameter.source!);
     final value = annotation.computeConstantValue();
     final annotationType = value?.type;
-    if (annotationType == null) {
+    if (value == null || annotationType == null) {
       _reportError('Could not resolve annotation', location: location);
       return null;
     }
-    if (annotationType.isEnvironmentVariable) {
-      final typeProvider = parameter.library!.typeProvider;
-      final validEnvTypes = TypeChecker.any([
-        TypeChecker.fromStatic(typeProvider.stringType),
-        TypeChecker.fromStatic(typeProvider.numType),
-        TypeChecker.fromStatic(typeProvider.intType),
-        TypeChecker.fromStatic(typeProvider.doubleType),
-        TypeChecker.fromStatic(typeProvider.boolType),
-      ]);
-      if (!validEnvTypes.isExactlyType(parameter.type)) {
-        _reportError(
-          'The type of an environment variable parameter must be one of: '
-          '`String`, `int`, `double`, `num`, or `bool`',
-          location: location,
-        );
-        return null;
-      }
-      final name = value?.getField('name')?.toStringValue();
-      if (name == null) {
-        _reportError(
-          'The `name` field is required on `EnvironmentVariable` annotations',
-          location: location,
-        );
-        return null;
-      }
-      const reservedEnvVars = ['PORT'];
-      if (reservedEnvVars.contains(name)) {
-        _reportError(
-          'The environment variable name `$name` is reserved by Celest',
-          location: location,
-        );
-        return null;
-      }
-      if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
-        _reportError(
-          'The environment variable `$name` does not exist',
-          location: location,
-        );
-        return null;
-      }
-      return ast.NodeReference(
-        type: ast.NodeType.environmentVariable,
-        name: name,
-      );
+    if (!annotationType.isEnvironmentVariable) {
+      _reportError('Invalid parameter annotation', location: location);
+      return null;
     }
-    _reportError('Invalid parameter annotation', location: location);
-    return null;
+    final typeProvider = parameter.library!.typeProvider;
+    final validEnvTypes = TypeChecker.any([
+      TypeChecker.fromStatic(typeProvider.stringType),
+      TypeChecker.fromStatic(typeProvider.numType),
+      TypeChecker.fromStatic(typeProvider.intType),
+      TypeChecker.fromStatic(typeProvider.doubleType),
+      TypeChecker.fromStatic(typeProvider.boolType),
+    ]);
+    if (!validEnvTypes.isExactlyType(parameter.type)) {
+      _reportError(
+        'The type of an environment variable parameter must be one of: '
+        '`String`, `int`, `double`, `num`, or `bool`',
+        location: parameter.sourceLocation,
+      );
+      return null;
+    }
+    final name = value.getField('name')?.toStringValue();
+    if (name == null) {
+      _reportError(
+        'The `name` field is required on `EnvironmentVariable` annotations',
+        location: annotation.element?.sourceLocation ?? location,
+      );
+      return null;
+    }
+    const reservedEnvVars = ['PORT'];
+    if (reservedEnvVars.contains(name)) {
+      _reportError(
+        'The environment variable name `$name` is reserved by Celest',
+        location: parameter.sourceLocation,
+      );
+      return null;
+    }
+    if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
+      _reportError(
+        'The environment variable `$name` does not exist',
+        location: annotation.element?.sourceLocation ?? location,
+      );
+      return null;
+    }
+    return ast.NodeReference(
+      type: ast.NodeType.environmentVariable,
+      name: name,
+    );
   }
 
   Future<void> _collectApis() async {
@@ -542,7 +550,11 @@ final class CelestAnalyzer {
               for (final reason in parameterTypeVerdict.reasons) {
                 _reportError(
                   'The type of a parameter must be serializable as JSON. $reason',
-                  location: parameter.location,
+                  location: switch (reason.location) {
+                    final reasonLoc? =>
+                      parameter.location.safeExpand(reasonLoc),
+                    _ => parameter.location,
+                  },
                 );
               }
             }
@@ -585,7 +597,10 @@ final class CelestAnalyzer {
           for (final reason in returnTypeVerdict.reasons) {
             _reportError(
               'The return type of a function must be serializable as JSON. $reason',
-              location: function.location,
+              location: switch (reason.location) {
+                final reasonLoc? => function.location.safeExpand(reasonLoc),
+                _ => function.location,
+              },
             );
           }
         }

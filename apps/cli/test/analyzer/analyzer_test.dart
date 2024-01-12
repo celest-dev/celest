@@ -5,6 +5,7 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/testing/init_tests.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -96,7 +97,7 @@ void testErrors({
   String? resourcesDart,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  required List<String> errors,
+  required List<Object /* String | Matcher */ > errors,
   void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
@@ -113,8 +114,16 @@ void testErrors({
       print(error);
     }
     expect(
-      actual.map((e) => e.message),
-      unorderedEquals(errors.map(contains)),
+      actual.map((e) => e.toString()),
+      unorderedEquals(
+        errors.map((error) {
+          return switch (error) {
+            Matcher _ => error,
+            String _ => contains(error),
+            _ => unreachable(),
+          };
+        }),
+      ),
     );
     if (actual.isEmpty) {
       expectProject?.call(project!);
@@ -432,9 +441,10 @@ NotJsonable sayHello() => throw UnimplementedError();
 ''',
         },
         errors: [
-          'The return type of a function must be serializable as JSON. '
-              'Field "value" of type "NotJsonable" is not serializable: '
-              'Untyped enums are not supported',
+          allOf([
+            contains('Untyped enums are not supported'),
+            contains('final Enum value'),
+          ]),
         ],
       );
 
@@ -456,10 +466,72 @@ OnlyFromJson sayHello() => OnlyFromJson();
 ''',
         },
         errors: [
-          'The return type of a function must be serializable as JSON. '
-              'Private field "_field" is not supported in a class used as a '
-              'return type. Consider defining custom fromJson/toJson methods '
-              'or making the field public.',
+          allOf([
+            contains('Private field "_field" is not supported'),
+            contains('late String'),
+          ]),
+        ],
+      );
+
+      // Tests that the analyzer can handle errors for a function which
+      // imports a class with an error.
+      //
+      // Specifically, tests the [SafeExpand] helper to ensure that spans
+      // are always correctly generated.
+      testErrors(
+        name: 'toJson_in_extension_imported',
+        apis: {
+          'only_from_json.dart': '''
+class OnlyFromJson {
+  late String _field;
+}
+''',
+          'greeting.dart': '''
+import 'only_from_json.dart';
+
+OnlyFromJson sayHello() => OnlyFromJson();
+''',
+        },
+        errors: [
+          allOf([
+            contains('Private field "_field" is not supported'),
+            isNot(contains('late String')),
+          ]),
+        ],
+      );
+
+      // Tests that really long contexts are not expanded.
+      testErrors(
+        name: 'really_long_context',
+        apis: {
+          'greeting.dart': '''
+class OnlyFromJson {
+  late String _field;
+}
+
+${'\n' * 20}
+
+OnlyFromJson sayHello() => OnlyFromJson();
+NotJsonable sayGoodbye() => throw UnimplementedError();
+
+${'\n' * 20}
+
+class NotJsonable {
+  NotJson(this.value);
+
+  final Enum value;
+}
+''',
+        },
+        errors: [
+          allOf([
+            contains('Private field "_field" is not supported'),
+            isNot(contains('late String')),
+          ]),
+          allOf([
+            contains('Untyped enums are not supported'),
+            isNot(contains('final Enum value')),
+          ]),
         ],
       );
 
@@ -800,6 +872,38 @@ void sayHello(@resources.env.port int port) => 'Hello, $port';
         },
         errors: [
           'The environment variable name `PORT` is reserved by Celest',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_env_applications',
+        config: {
+          '.env': '''
+PORT=8080
+''',
+        },
+        resourcesDart: '''
+import 'package:celest/celest.dart';
+
+abstract final class env {
+  static const port = EnvironmentVariable(name: r'PORT');
+}
+''',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+import '../resources.dart' as resources;
+
+void sayHello(
+  @resources.env.port
+  @resources.env.port
+    int port,
+) => 'Hello, $port';
+''',
+        },
+        errors: [
+          'Only one annotation may be specified on a parameter',
         ],
       );
     });

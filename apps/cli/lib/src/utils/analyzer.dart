@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -317,4 +319,24 @@ final class RecordTypeEquality implements Equality<RecordType> {
 
   @override
   bool isValidKey(Object? o) => o is RecordType;
+}
+
+extension SafeExpand on ast.FileSpan {
+  /// Allows expanding a span to include another span, but only if they are
+  /// in the same file, since [ast.FileSpan.expand] will throw if they are not.
+  // TODO(dnys1): Improve expand functionality to allow multi-file splits and better disjoint expands with (...) instead of showing every line.
+  ast.FileSpan safeExpand(ast.FileSpan other) {
+    if (sourceUrl != other.sourceUrl) {
+      return this;
+    }
+    // Limits the maximum number of lines that can be expanded.
+    // This prevents really long contexts.
+    const maxLines = 12;
+    final start = min(this.start.line, other.start.line);
+    final end = max(this.end.line, other.end.line);
+    if ((end - start) > maxLines) {
+      return this;
+    }
+    return expand(other);
+  }
 }

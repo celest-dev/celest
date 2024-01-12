@@ -1,5 +1,5 @@
-import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:source_span/source_span.dart';
 
 typedef AnalysisErrorReporter = void Function(
   String message, {
@@ -22,12 +22,12 @@ final class AnalysisError {
 
   final AnalysisErrorSeverity severity;
   final String message;
-  final FileSpan? location;
+  final SourceSpan? location;
 
   @override
   String toString() {
     if (location
-        case FileSpan(:final start, :final sourceUrl) && final location) {
+        case SourceSpan(:final start, :final sourceUrl?) && final location) {
       // Better `SourceLocation.message` implementation which makes URIs
       // clickable in VSCode terminal.
       final uri = p.prettyUri(sourceUrl);

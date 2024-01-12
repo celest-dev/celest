@@ -6,6 +6,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -22,10 +23,13 @@ sealed class Verdict {
   const factory Verdict.yes({
     Set<SerializationSpec> serializationSpecs,
   }) = VerdictYes;
-  factory Verdict.no(String reason) = VerdictNo.single;
+  factory Verdict.no(
+    String reason, {
+    FileSpan? location,
+  }) = VerdictNo.single;
 
   bool get isSerializable;
-  List<String> get reasons;
+  List<VerdictReason> get reasons;
 
   Verdict operator &(Verdict other) => switch ((this, other)) {
         (
@@ -70,24 +74,37 @@ final class VerdictYes extends Verdict {
       );
 
   @override
-  List<String> get reasons => const [];
+  List<VerdictReason> get reasons => const [];
 }
 
 final class VerdictNo extends Verdict {
   const VerdictNo(this.reasons);
-  VerdictNo.single(String reason) : reasons = [reason];
+  VerdictNo.single(
+    String reason, {
+    FileSpan? location,
+  }) : reasons = [VerdictReason(reason, location: location)];
 
   @override
   bool get isSerializable => false;
 
   @override
-  final List<String> reasons;
+  final List<VerdictReason> reasons;
 
   @override
   Verdict withSpec(SerializationSpec spec) => this;
 
   @override
   String toString() => reasons.join('; ');
+}
+
+final class VerdictReason {
+  const VerdictReason(this.reason, {this.location});
+
+  final String reason;
+  final FileSpan? location;
+
+  @override
+  String toString() => reason;
 }
 
 final class SerializationSpec {
@@ -255,17 +272,23 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return const Verdict.yes();
     }
     if (type.isDartCoreEnum) {
-      return const VerdictNo(['Untyped enums are not supported']);
+      return const VerdictNo([
+        VerdictReason('Untyped enums are not supported'),
+      ]);
     }
     if (type.isDartCoreSet) {
-      return const VerdictNo(['Set types are not supported']);
+      return const VerdictNo([
+        VerdictReason('Set types are not supported'),
+      ]);
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       return _isSimpleJson(type.typeArguments.single);
     }
     if (type.isDartCoreMap) {
       if (!type.typeArguments[0].isDartCoreString) {
-        return const VerdictNo(['Map keys must be strings']);
+        return const VerdictNo([
+          VerdictReason('Map keys must be strings'),
+        ]);
       }
       return switch (type.typeArguments[1]) {
         DynamicType() => const Verdict.yes(),
@@ -277,12 +300,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   }
 
   @override
-  Verdict visitDynamicType(DynamicType type) =>
-      const VerdictNo(['Dynamic values are not supported']);
+  Verdict visitDynamicType(DynamicType type) => const VerdictNo([
+        VerdictReason('Dynamic values are not supported'),
+      ]);
 
   @override
-  Verdict visitFunctionType(FunctionType type) =>
-      const VerdictNo(['Function types are not supported']);
+  Verdict visitFunctionType(FunctionType type) => const VerdictNo([
+        VerdictReason('Function types are not supported'),
+      ]);
 
   // Most logic for `_checkCustomDeserializer` and `_checkCustomSerializer` is
   // pulled from `package:json_serializable/src/type_helpers/json_helper.dart`.
@@ -314,6 +339,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         'The fromJson constructor of type ${type.element.name} must have '
         'one required, positional parameter whose type matches the return '
         'type of its toJson method, e.g. $functionSignature',
+        location: fromJsonCtor.sourceLocation,
       );
     }
 
@@ -325,6 +351,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return Verdict.no(
         'The fromJson constructor of type ${type.element.name} must have '
         'one required, positional parameter.',
+        location: fromJsonCtor.sourceLocation,
       );
     }
     switch (wireType) {
@@ -340,6 +367,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         return Verdict.no(
           'The parameter type of ${type.element.name}\'s fromJson constructor '
           'must be assignable to $wireType.',
+          location: fromJsonCtor.sourceLocation,
         );
     }
 
@@ -362,6 +390,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             verdict &= Verdict.no(
               'The parameter "${parameter.name}" of ${type.element.name}\'s '
               'fromJson constructor must be named "$expectedCtorParamName".',
+              location: parameter.sourceLocation,
             );
           }
         default:
@@ -370,6 +399,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             'parameter: ${parameter.name}. The only extra parameters allowed are '
             'functions of the form `T Function(Object?) fromJsonT` where `T` is '
             'a type parameter of ${type.element.name}.',
+            location: parameter.sourceLocation,
           );
       }
     }
@@ -404,6 +434,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             verdict &= Verdict.no(
               'The parameter "${parameter.name}" of ${type.element.name}\'s '
               'toJson method must be named "$expectedFuncParamName".',
+              location: parameter.sourceLocation,
             );
           }
         default:
@@ -412,6 +443,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             'parameter: ${parameter.name}. The only parameters allowed are '
             'functions of the form `Object Function(T) toJsonT` where `T` is '
             'a type parameter of ${type.element.name}.',
+            location: parameter.sourceLocation,
           );
       }
     }
@@ -421,6 +453,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       _ => Verdict.no(
           'Invalid return type of ${type.element.name}\'s toJson method: '
           '$returnType. Only simple JSON types are allowed.',
+          location: toJsonMethod.sourceLocation,
         ),
     };
     return verdict;
@@ -576,18 +609,19 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitInvalidType(InvalidType type) =>
-      const VerdictNo(['Invalid type']);
+      const VerdictNo([VerdictReason('Invalid type')]);
 
   @override
   Verdict visitNeverType(NeverType type) =>
-      const VerdictNo(['Never types are not supported']);
+      const VerdictNo([VerdictReason('Never types are not supported')]);
 
   @override
   Verdict visitRecordType(RecordType type) {
     if (type.positionalFields.isNotEmpty) {
-      return const VerdictNo([
+      return Verdict.no(
         'Positional fields are not supported in record types',
-      ]);
+        location: type.alias?.element.sourceLocation,
+      );
     }
     var verdict = const Verdict.yes();
     for (final field in type.namedFields) {
@@ -648,6 +682,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       return Verdict.no(
         'The type ${element.displayName} is not serializable since it is not '
         'a class or does not have a fromJson/toJson method.',
+        location: element.sourceLocation,
       );
     }
     final fields = element.sortedFields;
@@ -659,12 +694,14 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           'Private field "${field.displayName}" is not supported in a class '
           'used as a return type. Consider defining custom fromJson/toJson '
           'methods or making the field public.',
+          location: field.sourceLocation,
         );
         continue;
       }
       if (const DartTypeEquality().equals(type, field.type)) {
         fieldsVerdict &= Verdict.no(
           'Classes are not allowed to have fields of their own type.',
+          location: field.sourceLocation,
         );
         continue;
       }
@@ -674,6 +711,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         _ => Verdict.no(
             'Field "${field.displayName}" of type "${element.displayName}" is '
             'not serializable: $fieldVerdict',
+            location: field.sourceLocation,
           ),
       };
     }
@@ -701,6 +739,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           constructorVerdict &= Verdict.no(
             'Constructor parameter "${parameter.displayName}" is not '
             'supported.',
+            location: parameter.sourceLocation,
           );
           return false;
         }
@@ -708,6 +747,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           constructorVerdict &= Verdict.no(
             'Constructor parameter "${parameter.displayName}" is not '
             'a field of the class ${element.displayName}.',
+            location: parameter.sourceLocation,
           );
           return false;
         }
@@ -718,6 +758,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       constructorVerdict &= Verdict.no(
         'Class ${element.displayName} must have an unnamed constructor with '
         'the same number of parameters as fields.',
+        location: element.sourceLocation,
       );
     } else if (element.isAbstract &&
         !element.isSealed &&
@@ -725,6 +766,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       constructorVerdict &= Verdict.no(
         'Class ${element.displayName} is abstract and must have an unnamed factory '
         'or fromJson factory constructor to be used.',
+        location: element.sourceLocation,
       );
     }
     if (position == _TypePosition.parameter) {
