@@ -138,9 +138,7 @@ final class CelestAnalyzer {
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: _reportError,
     );
-    _project.envVars.replace(
-      projectPaths.envManager.env.keys.map(ast.EnvironmentVariable.new),
-    );
+    _project.envVars.replace(projectPaths.envManager.envVars);
     await _collectApis();
     return (project: _project.build(), errors: _errors);
   }
@@ -610,6 +608,10 @@ final class CelestAnalyzer {
     );
     return ast.Api(
       name: apiName,
+      location: SourceFile.fromString(
+        library.source.contents.data,
+        url: library.source.uri,
+      ).span(0, 0),
       metadata: libraryMetdata,
       functions: functions,
     );

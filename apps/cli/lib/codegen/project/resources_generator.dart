@@ -4,6 +4,7 @@ import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -24,8 +25,26 @@ final class ResourcesGenerator {
 
   // SplayTree ensures consistent ordering in output file which helps with
   // diffs.
-  // TODO(dnys1): Sort by API name, then definition order.
-  final _allResources = SplayTreeSet<String>();
+  /// All resources, sorted by API name, then definition order.
+  final _allResources = SplayTreeMap<Node, String>((a, b) {
+    return switch ((a, b)) {
+      (final Api a, final Api b) => a.name.compareTo(b.name),
+      (final CloudFunction a, final CloudFunction b) => () {
+          final apiCompare = a.apiName.compareTo(b.apiName);
+          if (apiCompare != 0) {
+            return apiCompare;
+          }
+          return a.location.start.offset.compareTo(b.location.start.offset);
+        }(),
+      (final EnvironmentVariable a, final EnvironmentVariable b) =>
+        a.envName.compareTo(b.envName),
+      (Api(), _) => -1,
+      (CloudFunction(), Api()) => 1,
+      (CloudFunction(), EnvironmentVariable()) => -1,
+      (EnvironmentVariable(), _) => 1,
+      _ => unreachable(),
+    };
+  });
 
   final _classBuilders = <String, ClassBuilder>{};
   ClassBuilder _beginClass(String name) {
@@ -93,10 +112,8 @@ final class ResourcesGenerator {
             'functionName': literalString(function.name, raw: true),
           }).code,
       );
-      _allResources.addAll([
-        'apis.$apiFieldName',
-        'functions.$functionFieldName',
-      ]);
+      _allResources[api] = 'apis.$apiFieldName';
+      _allResources[function] = 'functions.$functionFieldName';
     }
   }
 
@@ -116,7 +133,7 @@ final class ResourcesGenerator {
             }).code,
         ),
       );
-      _allResources.add('env.$fieldName');
+      _allResources[envVar] = 'env.$fieldName';
     }
   }
 
@@ -146,7 +163,7 @@ final class ResourcesGenerator {
           ..type = DartTypes.core.list(DartTypes.celest.cloudWidget)
           ..name = 'all'
           ..assignment = literalConstList(
-            _allResources.map(refer).toList(),
+            _allResources.values.map(refer).toList(),
           ).code,
       ),
     );

@@ -1,31 +1,42 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/env/env_parser.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:source_span/source_span.dart';
 
 final class EnvManager {
   EnvManager(String envFile) : _envFile = File(envFile) {
-    _env = _load();
+    final (env, spans) = _load();
+    _env = env;
+    _spans = spans;
   }
 
   final File _envFile;
   late DateTime _lastModified;
   late Map<String, String> _env;
+  late Map<String, FileSpan> _spans;
   final _changes = <String, String>{};
 
   Map<String, String> get env => _env;
+  Iterable<ast.EnvironmentVariable> get envVars => _env.keys.map(
+        (name) => ast.EnvironmentVariable(
+          name,
+          location: _spans[name]!,
+        ),
+      );
 
-  Map<String, String> _load() {
+  (Map<String, String> env, Map<String, FileSpan> spans) _load() {
     if (!_envFile.existsSync()) {
       _envFile.createSync(recursive: true);
     }
     _lastModified = _envFile.lastModifiedSync();
-    return EnvParser.parse(
-      LineSplitter.split(_envFile.readAsStringSync()),
-    );
+    final parser = EnvParser(
+      source: _envFile.readAsStringSync(),
+      sourceUri: _envFile.uri,
+    )..parse();
+    return (parser.env, parser.spans);
   }
 
   String? get(String key) => _changes[key] ?? _env[key];
@@ -37,7 +48,7 @@ final class EnvManager {
     required bool Function(String key, String value) onConflict,
   }) {
     if (_envFile.lastModifiedSync().isAfter(_lastModified)) {
-      final newEnv = _load();
+      final (newEnv, _) = _load();
       _changes.forEach((key, value) {
         newEnv.update(
           key,
@@ -60,9 +71,7 @@ final class EnvManager {
     _changes.clear();
 
     project = project.rebuild(
-      (project) => project.envVars.replace(
-        _env.keys.map(ast.EnvironmentVariable.new),
-      ),
+      (project) => project.envVars.replace(envVars),
     );
 
     final resourcesDart = CodeGenerator.generateResourcesDart(project);

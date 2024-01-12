@@ -13,19 +13,44 @@
   "apis": {},
   "envVars": [
     {
-      "envName": "MY_NAME"
+      "envName": "MY_NAME",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 0,
+        "end": 15
+      }
     },
     {
-      "envName": "MY_AGE"
+      "envName": "MY_AGE",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 15,
+        "end": 25
+      }
     },
     {
-      "envName": "MY_HEIGHT"
+      "envName": "MY_HEIGHT",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 25,
+        "end": 40
+      }
     },
     {
-      "envName": "MY_WEIGHT"
+      "envName": "MY_WEIGHT",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 40,
+        "end": 54
+      }
     },
     {
-      "envName": "IM_COOL"
+      "envName": "IM_COOL",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 54,
+        "end": 66
+      }
     }
   ]
 }

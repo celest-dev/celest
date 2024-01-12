@@ -81,6 +81,11 @@
             "end": 177
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/anonymous_function.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "records": {
@@ -773,6 +778,11 @@
             "end": 1624
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/records.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "sealed_classes": {
@@ -1276,6 +1286,11 @@
             "end": 4187
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/sealed_classes.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "parameter_types": {
@@ -4609,6 +4624,11 @@
             "end": 19743
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/parameter_types.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "cycles": {
@@ -4814,6 +4834,11 @@
             "end": 1454
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/cycles.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "authenticated_function": {
@@ -4877,6 +4902,11 @@
             "end": 147
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/authenticated_function.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "api_auth_constant_variables": {
@@ -4949,6 +4979,11 @@
             "end": 298
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/api_auth_constant_variables.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "return_types": {
@@ -6943,6 +6978,11 @@
             "end": 15145
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/return_types.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "middleware": {
@@ -7056,6 +7096,11 @@
             "end": 218
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/middleware.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "classes": {
@@ -8322,6 +8367,11 @@
             "end": 4173
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/classes.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "exceptions": {
@@ -8537,6 +8587,11 @@
             "end": 939
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/exceptions.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "authenticated_api": {
@@ -8600,6 +8655,11 @@
             "end": 172
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/authenticated_api.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "anonymous_api": {
@@ -8672,6 +8732,11 @@
             "end": 177
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/anonymous_api.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "parameters": {
@@ -8922,6 +8987,11 @@
             "end": 290
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/parameters.dart",
+        "start": 0,
+        "end": 0
       }
     },
     "generic_wrappers": {
@@ -9547,6 +9617,11 @@
             "end": 1923
           }
         }
+      },
+      "location": {
+        "uri": "project:functions/generic_wrappers.dart",
+        "start": 0,
+        "end": 0
       }
     }
   },

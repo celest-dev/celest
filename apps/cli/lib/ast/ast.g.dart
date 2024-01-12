@@ -159,6 +159,9 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       serializers.serialize(object.functions,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(CloudFunction)])),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -191,6 +194,10 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
                 const FullType(String),
                 const FullType(CloudFunction)
               ]))!);
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -528,6 +535,9 @@ class _$EnvironmentVariableSerializer
       'envName',
       serializers.serialize(object.envName,
           specifiedType: const FullType(String)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -548,6 +558,10 @@ class _$EnvironmentVariableSerializer
         case 'envName':
           result.envName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -618,6 +632,13 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
 
     return result.build();
   }
+}
+
+abstract mixin class NodeBuilder {
+  void replace(Node other);
+  void update(void Function(NodeBuilder) updates);
+  FileSpan? get location;
+  set location(FileSpan? location);
 }
 
 class _$Project extends Project {
@@ -691,30 +712,31 @@ class _$Project extends Project {
   }
 }
 
-class ProjectBuilder implements Builder<Project, ProjectBuilder> {
+class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
   _$Project? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  set name(covariant String? name) => _$this._name = name;
 
   Reference? _reference;
   Reference? get reference => _$this._reference;
-  set reference(Reference? reference) => _$this._reference = reference;
+  set reference(covariant Reference? reference) =>
+      _$this._reference = reference;
 
   FileSpan? _location;
   FileSpan? get location => _$this._location;
-  set location(FileSpan? location) => _$this._location = location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   MapBuilder<String, Api>? _apis;
   MapBuilder<String, Api> get apis =>
       _$this._apis ??= new MapBuilder<String, Api>();
-  set apis(MapBuilder<String, Api>? apis) => _$this._apis = apis;
+  set apis(covariant MapBuilder<String, Api>? apis) => _$this._apis = apis;
 
   ListBuilder<EnvironmentVariable>? _envVars;
   ListBuilder<EnvironmentVariable> get envVars =>
       _$this._envVars ??= new ListBuilder<EnvironmentVariable>();
-  set envVars(ListBuilder<EnvironmentVariable>? envVars) =>
+  set envVars(covariant ListBuilder<EnvironmentVariable>? envVars) =>
       _$this._envVars = envVars;
 
   ProjectBuilder();
@@ -733,7 +755,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   }
 
   @override
-  void replace(Project other) {
+  void replace(covariant Project other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Project;
   }
@@ -784,15 +806,22 @@ class _$Api extends Api {
   final BuiltList<ApiMetadata> metadata;
   @override
   final BuiltMap<String, CloudFunction> functions;
+  @override
+  final FileSpan location;
 
   factory _$Api([void Function(ApiBuilder)? updates]) =>
       (new ApiBuilder()..update(updates))._build();
 
-  _$Api._({required this.name, required this.metadata, required this.functions})
+  _$Api._(
+      {required this.name,
+      required this.metadata,
+      required this.functions,
+      required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
+    BuiltValueNullFieldError.checkNotNull(location, r'Api', 'location');
   }
 
   @override
@@ -808,7 +837,8 @@ class _$Api extends Api {
     return other is Api &&
         name == other.name &&
         metadata == other.metadata &&
-        functions == other.functions;
+        functions == other.functions &&
+        location == other.location;
   }
 
   @override
@@ -817,6 +847,7 @@ class _$Api extends Api {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, functions.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -826,29 +857,34 @@ class _$Api extends Api {
     return (newBuiltValueToStringHelper(r'Api')
           ..add('name', name)
           ..add('metadata', metadata)
-          ..add('functions', functions))
+          ..add('functions', functions)
+          ..add('location', location))
         .toString();
   }
 }
 
-class ApiBuilder implements Builder<Api, ApiBuilder> {
+class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
   _$Api? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  set name(covariant String? name) => _$this._name = name;
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
       _$this._metadata ??= new ListBuilder<ApiMetadata>();
-  set metadata(ListBuilder<ApiMetadata>? metadata) =>
+  set metadata(covariant ListBuilder<ApiMetadata>? metadata) =>
       _$this._metadata = metadata;
 
   MapBuilder<String, CloudFunction>? _functions;
   MapBuilder<String, CloudFunction> get functions =>
       _$this._functions ??= new MapBuilder<String, CloudFunction>();
-  set functions(MapBuilder<String, CloudFunction>? functions) =>
+  set functions(covariant MapBuilder<String, CloudFunction>? functions) =>
       _$this._functions = functions;
+
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   ApiBuilder();
 
@@ -858,13 +894,14 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
       _name = $v.name;
       _metadata = $v.metadata.toBuilder();
       _functions = $v.functions.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(Api other) {
+  void replace(covariant Api other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Api;
   }
@@ -884,7 +921,9 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
           new _$Api._(
               name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
               metadata: metadata.build(),
-              functions: functions.build());
+              functions: functions.build(),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'Api', 'location'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -1255,33 +1294,35 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
 }
 
 class CloudFunctionParameterBuilder
-    implements Builder<CloudFunctionParameter, CloudFunctionParameterBuilder> {
+    implements
+        Builder<CloudFunctionParameter, CloudFunctionParameterBuilder>,
+        NodeBuilder {
   _$CloudFunctionParameter? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  set name(covariant String? name) => _$this._name = name;
 
   Reference? _type;
   Reference? get type => _$this._type;
-  set type(Reference? type) => _$this._type = type;
+  set type(covariant Reference? type) => _$this._type = type;
 
   bool? _required;
   bool? get required => _$this._required;
-  set required(bool? required) => _$this._required = required;
+  set required(covariant bool? required) => _$this._required = required;
 
   bool? _named;
   bool? get named => _$this._named;
-  set named(bool? named) => _$this._named = named;
+  set named(covariant bool? named) => _$this._named = named;
 
   FileSpan? _location;
   FileSpan? get location => _$this._location;
-  set location(FileSpan? location) => _$this._location = location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   NodeReferenceBuilder? _references;
   NodeReferenceBuilder get references =>
       _$this._references ??= new NodeReferenceBuilder();
-  set references(NodeReferenceBuilder? references) =>
+  set references(covariant NodeReferenceBuilder? references) =>
       _$this._references = references;
 
   CloudFunctionParameterBuilder();
@@ -1301,7 +1342,7 @@ class CloudFunctionParameterBuilder
   }
 
   @override
-  void replace(CloudFunctionParameter other) {
+  void replace(covariant CloudFunctionParameter other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CloudFunctionParameter;
   }
@@ -1445,47 +1486,48 @@ class _$CloudFunction extends CloudFunction {
 }
 
 class CloudFunctionBuilder
-    implements Builder<CloudFunction, CloudFunctionBuilder> {
+    implements Builder<CloudFunction, CloudFunctionBuilder>, NodeBuilder {
   _$CloudFunction? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  set name(covariant String? name) => _$this._name = name;
 
   String? _apiName;
   String? get apiName => _$this._apiName;
-  set apiName(String? apiName) => _$this._apiName = apiName;
+  set apiName(covariant String? apiName) => _$this._apiName = apiName;
 
   ListBuilder<CloudFunctionParameter>? _parameters;
   ListBuilder<CloudFunctionParameter> get parameters =>
       _$this._parameters ??= new ListBuilder<CloudFunctionParameter>();
-  set parameters(ListBuilder<CloudFunctionParameter>? parameters) =>
+  set parameters(covariant ListBuilder<CloudFunctionParameter>? parameters) =>
       _$this._parameters = parameters;
 
   Reference? _returnType;
   Reference? get returnType => _$this._returnType;
-  set returnType(Reference? returnType) => _$this._returnType = returnType;
+  set returnType(covariant Reference? returnType) =>
+      _$this._returnType = returnType;
 
   Reference? _flattenedReturnType;
   Reference? get flattenedReturnType => _$this._flattenedReturnType;
-  set flattenedReturnType(Reference? flattenedReturnType) =>
+  set flattenedReturnType(covariant Reference? flattenedReturnType) =>
       _$this._flattenedReturnType = flattenedReturnType;
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
       _$this._metadata ??= new ListBuilder<ApiMetadata>();
-  set metadata(ListBuilder<ApiMetadata>? metadata) =>
+  set metadata(covariant ListBuilder<ApiMetadata>? metadata) =>
       _$this._metadata = metadata;
 
   ListBuilder<Reference>? _exceptionTypes;
   ListBuilder<Reference> get exceptionTypes =>
       _$this._exceptionTypes ??= new ListBuilder<Reference>();
-  set exceptionTypes(ListBuilder<Reference>? exceptionTypes) =>
+  set exceptionTypes(covariant ListBuilder<Reference>? exceptionTypes) =>
       _$this._exceptionTypes = exceptionTypes;
 
   FileSpan? _location;
   FileSpan? get location => _$this._location;
-  set location(FileSpan? location) => _$this._location = location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   CloudFunctionBuilder();
 
@@ -1506,7 +1548,7 @@ class CloudFunctionBuilder
   }
 
   @override
-  void replace(CloudFunction other) {
+  void replace(covariant CloudFunction other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CloudFunction;
   }
@@ -1561,14 +1603,19 @@ class CloudFunctionBuilder
 class _$EnvironmentVariable extends EnvironmentVariable {
   @override
   final String envName;
+  @override
+  final FileSpan location;
 
   factory _$EnvironmentVariable(
           [void Function(EnvironmentVariableBuilder)? updates]) =>
       (new EnvironmentVariableBuilder()..update(updates))._build();
 
-  _$EnvironmentVariable._({required this.envName}) : super._() {
+  _$EnvironmentVariable._({required this.envName, required this.location})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         envName, r'EnvironmentVariable', 'envName');
+    BuiltValueNullFieldError.checkNotNull(
+        location, r'EnvironmentVariable', 'location');
   }
 
   @override
@@ -1583,13 +1630,16 @@ class _$EnvironmentVariable extends EnvironmentVariable {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is EnvironmentVariable && envName == other.envName;
+    return other is EnvironmentVariable &&
+        envName == other.envName &&
+        location == other.location;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, envName.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1597,18 +1647,25 @@ class _$EnvironmentVariable extends EnvironmentVariable {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'EnvironmentVariable')
-          ..add('envName', envName))
+          ..add('envName', envName)
+          ..add('location', location))
         .toString();
   }
 }
 
 class EnvironmentVariableBuilder
-    implements Builder<EnvironmentVariable, EnvironmentVariableBuilder> {
+    implements
+        Builder<EnvironmentVariable, EnvironmentVariableBuilder>,
+        NodeBuilder {
   _$EnvironmentVariable? _$v;
 
   String? _envName;
   String? get envName => _$this._envName;
-  set envName(String? envName) => _$this._envName = envName;
+  set envName(covariant String? envName) => _$this._envName = envName;
+
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   EnvironmentVariableBuilder();
 
@@ -1616,13 +1673,14 @@ class EnvironmentVariableBuilder
     final $v = _$v;
     if ($v != null) {
       _envName = $v.envName;
+      _location = $v.location;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(EnvironmentVariable other) {
+  void replace(covariant EnvironmentVariable other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EnvironmentVariable;
   }
@@ -1639,7 +1697,9 @@ class EnvironmentVariableBuilder
     final _$result = _$v ??
         new _$EnvironmentVariable._(
             envName: BuiltValueNullFieldError.checkNotNull(
-                envName, r'EnvironmentVariable', 'envName'));
+                envName, r'EnvironmentVariable', 'envName'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'EnvironmentVariable', 'location'));
     replace(_$result);
     return _$result;
   }

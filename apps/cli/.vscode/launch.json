@@ -6,7 +6,19 @@
       "request": "launch",
       "type": "dart",
       "program": "e2e/run_tests.dart",
-      "args": ["--update-goldens"]
+      "args": ["--update-goldens"],
+      "vmAdditionalArgs": [
+        "--enable-experiment=native-assets",
+      ]
+    },
+    {
+      "name": "CLI (test/analyzer)",
+      "request": "launch",
+      "type": "dart",
+      "program": "test/analyzer/analyzer_test.dart",
+      "vmAdditionalArgs": [
+        "--enable-experiment=native-assets",
+      ]
     }
   ]
 }

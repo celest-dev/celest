@@ -10,7 +10,10 @@ export 'package:source_span/source_span.dart' show FileSpan;
 
 part 'ast.g.dart';
 
-sealed class Node {}
+@BuiltValue(instantiable: false)
+sealed class Node {
+  FileSpan get location;
+}
 
 abstract class Project implements Built<Project, ProjectBuilder>, Node {
   factory Project({
@@ -38,9 +41,11 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
 
   String get name;
   Reference get reference;
-  FileSpan get location;
   BuiltMap<String, Api> get apis;
   BuiltList<EnvironmentVariable> get envVars;
+
+  @override
+  FileSpan get location;
 
   R accept<R>(AstVisitor<R> visitor) => visitor.visitProject(this);
 
@@ -51,14 +56,16 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   static Serializer<Project> get serializer => _$projectSerializer;
 }
 
-abstract class Api implements Built<Api, ApiBuilder> {
+abstract class Api implements Built<Api, ApiBuilder>, Node {
   factory Api({
     required String name,
+    required FileSpan location,
     required Map<String, CloudFunction> functions,
     List<ApiMetadata> metadata = const [],
   }) {
     return _$Api._(
       name: name,
+      location: location,
       metadata: metadata.build(),
       functions: functions.build(),
     );
@@ -74,6 +81,9 @@ abstract class Api implements Built<Api, ApiBuilder> {
   String get name;
   BuiltList<ApiMetadata> get metadata;
   BuiltMap<String, CloudFunction> get functions;
+
+  @override
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(Api.serializer, this) as Map<String, dynamic>;
@@ -99,6 +109,7 @@ abstract class ApiPublic
 
   ApiPublic._();
 
+  @override
   FileSpan get location;
 
   Map<String, dynamic> toJson() =>
@@ -123,6 +134,7 @@ abstract class ApiAuthenticated
 
   ApiAuthenticated._();
 
+  @override
   FileSpan get location;
 
   Map<String, dynamic> toJson() =>
@@ -150,6 +162,8 @@ abstract class ApiMiddleware
   ApiMiddleware._();
 
   Reference get type;
+
+  @override
   FileSpan get location;
 
   Map<String, dynamic> toJson() =>
@@ -185,8 +199,10 @@ abstract class CloudFunctionParameter
   Reference get type;
   bool get required;
   bool get named;
-  FileSpan get location;
   NodeReference? get references;
+
+  @override
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(CloudFunctionParameter.serializer, this)
@@ -235,6 +251,8 @@ abstract class CloudFunction
   Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;
   BuiltList<Reference> get exceptionTypes;
+
+  @override
   FileSpan get location;
 
   Map<String, dynamic> toJson() =>
@@ -246,8 +264,11 @@ abstract class CloudFunction
 
 abstract class EnvironmentVariable
     implements Built<EnvironmentVariable, EnvironmentVariableBuilder>, Node {
-  factory EnvironmentVariable(String envName) =>
-      _$EnvironmentVariable._(envName: envName);
+  factory EnvironmentVariable(
+    String envName, {
+    required FileSpan location,
+  }) =>
+      _$EnvironmentVariable._(envName: envName, location: location);
 
   factory EnvironmentVariable.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(EnvironmentVariable.serializer, json)!;
@@ -256,6 +277,9 @@ abstract class EnvironmentVariable
 
   /// The name of the variable in the environment, e.g. `MY_ENV`.
   String get envName;
+
+  @override
+  FileSpan get location;
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(EnvironmentVariable.serializer, this)

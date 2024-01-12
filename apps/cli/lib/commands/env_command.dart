@@ -81,7 +81,7 @@ current project (config/.env) and prompt you for the values to update.
           logger.severe('Ignoring invalid key=value pair: $envVar');
           continue;
         }
-        final (:key, :value) = pair;
+        final (:key, :value, start: _, end: _) = pair;
         if (key.isEmpty) {
           logger.severe('Ignoring invalid key=value pair: $envVar');
           continue;
