@@ -488,111 +488,12 @@ final class WindowsBundler implements Bundler {
 
   @override
   Future<void> bundle() async {
-    await _createAppx();
-    // await _evCodesign(filename);
-  }
-
-// https://learn.microsoft.com/en-us/windows/win32/appxpkg/how-to-create-a-package-signing-certificate#step-2-create-a-private-key-using-makecertexe
-  Future<void> _testCodesign(Directory buildDir) async {
-    await _runProcess(
-      'MakeCert',
-      [
-        '/n',
-        'CN=Celest, O=Teo, Inc., C=US',
-        '/r',
-        '/h',
-        '0',
-        '/eku',
-        '1.3.6.1.5.5.7.3.3,1.3.6.1.4.1.311.10.3.13',
-        '/e',
-        '01/01/2025',
-        '/sv',
-        'celest.pvk',
-        'celest.cer',
-      ],
-    );
-
-    await _runProcess(
-      'Pvk2Pfx',
-      [
-        '/pvk',
-        'celest.pvk',
-        '/spc',
-        'celest.cer',
-        '/pfx',
-        'celest.pfx',
-        '/po',
-        'password',
-      ],
-    );
-  }
-
-  Future<void> _evCodesign(String appxPackage) async {
-    final evKeyRing = Platform.environment['EV_KEY_RING'];
-    final evKeyName = Platform.environment['EV_KEY_NAME'];
-
-    if (evKeyRing.isNullOrEmpty || evKeyName.isNullOrEmpty) {
-      throw StateError('EV_KEY_RING or EV_KEY_NAME is empty');
-    }
-    if (!evKeyRing!.startsWith('projects/')) {
-      throw StateError(
-        r'EV_KEY_RING must be of the form "projects/$projectId/locations/$location/keyRings/$keyRingName"',
-      );
-    }
-
-    print('Downloading GCP KMS integration...');
-    const gcpKmsUrl =
-        'https://github.com/GoogleCloudPlatform/kms-integrations/releases/download/v1.1/libkmsp11-1.1-windows-amd64.zip';
-
-    final gcpKmsZip = await httpClient.get(Uri.parse(gcpKmsUrl));
-    final decoder = ZipDecoder().decodeBytes(gcpKmsZip.bodyBytes);
-    extractArchiveToDisk(decoder, tempDir.path);
-
-    final pkcs11Config = File(p.join(tempDir.path, 'pkcs11.yaml'))
-      ..createSync();
-    pkcs11Config.writeAsStringSync(
-      '''
-tokens:
-  - key_ring: $evKeyRing
- ''',
-      flush: true,
-    );
-
-    final opensslArgs = [
-      'req',
-      '-new',
-      '-subj',
-      '/CN=Teo Inc./O=Teo Inc./C=US',
-      '-sha256',
-      '-engine',
-      'pkcs11',
-      '-keyform',
-      'engine',
-      '-key',
-      'pkcs11:object=$evKeyName',
-    ];
-    final csr = Process.runSync(
-      'openssl',
-      opensslArgs,
-      environment: {
-        'PKCS11_MODULE_PATH': tempDir.path,
-        'KMS_PKCS11_CONFIG': pkcs11Config.path,
-      },
-      stdoutEncoding: utf8,
-      stderrEncoding: utf8,
-    );
-    if (csr.exitCode != 0) {
-      throw ProcessException(
-        'openssl',
-        opensslArgs,
-        csr.stderr.toString(),
-        csr.exitCode,
-      );
-    }
+    final appxPackage = await _createAppx();
+    await _evCodesign(appxPackage);
   }
 
   /// Creates an APPX installer package for the CLI.
-  Future<void> _createAppx() async {
+  Future<String> _createAppx() async {
     // Mostly copied from winget: https://github.com/microsoft/winget-cli/blob/master/src/AppInstallerCLIPackage/Package.appxmanifest
     // Schema: https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-application
     final appxManifestPath = p.join(buildDir.path, 'AppxManifest.xml');
@@ -600,6 +501,7 @@ tokens:
       File(p.join(toolDir.path, 'windows', 'AppxManifest.xml'))
           .readAsStringSync(),
     ).renderString({
+      'arch': osArch == Abi.windowsArm64 ? 'arm64' : 'x64',
       'version': version,
     });
     print('Rendered AppxManifest.xml:\n\n$appxManifest\n');
@@ -618,6 +520,10 @@ tokens:
       File(p.join(sourceDir, logo)).copySync(p.join(buildDir.path, logo));
     }
 
+    // Output to temporary APPX since jsign gets confused when the filename
+    // contains the version (periods).
+    final tempOutputFilepath = p.join(tempDir.path, 'celest.appx');
+
     await _runProcess(
       p.join(_windowsSdkBinDir, 'makeappx.exe'),
       [
@@ -625,10 +531,120 @@ tokens:
         '/d',
         buildDir.path,
         '/p',
-        outputFilepath,
+        tempOutputFilepath,
         '/v',
       ],
     );
+
+    return tempOutputFilepath;
+  }
+
+  Future<void> _evCodesign(String appxPackage) async {
+    final evKeyRing = Platform.environment['EV_KEY_RING'];
+    final evKeyName = Platform.environment['EV_KEY_NAME'];
+    final certData = Platform.environment['WINDOWS_CERTS_DATA'];
+
+    if (evKeyRing.isNullOrEmpty ||
+        evKeyName.isNullOrEmpty ||
+        certData.isNullOrEmpty) {
+      throw StateError(
+        'EV_KEY_RING or EV_KEY_NAME or WINDOWS_CERTS_DATA is empty',
+      );
+    }
+    if (!evKeyRing!.startsWith('projects/')) {
+      throw StateError(
+        r'EV_KEY_RING must be of the form "projects/$projectId/locations/$location/keyRings/$keyRingName"',
+      );
+    }
+
+    final windowsCertsFile = File(p.join(tempDir.path, 'windows-certs.p7b'));
+    await windowsCertsFile.create();
+    await windowsCertsFile.writeAsBytes(base64Decode(certData!), flush: true);
+
+    print('Downloading jsign tool...');
+    // TODO(dnys1): Replace with GH release once 5.1 is released.
+    const jsignUrl = 'https://releases.celest.dev/_build/jsign.jar';
+    final jsignJarReq = await httpClient.get(Uri.parse(jsignUrl));
+    if (jsignJarReq.statusCode != 200) {
+      throw StateError(
+        'Could not download jsign (${jsignJarReq.statusCode}): '
+        '${jsignJarReq.body}',
+      );
+    }
+    final jsignJar = File(p.join(tempDir.path, 'jsign.jar'));
+    await jsignJar.create();
+    await jsignJar.writeAsBytes(jsignJarReq.bodyBytes, flush: true);
+
+    print('Loading GCP credentials...');
+    final gcloudPassProc = await Process.run(
+      'gcloud',
+      ['auth', 'application-default', 'print-access-token'],
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+      runInShell: true,
+    );
+    if (gcloudPassProc.exitCode != 0) {
+      throw ProcessException(
+        'gcloud',
+        ['auth', 'application-default', 'print-access-token'],
+        gcloudPassProc.stderr as String,
+        gcloudPassProc.exitCode,
+      );
+    }
+    final gcloudPass =
+        LineSplitter.split(gcloudPassProc.stdout as String).first.trim();
+
+    final jsignArgs = <String>[
+      '-jar',
+      jsignJar.path,
+      '--storetype',
+      'GOOGLECLOUD',
+      '--storepass',
+      gcloudPass,
+      '--keystore',
+      evKeyRing,
+      '--alias',
+      evKeyName!,
+      '--certfile',
+      windowsCertsFile.path,
+      '--tsmode',
+      'RFC3161',
+      '--tsaurl',
+      'http://timestamp.globalsign.com/tsa/r6advanced1',
+      appxPackage,
+    ];
+
+    print('Running jsign tool...');
+    final jsignRes = await Process.run(
+      'java',
+      jsignArgs,
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
+    if (jsignRes.exitCode != 0) {
+      throw ProcessException(
+        'java',
+        jsignArgs,
+        jsignRes.stderr as String,
+        jsignRes.exitCode,
+      );
+    }
+
+    print('Verifying EV code signature...');
+    await _runProcess(
+      p.join(_windowsSdkBinDir, 'signtool.exe'),
+      [
+        'verify',
+        '/pa',
+        '/v',
+        appxPackage,
+      ],
+    );
+
+    // Copy the temp appx package to its final output path.
+    await File(appxPackage).copy(outputFilepath);
+
+    print('Successfully codesigned $appxPackage');
   }
 }
 

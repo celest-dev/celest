@@ -7,9 +7,11 @@
          xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
          xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
          IgnorableNamespaces="uap uap3 uap5 rescap">
+  <!-- Publisher must exactly match EV certificate. Need &quot since name has comma in it -->
   <Identity Name="Celest.CLI"
             Version="{{ version }}.0"
-            Publisher="CN=Teo Inc., O=Teo Inc., C=US" />
+            Publisher="E=contact@celest.dev, CN=&quot;Teo, Inc.&quot;, O=&quot;Teo, Inc.&quot;, STREET=2261 Market Street Ste 5675, L=San Francisco, S=California, C=US, OID.1.3.6.1.4.1.311.60.2.1.2=Delaware, OID.1.3.6.1.4.1.311.60.2.1.3=US, SERIALNUMBER=2570417, OID.2.5.4.15=Private Organization"
+            ProcessorArchitecture="{{ arch }}" />
   <Properties>
     <DisplayName>Celest</DisplayName>
     <PublisherDisplayName>Celest</PublisherDisplayName>
