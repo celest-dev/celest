@@ -28,7 +28,9 @@ enum RestartMode {
 }
 
 final class CelestFrontend implements Closeable {
-  CelestFrontend() {
+  factory CelestFrontend() => instance ??= CelestFrontend._();
+
+  CelestFrontend._() {
     // Initialize immediately instead of lazily so that _readyForChanges has
     // a listener registered before firing.
     _watcher = StreamQueue(
@@ -62,6 +64,7 @@ final class CelestFrontend implements Closeable {
     });
   }
 
+  static CelestFrontend? instance;
   static final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer = CelestAnalyzer();
 
@@ -98,7 +101,12 @@ final class CelestFrontend implements Closeable {
   ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
   var _didFirstCompile = false;
-  ast.Project? _currentProject;
+
+  /// The current project being compiled.
+  ///
+  /// Will be `null` if there are errors or if the project has not been
+  /// analyzed yet.
+  ast.Project? currentProject;
 
   Future<int> run() async {
     // TODO: Queue changed paths and only recompile changes
@@ -119,7 +127,7 @@ final class CelestFrontend implements Closeable {
           // ignore: unnecessary_null_checks
           case (final project!, _):
             var restartMode = RestartMode.hotReload;
-            if (_currentProject case final currentProject?) {
+            if (currentProject case final currentProject?) {
               // Diff the old and new projects to see if anything changed.
               final differ = ProjectDiff(currentProject);
               project.accept(differ);
@@ -127,7 +135,7 @@ final class CelestFrontend implements Closeable {
                 restartMode = RestartMode.fullRestart;
               }
             }
-            _currentProject = project;
+            currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
             final _ = await _buildProject(project);
             if (project.apis.isNotEmpty) {

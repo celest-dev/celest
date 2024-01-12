@@ -16,38 +16,43 @@ final class StartCommand extends ProjectCommand {
   @override
   String get name => 'start';
 
+  Future<void> _createProject() async {
+    if (!pubspec.dependencies.containsKey('flutter')) {
+      throw const CelestException(
+        'Only Flutter projects are supported at this time.',
+      );
+    }
+
+    final appName = pubspec.name;
+    final projectName = cliLogger.prompt(
+      'Enter a name for your project',
+      defaultValue: appName,
+    );
+    logger.finest(
+      'Generating project for "$projectName" at '
+      '"${projectPaths.projectRoot}"...',
+    );
+    await ProjectGenerator(
+      projectName: projectName,
+      appRoot: Directory.current.path,
+      projectRoot: projectPaths.projectRoot,
+    ).generate();
+    logger.finest('Inserting project into DB...');
+    await database.createProject(
+      ProjectsCompanion.insert(
+        name: projectName,
+        path: projectPaths.projectRoot,
+      ),
+    );
+    cliLogger.success('Project generated successfully.');
+  }
+
   @override
   Future<int> run() async {
     await super.run();
 
     if (!isExistingProject) {
-      if (!pubspec.dependencies.containsKey('flutter')) {
-        logger.shout('Only Flutter projects are supported at this time.');
-        return 1;
-      }
-
-      final appName = pubspec.name;
-      final projectName = cliLogger.prompt(
-        'Enter a name for your project',
-        defaultValue: appName,
-      );
-      logger.finest(
-        'Generating project for "$projectName" at '
-        '"${projectPaths.projectRoot}"...',
-      );
-      await ProjectGenerator(
-        projectName: projectName,
-        appRoot: Directory.current.path,
-        projectRoot: projectPaths.projectRoot,
-      ).generate();
-      logger.finest('Inserting project into DB...');
-      await database.createProject(
-        ProjectsCompanion.insert(
-          name: projectName,
-          path: projectPaths.projectRoot,
-        ),
-      );
-      cliLogger.success('Project generated successfully.');
+      await _createProject();
     }
 
     try {
