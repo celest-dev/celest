@@ -1,16 +1,13 @@
-import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class CelestAllocator implements Allocator {
   CelestAllocator({
-    required this.projectPaths,
     required this.forFile,
   });
 
   static const _doNotPrefix = ['dart:core'];
 
-  final ProjectPaths projectPaths;
   final String forFile;
 
   final _imports = <String, int>{};
@@ -20,7 +17,7 @@ final class CelestAllocator implements Allocator {
   String allocate(Reference reference) {
     final symbol = reference.symbol!;
     var url = reference.url;
-    if (url == null || _doNotPrefix.contains(url)) {
+    if (url == null || _doNotPrefix.contains(url) || p.equals(url, forFile)) {
       return symbol;
     }
     // Fix `file://` and root-relative paths to be relative to the current file.
@@ -38,6 +35,9 @@ final class CelestAllocator implements Allocator {
             ),
       _ => url,
     };
+    if (p.equals(url, forFile)) {
+      return symbol;
+    }
     return '_i${_imports.putIfAbsent(url, _nextKey)}.$symbol';
   }
 

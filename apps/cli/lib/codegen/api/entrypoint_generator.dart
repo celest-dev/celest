@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -23,9 +22,6 @@ final class EntrypointGenerator {
   final String outputDir;
 
   late final String projectRoot = projectPaths.projectRoot;
-  late final JsonGenerator jsonGenerator = JsonGenerator(
-    typeHelper: typeHelper,
-  );
   late final String targetName = '${function.name.pascalCase}Target';
   final _customSerializers = LinkedHashSet<Class>(
     equals: (a, b) => a.name == b.name,
@@ -102,7 +98,11 @@ final class EntrypointGenerator {
               final fromMap = refer('request').index(
                 literalString(param.name, raw: true),
               );
-              final deserialized = jsonGenerator.fromJson(param.type, fromMap);
+              final deserialized = jsonGenerator.fromJson(
+                param.type,
+                fromMap,
+                defaultValue: param.defaultTo,
+              );
               paramExp = deserialized;
             }
             if (param.named) {
@@ -224,7 +224,11 @@ final class EntrypointGenerator {
       );
       if ((dartType, type)
           case (final ast.RecordType dartType, final RecordType recordType)) {
-        _anonymousRecordTypes[dartType.symbol] = recordType;
+        _anonymousRecordTypes[dartType.symbol] =
+            // Typedefs should always point to the non-nullable
+            // version since the type is only used to invoke the
+            // serializer and the serializer handles null values.
+            recordType.rebuild((r) => r.isNullable = false);
       }
     }
 
@@ -270,7 +274,7 @@ final class EntrypointGenerator {
     final entrypoint = Method(
       (m) => m
         ..name = 'main'
-        ..returns = DartTypes.async.future(DartTypes.core.void$)
+        ..returns = DartTypes.core.future(DartTypes.core.void$)
         ..modifier = MethodModifier.async
         ..requiredParameters.add(
           Parameter(

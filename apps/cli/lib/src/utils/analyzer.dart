@@ -1,17 +1,17 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-// ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
-// ignore: implementation_imports
 import 'package:analyzer/src/dart/element/type.dart';
-// ignore: implementation_imports
 import 'package:analyzer/src/generated/source.dart';
+import 'package:celest_cli/analyzer/const_to_code_builder.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
@@ -31,6 +31,7 @@ extension DartTypeHelper on DartType {
         return switch ((this, flattened)) {
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54260
           (
+            // e.g. Future<Record>/FutureOr<Record>
             InterfaceType(
               typeArguments: [
                 final RecordTypeImpl originalRecordType,
@@ -54,6 +55,8 @@ extension DartTypeHelper on DartType {
   DartType get nonNullable => (this as TypeImpl).withNullability(
         NullabilitySuffix.none,
       );
+
+  bool get isPackageCelest => element?.library?.isPackageCelest ?? false;
 
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -197,6 +200,12 @@ extension ElementSourceLocation on Element {
   ast.FileSpan get sourceLocation {
     return source!.toSpan(nameOffset, nameOffset + nameLength);
   }
+
+  List<String> get docLines => switch (documentationComment) {
+        final documentationComment? =>
+          LineSplitter.split(documentationComment).toList(),
+        _ => const <String>[],
+      };
 }
 
 extension ElementAnnotationSourceLocation on ElementAnnotation {
@@ -339,4 +348,52 @@ extension SafeExpand on ast.FileSpan {
     }
     return expand(other);
   }
+}
+
+extension AnnotationIsPrivate on ElementAnnotation {
+  /// Whether the annotation references a private [element].
+  bool get isPrivate => switch (element) {
+        null => false,
+        final PropertyAccessorElement propertyAccessor =>
+          propertyAccessor.variable.isPrivate,
+        final ConstructorElement constructor =>
+          constructor.enclosingElement.isPrivate,
+        _ => unreachable(
+            'Unexpected annotation element: ${element.runtimeType}',
+          ),
+      };
+
+  codegen.Expression? get toCodeBuilder {
+    if (isPrivate) {
+      return null;
+    }
+    final constant = computeConstantValue();
+    if (constant == null) {
+      return null;
+    }
+    final type = constant.type;
+    if (type == null || type.isPackageCelest || type.isMiddleware) {
+      return null;
+    }
+    if (element case final PropertyAccessorElement propertyAccessor) {
+      return codegen.refer(
+        propertyAccessor.name,
+        propertyAccessor.library.source.uri.toString(),
+      );
+    }
+    return constant.toCodeBuilder;
+  }
+}
+
+extension ParameterDefaultTo on ParameterElement {
+  /// The parameter's default value as a [codegen.Expression].
+  codegen.Expression? get defaultTo => switch (this) {
+        // TODO(dnys1): File ticket with Dart team
+        // Required, named, non-nullable parameters have a default value
+        // of `null` for some reason.
+        _ when isRequired && isNamed => null,
+        final ConstVariableElement constVar =>
+          constVar.computeConstantValue()?.toCodeBuilder,
+        _ => null,
+      };
 }

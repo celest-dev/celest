@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
-import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -43,7 +42,6 @@ final class SerializerGenerator {
   }
 
   late final type = serializationSpec.type;
-  late final jsonGenerator = JsonGenerator(typeHelper: typeHelper);
   late final typeReference = typeHelper.toReference(type).nonNullable;
   late final wireType = typeHelper.toReference(serializationSpec.wireType);
   late final castType = typeHelper.toReference(serializationSpec.castType);
@@ -362,20 +360,13 @@ final class SerializerGenerator {
     final deserializedNamed = <String, Expression>{};
     for (final parameter in serializationSpec.parameters) {
       final reference = typeHelper.toReference(parameter.type);
-      final initializer = parameter.defaultValueCode;
-      var deserialized = jsonGenerator.fromJson(
-        reference.withNullability(
-          reference.isNullableOrFalse || initializer != null,
-        ),
+      final deserialized = jsonGenerator.fromJson(
+        reference,
         serializationSpec.wireType.isDartCoreMap
             ? ref.index(literalString(parameter.name, raw: true))
             : ref,
+        defaultValue: parameter.defaultValue,
       );
-      if (initializer != null) {
-        deserialized = deserialized.parenthesized.ifNullThen(
-          CodeExpression(Code(initializer)),
-        );
-      }
       if (parameter.isPositional) {
         deserializedPositional.add(deserialized);
       } else {

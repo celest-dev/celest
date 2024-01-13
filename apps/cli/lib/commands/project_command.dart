@@ -45,7 +45,15 @@ abstract base class ProjectCommand extends CelestCommand {
     this.isExistingProject = isExistingProject;
 
     final projectRoot = celestDir.path;
-    init(projectRoot: projectRoot);
+    init(
+      projectRoot: projectRoot,
+      clientOutputsDir: p.join(
+        celestDir.parent.path,
+        'lib',
+        'src',
+        'celest',
+      ),
+    );
 
     // Ensure existing projects are in DB
     if (isExistingProject) {

@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
-// ignore: implementation_imports
 import 'package:process/src/interface/common.dart';
 
 /// A utility class for finding and referencing paths within the Dart SDK.

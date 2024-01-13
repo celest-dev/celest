@@ -1,0 +1,348 @@
+/// Tests that metadata associated with functions and parameters are correctly
+/// parsed and transferred to the generated client.
+library;
+
+class MyAnnotation {
+  const MyAnnotation.create(this.positional, {required this.named});
+
+  final String positional;
+  final String named;
+}
+
+/// A function that has doc comments.
+///
+/// This is a doc comment.
+///
+/// # This is an H1
+/// ## This is an H2
+/// ### This is an H3
+/// * This is a list item
+///
+/// This is an example:
+///
+/// ```dart
+/// void hasDocComments() {}
+/// ```
+// This should not be copied over.
+void hasDocComments() {}
+
+@deprecated
+void hasDeprecatedAnnotation() {}
+
+@Deprecated('Do not use this function.')
+void hasConstructedDeprecatedAnnotation() {}
+
+@MyAnnotation.create('positional', named: 'named')
+void hasNamedConstructedAnnotation() {}
+
+enum LiteralEnum { a, b, c }
+
+class Literals {
+  const Literals({
+    required this.string,
+    required this.intValue,
+    required this.doubleValue,
+    required this.boolValue,
+    required this.list,
+    required this.map,
+    required this.enumValue,
+    required this.recordValue,
+  });
+
+  final String string;
+  final int intValue;
+  final double doubleValue;
+  final bool boolValue;
+  final List<String> list;
+  final Map<String, String> map;
+  final LiteralEnum enumValue;
+  final ({String a, String b, String c}) recordValue;
+}
+
+@Literals(
+  string: 'string',
+  intValue: 1,
+  doubleValue: 1.0,
+  boolValue: true,
+  list: ['list'],
+  map: {'map': 'map'},
+  enumValue: LiteralEnum.a,
+  recordValue: (a: 'a', b: 'b', c: 'c'),
+)
+void hasLiteralsAnnotation(
+  @Literals(
+    string: 'string',
+    intValue: 1,
+    doubleValue: 1.0,
+    boolValue: true,
+    list: ['list'],
+    map: {'map': 'map'},
+    enumValue: LiteralEnum.a,
+    recordValue: (a: 'a', b: 'b', c: 'c'),
+  )
+  String value, {
+  @Literals(
+    string: 'string',
+    intValue: 1,
+    doubleValue: 1.0,
+    boolValue: true,
+    list: ['list'],
+    map: {'map': 'map'},
+    enumValue: LiteralEnum.a,
+    recordValue: (a: 'a', b: 'b', c: 'c'),
+  )
+  required String named,
+}) {}
+
+class _NotExportable {
+  const _NotExportable();
+}
+
+const _notExportable = _NotExportable();
+
+@_notExportable
+void hasNotExportableAnnotation(
+  @_notExportable String value, {
+  @_notExportable String named = 'named',
+}) {}
+
+@_NotExportable()
+void hasNotExportableConstructedAnnotation(
+  @_NotExportable() String value, {
+  @_NotExportable() String named = 'named',
+}) {}
+
+class Exportable {
+  const Exportable();
+
+  static const instance = Exportable();
+}
+
+const exportable = Exportable();
+const _notExportableExportable = Exportable();
+
+@exportable
+void hasExportableAnnotation(
+  @exportable String value, {
+  @exportable String named = 'named',
+}) {}
+
+@Exportable()
+void hasExportableConstructedAnnotation(
+  @Exportable() String value, {
+  @Exportable() String named = 'named',
+}) {}
+
+@_notExportableExportable
+void hasNotExportableExportableAnnotation(
+  @_notExportableExportable String value, {
+  @_notExportableExportable String named = 'named',
+}) {}
+
+// -- Default values --
+
+class Serializable {
+  const Serializable([this.type]);
+  const Serializable.forType(String this.type);
+
+  static const string = Serializable.forType('String');
+
+  final String? type;
+}
+
+void positionalDefaultValues([
+  String value = 'value',
+  int intValue = 1,
+  double doubleValue = 1.0,
+  bool boolValue = true,
+  List<String> list = const ['list'],
+  Map<String, String> map = const {'map': 'map'},
+  Exportable exportable = const Exportable(),
+  Serializable serializable = const Serializable.forType('String'),
+  LiteralEnum enumValue = LiteralEnum.a,
+  ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
+  // TODO(dnys1): Should be an error
+  // _NotExportable notExportable = const _NotExportable(),
+]) {}
+
+void nullablePositionalDefaultValues([
+  String? value = 'value',
+  int? intValue = 1,
+  double? doubleValue = 1.0,
+  bool? boolValue = true,
+  List<String>? list = const ['list'],
+  Map<String, String>? map = const {'map': 'map'},
+  Exportable? exportable = const Exportable(),
+  Serializable? serializable = const Serializable.forType('String'),
+  LiteralEnum? enumValue = LiteralEnum.a,
+  ({String a, String b, String c})? recordValue = (a: 'a', b: 'b', c: 'c'),
+  // _NotExportable? notExportable = const _NotExportable(),
+]) {}
+
+void namedDefaultValues({
+  String value = 'value',
+  int intValue = 1,
+  double doubleValue = 1.0,
+  bool boolValue = true,
+  List<String> list = const ['list'],
+  Map<String, String> map = const {'map': 'map'},
+  Exportable exportable = const Exportable(),
+  Serializable serializable = const Serializable.forType('String'),
+  LiteralEnum enumValue = LiteralEnum.a,
+  ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
+  // TODO(dnys1): Should be an error
+  // _NotExportable notExportable = const _NotExportable(),
+}) {}
+
+void nullableNamedDefaultValues({
+  String? value = 'value',
+  int? intValue = 1,
+  double? doubleValue = 1.0,
+  bool? boolValue = true,
+  List<String>? list = const ['list'],
+  Map<String, String>? map = const {'map': 'map'},
+  Exportable? exportable = const Exportable(),
+  Serializable? serializable = const Serializable.forType('String'),
+  LiteralEnum? enumValue = LiteralEnum.a,
+  ({String a, String b, String c})? recordValue = (a: 'a', b: 'b', c: 'c'),
+  // _NotExportable? notExportable = const _NotExportable(),
+}) {}
+
+// Tests that default values of function parameters can refer
+// to top-level variables and static field variables.
+
+const defaultInt = 42;
+const defaultDouble = 42.0;
+const defaultBool = true;
+const defaultString = 'default';
+const defaultList = ['default'];
+const defaultMap = {'default': 'default'};
+const defaultEnum = LiteralEnum.a;
+const defaultRecord = (a: 'a', b: 'b', c: 'c');
+const defaultExportable = Exportable.instance;
+const defaultSerializable = Serializable.string;
+
+void positionalDefaultValueVars([
+  int value = defaultInt,
+  double doubleValue = defaultDouble,
+  bool boolValue = defaultBool,
+  String stringValue = defaultString,
+  List<String> listValue = defaultList,
+  Map<String, String> mapValue = defaultMap,
+  LiteralEnum enumValue = defaultEnum,
+  ({String a, String b, String c}) recordValue = defaultRecord,
+  Exportable exportable = defaultExportable,
+  Serializable serializable = defaultSerializable,
+]) {}
+
+void nullablePositionalDefaultValueVars([
+  int? value = defaultInt,
+  double? doubleValue = defaultDouble,
+  bool? boolValue = defaultBool,
+  String? stringValue = defaultString,
+  List<String>? listValue = defaultList,
+  Map<String, String>? mapValue = defaultMap,
+  LiteralEnum? enumValue = defaultEnum,
+  ({String a, String b, String c})? recordValue = defaultRecord,
+  Exportable? exportable = defaultExportable,
+  Serializable? serializable = defaultSerializable,
+]) {}
+
+void namedDefaultValueVars({
+  int value = defaultInt,
+  double doubleValue = defaultDouble,
+  bool boolValue = defaultBool,
+  String stringValue = defaultString,
+  List<String> listValue = defaultList,
+  Map<String, String> mapValue = defaultMap,
+  LiteralEnum enumValue = defaultEnum,
+  ({String a, String b, String c}) recordValue = defaultRecord,
+  Exportable exportable = defaultExportable,
+  Serializable serializable = defaultSerializable,
+}) {}
+
+void nullableNamedDefaultValueVars({
+  int? value = defaultInt,
+  double? doubleValue = defaultDouble,
+  bool? boolValue = defaultBool,
+  String? stringValue = defaultString,
+  List<String>? listValue = defaultList,
+  Map<String, String>? mapValue = defaultMap,
+  LiteralEnum? enumValue = defaultEnum,
+  ({String a, String b, String c})? recordValue = defaultRecord,
+  Exportable? exportable = defaultExportable,
+  Serializable? serializable = defaultSerializable,
+}) {}
+
+// Tests that default values which are private variable references
+// are copied by value and not by trying to reference the private
+// variable.
+//
+// Since function signatures would become invalid if we did not
+// copy over the default value, this is a way to ensure that client
+// signatures look the same as the server signatures when variables
+// are public, but still function correctly when variables are
+// private.
+
+const _defaultInt = 42;
+const _defaultDouble = 42.0;
+const _defaultBool = true;
+const _defaultString = 'default';
+const _defaultList = ['default'];
+const _defaultMap = {'default': 'default'};
+const _defaultEnum = LiteralEnum.a;
+const _defaultRecord = (a: 'a', b: 'b', c: 'c');
+const _defaultExportable = Exportable.instance;
+const _defaultSerializable = Serializable.string;
+
+void positionalDefaultValueVarsPrivate([
+  int value = _defaultInt,
+  double doubleValue = _defaultDouble,
+  bool boolValue = _defaultBool,
+  String stringValue = _defaultString,
+  List<String> listValue = _defaultList,
+  Map<String, String> mapValue = _defaultMap,
+  LiteralEnum enumValue = _defaultEnum,
+  ({String a, String b, String c}) recordValue = _defaultRecord,
+  Exportable exportable = _defaultExportable,
+  Serializable serializable = _defaultSerializable,
+]) {}
+
+void nullablePositionalDefaultValueVarsPrivate([
+  int? value = _defaultInt,
+  double? doubleValue = _defaultDouble,
+  bool? boolValue = _defaultBool,
+  String? stringValue = _defaultString,
+  List<String>? listValue = _defaultList,
+  Map<String, String>? mapValue = _defaultMap,
+  LiteralEnum? enumValue = _defaultEnum,
+  ({String a, String b, String c})? recordValue = _defaultRecord,
+  Exportable? exportable = _defaultExportable,
+  Serializable? serializable = _defaultSerializable,
+]) {}
+
+void namedDefaultValueVarsPrivate({
+  int value = _defaultInt,
+  double doubleValue = _defaultDouble,
+  bool boolValue = _defaultBool,
+  String stringValue = _defaultString,
+  List<String> listValue = _defaultList,
+  Map<String, String> mapValue = _defaultMap,
+  LiteralEnum enumValue = _defaultEnum,
+  ({String a, String b, String c}) recordValue = _defaultRecord,
+  Exportable exportable = _defaultExportable,
+  Serializable serializable = _defaultSerializable,
+}) {}
+
+void nullableNamedDefaultValueVarsPrivate({
+  int? value = _defaultInt,
+  double? doubleValue = _defaultDouble,
+  bool? boolValue = _defaultBool,
+  String? stringValue = _defaultString,
+  List<String>? listValue = _defaultList,
+  Map<String, String>? mapValue = _defaultMap,
+  LiteralEnum? enumValue = _defaultEnum,
+  ({String a, String b, String c})? recordValue = _defaultRecord,
+  Exportable? exportable = _defaultExportable,
+  Serializable? serializable = _defaultSerializable,
+}) {}

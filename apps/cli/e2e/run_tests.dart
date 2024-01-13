@@ -5,7 +5,8 @@ import 'dart:math';
 import 'package:args/args.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/codegen/client_code_generator.dart';
+import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
@@ -106,6 +107,7 @@ class TestRunner {
       _testAnalyzer();
       _testCodegen();
       _testBuild();
+      _testClient();
 
       final apisDir = Directory(p.join(projectRoot, 'functions'));
       if (apisDir.existsSync()) {
@@ -142,7 +144,7 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final codegen = CodeGenerator();
+      final codegen = CloudCodeGenerator();
       project!.accept(codegen);
 
       if (Platform.isWindows) {
@@ -192,6 +194,19 @@ class TestRunner {
         final expectedAst = jsonDecode(cloudAstFile.readAsStringSync());
         expect(cloudAst.toProto3Json(), expectedAst);
       }
+    });
+  }
+
+  void _testClient() {
+    test('client', () async {
+      final (:project, :errors) = await analyzer.analyzeProject();
+      expect(project, isNotNull);
+      expect(errors, isEmpty);
+
+      final codegen = ClientCodeGenerator(
+        project: project!,
+      );
+      await codegen.generate();
     });
   }
 
@@ -2263,6 +2278,48 @@ const Map<String, Test> tests = {
                 ],
               },
             ),
+          ],
+        },
+      ),
+      'metadata': ApiTest(
+        functionTests: {
+          // Tests that invoking methods with all default values
+          // should not result in any serialization errors.
+          'positionalDefaultValues': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullablePositionalDefaultValues': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'namedDefaultValues': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullableNamedDefaultValues': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'positionalDefaultValueVars': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullablePositionalDefaultValueVars': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'namedDefaultValueVars': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullableNamedDefaultValueVars': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'positionalDefaultValueVarsPrivate': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullablePositionalDefaultValueVarsPrivate': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'namedDefaultValueVarsPrivate': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
+          ],
+          'nullableNamedDefaultValueVarsPrivate': [
+            FunctionTestSuccess(name: '', input: {}, output: null),
           ],
         },
       ),

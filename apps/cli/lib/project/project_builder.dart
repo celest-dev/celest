@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest/celest.dart';
-// ignore: implementation_imports
 import 'package:celest/src/authz/policy.dart' as core;
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/visitor.dart';

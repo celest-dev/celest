@@ -1,10 +1,9 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i5;
+import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/cycles.dart' as _i2;
 
@@ -31,8 +30,8 @@ final class SelfReferencingTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i4.Future<void> main(List<String> args) async {
-  await _i5.serve(
+Future<void> main(List<String> args) async {
+  await _i4.serve(
     args,
     (_) => SelfReferencingTarget(),
   );
@@ -78,10 +77,12 @@ final class SelfReferencingSerializer
   _i2.SelfReferencing deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return _i2.SelfReferencing(
-      value: _i3.Serializers.scoped
-          .deserialize<_i2.SelfReferencing?>(serialized[r'value']),
-      wrapper: _i3.Serializers.scoped
-          .deserialize<_i2.SelfReferencingWrapper?>(serialized[r'wrapper']),
+      value: (_i3.Serializers.scoped
+              .deserialize<_i2.SelfReferencing?>(serialized[r'value'])) ??
+          null,
+      wrapper: (_i3.Serializers.scoped.deserialize<_i2.SelfReferencingWrapper?>(
+              serialized[r'wrapper'])) ??
+          null,
       list: (serialized[r'list'] as Iterable<Object?>)
           .map((el) =>
               _i3.Serializers.scoped.deserialize<_i2.SelfReferencing>(el))

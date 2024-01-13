@@ -1,11 +1,11 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
+
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
 import 'dart:typed_data' as _i4;
 
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i6;
+import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/parameter_types.dart' as _i2;
 
@@ -210,8 +210,8 @@ final class SimpleTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i5.Future<void> main(List<String> args) async {
-  await _i6.serve(
+Future<void> main(List<String> args) async {
+  await _i5.serve(
     args,
     (_) => SimpleTarget(),
   );

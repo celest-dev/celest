@@ -583,24 +583,6 @@ FromJson fromJson(FromJson value) => value;
       );
 
       testErrors(
-        name: 'bad_middleware_class',
-        apis: {
-          'greeting.dart': '''
-class NotMiddleware {
-  const NotMiddleware();
-}
-
-@NotMiddleware()
-String sayHello() => 'Hello, World!';
-''',
-        },
-        errors: [
-          // TODO: Make more specific
-          'Invalid API annotation',
-        ],
-      );
-
-      testErrors(
         name: 'bad_middleware_type',
         apis: {
           'greeting.dart': '''

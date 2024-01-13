@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:celest_cli/ast/ast.dart' as ast;
-import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/env/env_parser.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:source_span/source_span.dart';
@@ -74,7 +74,7 @@ final class EnvManager {
       (project) => project.envVars.replace(envVars),
     );
 
-    final resourcesDart = CodeGenerator.generateResourcesDart(project);
+    final resourcesDart = CloudCodeGenerator.generateResourcesDart(project);
     File(projectPaths.resourcesDart).writeAsStringSync(resourcesDart);
     File(projectPaths.envFile).writeAsStringSync(
       _env.entries

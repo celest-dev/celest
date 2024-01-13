@@ -1,12 +1,11 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i4;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i5;
-import 'package:functions_framework/serve.dart' as _i7;
+import 'package:functions_framework/serve.dart' as _i6;
 
 import '../../../functions/generic_wrappers.dart' as _i2;
 
@@ -90,8 +89,8 @@ final class GenericWrapperParametersTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i6.Future<void> main(List<String> args) async {
-  await _i7.serve(
+Future<void> main(List<String> args) async {
+  await _i6.serve(
     args,
     (_) => GenericWrapperParametersTarget(),
   );

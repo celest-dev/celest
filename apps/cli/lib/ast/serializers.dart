@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
@@ -29,6 +30,7 @@ final Serializers serializers = (_$serializers.toBuilder()
       ..add(const SourceLocationSerializer())
       ..add(const SourceSpanSerializer())
       ..add(const FileSpanSerializer())
+      ..add(const ExpressionSerializer())
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Reference)]),
         BuiltList<Reference>.new,
@@ -544,5 +546,33 @@ final class FileSpanSerializer implements StructuredSerializer<FileSpan> {
       'end',
       object.end.offset,
     ];
+  }
+}
+
+final class ExpressionSerializer implements PrimitiveSerializer<Expression> {
+  const ExpressionSerializer();
+
+  @override
+  Iterable<Type> get types => const [Expression];
+
+  @override
+  String get wireName => 'Expression';
+
+  @override
+  Expression deserialize(
+    Serializers serializers,
+    Object? serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    Expression object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return CodeGenerator.rawEmit(object, forFile: '');
   }
 }

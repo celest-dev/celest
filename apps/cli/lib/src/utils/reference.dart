@@ -47,9 +47,15 @@ extension ReferenceHelper on Reference {
     return toTypeReference.rebuild((t) => t.isNullable = false);
   }
 
-  TypeReference withNullability(bool isNullable) {
-    return toTypeReference.rebuild((t) => t.isNullable = isNullable);
-  }
+  Reference withNullability(bool isNullable) => switch (this) {
+        final RecordType recordType =>
+          recordType.rebuild((t) => t..isNullable = isNullable),
+        final FunctionType functionType =>
+          functionType.rebuild((t) => t..isNullable = isNullable),
+        final TypeReference type =>
+          type.rebuild((t) => t..isNullable = isNullable),
+        _ => toTypeReference.rebuild((t) => t..isNullable = isNullable),
+      };
 
   bool get isNullableOrFalse => switch (this) {
         TypeReference(:final isNullable) => isNullable ?? false,
@@ -124,6 +130,23 @@ extension ExpressionUtil on Expression {
       statement,
       if (performCheck) const Code('}'),
     ]);
+  }
+
+  /// Strips the `const` keyword from this expression.
+  ///
+  // TODO(dnys1): File a ticket with `code_builder` since this is only used to
+  /// workaround limitation with const constructors in annotations.
+  Expression get stripConst {
+    if (this case final InvokeExpression invoke) {
+      return InvokeExpression.newOf(
+        invoke.target,
+        invoke.positionalArguments,
+        invoke.namedArguments,
+        invoke.typeArguments,
+        invoke.name,
+      );
+    }
+    return this;
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 // ignore: library_prefixes
 import 'package:os_detect/os_detect.dart' as Platform;
@@ -17,12 +18,15 @@ path.Context get p {
 ProjectPaths init({
   required String projectRoot,
   String? outputsDir,
+  String? clientOutputsDir,
 }) {
   return projectPaths = ProjectPaths(
     projectRoot,
     outputsDir: outputsDir,
+    clientOutputsDir: clientOutputsDir,
   );
 }
 
 late ProjectPaths projectPaths;
 final TypeHelper typeHelper = TypeHelper();
+final JsonGenerator jsonGenerator = JsonGenerator();

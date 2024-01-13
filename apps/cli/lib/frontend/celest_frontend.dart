@@ -7,7 +7,8 @@ import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/project_diff.dart';
-import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/codegen/client_code_generator.dart';
+import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
@@ -109,7 +110,6 @@ final class CelestFrontend implements Closeable {
   ast.Project? currentProject;
 
   Future<int> run() async {
-    // TODO: Queue changed paths and only recompile changes
     Progress? currentProgress;
     try {
       List<String>? changedPaths;
@@ -138,29 +138,26 @@ final class CelestFrontend implements Closeable {
             currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
             final _ = await _buildProject(project);
-            if (project.apis.isNotEmpty) {
-              final envVars = project.envVars.map((envVar) => envVar.envName);
-              final port = await _startLocalApi(
-                [
-                  ...generatedOutputs,
-                  if (changedPaths != null)
-                    ...changedPaths!
-                  else
-                    ...project.apis.values.map(
-                      (api) =>
-                          // TODO: Make a property of the API
-                          p.join(projectPaths.apisDir, '${api.name}.dart'),
-                    ),
-                ],
-                envVars: envVars,
-                restartMode: restartMode,
-              );
-              currentProgress.complete(
-                'Celest is running at http://localhost:$port',
-              );
-            } else {
-              currentProgress.complete('Celest is running');
-            }
+            final envVars = project.envVars.map((envVar) => envVar.envName);
+            final port = await _startLocalApi(
+              [
+                ...generatedOutputs,
+                if (changedPaths != null)
+                  ...changedPaths!
+                else
+                  ...project.apis.values.map(
+                    (api) =>
+                        // TODO: Make a property of the API
+                        p.join(projectPaths.apisDir, '${api.name}.dart'),
+                  ),
+              ],
+              envVars: envVars,
+              restartMode: restartMode,
+            );
+            await _generateClientCode(project);
+            currentProgress.complete(
+              'Celest is running at http://localhost:$port',
+            );
 
             _didFirstCompile = true;
         }
@@ -213,7 +210,7 @@ final class CelestFrontend implements Closeable {
   Future<List<String>> _generateBackendCode(ast.Project project) =>
       performance.trace('CelestFrontend', 'generateBackendCode', () async {
         logger.fine('Generating backend code...');
-        final codeGenerator = CodeGenerator();
+        final codeGenerator = CloudCodeGenerator();
         project.accept(codeGenerator);
         final outputsDir = Directory(projectPaths.outputsDir);
         if (outputsDir.existsSync() && !_didFirstCompile) {
@@ -293,6 +290,13 @@ final class CelestFrontend implements Closeable {
     }
     return _localApiRunner!.port;
   }
+
+  Future<void> _generateClientCode(ast.Project project) =>
+      performance.trace('CelestFrontend', 'generateClientCode', () async {
+        logger.fine('Generating client code...');
+        final generator = ClientCodeGenerator(project: project);
+        await generator.generate();
+      });
 
   @override
   Future<void> close() =>

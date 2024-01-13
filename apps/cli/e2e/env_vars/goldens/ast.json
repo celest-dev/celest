@@ -5,11 +5,6 @@
     "symbol": "project",
     "url": "project:project.dart"
   },
-  "location": {
-    "uri": "project:project.dart",
-    "start": 44,
-    "end": 51
-  },
   "apis": {},
   "envVars": [
     {
@@ -52,5 +47,10 @@
         "end": 66
       }
     }
-  ]
+  ],
+  "location": {
+    "uri": "project:project.dart",
+    "start": 44,
+    "end": 51
+  }
 }

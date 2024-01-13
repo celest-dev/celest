@@ -19,6 +19,7 @@ import 'package:celest_runtime_cloud/celest_runtime_cloud.dart'
     as celest_runtime_cloud;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart' as meta;
 import 'package:shelf/shelf.dart' as shelf;
 
@@ -109,6 +110,9 @@ abstract class DartTypes {
   /// `package:functions_framework` types.
   static const functionsFramework = _FunctionsFramework();
 
+  /// `package:http` types.
+  static const http = _Http();
+
   /// `dart:io` types.
   static const io = _Io();
 
@@ -195,6 +199,14 @@ class _Core {
 
   /// Creates a [Function] reference.
   DartTypeReference get function => const DartTypeReference('Function', _url);
+
+  /// Creates a [Future] reference.
+  Reference future(Reference ref) => TypeReference(
+        (t) => t
+          ..symbol = 'Future'
+          ..url = _url
+          ..types.add(ref),
+      );
 
   /// Creates a [IndexError] reference.
   DartTypeReference get indexError =>
@@ -292,6 +304,16 @@ class _Core {
   DartTypeReference get stateError =>
       const DartTypeReference('StateError', _url);
 
+  /// Creates a [Stream] reference.
+  Reference stream([Reference? ref]) => TypeReference(
+        (t) => t
+          ..symbol = 'Stream'
+          ..url = _url
+          ..types.addAll([
+            if (ref != null) ref,
+          ]),
+      );
+
   /// Creates a [String] reference.
   DartTypeReference get string => const DartTypeReference('String', _url);
 
@@ -337,30 +359,12 @@ class _Async {
 
   static const _url = 'dart:async';
 
-  /// Creates a [Future] reference.
-  Reference future(Reference ref) => TypeReference(
-        (t) => t
-          ..symbol = 'Future'
-          ..url = _url
-          ..types.add(ref),
-      );
-
   /// Creates a [FutureOr] reference.
   Reference futureOr(Reference ref) => TypeReference(
         (t) => t
           ..symbol = 'FutureOr'
           ..url = _url
           ..types.add(ref),
-      );
-
-  /// Creates a [Stream] reference.
-  Reference stream([Reference? ref]) => TypeReference(
-        (t) => t
-          ..symbol = 'Stream'
-          ..url = _url
-          ..types.addAll([
-            if (ref != null) ref,
-          ]),
       );
 
   /// Creates a `runZoned` refererence.
@@ -704,6 +708,19 @@ class _FunctionsFramework {
 
   /// Creates a [functions_framework.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _url);
+}
+
+class _Http {
+  const _Http();
+
+  static const _url = 'package:http/http.dart';
+
+  /// Creates a [http.BaseClient] reference.
+  DartTypeReference get baseClient =>
+      const DartTypeReference('BaseClient', _url);
+
+  /// Creates a [http.Client] reference.
+  DartTypeReference get client => const DartTypeReference('Client', _url);
 }
 
 /// `dart:io` types

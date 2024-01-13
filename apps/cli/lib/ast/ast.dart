@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:celest_cli/ast/serializers.dart';
 import 'package:celest_cli/ast/visitor.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_span/source_span.dart';
 
@@ -184,7 +185,20 @@ abstract class CloudFunctionParameter
     required bool named,
     required FileSpan location,
     required NodeReference? references,
-  }) = _$CloudFunctionParameter._;
+    List<Expression> annotations = const [],
+    Expression? defaultTo,
+  }) {
+    return _$CloudFunctionParameter._(
+      name: name,
+      type: type,
+      required: required,
+      named: named,
+      location: location,
+      references: references,
+      annotations: annotations.build(),
+      defaultTo: defaultTo,
+    );
+  }
 
   factory CloudFunctionParameter.build([
     void Function(CloudFunctionParameterBuilder) updates,
@@ -200,9 +214,18 @@ abstract class CloudFunctionParameter
   bool get required;
   bool get named;
   NodeReference? get references;
+  BuiltList<Expression> get annotations;
+  Expression? get defaultTo;
 
   @override
   FileSpan get location;
+
+  /// Whether to include this parameter in the generated client.
+  bool get includeInClient {
+    if (type.isFunctionContext) return false;
+    if (references != null) return false;
+    return true;
+  }
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(CloudFunctionParameter.serializer, this)
@@ -223,6 +246,8 @@ abstract class CloudFunction
     required List<Reference> exceptionTypes,
     List<ApiMetadata> metadata = const [],
     required FileSpan location,
+    List<Expression> annotations = const [],
+    List<String> docs = const [],
   }) {
     return _$CloudFunction._(
       name: name,
@@ -233,6 +258,8 @@ abstract class CloudFunction
       metadata: metadata.build(),
       exceptionTypes: exceptionTypes.build(),
       location: location,
+      annotations: annotations.build(),
+      docs: docs.build(),
     );
   }
 
@@ -251,6 +278,8 @@ abstract class CloudFunction
   Reference get flattenedReturnType;
   BuiltList<ApiMetadata> get metadata;
   BuiltList<Reference> get exceptionTypes;
+  BuiltList<Expression> get annotations;
+  BuiltList<String> get docs;
 
   @override
   FileSpan get location;

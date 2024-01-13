@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
-// ignore: implementation_imports
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/common.dart';
@@ -12,6 +11,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:code_builder/code_builder.dart' as code_builder;
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
@@ -210,7 +210,7 @@ final class ParameterSpec {
     required this.isPositional,
     required this.isOptional,
     required this.isNamed,
-    required this.defaultValueCode,
+    required this.defaultValue,
   });
 
   final String name;
@@ -218,7 +218,7 @@ final class ParameterSpec {
   final bool isPositional;
   final bool isOptional;
   final bool isNamed;
-  final String? defaultValueCode;
+  final code_builder.Expression? defaultValue;
 
   @override
   bool operator ==(Object other) {
@@ -228,8 +228,7 @@ final class ParameterSpec {
         const DartTypeEquality().equals(type, other.type) &&
         isPositional == other.isPositional &&
         isOptional == other.isOptional &&
-        isNamed == other.isNamed &&
-        defaultValueCode == other.defaultValueCode;
+        isNamed == other.isNamed;
   }
 
   @override
@@ -239,7 +238,6 @@ final class ParameterSpec {
         isPositional,
         isOptional,
         isNamed,
-        defaultValueCode,
       );
 }
 
@@ -279,6 +277,16 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     if (type.isDartCoreSet) {
       return const VerdictNo([
         VerdictReason('Set types are not supported'),
+      ]);
+    }
+    if (type.isDartCoreSymbol) {
+      return const VerdictNo([
+        VerdictReason('Symbol types are not supported'),
+      ]);
+    }
+    if (type.isDartCoreType) {
+      return const VerdictNo([
+        VerdictReason('Type types are not supported'),
       ]);
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
@@ -461,6 +469,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitInterfaceType(InterfaceType type) {
+    // TODO(dnys1): Test private aliases
+    if (type.element.isPrivate) {
+      return Verdict.no(
+        'Private types are not supported',
+        location: type.element.sourceLocation,
+      );
+    }
+
     if (_isSimpleJson(type) case final verdict?) {
       return verdict;
     }
@@ -551,7 +567,15 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       );
     }
     final wireConstructor = fromJsonCtor ??
-        type.constructors.singleWhere((ctor) => ctor.name.isEmpty);
+        type.constructors.singleWhereOrNull((ctor) => ctor.name.isEmpty);
+    if (wireConstructor == null) {
+      return verdict &
+          Verdict.no(
+            'Class ${element.displayName} must have an unnamed constructor '
+            'with the same number of parameters as fields.',
+            location: element.sourceLocation,
+          );
+    }
 
     final spec = SerializationSpec(
       type: type,
@@ -569,7 +593,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             isPositional: parameter.isPositional,
             isOptional: parameter.isOptional,
             isNamed: parameter.isNamed,
-            defaultValueCode: parameter.defaultValueCode,
+            defaultValue: parameter.declaration.defaultTo,
           ),
       ],
       hasFromJson: fromJsonCtor != null,
@@ -643,7 +667,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
               isPositional: false,
               isNamed: true,
               isOptional: false,
-              defaultValueCode: null,
+              defaultValue: null,
             ),
         ],
         hasFromJson: false,

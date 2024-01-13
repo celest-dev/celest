@@ -1,10 +1,9 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i5;
+import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/records.dart' as _i2;
 
@@ -40,8 +39,8 @@ final class NamedFieldsTarget extends _i1.CelestFunctionTarget {
         );
 }
 
-_i4.Future<void> main(List<String> args) async {
-  await _i5.serve(
+Future<void> main(List<String> args) async {
+  await _i4.serve(
     args,
     (_) => NamedFieldsTarget(),
   );
@@ -119,7 +118,8 @@ final class Record$sxv9hgSerializer extends _i3.Serializer<Record$sxv9hg> {
       aliased: _i3.Serializers.scoped
           .deserialize<_i2.NamedFields>(serialized[r'aliased']),
       nonAliased: _i3.Serializers.scoped
-          .deserialize<Record$rmm4wt>(serialized[r'nonAliased'])
+          .deserialize<({String anotherField, String field})>(
+              serialized[r'nonAliased'])
     );
   }
 

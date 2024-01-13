@@ -35,6 +35,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(Reference)]),
           () => new ListBuilder<Reference>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Expression)]),
+          () => new ListBuilder<Expression>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Expression)]),
+          () => new ListBuilder<Expression>())
+      ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(Api)]),
           () => new MapBuilder<String, Api>())

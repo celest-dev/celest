@@ -1,17 +1,11 @@
 import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
-import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class JsonGenerator {
-  JsonGenerator({
-    required this.typeHelper,
-  });
-
-  final TypeHelper typeHelper;
-
   Expression toJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartAsyncFuture || dartType.isDartAsyncFutureOr) {
@@ -39,7 +33,7 @@ final class JsonGenerator {
         return ref;
       }
       return ref
-          .property('map')
+          .nullableProperty('map', type.isNullableOrFalse)
           .call([
             Method(
               (m) => m
@@ -66,7 +60,7 @@ final class JsonGenerator {
       if (value == serializedValue) {
         return ref;
       }
-      return ref.property('map').call([
+      return ref.nullableProperty('map', type.isNullableOrFalse).call([
         Method(
           (m) => m
             ..requiredParameters.add(
@@ -102,7 +96,22 @@ final class JsonGenerator {
     );
   }
 
-  Expression fromJson(Reference type, Expression ref) {
+  Expression fromJson(
+    Reference type,
+    Expression ref, {
+    Expression? defaultValue,
+  }) {
+    type = type.withNullability(
+      type.isNullableOrFalse || defaultValue != null,
+    );
+    var fromJson = _fromJson(type, ref);
+    if (defaultValue != null) {
+      fromJson = fromJson.parenthesized.ifNullThen(defaultValue);
+    }
+    return fromJson;
+  }
+
+  Expression _fromJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartCoreBool ||
         dartType.isDartCoreNum ||

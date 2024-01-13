@@ -106,6 +106,13 @@
     },
     {
       "type": "Celest::CloudApi",
+      "id": "metadata",
+      "cloudApi": {
+        "name": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudApi",
       "id": "middleware",
       "cloudApi": {
         "name": "middleware"
@@ -600,6 +607,182 @@
       "cloudFunction": {
         "name": "genericWrapperParameters",
         "apiName": "generic_wrappers"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasDocComments",
+      "cloudFunction": {
+        "name": "hasDocComments",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasDeprecatedAnnotation",
+      "cloudFunction": {
+        "name": "hasDeprecatedAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasConstructedDeprecatedAnnotation",
+      "cloudFunction": {
+        "name": "hasConstructedDeprecatedAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasNamedConstructedAnnotation",
+      "cloudFunction": {
+        "name": "hasNamedConstructedAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasLiteralsAnnotation",
+      "cloudFunction": {
+        "name": "hasLiteralsAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasNotExportableAnnotation",
+      "cloudFunction": {
+        "name": "hasNotExportableAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasNotExportableConstructedAnnotation",
+      "cloudFunction": {
+        "name": "hasNotExportableConstructedAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasExportableAnnotation",
+      "cloudFunction": {
+        "name": "hasExportableAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasExportableConstructedAnnotation",
+      "cloudFunction": {
+        "name": "hasExportableConstructedAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.hasNotExportableExportableAnnotation",
+      "cloudFunction": {
+        "name": "hasNotExportableExportableAnnotation",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.positionalDefaultValues",
+      "cloudFunction": {
+        "name": "positionalDefaultValues",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullablePositionalDefaultValues",
+      "cloudFunction": {
+        "name": "nullablePositionalDefaultValues",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.namedDefaultValues",
+      "cloudFunction": {
+        "name": "namedDefaultValues",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullableNamedDefaultValues",
+      "cloudFunction": {
+        "name": "nullableNamedDefaultValues",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.positionalDefaultValueVars",
+      "cloudFunction": {
+        "name": "positionalDefaultValueVars",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullablePositionalDefaultValueVars",
+      "cloudFunction": {
+        "name": "nullablePositionalDefaultValueVars",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.namedDefaultValueVars",
+      "cloudFunction": {
+        "name": "namedDefaultValueVars",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullableNamedDefaultValueVars",
+      "cloudFunction": {
+        "name": "nullableNamedDefaultValueVars",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.positionalDefaultValueVarsPrivate",
+      "cloudFunction": {
+        "name": "positionalDefaultValueVarsPrivate",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullablePositionalDefaultValueVarsPrivate",
+      "cloudFunction": {
+        "name": "nullablePositionalDefaultValueVarsPrivate",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.namedDefaultValueVarsPrivate",
+      "cloudFunction": {
+        "name": "namedDefaultValueVarsPrivate",
+        "apiName": "metadata"
+      }
+    },
+    {
+      "type": "Celest::CloudFunction",
+      "id": "metadata.nullableNamedDefaultValueVarsPrivate",
+      "cloudFunction": {
+        "name": "nullableNamedDefaultValueVarsPrivate",
+        "apiName": "metadata"
       }
     },
     {

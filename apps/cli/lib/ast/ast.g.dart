@@ -82,9 +82,6 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
       'reference',
       serializers.serialize(object.reference,
           specifiedType: const FullType(Reference)),
-      'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
       'apis',
       serializers.serialize(object.apis,
           specifiedType: const FullType(
@@ -93,6 +90,9 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
       serializers.serialize(object.envVars,
           specifiedType: const FullType(
               BuiltList, const [const FullType(EnvironmentVariable)])),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(FileSpan)),
     ];
 
     return result;
@@ -117,10 +117,6 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
           result.reference = serializers.deserialize(value,
               specifiedType: const FullType(Reference))! as Reference;
           break;
-        case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
-          break;
         case 'apis':
           result.apis.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -131,6 +127,10 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(EnvironmentVariable)]))!
               as BuiltList<Object?>);
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -361,6 +361,10 @@ class _$CloudFunctionParameterSerializer
           specifiedType: const FullType(bool)),
       'named',
       serializers.serialize(object.named, specifiedType: const FullType(bool)),
+      'annotations',
+      serializers.serialize(object.annotations,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Expression)])),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(FileSpan)),
@@ -372,6 +376,13 @@ class _$CloudFunctionParameterSerializer
         ..add('references')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(NodeReference)));
+    }
+    value = object.defaultTo;
+    if (value != null) {
+      result
+        ..add('defaultTo')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(Expression)));
     }
     return result;
   }
@@ -404,13 +415,23 @@ class _$CloudFunctionParameterSerializer
           result.named = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
-        case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
-          break;
         case 'references':
           result.references.replace(serializers.deserialize(value,
               specifiedType: const FullType(NodeReference))! as NodeReference);
+          break;
+        case 'annotations':
+          result.annotations.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Expression)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'defaultTo':
+          result.defaultTo = serializers.deserialize(value,
+              specifiedType: const FullType(Expression)) as Expression?;
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
           break;
       }
     }
@@ -452,6 +473,14 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
       serializers.serialize(object.exceptionTypes,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Reference)])),
+      'annotations',
+      serializers.serialize(object.annotations,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Expression)])),
+      'docs',
+      serializers.serialize(object.docs,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(FileSpan)),
@@ -504,6 +533,18 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
           result.exceptionTypes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(Reference)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'annotations':
+          result.annotations.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Expression)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'docs':
+          result.docs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
         case 'location':
@@ -647,11 +688,11 @@ class _$Project extends Project {
   @override
   final Reference reference;
   @override
-  final FileSpan location;
-  @override
   final BuiltMap<String, Api> apis;
   @override
   final BuiltList<EnvironmentVariable> envVars;
+  @override
+  final FileSpan location;
 
   factory _$Project([void Function(ProjectBuilder)? updates]) =>
       (new ProjectBuilder()..update(updates))._build();
@@ -659,15 +700,15 @@ class _$Project extends Project {
   _$Project._(
       {required this.name,
       required this.reference,
-      required this.location,
       required this.apis,
-      required this.envVars})
+      required this.envVars,
+      required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name');
     BuiltValueNullFieldError.checkNotNull(reference, r'Project', 'reference');
-    BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
     BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
     BuiltValueNullFieldError.checkNotNull(envVars, r'Project', 'envVars');
+    BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
   }
 
   @override
@@ -683,9 +724,9 @@ class _$Project extends Project {
     return other is Project &&
         name == other.name &&
         reference == other.reference &&
-        location == other.location &&
         apis == other.apis &&
-        envVars == other.envVars;
+        envVars == other.envVars &&
+        location == other.location;
   }
 
   @override
@@ -693,9 +734,9 @@ class _$Project extends Project {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, reference.hashCode);
-    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jc(_$hash, apis.hashCode);
     _$hash = $jc(_$hash, envVars.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -705,9 +746,9 @@ class _$Project extends Project {
     return (newBuiltValueToStringHelper(r'Project')
           ..add('name', name)
           ..add('reference', reference)
-          ..add('location', location)
           ..add('apis', apis)
-          ..add('envVars', envVars))
+          ..add('envVars', envVars)
+          ..add('location', location))
         .toString();
   }
 }
@@ -724,10 +765,6 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
   set reference(covariant Reference? reference) =>
       _$this._reference = reference;
 
-  FileSpan? _location;
-  FileSpan? get location => _$this._location;
-  set location(covariant FileSpan? location) => _$this._location = location;
-
   MapBuilder<String, Api>? _apis;
   MapBuilder<String, Api> get apis =>
       _$this._apis ??= new MapBuilder<String, Api>();
@@ -739,6 +776,10 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
   set envVars(covariant ListBuilder<EnvironmentVariable>? envVars) =>
       _$this._envVars = envVars;
 
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(covariant FileSpan? location) => _$this._location = location;
+
   ProjectBuilder();
 
   ProjectBuilder get _$this {
@@ -746,9 +787,9 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
     if ($v != null) {
       _name = $v.name;
       _reference = $v.reference;
-      _location = $v.location;
       _apis = $v.apis.toBuilder();
       _envVars = $v.envVars.toBuilder();
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -777,10 +818,10 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
                   name, r'Project', 'name'),
               reference: BuiltValueNullFieldError.checkNotNull(
                   reference, r'Project', 'reference'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Project', 'location'),
               apis: apis.build(),
-              envVars: envVars.build());
+              envVars: envVars.build(),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'Project', 'location'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -1218,9 +1259,13 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
   @override
   final bool named;
   @override
-  final FileSpan location;
-  @override
   final NodeReference? references;
+  @override
+  final BuiltList<Expression> annotations;
+  @override
+  final Expression? defaultTo;
+  @override
+  final FileSpan location;
 
   factory _$CloudFunctionParameter(
           [void Function(CloudFunctionParameterBuilder)? updates]) =>
@@ -1231,8 +1276,10 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
       required this.type,
       required this.required,
       required this.named,
-      required this.location,
-      this.references})
+      this.references,
+      required this.annotations,
+      this.defaultTo,
+      required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         name, r'CloudFunctionParameter', 'name');
@@ -1242,6 +1289,8 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
         required, r'CloudFunctionParameter', 'required');
     BuiltValueNullFieldError.checkNotNull(
         named, r'CloudFunctionParameter', 'named');
+    BuiltValueNullFieldError.checkNotNull(
+        annotations, r'CloudFunctionParameter', 'annotations');
     BuiltValueNullFieldError.checkNotNull(
         location, r'CloudFunctionParameter', 'location');
   }
@@ -1263,8 +1312,10 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
         type == other.type &&
         required == other.required &&
         named == other.named &&
-        location == other.location &&
-        references == other.references;
+        references == other.references &&
+        annotations == other.annotations &&
+        defaultTo == other.defaultTo &&
+        location == other.location;
   }
 
   @override
@@ -1274,8 +1325,10 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, named.hashCode);
-    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jc(_$hash, references.hashCode);
+    _$hash = $jc(_$hash, annotations.hashCode);
+    _$hash = $jc(_$hash, defaultTo.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1287,8 +1340,10 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
           ..add('type', type)
           ..add('required', required)
           ..add('named', named)
-          ..add('location', location)
-          ..add('references', references))
+          ..add('references', references)
+          ..add('annotations', annotations)
+          ..add('defaultTo', defaultTo)
+          ..add('location', location))
         .toString();
   }
 }
@@ -1315,15 +1370,26 @@ class CloudFunctionParameterBuilder
   bool? get named => _$this._named;
   set named(covariant bool? named) => _$this._named = named;
 
-  FileSpan? _location;
-  FileSpan? get location => _$this._location;
-  set location(covariant FileSpan? location) => _$this._location = location;
-
   NodeReferenceBuilder? _references;
   NodeReferenceBuilder get references =>
       _$this._references ??= new NodeReferenceBuilder();
   set references(covariant NodeReferenceBuilder? references) =>
       _$this._references = references;
+
+  ListBuilder<Expression>? _annotations;
+  ListBuilder<Expression> get annotations =>
+      _$this._annotations ??= new ListBuilder<Expression>();
+  set annotations(covariant ListBuilder<Expression>? annotations) =>
+      _$this._annotations = annotations;
+
+  Expression? _defaultTo;
+  Expression? get defaultTo => _$this._defaultTo;
+  set defaultTo(covariant Expression? defaultTo) =>
+      _$this._defaultTo = defaultTo;
+
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(covariant FileSpan? location) => _$this._location = location;
 
   CloudFunctionParameterBuilder();
 
@@ -1334,8 +1400,10 @@ class CloudFunctionParameterBuilder
       _type = $v.type;
       _required = $v.required;
       _named = $v.named;
-      _location = $v.location;
       _references = $v.references?.toBuilder();
+      _annotations = $v.annotations.toBuilder();
+      _defaultTo = $v.defaultTo;
+      _location = $v.location;
       _$v = null;
     }
     return this;
@@ -1368,14 +1436,18 @@ class CloudFunctionParameterBuilder
                   required, r'CloudFunctionParameter', 'required'),
               named: BuiltValueNullFieldError.checkNotNull(
                   named, r'CloudFunctionParameter', 'named'),
+              references: _references?.build(),
+              annotations: annotations.build(),
+              defaultTo: defaultTo,
               location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'CloudFunctionParameter', 'location'),
-              references: _references?.build());
+                  location, r'CloudFunctionParameter', 'location'));
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'references';
         _references?.build();
+        _$failedField = 'annotations';
+        annotations.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CloudFunctionParameter', _$failedField, e.toString());
@@ -1403,6 +1475,10 @@ class _$CloudFunction extends CloudFunction {
   @override
   final BuiltList<Reference> exceptionTypes;
   @override
+  final BuiltList<Expression> annotations;
+  @override
+  final BuiltList<String> docs;
+  @override
   final FileSpan location;
 
   factory _$CloudFunction([void Function(CloudFunctionBuilder)? updates]) =>
@@ -1416,6 +1492,8 @@ class _$CloudFunction extends CloudFunction {
       required this.flattenedReturnType,
       required this.metadata,
       required this.exceptionTypes,
+      required this.annotations,
+      required this.docs,
       required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CloudFunction', 'name');
@@ -1430,6 +1508,9 @@ class _$CloudFunction extends CloudFunction {
         metadata, r'CloudFunction', 'metadata');
     BuiltValueNullFieldError.checkNotNull(
         exceptionTypes, r'CloudFunction', 'exceptionTypes');
+    BuiltValueNullFieldError.checkNotNull(
+        annotations, r'CloudFunction', 'annotations');
+    BuiltValueNullFieldError.checkNotNull(docs, r'CloudFunction', 'docs');
     BuiltValueNullFieldError.checkNotNull(
         location, r'CloudFunction', 'location');
   }
@@ -1452,6 +1533,8 @@ class _$CloudFunction extends CloudFunction {
         flattenedReturnType == other.flattenedReturnType &&
         metadata == other.metadata &&
         exceptionTypes == other.exceptionTypes &&
+        annotations == other.annotations &&
+        docs == other.docs &&
         location == other.location;
   }
 
@@ -1465,6 +1548,8 @@ class _$CloudFunction extends CloudFunction {
     _$hash = $jc(_$hash, flattenedReturnType.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, exceptionTypes.hashCode);
+    _$hash = $jc(_$hash, annotations.hashCode);
+    _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1480,6 +1565,8 @@ class _$CloudFunction extends CloudFunction {
           ..add('flattenedReturnType', flattenedReturnType)
           ..add('metadata', metadata)
           ..add('exceptionTypes', exceptionTypes)
+          ..add('annotations', annotations)
+          ..add('docs', docs)
           ..add('location', location))
         .toString();
   }
@@ -1525,6 +1612,16 @@ class CloudFunctionBuilder
   set exceptionTypes(covariant ListBuilder<Reference>? exceptionTypes) =>
       _$this._exceptionTypes = exceptionTypes;
 
+  ListBuilder<Expression>? _annotations;
+  ListBuilder<Expression> get annotations =>
+      _$this._annotations ??= new ListBuilder<Expression>();
+  set annotations(covariant ListBuilder<Expression>? annotations) =>
+      _$this._annotations = annotations;
+
+  ListBuilder<String>? _docs;
+  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  set docs(covariant ListBuilder<String>? docs) => _$this._docs = docs;
+
   FileSpan? _location;
   FileSpan? get location => _$this._location;
   set location(covariant FileSpan? location) => _$this._location = location;
@@ -1541,6 +1638,8 @@ class CloudFunctionBuilder
       _flattenedReturnType = $v.flattenedReturnType;
       _metadata = $v.metadata.toBuilder();
       _exceptionTypes = $v.exceptionTypes.toBuilder();
+      _annotations = $v.annotations.toBuilder();
+      _docs = $v.docs.toBuilder();
       _location = $v.location;
       _$v = null;
     }
@@ -1577,6 +1676,8 @@ class CloudFunctionBuilder
                   flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
               metadata: metadata.build(),
               exceptionTypes: exceptionTypes.build(),
+              annotations: annotations.build(),
+              docs: docs.build(),
               location: BuiltValueNullFieldError.checkNotNull(
                   location, r'CloudFunction', 'location'));
     } catch (_) {
@@ -1589,6 +1690,10 @@ class CloudFunctionBuilder
         metadata.build();
         _$failedField = 'exceptionTypes';
         exceptionTypes.build();
+        _$failedField = 'annotations';
+        annotations.build();
+        _$failedField = 'docs';
+        docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CloudFunction', _$failedField, e.toString());

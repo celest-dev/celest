@@ -7,6 +7,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_provider.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
+import 'package:analyzer/src/dart/element/type.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
@@ -97,6 +98,7 @@ final class TypeHelper {
   // final _customSerializers = <SerializationSpec, codegen.Class>{};
 
   // TODO: Test types that are only referred to in nested fields/parameters
+  /// ^^^^
   codegen.Reference toReference(DartType type) {
     if (_dartTypeToReference[type] case final reference?) {
       return reference;
@@ -105,6 +107,15 @@ final class TypeHelper {
     _dartTypeToReference[type] ??= reference;
     _referenceToDartType[reference] ??= type;
     _referenceToDartType[reference.toTypeReference] ??= type;
+    // Perform for nullable version of [type] so that subsequent
+    // nullable/non-nullable promotions which require [fromReference] succeed.
+    if (!reference.isNullableOrFalse) {
+      final nullableType = (type as TypeImpl)
+          .withNullability(NullabilitySuffix.question)
+        ..alias = type.alias;
+      final nullableReference = reference.withNullability(true);
+      _referenceToDartType[nullableReference] ??= nullableType;
+    }
     if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;
     }

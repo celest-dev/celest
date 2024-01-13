@@ -7,11 +7,16 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 final class ProjectPaths {
   ProjectPaths(
     this.projectRoot, {
+    String? clientOutputsDir,
     String? outputsDir,
   }) : outputsDir =
-            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
+            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path {
+    this.clientOutputsDir =
+        clientOutputsDir ?? p.join(this.outputsDir, 'client');
+  }
 
   final String projectRoot;
+  late final String clientOutputsDir;
   final String outputsDir;
 
   late final String appRoot =

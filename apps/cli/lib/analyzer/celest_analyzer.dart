@@ -1,5 +1,3 @@
-// ignore_for_file: implementation_imports
-
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
@@ -307,7 +305,6 @@ final class CelestAnalyzer {
                 location: location,
               );
             default:
-              _reportError('Invalid API annotation', location: location);
               return null;
           }
         })
@@ -343,7 +340,6 @@ final class CelestAnalyzer {
       return null;
     }
     if (!annotationType.isEnvironmentVariable) {
-      _reportError('Invalid parameter annotation', location: location);
       return null;
     }
     final typeProvider = parameter.library!.typeProvider;
@@ -432,6 +428,7 @@ final class CelestAnalyzer {
           return switch (res.kind) {
             SearchResultKind.REFERENCE_IN_EXTENDS_CLAUSE ||
             SearchResultKind.REFERENCE_IN_IMPLEMENTS_CLAUSE ||
+            // TODO(dnys1): Test these.
             SearchResultKind.REFERENCE_IN_ON_CLAUSE ||
             SearchResultKind.REFERENCE_IN_WITH_CLAUSE =>
               true,
@@ -531,6 +528,11 @@ final class CelestAnalyzer {
               named: param.isNamed,
               location: param.sourceLocation,
               references: _parameterReference(param),
+              annotations: param.metadata
+                  .map((annotation) => annotation.toCodeBuilder)
+                  .nonNulls
+                  .toList(),
+              defaultTo: param.defaultTo,
             );
             if (parameter.type.isFunctionContext) {
               return parameter;
@@ -564,6 +566,11 @@ final class CelestAnalyzer {
           exceptionTypes: exceptionTypes.map(typeHelper.toReference).toList(),
           location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
+          annotations: func.metadata
+              .map((annotation) => annotation.toCodeBuilder)
+              .nonNulls
+              .toList(),
+          docs: func.docLines,
         );
 
         var hasContext = false;
