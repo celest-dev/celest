@@ -54,6 +54,7 @@ Future<void> main(List<String> args) async {
   for (final testDir in allTests) {
     final projectRoot = testDir.path;
     final goldensDir = Directory(p.join(projectRoot, 'goldens'));
+    // ignore: invalid_use_of_visible_for_testing_member
     withErrorData(
       {},
       () => TestRunner(

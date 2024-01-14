@@ -118,7 +118,7 @@ class Sdk {
         _logger.finest('Could not find Dart SDK in PATH.', e);
       }
       if (dartPath == null) {
-        throw Exception('Could not find Dart SDK.');
+        throw const CelestException('Could not find Dart SDK.');
       }
       dartPath = _resolveLinks(dartPath);
       // `sdk/bin/dart` -> `sdk`

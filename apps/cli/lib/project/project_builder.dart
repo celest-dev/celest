@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:celest/celest.dart';
 import 'package:celest/src/authz/policy.dart' as core;
@@ -67,9 +66,9 @@ final class ProjectBuilder {
     await tempPackagesConfigFileSink.close();
     // Cannot use `Isolate.spawnUri` in AOT mode unless the URI is an AOT
     // snapshot compiled with the same SDK.
-    final processResult = await Process.run(
-      Sdk.current.dart,
+    final processResult = await processManager.run(
       [
+        Sdk.current.dart,
         'run',
         if (residentCompiler case final residentCompiler?) ...[
           '--resident',
@@ -92,9 +91,6 @@ final class ProjectBuilder {
       );
     }
     final protobufMessage = processResult.stdout as List<int>;
-    enrichErrors(
-      ErrorData.bytes('ast.binpb', protobufMessage),
-    );
     final cloudAst = proto.Project.fromBuffer(protobufMessage);
     final staticWidgetCollector = _StaticWidgetCollector(cloudAst: cloudAst);
     project.accept(staticWidgetCollector);
