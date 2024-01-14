@@ -82,18 +82,32 @@ final class ProjectBuilder {
         projectPaths.outputsDir,
       ],
       workingDirectory: projectPaths.projectRoot,
-      stdoutEncoding: null,
+      stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );
     if (processResult.exitCode != 0) {
-      throw Exception(
-        'Failed to build project: ${processResult.stderr}',
+      throw StateError(
+        'Failed to build project: ${processResult.stdout}\n'
+        '${processResult.stderr}',
       );
     }
-    final protobufMessage = processResult.stdout as List<int>;
-    final cloudAst = proto.Project.fromBuffer(protobufMessage);
+    final projectBinFile = fileSystem.file(projectPaths.projectBuildBin);
+    final projectBin = await projectBinFile.readAsBytes();
+    enrichErrors(
+      ErrorData.file(projectBinFile),
+    );
+    final cloudAst = proto.Project.fromBuffer(projectBin);
     final staticWidgetCollector = _StaticWidgetCollector(cloudAst: cloudAst);
     project.accept(staticWidgetCollector);
+    enrichErrors(
+      ErrorData.lazy(
+        'project.jsonpb',
+        () => ErrorData.json(
+          'project.jsonpb',
+          cloudAst.toProto3Json() as Map<String, Object?>,
+        ),
+      ),
+    );
     return cloudAst;
   }
 }

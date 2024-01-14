@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:file/chroot.dart';
 import 'package:file/local.dart';
 import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
+
+import '../common.dart';
 
 void main() {
   initTests();

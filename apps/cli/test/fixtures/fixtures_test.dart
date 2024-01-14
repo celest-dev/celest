@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:args/args.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
@@ -10,7 +10,6 @@ import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_builder.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -18,23 +17,18 @@ import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-import 'test.dart';
+import '../common.dart';
+import 'types.dart';
 
 int nextPort() => Random().nextInt(10000) + 30000;
 
-Future<void> main(List<String> args) async {
+Future<void> main() async {
   initTests();
 
-  final argParser = ArgParser()
-    ..addFlag(
-      'update-goldens',
-      abbr: 'u',
-      defaultsTo: false,
-      negatable: false,
-    );
-
-  final argResults = argParser.parse(args);
-  final updateGoldens = argResults['update-goldens'] as bool;
+  final updateGoldens = switch (Platform.environment['UPDATE_GOLDENS']) {
+    'true' => true,
+    _ => false,
+  };
 
   if (updateGoldens && Platform.isWindows) {
     throw Exception(
@@ -42,28 +36,23 @@ Future<void> main(List<String> args) async {
     );
   }
 
-  final testDir = p.dirname(p.fromUri(Platform.script));
+  final testDir = p.join(Directory.current.path, 'test', 'fixtures');
   final allTests = Directory(testDir)
-      .listSync(recursive: true)
+      .listSync()
       .whereType<Directory>()
-      .where((dir) {
-    if (!File(p.join(dir.path, 'pubspec.yaml')).existsSync()) return false;
-    if (argResults.rest.isEmpty) return true;
-    return argResults.rest.contains(p.basename(dir.path));
-  });
-  for (final testDir in allTests) {
-    final projectRoot = testDir.path;
-    final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-    // ignore: invalid_use_of_visible_for_testing_member
-    withErrorData(
-      {},
-      () => TestRunner(
+      .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync());
+  group('Fixture', () {
+    for (final testDir in allTests) {
+      final projectRoot = testDir.path;
+      final goldensDir = Directory(p.join(projectRoot, 'goldens'));
+      // ignore: invalid_use_of_visible_for_testing_member
+      TestRunner(
         updateGoldens: updateGoldens,
         projectRoot: projectRoot,
         goldensDir: goldensDir,
-      ).run(),
-    );
-  }
+      ).run();
+    }
+  });
 }
 
 class TestRunner {
@@ -81,8 +70,8 @@ class TestRunner {
   late final testName = p.basename(projectRoot);
 
   late Client client;
-  late final CelestAnalyzer analyzer = CelestAnalyzer();
-  late final ResidentCompiler residentCompiler;
+  late final analyzer = CelestAnalyzer();
+  ResidentCompiler? residentCompiler;
 
   void run() {
     group(testName, () {
@@ -102,26 +91,34 @@ class TestRunner {
         }
         goldensDir.createSync();
         client = Client();
-        residentCompiler = (await ResidentCompiler.ensureRunning())!;
+        residentCompiler ??= (await ResidentCompiler.ensureRunning())!;
       });
 
-      tearDownAll(() async {
+      setUp(() {
+        testOverrideErrorData = {};
+      });
+
+      tearDown(() {
+        testOverrideErrorData = null;
+      });
+
+      tearDownAll(() {
         client.close();
       });
 
-      _testAnalyzer();
-      _testCodegen();
-      _testBuild();
-      _testClient();
+      testAnalyzer();
+      testCodegen();
+      testBuild();
+      testClient();
 
       final apisDir = Directory(p.join(projectRoot, 'functions'));
       if (apisDir.existsSync()) {
-        _testApis(apisDir);
+        testApis(apisDir);
       }
     });
   }
 
-  void _testAnalyzer() {
+  void testAnalyzer() {
     test('analyzer', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
       expect(project, isNotNull);
@@ -143,7 +140,7 @@ class TestRunner {
     });
   }
 
-  void _testCodegen() {
+  void testCodegen() {
     test('codegen', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
       expect(project, isNotNull);
@@ -171,7 +168,7 @@ class TestRunner {
     });
   }
 
-  void _testBuild() {
+  void testBuild() {
     // Increase timeout since builder runs native-assets compilation.
     test('build', timeout: const Timeout.factor(10), () async {
       final (:project, :errors) = await analyzer.analyzeProject();
@@ -202,7 +199,7 @@ class TestRunner {
     });
   }
 
-  void _testClient() {
+  void testClient() {
     test('client', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
       expect(project, isNotNull);
@@ -215,23 +212,23 @@ class TestRunner {
     });
   }
 
-  void _testApis(Directory apisDir) {
+  void testApis(Directory apisDir) {
     final apis = testCases?.apis ?? const {};
     if (apis.isEmpty) {
       return;
     }
     group('apis', () {
       for (final MapEntry(key: apiName, value: apiTest) in apis.entries) {
-        _testApi(apiName, apiTest);
+        testApi(apiName, apiTest);
       }
     });
   }
 
-  void _testApi(String apiName, ApiTest apiTest) {
+  void testApi(String apiName, ApiTest apiTest) {
     group(apiName, () {
       for (final MapEntry(key: functionName, value: tests)
           in apiTest.functionTests.entries) {
-        _testFunction(
+        testFunction(
           apiName,
           functionName,
           tests,
@@ -240,7 +237,7 @@ class TestRunner {
     });
   }
 
-  void _testFunction(
+  void testFunction(
     String apiName,
     String functionName,
     List<FunctionTest> tests,
@@ -516,7 +513,7 @@ const complexStruct = <String, dynamic>{
   },
 };
 
-const Map<String, Test> tests = {
+const tests = <String, Test>{
   'api': Test(
     apis: {
       'middleware': ApiTest(
@@ -1612,25 +1609,25 @@ const Map<String, Test> tests = {
             FunctionTestSuccess(
               name: 'genericWrappers',
               input: {
-                'value': _genericWrappers,
+                'value': genericWrappers,
               },
-              output: _genericWrappers,
+              output: genericWrappers,
             ),
           ],
           'genericWrappersAsync': [
             FunctionTestSuccess(
               name: 'genericWrappers',
               input: {
-                'value': _genericWrappers,
+                'value': genericWrappers,
               },
-              output: _genericWrappers,
+              output: genericWrappers,
             ),
           ],
           'genericWrapperParameters': [
             FunctionTestSuccess(
               name: 'genericWrappers',
-              input: _genericWrappers,
-              output: _genericWrappers,
+              input: genericWrappers,
+              output: genericWrappers,
             ),
           ],
         },
@@ -2363,7 +2360,7 @@ const Map<String, Test> tests = {
   ),
 };
 
-const _genericWrappers = {
+const genericWrappers = {
   'listOfString': ['one', 'two', 'three'],
   'listOfUri': ['https://google.com', 'https://example.com'],
   'listOfSimpleClass': [simpleStruct, simpleStruct],

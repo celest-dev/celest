@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:celest_cli/commands/uninstall/celest_uninstaller.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:file/memory.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
 import 'package:process/process.dart';
 import 'package:test/test.dart';
+
+import '../common.dart';
 
 final class MockProcessManager extends Mock implements ProcessManager {}
 

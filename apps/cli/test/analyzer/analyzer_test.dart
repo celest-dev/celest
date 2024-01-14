@@ -4,12 +4,13 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
+
+import '../common.dart';
 
 String _simpleProjectDart(String name) => '''
 import 'package:celest/celest.dart';

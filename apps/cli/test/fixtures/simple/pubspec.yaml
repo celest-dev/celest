@@ -5,4 +5,4 @@ environment:
 
 dependencies:
   celest:
-    path: ../../../../packages/celest
+    path: ../../../../../packages/celest

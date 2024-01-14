@@ -32,8 +32,13 @@ final project = ${alloc(DartTypes.celest.runWithContext)}(context, () {
   final widgets = ${alloc(_allResourcesRef)}.map((widget) => widget.toProto());
   return ${alloc(projectReference)}.toProto()..widgets.addAll(widgets);
 });
-${alloc(DartTypes.io.stdout)}.add(project.writeToBuffer());
-${alloc(DartTypes.io.stdout)}.flush();
+final projectBin = ${alloc(DartTypes.path.join)}(
+  context.buildDir,
+  '${p.basename(projectPaths.projectBuildBin)}',
+);
+${alloc(DartTypes.io.file)}(projectBin)
+  ..createSync()
+  ..writeAsBytesSync(project.writeToBuffer(), flush: true);
 ''',
           ),
       );

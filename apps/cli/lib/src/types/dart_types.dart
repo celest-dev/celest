@@ -21,6 +21,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart' as meta;
+import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
 
 final class DartTypeReference extends Reference {
@@ -121,6 +122,9 @@ abstract class DartTypes {
 
   /// `package:meta` types.
   static const meta = _Meta();
+
+  /// `package:path` types.
+  static const path = _Path();
 
   /// `package:shelf` types.
   static const shelf = _Shelf();
@@ -729,6 +733,9 @@ class _Io {
 
   static const _url = 'dart:io';
 
+  /// Creates a [io.File] reference.
+  DartTypeReference get file => const DartTypeReference('File', _url);
+
   /// Creates a [io.Platform] reference.
   DartTypeReference get platform => const DartTypeReference('Platform', _url);
 
@@ -761,6 +768,16 @@ class _Meta {
 
   /// Creates a [meta.immutable] reference.
   DartTypeReference get immutable => const DartTypeReference('immutable', _url);
+}
+
+/// `package:path` types
+class _Path {
+  const _Path();
+
+  static const _url = 'package:path/path.dart';
+
+  /// Creates a [path.join] reference.
+  DartTypeReference get join => const DartTypeReference('join', _url);
 }
 
 /// `package:shelf` types
