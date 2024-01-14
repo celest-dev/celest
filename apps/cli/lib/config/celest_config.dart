@@ -1,22 +1,18 @@
-import 'package:cli_util/cli_util.dart';
+import 'package:celest_cli/config/find_application_home.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
-import 'package:file/local.dart';
 
 final class CelestConfig {
   CelestConfig._(this.configDir);
 
-  static final instance = _load();
+  static CelestConfig get instance => _load();
 
-  static CelestConfig _load({
-    FileSystem fileSystem = const LocalFileSystem(),
-  }) {
+  static CelestConfig _load() {
     final configHome = fileSystem.directory(
       applicationConfigHome('Celest'),
     );
     if (!configHome.existsSync()) {
-      configHome.createSync(
-        recursive: false, // TODO(dnys1): true?
-      );
+      configHome.createSync(recursive: true);
     }
     return CelestConfig._(configHome);
   }

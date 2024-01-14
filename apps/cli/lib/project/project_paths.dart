@@ -21,7 +21,7 @@ final class ProjectPaths {
 
   late final String appRoot =
       p.canonicalize(p.normalize(p.join(projectRoot, '..')));
-  late final String celestConfig = CelestConfig.instance.configDir.path;
+  String get celestConfig => CelestConfig.instance.configDir.path;
 
   late final String packagesConfig =
       p.join(projectRoot, '.dart_tool', 'package_config.json');

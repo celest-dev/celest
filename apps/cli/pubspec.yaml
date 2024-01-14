@@ -21,7 +21,6 @@ dependencies:
     path: ../../packages/celest_core
   celest_runtime_cloud:
     path: ../../packages/celest_runtime_cloud
-  cli_util: ^0.4.0
   code_builder: ^4.8.0
   collection: ^1.18.0
   dart_style: ^2.3.4
@@ -71,6 +70,7 @@ dev_dependencies:
   drift_dev: ^2.14.1
   fast_immutable_collections: ^9.2.0
   json_serializable: ^6.7.1
+  mocktail: ^1.0.2
   mustache_template: ^2.0.0
   test: ^1.24.9
   test_descriptor: ^2.0.1

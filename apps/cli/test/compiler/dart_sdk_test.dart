@@ -2,22 +2,16 @@ import 'dart:io';
 
 import 'package:celest_cli/compiler/dart_sdk.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:file/chroot.dart';
 import 'package:file/local.dart';
-import 'package:logging/logging.dart';
 import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
 void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.message}');
-    if (record.error != null) {
-      print(record.error);
-    }
-  });
+  initTests();
 
   group('Sdk', () {
     group('current', () {

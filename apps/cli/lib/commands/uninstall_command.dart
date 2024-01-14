@@ -1,7 +1,8 @@
-import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/commands/project_init.dart';
+import 'package:celest_cli/commands/uninstall/celest_uninstaller.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 
-final class UninstallCommand extends CelestCommand {
+final class UninstallCommand extends CelestCommand with Configure {
   UninstallCommand();
 
   @override
@@ -17,8 +18,19 @@ final class UninstallCommand extends CelestCommand {
   Future<int> run() async {
     await super.run();
 
-    // TODO(dnys1): Undo the installation process.
+    await configure();
 
-    TODO();
+    final areYouSure = cliLogger.confirm(
+      'Are you sure you want to uninstall Celest and all associated data?',
+    );
+    if (!areYouSure) {
+      cliLogger.info('Aborted uninstall');
+      return 0;
+    }
+
+    await const CelestUninstaller().uninstall();
+
+    cliLogger.success('Successfully uninstalled Celest.');
+    return 0;
   }
 }
