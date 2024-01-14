@@ -5,6 +5,9 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/analysis/driver.dart';
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
+import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
@@ -14,6 +17,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
@@ -170,6 +174,112 @@ extension DartTypeHelper on DartType {
         return symbolizedUri;
     }
   }
+
+  /// Cache for [hasAllowedSubtypes].
+  static final _hasAllowedSubtypesCache = <DartType, SubtypeResult>{};
+  static final _logger = Logger('DartTypeHelper');
+
+  /// Ensures custom types (e.g. those defined in the current project), have
+  /// allowed subtypes.
+  ///
+  /// Currently, only `sealed` classes are allowed to have subtypes.
+  Future<SubtypeResult> hasAllowedSubtypes() async {
+    return _hasAllowedSubtypesCache[this] ??= await _hasAllowedSubtypes();
+  }
+
+  Future<SubtypeResult> _hasAllowedSubtypes() async {
+    final type = this;
+    if (type is! InterfaceType) {
+      return _SubtypeResultX._allowed;
+    }
+    final element = type.element;
+    var hasAllowedSubtypes = (
+      allowed: true,
+      disallowedTypes: <InterfaceType>{},
+    );
+    // Recurse into type arguments before processing this wrapper, e.g. [type]
+    // could be List<T> where T is of interest.
+    for (final typeArgument in type.typeArguments) {
+      hasAllowedSubtypes &= await typeArgument.hasAllowedSubtypes();
+    }
+    final libraryUri = type.element.librarySource.uri;
+    final libraryPath =
+        element.library.session.uriConverter.uriToPath(libraryUri);
+    if (libraryPath == null) {
+      _logger.finest('Could not resolve path for URI: $libraryUri');
+      return _SubtypeResultX._allowed;
+    }
+    if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
+      return _SubtypeResultX._allowed;
+    }
+    final subtypes =
+        typeHelper.subtypes[element] ??= await element.collectSubtypes();
+    for (final subtype in subtypes) {
+      hasAllowedSubtypes &= await subtype.hasAllowedSubtypes();
+    }
+    if (element is ClassElement && element.isSealed) {
+      final allowed = hasAllowedSubtypes.allowed && subtypes.isNotEmpty;
+      return (
+        allowed: allowed,
+        disallowedTypes: {
+          if (!allowed) type,
+          ...hasAllowedSubtypes.disallowedTypes,
+        },
+      );
+    }
+    final allowed = hasAllowedSubtypes.allowed && subtypes.isEmpty;
+    return (
+      allowed: allowed,
+      disallowedTypes: {
+        if (!allowed) type,
+        ...hasAllowedSubtypes.disallowedTypes,
+      },
+    );
+  }
+}
+
+typedef SubtypeResult = ({
+  bool allowed,
+  Set<InterfaceType> disallowedTypes,
+});
+
+extension _SubtypeResultX on SubtypeResult {
+  static const SubtypeResult _allowed = (allowed: true, disallowedTypes: {});
+
+  SubtypeResult operator &(SubtypeResult other) => (
+        allowed: allowed && other.allowed,
+        disallowedTypes: {
+          ...disallowedTypes,
+          ...other.disallowedTypes,
+        },
+      );
+}
+
+extension on InterfaceElement {
+  AnalysisDriver get _driver =>
+      (library.session.analysisContext as DriverBasedAnalysisContext).driver;
+
+  /// Collects all subtypes of the given [type].
+  Future<List<InterfaceType>> collectSubtypes() async {
+    final searchedFiles = SearchedFiles();
+    final subtypes = await _driver.search.subTypes(this, searchedFiles);
+    return subtypes
+        .where((res) {
+          return switch (res.kind) {
+            SearchResultKind.REFERENCE_IN_EXTENDS_CLAUSE ||
+            SearchResultKind.REFERENCE_IN_IMPLEMENTS_CLAUSE ||
+            // TODO(dnys1): Test these.
+            SearchResultKind.REFERENCE_IN_ON_CLAUSE ||
+            SearchResultKind.REFERENCE_IN_WITH_CLAUSE =>
+              true,
+            _ => false,
+          };
+        })
+        .map((res) => res.enclosingElement)
+        .whereType<ClassElement>()
+        .map((res) => res.thisType)
+        .toList();
+  }
 }
 
 extension RecordTypeHelper on RecordType {
@@ -227,7 +337,7 @@ extension SourceToSpan on Source {
   }
 }
 
-// TODO: File ticket with Dart team around hashcode/equality of DartType
+// TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
 // == of RecordType does not take into account alias.
 // hashCode only takes into account the length of positionalFields and namedFields.
 final class DartTypeEquality implements Equality<DartType> {
@@ -263,7 +373,7 @@ final class DartTypeEquality implements Equality<DartType> {
   bool isValidKey(Object? o) => o is DartType;
 }
 
-// TODO: File ticket with Dart team around hashcode/equality of DartType
+// TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
 final class RecordTypeEquality implements Equality<RecordType> {
   const RecordTypeEquality({this.ignoreNullability = false});
 

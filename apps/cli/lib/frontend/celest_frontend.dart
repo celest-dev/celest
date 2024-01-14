@@ -22,7 +22,7 @@ import 'package:watcher/watcher.dart';
 
 enum RestartMode {
   hotReload,
-  // TODO: Support hot restart. Requires a shell wrapper which can hotswap
+  // TODO(dnys1): Support hot restart. Requires a shell wrapper which can hotswap
   // the isolate configuration like the Flutter shell does.
   // hotRestart,
   fullRestart;
@@ -147,7 +147,7 @@ final class CelestFrontend implements Closeable {
                 else
                   ...project.apis.values.map(
                     (api) =>
-                        // TODO: Make a property of the API
+                        // TODO(dnys1): Make a property of the API
                         p.join(projectPaths.apisDir, '${api.name}.dart'),
                   ),
               ],

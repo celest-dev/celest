@@ -84,7 +84,7 @@ final class TypeHelper {
     _coreErrorType = coreErrorType;
   }
 
-  // TODO: File ticket with Dart team around hashcode/equality of DartType
+  // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
   final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
     equals: const DartTypeEquality().equals,
     hashCode: const DartTypeEquality().hash,
@@ -97,7 +97,7 @@ final class TypeHelper {
   );
   // final _customSerializers = <SerializationSpec, codegen.Class>{};
 
-  // TODO: Test types that are only referred to in nested fields/parameters
+  // TODO(dnys1): Test types that are only referred to in nested fields/parameters
   /// ^^^^
   codegen.Reference toReference(DartType type) {
     if (_dartTypeToReference[type] case final reference?) {
@@ -193,7 +193,7 @@ final class TypeHelper {
     }
   }
 
-  final Map<InterfaceElement, List<DartType>> subtypes = {};
+  final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {

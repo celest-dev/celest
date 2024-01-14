@@ -11,7 +11,7 @@ abstract base class ProjectCommand extends CelestCommand {
   @override
   String get category => 'Project';
 
-  // TODO: Move to ProjectPaths. Rename to CelestProject.
+  // TODO(dnys1): Move to ProjectPaths. Rename to CelestProject.
   late final Pubspec pubspec;
   late final bool isExistingProject;
 

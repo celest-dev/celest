@@ -29,13 +29,7 @@ final class ResourcesGenerator {
   final _allResources = SplayTreeMap<Node, String>((a, b) {
     return switch ((a, b)) {
       (final Api a, final Api b) => a.name.compareTo(b.name),
-      (final CloudFunction a, final CloudFunction b) => () {
-          final apiCompare = a.apiName.compareTo(b.apiName);
-          if (apiCompare != 0) {
-            return apiCompare;
-          }
-          return a.location.start.offset.compareTo(b.location.start.offset);
-        }(),
+      (final CloudFunction a, final CloudFunction b) => a.compareTo(b),
       (final EnvironmentVariable a, final EnvironmentVariable b) =>
         a.envName.compareTo(b.envName),
       (Api(), _) => -1,

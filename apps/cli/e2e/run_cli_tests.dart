@@ -143,7 +143,7 @@ class InstalledTarget extends TestTarget {
 
   @override
   Future<void> afterAll() async {
-    // TODO: Use `celest uninstall` when implemented
+    // TODO(dnys1): Use `celest uninstall` when implemented
     switch (Platform.operatingSystem) {
       case 'macos':
       case 'linux':

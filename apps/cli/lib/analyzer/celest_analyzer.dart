@@ -11,9 +11,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/src/dart/analysis/driver.dart';
-import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
-import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
@@ -43,7 +40,6 @@ final class CelestAnalyzer {
     final contextCollection = AnalysisContextCollectionImpl(
       includedPaths: [projectPaths.projectRoot],
       sdkPath: Sdk.current.sdkPath,
-      // TODO(dnys1): Custom resource provider with Sentry integration and mock support?
       resourceProvider: PhysicalResourceProvider.INSTANCE,
       // Needed for [_collectSubtypes].
       enableIndex: true,
@@ -54,7 +50,6 @@ final class CelestAnalyzer {
 
   static final Logger _logger = Logger('CelestAnalyzer');
   final AnalysisContext _context;
-  AnalysisDriver get _driver => (_context as DriverBasedAnalysisContext).driver;
   final List<AnalysisError> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
@@ -177,7 +172,7 @@ final class CelestAnalyzer {
       ..typeProvider = projectFile.typeProvider
       ..coreErrorType = _coreErrorType
       ..coreExceptionType = _coreExceptionType;
-    // TODO: Some errors are okay, for example if `resources.dart` hasn't
+    // TODO(dnys1): Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
     //   _reportError(
@@ -277,7 +272,14 @@ final class CelestAnalyzer {
           final location = annotation.sourceLocation(element.source!);
           final type = annotation.computeConstantValue()?.type;
           if (type == null) {
-            _reportError('Could not resolve annotation', location: location);
+            // TODO(dnys1): Add separate `hints` parameter to `_reportError`
+            /// for suggestions on how to resolve the error/links to docs.
+            _reportError(
+              'Could not resolve annotation. Annotations must be '
+              'authorization grants like `@api.authenticated()` or middleware '
+              'classes like `@MyMiddleware()`.',
+              location: location,
+            );
             return null;
           }
 
@@ -419,62 +421,6 @@ final class CelestAnalyzer {
     }
   }
 
-  /// Collects all subtypes of the given [type].
-  Future<List<DartType>> _collectSubtypes(InterfaceElement element) async {
-    final searchedFiles = SearchedFiles();
-    final subtypes = await _driver.search.subTypes(element, searchedFiles);
-    return subtypes
-        .where((res) {
-          return switch (res.kind) {
-            SearchResultKind.REFERENCE_IN_EXTENDS_CLAUSE ||
-            SearchResultKind.REFERENCE_IN_IMPLEMENTS_CLAUSE ||
-            // TODO(dnys1): Test these.
-            SearchResultKind.REFERENCE_IN_ON_CLAUSE ||
-            SearchResultKind.REFERENCE_IN_WITH_CLAUSE =>
-              true,
-            _ => false,
-          };
-        })
-        .map((res) => (res.enclosingElement as InterfaceElement).thisType)
-        .toList();
-  }
-
-  /// Ensures custom [type]s (e.g. those defined in the current project), have
-  /// allowed subtypes.
-  ///
-  /// Currently, only `sealed` classes are allowed to have subtypes.
-  Future<bool> _hasAllowedSubtypes(DartType type) async {
-    if (type is! InterfaceType) {
-      return true;
-    }
-    final element = type.element;
-    var hasAllowedSubtypes = true;
-    // Recurse into type arguments before processing this wrapper, e.g. [type]
-    // could be List<T> where T is of interest.
-    for (final typeArgument in type.typeArguments) {
-      hasAllowedSubtypes &= await _hasAllowedSubtypes(typeArgument);
-    }
-    final libraryUri = type.element.librarySource.uri;
-    final libraryPath =
-        _context.currentSession.uriConverter.uriToPath(libraryUri);
-    if (libraryPath == null) {
-      _logger.finest('Could not resolve path for URI: $libraryUri');
-      return true;
-    }
-    if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
-      return true;
-    }
-    final subtypes =
-        typeHelper.subtypes[element] ??= await _collectSubtypes(element);
-    for (final subtype in subtypes) {
-      hasAllowedSubtypes &= await _hasAllowedSubtypes(subtype);
-    }
-    if (element is ClassElement && element.isSealed) {
-      return hasAllowedSubtypes && subtypes.isNotEmpty;
-    }
-    return hasAllowedSubtypes && subtypes.isEmpty;
-  }
-
   Future<ast.Api?> _collectApi({
     required String apiName,
     required String apiFile,
@@ -534,14 +480,28 @@ final class CelestAnalyzer {
                   .toList(),
               defaultTo: param.defaultTo,
             );
+            if (parameter.name.startsWith(r'$')) {
+              // Ensures that we can have all local variables in the generated
+              // client start with `$` without conflicting with parameter names
+              // and no one should absolutely need to do this anyway.
+              _reportError(
+                r'Parameter names may not start with a dollar sign (`$`)',
+                location: parameter.location,
+              );
+            }
             if (parameter.type.isFunctionContext) {
               return parameter;
             }
             // Check must happen before `isSerializable`
-            if (!await _hasAllowedSubtypes(param.type)) {
+            final hasAllowedSubtypes = await param.type.hasAllowedSubtypes();
+            if (!hasAllowedSubtypes.allowed) {
+              final disallowedTypes = hasAllowedSubtypes.disallowedTypes
+                  .map((type) => type.element.name)
+                  .join(', ');
               _reportError(
                 'Classes with subtypes (which are not sealed classes) are not '
-                'currently supported as parameters',
+                'currently supported as parameters. Disallowed subtypes: '
+                '$disallowedTypes',
                 location: parameter.location,
               );
             }
@@ -587,10 +547,16 @@ final class CelestAnalyzer {
         }
         final returnType = func.returnType;
         // Check must happen before `isSerializable`
-        if (!await _hasAllowedSubtypes(returnType.flattened)) {
+        final hasAllowedSubtypes =
+            await returnType.flattened.hasAllowedSubtypes();
+        if (!hasAllowedSubtypes.allowed) {
+          final disallowedTypes = hasAllowedSubtypes.disallowedTypes
+              .map((type) => type.element.name)
+              .join(', ');
           _reportError(
             'Classes with subtypes (which are not sealed classes) are not '
-            'currently supported as return types',
+            'currently supported as return types. Disallowed subtypes: '
+            '$disallowedTypes',
             location: function.location,
           );
         }
@@ -621,6 +587,7 @@ final class CelestAnalyzer {
       ).span(0, 0),
       metadata: libraryMetdata,
       functions: functions,
+      docs: library.docLines,
     );
   }
 }

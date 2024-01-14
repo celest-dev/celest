@@ -31,8 +31,6 @@ final class EntrypointGenerator {
 
   Library generate() {
     final library = LibraryBuilder();
-    // TODO(dnys1): To Set (when removed element)
-    // Actually, throw for duplicate values?
     final middleware = [
       ...api.metadata,
       ...function.metadata,

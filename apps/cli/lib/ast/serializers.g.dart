@@ -25,6 +25,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(String), const FullType(CloudFunction)]),
           () => new MapBuilder<String, CloudFunction>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(CloudFunctionParameter)]),
           () => new ListBuilder<CloudFunctionParameter>())

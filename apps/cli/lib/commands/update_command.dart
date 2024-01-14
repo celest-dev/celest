@@ -17,7 +17,7 @@ final class UpdateCommand extends CelestCommand {
   Future<int> run() async {
     await super.run();
 
-    // TODO: Implement proper replacement: https://developer.apple.com/documentation/security/updating_mac_software
+    // TODO(dnys1): Implement proper replacement: https://developer.apple.com/documentation/security/updating_mac_software
 
     TODO();
   }

@@ -8,7 +8,7 @@ class LocalApiGenerator {
     required Map<String, Reference> targets,
   }) :
         // Provides consistent ordering which helps with codegen diffing.
-        // TODO: Order by API then definition order.
+        // TODO(dnys1): Order by API then definition order.
         targets = SplayTreeMap.of(targets);
 
   final SplayTreeMap<String, Reference> targets;

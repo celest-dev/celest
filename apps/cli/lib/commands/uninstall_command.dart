@@ -17,7 +17,7 @@ final class UninstallCommand extends CelestCommand {
   Future<int> run() async {
     await super.run();
 
-    // TODO: Undo the installation process.
+    // TODO(dnys1): Undo the installation process.
 
     TODO();
   }

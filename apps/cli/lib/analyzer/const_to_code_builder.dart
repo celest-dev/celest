@@ -19,7 +19,10 @@ abstract base class DartObjectVisitor<R> {
   const DartObjectVisitor();
 
   R visit(DartObjectImpl node) {
-    if (node.variable case final variable? when !variable.isPrivate) {
+    if (node.variable case final variable?
+        // Private variable references cannot be copied to the generated code, so
+        // we use the raw value instead.
+        when !variable.isPrivate) {
       return visitVariableReference(variable);
     } else if (node.toBoolValue() case final boolValue?) {
       return visitBoolValue(boolValue);
@@ -80,11 +83,11 @@ abstract base class DartObjectVisitor<R> {
 
   R visitStringValue(String value);
 
-  R visitVariableReference(VariableElement variable);
-
   R visitSymbolValue(String value);
 
   R visitTypeValue(DartType value);
+
+  R visitVariableReference(VariableElement variable);
 }
 
 final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
@@ -156,6 +159,12 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
   Expression visitStringValue(String value) => literalString(value);
 
   @override
+  Expression visitSymbolValue(String value) => CodeExpression(Code('#$value'));
+
+  @override
+  Expression visitTypeValue(DartType value) => typeHelper.toReference(value);
+
+  @override
   Expression visitVariableReference(VariableElement variable) {
     return switch (variable) {
       TopLevelVariableElement() => refer(
@@ -169,12 +178,4 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
       _ => unreachable('Invalid variable element: $variable'),
     };
   }
-
-  // TODO(dnys1): Make these illegal
-
-  @override
-  Expression visitSymbolValue(String value) => CodeExpression(Code('#$value'));
-
-  @override
-  Expression visitTypeValue(DartType value) => typeHelper.toReference(value);
 }

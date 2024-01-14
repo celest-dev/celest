@@ -94,7 +94,7 @@ final class EntrypointCompiler {
         if (enabledExperiments.isNotEmpty)
           '--enable-experiment=${enabledExperiments.join(',')}',
         if (verbose) '-v',
-        // TODO: Dart defines?
+        // TODO(dnys1): Dart defines?
         p.canonicalize(entrypoint.path),
       ];
       logger.detail('Compiling with args: $buildArgs');

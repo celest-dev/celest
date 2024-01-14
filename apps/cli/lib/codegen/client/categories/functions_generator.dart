@@ -36,19 +36,20 @@ final class FunctionsGenerator {
 
   void _generateApi(ast.Api api) {
     final apiType = ClientTypes.api(api);
-    final apiClass = _beginClass(apiType.name);
+    final apiClass = _beginClass(apiType.name)..docs.addAll(api.docs);
 
     _client.fields.add(
       Field(
         (f) => f
+          ..docs.addAll(api.docs)
           ..modifier = FieldModifier.final$
           ..name = api.name.camelCase
           ..assignment = apiType.ref.newInstance([]).code,
       ),
     );
 
-    // TODO(dnys1): Sort by definition order.
-    for (final function in api.functions.values) {
+    final functions = api.functions.values.toList()..sort();
+    for (final function in functions) {
       final clientParameters =
           function.parameters.where((p) => p.includeInClient);
       final functionCall = Method(
@@ -96,7 +97,7 @@ final class FunctionsGenerator {
             final httpClient =
                 ClientTypes.topLevelClient.ref.property('httpClient');
             final functionCall = httpClient.property('post').call([
-              // TODO: Uri
+              // TODO(dnys1): Uri
               DartTypes.core.uri.property('parse').call([
                 literalString('https://example.com'),
               ]),
@@ -121,7 +122,7 @@ final class FunctionsGenerator {
                 ]),
             }).awaited;
             b.addExpression(
-              declareFinal('response').assign(functionCall),
+              declareFinal(r'$response').assign(functionCall),
             );
             if (typeHelper.fromReference(function.flattenedReturnType)
                 is VoidType) {
@@ -131,7 +132,7 @@ final class FunctionsGenerator {
             final fromJson = jsonGenerator.fromJson(
               function.flattenedReturnType,
               DartTypes.convert.jsonDecode.call([
-                refer('response').property('body'),
+                refer(r'$response').property('body'),
               ]),
             );
             b.addExpression(fromJson.returned);

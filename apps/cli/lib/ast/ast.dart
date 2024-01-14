@@ -63,12 +63,14 @@ abstract class Api implements Built<Api, ApiBuilder>, Node {
     required FileSpan location,
     required Map<String, CloudFunction> functions,
     List<ApiMetadata> metadata = const [],
+    List<String> docs = const [],
   }) {
     return _$Api._(
       name: name,
       location: location,
       metadata: metadata.build(),
       functions: functions.build(),
+      docs: docs.build(),
     );
   }
 
@@ -82,6 +84,7 @@ abstract class Api implements Built<Api, ApiBuilder>, Node {
   String get name;
   BuiltList<ApiMetadata> get metadata;
   BuiltMap<String, CloudFunction> get functions;
+  BuiltList<String> get docs;
 
   @override
   FileSpan get location;
@@ -236,7 +239,10 @@ abstract class CloudFunctionParameter
 }
 
 abstract class CloudFunction
-    implements Built<CloudFunction, CloudFunctionBuilder>, Node {
+    implements
+        Built<CloudFunction, CloudFunctionBuilder>,
+        Node,
+        Comparable<CloudFunction> {
   factory CloudFunction({
     required String name,
     required String apiName,
@@ -283,6 +289,15 @@ abstract class CloudFunction
 
   @override
   FileSpan get location;
+
+  @override
+  int compareTo(CloudFunction other) {
+    final apiCompare = apiName.compareTo(other.apiName);
+    if (apiCompare != 0) {
+      return apiCompare;
+    }
+    return location.start.offset.compareTo(other.location.start.offset);
+  }
 
   Map<String, dynamic> toJson() =>
       serializers.serializeWith(CloudFunction.serializer, this)

@@ -16,9 +16,9 @@ final class ClientTypes {
   static ClientTypes get topLevelClient =>
       ClientTypes._('celest', ClientPaths.client);
   static ClientTypes get clientClass =>
-      ClientTypes._(r'$Celest', ClientPaths.client);
+      ClientTypes._('Celest', ClientPaths.client);
   static ClientTypes get functionsClass =>
-      ClientTypes._(r'$CelestFunctions', ClientPaths.functions);
+      ClientTypes._('CelestFunctions', ClientPaths.functions);
   static ClientTypes api(Api api) => ClientTypes._(
         '${ClientTypes.functionsClass.name}${api.name.pascalCase}',
         ClientPaths.functions,

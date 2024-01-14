@@ -168,10 +168,8 @@ final class _BinaryExpression extends Expression implements BinaryExpression {
   const _BinaryExpression(
     this.left,
     this.right,
-    this.operator, {
-    this.addSpace = true,
-    this.isConst = false,
-  });
+    this.operator,
+  );
 
   @override
   final Expression left;
@@ -180,9 +178,9 @@ final class _BinaryExpression extends Expression implements BinaryExpression {
   @override
   final String operator;
   @override
-  final bool addSpace;
+  bool get addSpace => true;
   @override
-  final bool isConst;
+  bool get isConst => false;
 
   @override
   R accept<R>(ExpressionVisitor<R> visitor, [R? context]) =>

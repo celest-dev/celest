@@ -183,7 +183,7 @@ final class SerializerGenerator {
       if (serializationSpec.subtypes.isNotEmpty) {
         return literalMap({
           literalSpread(): serialized,
-          // TODO: Ensure subclasses are not private
+          // TODO(dnys1): Ensure subclasses are not private
           literalString(r'$type', raw: true): CodeExpression(
             Block((b) {
               b.statements.addAll([

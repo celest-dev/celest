@@ -6,9 +6,9 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:http/http.dart' as _i1;
 
-final $Celest celest = $Celest();
+final Celest celest = Celest();
 
-class $Celest {
+class Celest {
   late _i1.Client httpClient = _i1.Client();
 
   void init() {}

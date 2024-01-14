@@ -8,12 +8,12 @@ import 'package:http/http.dart' as _i1;
 
 import 'functions.dart' as _i2;
 
-final $Celest celest = $Celest();
+final Celest celest = Celest();
 
-class $Celest {
+class Celest {
   late _i1.Client httpClient = _i1.Client();
 
-  final functions = _i2.$CelestFunctions();
+  final functions = _i2.CelestFunctions();
 
   void init() {}
 }

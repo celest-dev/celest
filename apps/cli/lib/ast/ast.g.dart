@@ -159,6 +159,10 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       serializers.serialize(object.functions,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(CloudFunction)])),
+      'docs',
+      serializers.serialize(object.docs,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(FileSpan)),
@@ -194,6 +198,12 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
                 const FullType(String),
                 const FullType(CloudFunction)
               ]))!);
+          break;
+        case 'docs':
+          result.docs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'location':
           result.location = serializers.deserialize(value,
@@ -848,6 +858,8 @@ class _$Api extends Api {
   @override
   final BuiltMap<String, CloudFunction> functions;
   @override
+  final BuiltList<String> docs;
+  @override
   final FileSpan location;
 
   factory _$Api([void Function(ApiBuilder)? updates]) =>
@@ -857,11 +869,13 @@ class _$Api extends Api {
       {required this.name,
       required this.metadata,
       required this.functions,
+      required this.docs,
       required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
+    BuiltValueNullFieldError.checkNotNull(docs, r'Api', 'docs');
     BuiltValueNullFieldError.checkNotNull(location, r'Api', 'location');
   }
 
@@ -879,6 +893,7 @@ class _$Api extends Api {
         name == other.name &&
         metadata == other.metadata &&
         functions == other.functions &&
+        docs == other.docs &&
         location == other.location;
   }
 
@@ -888,6 +903,7 @@ class _$Api extends Api {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jc(_$hash, functions.hashCode);
+    _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -899,6 +915,7 @@ class _$Api extends Api {
           ..add('name', name)
           ..add('metadata', metadata)
           ..add('functions', functions)
+          ..add('docs', docs)
           ..add('location', location))
         .toString();
   }
@@ -923,6 +940,10 @@ class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
   set functions(covariant MapBuilder<String, CloudFunction>? functions) =>
       _$this._functions = functions;
 
+  ListBuilder<String>? _docs;
+  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  set docs(covariant ListBuilder<String>? docs) => _$this._docs = docs;
+
   FileSpan? _location;
   FileSpan? get location => _$this._location;
   set location(covariant FileSpan? location) => _$this._location = location;
@@ -935,6 +956,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
       _name = $v.name;
       _metadata = $v.metadata.toBuilder();
       _functions = $v.functions.toBuilder();
+      _docs = $v.docs.toBuilder();
       _location = $v.location;
       _$v = null;
     }
@@ -963,6 +985,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
               name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
               metadata: metadata.build(),
               functions: functions.build(),
+              docs: docs.build(),
               location: BuiltValueNullFieldError.checkNotNull(
                   location, r'Api', 'location'));
     } catch (_) {
@@ -972,6 +995,8 @@ class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
         metadata.build();
         _$failedField = 'functions';
         functions.build();
+        _$failedField = 'docs';
+        docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'Api', _$failedField, e.toString());

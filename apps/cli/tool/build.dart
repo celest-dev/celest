@@ -329,7 +329,7 @@ final class MacOSBundler implements Bundler {
         '--version',
         version,
         // https://www.pathname.com/fhs/pub/fhs-2.3.html#OPTADDONAPPLICATIONSOFTWAREPACKAGES
-        // TODO: /usr/local/lib + /usr/local/bin?
+        // TODO(dnys1): /usr/local/lib + /usr/local/bin?
         '--install-location',
         '/opt/celest/celest.app',
         '--scripts',
@@ -510,7 +510,7 @@ final class WindowsBundler implements Bundler {
       ..writeAsStringSync(appxManifest, flush: true);
 
     // Copy logo files to buildDir.
-    // TODO: Update logos to be cleaner.
+    // TODO(dnys1): Update logos to be cleaner.
     final sourceDir = p.dirname(p.fromUri(Platform.script));
     for (final logo in [
       'logo-full.png',

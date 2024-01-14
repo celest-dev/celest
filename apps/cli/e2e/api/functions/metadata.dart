@@ -161,8 +161,6 @@ void positionalDefaultValues([
   Serializable serializable = const Serializable.forType('String'),
   LiteralEnum enumValue = LiteralEnum.a,
   ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
-  // TODO(dnys1): Should be an error
-  // _NotExportable notExportable = const _NotExportable(),
 ]) {}
 
 void nullablePositionalDefaultValues([
@@ -176,7 +174,6 @@ void nullablePositionalDefaultValues([
   Serializable? serializable = const Serializable.forType('String'),
   LiteralEnum? enumValue = LiteralEnum.a,
   ({String a, String b, String c})? recordValue = (a: 'a', b: 'b', c: 'c'),
-  // _NotExportable? notExportable = const _NotExportable(),
 ]) {}
 
 void namedDefaultValues({
@@ -190,8 +187,6 @@ void namedDefaultValues({
   Serializable serializable = const Serializable.forType('String'),
   LiteralEnum enumValue = LiteralEnum.a,
   ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
-  // TODO(dnys1): Should be an error
-  // _NotExportable notExportable = const _NotExportable(),
 }) {}
 
 void nullableNamedDefaultValues({
@@ -205,7 +200,6 @@ void nullableNamedDefaultValues({
   Serializable? serializable = const Serializable.forType('String'),
   LiteralEnum? enumValue = LiteralEnum.a,
   ({String a, String b, String c})? recordValue = (a: 'a', b: 'b', c: 'c'),
-  // _NotExportable? notExportable = const _NotExportable(),
 }) {}
 
 // Tests that default values of function parameters can refer

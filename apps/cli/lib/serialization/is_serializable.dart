@@ -263,7 +263,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     if (type.isDartCoreBool ||
         type.isDartCoreDouble ||
         type.isDartCoreInt ||
-        type.isDartCoreNum || // TODO: test
+        type.isDartCoreNum || // TODO(dnys1): test
         type.isDartCoreString ||
         type.isDartCoreNull ||
         type.isDartCoreObject) {
@@ -286,7 +286,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     if (type.isDartCoreType) {
       return const VerdictNo([
-        VerdictReason('Type types are not supported'),
+        VerdictReason('Type literals are not supported'),
       ]);
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
@@ -533,7 +533,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     var verdict = const Verdict.yes();
 
     // Check type arguments
-    // TODO: Check bad arguments
+    // TODO(dnys1): Check bad arguments
     for (final typeArgument in type.typeArguments) {
       verdict &= typeHelper.isSerializable(typeArgument);
     }
@@ -601,7 +601,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     );
     verdict = verdict.withSpec(spec);
 
-    final subtypes = typeHelper.subtypes[type.element] ?? const <DartType>[];
+    final subtypes =
+        typeHelper.subtypes[type.element] ?? const <InterfaceType>[];
     for (final subtype in subtypes) {
       final subtypeVerdict = typeHelper.isSerializable(subtype);
       switch (subtypeVerdict) {
@@ -612,7 +613,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             if (subtypes.contains(subtypeSpec.type)) {
               if (!TypeChecker.fromStatic(jsonMapType)
                   .isExactlyType(subtypeSpec.wireType)) {
-                // TODO: Test
                 verdict &= Verdict.no(
                   'All classes in a sealed class hierarchy must use '
                   'Map<String, Object?> as their wire type but '

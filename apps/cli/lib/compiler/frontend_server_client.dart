@@ -218,7 +218,6 @@ class FrontendServerClient {
     }
   }
 
-  /// TODO: Document
   Future<CompileResult> compileExpression({
     required String expression,
     required List<String> definitions,
@@ -229,7 +228,6 @@ class FrontendServerClient {
   }) =>
       throw UnimplementedError();
 
-  /// TODO: Document
   Future<CompileResult> compileExpressionToJs({
     required String expression,
     required int column,

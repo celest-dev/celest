@@ -208,6 +208,12 @@ void sayHello({
   required dynamic dyn,
   required List<dynamic> listOfDyn,
   required Iterable<dynamic> iterableOfDyn,
+  required Symbol symbol,
+  required List<Symbol> listOfSymbol,
+  required Iterable<Symbol> iterableOfSymbol,
+  required Type type,
+  required List<Type> listOfType,
+  required Iterable<Type> iterableOfType,
 }) {}
 ''',
         },
@@ -231,6 +237,12 @@ void sayHello({
           'Dynamic values are not supported', // dynamic
           'Dynamic values are not supported', // List<dynamic>
           'Dynamic values are not supported', // Iterable<dynamic>
+          'Symbol types are not supported', // Symbol
+          'Symbol types are not supported', // List<Symbol>
+          'Symbol types are not supported', // Iterable<Symbol>
+          'Type literals are not supported', // Type
+          'Type literals are not supported', // List<Type>
+          'Type literals are not supported', // Iterable<Type>
         ],
       );
 
@@ -258,6 +270,12 @@ typedef ReturnTypes = ({
   dynamic dyn,
   List<dynamic> listOfDyn,
   Iterable<dynamic> iterableOfDyn,
+  Symbol symbol,
+  List<Symbol> listOfSymbol,
+  Iterable<Symbol> iterableOfSymbol,
+  Type type,
+  List<Type> listOfType,
+  Iterable<Type> iterableOfType,
 });
 
 ReturnTypes sayHello() {}
@@ -283,6 +301,12 @@ ReturnTypes sayHello() {}
           'Dynamic values are not supported', // dynamic
           'Dynamic values are not supported', // List<dynamic>
           'Dynamic values are not supported', // Iterable<dynamic>
+          'Symbol types are not supported', // Symbol
+          'Symbol types are not supported', // List<Symbol>
+          'Symbol types are not supported', // Iterable<Symbol>
+          'Type literals are not supported', // Type
+          'Type literals are not supported', // List<Type>
+          'Type literals are not supported', // Iterable<Type>
         ],
       );
 
@@ -595,8 +619,89 @@ String sayHello() => 'Hello, World!';
 ''',
         },
         errors: [
-          // TODO: Make more specific
-          'Could not resolve annotation',
+          'Could not resolve annotation. Annotations must be',
+        ],
+      );
+
+      testErrors(
+        name: 'bad_parameter_names',
+        apis: {
+          'greeting.dart': r'''
+String sayHello(String $param) => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Parameter names may not start with a dollar sign',
+        ],
+      );
+
+      testErrors(
+        name: 'private_parameter_type',
+        apis: {
+          'greeting.dart': r'''
+class _Private {
+  const _Private();
+}
+
+typedef Private = _Private;
+
+String sayHello(_Private private, Private privateAliased) => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Private types are not supported', // _Private private
+          'Private types are not supported', // Private privateAliased
+        ],
+      );
+
+      testErrors(
+        name: 'sealed_via_mixins',
+        apis: {
+          'greeting.dart': r'''
+sealed class Base {}
+
+mixin class BaseMixin implements Base {}
+
+final class Leaf with BaseMixin {}
+
+void sealedViaMixins(Base base) {}
+''',
+        },
+        errors: [
+          // Base and BaseMixin are not allowed as parameter/return types
+          // because they have unsealed classes in their hierarchy or are
+          // unsealed themselves.
+          allOf([
+            contains(
+              'Classes with subtypes (which are not sealed classes) are not '
+              'currently supported',
+            ),
+            contains('BaseMixin'),
+            contains('Base'),
+            isNot(contains('Leaf')),
+          ]),
+        ],
+      );
+
+      testErrors(
+        name: 'sealed_with_conflicting_wire_types',
+        apis: {
+          'greeting.dart': r'''
+sealed class Base {}
+
+final class LeafA extends Base {}
+
+final class LeafB extends Base {
+  LeafB.fromJson(String json);
+
+  String toJson() => '';
+}
+
+List<Base> takesLeaves(LeafA a, LeafB b) => [a, b];
+''',
+        },
+        errors: [
+          'All classes in a sealed class hierarchy must use Map<String, Object?>',
         ],
       );
 

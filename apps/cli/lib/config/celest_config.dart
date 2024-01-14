@@ -15,7 +15,7 @@ final class CelestConfig {
     );
     if (!configHome.existsSync()) {
       configHome.createSync(
-        recursive: false, // TODO: true?
+        recursive: false, // TODO(dnys1): true?
       );
     }
     return CelestConfig._(configHome);
