@@ -510,15 +510,51 @@ final class WindowsBundler implements Bundler {
       ..writeAsStringSync(appxManifest, flush: true);
 
     // Copy logo files to buildDir.
-    // TODO(dnys1): Update logos to be cleaner.
-    final sourceDir = p.dirname(p.fromUri(Platform.script));
-    for (final logo in [
-      'logo-full.png',
-      'logo-150x150.png',
-      'logo-44x44.png',
-    ]) {
-      File(p.join(sourceDir, logo)).copySync(p.join(buildDir.path, logo));
+    //
+    // These are generated using VS Studio 2022's built-in Asset Generator.
+    final sourceDir = p.join(
+      p.dirname(p.fromUri(Platform.script)),
+      'windows',
+      'Assets',
+    );
+    final assetsDir = Directory(p.join(buildDir.path, 'Assets'))
+      ..createSync(recursive: true);
+    for (final logoFile in Directory(sourceDir).listSync().whereType<File>()) {
+      logoFile.copySync(p.join(assetsDir.path, p.basename(logoFile.path)));
     }
+
+    // Create Package Resource Index (PRI) using unplated files. This resolves
+    // the transparency issues when using PNGs.
+    //
+    // See:
+    // - https://learn.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-manual-conversion#optional-add-target-based-unplated-assets
+    // - https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-construction
+    // - https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast#shell-light-theme-and-unplated-resources
+
+    print('Creating PRI...');
+    await _runProcess(
+      p.join(_windowsSdkBinDir, 'makepri.exe'),
+      [
+        'createconfig',
+        '/cf',
+        'priconfig.xml',
+        '/dq',
+        'en-US',
+      ],
+      workingDirectory: buildDir.path,
+    );
+    await _runProcess(
+      p.join(_windowsSdkBinDir, 'makepri.exe'),
+      [
+        'new',
+        '/pr',
+        '.',
+        '/cf',
+        'priconfig.xml',
+        '/v',
+      ],
+      workingDirectory: buildDir.path,
+    );
 
     // Output to temporary APPX since jsign gets confused when the filename
     // contains the version (periods).
