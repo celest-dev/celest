@@ -22,9 +22,6 @@ import 'package:watcher/watcher.dart';
 
 enum RestartMode {
   hotReload,
-  // TODO(dnys1): Support hot restart. Requires a shell wrapper which can hotswap
-  // the isolate configuration like the Flutter shell does.
-  // hotRestart,
   fullRestart;
 }
 
@@ -117,7 +114,7 @@ final class CelestFrontend implements Closeable {
         currentProgress = cliLogger.progress(
           _didFirstCompile ? 'Reloading Celest...' : 'Starting Celest...',
         );
-        _residentCompiler ??= ResidentCompiler.start();
+        _residentCompiler ??= await ResidentCompiler.ensureRunning();
         final analysisResult = await _analyzeProject(changedPaths);
 
         switch (analysisResult) {
@@ -146,9 +143,7 @@ final class CelestFrontend implements Closeable {
                   ...changedPaths!
                 else
                   ...project.apis.values.map(
-                    (api) =>
-                        // TODO(dnys1): Make a property of the API
-                        p.join(projectPaths.apisDir, '${api.name}.dart'),
+                    (api) => projectPaths.api(api.name),
                   ),
               ],
               envVars: envVars,
@@ -306,7 +301,6 @@ final class CelestFrontend implements Closeable {
         await _watcher.cancel(immediate: true);
         await _readyForChanges.close();
         await _localApiRunner?.close();
-        _residentCompiler?.stop();
         logger.finest('Stopped Celest frontend');
       });
 }

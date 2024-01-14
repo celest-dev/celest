@@ -91,9 +91,11 @@ final class ProjectBuilder {
         'Failed to build project: ${processResult.stderr}',
       );
     }
-    final cloudAst = proto.Project.fromBuffer(
-      processResult.stdout as List<int>,
+    final protobufMessage = processResult.stdout as List<int>;
+    enrichErrors(
+      ErrorData.bytes('ast.binpb', protobufMessage),
     );
+    final cloudAst = proto.Project.fromBuffer(protobufMessage);
     final staticWidgetCollector = _StaticWidgetCollector(cloudAst: cloudAst);
     project.accept(staticWidgetCollector);
     return cloudAst;

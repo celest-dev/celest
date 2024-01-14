@@ -4,3 +4,4 @@ analyzer:
   errors:
     implementation_imports: ignore
     avoid_print: ignore
+    avoid_catches_without_on_clauses: ignore

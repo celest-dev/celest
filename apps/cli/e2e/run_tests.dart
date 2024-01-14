@@ -13,6 +13,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/testing/init_tests.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -53,11 +54,14 @@ Future<void> main(List<String> args) async {
   for (final testDir in allTests) {
     final projectRoot = testDir.path;
     final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-    TestRunner(
-      updateGoldens: updateGoldens,
-      projectRoot: projectRoot,
-      goldensDir: goldensDir,
-    ).run();
+    withErrorData(
+      {},
+      () => TestRunner(
+        updateGoldens: updateGoldens,
+        projectRoot: projectRoot,
+        goldensDir: goldensDir,
+      ).run(),
+    );
   }
 }
 
@@ -77,7 +81,7 @@ class TestRunner {
 
   late Client client;
   late final CelestAnalyzer analyzer = CelestAnalyzer();
-  late final ResidentCompiler residentCompiler = ResidentCompiler.start()!;
+  late final ResidentCompiler residentCompiler;
 
   void run() {
     group(testName, () {
@@ -97,11 +101,11 @@ class TestRunner {
         }
         goldensDir.createSync();
         client = Client();
+        residentCompiler = (await ResidentCompiler.ensureRunning())!;
       });
 
       tearDownAll(() async {
         client.close();
-        residentCompiler.stop();
       });
 
       _testAnalyzer();

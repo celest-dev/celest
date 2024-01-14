@@ -55,13 +55,7 @@ final class StartCommand extends ProjectCommand {
       await _createProject();
     }
 
-    try {
-      // Start the Celest Frontend Loop
-      return await CelestFrontend().run();
-    } on Exception catch (e, st) {
-      logger.shout('An error occurred while running Celest', e, st);
-      await performance.captureError(e, stackTrace: st);
-      return 1;
-    }
+    // Start the Celest Frontend Loop
+    return CelestFrontend().run();
   }
 }
