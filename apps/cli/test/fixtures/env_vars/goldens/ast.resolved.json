@@ -1,0 +1,26 @@
+{
+  "name": "env_vars",
+  "apis": {},
+  "envVars": [
+    {
+      "name": "MY_NAME",
+      "value": "Dillon"
+    },
+    {
+      "name": "MY_AGE",
+      "value": "28"
+    },
+    {
+      "name": "MY_HEIGHT",
+      "value": "5.83"
+    },
+    {
+      "name": "MY_WEIGHT",
+      "value": "130"
+    },
+    {
+      "name": "IM_COOL",
+      "value": "true"
+    }
+  ]
+}

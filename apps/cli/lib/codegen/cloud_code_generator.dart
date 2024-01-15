@@ -3,7 +3,6 @@ import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
-import 'package:celest_cli/codegen/project/project_build_generator.dart';
 import 'package:celest_cli/codegen/project/resources_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
@@ -23,13 +22,6 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
   @override
   void visitProject(Project project) {
-    final projectBuildFile = projectPaths.projectBuildDart;
-    final projectBuild = ProjectBuildGenerator(
-      projectReference: project.reference,
-    ).generate();
-    fileOutputs[projectBuildFile] =
-        CodeGenerator.emit(projectBuild, forFile: projectBuildFile);
-
     fileOutputs[projectPaths.resourcesDart] = generateResourcesDart(project);
 
     project.apis.values.forEach(visitApi);

@@ -8,7 +8,7 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
-import 'package:celest_cli/project/project_builder.dart';
+import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
@@ -108,7 +108,7 @@ class TestRunner {
 
       testAnalyzer();
       testCodegen();
-      testBuild();
+      testResolve();
       testClient();
 
       final apisDir = Directory(p.join(projectRoot, 'functions'));
@@ -168,33 +168,27 @@ class TestRunner {
     });
   }
 
-  void testBuild() {
-    // Increase timeout since builder runs native-assets compilation.
-    test('build', timeout: const Timeout.factor(10), () async {
+  void testResolve() {
+    test('resolve', () async {
       final (:project, :errors) = await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final projectBuilder = ProjectBuilder(
-        project: project!,
-        projectPaths: projectPaths,
-        residentCompiler: residentCompiler,
+      final projectResolver = ProjectResolver();
+      project!.accept(projectResolver);
+      final resolvedAstFile = File(
+        p.join(projectPaths.outputsDir, 'ast.resolved.json'),
       );
-      final cloudAst = await projectBuilder.build();
-      final cloudAstFile = File(
-        p.join(projectPaths.outputsDir, 'ast.proto.json'),
-      );
+      final resolvedAst = projectResolver.resolvedProject.toJson();
       if (updateGoldens) {
-        cloudAstFile
+        resolvedAstFile
           ..createSync(recursive: true)
           ..writeAsStringSync(
-            const JsonEncoder.withIndent('  ').convert(
-              cloudAst.toProto3Json(),
-            ),
+            const JsonEncoder.withIndent('  ').convert(resolvedAst),
           );
       } else {
-        final expectedAst = jsonDecode(cloudAstFile.readAsStringSync());
-        expect(cloudAst.toProto3Json(), expectedAst);
+        final expectedAst = jsonDecode(resolvedAstFile.readAsStringSync());
+        expect(resolvedAst, expectedAst);
       }
     });
   }

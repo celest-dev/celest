@@ -7,14 +7,14 @@ import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/project_diff.dart';
+import 'package:celest_cli/ast/resolved_ast.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
-import 'package:celest_cli/project/project_builder.dart';
+import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_core/protos.dart' as proto;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -134,8 +134,9 @@ final class CelestFrontend implements Closeable {
             }
             currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
-            final _ = await _buildProject(project);
-            final envVars = project.envVars.map((envVar) => envVar.envName);
+            final resolvedProject = await _resolveProject(project);
+            final envVars =
+                resolvedProject.envVars.map((envVar) => envVar.name);
             final port = await _startLocalApi(
               [
                 ...generatedOutputs,
@@ -232,19 +233,12 @@ final class CelestFrontend implements Closeable {
 
   /// Builds the project into Protobuf format, applying transformations for
   /// things such as authorization.
-  Future<proto.Project> _buildProject(ast.Project project) =>
-      performance.trace('CelestFrontend', 'buildProject', () async {
-        logger.fine('Building project...');
-        final projectBuilder = ProjectBuilder(
-          project: project,
-          projectPaths: projectPaths,
-          residentCompiler: _residentCompiler,
-        );
-        final projectProto = await projectBuilder.build();
-        if (stopped) {
-          throw const CancellationException('Celest was stopped');
-        }
-        return projectProto;
+  Future<ResolvedProject> _resolveProject(ast.Project project) =>
+      performance.trace('CelestFrontend', 'resolveProject', () async {
+        logger.fine('Resolving project...');
+        final projectResolver = ProjectResolver();
+        project.accept(projectResolver);
+        return projectResolver.resolvedProject;
       });
 
   Future<int> _startLocalApi(

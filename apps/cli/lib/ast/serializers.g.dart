@@ -16,7 +16,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(EnvironmentVariable.serializer)
       ..add(NodeReference.serializer)
       ..add(NodeType.serializer)
+      ..add(Policy.serializer)
+      ..add(PolicyStatement.serializer)
       ..add(Project.serializer)
+      ..add(ResolvedApi.serializer)
+      ..add(ResolvedCloudFunction.serializer)
+      ..add(ResolvedEnvironmentVariable.serializer)
+      ..add(ResolvedProject.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())
@@ -53,7 +59,30 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(EnvironmentVariable)]),
-          () => new ListBuilder<EnvironmentVariable>()))
+          () => new ListBuilder<EnvironmentVariable>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ResolvedApi)]),
+          () => new MapBuilder<String, ResolvedApi>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(ResolvedEnvironmentVariable)]),
+          () => new ListBuilder<ResolvedEnvironmentVariable>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ResolvedCloudFunction)
+          ]),
+          () => new MapBuilder<String, ResolvedCloudFunction>())
+      ..addBuilderFactory(
+          const FullType(BuiltSet, const [const FullType(PolicyStatement)]),
+          () => new SetBuilder<PolicyStatement>())
+      ..addBuilderFactory(
+          const FullType(BuiltSet, const [const FullType(String)]),
+          () => new SetBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltSet, const [const FullType(String)]),
+          () => new SetBuilder<String>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

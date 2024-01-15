@@ -29,8 +29,6 @@ final class ProjectPaths {
   late final String analysisOptionsYaml =
       p.join(projectRoot, 'analysis_options.yaml');
   late final String projectDart = p.join(projectRoot, 'project.dart');
-  late final String projectBuildDart = p.join(outputsDir, 'project.build.dart');
-  late final String projectBuildBin = p.join(outputsDir, 'project.binpb');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
