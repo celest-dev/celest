@@ -71,8 +71,6 @@ final class StartCommand extends ProjectCommand {
     final launcher = await PubLauncher.git(
       pubServer: pubServerUri,
       gitUrl: gitUrl,
-      // TODO(dnys1): Remove when merged to main.
-      gitRef: 'feat/init-with-git',
     );
     await launcher.run();
 
