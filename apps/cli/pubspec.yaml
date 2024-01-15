@@ -67,8 +67,12 @@ dev_dependencies:
   built_value_generator: ^8.8.0
   celest_lints:
     path: ../../packages/celest_lints
+  chunked_stream: ^1.4.2
   drift_dev: ^2.14.1
   fast_immutable_collections: ^9.2.0
+  gcloud: ^0.8.12
+  googleapis: ^12.0.0
+  googleapis_auth: ^1.4.1
   json_serializable: ^6.7.1
   mocktail: ^1.0.2
   mustache_template: ^2.0.0

@@ -3,6 +3,14 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/releases/celest_release_info.dart';
+import 'package:celest_cli/src/utils/error.dart';
+import 'package:chunked_stream/chunked_stream.dart';
+import 'package:gcloud/storage.dart';
+import 'package:googleapis/cloudkms/v1.dart';
+import 'package:googleapis/storage/v1.dart' show DetailedApiRequestError;
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:mustache_template/mustache.dart';
 import 'package:path/path.dart' as p;
@@ -42,6 +50,9 @@ final String outputFilepath = p.canonicalize(
     'celest-$version-$osArch.${bundler.extension}',
   ),
 );
+
+/// Access token for GCP.
+final String? accessToken = Platform.environment['GCP_ACCESS_TOKEN'];
 
 /// Builds and bundles the CLI for the current platform.
 ///
@@ -83,26 +94,102 @@ Future<void> main() async {
     return;
   }
 
-  final latestFilename = outputFilepath.replaceAll(version, 'latest');
-  File(outputFilepath).copySync(latestFilename);
-  print('Successfully wrote $latestFilename');
-
-  final ghOutputPath = Platform.environment['GITHUB_OUTPUT'];
-  if (ghOutputPath == null) {
-    throw StateError('GITHUB_OUTPUT environment variable is not set');
+  final project = Platform.environment['GCP_BUILD_PROJECT'];
+  final bucketName = Platform.environment['GCP_BUILD_ARTIFACTS'];
+  if (project == null || bucketName == null || accessToken == null) {
+    throw StateError(
+      'GCP_BUILD_PROJECT or GCP_BUILD_ARTIFACTS or GCP_ACCESS_TOKEN '
+      'is not set',
+    );
   }
-  final ghOutput = File(ghOutputPath);
-  if (!ghOutput.existsSync()) {
-    throw StateError('GitHub output file does not exist: $ghOutput');
-  }
-  ghOutput.writeAsStringSync(
-    'version=$version${Platform.lineTerminator}'
-    'filepath=$outputFilepath${Platform.lineTerminator}'
-    'filepath-latest=$latestFilename${Platform.lineTerminator}'
-    'filename=${p.basename(outputFilepath)}${Platform.lineTerminator}',
-    mode: FileMode.append,
-    flush: true,
+  final client = authenticatedClient(
+    httpClient,
+    AccessCredentials(
+      AccessToken(
+        'Bearer',
+        accessToken!,
+        DateTime.timestamp().add(const Duration(hours: 1)),
+      ),
+      null,
+      [],
+    ),
   );
+  final storage = Storage(client, project);
+  final bucket = storage.bucket(bucketName);
+  // Don't cache artifacts when returned from the bucket since they're
+  // cached at the CDN layer.
+  final objectMetadata = ObjectMetadata(
+    cacheControl: 'no-cache, no-store, max-age=0',
+  );
+
+  final currentReleasesInfoKey = '$osArch/releases.json';
+  CelestReleasesInfo? currentReleasesInfo;
+  try {
+    await bucket.info(currentReleasesInfoKey);
+    final currentReleasesInfoBytes = await readByteStream(
+      bucket.read(currentReleasesInfoKey),
+    );
+    currentReleasesInfo = CelestReleasesInfo.fromJson(
+      jsonDecode(utf8.decode(currentReleasesInfoBytes)) as Map<String, Object?>,
+    );
+  } on DetailedApiRequestError catch (e) {
+    // TODO(dnys1): Remove after first release.
+    if (e.status != 404) {
+      rethrow;
+    }
+  }
+
+  // Upload the build artifacts to GCS.
+  final storagePaths = [
+    '$osArch/$version/${p.basename(outputFilepath)}',
+    '$osArch/latest/${p.basename(outputFilepath)}',
+  ];
+  final bytes = await File(outputFilepath).readAsBytes();
+  for (final storagePath in storagePaths) {
+    await bucket.writeBytes(
+      storagePath,
+      bytes,
+      metadata: objectMetadata,
+      contentType: switch (Platform.operatingSystem) {
+        'windows' => 'application/appx',
+        'macos' => 'application/octet-stream',
+        'linux' => 'application/zip',
+        _ => unreachable(),
+      },
+    );
+  }
+
+  final latestRelease = CelestReleaseInfo(
+    version: version,
+    installer: switch (Platform.operatingSystem) {
+      'windows' || 'macos' => storagePaths.first,
+      'linux' => null,
+      _ => unreachable(),
+    },
+    zip: switch (Platform.operatingSystem) {
+      'windows' || 'macos' => null,
+      'linux' => storagePaths.first,
+      _ => unreachable(),
+    },
+  );
+  final updatedReleasesInfo = CelestReleasesInfo(
+    latest: latestRelease,
+    releases: {
+      ...?currentReleasesInfo?.releases,
+      version: latestRelease,
+    },
+  );
+  final updatedReleasesInfoJson = updatedReleasesInfo.toJson();
+  print('Updated releases info: ${prettyPrintJson(updatedReleasesInfoJson)}');
+
+  await bucket.writeBytes(
+    currentReleasesInfoKey,
+    JsonUtf8Encoder().convert(updatedReleasesInfoJson),
+    metadata: objectMetadata,
+    contentType: 'application/json',
+  );
+
+  print('Successfully updated build artifacts');
 }
 
 abstract class Bundler {
@@ -611,24 +698,9 @@ final class WindowsBundler implements Bundler {
     await jsignJar.create();
     await jsignJar.writeAsBytes(jsignJarReq.bodyBytes, flush: true);
 
-    print('Loading GCP credentials...');
-    final gcloudPassProc = await Process.run(
-      'gcloud',
-      ['auth', 'application-default', 'print-access-token'],
-      stdoutEncoding: utf8,
-      stderrEncoding: utf8,
-      runInShell: true,
-    );
-    if (gcloudPassProc.exitCode != 0) {
-      throw ProcessException(
-        'gcloud',
-        ['auth', 'application-default', 'print-access-token'],
-        gcloudPassProc.stderr as String,
-        gcloudPassProc.exitCode,
-      );
+    if (accessToken == null) {
+      throw StateError('GCP_ACCESS_TOKEN is not set');
     }
-    final gcloudPass =
-        LineSplitter.split(gcloudPassProc.stdout as String).first.trim();
 
     final jsignArgs = <String>[
       '-jar',
@@ -636,7 +708,7 @@ final class WindowsBundler implements Bundler {
       '--storetype',
       'GOOGLECLOUD',
       '--storepass',
-      gcloudPass,
+      accessToken!,
       '--keystore',
       evKeyRing,
       '--alias',
