@@ -1,18 +1,10 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-import 'package:celest/celest.dart' as celest;
-import 'package:celest_cli/ast/serializers.dart';
-
-part 'authz.g.dart';
+part of 'resolved_ast.dart';
 
 abstract class Policy implements Built<Policy, PolicyBuilder> {
   factory Policy({
-    required celest.Entity grantor,
     required Iterable<PolicyStatement> statements,
   }) {
     return _$Policy._(
-      grantor: grantor.id,
       statements: statements.toBuiltSet(),
     );
   }
@@ -24,7 +16,6 @@ abstract class Policy implements Built<Policy, PolicyBuilder> {
 
   Policy._();
 
-  String get grantor;
   BuiltSet<PolicyStatement> get statements;
 
   Map<String, Object?> toJson() =>
@@ -37,12 +28,12 @@ abstract class Policy implements Built<Policy, PolicyBuilder> {
 abstract class PolicyStatement
     implements Built<PolicyStatement, PolicyStatementBuilder> {
   factory PolicyStatement({
-    required celest.Node grantee,
-    required Iterable<celest.CelestAction> actions,
+    required Node grantee,
+    required Iterable<CelestAction> actions,
   }) {
     return _$PolicyStatement._(
       grantee: grantee.id,
-      actions: actions.map((action) => action.toString()).toBuiltSet(),
+      actions: actions.toBuiltSet(),
     );
   }
 
@@ -55,8 +46,8 @@ abstract class PolicyStatement
 
   PolicyStatement._();
 
-  String get grantee;
-  BuiltSet<String> get actions;
+  NodeId get grantee;
+  BuiltSet<CelestAction> get actions;
 
   Map<String, Object?> toJson() =>
       serializers.serializeWith(PolicyStatement.serializer, this)
@@ -64,4 +55,34 @@ abstract class PolicyStatement
 
   static Serializer<PolicyStatement> get serializer =>
       _$policyStatementSerializer;
+}
+
+abstract class Role with Entity implements Built<Role, RoleBuilder>, Node {
+  factory Role({
+    required String name,
+  }) {
+    return _$Role._(
+      name: name,
+    );
+  }
+
+  factory Role.build([void Function(RoleBuilder) updates]) = _$Role;
+
+  factory Role.fromJson(Map<String, Object?> json) =>
+      serializers.deserializeWith(Role.serializer, json)!;
+
+  Role._();
+
+  static final authenticated = Role(name: r'$authenticated');
+  static final public = Role(name: r'$public');
+
+  @override
+  NodeId get id => NodeId('Celest::Role', name);
+
+  String get name;
+
+  Map<String, Object?> toJson() =>
+      serializers.serializeWith(Role.serializer, this) as Map<String, Object?>;
+
+  static Serializer<Role> get serializer => _$roleSerializer;
 }

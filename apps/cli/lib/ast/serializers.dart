@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:celest_cli/ast/actions.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/ast/authz.dart';
 import 'package:celest_cli/ast/resolved_ast.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/src/context.dart';
@@ -31,9 +31,13 @@ part 'serializers.g.dart';
   ResolvedCloudFunction,
   ResolvedEnvironmentVariable,
 
+  // Actions
+  CloudFunctionAction,
+
   // AuthZ
   Policy,
   PolicyStatement,
+  Role,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..addPlugin(_CustomJsonPlugin())

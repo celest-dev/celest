@@ -12,11 +12,11 @@ export 'package:source_span/source_span.dart' show FileSpan;
 part 'ast.g.dart';
 
 @BuiltValue(instantiable: false)
-sealed class Node {
+sealed class AstNode {
   FileSpan get location;
 }
 
-abstract class Project implements Built<Project, ProjectBuilder>, Node {
+abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
   factory Project({
     required String name,
     required Reference reference,
@@ -57,7 +57,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, Node {
   static Serializer<Project> get serializer => _$projectSerializer;
 }
 
-abstract class Api implements Built<Api, ApiBuilder>, Node {
+abstract class Api implements Built<Api, ApiBuilder>, AstNode {
   factory Api({
     required String name,
     required FileSpan location,
@@ -95,7 +95,7 @@ abstract class Api implements Built<Api, ApiBuilder>, Node {
   static Serializer<Api> get serializer => _$apiSerializer;
 }
 
-sealed class ApiMetadata implements Node {}
+sealed class ApiMetadata implements AstNode {}
 
 sealed class ApiAuth implements ApiMetadata {}
 
@@ -180,7 +180,7 @@ abstract class ApiMiddleware
 abstract class CloudFunctionParameter
     implements
         Built<CloudFunctionParameter, CloudFunctionParameterBuilder>,
-        Node {
+        AstNode {
   factory CloudFunctionParameter({
     required String name,
     required Reference type,
@@ -241,7 +241,7 @@ abstract class CloudFunctionParameter
 abstract class CloudFunction
     implements
         Built<CloudFunction, CloudFunctionBuilder>,
-        Node,
+        AstNode,
         Comparable<CloudFunction> {
   factory CloudFunction({
     required String name,
@@ -307,7 +307,7 @@ abstract class CloudFunction
 }
 
 abstract class EnvironmentVariable
-    implements Built<EnvironmentVariable, EnvironmentVariableBuilder>, Node {
+    implements Built<EnvironmentVariable, EnvironmentVariableBuilder>, AstNode {
   factory EnvironmentVariable(
     String envName, {
     required FileSpan location,

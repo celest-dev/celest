@@ -6,6 +6,7 @@ part of 'resolved_ast.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<NodeId> _$nodeIdSerializer = new _$NodeIdSerializer();
 Serializer<ResolvedProject> _$resolvedProjectSerializer =
     new _$ResolvedProjectSerializer();
 Serializer<ResolvedApi> _$resolvedApiSerializer = new _$ResolvedApiSerializer();
@@ -14,6 +15,55 @@ Serializer<ResolvedCloudFunction> _$resolvedCloudFunctionSerializer =
 Serializer<ResolvedEnvironmentVariable>
     _$resolvedEnvironmentVariableSerializer =
     new _$ResolvedEnvironmentVariableSerializer();
+Serializer<Policy> _$policySerializer = new _$PolicySerializer();
+Serializer<PolicyStatement> _$policyStatementSerializer =
+    new _$PolicyStatementSerializer();
+Serializer<Role> _$roleSerializer = new _$RoleSerializer();
+
+class _$NodeIdSerializer implements StructuredSerializer<NodeId> {
+  @override
+  final Iterable<Type> types = const [NodeId, _$NodeId];
+  @override
+  final String wireName = 'NodeId';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, NodeId object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'type',
+      serializers.serialize(object.type, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  NodeId deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new NodeIdBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$ResolvedProjectSerializer
     implements StructuredSerializer<ResolvedProject> {
@@ -265,9 +315,231 @@ class _$ResolvedEnvironmentVariableSerializer
   }
 }
 
-abstract mixin class ResolvedNodeBuilder {
-  void replace(ResolvedNode other);
-  void update(void Function(ResolvedNodeBuilder) updates);
+class _$PolicySerializer implements StructuredSerializer<Policy> {
+  @override
+  final Iterable<Type> types = const [Policy, _$Policy];
+  @override
+  final String wireName = 'Policy';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Policy object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'statements',
+      serializers.serialize(object.statements,
+          specifiedType: const FullType(
+              BuiltSet, const [const FullType(PolicyStatement)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  Policy deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PolicyBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'statements':
+          result.statements.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltSet, const [const FullType(PolicyStatement)]))!
+              as BuiltSet<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PolicyStatementSerializer
+    implements StructuredSerializer<PolicyStatement> {
+  @override
+  final Iterable<Type> types = const [PolicyStatement, _$PolicyStatement];
+  @override
+  final String wireName = 'PolicyStatement';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, PolicyStatement object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'grantee',
+      serializers.serialize(object.grantee,
+          specifiedType: const FullType(NodeId)),
+      'actions',
+      serializers.serialize(object.actions,
+          specifiedType:
+              const FullType(BuiltSet, const [const FullType(CelestAction)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  PolicyStatement deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PolicyStatementBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'grantee':
+          result.grantee.replace(serializers.deserialize(value,
+              specifiedType: const FullType(NodeId))! as NodeId);
+          break;
+        case 'actions':
+          result.actions.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltSet, const [const FullType(CelestAction)]))!
+              as BuiltSet<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$RoleSerializer implements StructuredSerializer<Role> {
+  @override
+  final Iterable<Type> types = const [Role, _$Role];
+  @override
+  final String wireName = 'Role';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Role object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  Role deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new RoleBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$NodeId extends NodeId {
+  @override
+  final String type;
+  @override
+  final String id;
+
+  factory _$NodeId([void Function(NodeIdBuilder)? updates]) =>
+      (new NodeIdBuilder()..update(updates))._build();
+
+  _$NodeId._({required this.type, required this.id}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(type, r'NodeId', 'type');
+    BuiltValueNullFieldError.checkNotNull(id, r'NodeId', 'id');
+  }
+
+  @override
+  NodeId rebuild(void Function(NodeIdBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  NodeIdBuilder toBuilder() => new NodeIdBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is NodeId && type == other.type && id == other.id;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'NodeId')
+          ..add('type', type)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class NodeIdBuilder implements Builder<NodeId, NodeIdBuilder> {
+  _$NodeId? _$v;
+
+  String? _type;
+  String? get type => _$this._type;
+  set type(String? type) => _$this._type = type;
+
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
+
+  NodeIdBuilder();
+
+  NodeIdBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _type = $v.type;
+      _id = $v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(NodeId other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$NodeId;
+  }
+
+  @override
+  void update(void Function(NodeIdBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  NodeId build() => _build();
+
+  _$NodeId _build() {
+    final _$result = _$v ??
+        new _$NodeId._(
+            type:
+                BuiltValueNullFieldError.checkNotNull(type, r'NodeId', 'type'),
+            id: BuiltValueNullFieldError.checkNotNull(id, r'NodeId', 'id'));
+    replace(_$result);
+    return _$result;
+  }
 }
 
 class _$ResolvedProject extends ResolvedProject {
@@ -328,25 +600,22 @@ class _$ResolvedProject extends ResolvedProject {
 }
 
 class ResolvedProjectBuilder
-    implements
-        Builder<ResolvedProject, ResolvedProjectBuilder>,
-        ResolvedNodeBuilder {
+    implements Builder<ResolvedProject, ResolvedProjectBuilder> {
   _$ResolvedProject? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(covariant String? name) => _$this._name = name;
+  set name(String? name) => _$this._name = name;
 
   MapBuilder<String, ResolvedApi>? _apis;
   MapBuilder<String, ResolvedApi> get apis =>
       _$this._apis ??= new MapBuilder<String, ResolvedApi>();
-  set apis(covariant MapBuilder<String, ResolvedApi>? apis) =>
-      _$this._apis = apis;
+  set apis(MapBuilder<String, ResolvedApi>? apis) => _$this._apis = apis;
 
   ListBuilder<ResolvedEnvironmentVariable>? _envVars;
   ListBuilder<ResolvedEnvironmentVariable> get envVars =>
       _$this._envVars ??= new ListBuilder<ResolvedEnvironmentVariable>();
-  set envVars(covariant ListBuilder<ResolvedEnvironmentVariable>? envVars) =>
+  set envVars(ListBuilder<ResolvedEnvironmentVariable>? envVars) =>
       _$this._envVars = envVars;
 
   ResolvedProjectBuilder();
@@ -363,7 +632,7 @@ class ResolvedProjectBuilder
   }
 
   @override
-  void replace(covariant ResolvedProject other) {
+  void replace(ResolvedProject other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedProject;
   }
@@ -457,24 +726,22 @@ class _$ResolvedApi extends ResolvedApi {
   }
 }
 
-class ResolvedApiBuilder
-    implements Builder<ResolvedApi, ResolvedApiBuilder>, ResolvedNodeBuilder {
+class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
   _$ResolvedApi? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(covariant String? name) => _$this._name = name;
+  set name(String? name) => _$this._name = name;
 
   MapBuilder<String, ResolvedCloudFunction>? _functions;
   MapBuilder<String, ResolvedCloudFunction> get functions =>
       _$this._functions ??= new MapBuilder<String, ResolvedCloudFunction>();
-  set functions(
-          covariant MapBuilder<String, ResolvedCloudFunction>? functions) =>
+  set functions(MapBuilder<String, ResolvedCloudFunction>? functions) =>
       _$this._functions = functions;
 
   PolicyBuilder? _policy;
   PolicyBuilder get policy => _$this._policy ??= new PolicyBuilder();
-  set policy(covariant PolicyBuilder? policy) => _$this._policy = policy;
+  set policy(PolicyBuilder? policy) => _$this._policy = policy;
 
   ResolvedApiBuilder();
 
@@ -490,7 +757,7 @@ class ResolvedApiBuilder
   }
 
   @override
-  void replace(covariant ResolvedApi other) {
+  void replace(ResolvedApi other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedApi;
   }
@@ -600,28 +867,25 @@ class _$ResolvedCloudFunction extends ResolvedCloudFunction {
 }
 
 class ResolvedCloudFunctionBuilder
-    implements
-        Builder<ResolvedCloudFunction, ResolvedCloudFunctionBuilder>,
-        ResolvedNodeBuilder {
+    implements Builder<ResolvedCloudFunction, ResolvedCloudFunctionBuilder> {
   _$ResolvedCloudFunction? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(covariant String? name) => _$this._name = name;
+  set name(String? name) => _$this._name = name;
 
   String? _apiName;
   String? get apiName => _$this._apiName;
-  set apiName(covariant String? apiName) => _$this._apiName = apiName;
+  set apiName(String? apiName) => _$this._apiName = apiName;
 
   SetBuilder<String>? _envVars;
   SetBuilder<String> get envVars =>
       _$this._envVars ??= new SetBuilder<String>();
-  set envVars(covariant SetBuilder<String>? envVars) =>
-      _$this._envVars = envVars;
+  set envVars(SetBuilder<String>? envVars) => _$this._envVars = envVars;
 
   PolicyBuilder? _policy;
   PolicyBuilder get policy => _$this._policy ??= new PolicyBuilder();
-  set policy(covariant PolicyBuilder? policy) => _$this._policy = policy;
+  set policy(PolicyBuilder? policy) => _$this._policy = policy;
 
   ResolvedCloudFunctionBuilder();
 
@@ -638,7 +902,7 @@ class ResolvedCloudFunctionBuilder
   }
 
   @override
-  void replace(covariant ResolvedCloudFunction other) {
+  void replace(ResolvedCloudFunction other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedCloudFunction;
   }
@@ -736,17 +1000,16 @@ class _$ResolvedEnvironmentVariable extends ResolvedEnvironmentVariable {
 class ResolvedEnvironmentVariableBuilder
     implements
         Builder<ResolvedEnvironmentVariable,
-            ResolvedEnvironmentVariableBuilder>,
-        ResolvedNodeBuilder {
+            ResolvedEnvironmentVariableBuilder> {
   _$ResolvedEnvironmentVariable? _$v;
 
   String? _name;
   String? get name => _$this._name;
-  set name(covariant String? name) => _$this._name = name;
+  set name(String? name) => _$this._name = name;
 
   String? _value;
   String? get value => _$this._value;
-  set value(covariant String? value) => _$this._value = value;
+  set value(String? value) => _$this._value = value;
 
   ResolvedEnvironmentVariableBuilder();
 
@@ -761,7 +1024,7 @@ class ResolvedEnvironmentVariableBuilder
   }
 
   @override
-  void replace(covariant ResolvedEnvironmentVariable other) {
+  void replace(ResolvedEnvironmentVariable other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedEnvironmentVariable;
   }
@@ -781,6 +1044,293 @@ class ResolvedEnvironmentVariableBuilder
                 name, r'ResolvedEnvironmentVariable', 'name'),
             value: BuiltValueNullFieldError.checkNotNull(
                 value, r'ResolvedEnvironmentVariable', 'value'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Policy extends Policy {
+  @override
+  final BuiltSet<PolicyStatement> statements;
+
+  factory _$Policy([void Function(PolicyBuilder)? updates]) =>
+      (new PolicyBuilder()..update(updates))._build();
+
+  _$Policy._({required this.statements}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(statements, r'Policy', 'statements');
+  }
+
+  @override
+  Policy rebuild(void Function(PolicyBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PolicyBuilder toBuilder() => new PolicyBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Policy && statements == other.statements;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, statements.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'Policy')
+          ..add('statements', statements))
+        .toString();
+  }
+}
+
+class PolicyBuilder implements Builder<Policy, PolicyBuilder> {
+  _$Policy? _$v;
+
+  SetBuilder<PolicyStatement>? _statements;
+  SetBuilder<PolicyStatement> get statements =>
+      _$this._statements ??= new SetBuilder<PolicyStatement>();
+  set statements(SetBuilder<PolicyStatement>? statements) =>
+      _$this._statements = statements;
+
+  PolicyBuilder();
+
+  PolicyBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _statements = $v.statements.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Policy other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Policy;
+  }
+
+  @override
+  void update(void Function(PolicyBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Policy build() => _build();
+
+  _$Policy _build() {
+    _$Policy _$result;
+    try {
+      _$result = _$v ?? new _$Policy._(statements: statements.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'statements';
+        statements.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'Policy', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PolicyStatement extends PolicyStatement {
+  @override
+  final NodeId grantee;
+  @override
+  final BuiltSet<CelestAction> actions;
+
+  factory _$PolicyStatement([void Function(PolicyStatementBuilder)? updates]) =>
+      (new PolicyStatementBuilder()..update(updates))._build();
+
+  _$PolicyStatement._({required this.grantee, required this.actions})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        grantee, r'PolicyStatement', 'grantee');
+    BuiltValueNullFieldError.checkNotNull(
+        actions, r'PolicyStatement', 'actions');
+  }
+
+  @override
+  PolicyStatement rebuild(void Function(PolicyStatementBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PolicyStatementBuilder toBuilder() =>
+      new PolicyStatementBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PolicyStatement &&
+        grantee == other.grantee &&
+        actions == other.actions;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, grantee.hashCode);
+    _$hash = $jc(_$hash, actions.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'PolicyStatement')
+          ..add('grantee', grantee)
+          ..add('actions', actions))
+        .toString();
+  }
+}
+
+class PolicyStatementBuilder
+    implements Builder<PolicyStatement, PolicyStatementBuilder> {
+  _$PolicyStatement? _$v;
+
+  NodeIdBuilder? _grantee;
+  NodeIdBuilder get grantee => _$this._grantee ??= new NodeIdBuilder();
+  set grantee(NodeIdBuilder? grantee) => _$this._grantee = grantee;
+
+  SetBuilder<CelestAction>? _actions;
+  SetBuilder<CelestAction> get actions =>
+      _$this._actions ??= new SetBuilder<CelestAction>();
+  set actions(SetBuilder<CelestAction>? actions) => _$this._actions = actions;
+
+  PolicyStatementBuilder();
+
+  PolicyStatementBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _grantee = $v.grantee.toBuilder();
+      _actions = $v.actions.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PolicyStatement other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$PolicyStatement;
+  }
+
+  @override
+  void update(void Function(PolicyStatementBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  PolicyStatement build() => _build();
+
+  _$PolicyStatement _build() {
+    _$PolicyStatement _$result;
+    try {
+      _$result = _$v ??
+          new _$PolicyStatement._(
+              grantee: grantee.build(), actions: actions.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'grantee';
+        grantee.build();
+        _$failedField = 'actions';
+        actions.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'PolicyStatement', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Role extends Role {
+  @override
+  final String name;
+
+  factory _$Role([void Function(RoleBuilder)? updates]) =>
+      (new RoleBuilder()..update(updates))._build();
+
+  _$Role._({required this.name}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'Role', 'name');
+  }
+
+  @override
+  Role rebuild(void Function(RoleBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  RoleBuilder toBuilder() => new RoleBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Role && name == other.name;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'Role')..add('name', name)).toString();
+  }
+}
+
+class RoleBuilder implements Builder<Role, RoleBuilder> {
+  _$Role? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  RoleBuilder();
+
+  RoleBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Role other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Role;
+  }
+
+  @override
+  void update(void Function(RoleBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Role build() => _build();
+
+  _$Role _build() {
+    final _$result = _$v ??
+        new _$Role._(
+            name: BuiltValueNullFieldError.checkNotNull(name, r'Role', 'name'));
     replace(_$result);
     return _$result;
   }

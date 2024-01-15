@@ -1,16 +1,49 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:celest_cli/ast/authz.dart';
+import 'package:celest_cli/ast/actions.dart';
 import 'package:celest_cli/ast/serializers.dart';
 
+part 'authz.dart';
 part 'resolved_ast.g.dart';
 
-@BuiltValue(instantiable: false)
-sealed class ResolvedNode {}
+sealed class Node {
+  /// A unique identifier for the node.
+  NodeId get id;
+}
+
+/// A marker trait for [Node]s which participant in authorization.
+abstract mixin class Entity implements Node {
+  const Entity();
+}
+
+abstract class NodeId implements Built<NodeId, NodeIdBuilder> {
+  factory NodeId(String type, String id) {
+    return _$NodeId._(
+      type: type,
+      id: id,
+    );
+  }
+
+  factory NodeId.build([void Function(NodeIdBuilder) updates]) = _$NodeId;
+
+  factory NodeId.fromJson(Map<String, dynamic> json) =>
+      serializers.deserializeWith(NodeId.serializer, json)!;
+
+  NodeId._();
+
+  String get type;
+  String get id;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(NodeId.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<NodeId> get serializer => _$nodeIdSerializer;
+}
 
 abstract class ResolvedProject
-    implements Built<ResolvedProject, ResolvedProjectBuilder>, ResolvedNode {
+    implements Built<ResolvedProject, ResolvedProjectBuilder>, Node {
   factory ResolvedProject({
     required String name,
     Map<String, ResolvedApi> apis = const {},
@@ -32,6 +65,9 @@ abstract class ResolvedProject
 
   ResolvedProject._();
 
+  @override
+  NodeId get id => NodeId('Celest::Project', name);
+
   String get name;
   BuiltMap<String, ResolvedApi> get apis;
   BuiltList<ResolvedEnvironmentVariable> get envVars;
@@ -45,7 +81,8 @@ abstract class ResolvedProject
 }
 
 abstract class ResolvedApi
-    implements Built<ResolvedApi, ResolvedApiBuilder>, ResolvedNode {
+    with Entity
+    implements Built<ResolvedApi, ResolvedApiBuilder>, Node {
   factory ResolvedApi({
     required String name,
     required Map<String, ResolvedCloudFunction> functions,
@@ -66,6 +103,9 @@ abstract class ResolvedApi
 
   ResolvedApi._();
 
+  @override
+  NodeId get id => NodeId('Celest::Api', name);
+
   String get name;
   BuiltMap<String, ResolvedCloudFunction> get functions;
   Policy? get policy;
@@ -78,9 +118,10 @@ abstract class ResolvedApi
 }
 
 abstract class ResolvedCloudFunction
+    with Entity
     implements
         Built<ResolvedCloudFunction, ResolvedCloudFunctionBuilder>,
-        ResolvedNode {
+        Node {
   factory ResolvedCloudFunction({
     required String name,
     required String apiName,
@@ -104,6 +145,9 @@ abstract class ResolvedCloudFunction
 
   ResolvedCloudFunction._();
 
+  @override
+  NodeId get id => NodeId('Celest::CloudFunction', '$apiName.$name');
+
   String get name;
   String get apiName;
   BuiltSet<String> get envVars;
@@ -120,7 +164,7 @@ abstract class ResolvedCloudFunction
 abstract class ResolvedEnvironmentVariable
     implements
         Built<ResolvedEnvironmentVariable, ResolvedEnvironmentVariableBuilder>,
-        ResolvedNode {
+        Node {
   factory ResolvedEnvironmentVariable({
     required String name,
     required String value,
@@ -133,6 +177,9 @@ abstract class ResolvedEnvironmentVariable
       )!;
 
   ResolvedEnvironmentVariable._();
+
+  @override
+  NodeId get id => NodeId('Celest::EnvironmentVariable', name);
 
   /// The name of the variable in the environment, e.g. `MY_ENV`.
   String get name;

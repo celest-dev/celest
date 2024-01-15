@@ -9,12 +9,17 @@
           "apiName": "anonymous_function",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -25,12 +30,17 @@
           "apiName": "anonymous_function",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -38,12 +48,17 @@
         }
       },
       "policy": {
-        "grantor": "",
         "statements": [
           {
-            "grantee": "Celest::Role::$authenticated",
+            "grantee": {
+              "type": "Celest::Role",
+              "id": "$authenticated"
+            },
             "actions": [
-              "CloudFunctionAction::\"invoke\""
+              {
+                "$": "CloudFunctionAction",
+                "": "invoke"
+              }
             ]
           }
         ]
@@ -57,12 +72,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -73,12 +93,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -89,12 +114,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -105,12 +135,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -121,12 +156,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -137,12 +177,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -153,12 +198,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -169,12 +219,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -185,12 +240,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -201,12 +261,17 @@
           "apiName": "records",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -222,12 +287,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -238,12 +308,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -254,12 +329,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -270,12 +350,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -286,12 +371,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -302,12 +392,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -318,12 +413,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -334,12 +434,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -350,12 +455,17 @@
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -371,12 +481,17 @@
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -387,12 +502,17 @@
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -403,12 +523,17 @@
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -424,12 +549,17 @@
           "apiName": "cycles",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -440,12 +570,17 @@
           "apiName": "cycles",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -456,12 +591,17 @@
           "apiName": "cycles",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -472,12 +612,17 @@
           "apiName": "cycles",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -493,12 +638,17 @@
           "apiName": "authenticated_function",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -509,12 +659,17 @@
           "apiName": "authenticated_function",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -530,12 +685,17 @@
           "apiName": "api_auth_constant_variables",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -546,12 +706,17 @@
           "apiName": "api_auth_constant_variables",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -559,12 +724,17 @@
         }
       },
       "policy": {
-        "grantor": "",
         "statements": [
           {
-            "grantee": "Celest::Role::$public",
+            "grantee": {
+              "type": "Celest::Role",
+              "id": "$public"
+            },
             "actions": [
-              "CloudFunctionAction::\"invoke\""
+              {
+                "$": "CloudFunctionAction",
+                "": "invoke"
+              }
             ]
           }
         ]
@@ -578,12 +748,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -594,12 +769,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -610,12 +790,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -626,12 +811,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -642,12 +832,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -658,12 +853,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -674,12 +874,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -690,12 +895,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -706,12 +916,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -722,12 +937,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -738,12 +958,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -754,12 +979,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -770,12 +1000,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -786,12 +1021,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -802,12 +1042,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -818,12 +1063,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -834,12 +1084,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -850,12 +1105,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -866,12 +1126,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -882,12 +1147,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -898,12 +1168,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -914,12 +1189,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -930,12 +1210,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -946,12 +1231,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -962,12 +1252,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -978,12 +1273,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -994,12 +1294,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1010,12 +1315,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1026,12 +1336,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1042,12 +1357,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1058,12 +1378,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1074,12 +1399,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1090,12 +1420,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1106,12 +1441,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1122,12 +1462,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1138,12 +1483,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1154,12 +1504,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1170,12 +1525,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1186,12 +1546,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1202,12 +1567,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1218,12 +1588,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1234,12 +1609,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1250,12 +1630,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1266,12 +1651,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1282,12 +1672,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1298,12 +1693,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1314,12 +1714,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1330,12 +1735,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1346,12 +1756,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1362,12 +1777,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1378,12 +1798,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1394,12 +1819,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1410,12 +1840,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1426,12 +1861,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1442,12 +1882,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1458,12 +1903,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1474,12 +1924,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1490,12 +1945,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1506,12 +1966,17 @@
           "apiName": "return_types",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1527,12 +1992,17 @@
           "apiName": "middleware",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1548,12 +2018,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1564,12 +2039,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1580,12 +2060,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1596,12 +2081,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1612,12 +2102,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1628,12 +2123,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1644,12 +2144,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1660,12 +2165,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1676,12 +2186,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1692,12 +2207,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1708,12 +2228,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1724,12 +2249,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1740,12 +2270,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1756,12 +2291,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1772,12 +2312,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1788,12 +2333,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1804,12 +2354,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1820,12 +2375,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1836,12 +2396,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1852,12 +2417,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1868,12 +2438,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1884,12 +2459,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1900,12 +2480,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1916,12 +2501,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1932,12 +2522,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1948,12 +2543,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1964,12 +2564,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -1980,12 +2585,17 @@
           "apiName": "classes",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2001,12 +2611,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2017,12 +2632,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2033,12 +2653,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2049,12 +2674,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2065,12 +2695,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2081,12 +2716,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2097,12 +2737,17 @@
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2118,12 +2763,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2134,12 +2784,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2150,12 +2805,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2166,12 +2826,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2182,12 +2847,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2198,12 +2868,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2214,12 +2889,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2230,12 +2910,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2246,12 +2931,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2262,12 +2952,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2278,12 +2973,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2294,12 +2994,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2310,12 +3015,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2326,12 +3036,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2342,12 +3057,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2358,12 +3078,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2374,12 +3099,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2390,12 +3120,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2406,12 +3141,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2422,12 +3162,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2438,12 +3183,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2454,12 +3204,17 @@
           "apiName": "metadata",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2475,12 +3230,17 @@
           "apiName": "authenticated_api",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2491,12 +3251,17 @@
           "apiName": "authenticated_api",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2504,12 +3269,17 @@
         }
       },
       "policy": {
-        "grantor": "",
         "statements": [
           {
-            "grantee": "Celest::Role::$authenticated",
+            "grantee": {
+              "type": "Celest::Role",
+              "id": "$authenticated"
+            },
             "actions": [
-              "CloudFunctionAction::\"invoke\""
+              {
+                "$": "CloudFunctionAction",
+                "": "invoke"
+              }
             ]
           }
         ]
@@ -2523,12 +3293,17 @@
           "apiName": "anonymous_api",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2539,12 +3314,17 @@
           "apiName": "anonymous_api",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2552,12 +3332,17 @@
         }
       },
       "policy": {
-        "grantor": "",
         "statements": [
           {
-            "grantee": "Celest::Role::$public",
+            "grantee": {
+              "type": "Celest::Role",
+              "id": "$public"
+            },
             "actions": [
-              "CloudFunctionAction::\"invoke\""
+              {
+                "$": "CloudFunctionAction",
+                "": "invoke"
+              }
             ]
           }
         ]
@@ -2571,12 +3356,17 @@
           "apiName": "parameters",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2587,12 +3377,17 @@
           "apiName": "parameters",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2603,12 +3398,17 @@
           "apiName": "parameters",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2619,12 +3419,17 @@
           "apiName": "parameters",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2640,12 +3445,17 @@
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2656,12 +3466,17 @@
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]
@@ -2672,12 +3487,17 @@
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {
-            "grantor": "",
             "statements": [
               {
-                "grantee": "Celest::Role::$authenticated",
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
                 "actions": [
-                  "CloudFunctionAction::\"invoke\""
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
                 ]
               }
             ]

@@ -685,9 +685,9 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
   }
 }
 
-abstract mixin class NodeBuilder {
-  void replace(Node other);
-  void update(void Function(NodeBuilder) updates);
+abstract mixin class AstNodeBuilder {
+  void replace(AstNode other);
+  void update(void Function(AstNodeBuilder) updates);
   FileSpan? get location;
   set location(FileSpan? location);
 }
@@ -763,7 +763,8 @@ class _$Project extends Project {
   }
 }
 
-class ProjectBuilder implements Builder<Project, ProjectBuilder>, NodeBuilder {
+class ProjectBuilder
+    implements Builder<Project, ProjectBuilder>, AstNodeBuilder {
   _$Project? _$v;
 
   String? _name;
@@ -921,7 +922,7 @@ class _$Api extends Api {
   }
 }
 
-class ApiBuilder implements Builder<Api, ApiBuilder>, NodeBuilder {
+class ApiBuilder implements Builder<Api, ApiBuilder>, AstNodeBuilder {
   _$Api? _$v;
 
   String? _name;
@@ -1376,7 +1377,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
 class CloudFunctionParameterBuilder
     implements
         Builder<CloudFunctionParameter, CloudFunctionParameterBuilder>,
-        NodeBuilder {
+        AstNodeBuilder {
   _$CloudFunctionParameter? _$v;
 
   String? _name;
@@ -1598,7 +1599,7 @@ class _$CloudFunction extends CloudFunction {
 }
 
 class CloudFunctionBuilder
-    implements Builder<CloudFunction, CloudFunctionBuilder>, NodeBuilder {
+    implements Builder<CloudFunction, CloudFunctionBuilder>, AstNodeBuilder {
   _$CloudFunction? _$v;
 
   String? _name;
@@ -1786,7 +1787,7 @@ class _$EnvironmentVariable extends EnvironmentVariable {
 class EnvironmentVariableBuilder
     implements
         Builder<EnvironmentVariable, EnvironmentVariableBuilder>,
-        NodeBuilder {
+        AstNodeBuilder {
   _$EnvironmentVariable? _$v;
 
   String? _envName;

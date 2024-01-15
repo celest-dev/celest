@@ -1,6 +1,5 @@
-import 'package:celest/celest.dart';
+import 'package:celest_cli/ast/actions.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
-import 'package:celest_cli/ast/authz.dart';
 import 'package:celest_cli/ast/resolved_ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/src/context.dart';
@@ -26,17 +25,15 @@ final class ProjectResolver extends AstVisitor<void> {
       if (apiAuth == null) {
         return;
       }
-      resolvedApi.policy
-        ..grantor = '' // TODO
-        ..statements.add(
-          PolicyStatement(
-            grantee: switch (apiAuth) {
-              ast.ApiAuthenticated() => const Role.authenticated(),
-              ast.ApiPublic() => const Role.public(),
-            },
-            actions: [CloudFunctionAction.invoke],
-          ),
-        );
+      resolvedApi.policy.statements.add(
+        PolicyStatement(
+          grantee: switch (apiAuth) {
+            ast.ApiAuthenticated() => Role.authenticated,
+            ast.ApiPublic() => Role.public,
+          },
+          actions: [CloudFunctionAction.invoke],
+        ),
+      );
     });
 
     api.functions.values.forEach(visitFunction);
@@ -60,14 +57,12 @@ final class ProjectResolver extends AstVisitor<void> {
             resolvedFunction
               ..name = function.name
               ..apiName = function.apiName;
-            resolvedFunction.policy
-              ..grantor = '' // TODO
-              ..statements.add(
-                PolicyStatement(
-                  grantee: const Role.authenticated(),
-                  actions: [CloudFunctionAction.invoke],
-                ),
-              );
+            resolvedFunction.policy.statements.add(
+              PolicyStatement(
+                grantee: Role.authenticated,
+                actions: [CloudFunctionAction.invoke],
+              ),
+            );
 
             for (final parameter in function.parameters) {
               if (parameter.references

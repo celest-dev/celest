@@ -12,8 +12,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ApiMiddleware.serializer)
       ..add(ApiPublic.serializer)
       ..add(CloudFunction.serializer)
+      ..add(CloudFunctionAction.serializer)
       ..add(CloudFunctionParameter.serializer)
       ..add(EnvironmentVariable.serializer)
+      ..add(NodeId.serializer)
       ..add(NodeReference.serializer)
       ..add(NodeType.serializer)
       ..add(Policy.serializer)
@@ -23,6 +25,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ResolvedCloudFunction.serializer)
       ..add(ResolvedEnvironmentVariable.serializer)
       ..add(ResolvedProject.serializer)
+      ..add(Role.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ApiMetadata)]),
           () => new ListBuilder<ApiMetadata>())
@@ -75,11 +78,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new MapBuilder<String, ResolvedCloudFunction>())
       ..addBuilderFactory(
+          const FullType(BuiltSet, const [const FullType(CelestAction)]),
+          () => new SetBuilder<CelestAction>())
+      ..addBuilderFactory(
           const FullType(BuiltSet, const [const FullType(PolicyStatement)]),
           () => new SetBuilder<PolicyStatement>())
-      ..addBuilderFactory(
-          const FullType(BuiltSet, const [const FullType(String)]),
-          () => new SetBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltSet, const [const FullType(String)]),
           () => new SetBuilder<String>()))

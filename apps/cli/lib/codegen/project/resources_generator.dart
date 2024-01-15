@@ -26,7 +26,7 @@ final class ResourcesGenerator {
   // SplayTree ensures consistent ordering in output file which helps with
   // diffs.
   /// All resources, sorted by API name, then definition order.
-  final _allResources = SplayTreeMap<Node, String>((a, b) {
+  final _allResources = SplayTreeMap<AstNode, String>((a, b) {
     return switch ((a, b)) {
       (final Api a, final Api b) => a.name.compareTo(b.name),
       (final CloudFunction a, final CloudFunction b) => a.compareTo(b),

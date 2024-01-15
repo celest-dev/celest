@@ -1,7 +1,7 @@
 import 'package:celest_cli/ast/ast.dart';
 
 abstract class AstVisitor<T> {
-  T visitNode(Node node) => switch (node) {
+  T visitNode(AstNode node) => switch (node) {
         final Project project => visitProject(project),
         final Api api => visitApi(api),
         final CloudFunction function => visitFunction(function),
@@ -32,7 +32,7 @@ abstract class AstVisitor<T> {
 }
 
 abstract class AstVisitorWithContext<R, C> {
-  R visitNode(Node node, C context) => switch (node) {
+  R visitNode(AstNode node, C context) => switch (node) {
         final Project project => visitProject(project, context),
         final Api api => visitApi(api, context),
         final CloudFunction function => visitFunction(function, context),
