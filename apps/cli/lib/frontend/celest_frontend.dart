@@ -231,8 +231,7 @@ final class CelestFrontend implements Closeable {
         return codeGenerator.fileOutputs.keys.toList();
       });
 
-  /// Builds the project into Protobuf format, applying transformations for
-  /// things such as authorization.
+  /// Resolves the project AST applying transformations for things such as authorization.
   Future<ResolvedProject> _resolveProject(ast.Project project) =>
       performance.trace('CelestFrontend', 'resolveProject', () async {
         logger.fine('Resolving project...');

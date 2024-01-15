@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/env_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
@@ -40,11 +38,8 @@ void main(List<String> args) async {
         return event;
       },
     ),
-  )..addCommand(StartCommand());
-  if (!zReleaseMode) {
-    cli.addCommand(DeployCommand());
-  }
-  cli
+  )
+    ..addCommand(StartCommand())
     ..addCommand(EnvCommand())
     ..addCommand(UpdateCommand())
     ..addCommand(UninstallCommand());

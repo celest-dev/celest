@@ -118,18 +118,14 @@ final class EntrypointCompiler {
           outputPath: outputPath,
         );
       }
-      logger
-        ..err('Compilation failed')
-        ..err('Compilation stdout:\n$stdout')
-        ..err('Compilation stderr:\n$stderr');
       throw ProcessException(
         Sdk.current.dart,
         buildArgs,
-        'Compilation failed',
+        'Compilation failed:\n$stdout\n$stderr',
         exitCode,
       );
     } on Object {
-      compileProgress.fail('Failed to compile entrypoint: $entrypoint');
+      compileProgress.fail('Failed to compile entrypoint');
       rethrow;
     }
   }
