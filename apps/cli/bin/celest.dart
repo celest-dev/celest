@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:celest_cli/commands/env_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
 import 'package:celest_cli/commands/update_command.dart';
@@ -40,7 +39,6 @@ void main(List<String> args) async {
     ),
   )
     ..addCommand(StartCommand())
-    ..addCommand(EnvCommand())
     ..addCommand(UpdateCommand())
     ..addCommand(UninstallCommand());
   await cli.run(args);
