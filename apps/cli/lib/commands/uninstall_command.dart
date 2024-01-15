@@ -30,7 +30,7 @@ final class UninstallCommand extends CelestCommand with Configure {
 
     await const CelestUninstaller().uninstall();
 
-    cliLogger.success('Successfully uninstalled Celest.');
+    cliLogger.success('Successfully uninstalled Celest');
     return 0;
   }
 }
