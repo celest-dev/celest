@@ -12,7 +12,7 @@ final class EnvCommand extends ProjectCommand {
   EnvCommand() {
     addSubcommand(_EnvSetCommand());
     addSubcommand(_EnvGetCommand());
-    addSubcommand(_EnvRemoveCommand());
+    addSubcommand(_EnvDeleteCommand());
   }
 
   @override
@@ -224,26 +224,26 @@ arguments:
   }
 }
 
-final class _EnvRemoveCommand extends ProjectCommand {
-  _EnvRemoveCommand();
+final class _EnvDeleteCommand extends ProjectCommand {
+  _EnvDeleteCommand();
 
   @override
   String get description => '''
-Removes an environment variable from your Celest backend.
+Deletes an environment variable from your Celest backend.
 
-To remove a single environment variable, run:
+To delete a single environment variable, run:
 
-  celest env remove <variable>
+  celest env delete <variable>
 
-To remove multiple environment variables, run:
+To delete multiple environment variables, run:
 
-  celest env remove <variable1> <variable2> <variable3> ...
+  celest env delete <variable1> <variable2> <variable3> ...
 
-There is no option to remove all environment variables at once.
+There is no option to delete all environment variables at once.
 ''';
 
   @override
-  String get name => 'remove';
+  String get name => 'delete';
 
   @override
   Future<int> run() async {
