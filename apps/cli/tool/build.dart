@@ -142,7 +142,7 @@ Future<void> main() async {
   // Upload the build artifacts to GCS.
   final storagePaths = [
     '$osArch/$version/${p.basename(outputFilepath)}',
-    '$osArch/latest/${p.basename(outputFilepath)}',
+    '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
   ];
   final bytes = await File(outputFilepath).readAsBytes();
   for (final storagePath in storagePaths) {
