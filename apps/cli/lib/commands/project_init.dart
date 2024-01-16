@@ -33,7 +33,7 @@ base mixin Configure on CelestCommand {
     this.isExistingProject = isExistingProject;
 
     final projectRoot = celestDir.path;
-    init(
+    await init(
       projectRoot: projectRoot,
       clientOutputsDir: p.join(
         celestDir.parent.path,

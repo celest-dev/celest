@@ -20,3 +20,12 @@ final jsonMapType = typeHelper.typeProvider.mapType(
   typeHelper.typeProvider.stringType,
   typeHelper.typeProvider.objectQuestionType,
 );
+
+/// Valid types for injected env variables.
+final validEnvTypes = TypeChecker.any([
+  DartTypes.core.bool.checker,
+  DartTypes.core.double.checker,
+  DartTypes.core.int.checker,
+  DartTypes.core.num.checker,
+  DartTypes.core.string.checker,
+]);

@@ -18,7 +18,7 @@ final class MockPlatform extends Mock implements Platform {}
 void main() {
   group('CelestUninstaller', () {
     setUp(() {
-      initTests(
+      return initTests(
         processManager: MockProcessManager(),
         platform: MockPlatform(),
       );
@@ -46,7 +46,7 @@ void main() {
             ctx.fileSystem.systemTempDirectory.childDirectory('Celest');
         configDir.createSync(recursive: true);
 
-        init(
+        await init(
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
         const appxOutput = r'''
@@ -179,7 +179,7 @@ Status            : Ok
           },
         );
 
-        init(
+        await init(
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
 
@@ -227,7 +227,7 @@ Status            : Ok
           },
         );
 
-        init(
+        await init(
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
 

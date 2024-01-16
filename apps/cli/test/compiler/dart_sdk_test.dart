@@ -12,9 +12,9 @@ import 'package:test_descriptor/test_descriptor.dart' as d;
 import '../common.dart';
 
 void main() {
-  initTests();
-
   group('Sdk', () {
+    setUpAll(initTests);
+
     group('current', () {
       test('homebrew', testOn: '!windows', () async {
         // Mimics the directory structure of a Homebrew-installed Dart SDK.

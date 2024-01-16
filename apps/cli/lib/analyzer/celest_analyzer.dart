@@ -9,18 +9,16 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/file_system/physical_file_system.dart';
-import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
+import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/compiler/dart_sdk.dart';
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -29,59 +27,18 @@ import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
-import 'package:yaml/yaml.dart';
 
 final class CelestAnalyzer {
-  CelestAnalyzer._(
-    this._context,
-  );
+  CelestAnalyzer._();
 
-  factory CelestAnalyzer() {
-    final contextCollection = AnalysisContextCollectionImpl(
-      includedPaths: [projectPaths.projectRoot],
-      sdkPath: Sdk.current.sdkPath,
-      resourceProvider: PhysicalResourceProvider.INSTANCE,
-      // Needed for [_collectSubtypes].
-      enableIndex: true,
-    );
-    final context = contextCollection.contexts.first;
-    return CelestAnalyzer._(context);
-  }
+  factory CelestAnalyzer() => _instance ??= CelestAnalyzer._();
 
+  static CelestAnalyzer? _instance;
   static final Logger _logger = Logger('CelestAnalyzer');
-  final AnalysisContext _context;
+  AnalysisContext get _context => celestProject.analysisContext;
   final List<AnalysisError> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
-  late final enabledExperiments = _loadEnabledExperiments(
-    projectPaths.analysisOptionsYaml,
-  );
-
-  List<String> _loadEnabledExperiments(String path) {
-    final analysisOptionsFile = fileSystem.file(path);
-    if (!analysisOptionsFile.existsSync()) {
-      _logger.finest('No analysis options file detected at $path');
-      return const [];
-    }
-    final analysisOptionsContent = analysisOptionsFile.readAsStringSync();
-    final analysisOptions = loadYamlDocument(analysisOptionsContent);
-    final analysisOptionsMap = analysisOptions.contents.value;
-    if (analysisOptionsMap is! YamlMap) {
-      _logger.finer('Invalid analysis options file: $analysisOptionsContent');
-      return const [];
-    }
-    final analyzerOptions = analysisOptionsMap.value['analyzer'];
-    if (analyzerOptions is! YamlMap) {
-      _logger.finer('No analyzer settings found');
-      return const [];
-    }
-    final enabledExperiments = analyzerOptions.value['enable-experiment'];
-    if (enabledExperiments is! YamlList) {
-      _logger.finer('No enabled experiments found');
-      return const [];
-    }
-    return enabledExperiments.value.cast<String>();
-  }
 
   void _reportError(
     String error, {
@@ -97,35 +54,26 @@ final class CelestAnalyzer {
     );
   }
 
-  late final DartType _coreErrorType;
-  late final DartType _coreExceptionType;
+  Future<void> init() => _initFuture ??= _init();
 
-  late final _loadedCoreTypes = _loadCoreTypes();
-  Future<void> _loadCoreTypes() async {
+  Future<void>? _initFuture;
+  Future<void> _init() async {
     final dartCore = await _context.currentSession.getLibraryByUri('dart:core')
         as LibraryElementResult;
-    _coreExceptionType =
+    typeHelper.coreExceptionType =
         (dartCore.element.exportNamespace.get('Exception') as ClassElement)
             .thisType;
-    _coreErrorType =
+    typeHelper.coreErrorType =
         (dartCore.element.exportNamespace.get('Error') as ClassElement)
             .thisType;
   }
 
-  Future<({ast.Project? project, List<AnalysisError> errors})> analyzeProject([
-    List<String>? invalidatedFiles,
-  ]) async {
+  Future<CelestAnalysisResult> analyzeProject() async {
+    await init();
     _errors.clear();
-    if (invalidatedFiles != null) {
-      for (final file in invalidatedFiles) {
-        _context.changeFile(file);
-      }
-      await _context.applyPendingFileChanges();
-    }
-    await _loadedCoreTypes;
     final project = await _findProject();
     if (project == null) {
-      return (project: null, errors: _errors);
+      return CelestAnalysisResult.failure(_errors);
     }
     _project = project;
     _widgetCollector = _ScopedWidgetCollector(
@@ -133,7 +81,10 @@ final class CelestAnalyzer {
     );
     _project.envVars.replace(projectPaths.envManager.envVars);
     await _collectApis();
-    return (project: _project.build(), errors: _errors);
+    return CelestAnalysisResult.success(
+      project: _project.build(),
+      errors: _errors,
+    );
   }
 
   Future<ResolvedLibraryResult> _resolveLibrary(String path) async {
@@ -169,9 +120,7 @@ final class CelestAnalyzer {
     _logger.finer('Resolved project file');
     typeHelper
       ..typeSystem = projectFile.element.typeSystem
-      ..typeProvider = projectFile.typeProvider
-      ..coreErrorType = _coreErrorType
-      ..coreExceptionType = _coreExceptionType;
+      ..typeProvider = projectFile.typeProvider;
     // TODO(dnys1): Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
@@ -344,14 +293,6 @@ final class CelestAnalyzer {
     if (!annotationType.isEnvironmentVariable) {
       return null;
     }
-    final typeProvider = parameter.library!.typeProvider;
-    final validEnvTypes = TypeChecker.any([
-      TypeChecker.fromStatic(typeProvider.stringType),
-      TypeChecker.fromStatic(typeProvider.numType),
-      TypeChecker.fromStatic(typeProvider.intType),
-      TypeChecker.fromStatic(typeProvider.doubleType),
-      TypeChecker.fromStatic(typeProvider.boolType),
-    ]);
     if (!validEnvTypes.isExactlyType(parameter.type)) {
       _reportError(
         'The type of an environment variable parameter must be one of: '
@@ -446,8 +387,8 @@ final class CelestAnalyzer {
         final exceptionTypes = exceptionCollector.exceptionTypes;
         // These are supported but are handled by the common runtime.
         exceptionTypes.removeAll([
-          _coreErrorType,
-          _coreExceptionType,
+          typeHelper.coreErrorType,
+          typeHelper.coreExceptionType,
         ]);
         for (final exceptionType in exceptionTypes) {
           final isSerializable = typeHelper.isSerializable(exceptionType);

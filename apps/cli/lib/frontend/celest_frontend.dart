@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
+import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/project_diff.dart';
@@ -29,24 +30,6 @@ final class CelestFrontend implements Closeable {
   factory CelestFrontend() => instance ??= CelestFrontend._();
 
   CelestFrontend._() {
-    // Initialize immediately instead of lazily so that _readyForChanges has
-    // a listener registered before firing.
-    _watcher = StreamQueue(
-      DirectoryWatcher(projectPaths.projectRoot)
-          .events
-          // Ignore creation of new directories and files (they'll be empty)
-          .where((event) => event.type != ChangeType.ADD)
-          // Ignore events from the .dart_tool directory
-          .where(
-            (event) => !p.isWithin(
-              p.join(projectPaths.projectRoot, '.dart_tool'),
-              event.path,
-            ),
-          )
-          // Ignore changes to the generated resources.dart file
-          .where((event) => !p.equals(projectPaths.resourcesDart, event.path))
-          .buffer(_readyForChanges.stream),
-    );
     // Initialize immediately instead of lazily since _stopSub is never accessed
     // directly until `close`.
     _stopSub = StreamGroup.merge([
@@ -82,7 +65,49 @@ final class CelestFrontend implements Closeable {
   final _readyForChanges = StreamController<void>.broadcast();
 
   /// Watches for filesystem changes in the project root.
-  late final StreamQueue<List<WatchEvent>> _watcher;
+  StreamQueue<List<WatchEvent>>? _watcher;
+
+  /// The list of paths changed since the last frontend pass.
+  Set<String>? _changedPaths;
+
+  /// Notifies the watcher that we're listening for filesystem changes.
+  Future<void> _nextChangeSet() async {
+    logger.finer('Waiting for changes...');
+
+    // Initialize [_watcher] lazily since it's only needed after the first
+    // compile.
+    _watcher ??= StreamQueue(
+      DirectoryWatcher(projectPaths.projectRoot)
+          .events
+          // Ignore creation of new directories and files (they'll be empty)
+          .where((event) => event.type != ChangeType.ADD)
+          // Ignore events from the .dart_tool directory
+          .where(
+            (event) => !p.isWithin(
+              p.join(projectPaths.projectRoot, '.dart_tool'),
+              event.path,
+            ),
+          )
+          // Ignore changes to the generated resources.dart file
+          .where((event) => !p.equals(projectPaths.resourcesDart, event.path))
+          .buffer(_readyForChanges.stream),
+    );
+    _readyForChanges.add(null);
+
+    await Future.any([
+      _watcher!.next.then(
+        (events) {
+          final paths = events.map((event) => event.path).toList();
+          logger.severe(
+            '${events.length} watcher events since last compile: ',
+            '$_changedPaths',
+          );
+          _changedPaths = paths.toSet();
+        },
+      ),
+      _stopSignal.future,
+    ]);
+  }
 
   /// Signals that a SIGINT or SIGTERM event has fired and the CLI needs to
   /// shutdown.
@@ -109,20 +134,22 @@ final class CelestFrontend implements Closeable {
   Future<int> run() async {
     Progress? currentProgress;
     try {
-      List<String>? changedPaths;
       while (!stopped) {
         currentProgress = cliLogger.progress(
           _didFirstCompile ? 'Reloading Celest...' : 'Starting Celest...',
         );
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
-        final analysisResult = await _analyzeProject(changedPaths);
 
+        if (_didFirstCompile && _changedPaths != null) {
+          _changedPaths = await celestProject.invalidate(_changedPaths!);
+        }
+        final analysisResult = await _analyzeProject();
         switch (analysisResult) {
-          case (_, final errors) when errors.isNotEmpty:
+          case AnalysisFailureResult(:final errors):
             currentProgress.cancel();
             _logErrors(errors);
           // ignore: unnecessary_null_checks
-          case (final project!, _):
+          case AnalysisSuccessResult(:final project):
             var restartMode = RestartMode.hotReload;
             if (currentProject case final currentProject?) {
               // Diff the old and new projects to see if anything changed.
@@ -140,8 +167,8 @@ final class CelestFrontend implements Closeable {
             final port = await _startLocalApi(
               [
                 ...generatedOutputs,
-                if (changedPaths != null)
-                  ...changedPaths!
+                if (_changedPaths != null)
+                  ..._changedPaths!
                 else
                   ...project.apis.values.map(
                     (api) => projectPaths.api(api.name),
@@ -157,19 +184,7 @@ final class CelestFrontend implements Closeable {
 
             _didFirstCompile = true;
         }
-        logger.finer('Waiting for changes...');
-        _readyForChanges.add(null);
-        await Future.any([
-          _watcher.next.then(
-            (events) {
-              logger.finer(
-                '${events.length} watcher events since last compile',
-              );
-              changedPaths = events.map((event) => event.path).toList();
-            },
-          ),
-          _stopSignal.future,
-        ]);
+        await _nextChangeSet();
       }
       return 0;
     } on CancellationException {
@@ -181,23 +196,14 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Analyzes the project and reports if there are any errors.
-  Future<(ast.Project?, List<AnalysisError>)> _analyzeProject([
-    List<String>? invalidatedFiles,
-  ]) =>
+  Future<CelestAnalysisResult> _analyzeProject() =>
       performance.trace('CelestFrontend', 'analyzeProject', () async {
         logger.fine('Analyzing project...');
-        final (:project, :errors) =
-            await analyzer.analyzeProject(invalidatedFiles);
+        final result = await analyzer.analyzeProject();
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
-        if (errors.isEmpty) {
-          assert(
-            project != null,
-            'Project should not be null if there are no errors',
-          );
-        }
-        return (project, errors);
+        return result;
       });
 
   /// Generates code for [project] and writes to the output directory.
@@ -251,7 +257,6 @@ final class CelestFrontend implements Closeable {
           path: projectPaths.localApiEntrypoint,
           envVars: envVars,
           verbose: verbose,
-          enabledExperiments: analyzer.enabledExperiments,
         );
       });
     } else {
@@ -268,7 +273,6 @@ final class CelestFrontend implements Closeable {
               path: projectPaths.localApiEntrypoint,
               envVars: envVars,
               verbose: verbose,
-              enabledExperiments: analyzer.enabledExperiments,
             );
           });
       }
@@ -291,7 +295,7 @@ final class CelestFrontend implements Closeable {
       performance.trace('CelestFrontend', 'close', () async {
         logger.finest('Stopping Celest frontend...');
         await _stopSub.cancel();
-        await _watcher.cancel(immediate: true);
+        await _watcher?.cancel(immediate: true);
         await _readyForChanges.close();
         await _localApiRunner?.close();
         logger.finest('Stopped Celest frontend');

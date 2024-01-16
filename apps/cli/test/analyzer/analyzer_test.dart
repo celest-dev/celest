@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:package_config/package_config.dart';
@@ -18,8 +19,9 @@ import 'package:celest/celest.dart';
 const project = Project(name: '$name');
 ''';
 
-Future<ProjectPaths> newProject({
+Future<CelestProject> newProject({
   required String name,
+  String? analysisOptions,
   String? projectDart,
   String? resourcesDart,
   Map<String, String> apis = const {},
@@ -29,10 +31,19 @@ Future<ProjectPaths> newProject({
   final celestDir = p.fromUri(
     Directory.current.uri.resolve('../../packages/celest/'),
   );
+  final celestCoreDir = p.fromUri(
+    Directory.current.uri.resolve('../../packages/celest_core/'),
+  );
   final packageConfig = PackageConfig([
     Package(
       'celest',
       p.toUri(celestDir),
+      packageUriRoot: Uri.parse('lib/'),
+      relativeRoot: false,
+    ),
+    Package(
+      'celest_core',
+      p.toUri(celestCoreDir),
       packageUriRoot: Uri.parse('lib/'),
       relativeRoot: false,
     ),
@@ -43,6 +54,8 @@ Future<ProjectPaths> newProject({
     d.dir('.dart_tool', [
       d.file('package_config.json', packageConfigJson.toString()),
     ]),
+    if (analysisOptions != null)
+      d.file('analysis_options.yaml', analysisOptions),
     d.file('pubspec.yaml', '''
 name: $name
 
@@ -67,7 +80,8 @@ dependencies:
   ]);
   await project.create();
   final projectRoot = d.path(name);
-  return init(projectRoot: projectRoot);
+  await init(projectRoot: projectRoot);
+  return celestProject;
 }
 
 void testNoErrors({
@@ -102,7 +116,7 @@ void testErrors({
   void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
-    projectPaths = await newProject(
+    celestProject = await newProject(
       name: name,
       projectDart: projectDart,
       resourcesDart: resourcesDart,
@@ -110,7 +124,8 @@ void testErrors({
       config: config,
     );
     final analyzer = CelestAnalyzer();
-    final (:project, errors: actual) = await analyzer.analyzeProject();
+    final CelestAnalysisResult(:project, errors: actual) =
+        await analyzer.analyzeProject();
     for (final error in actual) {
       print(error);
     }
@@ -133,9 +148,9 @@ void testErrors({
 }
 
 void main() {
-  initTests();
-
   group('Analyzer Errors', () {
+    setUpAll(initTests);
+
     group('project.dart', () {
       testNoErrors(
         name: 'simple_project',
@@ -607,6 +622,57 @@ FromJson fromJson(FromJson value) => value;
         ],
       );
 
+      testNoErrors(
+        name: 'valid_middleware',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+class logRequests implements Middleware {
+  const logRequests();
+
+  @override
+  Handler handle(Handler handler) {
+    return (request) {
+      print('Request: $request');
+      return handler(request);
+    };
+  }
+}
+
+class _LogResponses implements Middleware {
+  const _LogResponses();
+
+  @override
+  Handler handle(Handler handler) {
+    return (request) {
+      print('Request: $request');
+      return handler(request);
+    };
+  }
+}
+
+const logResponses = _LogResponses();
+
+@logRequests()
+@logResponses
+String sayHello() => 'Hello, World!';
+''',
+        },
+        expectProject: (project) {
+          expect(
+            project.apis['greeting']!.functions['sayHello']!.metadata,
+            unorderedEquals([
+              isA<ApiMiddleware>()
+                  .having((m) => m.type.symbol, 'type', 'logRequests'),
+              // TODO(dnys1): Reference should use local variable
+              isA<ApiMiddleware>()
+                  .having((m) => m.type.symbol, 'type', '_LogResponses'),
+            ]),
+          );
+        },
+      );
+
       testErrors(
         name: 'bad_middleware_type',
         apis: {
@@ -739,17 +805,14 @@ String sayHello() => 'Hello, World!';
         apis: {
           'greeting.dart': '''
 @public
-@logRequests
 library;
 
 const public = functions.public();
-const logRequests = middleware.logRequests();
-const logResponses = middleware.logResponses();
+const authenticated = functions.authenticated();
 
 import 'package:celest/functions.dart' as functions;
-import 'package:celest/functions/middleware.dart' as middleware;
 
-@logResponses
+@authenticated
 String sayHello() => 'Hello, World!';
 ''',
         },

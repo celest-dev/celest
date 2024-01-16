@@ -18,7 +18,6 @@ final class LocalApiRunner implements Closeable {
   LocalApiRunner._({
     required this.path,
     required this.verbose,
-    required this.enabledExperiments,
     required this.port,
     required FrontendServerClient client,
     required VmService vmService,
@@ -31,7 +30,6 @@ final class LocalApiRunner implements Closeable {
 
   static final Logger logger = Logger('LocalApiRunner');
   final bool verbose;
-  final List<String> enabledExperiments;
   final String path;
 
   /// The port that the local API is running on.
@@ -46,7 +44,6 @@ final class LocalApiRunner implements Closeable {
     required String path,
     required Iterable<String> envVars,
     required bool verbose,
-    required List<String> enabledExperiments,
     List<String> additionalSources = const [],
   }) async {
     final env = <String, String>{};
@@ -67,7 +64,7 @@ final class LocalApiRunner implements Closeable {
       packagesJson: projectPaths.packagesConfig,
       fileSystemRoots: ['/'],
       fileSystemScheme: 'org-dartlang-root',
-      enabledExperiments: enabledExperiments,
+      enabledExperiments: celestProject.analysisOptions.enabledExperiments,
       frontendServerPath: Sdk.current.frontendServerAotSnapshot,
       additionalSources: additionalSources,
       additionalArgs: [
@@ -143,7 +140,6 @@ final class LocalApiRunner implements Closeable {
     return LocalApiRunner._(
       path: path,
       verbose: verbose,
-      enabledExperiments: enabledExperiments,
       port: port,
       client: client,
       vmService: vmService,

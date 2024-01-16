@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:async/async.dart';
+import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
@@ -20,11 +21,7 @@ import 'package:test/test.dart';
 import '../common.dart';
 import 'types.dart';
 
-int nextPort() => Random().nextInt(10000) + 30000;
-
-Future<void> main() async {
-  initTests();
-
+void main() {
   final updateGoldens = switch (Platform.environment['UPDATE_GOLDENS']) {
     'true' => true,
     _ => false,
@@ -42,6 +39,8 @@ Future<void> main() async {
       .whereType<Directory>()
       .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync());
   group('Fixture', () {
+    setUpAll(initTests);
+
     for (final testDir in allTests) {
       final projectRoot = testDir.path;
       final goldensDir = Directory(p.join(projectRoot, 'goldens'));
@@ -76,16 +75,16 @@ class TestRunner {
   void run() {
     group(testName, () {
       setUpAll(() async {
-        init(
+        await init(
           projectRoot: projectRoot,
           outputsDir: goldensDir.path,
         );
-        final res = Process.runSync(
+        final res = await Process.start(
           Platform.executable,
           ['pub', 'get'],
           workingDirectory: projectRoot,
-        );
-        expect(res.exitCode, 0, reason: '${res.stderr}');
+        ).timeout(const Duration(seconds: 10));
+        expect(await res.exitCode, 0, reason: '${res.stderr}');
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
@@ -119,8 +118,11 @@ class TestRunner {
   }
 
   void testAnalyzer() {
-    test('analyzer', () async {
-      final (:project, :errors) = await analyzer.analyzeProject();
+    // Analyzer needs a bit longer.
+    // TODO(dnys1): Benchmark + improve performance of analysis.
+    test('analyzer', timeout: const Timeout.factor(3), () async {
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -142,7 +144,8 @@ class TestRunner {
 
   void testCodegen() {
     test('codegen', () async {
-      final (:project, :errors) = await analyzer.analyzeProject();
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -170,7 +173,8 @@ class TestRunner {
 
   void testResolve() {
     test('resolve', () async {
-      final (:project, :errors) = await analyzer.analyzeProject();
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -195,7 +199,8 @@ class TestRunner {
 
   void testClient() {
     test('client', () async {
-      final (:project, :errors) = await analyzer.analyzeProject();
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject();
       expect(project, isNotNull);
       expect(errors, isEmpty);
 

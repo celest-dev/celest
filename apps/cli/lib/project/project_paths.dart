@@ -1,4 +1,3 @@
-import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -21,7 +20,7 @@ final class ProjectPaths {
 
   late final String appRoot =
       p.canonicalize(p.normalize(p.join(projectRoot, '..')));
-  String get celestConfig => CelestConfig.instance.configDir.path;
+  String get celestConfig => celestProject.config.configDir.path;
 
   late final String packagesConfig =
       p.join(projectRoot, '.dart_tool', 'package_config.json');

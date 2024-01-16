@@ -5,14 +5,12 @@ import 'package:file/file.dart';
 final class CelestConfig {
   CelestConfig._(this.configDir);
 
-  static CelestConfig get instance => _load();
-
-  static CelestConfig _load() {
+  static Future<CelestConfig> load() async {
     final configHome = fileSystem.directory(
       applicationConfigHome('Celest'),
     );
-    if (!configHome.existsSync()) {
-      configHome.createSync(recursive: true);
+    if (!await configHome.exists()) {
+      await configHome.create(recursive: true);
     }
     return CelestConfig._(configHome);
   }

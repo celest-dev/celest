@@ -5,12 +5,12 @@ import 'package:logging/logging.dart';
 import 'package:platform/platform.dart';
 import 'package:process/process.dart';
 
-void initTests({
+Future<void> initTests({
   FileSystem? fileSystem,
   http.Client? httpClient,
   Platform? platform,
   ProcessManager? processManager,
-}) {
+}) async {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     print('${record.level.name}: ${record.message}');
@@ -18,7 +18,7 @@ void initTests({
       print(record.error);
     }
   });
-  Cli.configure(
+  await Cli.configure(
     verbose: true,
     fileSystem: fileSystem,
     platform: platform,

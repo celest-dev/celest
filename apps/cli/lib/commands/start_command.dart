@@ -44,7 +44,7 @@ final class StartCommand extends ProjectCommand {
       projectRoot: projectPaths.projectRoot,
     ).generate(pubServer);
     logger.finest('Inserting project into DB...');
-    await database.createProject(
+    await celestProject.database.createProject(
       ProjectsCompanion.insert(
         name: projectName,
         path: projectPaths.projectRoot,

@@ -1,5 +1,4 @@
 import 'package:celest_cli/commands/project_init.dart';
-import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -9,9 +8,6 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 abstract base class ProjectCommand extends CelestCommand with Configure {
   @override
   String get category => 'Project';
-
-  /// The global database for Celest projects.
-  late final database = CelestDatabase(CelestConfig.instance);
 
   @override
   @mustCallSuper
@@ -28,12 +24,12 @@ abstract base class ProjectCommand extends CelestCommand with Configure {
             .readAsStringSync(),
       );
       logger.finest('Checking if project existings in DB...');
-      final dbProject =
-          await database.findProjectByPath(projectPaths.projectRoot);
+      final dbProject = await celestProject.database
+          .findProjectByPath(projectPaths.projectRoot);
       logger.finest('Found project in DB: $dbProject');
       if (dbProject == null) {
         logger.finest('Creating project in DB...');
-        await database.createProject(
+        await celestProject.database.createProject(
           ProjectsCompanion.insert(
             name: celestPubspec.name,
             path: projectPaths.projectRoot,
