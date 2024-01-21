@@ -110,6 +110,13 @@ final class LocalApiRunner implements Closeable {
         // Ignore
       } else if (line.startsWith('Serving on')) {
         // Ignore
+      } else if (line.startsWith('/')) {
+        analytics.capture(
+          'local_api_call',
+          properties: {
+            'route': line,
+          },
+        ).ignore();
       } else {
         stdout.writeln(line);
       }
