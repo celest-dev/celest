@@ -4,7 +4,7 @@
 import 'package:api/src/models/generic_wrappers.dart' as _i7;
 import 'package:api/src/models/parameter_types.dart' as _i5;
 import 'package:celest/celest.dart' as _i3;
-import 'package:celest/src/runtime.dart' as _i1;
+import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i4;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i6;
 

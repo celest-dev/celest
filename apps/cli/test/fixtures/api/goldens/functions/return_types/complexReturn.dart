@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i5;
 
 import 'package:api/src/models/parameter_types.dart' as _i4;
 import 'package:celest/celest.dart' as _i3;
-import 'package:celest/src/runtime.dart' as _i1;
+import 'package:celest/src/runtime/serve.dart' as _i1;
 
 import '../../../functions/return_types.dart' as _i2;
 

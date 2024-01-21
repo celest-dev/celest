@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:celest/src/runtime.dart';
+import 'package:celest/src/runtime/serve.dart';
 
 Future<int> findOpenPort([int initialPort = defaultCelestPort]) async {
   Future<int> findOpenPort() async {

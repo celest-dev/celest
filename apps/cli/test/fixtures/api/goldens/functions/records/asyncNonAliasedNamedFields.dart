@@ -2,7 +2,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/celest.dart' as _i3;
-import 'package:celest/src/runtime.dart' as _i1;
+import 'package:celest/src/runtime/serve.dart' as _i1;
 
 import '../../../functions/records.dart' as _i2;
 
