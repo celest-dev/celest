@@ -6,8 +6,9 @@
          xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
          xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+         xmlns:desktop2="http://schemas.microsoft.com/appx/manifest/desktop/windows10/2"
          xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
-         IgnorableNamespaces="uap uap3 uap5 uap6 rescap">
+         IgnorableNamespaces="uap uap3 uap5 uap6 rescap desktop2">
   <!-- Publisher must exactly match EV certificate. Need &quot since name has comma in it -->
   <Identity Name="Celest.CLI"
             Version="{{ version }}.0"
@@ -62,5 +63,13 @@
         <uap6:LoaderSearchPathEntry FolderPath=""/>
       </uap6:LoaderSearchPathOverride>
     </uap6:Extension>
+    <desktop2:Extension Category="windows.firewallRules">
+      <desktop2:FirewallRules Executable="celest.exe">
+        <desktop2:Rule
+          Direction="in"
+          IPProtocol="TCP"
+          Profile="domainAndPrivate"/>
+      </desktop2:FirewallRules>
+    </desktop2:Extension>
   </Extensions>
 </Package>

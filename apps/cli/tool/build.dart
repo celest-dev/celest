@@ -582,7 +582,7 @@ final class WindowsBundler implements Bundler {
   Future<String> _createAppx() async {
     // Mostly copied from winget: https://github.com/microsoft/winget-cli/blob/master/src/AppInstallerCLIPackage/Package.appxmanifest
     // Schema: https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-application
-    // Fix for loader path: https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/desktop-to-uwp-extensions#place-your-dll-files-into-any-folder-of-the-package
+    // Fix for firewall rules: https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/desktop-to-uwp-extensions#create-firewall-exception-for-your-app
     final appxManifestPath = p.join(buildDir.path, 'AppxManifest.xml');
     final appxManifest = Template(
       File(p.join(toolDir.path, 'windows', 'AppxManifest.xml'))
