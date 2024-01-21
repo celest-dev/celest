@@ -44,11 +44,6 @@
             <uap5:ExecutionAlias Alias="celest.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
-        <uap6:Extension Category="windows.loaderSearchPathOverride">
-          <uap6:LoaderSearchPathOverride>
-            <uap6:LoaderSearchPathEntry FolderPath=""/>
-          </uap6:LoaderSearchPathOverride>
-        </uap6:Extension>
       </Extensions>
     </Application>
   </Applications>
@@ -61,4 +56,11 @@
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
   </Capabilities>
+  <Extensions>
+    <uap6:Extension Category="windows.loaderSearchPathOverride">
+      <uap6:LoaderSearchPathOverride>
+        <uap6:LoaderSearchPathEntry FolderPath=""/>
+      </uap6:LoaderSearchPathOverride>
+    </uap6:Extension>
+  </Extensions>
 </Package>
