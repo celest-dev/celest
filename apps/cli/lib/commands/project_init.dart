@@ -110,7 +110,7 @@ base mixin Configure on CelestCommand {
     final projectRoot = projectPaths.projectRoot;
     logger.fine('Running pub get in "$projectRoot"...');
     final result = await processManager.run(
-      [exe, 'pub', 'get'],
+      [exe, 'pub', 'upgrade'],
       workingDirectory: workingDirectory,
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
@@ -118,7 +118,7 @@ base mixin Configure on CelestCommand {
     if (result.exitCode != 0) {
       throw ProcessException(
         exe,
-        ['pub', 'get'],
+        ['pub', 'upgrade'],
         '${result.stdout}\n${result.stderr}',
         result.exitCode,
       );
