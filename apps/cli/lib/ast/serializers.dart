@@ -6,7 +6,6 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/resolved_ast.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_span/source_span.dart';
 

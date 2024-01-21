@@ -2,7 +2,6 @@ import 'package:celest_cli/init/pub/project_dependency.dart';
 import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli/init/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 sealed class ProjectItem {
@@ -102,18 +101,6 @@ final class _HelloProject extends ProjectTemplate {
 
   @override
   Future<void> create(String projectRoot) async {
-    final greetingsTestHeader = switch (projectName.compareTo('test')) {
-      >= 0 => '''
-import 'package:test/test.dart';
-import 'package:${projectName}_celest/exceptions.dart';
-import 'package:${projectName}_celest/models.dart';
-''',
-      _ => '''
-import 'package:${projectName}_celest/exceptions.dart';
-import 'package:${projectName}_celest/models.dart';
-import 'package:test/test.dart';
-''',
-    };
     await Future.wait([
       _createFile(
         projectPaths.projectDart,
@@ -127,77 +114,30 @@ const project = Project(
       ),
       _createFile(
         p.join(projectPaths.apisDir, 'greeting.dart'),
-        '''
+        r'''
 // Cloud functions are top-level Dart functions defined in the `functions/` 
 // folder of your Celest project.
 
-// By convention, any custom exception types thrown by an API are defined in
-// the `lib/exceptions.dart` file of your Celest project.
-import 'package:${projectName}_celest/exceptions.dart';
-
-// Likewise, any custom types used within an API's request/response are defined 
-// in the `lib/models.dart` file of your Celest project.
-import 'package:${projectName}_celest/models.dart';
-
-/// Says hello to a [person].
-Future<String> sayHello(Person person) async {
+/// Says hello to a person called [name].
+Future<String> sayHello(String name) async {
   // Logging is handled automatically when you print to the console.
-  print('Saying hello to \$person');
+  print('Saying hello to $name');
 
-  // You can throw exceptions to return an error response.
-  //
-  // Custom exception types are serialized automatically, just like request/
-  // response types and will be thrown on the client side.
-  if (person.name.isEmpty) {
-    throw const BadNameException('Name cannot be empty');
-  }
-
-  return 'Hello, \${person.name}!';
-}
-''',
-      ),
-      _createFile(
-        p.join(projectRoot, 'lib', 'models.dart'),
-        r'''
-/// A person identified by [name].
-class Person {
-  const Person(this.name);
-
-  final String name;
-
-  @override
-  String toString() => 'Person(name: $name)';
-}
-''',
-      ),
-      _createFile(
-        p.join(projectRoot, 'lib', 'exceptions.dart'),
-        r'''
-/// Thrown when a name is invalid.
-class BadNameException implements Exception {
-  const BadNameException(this.message);
-
-  final String message;
-
-  @override
-  String toString() => 'Bad name: $message';
+  return 'Hello, $name!';
 }
 ''',
       ),
       _createFile(
         p.join(projectRoot, 'test', 'functions', 'greeting_test.dart'),
         '''
-$greetingsTestHeader
+import 'package:test/test.dart';
+
 import '../../functions/greeting.dart';
 
 void main() {
   group('greeting', () {
     test('sayHello', () async {
-      const person = Person('Celest');
-      await expectLater(sayHello(person), completion('Hello, Celest!'));
-
-      const noName = Person('');
-      await expectLater(sayHello(noName), throwsA(isA<BadNameException>()));
+      expect(await sayHello('Celest'), 'Hello, Celest!');
     });
   });
 }

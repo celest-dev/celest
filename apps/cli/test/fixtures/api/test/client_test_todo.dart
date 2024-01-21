@@ -1,5 +1,4 @@
 import 'package:api/client.dart';
-import 'package:api/models.dart';
 import 'package:test/test.dart';
 
 void main() {

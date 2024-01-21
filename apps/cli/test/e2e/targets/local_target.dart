@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:celest_cli/compiler/dart_sdk.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 
 import '../common/common.dart';
 

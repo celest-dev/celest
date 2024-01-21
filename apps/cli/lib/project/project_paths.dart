@@ -1,7 +1,6 @@
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 
 final class ProjectPaths {
   ProjectPaths(
