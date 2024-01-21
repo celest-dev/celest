@@ -35,16 +35,17 @@ final class ClientGenerator {
       ..name = ClientTypes.topLevelClient.name
       ..assignment = ClientTypes.clientClass.ref.newInstance([]).code,
   );
-  final _clientClass = ClassBuilder()
+  late final _clientClass = ClassBuilder()
     ..name = ClientTypes.clientClass.name
     ..fields.addAll([
-      Field(
-        (f) => f
-          ..late = true
-          ..type = DartTypes.http.client
-          ..name = 'httpClient'
-          ..assignment = DartTypes.http.client.newInstance([]).code,
-      ),
+      if (project.apis.values.isNotEmpty)
+        Field(
+          (f) => f
+            ..late = true
+            ..type = DartTypes.http.client
+            ..name = 'httpClient'
+            ..assignment = DartTypes.http.client.newInstance([]).code,
+        ),
     ]);
 
   Map<String, Library> generate() {
@@ -83,7 +84,10 @@ final class ClientGenerator {
 
       for (final serializer in customSerializers) {
         clientInitBody.addExpression(
-          DartTypes.celest.serializers.property('scoped').property('put').call([
+          DartTypes.celest.serializers
+              .property('instance')
+              .property('put')
+              .call([
             refer(serializer.name, ClientPaths.serializers).constInstance([]),
           ]),
         );

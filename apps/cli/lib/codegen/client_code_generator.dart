@@ -1,4 +1,5 @@
 import 'package:celest_cli/ast/ast.dart' as ast;
+import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/code_outputs.dart';
@@ -21,7 +22,11 @@ final class ClientCodeGenerator {
       generator.generate().map(
             (path, library) => MapEntry(
               path,
-              CodeGenerator.emit(library, forFile: path),
+              CodeGenerator.emit(
+                library,
+                forFile: path,
+                prefixingStrategy: PrefixingStrategy.none,
+              ),
             ),
           ),
     );

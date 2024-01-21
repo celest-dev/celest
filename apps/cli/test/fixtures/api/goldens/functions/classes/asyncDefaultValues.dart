@@ -1,29 +1,30 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:api/src/models/classes.dart' as _i4;
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 
 import '../../../functions/classes.dart' as _i2;
 
 final class AsyncDefaultValuesTarget extends _i1.CloudFunctionTarget {
-  AsyncDefaultValuesTarget()
-      : super(
-          (request) async {
-            final response = await _i2.asyncDefaultValues(_i3.Serializers.scoped
-                .deserialize<_i2.DefaultValues>(request[r'value']));
-            return (
-              statusCode: 200,
-              body: {
-                'response': _i3.Serializers.scoped
-                    .serialize<_i2.DefaultValues>(response)
-              }
-            );
-          },
-          installSerializers: (serializers) {
-            serializers.put(const DefaultValuesSerializer());
-          },
-        );
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final response = await _i2.asyncDefaultValues(_i3.Serializers.instance
+        .deserialize<_i4.DefaultValues>(request[r'value']));
+    return (
+      statusCode: 200,
+      body: {
+        'response':
+            _i3.Serializers.instance.serialize<_i4.DefaultValues>(response)
+      }
+    );
+  }
+
+  @override
+  void init() {
+    _i3.Serializers.instance.put(const DefaultValuesSerializer());
+  }
 }
 
 Future<void> main(List<String> args) async {
@@ -32,19 +33,13 @@ Future<void> main(List<String> args) async {
   );
 }
 
-final class DefaultValuesSerializer extends _i3.Serializer<_i2.DefaultValues> {
+final class DefaultValuesSerializer extends _i3.Serializer<_i4.DefaultValues> {
   const DefaultValuesSerializer();
 
   @override
-  String get dartType => r'project:functions/classes.dart#DefaultValues';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.DefaultValues deserialize(Object? value) {
+  _i4.DefaultValues deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return _i2.DefaultValues(
+    return _i4.DefaultValues(
       field: ((serialized?[r'field'] as String?)) ?? 'default',
       nullableField: ((serialized?[r'nullableField'] as String?)) ?? null,
       nullableFieldWithDefault:
@@ -53,7 +48,7 @@ final class DefaultValuesSerializer extends _i3.Serializer<_i2.DefaultValues> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.DefaultValues value) => {
+  Map<String, Object?> serialize(_i4.DefaultValues value) => {
         r'field': value.field,
         r'nullableField': value.nullableField,
         r'nullableFieldWithDefault': value.nullableFieldWithDefault,

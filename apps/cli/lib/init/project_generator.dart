@@ -29,7 +29,7 @@ class ProjectGenerator {
         const ProjectFile.gitIgnore(),
         const ProjectFile.analysisOptions(),
         ProjectFile.pubspec(projectName, pubServer),
-        const ProjectTemplate.hello(),
+        ProjectTemplate.hello(projectName),
       ].map((item) => item.create(projectRoot)),
     );
   }

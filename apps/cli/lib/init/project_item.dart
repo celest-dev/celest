@@ -34,15 +34,16 @@ final class _GitIgnore extends ProjectFile {
 
   @override
   Future<void> create(String projectRoot) async {
-    final file = fileSystem.file(p.join(projectRoot, relativePath));
-    await file.create(recursive: true);
-    await file.writeAsString('''
+    await _createFile(
+      p.join(projectRoot, relativePath),
+      '''
 # Dart
 .dart_tool/
 
 # Celest
 **/.env       # Environment variables
-''');
+''',
+    );
   }
 }
 
@@ -54,11 +55,12 @@ final class _AnalysisOptions extends ProjectFile {
 
   @override
   Future<void> create(String projectRoot) async {
-    final file = fileSystem.file(p.join(projectRoot, relativePath));
-    await file.create(recursive: true);
-    await file.writeAsString('''
+    await _createFile(
+      p.join(projectRoot, relativePath),
+      '''
 include: package:lints/recommended.yaml
-''');
+''',
+    );
   }
 }
 
@@ -93,89 +95,120 @@ final class _Pubspec extends ProjectFile {
 sealed class ProjectTemplate extends ProjectItem {
   const ProjectTemplate();
 
-  const factory ProjectTemplate.hello() = _HelloProject;
+  factory ProjectTemplate.hello(String projectName) = _HelloProject;
 }
 
 final class _HelloProject extends ProjectTemplate {
-  const _HelloProject();
+  _HelloProject(this.projectName);
+
+  final String projectName;
 
   @override
   Future<void> create(String projectRoot) async {
-    final projectFile = fileSystem.file(projectPaths.projectDart);
-    await projectFile.create(recursive: true);
-    await projectFile.writeAsString('''
+    final greetingsTestHeader = switch (projectName.compareTo('test')) {
+      >= 0 => '''
+import 'package:test/test.dart';
+import 'package:${projectName}_celest/exceptions.dart';
+import 'package:${projectName}_celest/models.dart';
+''',
+      _ => '''
+import 'package:${projectName}_celest/exceptions.dart';
+import 'package:${projectName}_celest/models.dart';
+import 'package:test/test.dart';
+''',
+    };
+    await Future.wait([
+      _createFile(
+        projectPaths.projectDart,
+        '''
 import 'package:celest/celest.dart';
 
 const project = Project(
   name: 'hello',
 );
-''');
+''',
+      ),
+      _createFile(
+        p.join(projectPaths.apisDir, 'greeting.dart'),
+        '''
+// Cloud functions are top-level Dart functions defined in the `functions/` 
+// folder of your Celest project.
 
-//     final middleware = fileSystem.file(
-//       p.join(projectPaths.apisDir, 'middleware.dart'),
-//     );
-//     await middleware.create(recursive: true);
-//     await middleware.writeAsString(r'''
-// import 'package:celest/celest.dart';
+// By convention, any custom exception types thrown by an API are defined in
+// the `lib/exceptions.dart` file of your Celest project.
+import 'package:${projectName}_celest/exceptions.dart';
 
-// // An example middleware showing how to log all requests made to a function.
-// //
-// // Applying this middleware to a function will log the request to the console
-// // before passing it on to the function.
-// //
-// // Applying this middleware to a library will log all requests made to all
-// // functions in that library.
-// //
-// // This middleware is applied to the `sayHello` function in `greeting.dart`.
+// Likewise, any custom types used within an API's request/response are defined 
+// in the `lib/models.dart` file of your Celest project.
+import 'package:${projectName}_celest/models.dart';
 
-// /// Logs requests to the function.
-// class logRequests implements Middleware {
-//   /// Logs requests to the function.
-//   const logRequests();
-
-//   @override
-//   Handler handle(Handler next) {
-//     return Handler((request) {
-//       print('Request: $request');
-//       return next(request);
-//     });
-//   }
-// }
-// ''');
-
-    final greetingApi = fileSystem.file(
-      p.join(projectPaths.apisDir, 'greeting.dart'),
-    );
-    await greetingApi.create(recursive: true);
-    await greetingApi.writeAsString(r'''
-// Cloud functions are just top-level Dart functions defined in the 
-// `functions/` folder of your Celest project.
-
-/// Says hello to a person called [name].
-Future<String> sayHello(String name) async {
+/// Says hello to a [person].
+Future<String> sayHello(Person person) async {
   // Logging is handled automatically when you print to the console.
-  print('Saying hello to $name');
+  print('Saying hello to \$person');
 
-  return 'Hello, $name!';
+  // You can throw exceptions to return an error response.
+  //
+  // Custom exception types are serialized automatically, just like request/
+  // response types and will be thrown on the client side.
+  if (person.name.isEmpty) {
+    throw const BadNameException('Name cannot be empty');
+  }
+
+  return 'Hello, \${person.name}!';
 }
-''');
+''',
+      ),
+      _createFile(
+        p.join(projectRoot, 'lib', 'models.dart'),
+        r'''
+/// A person identified by [name].
+class Person {
+  const Person(this.name);
 
-    final greetingTest = fileSystem.file(
-      p.join(projectRoot, 'test', 'functions', 'greeting_test.dart'),
-    );
-    await greetingTest.create(recursive: true);
-    await greetingTest.writeAsString(r'''
-import 'package:test/test.dart';
+  final String name;
 
+  @override
+  String toString() => 'Person(name: $name)';
+}
+''',
+      ),
+      _createFile(
+        p.join(projectRoot, 'lib', 'exceptions.dart'),
+        r'''
+/// Thrown when a name is invalid.
+class BadNameException implements Exception {
+  const BadNameException(this.message);
+
+  final String message;
+}
+''',
+      ),
+      _createFile(
+        p.join(projectRoot, 'test', 'functions', 'greeting_test.dart'),
+        '''
+$greetingsTestHeader
 import '../../functions/greeting.dart';
 
 void main() {
   group('greeting', () {
     test('sayHello', () async {
-      expect(await sayHello('world'), 'Hello, world!');
+      const person = Person('Celest');
+      await expectLater(sayHello(person), completion('Hello, Celest!'));
+
+      const noName = Person('');
+      await expectLater(sayHello(noName), throwsA(isA<BadNameException>()));
     });
   });
 }
-''');
+''',
+      ),
+    ]);
   }
+}
+
+Future<void> _createFile(String path, String contents) async {
+  final file = fileSystem.file(path);
+  await file.create(recursive: true);
+  await file.writeAsString(contents);
 }

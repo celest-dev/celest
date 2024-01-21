@@ -14,9 +14,13 @@ abstract final class CodeGenerator {
   );
   static DartEmitter _emitter({
     required String forFile,
+    PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
   }) =>
       DartEmitter(
-        allocator: CelestAllocator(forFile: forFile),
+        allocator: CelestAllocator(
+          prefixingStrategy: prefixingStrategy,
+          forFile: forFile,
+        ),
         useNullSafetySyntax: true,
         orderDirectives: true,
       );
@@ -24,23 +28,34 @@ abstract final class CodeGenerator {
   static String rawEmit(
     Spec spec, {
     required String forFile,
+    PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
   }) =>
-      spec.accept(_emitter(forFile: forFile)).toString();
+      spec
+          .accept(
+            _emitter(
+              forFile: forFile,
+              prefixingStrategy: prefixingStrategy,
+            ),
+          )
+          .toString();
 
   static String emit(
     Spec spec, {
     required String forFile,
+    PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
   }) {
     if (spec is Library) {
       spec = spec.rebuild((lib) => lib.comments.add(_header));
     }
-    final code = rawEmit(spec, forFile: forFile);
+    final code = rawEmit(
+      spec,
+      forFile: forFile,
+      prefixingStrategy: prefixingStrategy,
+    );
     try {
       return _formatter.format(code);
-    } on Object {
-      // TODO(dnys1): Proper error handling
-      print(code);
-      rethrow;
+    } on Object catch (e) {
+      throw FormatException(e.toString(), code);
     }
   }
 }

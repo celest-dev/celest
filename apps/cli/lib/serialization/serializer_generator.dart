@@ -57,34 +57,6 @@ final class SerializerGenerator {
           Constructor((b) => b..constant = true),
         );
 
-        // Create `dartType` and `wireType` overrides
-        b.methods.addAll([
-          Method(
-            (b) => b
-              ..name = 'dartType'
-              ..returns = DartTypes.core.string
-              ..type = MethodType.getter
-              ..annotations.add(DartTypes.core.override)
-              ..lambda = true
-              ..body = literalString(
-                type.instantiatedUri.toString(),
-                raw: true,
-              ).code,
-          ),
-          Method(
-            (b) => b
-              ..name = 'wireType'
-              ..returns = DartTypes.core.string
-              ..type = MethodType.getter
-              ..annotations.add(DartTypes.core.override)
-              ..lambda = true
-              ..body = literalString(
-                'dart:core#Map',
-                raw: true,
-              ).code,
-          ),
-        ]);
-
         // Create `deserialize` and `serialize` overrides
         b.methods.addAll([
           Method(
@@ -212,8 +184,9 @@ final class SerializerGenerator {
       return serialized;
     }
     if (serializationSpec.subtypes.isNotEmpty) {
-      final serialize =
-          DartTypes.celest.serializers.property('scoped').property('serialize');
+      final serialize = DartTypes.celest.serializers
+          .property('instance')
+          .property('serialize');
       return CodeExpression(
         Block((b) {
           b.statements.addAll([
@@ -307,7 +280,7 @@ final class SerializerGenerator {
       assert(!mayBeAbsent, 'Classes with subtypes must have a map');
       final ref = _reference(from, isNullable: false);
       final deserialize = DartTypes.celest.serializers
-          .property('scoped')
+          .property('instance')
           .property('deserialize');
       return CodeExpression(
         Block((b) {

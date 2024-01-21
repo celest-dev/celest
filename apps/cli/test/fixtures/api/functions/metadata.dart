@@ -2,12 +2,7 @@
 /// parsed and transferred to the generated client.
 library;
 
-class MyAnnotation {
-  const MyAnnotation.create(this.positional, {required this.named});
-
-  final String positional;
-  final String named;
-}
+import 'package:api/models.dart';
 
 /// A function that has doc comments.
 ///
@@ -34,30 +29,6 @@ void hasConstructedDeprecatedAnnotation() {}
 
 @MyAnnotation.create('positional', named: 'named')
 void hasNamedConstructedAnnotation() {}
-
-enum LiteralEnum { a, b, c }
-
-class Literals {
-  const Literals({
-    required this.string,
-    required this.intValue,
-    required this.doubleValue,
-    required this.boolValue,
-    required this.list,
-    required this.map,
-    required this.enumValue,
-    required this.recordValue,
-  });
-
-  final String string;
-  final int intValue;
-  final double doubleValue;
-  final bool boolValue;
-  final List<String> list;
-  final Map<String, String> map;
-  final LiteralEnum enumValue;
-  final ({String a, String b, String c}) recordValue;
-}
 
 @Literals(
   string: 'string',
@@ -94,33 +65,6 @@ void hasLiteralsAnnotation(
   required String named,
 }) {}
 
-class _NotExportable {
-  const _NotExportable();
-}
-
-const _notExportable = _NotExportable();
-
-@_notExportable
-void hasNotExportableAnnotation(
-  @_notExportable String value, {
-  @_notExportable String named = 'named',
-}) {}
-
-@_NotExportable()
-void hasNotExportableConstructedAnnotation(
-  @_NotExportable() String value, {
-  @_NotExportable() String named = 'named',
-}) {}
-
-class Exportable {
-  const Exportable();
-
-  static const instance = Exportable();
-}
-
-const exportable = Exportable();
-const _notExportableExportable = Exportable();
-
 @exportable
 void hasExportableAnnotation(
   @exportable String value, {
@@ -133,22 +77,13 @@ void hasExportableConstructedAnnotation(
   @Exportable() String named = 'named',
 }) {}
 
-@_notExportableExportable
-void hasNotExportableExportableAnnotation(
-  @_notExportableExportable String value, {
-  @_notExportableExportable String named = 'named',
+@notExportable
+void hasNotExportableAnnotation(
+  @notExportable String value, {
+  @notExportable String named = 'named',
 }) {}
 
 // -- Default values --
-
-class Serializable {
-  const Serializable([this.type]);
-  const Serializable.forType(String this.type);
-
-  static const string = Serializable.forType('String');
-
-  final String? type;
-}
 
 void positionalDefaultValues([
   String value = 'value',

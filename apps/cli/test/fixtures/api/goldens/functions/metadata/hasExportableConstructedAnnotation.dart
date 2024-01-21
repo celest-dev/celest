@@ -7,14 +7,14 @@ import '../../../functions/metadata.dart' as _i2;
 
 final class HasExportableConstructedAnnotationTarget
     extends _i1.CloudFunctionTarget {
-  HasExportableConstructedAnnotationTarget()
-      : super((request) async {
-          _i2.hasExportableConstructedAnnotation(
-            (request[r'value'] as String),
-            named: ((request[r'named'] as String?)) ?? 'named',
-          );
-          return (statusCode: 200, body: {'response': null});
-        });
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    _i2.hasExportableConstructedAnnotation(
+      (request[r'value'] as String),
+      named: ((request[r'named'] as String?)) ?? 'named',
+    );
+    return (statusCode: 200, body: {'response': null});
+  }
 }
 
 Future<void> main(List<String> args) async {

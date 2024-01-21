@@ -6,32 +6,19 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:typed_data' as _i10;
 
+import 'package:api/exceptions.dart' as _i4;
+import 'package:api/src/models/classes.dart' as _i2;
+import 'package:api/src/models/cycles.dart' as _i3;
+import 'package:api/src/models/generic_wrappers.dart' as _i8;
+import 'package:api/src/models/metadata.dart' as _i9;
+import 'package:api/src/models/parameter_types.dart' as _i6;
+import 'package:api/src/models/records.dart' as _i11;
+import 'package:api/src/models/sealed_classes.dart' as _i12;
 import 'package:celest/celest.dart' as _i1;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i5;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i7;
 
-import 'functions/classes.dart' as _i2;
-import 'functions/cycles.dart' as _i3;
-import 'functions/exceptions.dart' as _i4;
-import 'functions/generic_wrappers.dart' as _i6;
-import 'functions/metadata.dart' as _i8;
-import 'functions/parameter_types.dart' as _i9;
-import 'functions/records.dart' as _i11;
-import 'functions/sealed_classes.dart' as _i12;
-
 abstract final class apis {
-  static const anonymousApi = _i1.CloudApi(name: r'anonymous_api');
-
-  static const anonymousFunction = _i1.CloudApi(name: r'anonymous_function');
-
-  static const apiAuthConstantVariables =
-      _i1.CloudApi(name: r'api_auth_constant_variables');
-
-  static const authenticatedApi = _i1.CloudApi(name: r'authenticated_api');
-
-  static const authenticatedFunction =
-      _i1.CloudApi(name: r'authenticated_function');
-
   static const classes = _i1.CloudApi(name: r'classes');
 
   static const cycles = _i1.CloudApi(name: r'cycles');
@@ -54,63 +41,6 @@ abstract final class apis {
 }
 
 abstract final class functions {
-  static const anonymousApiSayHello = _i1.CloudFunction<void, String>(
-    api: r'anonymous_api',
-    functionName: r'sayHello',
-  );
-
-  static const anonymousApiSayHelloAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'anonymous_api',
-    functionName: r'sayHelloAuthenticated',
-  );
-
-  static const anonymousFunctionSayHello = _i1.CloudFunction<void, String>(
-    api: r'anonymous_function',
-    functionName: r'sayHello',
-  );
-
-  static const anonymousFunctionSayHelloAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'anonymous_function',
-    functionName: r'sayHelloAuthenticated',
-  );
-
-  static const apiAuthConstantVariablesSayHello =
-      _i1.CloudFunction<void, String>(
-    api: r'api_auth_constant_variables',
-    functionName: r'sayHello',
-  );
-
-  static const apiAuthConstantVariablesSayHelloAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'api_auth_constant_variables',
-    functionName: r'sayHelloAuthenticated',
-  );
-
-  static const authenticatedApiSayGoodbyeAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'authenticated_api',
-    functionName: r'sayGoodbyeAuthenticated',
-  );
-
-  static const authenticatedApiSayHelloAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'authenticated_api',
-    functionName: r'sayHelloAuthenticated',
-  );
-
-  static const authenticatedFunctionSayHello = _i1.CloudFunction<void, String>(
-    api: r'authenticated_function',
-    functionName: r'sayHello',
-  );
-
-  static const authenticatedFunctionSayHelloAuthenticated =
-      _i1.CloudFunction<void, String>(
-    api: r'authenticated_function',
-    functionName: r'sayHelloAuthenticated',
-  );
-
   static const classesAsyncDefaultValues =
       _i1.CloudFunction<_i2.DefaultValues, _i2.DefaultValues>(
     api: r'classes',
@@ -356,19 +286,19 @@ abstract final class functions {
         _i7
         .IMap<String, _i7.IMap<String, _i6.SimpleClass>> mapOfMapOfSimpleClass
       }),
-      _i6.GenericWrappers>(
+      _i8.GenericWrappers>(
     api: r'generic_wrappers',
     functionName: r'genericWrapperParameters',
   );
 
   static const genericWrappersGenericWrappers =
-      _i1.CloudFunction<_i6.GenericWrappers, _i6.GenericWrappers>(
+      _i1.CloudFunction<_i8.GenericWrappers, _i8.GenericWrappers>(
     api: r'generic_wrappers',
     functionName: r'genericWrappers',
   );
 
   static const genericWrappersGenericWrappersAsync =
-      _i1.CloudFunction<_i6.GenericWrappers, _i6.GenericWrappers>(
+      _i1.CloudFunction<_i8.GenericWrappers, _i8.GenericWrappers>(
     api: r'generic_wrappers',
     functionName: r'genericWrappersAsync',
   );
@@ -419,18 +349,6 @@ abstract final class functions {
     functionName: r'hasNotExportableAnnotation',
   );
 
-  static const metadataHasNotExportableConstructedAnnotation =
-      _i1.CloudFunction<(String, {String named}), void>(
-    api: r'metadata',
-    functionName: r'hasNotExportableConstructedAnnotation',
-  );
-
-  static const metadataHasNotExportableExportableAnnotation =
-      _i1.CloudFunction<(String, {String named}), void>(
-    api: r'metadata',
-    functionName: r'hasNotExportableExportableAnnotation',
-  );
-
   static const metadataNamedDefaultValueVars = _i1.CloudFunction<
       ({
         int value,
@@ -439,10 +357,10 @@ abstract final class functions {
         String stringValue,
         List<String> listValue,
         Map<String, String> mapValue,
-        _i8.LiteralEnum enumValue,
+        _i9.LiteralEnum enumValue,
         ({String a, String b, String c}) recordValue,
-        _i8.Exportable exportable,
-        _i8.Serializable serializable
+        _i9.Exportable exportable,
+        _i9.Serializable serializable
       }),
       void>(
     api: r'metadata',
@@ -457,10 +375,10 @@ abstract final class functions {
         String stringValue,
         List<String> listValue,
         Map<String, String> mapValue,
-        _i8.LiteralEnum enumValue,
+        _i9.LiteralEnum enumValue,
         ({String a, String b, String c}) recordValue,
-        _i8.Exportable exportable,
-        _i8.Serializable serializable
+        _i9.Exportable exportable,
+        _i9.Serializable serializable
       }),
       void>(
     api: r'metadata',
@@ -475,9 +393,9 @@ abstract final class functions {
         bool boolValue,
         List<String> list,
         Map<String, String> map,
-        _i8.Exportable exportable,
-        _i8.Serializable serializable,
-        _i8.LiteralEnum enumValue,
+        _i9.Exportable exportable,
+        _i9.Serializable serializable,
+        _i9.LiteralEnum enumValue,
         ({String a, String b, String c}) recordValue
       }),
       void>(
@@ -493,10 +411,10 @@ abstract final class functions {
         String? stringValue,
         List<String>? listValue,
         Map<String, String>? mapValue,
-        _i8.LiteralEnum? enumValue,
+        _i9.LiteralEnum? enumValue,
         ({String a, String b, String c})? recordValue,
-        _i8.Exportable? exportable,
-        _i8.Serializable? serializable
+        _i9.Exportable? exportable,
+        _i9.Serializable? serializable
       }),
       void>(
     api: r'metadata',
@@ -511,10 +429,10 @@ abstract final class functions {
         String? stringValue,
         List<String>? listValue,
         Map<String, String>? mapValue,
-        _i8.LiteralEnum? enumValue,
+        _i9.LiteralEnum? enumValue,
         ({String a, String b, String c})? recordValue,
-        _i8.Exportable? exportable,
-        _i8.Serializable? serializable
+        _i9.Exportable? exportable,
+        _i9.Serializable? serializable
       }),
       void>(
     api: r'metadata',
@@ -529,9 +447,9 @@ abstract final class functions {
         bool? boolValue,
         List<String>? list,
         Map<String, String>? map,
-        _i8.Exportable? exportable,
-        _i8.Serializable? serializable,
-        _i8.LiteralEnum? enumValue,
+        _i9.Exportable? exportable,
+        _i9.Serializable? serializable,
+        _i9.LiteralEnum? enumValue,
         ({String a, String b, String c})? recordValue
       }),
       void>(
@@ -547,10 +465,10 @@ abstract final class functions {
         String?,
         List<String>?,
         Map<String, String>?,
-        _i8.LiteralEnum?,
+        _i9.LiteralEnum?,
         ({String a, String b, String c})?,
-        _i8.Exportable?,
-        _i8.Serializable?
+        _i9.Exportable?,
+        _i9.Serializable?
       ),
       void>(
     api: r'metadata',
@@ -566,10 +484,10 @@ abstract final class functions {
             String?,
             List<String>?,
             Map<String, String>?,
-            _i8.LiteralEnum?,
+            _i9.LiteralEnum?,
             ({String a, String b, String c})?,
-            _i8.Exportable?,
-            _i8.Serializable?
+            _i9.Exportable?,
+            _i9.Serializable?
           ),
           void>(
     api: r'metadata',
@@ -584,9 +502,9 @@ abstract final class functions {
         bool?,
         List<String>?,
         Map<String, String>?,
-        _i8.Exportable?,
-        _i8.Serializable?,
-        _i8.LiteralEnum?,
+        _i9.Exportable?,
+        _i9.Serializable?,
+        _i9.LiteralEnum?,
         ({String a, String b, String c})?
       ),
       void>(
@@ -602,10 +520,10 @@ abstract final class functions {
         String,
         List<String>,
         Map<String, String>,
-        _i8.LiteralEnum,
+        _i9.LiteralEnum,
         ({String a, String b, String c}),
-        _i8.Exportable,
-        _i8.Serializable
+        _i9.Exportable,
+        _i9.Serializable
       ),
       void>(
     api: r'metadata',
@@ -620,10 +538,10 @@ abstract final class functions {
         String,
         List<String>,
         Map<String, String>,
-        _i8.LiteralEnum,
+        _i9.LiteralEnum,
         ({String a, String b, String c}),
-        _i8.Exportable,
-        _i8.Serializable
+        _i9.Exportable,
+        _i9.Serializable
       ),
       void>(
     api: r'metadata',
@@ -638,9 +556,9 @@ abstract final class functions {
         bool,
         List<String>,
         Map<String, String>,
-        _i8.Exportable,
-        _i8.Serializable,
-        _i8.LiteralEnum,
+        _i9.Exportable,
+        _i9.Serializable,
+        _i9.LiteralEnum,
         ({String a, String b, String c})
       ),
       void>(
@@ -650,54 +568,54 @@ abstract final class functions {
 
   static const parameterTypesComplex = _i1.CloudFunction<
       (
-        _i9.SimpleStruct,
-        _i9.ComplexStruct,
-        _i9.SimpleClass,
-        _i9.ComplexClass,
-        _i9.SimpleStruct?,
-        _i9.ComplexStruct?,
-        _i9.SimpleClass?,
-        _i9.ComplexClass?,
-        Iterable<_i9.SimpleStruct>,
-        Iterable<_i9.ComplexStruct>,
-        Iterable<_i9.SimpleClass>,
-        Iterable<_i9.ComplexClass>,
-        Iterable<_i9.SimpleStruct>?,
-        Iterable<_i9.ComplexStruct>?,
-        Iterable<_i9.SimpleClass>?,
-        Iterable<_i9.ComplexClass>?,
-        Iterable<_i9.SimpleStruct?>,
-        Iterable<_i9.ComplexStruct?>,
-        Iterable<_i9.SimpleClass?>,
-        Iterable<_i9.ComplexClass?>,
-        List<_i9.SimpleStruct>,
-        List<_i9.ComplexStruct>,
-        List<_i9.SimpleClass>,
-        List<_i9.ComplexClass>,
-        List<_i9.SimpleStruct>?,
-        List<_i9.ComplexStruct>?,
-        List<_i9.SimpleClass>?,
-        List<_i9.ComplexClass>?,
-        List<_i9.SimpleStruct?>,
-        List<_i9.ComplexStruct?>,
-        List<_i9.SimpleClass?>,
-        List<_i9.ComplexClass?>,
-        Map<String, _i9.SimpleStruct>,
-        Map<String, _i9.ComplexStruct>,
-        Map<String, _i9.SimpleClass>,
-        Map<String, _i9.ComplexClass>,
-        Map<String, _i9.SimpleStruct>?,
-        Map<String, _i9.ComplexStruct>?,
-        Map<String, _i9.SimpleClass>?,
-        Map<String, _i9.ComplexClass>?,
-        Map<String, _i9.SimpleStruct?>,
-        Map<String, _i9.ComplexStruct?>,
-        Map<String, _i9.SimpleClass?>,
-        Map<String, _i9.ComplexClass?>,
-        Map<String, _i9.SimpleStruct?>?,
-        Map<String, _i9.ComplexStruct?>?,
-        Map<String, _i9.SimpleClass?>?,
-        Map<String, _i9.ComplexClass?>?
+        _i6.SimpleStruct,
+        _i6.ComplexStruct,
+        _i6.SimpleClass,
+        _i6.ComplexClass,
+        _i6.SimpleStruct?,
+        _i6.ComplexStruct?,
+        _i6.SimpleClass?,
+        _i6.ComplexClass?,
+        Iterable<_i6.SimpleStruct>,
+        Iterable<_i6.ComplexStruct>,
+        Iterable<_i6.SimpleClass>,
+        Iterable<_i6.ComplexClass>,
+        Iterable<_i6.SimpleStruct>?,
+        Iterable<_i6.ComplexStruct>?,
+        Iterable<_i6.SimpleClass>?,
+        Iterable<_i6.ComplexClass>?,
+        Iterable<_i6.SimpleStruct?>,
+        Iterable<_i6.ComplexStruct?>,
+        Iterable<_i6.SimpleClass?>,
+        Iterable<_i6.ComplexClass?>,
+        List<_i6.SimpleStruct>,
+        List<_i6.ComplexStruct>,
+        List<_i6.SimpleClass>,
+        List<_i6.ComplexClass>,
+        List<_i6.SimpleStruct>?,
+        List<_i6.ComplexStruct>?,
+        List<_i6.SimpleClass>?,
+        List<_i6.ComplexClass>?,
+        List<_i6.SimpleStruct?>,
+        List<_i6.ComplexStruct?>,
+        List<_i6.SimpleClass?>,
+        List<_i6.ComplexClass?>,
+        Map<String, _i6.SimpleStruct>,
+        Map<String, _i6.ComplexStruct>,
+        Map<String, _i6.SimpleClass>,
+        Map<String, _i6.ComplexClass>,
+        Map<String, _i6.SimpleStruct>?,
+        Map<String, _i6.ComplexStruct>?,
+        Map<String, _i6.SimpleClass>?,
+        Map<String, _i6.ComplexClass>?,
+        Map<String, _i6.SimpleStruct?>,
+        Map<String, _i6.ComplexStruct?>,
+        Map<String, _i6.SimpleClass?>,
+        Map<String, _i6.ComplexClass?>,
+        Map<String, _i6.SimpleStruct?>?,
+        Map<String, _i6.ComplexStruct?>?,
+        Map<String, _i6.SimpleClass?>?,
+        Map<String, _i6.ComplexClass?>?
       ),
       void>(
     api: r'parameter_types',
@@ -710,7 +628,7 @@ abstract final class functions {
         int,
         double,
         bool,
-        _i9.MyEnum,
+        _i6.MyEnum,
         Null,
         BigInt,
         DateTime,
@@ -726,7 +644,7 @@ abstract final class functions {
         List<int>,
         List<double>,
         List<bool>,
-        List<_i9.MyEnum>,
+        List<_i6.MyEnum>,
         List<Null>,
         List<BigInt>,
         List<DateTime>,
@@ -740,7 +658,7 @@ abstract final class functions {
         Map<String, int>,
         Map<String, double>,
         Map<String, bool>,
-        Map<String, _i9.MyEnum>,
+        Map<String, _i6.MyEnum>,
         Map<String, Null>,
         Map<String, BigInt>,
         Map<String, DateTime>,
@@ -762,7 +680,7 @@ abstract final class functions {
         int?,
         double?,
         bool?,
-        _i9.MyEnum?,
+        _i6.MyEnum?,
         Null,
         BigInt?,
         DateTime?,
@@ -778,7 +696,7 @@ abstract final class functions {
         List<int>?,
         List<double>?,
         List<bool>?,
-        List<_i9.MyEnum>?,
+        List<_i6.MyEnum>?,
         List<Null>?,
         List<BigInt>?,
         List<DateTime>?,
@@ -792,7 +710,7 @@ abstract final class functions {
         Map<String, int>?,
         Map<String, double>?,
         Map<String, bool>?,
-        Map<String, _i9.MyEnum>?,
+        Map<String, _i6.MyEnum>?,
         Map<String, Null>?,
         Map<String, BigInt>?,
         Map<String, DateTime>?,
@@ -833,13 +751,13 @@ abstract final class functions {
   );
 
   static const recordsAliasedNamedFields =
-      _i1.CloudFunction<_i11.NamedFields, _i11.NamedFields>(
+      _i1.CloudFunction<_i11.NamedFieldsRecord, _i11.NamedFieldsRecord>(
     api: r'records',
     functionName: r'aliasedNamedFields',
   );
 
   static const recordsAsyncAliasedNamedFields =
-      _i1.CloudFunction<_i11.NamedFields, _i11.NamedFields>(
+      _i1.CloudFunction<_i11.NamedFieldsRecord, _i11.NamedFieldsRecord>(
     api: r'records',
     functionName: r'asyncAliasedNamedFields',
   );
@@ -847,10 +765,10 @@ abstract final class functions {
   static const recordsAsyncNamedFields = _i1.CloudFunction<
       ({
         ({String anotherField, String field}) nonAliased,
-        _i11.NamedFields aliased
+        _i11.NamedFieldsRecord aliased
       }),
       ({
-        _i11.NamedFields aliased,
+        _i11.NamedFieldsRecord aliased,
         ({String anotherField, String field}) nonAliased
       })>(
     api: r'records',
@@ -878,10 +796,10 @@ abstract final class functions {
   static const recordsNamedFields = _i1.CloudFunction<
       ({
         ({String anotherField, String field}) nonAliased,
-        _i11.NamedFields aliased
+        _i11.NamedFieldsRecord aliased
       }),
       ({
-        _i11.NamedFields aliased,
+        _i11.NamedFieldsRecord aliased,
         ({String anotherField, String field}) nonAliased
       })>(
     api: r'records',
@@ -912,25 +830,25 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncClassReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleClass?>(
+      _i1.CloudFunction<void, _i6.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncClassReturnNullable',
   );
 
   static const returnTypesAsyncComplexClassReturn =
-      _i1.CloudFunction<void, _i9.ComplexClass>(
+      _i1.CloudFunction<void, _i6.ComplexClass>(
     api: r'return_types',
     functionName: r'asyncComplexClassReturn',
   );
 
   static const returnTypesAsyncComplexStructReturn =
-      _i1.CloudFunction<void, _i9.ComplexStruct>(
+      _i1.CloudFunction<void, _i6.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturn',
   );
 
   static const returnTypesAsyncComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i9.ComplexStruct?>(
+      _i1.CloudFunction<void, _i6.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturnNullable',
   );
@@ -975,19 +893,19 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i9.ComplexClass?>(
+      _i1.CloudFunction<void, _i6.ComplexClass?>(
     api: r'return_types',
     functionName: r'asyncOrComplexClassReturnNullable',
   );
 
   static const returnTypesAsyncOrComplexStructReturn =
-      _i1.CloudFunction<void, _i9.ComplexStruct>(
+      _i1.CloudFunction<void, _i6.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturn',
   );
 
   static const returnTypesAsyncOrComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i9.ComplexStruct?>(
+      _i1.CloudFunction<void, _i6.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturnNullable',
   );
@@ -1051,7 +969,7 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleClass?>(
+      _i1.CloudFunction<void, _i6.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncOrSimpleClassReturnNullable',
   );
@@ -1068,13 +986,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrStructReturn =
-      _i1.CloudFunction<void, _i9.SimpleStruct>(
+      _i1.CloudFunction<void, _i6.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
   static const returnTypesAsyncOrStructReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleStruct?>(
+      _i1.CloudFunction<void, _i6.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
@@ -1096,13 +1014,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncStructReturn =
-      _i1.CloudFunction<void, _i9.SimpleStruct>(
+      _i1.CloudFunction<void, _i6.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
   static const returnTypesAsyncStructReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleStruct?>(
+      _i1.CloudFunction<void, _i6.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
@@ -1123,25 +1041,25 @@ abstract final class functions {
   );
 
   static const returnTypesComplexClassReturn =
-      _i1.CloudFunction<void, _i9.ComplexClass>(
+      _i1.CloudFunction<void, _i6.ComplexClass>(
     api: r'return_types',
     functionName: r'complexClassReturn',
   );
 
   static const returnTypesComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i9.ComplexClass?>(
+      _i1.CloudFunction<void, _i6.ComplexClass?>(
     api: r'return_types',
     functionName: r'complexClassReturnNullable',
   );
 
   static const returnTypesComplexReturn =
-      _i1.CloudFunction<void, _i9.ComplexStruct>(
+      _i1.CloudFunction<void, _i6.ComplexStruct>(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
   static const returnTypesComplexReturnNullable =
-      _i1.CloudFunction<void, _i9.ComplexStruct?>(
+      _i1.CloudFunction<void, _i6.ComplexStruct?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
@@ -1203,13 +1121,13 @@ abstract final class functions {
   );
 
   static const returnTypesSimpleClassReturn =
-      _i1.CloudFunction<void, _i9.SimpleClass>(
+      _i1.CloudFunction<void, _i6.SimpleClass>(
     api: r'return_types',
     functionName: r'simpleClassReturn',
   );
 
   static const returnTypesSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleClass?>(
+      _i1.CloudFunction<void, _i6.SimpleClass?>(
     api: r'return_types',
     functionName: r'simpleClassReturnNullable',
   );
@@ -1226,13 +1144,13 @@ abstract final class functions {
   );
 
   static const returnTypesStructReturn =
-      _i1.CloudFunction<void, _i9.SimpleStruct>(
+      _i1.CloudFunction<void, _i6.SimpleStruct>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
   static const returnTypesStructReturnNullable =
-      _i1.CloudFunction<void, _i9.SimpleStruct?>(
+      _i1.CloudFunction<void, _i6.SimpleStruct?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
@@ -1303,180 +1221,3 @@ abstract final class functions {
     functionName: r'sealedClassWithOverriddenCustomJson',
   );
 }
-
-const List<_i1.CloudWidget> all = [
-  apis.anonymousApi,
-  apis.anonymousFunction,
-  apis.apiAuthConstantVariables,
-  apis.authenticatedApi,
-  apis.authenticatedFunction,
-  apis.classes,
-  apis.cycles,
-  apis.exceptions,
-  apis.genericWrappers,
-  apis.metadata,
-  apis.parameterTypes,
-  apis.parameters,
-  apis.records,
-  apis.returnTypes,
-  apis.sealedClasses,
-  functions.anonymousApiSayHelloAuthenticated,
-  functions.anonymousApiSayHello,
-  functions.anonymousFunctionSayHello,
-  functions.anonymousFunctionSayHelloAuthenticated,
-  functions.apiAuthConstantVariablesSayHelloAuthenticated,
-  functions.apiAuthConstantVariablesSayHello,
-  functions.authenticatedApiSayHelloAuthenticated,
-  functions.authenticatedApiSayGoodbyeAuthenticated,
-  functions.authenticatedFunctionSayHelloAuthenticated,
-  functions.authenticatedFunctionSayHello,
-  functions.classesEmpty,
-  functions.classesAsyncEmpty,
-  functions.classesFields,
-  functions.classesAsyncFields,
-  functions.classesNullableFields,
-  functions.classesAsyncNullableFields,
-  functions.classesNamedFields,
-  functions.classesAsyncNamedFields,
-  functions.classesMixedFields,
-  functions.classesAsyncMixedFields,
-  functions.classesDefaultValues,
-  functions.classesAsyncDefaultValues,
-  functions.classesNestedClass,
-  functions.classesAsyncNestedClass,
-  functions.classesOnlyFromJson,
-  functions.classesAsyncOnlyFromJson,
-  functions.classesOnlyToJson,
-  functions.classesAsyncOnlyToJson,
-  functions.classesOnlyToJsonWithDefaults,
-  functions.classesAsyncOnlyToJsonWithDefaults,
-  functions.classesFromAndToJson,
-  functions.classesAsyncFromAndToJson,
-  functions.classesNonMapToJson,
-  functions.classesAsyncNonMapToJson,
-  functions.classesNonMapToJsonWithDefaults,
-  functions.classesAsyncNonMapToJsonWithDefaults,
-  functions.classesNonMapFromAndToJson,
-  functions.classesAsyncNonMapFromAndToJson,
-  functions.cyclesCreateTree,
-  functions.cyclesPrintTree,
-  functions.cyclesCombineTrees,
-  functions.cyclesSelfReferencing,
-  functions.exceptionsThrowsException,
-  functions.exceptionsThrowsError,
-  functions.exceptionsThrowsCustomException,
-  functions.exceptionsThrowsCustomExceptionToFromJson,
-  functions.exceptionsThrowsCustomError,
-  functions.exceptionsThrowsCustomErrorToFromJson,
-  functions.exceptionsThrowsCustomErrorWithStackTrace,
-  functions.genericWrappersGenericWrappers,
-  functions.genericWrappersGenericWrappersAsync,
-  functions.genericWrappersGenericWrapperParameters,
-  functions.metadataHasDocComments,
-  functions.metadataHasDeprecatedAnnotation,
-  functions.metadataHasConstructedDeprecatedAnnotation,
-  functions.metadataHasNamedConstructedAnnotation,
-  functions.metadataHasLiteralsAnnotation,
-  functions.metadataHasNotExportableAnnotation,
-  functions.metadataHasNotExportableConstructedAnnotation,
-  functions.metadataHasExportableAnnotation,
-  functions.metadataHasExportableConstructedAnnotation,
-  functions.metadataHasNotExportableExportableAnnotation,
-  functions.metadataPositionalDefaultValues,
-  functions.metadataNullablePositionalDefaultValues,
-  functions.metadataNamedDefaultValues,
-  functions.metadataNullableNamedDefaultValues,
-  functions.metadataPositionalDefaultValueVars,
-  functions.metadataNullablePositionalDefaultValueVars,
-  functions.metadataNamedDefaultValueVars,
-  functions.metadataNullableNamedDefaultValueVars,
-  functions.metadataPositionalDefaultValueVarsPrivate,
-  functions.metadataNullablePositionalDefaultValueVarsPrivate,
-  functions.metadataNamedDefaultValueVarsPrivate,
-  functions.metadataNullableNamedDefaultValueVarsPrivate,
-  functions.parameterTypesSimple,
-  functions.parameterTypesSimpleOptional,
-  functions.parameterTypesComplex,
-  functions.parametersOptionalPositional,
-  functions.parametersOptionalNamed,
-  functions.parametersRequiredPositional,
-  functions.parametersRequiredNamed,
-  functions.recordsNonAliasedNamedFields,
-  functions.recordsAsyncNonAliasedNamedFields,
-  functions.recordsAliasedNamedFields,
-  functions.recordsAsyncAliasedNamedFields,
-  functions.recordsNamedFields,
-  functions.recordsAsyncNamedFields,
-  functions.recordsNested,
-  functions.recordsAsyncNested,
-  functions.recordsNullableNested,
-  functions.recordsAsyncNullableNested,
-  functions.returnTypesAsyncVoidReturn,
-  functions.returnTypesAsyncStringReturn,
-  functions.returnTypesAsyncIntReturn,
-  functions.returnTypesAsyncDoubleReturn,
-  functions.returnTypesAsyncBoolReturn,
-  functions.returnTypesAsyncIterableReturn,
-  functions.returnTypesAsyncListReturn,
-  functions.returnTypesAsyncMapReturn,
-  functions.returnTypesAsyncStructReturn,
-  functions.returnTypesAsyncStructReturnNullable,
-  functions.returnTypesAsyncComplexStructReturn,
-  functions.returnTypesAsyncComplexStructReturnNullable,
-  functions.returnTypesAsyncComplexClassReturn,
-  functions.returnTypesAsyncClassReturnNullable,
-  functions.returnTypesAsyncOrVoidReturn,
-  functions.returnTypesAsyncOrStringReturn,
-  functions.returnTypesAsyncOrIntReturn,
-  functions.returnTypesAsyncOrDoubleReturn,
-  functions.returnTypesAsyncOrBoolReturn,
-  functions.returnTypesAsyncOrIterableReturn,
-  functions.returnTypesAsyncOrListReturn,
-  functions.returnTypesAsyncOrMapReturn,
-  functions.returnTypesAsyncOrStructReturn,
-  functions.returnTypesAsyncOrComplexStructReturn,
-  functions.returnTypesAsyncOrVoidReturnNullable,
-  functions.returnTypesAsyncOrStringReturnNullable,
-  functions.returnTypesAsyncOrIntReturnNullable,
-  functions.returnTypesAsyncOrDoubleReturnNullable,
-  functions.returnTypesAsyncOrBoolReturnNullable,
-  functions.returnTypesAsyncOrIterableReturnNullable,
-  functions.returnTypesAsyncOrListReturnNullable,
-  functions.returnTypesAsyncOrMapReturnNullable,
-  functions.returnTypesAsyncOrStructReturnNullable,
-  functions.returnTypesAsyncOrComplexStructReturnNullable,
-  functions.returnTypesAsyncOrSimpleClassReturnNullable,
-  functions.returnTypesAsyncOrComplexClassReturnNullable,
-  functions.returnTypesVoidReturn,
-  functions.returnTypesStringReturn,
-  functions.returnTypesIntReturn,
-  functions.returnTypesDoubleReturn,
-  functions.returnTypesBoolReturn,
-  functions.returnTypesIterableReturn,
-  functions.returnTypesListReturn,
-  functions.returnTypesMapReturn,
-  functions.returnTypesStructReturn,
-  functions.returnTypesComplexReturn,
-  functions.returnTypesSimpleClassReturn,
-  functions.returnTypesComplexClassReturn,
-  functions.returnTypesStringReturnNullable,
-  functions.returnTypesIntReturnNullable,
-  functions.returnTypesDoubleReturnNullable,
-  functions.returnTypesBoolReturnNullable,
-  functions.returnTypesIterableReturnNullable,
-  functions.returnTypesListReturnNullable,
-  functions.returnTypesMapReturnNullable,
-  functions.returnTypesStructReturnNullable,
-  functions.returnTypesComplexReturnNullable,
-  functions.returnTypesSimpleClassReturnNullable,
-  functions.returnTypesComplexClassReturnNullable,
-  functions.sealedClassesArea,
-  functions.sealedClassesSealedClass,
-  functions.sealedClassesRectangle,
-  functions.sealedClassesCircle,
-  functions.sealedClassesSealedClassWithInheritedCustomJson,
-  functions.sealedClassesSealedClassWithCustomJson,
-  functions.sealedClassesSealedClassWithOverriddenCustomJson,
-  functions.sealedClassesRectangleWithOverriddenCustomJson,
-  functions.sealedClassesCircleWithOverriddenCustomJson,
-];

@@ -6,16 +6,11 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 final class ProjectPaths {
   ProjectPaths(
     this.projectRoot, {
-    String? clientOutputsDir,
     String? outputsDir,
   }) : outputsDir =
-            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path {
-    this.clientOutputsDir =
-        clientOutputsDir ?? p.join(appRoot, 'lib', 'celest');
-  }
+            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
 
   final String projectRoot;
-  late final String clientOutputsDir;
   final String outputsDir;
 
   late final String appRoot =
@@ -28,7 +23,10 @@ final class ProjectPaths {
   late final String analysisOptionsYaml =
       p.join(projectRoot, 'analysis_options.yaml');
   late final String projectDart = p.join(projectRoot, 'project.dart');
+  late final String projectLib = p.join(projectRoot, 'lib');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
+  late final String clientOutputsDir =
+      p.join(projectRoot, 'lib', 'src', 'client');
 
   late final String resourcesDart = p.join(projectRoot, 'resources.dart');
   late final String apisDir = p.join(projectRoot, 'functions');

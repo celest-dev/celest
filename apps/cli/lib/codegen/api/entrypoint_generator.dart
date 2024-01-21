@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -35,11 +36,16 @@ final class EntrypointGenerator {
     //   ...api.metadata,
     //   ...function.metadata,
     // ].whereType<ApiMiddleware>().toList();
-    final body = Method(
+    final handle = Method(
       (m) => m
+        ..returns = DartTypes.core.future(DartTypes.celest.celestResponse)
+        ..annotations.add(DartTypes.core.override)
+        ..name = 'handle'
         ..requiredParameters.add(
           Parameter(
-            (p) => p..name = 'request',
+            (p) => p
+              ..type = typeHelper.toReference(jsonMapType)
+              ..name = 'request',
           ),
         )
         ..modifier = MethodModifier.async
@@ -223,31 +229,28 @@ final class EntrypointGenerator {
         ..name = targetName
         ..modifier = ClassModifier.final$
         ..extend = DartTypes.celest.cloudFunctionTarget
-        ..constructors.add(
-          Constructor((c) {
-            c.initializers.add(
-              refer('super').call([
-                body.closure,
-              ], {
-                if (_customSerializers.isNotEmpty)
-                  'installSerializers': Method(
-                    (m) => m
-                      ..requiredParameters
-                          .add(Parameter((p) => p.name = 'serializers'))
-                      ..body = Block((b) {
-                        for (final serializer in _customSerializers) {
-                          b.addExpression(
-                            refer('serializers').property('put').call([
-                              refer(serializer.name).constInstance([]),
-                            ]),
-                          );
-                        }
-                      }),
-                  ).closure,
-              }).code,
-            );
-          }),
-        ),
+        ..methods.addAll([
+          handle,
+          if (_customSerializers.isNotEmpty)
+            Method(
+              (m) => m
+                ..returns = DartTypes.core.void$
+                ..annotations.add(DartTypes.core.override)
+                ..name = 'init'
+                ..body = Block((b) {
+                  for (final serializer in _customSerializers) {
+                    b.addExpression(
+                      DartTypes.celest.serializers
+                          .property('instance')
+                          .property('put')
+                          .call([
+                        refer(serializer.name).constInstance([]),
+                      ]),
+                    );
+                  }
+                }),
+            ),
+        ]),
     );
 
     final entrypoint = Method(

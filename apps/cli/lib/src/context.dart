@@ -16,12 +16,10 @@ extension PlatformContext on path.Context {
 Future<ProjectPaths> init({
   required String projectRoot,
   String? outputsDir,
-  String? clientOutputsDir,
 }) async {
   celestProject = await CelestProject.init(
     projectRoot: projectRoot,
     outputsDir: outputsDir,
-    clientOutputsDir: clientOutputsDir,
   );
   return projectPaths = celestProject.projectPaths;
 }

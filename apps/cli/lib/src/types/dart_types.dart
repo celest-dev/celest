@@ -589,7 +589,7 @@ class _Celest {
 
   static const _url = 'package:celest/celest.dart';
   static const _coreUrl = 'package:celest_core/celest_core.dart';
-  static const _cloudRuntimeUrl = 'package:celest/src/runtime.dart';
+  static const _runtimeUrl = 'package:celest/src/runtime.dart';
 
   /// Creates a [celest.BuildEnvironment] reference.
   DartTypeReference get buildEnvironment =>
@@ -597,11 +597,15 @@ class _Celest {
 
   /// Creates a [celest_runtime.celestEnv] reference.
   DartTypeReference get celestEnv =>
-      const DartTypeReference('celestEnv', _cloudRuntimeUrl);
+      const DartTypeReference('celestEnv', _runtimeUrl);
 
   /// Creates a [celest_core.CelestEnvironment] reference.
   DartTypeReference get celestEnvironment =>
       const DartTypeReference('CelestEnvironment', _coreUrl);
+
+  /// Creates a [celest_runtime.CelestResponse] reference.
+  DartTypeReference get celestResponse =>
+      const DartTypeReference('CelestResponse', _runtimeUrl);
 
   /// Creates a [celest.CloudApi] reference.
   DartTypeReference get cloudApi => const DartTypeReference('CloudApi', _url);
@@ -652,12 +656,11 @@ class _Celest {
       const DartTypeReference('Serializers', _coreUrl);
 
   /// Creates a [celest_runtime.serve] reference.
-  DartTypeReference get serve =>
-      const DartTypeReference('serve', _cloudRuntimeUrl);
+  DartTypeReference get serve => const DartTypeReference('serve', _runtimeUrl);
 
   /// Creates a [celest_runtime.CloudFunctionTarget] reference.
   DartTypeReference get cloudFunctionTarget =>
-      const DartTypeReference('CloudFunctionTarget', _cloudRuntimeUrl);
+      const DartTypeReference('CloudFunctionTarget', _runtimeUrl);
 }
 
 /// `dart:convert` types

@@ -23,6 +23,8 @@ import 'package:source_span/source_span.dart';
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
       source.uri.toString().startsWith('package:celest');
+  bool get isWithinProjectLib =>
+      p.isWithin(projectPaths.projectLib, source.fullName);
   bool get isCelestApi => isPackageCelest && name == 'api';
 }
 
@@ -485,11 +487,9 @@ extension AnnotationIsPrivate on ElementAnnotation {
     if (type == null || type.isPackageCelest || type.isMiddleware) {
       return null;
     }
-    if (element case final PropertyAccessorElement propertyAccessor) {
-      return codegen.refer(
-        propertyAccessor.name,
-        propertyAccessor.library.source.uri.toString(),
-      );
+    if (element case PropertyAccessorElement(:final name, :final library)
+        when library.isWithinProjectLib) {
+      return codegen.refer(name, library.source.uri.toString());
     }
     return constant.toCodeBuilder;
   }

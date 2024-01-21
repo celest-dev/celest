@@ -2,10 +2,7 @@
 /// deserializable.
 library;
 
-typedef NamedFields = ({
-  String field,
-  String anotherField,
-});
+import 'package:api/models.dart';
 
 ({
   String field,
@@ -29,12 +26,12 @@ Future<
 }) async =>
     value;
 
-NamedFields aliasedNamedFields({
-  required NamedFields value,
+NamedFieldsRecord aliasedNamedFields({
+  required NamedFieldsRecord value,
 }) =>
     value;
-Future<NamedFields> asyncAliasedNamedFields({
-  required NamedFields value,
+Future<NamedFieldsRecord> asyncAliasedNamedFields({
+  required NamedFieldsRecord value,
 }) async =>
     value;
 
@@ -43,13 +40,13 @@ Future<NamedFields> asyncAliasedNamedFields({
     String field,
     String anotherField,
   }) nonAliased,
-  NamedFields aliased,
+  NamedFieldsRecord aliased,
 }) namedFields({
   required ({
     String field,
     String anotherField,
   }) nonAliased,
-  required NamedFields aliased,
+  required NamedFieldsRecord aliased,
 }) =>
     (
       nonAliased: nonAliased,
@@ -61,25 +58,21 @@ Future<
         String field,
         String anotherField,
       }) nonAliased,
-      NamedFields aliased,
+      NamedFieldsRecord aliased,
     })> asyncNamedFields({
   required ({
     String field,
     String anotherField,
   }) nonAliased,
-  required NamedFields aliased,
+  required NamedFieldsRecord aliased,
 }) async =>
     (
       nonAliased: nonAliased,
       aliased: aliased,
     );
 
-typedef Nested = ({NamedFields namedFields});
-
 Nested nested(Nested value) => value;
 Future<Nested> asyncNested(Nested value) async => value;
-
-typedef NullableNested = ({NamedFields? namedFields});
 
 NullableNested? nullableNested(NullableNested? value) => value;
 Future<NullableNested?> asyncNullableNested(NullableNested? value) async =>

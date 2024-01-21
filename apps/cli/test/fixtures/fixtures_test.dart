@@ -79,7 +79,6 @@ class TestRunner {
         await init(
           projectRoot: projectRoot,
           outputsDir: goldensDir.path,
-          clientOutputsDir: p.join(goldensDir.path, 'client'),
         );
         final res = await Process.start(
           Platform.executable,
@@ -352,19 +351,6 @@ class TestRunner {
           }
         });
       }
-
-      // test('e2e', () async {
-      //   final result = await Process.run(
-      //     Platform.resolvedExecutable,
-      //     ['test'],
-      //     workingDirectory: projectRoot,
-      //   );
-      //   expect(
-      //     result.exitCode,
-      //     0,
-      //     reason: '${result.stdout}\n${result.stderr}',
-      //   );
-      // });
     });
   }
 }

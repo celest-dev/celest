@@ -7,25 +7,25 @@ import 'package:celest_core/celest_core.dart' as _i3;
 import '../../../functions/records.dart' as _i2;
 
 final class AsyncNonAliasedNamedFieldsTarget extends _i1.CloudFunctionTarget {
-  AsyncNonAliasedNamedFieldsTarget()
-      : super(
-          (request) async {
-            final response = await _i2.asyncNonAliasedNamedFields(
-                value: _i3.Serializers.scoped
-                    .deserialize<({String anotherField, String field})>(
-                        request[r'value']));
-            return (
-              statusCode: 200,
-              body: {
-                'response': _i3.Serializers.scoped
-                    .serialize<({String anotherField, String field})>(response)
-              }
-            );
-          },
-          installSerializers: (serializers) {
-            serializers.put(const Record$rmm4wtSerializer());
-          },
-        );
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final response = await _i2.asyncNonAliasedNamedFields(
+        value: _i3.Serializers.instance
+            .deserialize<({String anotherField, String field})>(
+                request[r'value']));
+    return (
+      statusCode: 200,
+      body: {
+        'response': _i3.Serializers.instance
+            .serialize<({String anotherField, String field})>(response)
+      }
+    );
+  }
+
+  @override
+  void init() {
+    _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
+  }
 }
 
 Future<void> main(List<String> args) async {
@@ -38,12 +38,6 @@ typedef Record$rmm4wt = ({String anotherField, String field});
 
 final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
   const Record$rmm4wtSerializer();
-
-  @override
-  String get dartType => r'#Record$rmm4wt';
-
-  @override
-  String get wireType => r'dart:core#Map';
 
   @override
   Record$rmm4wt deserialize(Object? value) {

@@ -6,14 +6,14 @@ import 'package:celest/src/runtime.dart' as _i1;
 import '../../../functions/metadata.dart' as _i2;
 
 final class HasExportableAnnotationTarget extends _i1.CloudFunctionTarget {
-  HasExportableAnnotationTarget()
-      : super((request) async {
-          _i2.hasExportableAnnotation(
-            (request[r'value'] as String),
-            named: ((request[r'named'] as String?)) ?? 'named',
-          );
-          return (statusCode: 200, body: {'response': null});
-        });
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    _i2.hasExportableAnnotation(
+      (request[r'value'] as String),
+      named: ((request[r'named'] as String?)) ?? 'named',
+    );
+    return (statusCode: 200, body: {'response': null});
+  }
 }
 
 Future<void> main(List<String> args) async {

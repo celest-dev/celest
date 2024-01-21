@@ -150,17 +150,6 @@ final class ResourcesGenerator {
     if (project.envVars.isNotEmpty) {
       _generateEnv(project.envVars);
     }
-    _library.body.add(
-      Field(
-        (f) => f
-          ..modifier = FieldModifier.constant
-          ..type = DartTypes.core.list(DartTypes.celest.cloudWidget)
-          ..name = 'all'
-          ..assignment = literalConstList(
-            _allResources.values.map(refer).toList(),
-          ).code,
-      ),
-    );
     return _library.build();
   }
 }

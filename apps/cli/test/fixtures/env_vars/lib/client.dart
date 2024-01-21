@@ -2,14 +2,10 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
-
-import 'package:http/http.dart' as _i1;
+library;
 
 final Celest celest = Celest();
 
 class Celest {
-  late _i1.Client httpClient = _i1.Client();
-
   void init() {}
 }

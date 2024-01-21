@@ -4,7 +4,7 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
-import 'parameter_types.dart';
+import 'package:api/models.dart';
 
 Future<void> asyncVoidReturn() async {}
 

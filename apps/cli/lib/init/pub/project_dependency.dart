@@ -27,14 +27,6 @@ final class ProjectDependency {
           hosted: HostedDetails('celest_core', pubServer),
         ),
       );
-  static ProjectDependency celestRuntimeCloudLocal(Uri pubServer) =>
-      ProjectDependency._(
-        'celest_runtime_cloud',
-        HostedDependency(
-          version: Version.parse(packageVersion),
-          hosted: HostedDetails('celest_runtime_cloud', pubServer),
-        ),
-      );
 
   static final ProjectDependency http = ProjectDependency._(
     'http',
@@ -73,11 +65,9 @@ final class ProjectDependency {
   static Map<String, Dependency> dependencyOverrides(Uri pubServer) {
     final celest = celestLocal(pubServer);
     final celestCore = celestCoreLocal(pubServer);
-    final celestRuntimeCloud = celestRuntimeCloudLocal(pubServer);
     return {
       celest.name: celest.pubDependency,
       celestCore.name: celestCore.pubDependency,
-      celestRuntimeCloud.name: celestRuntimeCloud.pubDependency,
     };
   }
 

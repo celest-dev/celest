@@ -6,11 +6,11 @@ import 'package:celest/src/runtime.dart' as _i1;
 import '../../../functions/return_types.dart' as _i2;
 
 final class MapReturnNullableTarget extends _i1.CloudFunctionTarget {
-  MapReturnNullableTarget()
-      : super((request) async {
-          final response = _i2.mapReturnNullable();
-          return (statusCode: 200, body: {'response': response});
-        });
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final response = _i2.mapReturnNullable();
+    return (statusCode: 200, body: {'response': response});
+  }
 }
 
 Future<void> main(List<String> args) async {

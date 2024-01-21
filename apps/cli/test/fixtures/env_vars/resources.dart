@@ -17,11 +17,3 @@ abstract final class env {
 
   static const imCool = _i1.EnvironmentVariable(name: r'IM_COOL');
 }
-
-const List<_i1.CloudWidget> all = [
-  env.imCool,
-  env.myAge,
-  env.myHeight,
-  env.myName,
-  env.myWeight,
-];

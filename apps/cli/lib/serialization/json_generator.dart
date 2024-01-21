@@ -87,7 +87,7 @@ final class JsonGenerator {
       'Should not have passed analyzer if no',
     );
     return DartTypes.celest.serializers
-        .property('scoped')
+        .property('instance')
         .property('serialize')
         .call(
       [ref],
@@ -210,7 +210,7 @@ final class JsonGenerator {
       'Should not have passed analyzer if no',
     );
     return DartTypes.celest.serializers
-        .property('scoped')
+        .property('instance')
         .property('deserialize')
         .call(
       [ref],

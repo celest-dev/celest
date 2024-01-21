@@ -1,7 +1,6 @@
+import 'package:api/client.dart';
+import 'package:api/models.dart';
 import 'package:test/test.dart';
-
-import '../functions/classes.dart';
-import '../goldens/client/client.dart';
 
 void main() {
   group('Client', () {

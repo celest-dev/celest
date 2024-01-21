@@ -14,11 +14,14 @@ final class CelestAllocator implements Allocator {
   });
 
   static const _doNotPrefix = ['dart:core'];
+  static const _defaultImports = {
+    'package:http/http.dart': 'http',
+  };
 
   final String forFile;
   final PrefixingStrategy prefixingStrategy;
 
-  final _imports = <String, int>{};
+  final _imports = <String, String?>{};
   var _keys = 1;
 
   @override
@@ -56,16 +59,20 @@ final class CelestAllocator implements Allocator {
   String _importFor(String url, String symbol) {
     switch (prefixingStrategy) {
       case PrefixingStrategy.indexed:
-        return '_i${_imports.putIfAbsent(url, _nextKey)}.$symbol';
+        return '${_imports.putIfAbsent(url, _nextKey)}.$symbol';
       case PrefixingStrategy.none:
-        return symbol;
+        final import = _imports.putIfAbsent(url, () => _defaultImports[url]);
+        return switch (import) {
+          final import? => '$import.$symbol',
+          null => symbol,
+        };
     }
   }
 
-  int _nextKey() => _keys++;
+  String _nextKey() => '_i${_keys++}';
 
   @override
   Iterable<Directive> get imports => _imports.keys.map(
-        (u) => Directive.import(u, as: '_i${_imports[u]}'),
+        (u) => Directive.import(u, as: _imports[u]),
       );
 }

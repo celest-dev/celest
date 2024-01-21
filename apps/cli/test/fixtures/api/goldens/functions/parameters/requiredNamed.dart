@@ -6,14 +6,14 @@ import 'package:celest/src/runtime.dart' as _i1;
 import '../../../functions/parameters.dart' as _i2;
 
 final class RequiredNamedTarget extends _i1.CloudFunctionTarget {
-  RequiredNamedTarget()
-      : super((request) async {
-          await _i2.requiredNamed(
-            requiredString: (request[r'requiredString'] as String),
-            requiredInt: (request[r'requiredInt'] as num).toInt(),
-          );
-          return (statusCode: 200, body: {'response': null});
-        });
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    await _i2.requiredNamed(
+      requiredString: (request[r'requiredString'] as String),
+      requiredInt: (request[r'requiredInt'] as num).toInt(),
+    );
+    return (statusCode: 200, body: {'response': null});
+  }
 }
 
 Future<void> main(List<String> args) async {

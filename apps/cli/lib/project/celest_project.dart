@@ -6,7 +6,9 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 
 /// Static information about the current Celest project.
 final class CelestProject {
@@ -21,13 +23,11 @@ final class CelestProject {
   static Future<CelestProject> init({
     required String projectRoot,
     String? outputsDir,
-    String? clientOutputsDir,
   }) async {
     _logger.finest('Loading celest project at root: "$projectRoot"...');
     final projectPaths = ProjectPaths(
       projectRoot,
       outputsDir: outputsDir,
-      clientOutputsDir: clientOutputsDir,
     );
     final (config, analysisOptions) = await (
       CelestConfig.load(),
@@ -43,6 +43,13 @@ final class CelestProject {
     );
     return project;
   }
+
+  late final Pubspec pubspec = Pubspec.parse(
+    fileSystem
+        .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
+        .readAsStringSync(),
+  );
+  String get packageName => pubspec.name;
 
   final ProjectPaths projectPaths;
   AnalysisOptions _analysisOptions;

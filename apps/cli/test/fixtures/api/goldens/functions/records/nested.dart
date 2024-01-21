@@ -1,30 +1,30 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:api/src/models/records.dart' as _i4;
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 
 import '../../../functions/records.dart' as _i2;
 
 final class NestedTarget extends _i1.CloudFunctionTarget {
-  NestedTarget()
-      : super(
-          (request) async {
-            final response = _i2.nested(_i3.Serializers.scoped
-                .deserialize<_i2.Nested>(request[r'value']));
-            return (
-              statusCode: 200,
-              body: {
-                'response':
-                    _i3.Serializers.scoped.serialize<_i2.Nested>(response)
-              }
-            );
-          },
-          installSerializers: (serializers) {
-            serializers.put(const NamedFieldsSerializer());
-            serializers.put(const NestedSerializer());
-          },
-        );
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final response = _i2.nested(
+        _i3.Serializers.instance.deserialize<_i4.Nested>(request[r'value']));
+    return (
+      statusCode: 200,
+      body: {
+        'response': _i3.Serializers.instance.serialize<_i4.Nested>(response)
+      }
+    );
+  }
+
+  @override
+  void init() {
+    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
+    _i3.Serializers.instance.put(const NestedSerializer());
+  }
 }
 
 Future<void> main(List<String> args) async {
@@ -33,17 +33,12 @@ Future<void> main(List<String> args) async {
   );
 }
 
-final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
-  const NamedFieldsSerializer();
+final class NamedFieldsRecordSerializer
+    extends _i3.Serializer<_i4.NamedFieldsRecord> {
+  const NamedFieldsRecordSerializer();
 
   @override
-  String get dartType => r'project:functions/records.dart#NamedFields';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.NamedFields deserialize(Object? value) {
+  _i4.NamedFieldsRecord deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       anotherField: (serialized[r'anotherField'] as String),
@@ -52,33 +47,27 @@ final class NamedFieldsSerializer extends _i3.Serializer<_i2.NamedFields> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.NamedFields value) => {
+  Map<String, Object?> serialize(_i4.NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
 }
 
-final class NestedSerializer extends _i3.Serializer<_i2.Nested> {
+final class NestedSerializer extends _i3.Serializer<_i4.Nested> {
   const NestedSerializer();
 
   @override
-  String get dartType => r'project:functions/records.dart#Nested';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.Nested deserialize(Object? value) {
+  _i4.Nested deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
-      namedFields: _i3.Serializers.scoped
-          .deserialize<_i2.NamedFields>(serialized[r'namedFields'])
+      namedFields: _i3.Serializers.instance
+          .deserialize<_i4.NamedFieldsRecord>(serialized[r'namedFields'])
     );
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Nested value) => {
-        r'namedFields':
-            _i3.Serializers.scoped.serialize<_i2.NamedFields>(value.namedFields)
+  Map<String, Object?> serialize(_i4.Nested value) => {
+        r'namedFields': _i3.Serializers.instance
+            .serialize<_i4.NamedFieldsRecord>(value.namedFields)
       };
 }

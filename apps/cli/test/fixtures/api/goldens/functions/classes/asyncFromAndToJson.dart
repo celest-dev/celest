@@ -1,29 +1,30 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:api/src/models/classes.dart' as _i4;
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 
 import '../../../functions/classes.dart' as _i2;
 
 final class AsyncFromAndToJsonTarget extends _i1.CloudFunctionTarget {
-  AsyncFromAndToJsonTarget()
-      : super(
-          (request) async {
-            final response = await _i2.asyncFromAndToJson(_i3.Serializers.scoped
-                .deserialize<_i2.FromJsonAndToJson>(request[r'value']));
-            return (
-              statusCode: 200,
-              body: {
-                'response': _i3.Serializers.scoped
-                    .serialize<_i2.FromJsonAndToJson>(response)
-              }
-            );
-          },
-          installSerializers: (serializers) {
-            serializers.put(const FromJsonAndToJsonSerializer());
-          },
-        );
+  @override
+  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final response = await _i2.asyncFromAndToJson(_i3.Serializers.instance
+        .deserialize<_i4.FromJsonAndToJson>(request[r'value']));
+    return (
+      statusCode: 200,
+      body: {
+        'response':
+            _i3.Serializers.instance.serialize<_i4.FromJsonAndToJson>(response)
+      }
+    );
+  }
+
+  @override
+  void init() {
+    _i3.Serializers.instance.put(const FromJsonAndToJsonSerializer());
+  }
 }
 
 Future<void> main(List<String> args) async {
@@ -33,21 +34,15 @@ Future<void> main(List<String> args) async {
 }
 
 final class FromJsonAndToJsonSerializer
-    extends _i3.Serializer<_i2.FromJsonAndToJson> {
+    extends _i3.Serializer<_i4.FromJsonAndToJson> {
   const FromJsonAndToJsonSerializer();
 
   @override
-  String get dartType => r'project:functions/classes.dart#FromJsonAndToJson';
-
-  @override
-  String get wireType => r'dart:core#Map';
-
-  @override
-  _i2.FromJsonAndToJson deserialize(Object? value) {
+  _i4.FromJsonAndToJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.FromJsonAndToJson.fromJson(serialized);
+    return _i4.FromJsonAndToJson.fromJson(serialized);
   }
 
   @override
-  Map<String, Object?> serialize(_i2.FromJsonAndToJson value) => value.toJson();
+  Map<String, Object?> serialize(_i4.FromJsonAndToJson value) => value.toJson();
 }
