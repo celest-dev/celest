@@ -31,7 +31,7 @@ dependencies:
   json_annotation: ^4.8.1
   logging: ^1.2.0
   mason_logger: ^0.2.10
-  meta: ^1.11.0
+  meta: ^1.10.0
   os_detect: ^2.0.1
   package_config: ^2.1.0
   path: ^1.8.3
