@@ -111,9 +111,10 @@ final class ClientFunctionsGenerator {
             final output = apiOutputs[api.name]!.functions[function.name]!;
             final httpClient =
                 ClientTypes.topLevelClient.ref.property('httpClient');
+            final baseUri = ClientTypes.topLevelClient.ref.property('baseUri');
             final functionCall = httpClient.property('post').call([
-              DartTypes.core.uri.property('parse').call([
-                literalString(output.uri.toString()),
+              baseUri.property('resolve').call([
+                literalString(output.uri.path),
               ]),
             ], {
               'headers': literalConstMap({

@@ -45,7 +45,7 @@ final class ClientGenerator {
   late final _clientClass = ClassBuilder()
     ..name = ClientTypes.clientClass.name
     ..fields.addAll([
-      if (project.apis.values.isNotEmpty)
+      if (project.apis.values.isNotEmpty) ...[
         Field(
           (f) => f
             ..late = true
@@ -53,6 +53,29 @@ final class ClientGenerator {
             ..name = 'httpClient'
             ..assignment = DartTypes.http.client.newInstance([]).code,
         ),
+        Field(
+          (f) => f
+            ..late = true
+            ..modifier = FieldModifier.final$
+            ..type = DartTypes.core.uri
+            ..name = 'baseUri'
+            ..assignment = DartTypes.globals.kIsWeb
+                .or(DartTypes.io.platform.property('isAndroid').negate())
+                .conditional(
+                  DartTypes.core.uri.property('parse').call([
+                    literalString(
+                      'http://localhost:${(projectOutputs as ast.LocalDeployedProject).port}',
+                    ),
+                  ]),
+                  DartTypes.core.uri.property('parse').call([
+                    literalString(
+                      'http://10.0.2.2:${(projectOutputs as ast.LocalDeployedProject).port}',
+                    ),
+                  ]),
+                )
+                .code,
+        ),
+      ],
     ]);
 
   Map<String, Library> generate() {

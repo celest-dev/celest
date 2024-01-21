@@ -13,9 +13,10 @@ import 'package:built_value/built_value.dart' as built_value;
 import 'package:built_value/json_object.dart' as built_value_json_object;
 import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
-import 'package:celest/src/runtime.dart' as celest_runtime;
+import 'package:celest/src/runtime/serve.dart' as celest_runtime;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_core/celest_core.dart' as celest_core;
+import 'package:celest_core/src/util/globals.dart' as celest_globals;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
@@ -109,6 +110,9 @@ abstract class DartTypes {
 
   /// `package:functions_framework` types.
   static const functionsFramework = _FunctionsFramework();
+
+  /// Access to various global values.
+  static const globals = _Globals();
 
   /// `package:http` types.
   static const http = _Http();
@@ -583,12 +587,23 @@ class BuiltValueType {
       const DartTypeReference('Serializers', serializerUrl);
 }
 
+/// Access to various global values.
+class _Globals {
+  const _Globals();
+
+  static const _celestGlobalsUrl = 'package:celest_core/src/util/globals.dart';
+
+  /// Creates a [celest_globals.kIsWeb] reference.
+  DartTypeReference get kIsWeb =>
+      const DartTypeReference('kIsWeb', _celestGlobalsUrl);
+}
+
 /// `package:celest` types
 class _Celest {
   const _Celest();
 
   static const _url = 'package:celest/celest.dart';
-  static const _runtimeUrl = 'package:celest/src/runtime.dart';
+  static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
 
   /// Creates a [celest.BadRequestException] reference.
   DartTypeReference get badRequestException =>
