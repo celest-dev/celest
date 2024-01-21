@@ -1,0 +1,17 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  ### ACTIONS ###
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  ### PUB ###
+  - package-ecosystem: "pub"
+    directory: "packages/celest"
+    schedule:
+      interval: "weekly"
+    directory: "packages/celest_core"
+    schedule:
+      interval: "weekly"
