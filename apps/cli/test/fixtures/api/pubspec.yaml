@@ -6,18 +6,18 @@ environment:
 
 dependencies:
   celest:
-    path: ../../../../../packages/celest
+    path: ../../../../../celest/packages/celest
   celest_core:
-    path: ../../../../../packages/celest_core
+    path: ../../../../../celest/packages/celest_core
   fast_immutable_collections: ^9.2.0
   http: ^1.0.0
   shelf: ^1.4.1
 
 dependency_overrides:
   celest:
-    path: ../../../../../packages/celest
+    path: ../../../../../celest/packages/celest
   celest_core:
-    path: ../../../../../packages/celest_core
+    path: ../../../../../celest/packages/celest_core
 
 dev_dependencies:
   test: any

@@ -6,11 +6,11 @@ environment:
 
 dependencies:
   celest:
-    path: ../../../../../packages/celest
+    path: ../../../../../celest/packages/celest
   http: ^1.0.0
 
 dependency_overrides:
   celest:
-    path: ../../../../../packages/celest
+    path: ../../../../../celest/packages/celest
   celest_core:
-    path: ../../../../../packages/celest_core
+    path: ../../../../../celest/packages/celest_core

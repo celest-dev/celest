@@ -10,6 +10,10 @@ extension PlatformContext on path.Context {
   path.Context get url => path.url;
   path.Context get windows => path.windows;
   path.Context get posix => path.posix;
+  path.Context get project => path.Context(
+        current: projectPaths.projectRoot,
+        style: path.Style.url,
+      );
 }
 
 Future<ProjectPaths> init({
