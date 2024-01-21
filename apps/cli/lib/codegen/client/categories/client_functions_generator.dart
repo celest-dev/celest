@@ -1,15 +1,20 @@
-import 'package:analyzer/dart/element/type.dart';
+import 'dart:collection';
+
+import 'package:analyzer/dart/element/type.dart' as dart_ast;
+import 'package:analyzer/dart/element/type.dart' hide RecordType;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
-final class FunctionsGenerator {
-  FunctionsGenerator({
+final class ClientFunctionsGenerator {
+  ClientFunctionsGenerator({
     required this.apis,
     required this.apiOutputs,
   }) {
@@ -22,6 +27,12 @@ final class FunctionsGenerator {
 
   final List<ast.Api> apis;
   final Map<String, ast.DeployedApi> apiOutputs;
+
+  final customSerializers = LinkedHashSet<Class>(
+    equals: (a, b) => a.name == b.name,
+    hashCode: (a) => a.name.hashCode,
+  );
+  final anonymousRecordTypes = <String, RecordType>{};
 
   late final LibraryBuilder _library;
   final _client = ClassBuilder()..name = ClientTypes.functionsClass.name;
@@ -132,16 +143,46 @@ final class FunctionsGenerator {
               b.statements.add(const Code('return;'));
               return;
             }
+            b.addExpression(
+              declareFinal(r'$body').assign(
+                DartTypes.convert.jsonDecode.call([
+                  refer(r'$response').property('body'),
+                ]).asA(typeHelper.toReference(jsonMapType)),
+              ),
+            );
+
             final fromJson = jsonGenerator.fromJson(
               function.flattenedReturnType,
-              DartTypes.convert.jsonDecode.call([
-                refer(r'$response').property('body'),
-              ]),
+              refer(r'$body').index(literalString('response')),
             );
             b.addExpression(fromJson.returned);
           }),
       );
       apiClass.methods.add(functionCall);
+      final allTypes = Set.of(
+        [
+          function.flattenedReturnType,
+          ...function.parameters.map((p) => p.type),
+          ...function.exceptionTypes,
+        ].where((type) => !type.isFunctionContext),
+      );
+      for (final type in allTypes) {
+        final dartType = typeHelper.fromReference(type);
+        customSerializers.addAll(
+          typeHelper.customSerializers(dartType),
+        );
+        if ((dartType, type)
+            case (
+              final dart_ast.RecordType dartType,
+              final RecordType recordType
+            )) {
+          anonymousRecordTypes[dartType.symbol] =
+              // Typedefs should always point to the non-nullable
+              // version since the type is only used to invoke the
+              // serializer and the serializer handles null values.
+              recordType.rebuild((r) => r.isNullable = false);
+        }
+      }
     }
   }
 

@@ -22,3 +22,4 @@ dependency_overrides:
     path: ../../../../../packages/celest_core
   celest_runtime_cloud:
     path: ../../../../../packages/celest_runtime_cloud
+  test: any

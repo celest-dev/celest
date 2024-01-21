@@ -172,218 +172,223 @@ import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
 
 void main() {
   _i1.serve(targets: {
-    '/anonymous_api/sayHello': _i2.SayHelloTarget(),
-    '/anonymous_api/sayHelloAuthenticated': _i3.SayHelloAuthenticatedTarget(),
-    '/anonymous_function/sayHello': _i4.SayHelloTarget(),
-    '/anonymous_function/sayHelloAuthenticated':
+    '/anonymous-api/say-hello': _i2.SayHelloTarget(),
+    '/anonymous-api/say-hello-authenticated': _i3.SayHelloAuthenticatedTarget(),
+    '/anonymous-function/say-hello': _i4.SayHelloTarget(),
+    '/anonymous-function/say-hello-authenticated':
         _i5.SayHelloAuthenticatedTarget(),
-    '/api_auth_constant_variables/sayHello': _i6.SayHelloTarget(),
-    '/api_auth_constant_variables/sayHelloAuthenticated':
+    '/api-auth-constant-variables/say-hello': _i6.SayHelloTarget(),
+    '/api-auth-constant-variables/say-hello-authenticated':
         _i7.SayHelloAuthenticatedTarget(),
-    '/authenticated_api/sayGoodbyeAuthenticated':
+    '/authenticated-api/say-goodbye-authenticated':
         _i8.SayGoodbyeAuthenticatedTarget(),
-    '/authenticated_api/sayHelloAuthenticated':
+    '/authenticated-api/say-hello-authenticated':
         _i9.SayHelloAuthenticatedTarget(),
-    '/authenticated_function/sayHello': _i10.SayHelloTarget(),
-    '/authenticated_function/sayHelloAuthenticated':
+    '/authenticated-function/say-hello': _i10.SayHelloTarget(),
+    '/authenticated-function/say-hello-authenticated':
         _i11.SayHelloAuthenticatedTarget(),
-    '/classes/asyncDefaultValues': _i12.AsyncDefaultValuesTarget(),
-    '/classes/asyncEmpty': _i13.AsyncEmptyTarget(),
-    '/classes/asyncFields': _i14.AsyncFieldsTarget(),
-    '/classes/asyncFromAndToJson': _i15.AsyncFromAndToJsonTarget(),
-    '/classes/asyncMixedFields': _i16.AsyncMixedFieldsTarget(),
-    '/classes/asyncNamedFields': _i17.AsyncNamedFieldsTarget(),
-    '/classes/asyncNestedClass': _i18.AsyncNestedClassTarget(),
-    '/classes/asyncNonMapFromAndToJson': _i19.AsyncNonMapFromAndToJsonTarget(),
-    '/classes/asyncNonMapToJson': _i20.AsyncNonMapToJsonTarget(),
-    '/classes/asyncNonMapToJsonWithDefaults':
+    '/classes/async-default-values': _i12.AsyncDefaultValuesTarget(),
+    '/classes/async-empty': _i13.AsyncEmptyTarget(),
+    '/classes/async-fields': _i14.AsyncFieldsTarget(),
+    '/classes/async-from-and-to-json': _i15.AsyncFromAndToJsonTarget(),
+    '/classes/async-mixed-fields': _i16.AsyncMixedFieldsTarget(),
+    '/classes/async-named-fields': _i17.AsyncNamedFieldsTarget(),
+    '/classes/async-nested-class': _i18.AsyncNestedClassTarget(),
+    '/classes/async-non-map-from-and-to-json':
+        _i19.AsyncNonMapFromAndToJsonTarget(),
+    '/classes/async-non-map-to-json': _i20.AsyncNonMapToJsonTarget(),
+    '/classes/async-non-map-to-json-with-defaults':
         _i21.AsyncNonMapToJsonWithDefaultsTarget(),
-    '/classes/asyncNullableFields': _i22.AsyncNullableFieldsTarget(),
-    '/classes/asyncOnlyFromJson': _i23.AsyncOnlyFromJsonTarget(),
-    '/classes/asyncOnlyToJson': _i24.AsyncOnlyToJsonTarget(),
-    '/classes/asyncOnlyToJsonWithDefaults':
+    '/classes/async-nullable-fields': _i22.AsyncNullableFieldsTarget(),
+    '/classes/async-only-from-json': _i23.AsyncOnlyFromJsonTarget(),
+    '/classes/async-only-to-json': _i24.AsyncOnlyToJsonTarget(),
+    '/classes/async-only-to-json-with-defaults':
         _i25.AsyncOnlyToJsonWithDefaultsTarget(),
-    '/classes/defaultValues': _i26.DefaultValuesTarget(),
+    '/classes/default-values': _i26.DefaultValuesTarget(),
     '/classes/empty': _i27.EmptyTarget(),
     '/classes/fields': _i28.FieldsTarget(),
-    '/classes/fromAndToJson': _i29.FromAndToJsonTarget(),
-    '/classes/mixedFields': _i30.MixedFieldsTarget(),
-    '/classes/namedFields': _i31.NamedFieldsTarget(),
-    '/classes/nestedClass': _i32.NestedClassTarget(),
-    '/classes/nonMapFromAndToJson': _i33.NonMapFromAndToJsonTarget(),
-    '/classes/nonMapToJson': _i34.NonMapToJsonTarget(),
-    '/classes/nonMapToJsonWithDefaults': _i35.NonMapToJsonWithDefaultsTarget(),
-    '/classes/nullableFields': _i36.NullableFieldsTarget(),
-    '/classes/onlyFromJson': _i37.OnlyFromJsonTarget(),
-    '/classes/onlyToJson': _i38.OnlyToJsonTarget(),
-    '/classes/onlyToJsonWithDefaults': _i39.OnlyToJsonWithDefaultsTarget(),
-    '/cycles/combineTrees': _i40.CombineTreesTarget(),
-    '/cycles/createTree': _i41.CreateTreeTarget(),
-    '/cycles/printTree': _i42.PrintTreeTarget(),
-    '/cycles/selfReferencing': _i43.SelfReferencingTarget(),
-    '/exceptions/throwsCustomError': _i44.ThrowsCustomErrorTarget(),
-    '/exceptions/throwsCustomErrorToFromJson':
+    '/classes/from-and-to-json': _i29.FromAndToJsonTarget(),
+    '/classes/mixed-fields': _i30.MixedFieldsTarget(),
+    '/classes/named-fields': _i31.NamedFieldsTarget(),
+    '/classes/nested-class': _i32.NestedClassTarget(),
+    '/classes/non-map-from-and-to-json': _i33.NonMapFromAndToJsonTarget(),
+    '/classes/non-map-to-json': _i34.NonMapToJsonTarget(),
+    '/classes/non-map-to-json-with-defaults':
+        _i35.NonMapToJsonWithDefaultsTarget(),
+    '/classes/nullable-fields': _i36.NullableFieldsTarget(),
+    '/classes/only-from-json': _i37.OnlyFromJsonTarget(),
+    '/classes/only-to-json': _i38.OnlyToJsonTarget(),
+    '/classes/only-to-json-with-defaults': _i39.OnlyToJsonWithDefaultsTarget(),
+    '/cycles/combine-trees': _i40.CombineTreesTarget(),
+    '/cycles/create-tree': _i41.CreateTreeTarget(),
+    '/cycles/print-tree': _i42.PrintTreeTarget(),
+    '/cycles/self-referencing': _i43.SelfReferencingTarget(),
+    '/exceptions/throws-custom-error': _i44.ThrowsCustomErrorTarget(),
+    '/exceptions/throws-custom-error-to-from-json':
         _i45.ThrowsCustomErrorToFromJsonTarget(),
-    '/exceptions/throwsCustomErrorWithStackTrace':
+    '/exceptions/throws-custom-error-with-stack-trace':
         _i46.ThrowsCustomErrorWithStackTraceTarget(),
-    '/exceptions/throwsCustomException': _i47.ThrowsCustomExceptionTarget(),
-    '/exceptions/throwsCustomExceptionToFromJson':
+    '/exceptions/throws-custom-exception': _i47.ThrowsCustomExceptionTarget(),
+    '/exceptions/throws-custom-exception-to-from-json':
         _i48.ThrowsCustomExceptionToFromJsonTarget(),
-    '/exceptions/throwsError': _i49.ThrowsErrorTarget(),
-    '/exceptions/throwsException': _i50.ThrowsExceptionTarget(),
-    '/generic_wrappers/genericWrapperParameters':
+    '/exceptions/throws-error': _i49.ThrowsErrorTarget(),
+    '/exceptions/throws-exception': _i50.ThrowsExceptionTarget(),
+    '/generic-wrappers/generic-wrapper-parameters':
         _i51.GenericWrapperParametersTarget(),
-    '/generic_wrappers/genericWrappers': _i52.GenericWrappersTarget(),
-    '/generic_wrappers/genericWrappersAsync': _i53.GenericWrappersAsyncTarget(),
-    '/metadata/hasConstructedDeprecatedAnnotation':
+    '/generic-wrappers/generic-wrappers': _i52.GenericWrappersTarget(),
+    '/generic-wrappers/generic-wrappers-async':
+        _i53.GenericWrappersAsyncTarget(),
+    '/metadata/has-constructed-deprecated-annotation':
         _i54.HasConstructedDeprecatedAnnotationTarget(),
-    '/metadata/hasDeprecatedAnnotation': _i55.HasDeprecatedAnnotationTarget(),
-    '/metadata/hasDocComments': _i56.HasDocCommentsTarget(),
-    '/metadata/hasExportableAnnotation': _i57.HasExportableAnnotationTarget(),
-    '/metadata/hasExportableConstructedAnnotation':
+    '/metadata/has-deprecated-annotation': _i55.HasDeprecatedAnnotationTarget(),
+    '/metadata/has-doc-comments': _i56.HasDocCommentsTarget(),
+    '/metadata/has-exportable-annotation': _i57.HasExportableAnnotationTarget(),
+    '/metadata/has-exportable-constructed-annotation':
         _i58.HasExportableConstructedAnnotationTarget(),
-    '/metadata/hasLiteralsAnnotation': _i59.HasLiteralsAnnotationTarget(),
-    '/metadata/hasNamedConstructedAnnotation':
+    '/metadata/has-literals-annotation': _i59.HasLiteralsAnnotationTarget(),
+    '/metadata/has-named-constructed-annotation':
         _i60.HasNamedConstructedAnnotationTarget(),
-    '/metadata/hasNotExportableAnnotation':
+    '/metadata/has-not-exportable-annotation':
         _i61.HasNotExportableAnnotationTarget(),
-    '/metadata/hasNotExportableConstructedAnnotation':
+    '/metadata/has-not-exportable-constructed-annotation':
         _i62.HasNotExportableConstructedAnnotationTarget(),
-    '/metadata/hasNotExportableExportableAnnotation':
+    '/metadata/has-not-exportable-exportable-annotation':
         _i63.HasNotExportableExportableAnnotationTarget(),
-    '/metadata/namedDefaultValueVars': _i64.NamedDefaultValueVarsTarget(),
-    '/metadata/namedDefaultValueVarsPrivate':
+    '/metadata/named-default-value-vars': _i64.NamedDefaultValueVarsTarget(),
+    '/metadata/named-default-value-vars-private':
         _i65.NamedDefaultValueVarsPrivateTarget(),
-    '/metadata/namedDefaultValues': _i66.NamedDefaultValuesTarget(),
-    '/metadata/nullableNamedDefaultValueVars':
+    '/metadata/named-default-values': _i66.NamedDefaultValuesTarget(),
+    '/metadata/nullable-named-default-value-vars':
         _i67.NullableNamedDefaultValueVarsTarget(),
-    '/metadata/nullableNamedDefaultValueVarsPrivate':
+    '/metadata/nullable-named-default-value-vars-private':
         _i68.NullableNamedDefaultValueVarsPrivateTarget(),
-    '/metadata/nullableNamedDefaultValues':
+    '/metadata/nullable-named-default-values':
         _i69.NullableNamedDefaultValuesTarget(),
-    '/metadata/nullablePositionalDefaultValueVars':
+    '/metadata/nullable-positional-default-value-vars':
         _i70.NullablePositionalDefaultValueVarsTarget(),
-    '/metadata/nullablePositionalDefaultValueVarsPrivate':
+    '/metadata/nullable-positional-default-value-vars-private':
         _i71.NullablePositionalDefaultValueVarsPrivateTarget(),
-    '/metadata/nullablePositionalDefaultValues':
+    '/metadata/nullable-positional-default-values':
         _i72.NullablePositionalDefaultValuesTarget(),
-    '/metadata/positionalDefaultValueVars':
+    '/metadata/positional-default-value-vars':
         _i73.PositionalDefaultValueVarsTarget(),
-    '/metadata/positionalDefaultValueVarsPrivate':
+    '/metadata/positional-default-value-vars-private':
         _i74.PositionalDefaultValueVarsPrivateTarget(),
-    '/metadata/positionalDefaultValues': _i75.PositionalDefaultValuesTarget(),
-    '/middleware/sayHello': _i76.SayHelloTarget(),
-    '/parameter_types/complex': _i77.ComplexTarget(),
-    '/parameter_types/simple': _i78.SimpleTarget(),
-    '/parameter_types/simpleOptional': _i79.SimpleOptionalTarget(),
-    '/parameters/optionalNamed': _i80.OptionalNamedTarget(),
-    '/parameters/optionalPositional': _i81.OptionalPositionalTarget(),
-    '/parameters/requiredNamed': _i82.RequiredNamedTarget(),
-    '/parameters/requiredPositional': _i83.RequiredPositionalTarget(),
-    '/records/aliasedNamedFields': _i84.AliasedNamedFieldsTarget(),
-    '/records/asyncAliasedNamedFields': _i85.AsyncAliasedNamedFieldsTarget(),
-    '/records/asyncNamedFields': _i86.AsyncNamedFieldsTarget(),
-    '/records/asyncNested': _i87.AsyncNestedTarget(),
-    '/records/asyncNonAliasedNamedFields':
+    '/metadata/positional-default-values': _i75.PositionalDefaultValuesTarget(),
+    '/middleware/say-hello': _i76.SayHelloTarget(),
+    '/parameter-types/complex': _i77.ComplexTarget(),
+    '/parameter-types/simple': _i78.SimpleTarget(),
+    '/parameter-types/simple-optional': _i79.SimpleOptionalTarget(),
+    '/parameters/optional-named': _i80.OptionalNamedTarget(),
+    '/parameters/optional-positional': _i81.OptionalPositionalTarget(),
+    '/parameters/required-named': _i82.RequiredNamedTarget(),
+    '/parameters/required-positional': _i83.RequiredPositionalTarget(),
+    '/records/aliased-named-fields': _i84.AliasedNamedFieldsTarget(),
+    '/records/async-aliased-named-fields': _i85.AsyncAliasedNamedFieldsTarget(),
+    '/records/async-named-fields': _i86.AsyncNamedFieldsTarget(),
+    '/records/async-nested': _i87.AsyncNestedTarget(),
+    '/records/async-non-aliased-named-fields':
         _i88.AsyncNonAliasedNamedFieldsTarget(),
-    '/records/asyncNullableNested': _i89.AsyncNullableNestedTarget(),
-    '/records/namedFields': _i90.NamedFieldsTarget(),
+    '/records/async-nullable-nested': _i89.AsyncNullableNestedTarget(),
+    '/records/named-fields': _i90.NamedFieldsTarget(),
     '/records/nested': _i91.NestedTarget(),
-    '/records/nonAliasedNamedFields': _i92.NonAliasedNamedFieldsTarget(),
-    '/records/nullableNested': _i93.NullableNestedTarget(),
-    '/return_types/asyncBoolReturn': _i94.AsyncBoolReturnTarget(),
-    '/return_types/asyncClassReturnNullable':
+    '/records/non-aliased-named-fields': _i92.NonAliasedNamedFieldsTarget(),
+    '/records/nullable-nested': _i93.NullableNestedTarget(),
+    '/return-types/async-bool-return': _i94.AsyncBoolReturnTarget(),
+    '/return-types/async-class-return-nullable':
         _i95.AsyncClassReturnNullableTarget(),
-    '/return_types/asyncComplexClassReturn':
+    '/return-types/async-complex-class-return':
         _i96.AsyncComplexClassReturnTarget(),
-    '/return_types/asyncComplexStructReturn':
+    '/return-types/async-complex-struct-return':
         _i97.AsyncComplexStructReturnTarget(),
-    '/return_types/asyncComplexStructReturnNullable':
+    '/return-types/async-complex-struct-return-nullable':
         _i98.AsyncComplexStructReturnNullableTarget(),
-    '/return_types/asyncDoubleReturn': _i99.AsyncDoubleReturnTarget(),
-    '/return_types/asyncIntReturn': _i100.AsyncIntReturnTarget(),
-    '/return_types/asyncIterableReturn': _i101.AsyncIterableReturnTarget(),
-    '/return_types/asyncListReturn': _i102.AsyncListReturnTarget(),
-    '/return_types/asyncMapReturn': _i103.AsyncMapReturnTarget(),
-    '/return_types/asyncOrBoolReturn': _i104.AsyncOrBoolReturnTarget(),
-    '/return_types/asyncOrBoolReturnNullable':
+    '/return-types/async-double-return': _i99.AsyncDoubleReturnTarget(),
+    '/return-types/async-int-return': _i100.AsyncIntReturnTarget(),
+    '/return-types/async-iterable-return': _i101.AsyncIterableReturnTarget(),
+    '/return-types/async-list-return': _i102.AsyncListReturnTarget(),
+    '/return-types/async-map-return': _i103.AsyncMapReturnTarget(),
+    '/return-types/async-or-bool-return': _i104.AsyncOrBoolReturnTarget(),
+    '/return-types/async-or-bool-return-nullable':
         _i105.AsyncOrBoolReturnNullableTarget(),
-    '/return_types/asyncOrComplexClassReturnNullable':
+    '/return-types/async-or-complex-class-return-nullable':
         _i106.AsyncOrComplexClassReturnNullableTarget(),
-    '/return_types/asyncOrComplexStructReturn':
+    '/return-types/async-or-complex-struct-return':
         _i107.AsyncOrComplexStructReturnTarget(),
-    '/return_types/asyncOrComplexStructReturnNullable':
+    '/return-types/async-or-complex-struct-return-nullable':
         _i108.AsyncOrComplexStructReturnNullableTarget(),
-    '/return_types/asyncOrDoubleReturn': _i109.AsyncOrDoubleReturnTarget(),
-    '/return_types/asyncOrDoubleReturnNullable':
+    '/return-types/async-or-double-return': _i109.AsyncOrDoubleReturnTarget(),
+    '/return-types/async-or-double-return-nullable':
         _i110.AsyncOrDoubleReturnNullableTarget(),
-    '/return_types/asyncOrIntReturn': _i111.AsyncOrIntReturnTarget(),
-    '/return_types/asyncOrIntReturnNullable':
+    '/return-types/async-or-int-return': _i111.AsyncOrIntReturnTarget(),
+    '/return-types/async-or-int-return-nullable':
         _i112.AsyncOrIntReturnNullableTarget(),
-    '/return_types/asyncOrIterableReturn': _i113.AsyncOrIterableReturnTarget(),
-    '/return_types/asyncOrIterableReturnNullable':
+    '/return-types/async-or-iterable-return':
+        _i113.AsyncOrIterableReturnTarget(),
+    '/return-types/async-or-iterable-return-nullable':
         _i114.AsyncOrIterableReturnNullableTarget(),
-    '/return_types/asyncOrListReturn': _i115.AsyncOrListReturnTarget(),
-    '/return_types/asyncOrListReturnNullable':
+    '/return-types/async-or-list-return': _i115.AsyncOrListReturnTarget(),
+    '/return-types/async-or-list-return-nullable':
         _i116.AsyncOrListReturnNullableTarget(),
-    '/return_types/asyncOrMapReturn': _i117.AsyncOrMapReturnTarget(),
-    '/return_types/asyncOrMapReturnNullable':
+    '/return-types/async-or-map-return': _i117.AsyncOrMapReturnTarget(),
+    '/return-types/async-or-map-return-nullable':
         _i118.AsyncOrMapReturnNullableTarget(),
-    '/return_types/asyncOrSimpleClassReturnNullable':
+    '/return-types/async-or-simple-class-return-nullable':
         _i119.AsyncOrSimpleClassReturnNullableTarget(),
-    '/return_types/asyncOrStringReturn': _i120.AsyncOrStringReturnTarget(),
-    '/return_types/asyncOrStringReturnNullable':
+    '/return-types/async-or-string-return': _i120.AsyncOrStringReturnTarget(),
+    '/return-types/async-or-string-return-nullable':
         _i121.AsyncOrStringReturnNullableTarget(),
-    '/return_types/asyncOrStructReturn': _i122.AsyncOrStructReturnTarget(),
-    '/return_types/asyncOrStructReturnNullable':
+    '/return-types/async-or-struct-return': _i122.AsyncOrStructReturnTarget(),
+    '/return-types/async-or-struct-return-nullable':
         _i123.AsyncOrStructReturnNullableTarget(),
-    '/return_types/asyncOrVoidReturn': _i124.AsyncOrVoidReturnTarget(),
-    '/return_types/asyncOrVoidReturnNullable':
+    '/return-types/async-or-void-return': _i124.AsyncOrVoidReturnTarget(),
+    '/return-types/async-or-void-return-nullable':
         _i125.AsyncOrVoidReturnNullableTarget(),
-    '/return_types/asyncStringReturn': _i126.AsyncStringReturnTarget(),
-    '/return_types/asyncStructReturn': _i127.AsyncStructReturnTarget(),
-    '/return_types/asyncStructReturnNullable':
+    '/return-types/async-string-return': _i126.AsyncStringReturnTarget(),
+    '/return-types/async-struct-return': _i127.AsyncStructReturnTarget(),
+    '/return-types/async-struct-return-nullable':
         _i128.AsyncStructReturnNullableTarget(),
-    '/return_types/asyncVoidReturn': _i129.AsyncVoidReturnTarget(),
-    '/return_types/boolReturn': _i130.BoolReturnTarget(),
-    '/return_types/boolReturnNullable': _i131.BoolReturnNullableTarget(),
-    '/return_types/complexClassReturn': _i132.ComplexClassReturnTarget(),
-    '/return_types/complexClassReturnNullable':
+    '/return-types/async-void-return': _i129.AsyncVoidReturnTarget(),
+    '/return-types/bool-return': _i130.BoolReturnTarget(),
+    '/return-types/bool-return-nullable': _i131.BoolReturnNullableTarget(),
+    '/return-types/complex-class-return': _i132.ComplexClassReturnTarget(),
+    '/return-types/complex-class-return-nullable':
         _i133.ComplexClassReturnNullableTarget(),
-    '/return_types/complexReturn': _i134.ComplexReturnTarget(),
-    '/return_types/complexReturnNullable': _i135.ComplexReturnNullableTarget(),
-    '/return_types/doubleReturn': _i136.DoubleReturnTarget(),
-    '/return_types/doubleReturnNullable': _i137.DoubleReturnNullableTarget(),
-    '/return_types/intReturn': _i138.IntReturnTarget(),
-    '/return_types/intReturnNullable': _i139.IntReturnNullableTarget(),
-    '/return_types/iterableReturn': _i140.IterableReturnTarget(),
-    '/return_types/iterableReturnNullable':
+    '/return-types/complex-return': _i134.ComplexReturnTarget(),
+    '/return-types/complex-return-nullable':
+        _i135.ComplexReturnNullableTarget(),
+    '/return-types/double-return': _i136.DoubleReturnTarget(),
+    '/return-types/double-return-nullable': _i137.DoubleReturnNullableTarget(),
+    '/return-types/int-return': _i138.IntReturnTarget(),
+    '/return-types/int-return-nullable': _i139.IntReturnNullableTarget(),
+    '/return-types/iterable-return': _i140.IterableReturnTarget(),
+    '/return-types/iterable-return-nullable':
         _i141.IterableReturnNullableTarget(),
-    '/return_types/listReturn': _i142.ListReturnTarget(),
-    '/return_types/listReturnNullable': _i143.ListReturnNullableTarget(),
-    '/return_types/mapReturn': _i144.MapReturnTarget(),
-    '/return_types/mapReturnNullable': _i145.MapReturnNullableTarget(),
-    '/return_types/simpleClassReturn': _i146.SimpleClassReturnTarget(),
-    '/return_types/simpleClassReturnNullable':
+    '/return-types/list-return': _i142.ListReturnTarget(),
+    '/return-types/list-return-nullable': _i143.ListReturnNullableTarget(),
+    '/return-types/map-return': _i144.MapReturnTarget(),
+    '/return-types/map-return-nullable': _i145.MapReturnNullableTarget(),
+    '/return-types/simple-class-return': _i146.SimpleClassReturnTarget(),
+    '/return-types/simple-class-return-nullable':
         _i147.SimpleClassReturnNullableTarget(),
-    '/return_types/stringReturn': _i148.StringReturnTarget(),
-    '/return_types/stringReturnNullable': _i149.StringReturnNullableTarget(),
-    '/return_types/structReturn': _i150.StructReturnTarget(),
-    '/return_types/structReturnNullable': _i151.StructReturnNullableTarget(),
-    '/return_types/voidReturn': _i152.VoidReturnTarget(),
-    '/sealed_classes/area': _i153.AreaTarget(),
-    '/sealed_classes/circle': _i154.CircleTarget(),
-    '/sealed_classes/circleWithOverriddenCustomJson':
+    '/return-types/string-return': _i148.StringReturnTarget(),
+    '/return-types/string-return-nullable': _i149.StringReturnNullableTarget(),
+    '/return-types/struct-return': _i150.StructReturnTarget(),
+    '/return-types/struct-return-nullable': _i151.StructReturnNullableTarget(),
+    '/return-types/void-return': _i152.VoidReturnTarget(),
+    '/sealed-classes/area': _i153.AreaTarget(),
+    '/sealed-classes/circle': _i154.CircleTarget(),
+    '/sealed-classes/circle-with-overridden-custom-json':
         _i155.CircleWithOverriddenCustomJsonTarget(),
-    '/sealed_classes/rectangle': _i156.RectangleTarget(),
-    '/sealed_classes/rectangleWithOverriddenCustomJson':
+    '/sealed-classes/rectangle': _i156.RectangleTarget(),
+    '/sealed-classes/rectangle-with-overridden-custom-json':
         _i157.RectangleWithOverriddenCustomJsonTarget(),
-    '/sealed_classes/sealedClass': _i158.SealedClassTarget(),
-    '/sealed_classes/sealedClassWithCustomJson':
+    '/sealed-classes/sealed-class': _i158.SealedClassTarget(),
+    '/sealed-classes/sealed-class-with-custom-json':
         _i159.SealedClassWithCustomJsonTarget(),
-    '/sealed_classes/sealedClassWithInheritedCustomJson':
+    '/sealed-classes/sealed-class-with-inherited-custom-json':
         _i160.SealedClassWithInheritedCustomJsonTarget(),
-    '/sealed_classes/sealedClassWithOverriddenCustomJson':
+    '/sealed-classes/sealed-class-with-overridden-custom-json':
         _i161.SealedClassWithOverriddenCustomJsonTarget(),
   });
 }

@@ -8,6 +8,8 @@ abstract final class ClientPaths {
       p.join(projectPaths.clientOutputsDir, 'client.dart');
   static String get functions =>
       p.join(projectPaths.clientOutputsDir, 'functions.dart');
+  static String get serializers =>
+      p.join(projectPaths.clientOutputsDir, 'serializers.dart');
 }
 
 final class ClientTypes {

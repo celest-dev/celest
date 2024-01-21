@@ -1,5 +1,6 @@
 import 'package:celest_cli/ast/ast.dart' as ast;
-import 'package:celest_cli/codegen/client/categories/functions_generator.dart';
+import 'package:celest_cli/codegen/client/categories/client_functions_generator.dart';
+import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:code_builder/code_builder.dart';
@@ -51,9 +52,12 @@ final class ClientGenerator {
 
     final clientInitBody = BlockBuilder();
 
+    var customSerializers = <Class>{};
+    var anonymousRecordTypes = <String, RecordType>{};
+
     final apis = project.apis.values;
     if (apis.isNotEmpty) {
-      final functionsGenerator = FunctionsGenerator(
+      final functionsGenerator = ClientFunctionsGenerator(
         apis: apis.toList(),
         apiOutputs: projectOutputs.apis.asMap(),
       );
@@ -66,6 +70,24 @@ final class ClientGenerator {
             ..assignment = ClientTypes.functionsClass.ref.newInstance([]).code,
         ),
       );
+      customSerializers = functionsGenerator.customSerializers;
+      anonymousRecordTypes = functionsGenerator.anonymousRecordTypes;
+    }
+
+    if (customSerializers.isNotEmpty) {
+      final clientSerializers = ClientSerializersGenerator(
+        customSerializers: customSerializers,
+        anonymousRecordTypes: anonymousRecordTypes,
+      );
+      libraries[ClientPaths.serializers] = clientSerializers.generate();
+
+      for (final serializer in customSerializers) {
+        clientInitBody.addExpression(
+          DartTypes.celest.serializers.property('scoped').property('put').call([
+            refer(serializer.name, ClientPaths.serializers).constInstance([]),
+          ]),
+        );
+      }
     }
 
     // Add client methods

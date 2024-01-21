@@ -11,7 +11,7 @@ final class ProjectPaths {
   }) : outputsDir =
             outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path {
     this.clientOutputsDir =
-        clientOutputsDir ?? p.join(this.outputsDir, 'client');
+        clientOutputsDir ?? p.join(appRoot, 'lib', 'celest');
   }
 
   final String projectRoot;

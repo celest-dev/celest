@@ -74,7 +74,8 @@ class CelestFunctionsAnonymousApi {
       Uri.parse('http://localhost:7777/anonymous-api/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<String> sayHello() async {
@@ -82,7 +83,8 @@ class CelestFunctionsAnonymousApi {
       Uri.parse('http://localhost:7777/anonymous-api/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -92,7 +94,8 @@ class CelestFunctionsAnonymousFunction {
       Uri.parse('http://localhost:7777/anonymous-function/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<String> sayHelloAuthenticated() async {
@@ -101,7 +104,8 @@ class CelestFunctionsAnonymousFunction {
           'http://localhost:7777/anonymous-function/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -112,7 +116,8 @@ class CelestFunctionsApiAuthConstantVariables {
           'http://localhost:7777/api-auth-constant-variables/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<String> sayHello() async {
@@ -120,7 +125,8 @@ class CelestFunctionsApiAuthConstantVariables {
       Uri.parse('http://localhost:7777/api-auth-constant-variables/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -131,7 +137,8 @@ class CelestFunctionsAuthenticatedApi {
           'http://localhost:7777/authenticated-api/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<String> sayGoodbyeAuthenticated() async {
@@ -140,7 +147,8 @@ class CelestFunctionsAuthenticatedApi {
           'http://localhost:7777/authenticated-api/say-goodbye-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -151,7 +159,8 @@ class CelestFunctionsAuthenticatedFunction {
           'http://localhost:7777/authenticated-function/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<String> sayHello() async {
@@ -159,7 +168,8 @@ class CelestFunctionsAuthenticatedFunction {
       Uri.parse('http://localhost:7777/authenticated-function/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -173,8 +183,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Empty>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Empty>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Empty>($body['response']);
   }
 
   Future<_i3.Empty> asyncEmpty(_i3.Empty value) async {
@@ -184,8 +194,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Empty>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Empty>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Empty>($body['response']);
   }
 
   Future<_i3.Fields> fields(_i3.Fields value) async {
@@ -195,8 +205,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Fields>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Fields>($body['response']);
   }
 
   Future<_i3.Fields> asyncFields(_i3.Fields value) async {
@@ -206,8 +216,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Fields>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Fields>($body['response']);
   }
 
   Future<_i3.Fields?> nullableFields(_i3.Fields? value) async {
@@ -217,8 +227,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields?>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Fields?>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Fields?>($body['response']);
   }
 
   Future<_i3.Fields?> asyncNullableFields(_i3.Fields? value) async {
@@ -228,8 +238,8 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields?>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i3.Fields?>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i3.Fields?>($body['response']);
   }
 
   Future<_i3.NamedFields> namedFields(_i3.NamedFields value) async {
@@ -239,8 +249,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NamedFields>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NamedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NamedFields>($body['response']);
   }
 
   Future<_i3.NamedFields> asyncNamedFields(_i3.NamedFields value) async {
@@ -250,8 +261,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NamedFields>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NamedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NamedFields>($body['response']);
   }
 
   Future<_i3.MixedFields> mixedFields(_i3.MixedFields value) async {
@@ -261,8 +273,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.MixedFields>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.MixedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.MixedFields>($body['response']);
   }
 
   Future<_i3.MixedFields> asyncMixedFields(_i3.MixedFields value) async {
@@ -272,8 +285,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.MixedFields>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.MixedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.MixedFields>($body['response']);
   }
 
   Future<_i3.DefaultValues> defaultValues(_i3.DefaultValues value) async {
@@ -284,8 +298,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.DefaultValues>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.DefaultValues>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.DefaultValues>($body['response']);
   }
 
   Future<_i3.DefaultValues> asyncDefaultValues(_i3.DefaultValues value) async {
@@ -296,8 +311,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.DefaultValues>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.DefaultValues>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.DefaultValues>($body['response']);
   }
 
   Future<_i3.NestedClass> nestedClass(_i3.NestedClass value) async {
@@ -307,8 +323,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NestedClass>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NestedClass>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NestedClass>($body['response']);
   }
 
   Future<_i3.NestedClass> asyncNestedClass(_i3.NestedClass value) async {
@@ -318,8 +335,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NestedClass>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NestedClass>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NestedClass>($body['response']);
   }
 
   Future<_i3.OnlyFromJson> onlyFromJson(_i3.OnlyFromJson value) async {
@@ -330,8 +348,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.OnlyFromJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.OnlyFromJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.OnlyFromJson>($body['response']);
   }
 
   Future<_i3.OnlyFromJson> asyncOnlyFromJson(_i3.OnlyFromJson value) async {
@@ -342,8 +361,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.OnlyFromJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.OnlyFromJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.OnlyFromJson>($body['response']);
   }
 
   Future<_i3.OnlyToJson> onlyToJson(_i3.OnlyToJson value) async {
@@ -353,8 +373,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.OnlyToJson>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.OnlyToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.OnlyToJson>($body['response']);
   }
 
   Future<_i3.OnlyToJson> asyncOnlyToJson(_i3.OnlyToJson value) async {
@@ -364,8 +385,9 @@ class CelestFunctionsClasses {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.OnlyToJson>(value)}),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.OnlyToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.OnlyToJson>($body['response']);
   }
 
   Future<_i3.OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
@@ -378,8 +400,9 @@ class CelestFunctionsClasses {
             _i4.Serializers.scoped.serialize<_i3.OnlyToJsonWithDefaults>(value)
       }),
     );
-    return _i4.Serializers.scoped.deserialize<_i3.OnlyToJsonWithDefaults>(
-        _i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped
+        .deserialize<_i3.OnlyToJsonWithDefaults>($body['response']);
   }
 
   Future<_i3.OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
@@ -393,8 +416,9 @@ class CelestFunctionsClasses {
             _i4.Serializers.scoped.serialize<_i3.OnlyToJsonWithDefaults>(value)
       }),
     );
-    return _i4.Serializers.scoped.deserialize<_i3.OnlyToJsonWithDefaults>(
-        _i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped
+        .deserialize<_i3.OnlyToJsonWithDefaults>($body['response']);
   }
 
   Future<_i3.FromJsonAndToJson> fromAndToJson(
@@ -406,8 +430,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.FromJsonAndToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.FromJsonAndToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.FromJsonAndToJson>($body['response']);
   }
 
   Future<_i3.FromJsonAndToJson> asyncFromAndToJson(
@@ -419,8 +444,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.FromJsonAndToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.FromJsonAndToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.FromJsonAndToJson>($body['response']);
   }
 
   Future<_i3.NonMapToJson> nonMapToJson(_i3.NonMapToJson value) async {
@@ -431,8 +457,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.NonMapToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NonMapToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NonMapToJson>($body['response']);
   }
 
   Future<_i3.NonMapToJson> asyncNonMapToJson(_i3.NonMapToJson value) async {
@@ -443,8 +470,9 @@ class CelestFunctionsClasses {
         r'value': _i4.Serializers.scoped.serialize<_i3.NonMapToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NonMapToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NonMapToJson>($body['response']);
   }
 
   Future<_i3.NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
@@ -457,8 +485,9 @@ class CelestFunctionsClasses {
             .serialize<_i3.NonMapToJsonWithDefaults>(value)
       }),
     );
-    return _i4.Serializers.scoped.deserialize<_i3.NonMapToJsonWithDefaults>(
-        _i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped
+        .deserialize<_i3.NonMapToJsonWithDefaults>($body['response']);
   }
 
   Future<_i3.NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
@@ -472,8 +501,9 @@ class CelestFunctionsClasses {
             .serialize<_i3.NonMapToJsonWithDefaults>(value)
       }),
     );
-    return _i4.Serializers.scoped.deserialize<_i3.NonMapToJsonWithDefaults>(
-        _i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped
+        .deserialize<_i3.NonMapToJsonWithDefaults>($body['response']);
   }
 
   Future<_i3.NonMapFromAndToJson> nonMapFromAndToJson(
@@ -486,8 +516,9 @@ class CelestFunctionsClasses {
             _i4.Serializers.scoped.serialize<_i3.NonMapFromAndToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NonMapFromAndToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NonMapFromAndToJson>($body['response']);
   }
 
   Future<_i3.NonMapFromAndToJson> asyncNonMapFromAndToJson(
@@ -500,8 +531,9 @@ class CelestFunctionsClasses {
             _i4.Serializers.scoped.serialize<_i3.NonMapFromAndToJson>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i3.NonMapFromAndToJson>(_i2.jsonDecode($response.body));
+        .deserialize<_i3.NonMapFromAndToJson>($body['response']);
   }
 }
 
@@ -513,8 +545,8 @@ class CelestFunctionsCycles {
       Uri.parse('http://localhost:7777/cycles/create-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i5.Node>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i5.Node>($body['response']);
   }
 
   Future<void> printTree(_i5.Node node) async {
@@ -545,8 +577,8 @@ class CelestFunctionsCycles {
             .toList(),
       }),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i5.Node>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i5.Node>($body['response']);
   }
 
   /// Tests that self-referencing is allowed when there is a level
@@ -561,8 +593,9 @@ class CelestFunctionsCycles {
             .serialize<_i5.SelfReferencing>(selfReferencing)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i5.SelfReferencing>(_i2.jsonDecode($response.body));
+        .deserialize<_i5.SelfReferencing>($body['response']);
   }
 }
 
@@ -648,8 +681,9 @@ class CelestFunctionsGenericWrappers {
         r'value': _i4.Serializers.scoped.serialize<_i7.GenericWrappers>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i7.GenericWrappers>(_i2.jsonDecode($response.body));
+        .deserialize<_i7.GenericWrappers>($body['response']);
   }
 
   Future<_i7.GenericWrappers> genericWrappersAsync(
@@ -662,8 +696,9 @@ class CelestFunctionsGenericWrappers {
         r'value': _i4.Serializers.scoped.serialize<_i7.GenericWrappers>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i7.GenericWrappers>(_i2.jsonDecode($response.body));
+        .deserialize<_i7.GenericWrappers>($body['response']);
   }
 
   Future<_i7.GenericWrappers> genericWrapperParameters({
@@ -726,8 +761,9 @@ class CelestFunctionsGenericWrappers {
                 mapOfMapOfSimpleClass),
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i7.GenericWrappers>(_i2.jsonDecode($response.body));
+        .deserialize<_i7.GenericWrappers>($body['response']);
   }
 }
 
@@ -1380,7 +1416,8 @@ class CelestFunctionsMiddleware {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({r'name': name}),
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 }
 
@@ -2130,9 +2167,9 @@ class CelestFunctionsRecords {
             .serialize<({String anotherField, String field})>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<({String anotherField, String field})>(
-            _i2.jsonDecode($response.body));
+        .deserialize<({String anotherField, String field})>($body['response']);
   }
 
   Future<({String anotherField, String field})> asyncNonAliasedNamedFields(
@@ -2145,9 +2182,9 @@ class CelestFunctionsRecords {
             .serialize<({String anotherField, String field})>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<({String anotherField, String field})>(
-            _i2.jsonDecode($response.body));
+        .deserialize<({String anotherField, String field})>($body['response']);
   }
 
   Future<_i13.NamedFields> aliasedNamedFields(
@@ -2159,8 +2196,9 @@ class CelestFunctionsRecords {
         r'value': _i4.Serializers.scoped.serialize<_i13.NamedFields>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i13.NamedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i13.NamedFields>($body['response']);
   }
 
   Future<_i13.NamedFields> asyncAliasedNamedFields(
@@ -2172,8 +2210,9 @@ class CelestFunctionsRecords {
         r'value': _i4.Serializers.scoped.serialize<_i13.NamedFields>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i13.NamedFields>(_i2.jsonDecode($response.body));
+        .deserialize<_i13.NamedFields>($body['response']);
   }
 
   Future<
@@ -2193,11 +2232,12 @@ class CelestFunctionsRecords {
         r'aliased': _i4.Serializers.scoped.serialize<_i13.NamedFields>(aliased),
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped.deserialize<
         ({
           _i13.NamedFields aliased,
           ({String anotherField, String field}) nonAliased
-        })>(_i2.jsonDecode($response.body));
+        })>($body['response']);
   }
 
   Future<
@@ -2217,11 +2257,12 @@ class CelestFunctionsRecords {
         r'aliased': _i4.Serializers.scoped.serialize<_i13.NamedFields>(aliased),
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped.deserialize<
         ({
           _i13.NamedFields aliased,
           ({String anotherField, String field}) nonAliased
-        })>(_i2.jsonDecode($response.body));
+        })>($body['response']);
   }
 
   Future<_i13.Nested> nested(_i13.Nested value) async {
@@ -2231,8 +2272,8 @@ class CelestFunctionsRecords {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i13.Nested>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i13.Nested>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i13.Nested>($body['response']);
   }
 
   Future<_i13.Nested> asyncNested(_i13.Nested value) async {
@@ -2242,8 +2283,8 @@ class CelestFunctionsRecords {
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i13.Nested>(value)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i13.Nested>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i13.Nested>($body['response']);
   }
 
   Future<_i13.NullableNested?> nullableNested(
@@ -2255,8 +2296,9 @@ class CelestFunctionsRecords {
         r'value': _i4.Serializers.scoped.serialize<_i13.NullableNested?>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i13.NullableNested?>(_i2.jsonDecode($response.body));
+        .deserialize<_i13.NullableNested?>($body['response']);
   }
 
   Future<_i13.NullableNested?> asyncNullableNested(
@@ -2268,8 +2310,9 @@ class CelestFunctionsRecords {
         r'value': _i4.Serializers.scoped.serialize<_i13.NullableNested?>(value)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i13.NullableNested?>(_i2.jsonDecode($response.body));
+        .deserialize<_i13.NullableNested?>($body['response']);
   }
 }
 
@@ -2288,7 +2331,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<int> asyncIntReturn() async {
@@ -2296,7 +2340,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toInt();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> asyncDoubleReturn() async {
@@ -2304,7 +2349,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> asyncBoolReturn() async {
@@ -2312,7 +2358,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as bool);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> asyncIterableReturn() async {
@@ -2320,7 +2367,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2330,7 +2378,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2340,7 +2389,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Map<String, Object?>).map((
       key,
       value,
     ) =>
@@ -2355,8 +2405,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct>($body['response']);
   }
 
   Future<_i11.SimpleStruct?> asyncStructReturnNullable() async {
@@ -2365,8 +2416,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct?>($body['response']);
   }
 
   Future<_i11.ComplexStruct> asyncComplexStructReturn() async {
@@ -2375,8 +2427,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct>($body['response']);
   }
 
   Future<_i11.ComplexStruct?> asyncComplexStructReturnNullable() async {
@@ -2385,8 +2438,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct?>($body['response']);
   }
 
   Future<_i11.ComplexClass> asyncComplexClassReturn() async {
@@ -2395,8 +2449,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexClass>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexClass>($body['response']);
   }
 
   Future<_i11.SimpleClass?> asyncClassReturnNullable() async {
@@ -2405,8 +2460,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleClass?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleClass?>($body['response']);
   }
 
   Future<void> asyncOrVoidReturn() async {
@@ -2422,7 +2478,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<int> asyncOrIntReturn() async {
@@ -2430,7 +2487,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toInt();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> asyncOrDoubleReturn() async {
@@ -2438,7 +2496,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> asyncOrBoolReturn() async {
@@ -2446,7 +2505,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as bool);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> asyncOrIterableReturn() async {
@@ -2454,7 +2514,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2464,7 +2525,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2474,7 +2536,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Map<String, Object?>).map((
       key,
       value,
     ) =>
@@ -2489,8 +2552,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/async-or-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct>($body['response']);
   }
 
   Future<_i11.ComplexStruct> asyncOrComplexStructReturn() async {
@@ -2499,8 +2563,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct>($body['response']);
   }
 
   Future<void> asyncOrVoidReturnNullable() async {
@@ -2518,7 +2583,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String?);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String?);
   }
 
   Future<int?> asyncOrIntReturnNullable() async {
@@ -2527,7 +2593,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num?)?.toInt();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num?)?.toInt();
   }
 
   Future<double?> asyncOrDoubleReturnNullable() async {
@@ -2536,7 +2603,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num?)?.toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num?)?.toDouble();
   }
 
   Future<bool?> asyncOrBoolReturnNullable() async {
@@ -2545,7 +2613,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as bool?);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as bool?);
   }
 
   Future<Iterable<String>?> asyncOrIterableReturnNullable() async {
@@ -2554,7 +2623,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>?)
         ?.map((el) => (el as String))
         .toList();
   }
@@ -2565,7 +2635,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>?)
         ?.map((el) => (el as String))
         .toList();
   }
@@ -2576,7 +2647,8 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Map<String, Object?>?)?.map((
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Map<String, Object?>?)?.map((
       key,
       value,
     ) =>
@@ -2592,8 +2664,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct?>($body['response']);
   }
 
   Future<_i11.ComplexStruct?> asyncOrComplexStructReturnNullable() async {
@@ -2602,8 +2675,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct?>($body['response']);
   }
 
   Future<_i11.SimpleClass?> asyncOrSimpleClassReturnNullable() async {
@@ -2612,8 +2686,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleClass?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleClass?>($body['response']);
   }
 
   Future<_i11.ComplexClass?> asyncOrComplexClassReturnNullable() async {
@@ -2622,8 +2697,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/async-or-complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexClass?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexClass?>($body['response']);
   }
 
   Future<void> voidReturn() async {
@@ -2639,7 +2715,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String);
   }
 
   Future<int> intReturn() async {
@@ -2647,7 +2724,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toInt();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> doubleReturn() async {
@@ -2655,7 +2733,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num).toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> boolReturn() async {
@@ -2663,7 +2742,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as bool);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> iterableReturn() async {
@@ -2671,7 +2751,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2681,7 +2762,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => (el as String))
         .toList();
   }
@@ -2691,7 +2773,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Map<String, Object?>).map((
       key,
       value,
     ) =>
@@ -2706,8 +2789,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct>($body['response']);
   }
 
   Future<_i11.ComplexStruct> complexReturn() async {
@@ -2715,8 +2799,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/complex-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct>($body['response']);
   }
 
   Future<_i11.SimpleClass> simpleClassReturn() async {
@@ -2724,8 +2809,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/simple-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleClass>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleClass>($body['response']);
   }
 
   Future<_i11.ComplexClass> complexClassReturn() async {
@@ -2733,8 +2819,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexClass>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexClass>($body['response']);
   }
 
   Future<String?> stringReturnNullable() async {
@@ -2742,7 +2829,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as String?);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as String?);
   }
 
   Future<int?> intReturnNullable() async {
@@ -2750,7 +2838,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num?)?.toInt();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num?)?.toInt();
   }
 
   Future<double?> doubleReturnNullable() async {
@@ -2758,7 +2847,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as num?)?.toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num?)?.toDouble();
   }
 
   Future<bool?> boolReturnNullable() async {
@@ -2766,7 +2856,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as bool?);
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as bool?);
   }
 
   Future<Iterable<String>?> iterableReturnNullable() async {
@@ -2774,7 +2865,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>?)
         ?.map((el) => (el as String))
         .toList();
   }
@@ -2784,7 +2876,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>?)
         ?.map((el) => (el as String))
         .toList();
   }
@@ -2794,7 +2887,8 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    return (_i2.jsonDecode($response.body) as Map<String, Object?>?)?.map((
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Map<String, Object?>?)?.map((
       key,
       value,
     ) =>
@@ -2809,8 +2903,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleStruct?>($body['response']);
   }
 
   Future<_i11.ComplexStruct?> complexReturnNullable() async {
@@ -2818,8 +2913,9 @@ class CelestFunctionsReturnTypes {
       Uri.parse('http://localhost:7777/return-types/complex-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexStruct?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexStruct?>($body['response']);
   }
 
   Future<_i11.SimpleClass?> simpleClassReturnNullable() async {
@@ -2828,8 +2924,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.SimpleClass?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.SimpleClass?>($body['response']);
   }
 
   Future<_i11.ComplexClass?> complexClassReturnNullable() async {
@@ -2838,8 +2935,9 @@ class CelestFunctionsReturnTypes {
           'http://localhost:7777/return-types/complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i11.ComplexClass?>(_i2.jsonDecode($response.body));
+        .deserialize<_i11.ComplexClass?>($body['response']);
   }
 }
 
@@ -2851,7 +2949,8 @@ class CelestFunctionsSealedClasses {
       body: _i2.jsonEncode(
           {r'shape': _i4.Serializers.scoped.serialize<_i14.Shape>(shape)}),
     );
-    return (_i2.jsonDecode($response.body) as num).toDouble();
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as num).toDouble();
   }
 
   Future<List<_i14.Shape>> sealedClass(
@@ -2865,7 +2964,8 @@ class CelestFunctionsSealedClasses {
             .toList()
       }),
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => _i4.Serializers.scoped.deserialize<_i14.Shape>(el))
         .toList();
   }
@@ -2879,8 +2979,9 @@ class CelestFunctionsSealedClasses {
             _i4.Serializers.scoped.serialize<_i14.Rectangle>(rectangle)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i14.Rectangle>(_i2.jsonDecode($response.body));
+        .deserialize<_i14.Rectangle>($body['response']);
   }
 
   Future<_i14.Circle> circle(_i14.Circle circle) async {
@@ -2890,8 +2991,8 @@ class CelestFunctionsSealedClasses {
       body: _i2.jsonEncode(
           {r'circle': _i4.Serializers.scoped.serialize<_i14.Circle>(circle)}),
     );
-    return _i4.Serializers.scoped
-        .deserialize<_i14.Circle>(_i2.jsonDecode($response.body));
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return _i4.Serializers.scoped.deserialize<_i14.Circle>($body['response']);
   }
 
   Future<List<_i14.ShapeWithInheritedCustomJson>>
@@ -2908,7 +3009,8 @@ class CelestFunctionsSealedClasses {
             .toList()
       }),
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => _i4.Serializers.scoped
             .deserialize<_i14.ShapeWithInheritedCustomJson>(el))
         .toList();
@@ -2927,7 +3029,8 @@ class CelestFunctionsSealedClasses {
             .toList()
       }),
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) =>
             _i4.Serializers.scoped.deserialize<_i14.ShapeWithCustomJson>(el))
         .toList();
@@ -2954,7 +3057,8 @@ class CelestFunctionsSealedClasses {
             .toList(),
       }),
     );
-    return (_i2.jsonDecode($response.body) as Iterable<Object?>)
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
+    return ($body['response'] as Iterable<Object?>)
         .map((el) => _i4.Serializers.scoped
             .deserialize<_i14.ShapeWithOverriddenCustomJson>(el))
         .toList();
@@ -2971,9 +3075,9 @@ class CelestFunctionsSealedClasses {
             .serialize<_i14.RectangleWithOverriddenCustomJson>(rectangle)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i14.ShapeWithOverriddenCustomJson>(
-            _i2.jsonDecode($response.body));
+        .deserialize<_i14.ShapeWithOverriddenCustomJson>($body['response']);
   }
 
   Future<_i14.CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
@@ -2987,8 +3091,8 @@ class CelestFunctionsSealedClasses {
             .serialize<_i14.ShapeWithOverriddenCustomJson>(circle)
       }),
     );
+    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
     return _i4.Serializers.scoped
-        .deserialize<_i14.CircleWithOverriddenCustomJson>(
-            _i2.jsonDecode($response.body));
+        .deserialize<_i14.CircleWithOverriddenCustomJson>($body['response']);
   }
 }
