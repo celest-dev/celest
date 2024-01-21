@@ -76,7 +76,7 @@ final class _Pubspec extends ProjectFile {
     await file.create(recursive: true);
     final pubspec = Pubspec(
       '${projectName}_celest',
-      description: 'The Celest backend for $projectName',
+      description: 'The Celest backend for $projectName.',
       publishTo: 'none',
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
@@ -108,14 +108,14 @@ final class _HelloProject extends ProjectTemplate {
 import 'package:celest/celest.dart';
 
 const project = Project(
-  name: 'hello',
+  name: '$projectName',
 );
 ''',
       ),
       _createFile(
         p.join(projectPaths.apisDir, 'greeting.dart'),
         r'''
-// Cloud functions are top-level Dart functions defined in the `functions/` 
+// Cloud functions are top-level Dart functions defined in the `functions/`
 // folder of your Celest project.
 
 /// Says hello to a person called [name].
