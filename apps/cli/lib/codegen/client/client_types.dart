@@ -27,5 +27,5 @@ final class ClientTypes {
   final String name;
   final String uri;
 
-  Reference get ref => refer(name, uri);
+  Reference get ref => refer(name, p.toUri(uri).toString());
 }

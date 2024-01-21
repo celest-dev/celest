@@ -1,7 +1,7 @@
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/codegen/code_outputs.dart';
 
 final class ClientCodeGenerator {
   ClientCodeGenerator({
@@ -10,20 +10,15 @@ final class ClientCodeGenerator {
 
   final ast.Project project;
 
-  Future<void> generate() async {
+  CodeOutputs generate() {
     final generator = ClientGenerator(project: project);
-    final outputs = generator.generate();
-    final outputFutures = <Future<void>>[];
-    outputs.forEach((path, library) {
-      final code = CodeGenerator.emit(library, forFile: path);
-      outputFutures.add(
-        Future<void>(() async {
-          final file = fileSystem.file(path);
-          await file.create(recursive: true);
-          await file.writeAsString(code);
-        }),
-      );
-    });
-    await Future.wait(outputFutures);
+    return CodeOutputs(
+      generator.generate().map(
+            (path, library) => MapEntry(
+              path,
+              CodeGenerator.emit(library, forFile: path),
+            ),
+          ),
+    );
   }
 }

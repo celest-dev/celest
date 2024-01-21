@@ -6,6 +6,7 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:logging/logging.dart';
 
 /// Static information about the current Celest project.
 final class CelestProject {
@@ -15,11 +16,14 @@ final class CelestProject {
     required this.config,
   }) : _analysisOptions = analysisOptions;
 
+  static final _logger = Logger('CelestProject');
+
   static Future<CelestProject> init({
     required String projectRoot,
     String? outputsDir,
     String? clientOutputsDir,
   }) async {
+    _logger.finest('Loading celest project at root: "$projectRoot"...');
     final projectPaths = ProjectPaths(
       projectRoot,
       outputsDir: outputsDir,
@@ -29,6 +33,9 @@ final class CelestProject {
       CelestConfig.load(),
       AnalysisOptions.load(projectPaths.analysisOptionsYaml),
     ).wait;
+    _logger
+      ..finest('Loaded analysis options: $analysisOptions')
+      ..finest('Loaded Celest config: $config');
     final project = CelestProject._(
       projectPaths: projectPaths,
       analysisOptions: analysisOptions,

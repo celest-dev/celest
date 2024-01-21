@@ -7,6 +7,12 @@ import 'package:path/path.dart' as path;
 
 path.Context get p => fileSystem.path;
 
+extension PlatformContext on path.Context {
+  path.Context get url => path.url;
+  path.Context get windows => path.windows;
+  path.Context get posix => path.posix;
+}
+
 Future<ProjectPaths> init({
   required String projectRoot,
   String? outputsDir,

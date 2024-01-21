@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 
 class CelestUninstaller {
@@ -95,37 +94,16 @@ class CelestUninstaller {
           [
             'powershell',
             '-Command',
-            'Get-AppxPackage -Name "$windowsPackageName"',
+            '{ Get-AppxPackage -Name "$windowsPackageName" | Remove-AppxPackage -Confirm:\$false }',
           ],
           stdoutEncoding: utf8,
           stderrEncoding: utf8,
         );
-        final appxPackage = LineSplitter.split(appxPackageInfo.stdout as String)
-            .firstWhereOrNull((line) => line.startsWith('PackageFullName'))
-            ?.split(':')
-            .last
-            .trim();
-        if (appxPackage == null) {
+        if (appxPackageInfo.exitCode != 0) {
           throw StateError(
-            'Could not determine appx full package name for "$windowsPackageName". '
+            'Could not uninstall package "$windowsPackageName". '
             'Stdout: ${appxPackageInfo.stdout}\n'
             'Stderr: ${appxPackageInfo.stderr}',
-          );
-        }
-        final uninstallResult = await processManager.run(
-          [
-            'powershell',
-            '-Command',
-            'Remove-AppxPackage -Package "$appxPackage"',
-          ],
-          stdoutEncoding: utf8,
-          stderrEncoding: utf8,
-        );
-        if (uninstallResult.exitCode != 0) {
-          throw StateError(
-            'Failed to uninstall appx package ($appxPackage). '
-            'Stdout: ${uninstallResult.stdout}\n'
-            'Stderr: ${uninstallResult.stderr}',
           );
         }
       case final unsupported:

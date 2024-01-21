@@ -56,14 +56,12 @@ final class LocalApiRunner implements Closeable {
       env[envVar] = value;
     }
     final client = await FrontendServerClient.start(
-      'org-dartlang-root://$path', // entrypoint
+      p.toUri(path).toString(), // entrypoint
       path.replaceFirst(RegExp(r'.dart$'), '.dill'), // dill
-      Sdk.current.vmPlatformDill,
+      p.toUri(Sdk.current.vmPlatformDill).toString(),
       target: 'vm',
       verbose: verbose,
       packagesJson: projectPaths.packagesConfig,
-      fileSystemRoots: ['/'],
-      fileSystemScheme: 'org-dartlang-root',
       enabledExperiments: celestProject.analysisOptions.enabledExperiments,
       frontendServerPath: Sdk.current.frontendServerAotSnapshot,
       additionalSources: additionalSources,
@@ -173,8 +171,7 @@ final class LocalApiRunner implements Closeable {
   Future<void> hotReload(List<String> pathsToInvalidate) async {
     logger.fine('Hot reloading local API...');
     final result = await _client.compile([
-      for (final path in pathsToInvalidate)
-        Uri.parse('org-dartlang-root://$path'),
+      for (final path in pathsToInvalidate) p.toUri(path),
     ]);
     final dillOutput = _client.expectOutput(result);
     await _vmService.reloadSources(

@@ -1,3 +1,4 @@
+import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
@@ -45,4 +46,9 @@ final class AnalysisOptions {
       enabledExperiments: enabledExperiments.value.cast<String>(),
     );
   }
+
+  @override
+  String toString() => prettyPrintJson({
+        'enabledExperiments': enabledExperiments,
+      });
 }

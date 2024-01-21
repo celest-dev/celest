@@ -44,7 +44,6 @@ void main() {
     for (final testDir in allTests) {
       final projectRoot = testDir.path;
       final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-      // ignore: invalid_use_of_visible_for_testing_member
       TestRunner(
         updateGoldens: updateGoldens,
         projectRoot: projectRoot,
@@ -82,9 +81,10 @@ class TestRunner {
         final res = await Process.start(
           Platform.executable,
           ['pub', 'get'],
+          mode: ProcessStartMode.inheritStdio,
           workingDirectory: projectRoot,
         ).timeout(const Duration(seconds: 10));
-        expect(await res.exitCode, 0, reason: '${res.stderr}');
+        await expectLater(res.exitCode, completion(0));
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
@@ -204,10 +204,17 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final codegen = ClientCodeGenerator(
+      final clientGen = ClientCodeGenerator(
         project: project!,
       );
-      await codegen.generate();
+      final outputs = clientGen.generate();
+      if (updateGoldens) {
+        await outputs.write();
+      } else {
+        outputs.forEach((path, library) {
+          expect(library, equalsIgnoringWhitespace(File(path).readAsStringSync()));
+        });
+      }
     });
   }
 

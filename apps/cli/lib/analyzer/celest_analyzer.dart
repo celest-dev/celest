@@ -27,6 +27,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 final class CelestAnalyzer {
   CelestAnalyzer._();
@@ -111,7 +112,7 @@ final class CelestAnalyzer {
   Future<ast.ProjectBuilder?> _findProject() async {
     _logger.fine('Analyzing project...');
     final projectFilePath = projectPaths.projectDart;
-    if (!fileSystem.file(projectFilePath).existsSync()) {
+    if (!await fileSystem.file(projectFilePath).exists()) {
       _reportError('No project file found at $projectFilePath');
       return null;
     }
@@ -332,12 +333,12 @@ final class CelestAnalyzer {
 
   Future<void> _collectApis() async {
     final apiDir = Directory(projectPaths.apisDir);
-    if (!apiDir.existsSync()) {
+    if (!await apiDir.exists()) {
       return;
     }
 
-    final apiFiles = apiDir
-        .listSync()
+    final apiFiles = await apiDir
+        .list()
         .whereType<File>()
         .map((file) => file.path)
         .where((path) => path.endsWith('.dart'))

@@ -50,7 +50,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
           CodeGenerator.emit(entrypoint, forFile: entrypointFile);
       _targets['/${api.name}/${function.name}'] = refer(
         generator.targetName,
-        entrypointFile,
+        p.toUri(entrypointFile).toString(),
       );
     }
   }

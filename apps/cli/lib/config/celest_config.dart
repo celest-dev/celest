@@ -16,4 +16,7 @@ final class CelestConfig {
   }
 
   final Directory configDir;
+
+  @override
+  String toString() => 'CelestConfig: $configDir';
 }
