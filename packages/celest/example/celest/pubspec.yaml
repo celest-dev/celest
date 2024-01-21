@@ -1,0 +1,15 @@
+name: example_app_celest
+description: The Celest backend for example_app.
+publish_to: none
+
+environment:
+  sdk: ^3.2.0
+
+dependencies:
+  celest: ^0.0.1
+  celest_core: ^0.0.1
+  http: ">=0.13.0 <2.0.0"
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0

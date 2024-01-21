@@ -1,0 +1,5 @@
+.dart_tool/
+.DS_Store
+doc/api/
+**/doc/api/
+pubspec_overrides.yaml
