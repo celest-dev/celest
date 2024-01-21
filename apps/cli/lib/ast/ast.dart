@@ -9,6 +9,8 @@ import 'package:source_span/source_span.dart';
 
 export 'package:source_span/source_span.dart' show FileSpan;
 
+export 'deployed_ast.dart';
+
 part 'ast.g.dart';
 
 @BuiltValue(instantiable: false)

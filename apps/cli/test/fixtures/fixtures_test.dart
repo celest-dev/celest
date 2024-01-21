@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:async/async.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
@@ -14,6 +15,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -204,15 +206,26 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
+      final projectResolver = ProjectResolver();
+      project!.accept(projectResolver);
+      final resolvedProject = projectResolver.resolvedProject;
+
       final clientGen = ClientCodeGenerator(
-        project: project!,
+        project: project,
+        projectOutputs: LocalDeployedProject.from(
+          projectAst: resolvedProject,
+          port: defaultCelestPort,
+        ),
       );
       final outputs = clientGen.generate();
       if (updateGoldens) {
         await outputs.write();
       } else {
         outputs.forEach((path, library) {
-          expect(library, equalsIgnoringWhitespace(File(path).readAsStringSync()));
+          expect(
+            library,
+            equalsIgnoringWhitespace(File(path).readAsStringSync()),
+          );
         });
       }
     });

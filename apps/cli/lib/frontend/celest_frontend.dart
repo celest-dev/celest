@@ -162,9 +162,7 @@ final class CelestFrontend implements Closeable {
             currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
-            final envVars =
-                resolvedProject.envVars.map((envVar) => envVar.name);
-            final port = await _startLocalApi(
+            final projectOutputs = await _startLocalApi(
               [
                 ...generatedOutputs,
                 if (_changedPaths != null)
@@ -174,12 +172,15 @@ final class CelestFrontend implements Closeable {
                     (api) => projectPaths.api(api.name),
                   ),
               ],
-              envVars: envVars,
+              resolvedProject: resolvedProject,
               restartMode: restartMode,
             );
-            await _generateClientCode(project);
+            await _generateClientCode(
+              project: project,
+              projectOutputs: projectOutputs,
+            );
             currentProgress.complete(
-              'Celest is running at http://localhost:$port',
+              'Celest is running at http://localhost:${projectOutputs.port}',
             );
 
             _didFirstCompile = true;
@@ -246,11 +247,12 @@ final class CelestFrontend implements Closeable {
         return projectResolver.resolvedProject;
       });
 
-  Future<int> _startLocalApi(
+  Future<ast.LocalDeployedProject> _startLocalApi(
     List<String> invalidatedPaths, {
-    required Iterable<String> envVars,
+    required ResolvedProject resolvedProject,
     RestartMode restartMode = RestartMode.hotReload,
   }) async {
+    final envVars = resolvedProject.envVars.map((envVar) => envVar.name);
     if (_localApiRunner == null) {
       await performance.trace('LocalApiRunner', 'start', () async {
         _localApiRunner = await LocalApiRunner.start(
@@ -280,14 +282,23 @@ final class CelestFrontend implements Closeable {
     if (stopped) {
       throw const CancellationException('Celest was stopped');
     }
-    return _localApiRunner!.port;
+    return ast.LocalDeployedProject.from(
+      projectAst: resolvedProject,
+      port: _localApiRunner!.port,
+    );
   }
 
-  Future<void> _generateClientCode(ast.Project project) =>
+  Future<void> _generateClientCode({
+    required ast.Project project,
+    required ast.DeployedProject projectOutputs,
+  }) =>
       performance.trace('CelestFrontend', 'generateClientCode', () async {
         logger.fine('Generating client code...');
-        final generator = ClientCodeGenerator(project: project);
-        await generator.generate();
+        final generator = ClientCodeGenerator(
+          project: project,
+          projectOutputs: projectOutputs,
+        );
+        await generator.generate().write();
       });
 
   @override

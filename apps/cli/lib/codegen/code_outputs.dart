@@ -11,7 +11,7 @@ final class CodeOutputs extends DelegatingMap<String, String> {
         Future<void>(() async {
           final file = fileSystem.file(path);
           await file.create(recursive: true);
-          await file.writeAsString(path);
+          await file.writeAsString(library);
         }),
       );
     });

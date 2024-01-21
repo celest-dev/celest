@@ -71,7 +71,7 @@ class CelestFunctions {
 class CelestFunctionsAnonymousApi {
   Future<String> sayHelloAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/anonymous-api/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -79,7 +79,7 @@ class CelestFunctionsAnonymousApi {
 
   Future<String> sayHello() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/anonymous-api/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -89,7 +89,7 @@ class CelestFunctionsAnonymousApi {
 class CelestFunctionsAnonymousFunction {
   Future<String> sayHello() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/anonymous-function/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -97,7 +97,8 @@ class CelestFunctionsAnonymousFunction {
 
   Future<String> sayHelloAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/anonymous-function/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -107,7 +108,8 @@ class CelestFunctionsAnonymousFunction {
 class CelestFunctionsApiAuthConstantVariables {
   Future<String> sayHelloAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/api-auth-constant-variables/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -115,7 +117,7 @@ class CelestFunctionsApiAuthConstantVariables {
 
   Future<String> sayHello() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/api-auth-constant-variables/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -125,7 +127,8 @@ class CelestFunctionsApiAuthConstantVariables {
 class CelestFunctionsAuthenticatedApi {
   Future<String> sayHelloAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/authenticated-api/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -133,7 +136,8 @@ class CelestFunctionsAuthenticatedApi {
 
   Future<String> sayGoodbyeAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/authenticated-api/say-goodbye-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -143,7 +147,8 @@ class CelestFunctionsAuthenticatedApi {
 class CelestFunctionsAuthenticatedFunction {
   Future<String> sayHelloAuthenticated() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/authenticated-function/say-hello-authenticated'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -151,7 +156,7 @@ class CelestFunctionsAuthenticatedFunction {
 
   Future<String> sayHello() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/authenticated-function/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -163,7 +168,7 @@ class CelestFunctionsAuthenticatedFunction {
 class CelestFunctionsClasses {
   Future<_i3.Empty> empty(_i3.Empty value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Empty>(value)}),
@@ -174,7 +179,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.Empty> asyncEmpty(_i3.Empty value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Empty>(value)}),
@@ -185,7 +190,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.Fields> fields(_i3.Fields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields>(value)}),
@@ -196,7 +201,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.Fields> asyncFields(_i3.Fields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields>(value)}),
@@ -207,7 +212,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.Fields?> nullableFields(_i3.Fields? value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields?>(value)}),
@@ -218,7 +223,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.Fields?> asyncNullableFields(_i3.Fields? value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.Fields?>(value)}),
@@ -229,7 +234,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NamedFields> namedFields(_i3.NamedFields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NamedFields>(value)}),
@@ -240,7 +245,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NamedFields> asyncNamedFields(_i3.NamedFields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NamedFields>(value)}),
@@ -251,7 +256,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.MixedFields> mixedFields(_i3.MixedFields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.MixedFields>(value)}),
@@ -262,7 +267,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.MixedFields> asyncMixedFields(_i3.MixedFields value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.MixedFields>(value)}),
@@ -273,7 +278,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.DefaultValues> defaultValues(_i3.DefaultValues value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.DefaultValues>(value)
@@ -285,7 +290,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.DefaultValues> asyncDefaultValues(_i3.DefaultValues value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.DefaultValues>(value)
@@ -297,7 +302,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NestedClass> nestedClass(_i3.NestedClass value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NestedClass>(value)}),
@@ -308,7 +313,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NestedClass> asyncNestedClass(_i3.NestedClass value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.NestedClass>(value)}),
@@ -319,7 +324,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.OnlyFromJson> onlyFromJson(_i3.OnlyFromJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.OnlyFromJson>(value)
@@ -331,7 +336,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.OnlyFromJson> asyncOnlyFromJson(_i3.OnlyFromJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.OnlyFromJson>(value)
@@ -343,7 +348,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.OnlyToJson> onlyToJson(_i3.OnlyToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.OnlyToJson>(value)}),
@@ -354,7 +359,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.OnlyToJson> asyncOnlyToJson(_i3.OnlyToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i3.OnlyToJson>(value)}),
@@ -366,7 +371,7 @@ class CelestFunctionsClasses {
   Future<_i3.OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
       _i3.OnlyToJsonWithDefaults value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value':
@@ -380,7 +385,8 @@ class CelestFunctionsClasses {
   Future<_i3.OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
       _i3.OnlyToJsonWithDefaults value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/classes/async-only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value':
@@ -394,7 +400,7 @@ class CelestFunctionsClasses {
   Future<_i3.FromJsonAndToJson> fromAndToJson(
       _i3.FromJsonAndToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.FromJsonAndToJson>(value)
@@ -407,7 +413,7 @@ class CelestFunctionsClasses {
   Future<_i3.FromJsonAndToJson> asyncFromAndToJson(
       _i3.FromJsonAndToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.FromJsonAndToJson>(value)
@@ -419,7 +425,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NonMapToJson> nonMapToJson(_i3.NonMapToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.NonMapToJson>(value)
@@ -431,7 +437,7 @@ class CelestFunctionsClasses {
 
   Future<_i3.NonMapToJson> asyncNonMapToJson(_i3.NonMapToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i3.NonMapToJson>(value)
@@ -444,7 +450,7 @@ class CelestFunctionsClasses {
   Future<_i3.NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
       _i3.NonMapToJsonWithDefaults value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped
@@ -458,7 +464,8 @@ class CelestFunctionsClasses {
   Future<_i3.NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
       _i3.NonMapToJsonWithDefaults value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/classes/async-non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped
@@ -472,7 +479,7 @@ class CelestFunctionsClasses {
   Future<_i3.NonMapFromAndToJson> nonMapFromAndToJson(
       _i3.NonMapFromAndToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value':
@@ -486,7 +493,7 @@ class CelestFunctionsClasses {
   Future<_i3.NonMapFromAndToJson> asyncNonMapFromAndToJson(
       _i3.NonMapFromAndToJson value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/classes/async-non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value':
@@ -503,7 +510,7 @@ class CelestFunctionsClasses {
 class CelestFunctionsCycles {
   Future<_i5.Node> createTree() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/cycles/create-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -512,7 +519,7 @@ class CelestFunctionsCycles {
 
   Future<void> printTree(_i5.Node node) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/cycles/print-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'node': _i4.Serializers.scoped.serialize<_i5.Node>(node)}),
@@ -527,7 +534,7 @@ class CelestFunctionsCycles {
     List<_i5.Node?> additionalChildren = const [],
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/cycles/combine-trees'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'tree1': _i4.Serializers.scoped.serialize<_i5.Node>(tree1),
@@ -547,7 +554,7 @@ class CelestFunctionsCycles {
   Future<_i5.SelfReferencing> selfReferencing(
       _i5.SelfReferencing selfReferencing) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/cycles/self-referencing'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'selfReferencing': _i4.Serializers.scoped
@@ -563,7 +570,7 @@ class CelestFunctionsExceptions {
   Future<void> throwsException(
       {required _i6.SupportedExceptionType type}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/exceptions/throws-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'type':
@@ -575,7 +582,7 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsError({required _i6.SupportedErrorType type}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/exceptions/throws-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'type': _i4.Serializers.scoped.serialize<_i6.SupportedErrorType>(type)
@@ -586,7 +593,7 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsCustomException() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/exceptions/throws-custom-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -594,7 +601,8 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsCustomExceptionToFromJson() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/exceptions/throws-custom-exception-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -602,7 +610,7 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsCustomError() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/exceptions/throws-custom-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -610,7 +618,8 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsCustomErrorToFromJson() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/exceptions/throws-custom-error-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -618,7 +627,8 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsCustomErrorWithStackTrace() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/exceptions/throws-custom-error-with-stack-trace'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -632,7 +642,7 @@ class CelestFunctionsExceptions {
 class CelestFunctionsGenericWrappers {
   Future<_i7.GenericWrappers> genericWrappers(_i7.GenericWrappers value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/generic-wrappers/generic-wrappers'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i7.GenericWrappers>(value)
@@ -645,7 +655,8 @@ class CelestFunctionsGenericWrappers {
   Future<_i7.GenericWrappers> genericWrappersAsync(
       _i7.GenericWrappers value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/generic-wrappers/generic-wrappers-async'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i7.GenericWrappers>(value)
@@ -675,7 +686,8 @@ class CelestFunctionsGenericWrappers {
         mapOfMapOfSimpleClass,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/generic-wrappers/generic-wrapper-parameters'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'listOfString':
@@ -738,7 +750,7 @@ class CelestFunctionsMetadata {
   /// ```
   Future<void> hasDocComments() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/has-doc-comments'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -747,7 +759,7 @@ class CelestFunctionsMetadata {
   @deprecated
   Future<void> hasDeprecatedAnnotation() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/has-deprecated-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -756,7 +768,8 @@ class CelestFunctionsMetadata {
   @Deprecated('Do not use this function.')
   Future<void> hasConstructedDeprecatedAnnotation() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/has-constructed-deprecated-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -768,7 +781,8 @@ class CelestFunctionsMetadata {
   )
   Future<void> hasNamedConstructedAnnotation() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/has-named-constructed-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -809,7 +823,7 @@ class CelestFunctionsMetadata {
     required String named,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/has-literals-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -824,7 +838,7 @@ class CelestFunctionsMetadata {
     String named = 'named',
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/has-not-exportable-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -839,7 +853,8 @@ class CelestFunctionsMetadata {
     String named = 'named',
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/has-not-exportable-constructed-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -855,7 +870,7 @@ class CelestFunctionsMetadata {
     @_i10.exportable String named = 'named',
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/has-exportable-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -871,7 +886,8 @@ class CelestFunctionsMetadata {
     @_i10.Exportable() String named = 'named',
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/has-exportable-constructed-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -886,7 +902,8 @@ class CelestFunctionsMetadata {
     String named = 'named',
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/has-not-exportable-exportable-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -913,7 +930,7 @@ class CelestFunctionsMetadata {
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/positional-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -952,7 +969,8 @@ class CelestFunctionsMetadata {
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/nullable-positional-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -991,7 +1009,7 @@ class CelestFunctionsMetadata {
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/named-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1030,7 +1048,7 @@ class CelestFunctionsMetadata {
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/nullable-named-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1065,7 +1083,7 @@ class CelestFunctionsMetadata {
     _i10.Serializable serializable = _i10.defaultSerializable,
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/positional-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1100,7 +1118,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable? serializable = _i10.defaultSerializable,
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/nullable-positional-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1135,7 +1154,7 @@ class CelestFunctionsMetadata {
     _i10.Serializable serializable = _i10.defaultSerializable,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/metadata/named-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1170,7 +1189,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable? serializable = _i10.defaultSerializable,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/nullable-named-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1209,7 +1229,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable serializable = const _i10.Serializable.forType('String'),
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/positional-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1248,7 +1269,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable? serializable = const _i10.Serializable.forType('String'),
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/nullable-positional-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1287,7 +1309,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable serializable = const _i10.Serializable.forType('String'),
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/named-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1326,7 +1349,8 @@ class CelestFunctionsMetadata {
     _i10.Serializable? serializable = const _i10.Serializable.forType('String'),
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/metadata/nullable-named-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': value,
@@ -1352,7 +1376,7 @@ class CelestFunctionsMetadata {
 class CelestFunctionsMiddleware {
   Future<String> sayHello(String name) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/middleware/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({r'name': name}),
     );
@@ -1408,7 +1432,7 @@ class CelestFunctionsParameterTypes {
     Map<String, _i12.Uint8List> aMapOfUint8List,
   ) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameter-types/simple'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'aString': aString,
@@ -1592,7 +1616,7 @@ class CelestFunctionsParameterTypes {
     Map<String, _i12.Uint8List>? aMapOfUint8List,
   ) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameter-types/simple-optional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'aString': aString,
@@ -1780,7 +1804,7 @@ class CelestFunctionsParameterTypes {
     Map<String, _i11.ComplexClass?>? aNullableMapOfNullableComplexClass,
   ) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameter-types/complex'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'aSimpleStruct':
@@ -2037,7 +2061,7 @@ class CelestFunctionsParameters {
     int? optionalInt = null,
   ]) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameters/optional-positional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'optionalString': optionalString,
@@ -2052,7 +2076,7 @@ class CelestFunctionsParameters {
     int? namedInt = null,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameters/optional-named'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'namedString': namedString,
@@ -2067,7 +2091,7 @@ class CelestFunctionsParameters {
     int requiredInt,
   ) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameters/required-positional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'requiredString': requiredString,
@@ -2082,7 +2106,7 @@ class CelestFunctionsParameters {
     required int requiredInt,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/parameters/required-named'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'requiredString': requiredString,
@@ -2099,7 +2123,7 @@ class CelestFunctionsRecords {
   Future<({String anotherField, String field})> nonAliasedNamedFields(
       {required ({String anotherField, String field}) value}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/non-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped
@@ -2114,7 +2138,7 @@ class CelestFunctionsRecords {
   Future<({String anotherField, String field})> asyncNonAliasedNamedFields(
       {required ({String anotherField, String field}) value}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/async-non-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped
@@ -2129,7 +2153,7 @@ class CelestFunctionsRecords {
   Future<_i13.NamedFields> aliasedNamedFields(
       {required _i13.NamedFields value}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i13.NamedFields>(value)
@@ -2142,7 +2166,7 @@ class CelestFunctionsRecords {
   Future<_i13.NamedFields> asyncAliasedNamedFields(
       {required _i13.NamedFields value}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/async-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i13.NamedFields>(value)
@@ -2161,7 +2185,7 @@ class CelestFunctionsRecords {
     required _i13.NamedFields aliased,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'nonAliased': _i4.Serializers.scoped
@@ -2185,7 +2209,7 @@ class CelestFunctionsRecords {
     required _i13.NamedFields aliased,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/async-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'nonAliased': _i4.Serializers.scoped
@@ -2202,7 +2226,7 @@ class CelestFunctionsRecords {
 
   Future<_i13.Nested> nested(_i13.Nested value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i13.Nested>(value)}),
@@ -2213,7 +2237,7 @@ class CelestFunctionsRecords {
 
   Future<_i13.Nested> asyncNested(_i13.Nested value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/async-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'value': _i4.Serializers.scoped.serialize<_i13.Nested>(value)}),
@@ -2225,7 +2249,7 @@ class CelestFunctionsRecords {
   Future<_i13.NullableNested?> nullableNested(
       _i13.NullableNested? value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i13.NullableNested?>(value)
@@ -2238,7 +2262,7 @@ class CelestFunctionsRecords {
   Future<_i13.NullableNested?> asyncNullableNested(
       _i13.NullableNested? value) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/records/async-nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'value': _i4.Serializers.scoped.serialize<_i13.NullableNested?>(value)
@@ -2253,7 +2277,7 @@ class CelestFunctionsRecords {
 class CelestFunctionsReturnTypes {
   Future<void> asyncVoidReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -2261,7 +2285,7 @@ class CelestFunctionsReturnTypes {
 
   Future<String> asyncStringReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -2269,7 +2293,7 @@ class CelestFunctionsReturnTypes {
 
   Future<int> asyncIntReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toInt();
@@ -2277,7 +2301,7 @@ class CelestFunctionsReturnTypes {
 
   Future<double> asyncDoubleReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toDouble();
@@ -2285,7 +2309,7 @@ class CelestFunctionsReturnTypes {
 
   Future<bool> asyncBoolReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as bool);
@@ -2293,7 +2317,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Iterable<String>> asyncIterableReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2303,7 +2327,7 @@ class CelestFunctionsReturnTypes {
 
   Future<List<String>> asyncListReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2313,7 +2337,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Map<String, String>> asyncMapReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
@@ -2328,7 +2352,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct> asyncStructReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2337,7 +2361,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct?> asyncStructReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2346,7 +2371,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct> asyncComplexStructReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2355,7 +2381,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct?> asyncComplexStructReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2364,7 +2391,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexClass> asyncComplexClassReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2373,7 +2401,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleClass?> asyncClassReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2382,7 +2411,7 @@ class CelestFunctionsReturnTypes {
 
   Future<void> asyncOrVoidReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -2390,7 +2419,7 @@ class CelestFunctionsReturnTypes {
 
   Future<String> asyncOrStringReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -2398,7 +2427,7 @@ class CelestFunctionsReturnTypes {
 
   Future<int> asyncOrIntReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toInt();
@@ -2406,7 +2435,7 @@ class CelestFunctionsReturnTypes {
 
   Future<double> asyncOrDoubleReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toDouble();
@@ -2414,7 +2443,7 @@ class CelestFunctionsReturnTypes {
 
   Future<bool> asyncOrBoolReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as bool);
@@ -2422,7 +2451,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Iterable<String>> asyncOrIterableReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2432,7 +2461,7 @@ class CelestFunctionsReturnTypes {
 
   Future<List<String>> asyncOrListReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2442,7 +2471,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Map<String, String>> asyncOrMapReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
@@ -2457,7 +2486,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct> asyncOrStructReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/async-or-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2466,7 +2495,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct> asyncOrComplexStructReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2475,7 +2505,8 @@ class CelestFunctionsReturnTypes {
 
   Future<void> asyncOrVoidReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-void-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -2483,7 +2514,8 @@ class CelestFunctionsReturnTypes {
 
   Future<String?> asyncOrStringReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String?);
@@ -2491,7 +2523,8 @@ class CelestFunctionsReturnTypes {
 
   Future<int?> asyncOrIntReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num?)?.toInt();
@@ -2499,7 +2532,8 @@ class CelestFunctionsReturnTypes {
 
   Future<double?> asyncOrDoubleReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num?)?.toDouble();
@@ -2507,7 +2541,8 @@ class CelestFunctionsReturnTypes {
 
   Future<bool?> asyncOrBoolReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as bool?);
@@ -2515,7 +2550,8 @@ class CelestFunctionsReturnTypes {
 
   Future<Iterable<String>?> asyncOrIterableReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
@@ -2525,7 +2561,8 @@ class CelestFunctionsReturnTypes {
 
   Future<List<String>?> asyncOrListReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
@@ -2535,7 +2572,8 @@ class CelestFunctionsReturnTypes {
 
   Future<Map<String, String>?> asyncOrMapReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Map<String, Object?>?)?.map((
@@ -2550,7 +2588,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct?> asyncOrStructReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2559,7 +2598,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct?> asyncOrComplexStructReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2568,7 +2608,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleClass?> asyncOrSimpleClassReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2577,7 +2618,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexClass?> asyncOrComplexClassReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/async-or-complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2586,7 +2628,7 @@ class CelestFunctionsReturnTypes {
 
   Future<void> voidReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return;
@@ -2594,7 +2636,7 @@ class CelestFunctionsReturnTypes {
 
   Future<String> stringReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String);
@@ -2602,7 +2644,7 @@ class CelestFunctionsReturnTypes {
 
   Future<int> intReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toInt();
@@ -2610,7 +2652,7 @@ class CelestFunctionsReturnTypes {
 
   Future<double> doubleReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num).toDouble();
@@ -2618,7 +2660,7 @@ class CelestFunctionsReturnTypes {
 
   Future<bool> boolReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as bool);
@@ -2626,7 +2668,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Iterable<String>> iterableReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2636,7 +2678,7 @@ class CelestFunctionsReturnTypes {
 
   Future<List<String>> listReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>)
@@ -2646,7 +2688,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Map<String, String>> mapReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Map<String, Object?>).map((
@@ -2661,7 +2703,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct> structReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2670,7 +2712,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct> complexReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/complex-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2679,7 +2721,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleClass> simpleClassReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/simple-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2688,7 +2730,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexClass> complexClassReturn() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2697,7 +2739,7 @@ class CelestFunctionsReturnTypes {
 
   Future<String?> stringReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as String?);
@@ -2705,7 +2747,7 @@ class CelestFunctionsReturnTypes {
 
   Future<int?> intReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num?)?.toInt();
@@ -2713,7 +2755,7 @@ class CelestFunctionsReturnTypes {
 
   Future<double?> doubleReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as num?)?.toDouble();
@@ -2721,7 +2763,7 @@ class CelestFunctionsReturnTypes {
 
   Future<bool?> boolReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as bool?);
@@ -2729,7 +2771,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Iterable<String>?> iterableReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
@@ -2739,7 +2781,7 @@ class CelestFunctionsReturnTypes {
 
   Future<List<String>?> listReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Iterable<Object?>?)
@@ -2749,7 +2791,7 @@ class CelestFunctionsReturnTypes {
 
   Future<Map<String, String>?> mapReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return (_i2.jsonDecode($response.body) as Map<String, Object?>?)?.map((
@@ -2764,7 +2806,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleStruct?> structReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2773,7 +2815,7 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexStruct?> complexReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/return-types/complex-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2782,7 +2824,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.SimpleClass?> simpleClassReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2791,7 +2834,8 @@ class CelestFunctionsReturnTypes {
 
   Future<_i11.ComplexClass?> complexClassReturnNullable() async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/return-types/complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     return _i4.Serializers.scoped
@@ -2802,7 +2846,7 @@ class CelestFunctionsReturnTypes {
 class CelestFunctionsSealedClasses {
   Future<double> area(_i14.Shape shape) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/sealed-classes/area'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'shape': _i4.Serializers.scoped.serialize<_i14.Shape>(shape)}),
@@ -2813,7 +2857,7 @@ class CelestFunctionsSealedClasses {
   Future<List<_i14.Shape>> sealedClass(
       {required List<_i14.Shape> shapes}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/sealed-classes/sealed-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'shapes': shapes
@@ -2828,7 +2872,7 @@ class CelestFunctionsSealedClasses {
 
   Future<_i14.Rectangle> rectangle(_i14.Rectangle rectangle) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/sealed-classes/rectangle'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'rectangle':
@@ -2841,7 +2885,7 @@ class CelestFunctionsSealedClasses {
 
   Future<_i14.Circle> circle(_i14.Circle circle) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse('http://localhost:7777/sealed-classes/circle'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode(
           {r'circle': _i4.Serializers.scoped.serialize<_i14.Circle>(circle)}),
@@ -2854,7 +2898,8 @@ class CelestFunctionsSealedClasses {
       sealedClassWithInheritedCustomJson(
           {required List<_i14.ShapeWithInheritedCustomJson> shapes}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/sealed-classes/sealed-class-with-inherited-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'shapes': shapes
@@ -2872,7 +2917,8 @@ class CelestFunctionsSealedClasses {
   Future<List<_i14.ShapeWithCustomJson>> sealedClassWithCustomJson(
       {required List<_i14.ShapeWithCustomJson> shapes}) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/sealed-classes/sealed-class-with-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'shapes': shapes
@@ -2894,7 +2940,8 @@ class CelestFunctionsSealedClasses {
     required List<_i14.ShapeWithOverriddenCustomJson> other,
   }) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/sealed-classes/sealed-class-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'circle': _i4.Serializers.scoped
@@ -2916,7 +2963,8 @@ class CelestFunctionsSealedClasses {
   Future<_i14.ShapeWithOverriddenCustomJson> rectangleWithOverriddenCustomJson(
       _i14.RectangleWithOverriddenCustomJson rectangle) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/sealed-classes/rectangle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'rectangle': _i4.Serializers.scoped
@@ -2931,7 +2979,8 @@ class CelestFunctionsSealedClasses {
   Future<_i14.CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
       _i14.ShapeWithOverriddenCustomJson circle) async {
     final $response = await _i1.celest.httpClient.post(
-      Uri.parse('https://example.com'),
+      Uri.parse(
+          'http://localhost:7777/sealed-classes/circle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _i2.jsonEncode({
         r'circle': _i4.Serializers.scoped

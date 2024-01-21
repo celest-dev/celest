@@ -14,6 +14,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionAction.serializer)
       ..add(CloudFunctionParameter.serializer)
+      ..add(DeployedApi.serializer)
+      ..add(DeployedFunction.serializer)
       ..add(EnvironmentVariable.serializer)
       ..add(NodeId.serializer)
       ..add(NodeReference.serializer)
@@ -21,6 +23,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Policy.serializer)
       ..add(PolicyStatement.serializer)
       ..add(Project.serializer)
+      ..add(RemoteDeployedProject.serializer)
       ..add(ResolvedApi.serializer)
       ..add(ResolvedCloudFunction.serializer)
       ..add(ResolvedEnvironmentVariable.serializer)
@@ -63,6 +66,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(EnvironmentVariable)]),
           () => new ListBuilder<EnvironmentVariable>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(DeployedApi)]),
+          () => new MapBuilder<String, DeployedApi>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(DeployedFunction)]),
+          () => new MapBuilder<String, DeployedFunction>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(ResolvedApi)]),

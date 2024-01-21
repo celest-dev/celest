@@ -1,3 +1,4 @@
+import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
@@ -48,7 +49,9 @@ final class CloudCodeGenerator extends AstVisitor<void> {
           projectPaths.functionEntrypoint(api.name, function.name);
       fileOutputs[entrypointFile] =
           CodeGenerator.emit(entrypoint, forFile: entrypointFile);
-      _targets['/${api.name}/${function.name}'] = refer(
+      // TODO(dnys1): Centralize routing logic to a LocalDeployer (<: Deployer)
+      // class.
+      _targets['/${api.name.paramCase}/${function.name.paramCase}'] = refer(
         generator.targetName,
         p.toUri(entrypointFile).toString(),
       );

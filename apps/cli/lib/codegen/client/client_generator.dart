@@ -12,6 +12,7 @@ const kClientHeader = [
 final class ClientGenerator {
   ClientGenerator({
     required this.project,
+    required this.projectOutputs,
   }) {
     _library = LibraryBuilder()
       ..name = ''
@@ -23,6 +24,7 @@ final class ClientGenerator {
   }
 
   final ast.Project project;
+  final ast.DeployedProject projectOutputs;
   late final LibraryBuilder _library;
 
   final _client = Field(
@@ -51,7 +53,10 @@ final class ClientGenerator {
 
     final apis = project.apis.values;
     if (apis.isNotEmpty) {
-      final functionsGenerator = FunctionsGenerator(apis: apis.toList());
+      final functionsGenerator = FunctionsGenerator(
+        apis: apis.toList(),
+        apiOutputs: projectOutputs.apis.asMap(),
+      );
       libraries[ClientPaths.functions] = functionsGenerator.generate();
       _clientClass.fields.add(
         Field(

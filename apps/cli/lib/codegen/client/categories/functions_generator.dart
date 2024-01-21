@@ -11,6 +11,7 @@ import 'package:code_builder/code_builder.dart';
 final class FunctionsGenerator {
   FunctionsGenerator({
     required this.apis,
+    required this.apiOutputs,
   }) {
     apis.sort((a, b) => a.name.compareTo(b.name));
     _library = LibraryBuilder()
@@ -20,6 +21,8 @@ final class FunctionsGenerator {
   }
 
   final List<ast.Api> apis;
+  final Map<String, ast.DeployedApi> apiOutputs;
+
   late final LibraryBuilder _library;
   final _client = ClassBuilder()..name = ClientTypes.functionsClass.name;
 
@@ -94,12 +97,12 @@ final class FunctionsGenerator {
                 ),
           )
           ..body = Block((b) {
+            final output = apiOutputs[api.name]!.functions[function.name]!;
             final httpClient =
                 ClientTypes.topLevelClient.ref.property('httpClient');
             final functionCall = httpClient.property('post').call([
-              // TODO(dnys1): Uri
               DartTypes.core.uri.property('parse').call([
-                literalString('https://example.com'),
+                literalString(output.uri.toString()),
               ]),
             ], {
               'headers': literalConstMap({

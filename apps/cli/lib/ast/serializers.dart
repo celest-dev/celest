@@ -31,6 +31,11 @@ part 'serializers.g.dart';
   ResolvedCloudFunction,
   ResolvedEnvironmentVariable,
 
+  // Deployed AST
+  RemoteDeployedProject,
+  DeployedApi,
+  DeployedFunction,
+
   // Actions
   CloudFunctionAction,
 
