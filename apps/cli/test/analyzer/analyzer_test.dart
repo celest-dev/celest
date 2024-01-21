@@ -622,57 +622,6 @@ FromJson fromJson(FromJson value) => value;
         ],
       );
 
-      testNoErrors(
-        name: 'valid_middleware',
-        apis: {
-          'greeting.dart': r'''
-import 'package:celest/celest.dart';
-
-class logRequests implements Middleware {
-  const logRequests();
-
-  @override
-  Handler handle(Handler handler) {
-    return (request) {
-      print('Request: $request');
-      return handler(request);
-    };
-  }
-}
-
-class _LogResponses implements Middleware {
-  const _LogResponses();
-
-  @override
-  Handler handle(Handler handler) {
-    return (request) {
-      print('Request: $request');
-      return handler(request);
-    };
-  }
-}
-
-const logResponses = _LogResponses();
-
-@logRequests()
-@logResponses
-String sayHello() => 'Hello, World!';
-''',
-        },
-        expectProject: (project) {
-          expect(
-            project.apis['greeting']!.functions['sayHello']!.metadata,
-            unorderedEquals([
-              isA<ApiMiddleware>()
-                  .having((m) => m.type.symbol, 'type', 'logRequests'),
-              // TODO(dnys1): Reference should use local variable
-              isA<ApiMiddleware>()
-                  .having((m) => m.type.symbol, 'type', '_LogResponses'),
-            ]),
-          );
-        },
-      );
-
       testErrors(
         name: 'bad_middleware_type',
         apis: {

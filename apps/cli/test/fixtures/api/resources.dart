@@ -42,8 +42,6 @@ abstract final class apis {
 
   static const metadata = _i1.CloudApi(name: r'metadata');
 
-  static const middleware = _i1.CloudApi(name: r'middleware');
-
   static const parameterTypes = _i1.CloudApi(name: r'parameter_types');
 
   static const parameters = _i1.CloudApi(name: r'parameters');
@@ -648,11 +646,6 @@ abstract final class functions {
       void>(
     api: r'metadata',
     functionName: r'positionalDefaultValues',
-  );
-
-  static const middlewareSayHello = _i1.CloudFunction<String, String>(
-    api: r'middleware',
-    functionName: r'sayHello',
   );
 
   static const parameterTypesComplex = _i1.CloudFunction<
@@ -1322,7 +1315,6 @@ const List<_i1.CloudWidget> all = [
   apis.exceptions,
   apis.genericWrappers,
   apis.metadata,
-  apis.middleware,
   apis.parameterTypes,
   apis.parameters,
   apis.records,
@@ -1402,7 +1394,6 @@ const List<_i1.CloudWidget> all = [
   functions.metadataNullablePositionalDefaultValueVarsPrivate,
   functions.metadataNamedDefaultValueVarsPrivate,
   functions.metadataNullableNamedDefaultValueVarsPrivate,
-  functions.middlewareSayHello,
   functions.parameterTypesSimple,
   functions.parameterTypesSimpleOptional,
   functions.parameterTypesComplex,

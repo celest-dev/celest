@@ -3,26 +3,24 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
 final class RectangleWithOverriddenCustomJsonTarget
-    extends _i1.CelestFunctionTarget {
+    extends _i1.CloudFunctionTarget {
   RectangleWithOverriddenCustomJsonTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = _i2.rectangleWithOverriddenCustomJson(_i3
                 .Serializers.scoped
                 .deserialize<_i2.RectangleWithOverriddenCustomJson>(
                     request[r'rectangle']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.scoped
-                  .serialize<_i2.ShapeWithOverriddenCustomJson>(response)
+              body: {
+                'response': _i3.Serializers.scoped
+                    .serialize<_i2.ShapeWithOverriddenCustomJson>(response)
+              }
             );
           },
           installSerializers: (serializers) {
@@ -31,14 +29,12 @@ final class RectangleWithOverriddenCustomJsonTarget
                 .put(const RectangleWithOverriddenCustomJsonSerializer());
             serializers.put(const CircleWithOverriddenCustomJsonSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => RectangleWithOverriddenCustomJsonTarget(),
+  await _i1.serve(
+    targets: {'/': RectangleWithOverriddenCustomJsonTarget()},
   );
 }
 

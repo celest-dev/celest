@@ -19,8 +19,6 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../packages/celest_core
-  celest_runtime_cloud:
-    path: ../../packages/celest_runtime_cloud
   cli_script: ^1.0.0
   code_builder: ^4.8.0
   collection: ^1.18.0

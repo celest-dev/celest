@@ -84,6 +84,8 @@ abstract class Api implements Built<Api, ApiBuilder>, AstNode {
   Api._();
 
   String get name;
+
+  /// Ordered list of metadata applied to the API.
   BuiltList<ApiMetadata> get metadata;
   BuiltMap<String, CloudFunction> get functions;
   BuiltList<String> get docs;

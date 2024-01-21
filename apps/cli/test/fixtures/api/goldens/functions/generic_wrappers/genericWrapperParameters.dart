@@ -5,17 +5,13 @@ import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i4;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i5;
-import 'package:functions_framework/serve.dart' as _i6;
 
 import '../../../functions/generic_wrappers.dart' as _i2;
 
-final class GenericWrapperParametersTarget extends _i1.CelestFunctionTarget {
+final class GenericWrapperParametersTarget extends _i1.CloudFunctionTarget {
   GenericWrapperParametersTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = _i2.genericWrapperParameters(
               listOfString: _i3.Serializers.scoped
                   .deserialize<_i4.IList<String>>(request[r'listOfString']),
@@ -62,8 +58,10 @@ final class GenericWrapperParametersTarget extends _i1.CelestFunctionTarget {
             );
             return (
               statusCode: 200,
-              body: _i3.Serializers.scoped
-                  .serialize<_i2.GenericWrappers>(response)
+              body: {
+                'response': _i3.Serializers.scoped
+                    .serialize<_i2.GenericWrappers>(response)
+              }
             );
           },
           installSerializers: (serializers) {
@@ -85,14 +83,12 @@ final class GenericWrapperParametersTarget extends _i1.CelestFunctionTarget {
             serializers.put(const IMapStringIMapStringSimpleClassSerializer());
             serializers.put(const GenericWrappersSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i6.serve(
-    args,
-    (_) => GenericWrapperParametersTarget(),
+  await _i1.serve(
+    targets: {'/': GenericWrapperParametersTarget()},
   );
 }
 

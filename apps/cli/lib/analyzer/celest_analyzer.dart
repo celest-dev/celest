@@ -20,6 +20,7 @@ import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -226,8 +227,8 @@ final class CelestAnalyzer {
             /// for suggestions on how to resolve the error/links to docs.
             _reportError(
               'Could not resolve annotation. Annotations must be '
-              'authorization grants like `@api.authenticated()` or middleware '
-              'classes like `@MyMiddleware()`.',
+              'authorization grants like `@api.authenticated()` or '
+              '`@api.public()`.',
               location: location,
             );
             return null;
@@ -252,10 +253,11 @@ final class CelestAnalyzer {
               assertSingleAuth();
               return ast.ApiPublic(location: location);
             case _ when type.isMiddleware:
-              return ast.ApiMiddleware(
-                type: typeHelper.toReference(type),
-                location: location,
-              );
+              // return ast.ApiMiddleware(
+              //   type: typeHelper.toReference(type),
+              //   location: location,
+              // );
+              throw unreachable();
             default:
               return null;
           }

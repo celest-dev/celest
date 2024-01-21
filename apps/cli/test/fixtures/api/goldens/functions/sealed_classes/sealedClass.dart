@@ -3,17 +3,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class SealedClassTarget extends _i1.CelestFunctionTarget {
+final class SealedClassTarget extends _i1.CloudFunctionTarget {
   SealedClassTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = _i2.sealedClass(
                 shapes: (request[r'shapes'] as Iterable<Object?>)
                     .map((el) =>
@@ -21,9 +17,12 @@ final class SealedClassTarget extends _i1.CelestFunctionTarget {
                     .toList());
             return (
               statusCode: 200,
-              body: response
-                  .map((el) => _i3.Serializers.scoped.serialize<_i2.Shape>(el))
-                  .toList()
+              body: {
+                'response': response
+                    .map(
+                        (el) => _i3.Serializers.scoped.serialize<_i2.Shape>(el))
+                    .toList()
+              }
             );
           },
           installSerializers: (serializers) {
@@ -31,14 +30,12 @@ final class SealedClassTarget extends _i1.CelestFunctionTarget {
             serializers.put(const RectangleSerializer());
             serializers.put(const CircleSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => SealedClassTarget(),
+  await _i1.serve(
+    targets: {'/': SealedClassTarget()},
   );
 }
 

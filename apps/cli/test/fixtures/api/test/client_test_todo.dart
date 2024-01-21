@@ -5,7 +5,16 @@ import '../goldens/client/client.dart';
 
 void main() {
   group('Client', () {
-    setUpAll(celest.init);
+    // late final Process celestProcess;
+
+    setUpAll(() async {
+      // celestProcess = await Process.start(
+      //   Platform.resolvedExecutable,
+      //   [Platform.script.resolve('../../../../bin/celest.dart').toFilePath()],
+      //   workingDirectory: Platform.script.resolve('..').toFilePath(),
+      // );
+      celest.init();
+    });
 
     group('apis', () {
       test('classes', () async {

@@ -111,19 +111,53 @@ const project = Project(
 );
 ''');
 
+//     final middleware = fileSystem.file(
+//       p.join(projectPaths.apisDir, 'middleware.dart'),
+//     );
+//     await middleware.create(recursive: true);
+//     await middleware.writeAsString(r'''
+// import 'package:celest/celest.dart';
+
+// // An example middleware showing how to log all requests made to a function.
+// //
+// // Applying this middleware to a function will log the request to the console
+// // before passing it on to the function.
+// //
+// // Applying this middleware to a library will log all requests made to all
+// // functions in that library.
+// //
+// // This middleware is applied to the `sayHello` function in `greeting.dart`.
+
+// /// Logs requests to the function.
+// class logRequests implements Middleware {
+//   /// Logs requests to the function.
+//   const logRequests();
+
+//   @override
+//   Handler handle(Handler next) {
+//     return Handler((request) {
+//       print('Request: $request');
+//       return next(request);
+//     });
+//   }
+// }
+// ''');
+
     final greetingApi = fileSystem.file(
       p.join(projectPaths.apisDir, 'greeting.dart'),
     );
     await greetingApi.create(recursive: true);
     await greetingApi.writeAsString(r'''
-import 'package:celest/functions/middleware.dart' as middleware;
+// Cloud functions are just top-level Dart functions defined in the 
+// `functions/` folder of your Celest project.
 
-// Middleware are applied by adding annotations to your function.
-//
-// They allow reuse of code between functions and can be used for logging,
-// authentication, authorization, and more.
-@middleware.logRequests()
-Future<String> sayHello(String name) async => 'Hello, $name!';
+/// Says hello to a person called [name].
+Future<String> sayHello(String name) async {
+  // Logging is handled automatically when you print to the console.
+  print('Saying hello to $name');
+
+  return 'Hello, $name!';
+}
 ''');
 
     final greetingTest = fileSystem.file(

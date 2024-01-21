@@ -31,24 +31,17 @@ final class EntrypointGenerator {
 
   Library generate() {
     final library = LibraryBuilder();
-    final middleware = [
-      ...api.metadata,
-      ...function.metadata,
-    ]
-        // Middleware are applied in reverse order
-        .reversed
-        .whereType<ApiMiddleware>()
-        .toList();
+    // final middleware = [
+    //   ...api.metadata,
+    //   ...function.metadata,
+    // ].whereType<ApiMiddleware>().toList();
     final body = Method(
       (m) => m
-        ..requiredParameters.addAll([
+        ..requiredParameters.add(
           Parameter(
             (p) => p..name = 'request',
           ),
-          Parameter(
-            (p) => p..name = 'context',
-          ),
-        ])
+        )
         ..modifier = MethodModifier.async
         ..body = Block((b) {
           final functionReference = refer(
@@ -117,39 +110,37 @@ final class EntrypointGenerator {
             namedParams,
           );
           final returnType = function.returnType;
-          final flattenedReturnTyep = function.flattenedReturnType;
-          switch (flattenedReturnTyep.symbol) {
+          final flattenedReturnType = function.flattenedReturnType;
+          final dartReturnType = typeHelper.fromReference(returnType);
+          if (dartReturnType.isDartAsyncFuture ||
+              dartReturnType.isDartAsyncFutureOr) {
+            response = response.awaited;
+          }
+          switch (flattenedReturnType.symbol) {
             case 'void':
               b.addExpression(response);
               b.addExpression(
                 literalRecord([], {
                   'statusCode': literalNum(200),
-                  // TODO(dnys1): Should `void` be represented as null or empty map?
-                  // 'body': literalConstMap(
-                  //   {},
-                  //   DartTypes.core.string,
-                  //   DartTypes.core.object.nullable,
-                  // ),
-                  'body': literalNull,
+                  'body': literalMap({
+                    'response': literalNull,
+                  }),
                 }).returned,
               );
             default:
-              final dartReturnType = typeHelper.fromReference(returnType);
-              if (dartReturnType.isDartAsyncFuture ||
-                  dartReturnType.isDartAsyncFutureOr) {
-                response = response.awaited;
-              }
               b.addExpression(
                 declareFinal('response').assign(response),
               );
               final result = jsonGenerator.toJson(
-                flattenedReturnTyep,
+                flattenedReturnType,
                 refer('response'),
               );
               b.addExpression(
                 literalRecord([], {
                   'statusCode': literalNum(200),
-                  'body': result,
+                  'body': literalMap({
+                    'response': result,
+                  }),
                 }).returned,
               );
           }
@@ -190,9 +181,6 @@ final class EntrypointGenerator {
                     ? literalNum(500)
                     : literalNum(400),
                 'body': literalMap({
-                  // TODO(dnys1): Should the payload be different depending
-                  // on the environment? Or is it up to developers to protect
-                  // which data is sent via `toJson`?
                   'error': literalMap({
                     'code': literalString(exceptionType.symbol!, raw: true),
                     'message': refer('e').property('toString').call([]),
@@ -234,7 +222,7 @@ final class EntrypointGenerator {
       (c) => c
         ..name = targetName
         ..modifier = ClassModifier.final$
-        ..extend = DartTypes.celest.functionTarget
+        ..extend = DartTypes.celest.cloudFunctionTarget
         ..constructors.add(
           Constructor((c) {
             c.initializers.add(
@@ -256,13 +244,6 @@ final class EntrypointGenerator {
                         }
                       }),
                   ).closure,
-                'middleware': literalList(
-                  middleware
-                      .map(
-                        (m) => m.type.constInstance([]).property('handle'),
-                      )
-                      .toList(),
-                ),
               }).code,
             );
           }),
@@ -283,9 +264,8 @@ final class EntrypointGenerator {
         )
         ..body = Code.scope(
           (alloc) => '''
-  await ${alloc(DartTypes.functionsFramework.serve)}(
-    args,
-    (_) => ${target.name}(),
+  await ${alloc(DartTypes.celest.serve)}(
+    targets: {'/': ${target.name}()},
   );
 ''',
         ),

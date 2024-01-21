@@ -2,27 +2,19 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:functions_framework/serve.dart' as _i3;
 
 import '../../../functions/return_types.dart' as _i2;
 
-final class AsyncOrBoolReturnNullableTarget extends _i1.CelestFunctionTarget {
+final class AsyncOrBoolReturnNullableTarget extends _i1.CloudFunctionTarget {
   AsyncOrBoolReturnNullableTarget()
-      : super(
-          (
-            request,
-            context,
-          ) async {
-            final response = await _i2.asyncOrBoolReturnNullable();
-            return (statusCode: 200, body: response);
-          },
-          middleware: [],
-        );
+      : super((request) async {
+          final response = await _i2.asyncOrBoolReturnNullable();
+          return (statusCode: 200, body: {'response': response});
+        });
 }
 
 Future<void> main(List<String> args) async {
-  await _i3.serve(
-    args,
-    (_) => AsyncOrBoolReturnNullableTarget(),
+  await _i1.serve(
+    targets: {'/': AsyncOrBoolReturnNullableTarget()},
   );
 }

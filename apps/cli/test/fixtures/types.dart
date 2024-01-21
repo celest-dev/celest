@@ -28,24 +28,27 @@ sealed class FunctionTest {
 }
 
 class FunctionTestSuccess extends FunctionTest {
-  const FunctionTestSuccess({
+  FunctionTestSuccess({
     required super.name,
     required super.input,
-    required this.output,
+    required Object? output,
     super.logs,
-  });
+  }) : output = {
+          'response': output,
+        };
 
   final Object? output;
 }
 
-class FunctionTestError extends FunctionTestSuccess {
+class FunctionTestError extends FunctionTest {
   const FunctionTestError({
     required super.name,
     required super.input,
-    required super.output,
-    this.statusCode = 400,
+    required this.statusCode,
+    required this.output,
     super.logs,
   });
 
   final int statusCode;
+  final Object? output;
 }

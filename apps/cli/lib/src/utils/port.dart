@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
+import 'package:celest/src/runtime.dart';
 
 Future<int> findOpenPort([int initialPort = defaultCelestPort]) async {
   Future<int> findOpenPort() async {

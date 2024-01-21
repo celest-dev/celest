@@ -5,8 +5,6 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../packages/celest_core
-  celest_runtime_cloud:
-    path: ../../packages/celest_runtime_cloud
   # Use vendored sqlite3 to make use of native-assets
   sqlite3:
     path: ../../packages/sqlite3/sqlite3

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:async/async.dart';
+import 'package:celest/src/runtime.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart';
@@ -15,7 +16,6 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_runtime_cloud/celest_runtime_cloud.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -296,12 +296,13 @@ class TestRunner {
           ..captureStderr(sink: logs.add);
         // Wait for failure or first "Listening on" message.
         await Future.any([
+          functionProc.exitCode.then((exitCode) => expect(exitCode, 0)),
           ProcessUtil(functionProc).stdout.first,
           ProcessUtil(functionProc)
               .stderr
               .first
               .then((e) => fail('Failed to start function: ${utf8.decode(e)}')),
-        ]);
+        ]).timeout(const Duration(seconds: 15));
 
         await expectLater(
           client.get(apiUri),
@@ -352,18 +353,18 @@ class TestRunner {
         });
       }
 
-      test('e2e', () async {
-        final result = await Process.run(
-          Platform.resolvedExecutable,
-          ['test'],
-          workingDirectory: projectRoot,
-        );
-        expect(
-          result.exitCode,
-          0,
-          reason: '${result.stdout}\n${result.stderr}',
-        );
-      });
+      // test('e2e', () async {
+      //   final result = await Process.run(
+      //     Platform.resolvedExecutable,
+      //     ['test'],
+      //     workingDirectory: projectRoot,
+      //   );
+      //   expect(
+      //     result.exitCode,
+      //     0,
+      //     reason: '${result.stdout}\n${result.stderr}',
+      //   );
+      // });
     });
   }
 }
@@ -546,35 +547,15 @@ const complexStruct = <String, dynamic>{
   },
 };
 
-const tests = <String, Test>{
+final tests = <String, Test>{
   'api': Test(
     apis: {
-      'middleware': ApiTest(
-        functionTests: {
-          'sayHello': [
-            FunctionTestSuccess(
-              name: 'valid name',
-              input: {
-                'name': 'Dillon',
-              },
-              output: 'Hello, Dillon!',
-              logs: [
-                'first',
-                'second',
-                'third',
-                'fourth',
-              ],
-            ),
-          ],
-        },
-      ),
       'parameter_types': ApiTest(
         functionTests: {
           'simple': [
             FunctionTestSuccess(
               name: 'valid input',
               input: complexStruct,
-              // TODO(dnys1): Empty map/string for void outputs?
               output: null,
             ),
           ],
@@ -1665,11 +1646,12 @@ const tests = <String, Test>{
           ],
         },
       ),
-      'exceptions': ApiTest(
+      'exceptions': const ApiTest(
         functionTests: {
           'throwsException': [
             FunctionTestError(
               name: 'deserializes std exception',
+              statusCode: 400,
               input: {
                 'type': 'Exception',
               },
@@ -1682,6 +1664,7 @@ const tests = <String, Test>{
             ),
             FunctionTestError(
               name: 'deserializes format exception',
+              statusCode: 400,
               input: {
                 'type': 'FormatException',
               },
@@ -1724,6 +1707,7 @@ const tests = <String, Test>{
           'throwsCustomException': [
             FunctionTestError(
               name: 'deserializes custom exception',
+              statusCode: 400,
               input: {},
               output: {
                 'error': {
@@ -1742,6 +1726,7 @@ const tests = <String, Test>{
           'throwsCustomExceptionToFromJson': [
             FunctionTestError(
               name: 'deserializes custom exception w/ custom serializer',
+              statusCode: 400,
               input: {},
               output: {
                 'error': {

@@ -3,20 +3,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/exceptions.dart' as _i2;
 
-final class ThrowsCustomErrorTarget extends _i1.CelestFunctionTarget {
+final class ThrowsCustomErrorTarget extends _i1.CloudFunctionTarget {
   ThrowsCustomErrorTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             try {
               _i2.throwsCustomError();
-              return (statusCode: 200, body: null);
+              return (statusCode: 200, body: {'response': null});
             } on _i2.CustomError catch (e, st) {
               print('$e\n$st');
               final error =
@@ -36,14 +32,12 @@ final class ThrowsCustomErrorTarget extends _i1.CelestFunctionTarget {
           installSerializers: (serializers) {
             serializers.put(const CustomErrorSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => ThrowsCustomErrorTarget(),
+  await _i1.serve(
+    targets: {'/': ThrowsCustomErrorTarget()},
   );
 }
 

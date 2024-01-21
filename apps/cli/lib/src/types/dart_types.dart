@@ -13,10 +13,9 @@ import 'package:built_value/built_value.dart' as built_value;
 import 'package:built_value/json_object.dart' as built_value_json_object;
 import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
+import 'package:celest/src/runtime.dart' as celest_runtime;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_core/celest_core.dart' as celest_core;
-import 'package:celest_runtime_cloud/celest_runtime_cloud.dart'
-    as celest_runtime_cloud;
 import 'package:code_builder/code_builder.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
@@ -240,12 +239,16 @@ class _Core {
       );
 
   /// Creates a [Map] reference.
-  Reference map(Reference key, Reference value) => TypeReference(
+  Reference map([Reference? key, Reference? value]) => TypeReference(
         (t) => t
           ..symbol = 'Map'
           ..url = _url
-          ..types.add(key)
-          ..types.add(value),
+          ..types.addAll(
+            [
+              if (key != null) key,
+              if (key != null && value != null) value,
+            ],
+          ),
       );
 
   /// Creates an [MapEntry] reference.
@@ -592,7 +595,7 @@ class _Celest {
   DartTypeReference get buildEnvironment =>
       const DartTypeReference('BuildEnvironment', _url);
 
-  /// Creates a [celest_runtime_cloud.celestEnv] reference.
+  /// Creates a [celest_runtime.celestEnv] reference.
   DartTypeReference get celestEnv =>
       const DartTypeReference('celestEnv', _cloudRuntimeUrl);
 
@@ -619,10 +622,6 @@ class _Celest {
   DartTypeReference get cloudWidget =>
       const DartTypeReference('CloudWidget', _url);
 
-  /// Creates a [celest.CloudWidgetSet] reference.
-  DartTypeReference get cloudWidgetSet =>
-      const DartTypeReference('CloudWidgetSet', _url);
-
   /// Creates a [celest.EnvironmentVariable] reference.
   DartTypeReference get environmentVariable =>
       const DartTypeReference('EnvironmentVariable', _url);
@@ -631,15 +630,8 @@ class _Celest {
   DartTypeReference get functionContext =>
       const DartTypeReference('FunctionContext', _url);
 
-  /// Creates a [celest.ProjectContext] reference.
-  DartTypeReference get projectContext =>
-      const DartTypeReference('ProjectContext', _url);
-
-  /// Creates a `celest.runWithContext` reference.
-  DartTypeReference get runWithContext => const DartTypeReference(
-        'runWithContext',
-        'package:celest/src/core/project_context.dart',
-      );
+  /// Creates a [celest.JsonMap] reference.
+  DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _url);
 
   /// Creates a [celest_core.Serializer] reference.
   TypeReference serializer([Reference? dartType]) => TypeReference(
@@ -659,13 +651,13 @@ class _Celest {
   DartTypeReference get serializers =>
       const DartTypeReference('Serializers', _coreUrl);
 
-  /// Creates a [celest_runtime_cloud.serve] reference.
+  /// Creates a [celest_runtime.serve] reference.
   DartTypeReference get serve =>
       const DartTypeReference('serve', _cloudRuntimeUrl);
 
-  /// Creates a [celest_runtime_cloud.CelestFunctionTarget] reference.
-  DartTypeReference get functionTarget =>
-      const DartTypeReference('CelestFunctionTarget', _cloudRuntimeUrl);
+  /// Creates a [celest_runtime.CloudFunctionTarget] reference.
+  DartTypeReference get cloudFunctionTarget =>
+      const DartTypeReference('CloudFunctionTarget', _cloudRuntimeUrl);
 }
 
 /// `dart:convert` types

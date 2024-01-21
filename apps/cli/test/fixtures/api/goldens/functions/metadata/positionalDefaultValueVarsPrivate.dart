@@ -3,18 +3,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/metadata.dart' as _i2;
 
 final class PositionalDefaultValueVarsPrivateTarget
-    extends _i1.CelestFunctionTarget {
+    extends _i1.CloudFunctionTarget {
   PositionalDefaultValueVarsPrivateTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             _i2.positionalDefaultValueVarsPrivate(
               ((request[r'value'] as num?)?.toInt()) ?? 42,
               ((request[r'doubleValue'] as num?)?.toDouble()) ?? 42.0,
@@ -47,7 +43,7 @@ final class PositionalDefaultValueVarsPrivateTarget
                       request[r'serializable'])) ??
                   const _i2.Serializable.forType('String'),
             );
-            return (statusCode: 200, body: null);
+            return (statusCode: 200, body: {'response': null});
           },
           installSerializers: (serializers) {
             serializers.put(const LiteralEnumSerializer());
@@ -55,14 +51,12 @@ final class PositionalDefaultValueVarsPrivateTarget
             serializers.put(const ExportableSerializer());
             serializers.put(const SerializableSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => PositionalDefaultValueVarsPrivateTarget(),
+  await _i1.serve(
+    targets: {'/': PositionalDefaultValueVarsPrivateTarget()},
   );
 }
 

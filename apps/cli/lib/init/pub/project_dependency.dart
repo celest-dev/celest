@@ -36,6 +36,18 @@ final class ProjectDependency {
         ),
       );
 
+  static final ProjectDependency http = ProjectDependency._(
+    'http',
+    HostedDependency(
+      version: VersionRange(
+        min: Version.parse('0.13.0'),
+        max: Version.parse('2.0.0'),
+        includeMin: true,
+        includeMax: false,
+      ),
+    ),
+  );
+
   static final ProjectDependency lints = ProjectDependency._(
     'lints',
     HostedDependency(
@@ -54,6 +66,7 @@ final class ProjectDependency {
     final celest = celestLocal(pubServer);
     return {
       celest.name: celest.pubDependency,
+      http.name: http.pubDependency,
     };
   }
 

@@ -2,27 +2,19 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:functions_framework/serve.dart' as _i3;
 
 import '../../../functions/return_types.dart' as _i2;
 
-final class MapReturnNullableTarget extends _i1.CelestFunctionTarget {
+final class MapReturnNullableTarget extends _i1.CloudFunctionTarget {
   MapReturnNullableTarget()
-      : super(
-          (
-            request,
-            context,
-          ) async {
-            final response = _i2.mapReturnNullable();
-            return (statusCode: 200, body: response);
-          },
-          middleware: [],
-        );
+      : super((request) async {
+          final response = _i2.mapReturnNullable();
+          return (statusCode: 200, body: {'response': response});
+        });
 }
 
 Future<void> main(List<String> args) async {
-  await _i3.serve(
-    args,
-    (_) => MapReturnNullableTarget(),
+  await _i1.serve(
+    targets: {'/': MapReturnNullableTarget()},
   );
 }

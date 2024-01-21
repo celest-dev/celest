@@ -22,7 +22,7 @@ import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
-      source.uri.scheme == 'package' && source.uri.path.startsWith('celest/');
+      source.uri.toString().startsWith('package:celest');
   bool get isCelestApi => isPackageCelest && name == 'api';
 }
 

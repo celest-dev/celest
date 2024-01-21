@@ -2,27 +2,19 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:functions_framework/serve.dart' as _i3;
 
 import '../../../functions/return_types.dart' as _i2;
 
-final class VoidReturnTarget extends _i1.CelestFunctionTarget {
+final class VoidReturnTarget extends _i1.CloudFunctionTarget {
   VoidReturnTarget()
-      : super(
-          (
-            request,
-            context,
-          ) async {
-            _i2.voidReturn();
-            return (statusCode: 200, body: null);
-          },
-          middleware: [],
-        );
+      : super((request) async {
+          _i2.voidReturn();
+          return (statusCode: 200, body: {'response': null});
+        });
 }
 
 Future<void> main(List<String> args) async {
-  await _i3.serve(
-    args,
-    (_) => VoidReturnTarget(),
+  await _i1.serve(
+    targets: {'/': VoidReturnTarget()},
   );
 }

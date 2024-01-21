@@ -2,30 +2,22 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:functions_framework/serve.dart' as _i3;
 
 import '../../../functions/parameters.dart' as _i2;
 
-final class RequiredPositionalTarget extends _i1.CelestFunctionTarget {
+final class RequiredPositionalTarget extends _i1.CloudFunctionTarget {
   RequiredPositionalTarget()
-      : super(
-          (
-            request,
-            context,
-          ) async {
-            _i2.requiredPositional(
-              (request[r'requiredString'] as String),
-              (request[r'requiredInt'] as num).toInt(),
-            );
-            return (statusCode: 200, body: null);
-          },
-          middleware: [],
-        );
+      : super((request) async {
+          await _i2.requiredPositional(
+            (request[r'requiredString'] as String),
+            (request[r'requiredInt'] as num).toInt(),
+          );
+          return (statusCode: 200, body: {'response': null});
+        });
 }
 
 Future<void> main(List<String> args) async {
-  await _i3.serve(
-    args,
-    (_) => RequiredPositionalTarget(),
+  await _i1.serve(
+    targets: {'/': RequiredPositionalTarget()},
   );
 }

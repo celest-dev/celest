@@ -9,10 +9,8 @@ dependencies:
     path: ../../../../../packages/celest
   celest_core:
     path: ../../../../../packages/celest_core
-  celest_runtime_cloud:
-    path: ../../../../../packages/celest_runtime_cloud
   fast_immutable_collections: ^9.2.0
-  functions_framework: ^0.4.3+1
+  http: ^1.0.0
   shelf: ^1.4.1
 
 dependency_overrides:
@@ -20,6 +18,6 @@ dependency_overrides:
     path: ../../../../../packages/celest
   celest_core:
     path: ../../../../../packages/celest_core
-  celest_runtime_cloud:
-    path: ../../../../../packages/celest_runtime_cloud
+
+dev_dependencies:
   test: any

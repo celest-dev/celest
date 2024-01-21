@@ -3,17 +3,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/records.dart' as _i2;
 
-final class AsyncNamedFieldsTarget extends _i1.CelestFunctionTarget {
+final class AsyncNamedFieldsTarget extends _i1.CloudFunctionTarget {
   AsyncNamedFieldsTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = await _i2.asyncNamedFields(
               nonAliased: _i3.Serializers.scoped
                   .deserialize<({String anotherField, String field})>(
@@ -23,11 +19,13 @@ final class AsyncNamedFieldsTarget extends _i1.CelestFunctionTarget {
             );
             return (
               statusCode: 200,
-              body: _i3.Serializers.scoped.serialize<
-                  ({
-                    _i2.NamedFields aliased,
-                    ({String anotherField, String field}) nonAliased
-                  })>(response)
+              body: {
+                'response': _i3.Serializers.scoped.serialize<
+                    ({
+                      _i2.NamedFields aliased,
+                      ({String anotherField, String field}) nonAliased
+                    })>(response)
+              }
             );
           },
           installSerializers: (serializers) {
@@ -35,14 +33,12 @@ final class AsyncNamedFieldsTarget extends _i1.CelestFunctionTarget {
             serializers.put(const Record$rmm4wtSerializer());
             serializers.put(const Record$sxv9hgSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => AsyncNamedFieldsTarget(),
+  await _i1.serve(
+    targets: {'/': AsyncNamedFieldsTarget()},
   );
 }
 

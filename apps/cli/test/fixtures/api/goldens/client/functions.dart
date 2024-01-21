@@ -52,8 +52,6 @@ class CelestFunctions {
   /// parsed and transferred to the generated client.
   final metadata = CelestFunctionsMetadata();
 
-  final middleware = CelestFunctionsMiddleware();
-
   final parameterTypes = CelestFunctionsParameterTypes();
 
   final parameters = CelestFunctionsParameters();
@@ -1406,18 +1404,6 @@ class CelestFunctionsMetadata {
       }),
     );
     return;
-  }
-}
-
-class CelestFunctionsMiddleware {
-  Future<String> sayHello(String name) async {
-    final $response = await _i1.celest.httpClient.post(
-      Uri.parse('http://localhost:7777/middleware/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _i2.jsonEncode({r'name': name}),
-    );
-    final $body = (_i2.jsonDecode($response.body) as Map<String, Object?>);
-    return ($body['response'] as String);
   }
 }
 

@@ -5,18 +5,14 @@ import 'dart:typed_data' as _i4;
 
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/parameter_types.dart' as _i2;
 
-final class SimpleTarget extends _i1.CelestFunctionTarget {
+final class SimpleTarget extends _i1.CloudFunctionTarget {
   SimpleTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
-            _i2.simple(
+          (request) async {
+            await _i2.simple(
               (request[r'aString'] as String),
               (request[r'anInt'] as num).toInt(),
               (request[r'aDouble'] as num).toDouble(),
@@ -201,19 +197,17 @@ final class SimpleTarget extends _i1.CelestFunctionTarget {
                     _i3.Serializers.scoped.deserialize<_i4.Uint8List>(value),
                   )),
             );
-            return (statusCode: 200, body: null);
+            return (statusCode: 200, body: {'response': null});
           },
           installSerializers: (serializers) {
             serializers.put(const MyEnumSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i5.serve(
-    args,
-    (_) => SimpleTarget(),
+  await _i1.serve(
+    targets: {'/': SimpleTarget()},
   );
 }
 

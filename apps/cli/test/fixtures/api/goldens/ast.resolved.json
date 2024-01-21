@@ -1984,32 +1984,6 @@
         }
       }
     },
-    "middleware": {
-      "name": "middleware",
-      "functions": {
-        "sayHello": {
-          "name": "sayHello",
-          "apiName": "middleware",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    },
     "classes": {
       "name": "classes",
       "functions": {

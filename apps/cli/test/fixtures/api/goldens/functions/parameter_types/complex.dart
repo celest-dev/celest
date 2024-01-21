@@ -1,22 +1,18 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:typed_data' as _i5;
+import 'dart:typed_data' as _i4;
 
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/parameter_types.dart' as _i2;
 
-final class ComplexTarget extends _i1.CelestFunctionTarget {
+final class ComplexTarget extends _i1.CloudFunctionTarget {
   ComplexTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
-            _i2.complex(
+          (request) async {
+            await _i2.complex(
               _i3.Serializers.scoped
                   .deserialize<_i2.SimpleStruct>(request[r'aSimpleStruct']),
               _i3.Serializers.scoped
@@ -293,7 +289,7 @@ final class ComplexTarget extends _i1.CelestFunctionTarget {
                             .deserialize<_i2.ComplexClass?>(value),
                       )),
             );
-            return (statusCode: 200, body: null);
+            return (statusCode: 200, body: {'response': null});
           },
           installSerializers: (serializers) {
             serializers.put(const SimpleStructSerializer());
@@ -302,14 +298,12 @@ final class ComplexTarget extends _i1.CelestFunctionTarget {
             serializers.put(const ComplexStructSerializer());
             serializers.put(const ComplexClassSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => ComplexTarget(),
+  await _i1.serve(
+    targets: {'/': ComplexTarget()},
   );
 }
 
@@ -434,7 +428,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
           .map((el) => (el as String))
           .toList(),
       aListOfUint8List: (serialized[r'aListOfUint8List'] as Iterable<Object?>)
-          .map((el) => _i3.Serializers.scoped.deserialize<_i5.Uint8List>(el))
+          .map((el) => _i3.Serializers.scoped.deserialize<_i4.Uint8List>(el))
           .toList(),
       aListOfUri: (serialized[r'aListOfUri'] as Iterable<Object?>)
           .map((el) => _i3.Serializers.scoped.deserialize<Uri>(el))
@@ -558,7 +552,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
       ) =>
               MapEntry(
                 key,
-                _i3.Serializers.scoped.deserialize<_i5.Uint8List>(value),
+                _i3.Serializers.scoped.deserialize<_i4.Uint8List>(value),
               )),
       aMapOfUri: (serialized[r'aMapOfUri'] as Map<String, Object?>).map((
         key,
@@ -588,7 +582,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
           .deserialize<StackTrace>(serialized[r'aStackTrace']),
       aString: (serialized[r'aString'] as String),
       aUint8List: _i3.Serializers.scoped
-          .deserialize<_i5.Uint8List>(serialized[r'aUint8List']),
+          .deserialize<_i4.Uint8List>(serialized[r'aUint8List']),
       aUri: _i3.Serializers.scoped.deserialize<Uri>(serialized[r'aUri']),
       aUriData:
           _i3.Serializers.scoped.deserialize<UriData>(serialized[r'aUriData']),
@@ -641,7 +635,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
             .toList(),
         r'aListOfString': value.aListOfString,
         r'aListOfUint8List': value.aListOfUint8List
-            .map((el) => _i3.Serializers.scoped.serialize<_i5.Uint8List>(el))
+            .map((el) => _i3.Serializers.scoped.serialize<_i4.Uint8List>(el))
             .toList(),
         r'aListOfUri': value.aListOfUri
             .map((el) => _i3.Serializers.scoped.serialize<Uri>(el))
@@ -724,7 +718,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              _i3.Serializers.scoped.serialize<_i5.Uint8List>(value),
+              _i3.Serializers.scoped.serialize<_i4.Uint8List>(value),
             )),
         r'aMapOfUri': value.aMapOfUri.map((
           key,
@@ -752,7 +746,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i2.ComplexStruct> {
             _i3.Serializers.scoped.serialize<StackTrace>(value.aStackTrace),
         r'aString': value.aString,
         r'aUint8List':
-            _i3.Serializers.scoped.serialize<_i5.Uint8List>(value.aUint8List),
+            _i3.Serializers.scoped.serialize<_i4.Uint8List>(value.aUint8List),
         r'aUri': _i3.Serializers.scoped.serialize<Uri>(value.aUri),
         r'aUriData': _i3.Serializers.scoped.serialize<UriData>(value.aUriData),
         r'anEnum': _i3.Serializers.scoped.serialize<_i2.MyEnum>(value.anEnum),

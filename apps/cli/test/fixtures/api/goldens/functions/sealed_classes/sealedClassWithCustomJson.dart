@@ -3,17 +3,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class SealedClassWithCustomJsonTarget extends _i1.CelestFunctionTarget {
+final class SealedClassWithCustomJsonTarget extends _i1.CloudFunctionTarget {
   SealedClassWithCustomJsonTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = _i2.sealedClassWithCustomJson(
                 shapes: (request[r'shapes'] as Iterable<Object?>)
                     .map((el) => _i3.Serializers.scoped
@@ -21,10 +17,12 @@ final class SealedClassWithCustomJsonTarget extends _i1.CelestFunctionTarget {
                     .toList());
             return (
               statusCode: 200,
-              body: response
-                  .map((el) => _i3.Serializers.scoped
-                      .serialize<_i2.ShapeWithCustomJson>(el))
-                  .toList()
+              body: {
+                'response': response
+                    .map((el) => _i3.Serializers.scoped
+                        .serialize<_i2.ShapeWithCustomJson>(el))
+                    .toList()
+              }
             );
           },
           installSerializers: (serializers) {
@@ -32,14 +30,12 @@ final class SealedClassWithCustomJsonTarget extends _i1.CelestFunctionTarget {
             serializers.put(const CircleWithCustomJsonSerializer());
             serializers.put(const RectangleWithCustomJsonSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => SealedClassWithCustomJsonTarget(),
+  await _i1.serve(
+    targets: {'/': SealedClassWithCustomJsonTarget()},
   );
 }
 

@@ -3,37 +3,33 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/parameter_types.dart' as _i4;
 import '../../../functions/return_types.dart' as _i2;
 
 final class AsyncOrComplexClassReturnNullableTarget
-    extends _i1.CelestFunctionTarget {
+    extends _i1.CloudFunctionTarget {
   AsyncOrComplexClassReturnNullableTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = await _i2.asyncOrComplexClassReturnNullable();
             return (
               statusCode: 200,
-              body:
-                  _i3.Serializers.scoped.serialize<_i4.ComplexClass?>(response)
+              body: {
+                'response': _i3.Serializers.scoped
+                    .serialize<_i4.ComplexClass?>(response)
+              }
             );
           },
           installSerializers: (serializers) {
             serializers.put(const ComplexClassSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i5.serve(
-    args,
-    (_) => AsyncOrComplexClassReturnNullableTarget(),
+  await _i1.serve(
+    targets: {'/': AsyncOrComplexClassReturnNullableTarget()},
   );
 }
 

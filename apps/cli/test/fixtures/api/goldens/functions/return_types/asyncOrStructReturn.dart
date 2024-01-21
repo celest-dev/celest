@@ -3,35 +3,32 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i5;
 
 import '../../../functions/parameter_types.dart' as _i4;
 import '../../../functions/return_types.dart' as _i2;
 
-final class AsyncOrStructReturnTarget extends _i1.CelestFunctionTarget {
+final class AsyncOrStructReturnTarget extends _i1.CloudFunctionTarget {
   AsyncOrStructReturnTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = await _i2.asyncOrStructReturn();
             return (
               statusCode: 200,
-              body: _i3.Serializers.scoped.serialize<_i4.SimpleStruct>(response)
+              body: {
+                'response':
+                    _i3.Serializers.scoped.serialize<_i4.SimpleStruct>(response)
+              }
             );
           },
           installSerializers: (serializers) {
             serializers.put(const SimpleStructSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i5.serve(
-    args,
-    (_) => AsyncOrStructReturnTarget(),
+  await _i1.serve(
+    targets: {'/': AsyncOrStructReturnTarget()},
   );
 }
 

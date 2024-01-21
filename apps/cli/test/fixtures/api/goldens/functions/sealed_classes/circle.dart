@@ -3,35 +3,32 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime.dart' as _i1;
 import 'package:celest_core/celest_core.dart' as _i3;
-import 'package:functions_framework/serve.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class CircleTarget extends _i1.CelestFunctionTarget {
+final class CircleTarget extends _i1.CloudFunctionTarget {
   CircleTarget()
       : super(
-          (
-            request,
-            context,
-          ) async {
+          (request) async {
             final response = _i2.circle(_i3.Serializers.scoped
                 .deserialize<_i2.Circle>(request[r'circle']));
             return (
               statusCode: 200,
-              body: _i3.Serializers.scoped.serialize<_i2.Circle>(response)
+              body: {
+                'response':
+                    _i3.Serializers.scoped.serialize<_i2.Circle>(response)
+              }
             );
           },
           installSerializers: (serializers) {
             serializers.put(const CircleSerializer());
           },
-          middleware: [],
         );
 }
 
 Future<void> main(List<String> args) async {
-  await _i4.serve(
-    args,
-    (_) => CircleTarget(),
+  await _i1.serve(
+    targets: {'/': CircleTarget()},
   );
 }
 
