@@ -3,10 +3,11 @@
          xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
          xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
          xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+         xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
          xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
          xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
-         IgnorableNamespaces="uap uap3 uap5 rescap">
+         IgnorableNamespaces="uap uap3 uap5 uap6 rescap">
   <!-- Publisher must exactly match EV certificate. Need &quot since name has comma in it -->
   <Identity Name="Celest.CLI"
             Version="{{ version }}.0"
@@ -38,12 +39,17 @@
         <uap:DefaultTile />
       </uap:VisualElements>
       <Extensions>
-      <uap5:Extension Category="windows.appExecutionAlias">
-        <uap5:AppExecutionAlias>
-          <uap5:ExecutionAlias Alias="celest.exe" />
-        </uap5:AppExecutionAlias>
-      </uap5:Extension>
-    </Extensions>
+        <uap5:Extension Category="windows.appExecutionAlias">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="celest.exe" />
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
+        <uap6:Extension Category="windows.loaderSearchPathOverride">
+          <uap6:LoaderSearchPathOverride>
+            <uap6:LoaderSearchPathEntry FolderPath=""/>
+          </uap6:LoaderSearchPathOverride>
+        </uap6:Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

@@ -34,29 +34,44 @@ final class CelestDatabase extends _$CelestDatabase {
   int get schemaVersion => 1;
 
   /// Creates a [project] in the database.
-  Future<void> createProject(ProjectsCompanion project) {
-    project = project.copyWith(
-      path: Value(p.canonicalize(p.normalize(project.path.value))),
-    );
-    return into(projects).insert(project);
+  Future<void> createProject(ProjectsCompanion project) async {
+    try {
+      project = project.copyWith(
+        path: Value(p.canonicalize(p.normalize(project.path.value))),
+      );
+      await into(projects).insert(project);
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+    }
   }
 
   /// Lists all projects in the database.
-  Future<List<Project>> listProjects() {
-    return select(projects).get();
+  Future<List<Project>> listProjects() async {
+    try {
+      return await select(projects).get();
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+      return const [];
+    }
   }
 
   /// Finds a project by its [path].
-  Future<Project?> findProjectByPath(String path) {
-    path = p.canonicalize(p.normalize(path));
-    return (select(projects)..where((project) => project.path.equals(path)))
-        .getSingleOrNull();
+  Future<Project?> findProjectByPath(String path) async {
+    try {
+      path = p.canonicalize(p.normalize(path));
+      return await (select(projects)
+            ..where((project) => project.path.equals(path)))
+          .getSingleOrNull();
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+      return null;
+    }
   }
 }
 
 LazyDatabase _openConnection(CelestConfig config) {
   return LazyDatabase(() async {
     final file = File(p.join(config.configDir.path, 'celest.db'));
-    return NativeDatabase.createInBackground(file);
+    return NativeDatabase(file);
   });
 }

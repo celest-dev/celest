@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:process/src/interface/common.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
@@ -56,7 +57,7 @@ base mixin Configure on CelestCommand {
           .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
           .readAsStringSync(),
     );
-    logger.finest('Checking if project existings in DB...');
+    logger.finest('Checking if project exists in DB...');
     final dbProject = await celestProject.database
         .findProjectByPath(projectPaths.projectRoot);
     logger.finest('Found project in DB: $dbProject');
@@ -85,7 +86,17 @@ base mixin Configure on CelestCommand {
           {'path': 'celest/'},
         );
       await appPubspecFile.writeAsString(updatedPubspec.toString());
-      await pubGet(exe: 'flutter', workingDirectory: projectPaths.appRoot);
+      await pubGet(
+        exe: getExecutablePath(
+              'flutter',
+              fileSystem.currentDirectory.path,
+              platform: platform,
+              fs: fileSystem,
+              throwOnFailure: false,
+            ) ??
+            'flutter',
+        workingDirectory: projectPaths.appRoot,
+      );
     }
 
     this.isExistingProject = isExistingProject;

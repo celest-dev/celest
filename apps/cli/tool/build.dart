@@ -133,7 +133,6 @@ Future<void> main() async {
       jsonDecode(utf8.decode(currentReleasesInfoBytes)) as Map<String, Object?>,
     );
   } on DetailedApiRequestError catch (e) {
-    // TODO(dnys1): Remove after first release.
     if (e.status != 404) {
       rethrow;
     }
@@ -431,7 +430,7 @@ final class MacOSBundler implements Bundler {
 
     // Create distribution XML file
     // See: https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html
-    // `TODO`: enable_currentUserHome="true"? https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html#//apple_ref/doc/uid/TP40005370-CH100-SW35
+    // TODO(dnys1): enable_currentUserHome="true"? https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html#//apple_ref/doc/uid/TP40005370-CH100-SW35
     final distributionTmpl =
         File(p.join(toolDir.path, 'macos', 'distribution.xml'))
             .readAsStringSync();
