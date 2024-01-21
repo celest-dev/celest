@@ -84,6 +84,9 @@ final class TypeHelper {
     _coreErrorType = coreErrorType;
   }
 
+  late final DartType badRequestExceptionType;
+  late final DartType internalServerExceptionType;
+
   // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
   final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
     equals: const DartTypeEquality().equals,

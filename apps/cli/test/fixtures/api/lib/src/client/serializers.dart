@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 import 'dart:typed_data';
 
@@ -10,7 +10,7 @@ import 'package:api/src/models/metadata.dart';
 import 'package:api/src/models/parameter_types.dart';
 import 'package:api/src/models/records.dart';
 import 'package:api/src/models/sealed_classes.dart';
-import 'package:celest_core/celest_core.dart';
+import 'package:celest/celest.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart';
 import 'package:fast_immutable_collections/src/imap/imap.dart';
 

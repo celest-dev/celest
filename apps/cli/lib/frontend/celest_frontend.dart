@@ -9,6 +9,7 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/project_diff.dart';
 import 'package:celest_cli/ast/resolved_ast.dart';
+import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
@@ -88,8 +89,12 @@ final class CelestFrontend implements Closeable {
               event.path,
             ),
           )
-          // Ignore changes to the generated resources.dart file
+          // Ignore changes to generated files
           .where((event) => !p.equals(projectPaths.resourcesDart, event.path))
+          .where((event) => !p.equals(ClientTypes.clientClass.uri, event.path))
+          .where(
+            (event) => !p.isWithin(projectPaths.clientOutputsDir, event.path),
+          )
           .buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
@@ -98,7 +103,7 @@ final class CelestFrontend implements Closeable {
       _watcher!.next.then(
         (events) {
           final paths = events.map((event) => event.path).toList();
-          logger.severe(
+          logger.finest(
             '${events.length} watcher events since last compile: ',
             '$_changedPaths',
           );

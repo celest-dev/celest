@@ -68,6 +68,15 @@ final class CelestAnalyzer {
     typeHelper.coreErrorType =
         (dartCore.element.exportNamespace.get('Error') as ClassElement)
             .thisType;
+    final celestCore = await _context.currentSession
+            .getLibraryByUri('package:celest_core/celest_core.dart')
+        as LibraryElementResult;
+    typeHelper.badRequestExceptionType = (celestCore.element.exportNamespace
+            .get('BadRequestException') as ClassElement)
+        .thisType;
+    typeHelper.internalServerExceptionType = (celestCore.element.exportNamespace
+            .get('InternalServerException') as ClassElement)
+        .thisType;
   }
 
   Future<CelestAnalysisResult> analyzeProject() async {

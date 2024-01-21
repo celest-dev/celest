@@ -135,14 +135,10 @@ final class ClientFunctionsGenerator {
                   }),
                 ]),
             }).awaited;
+
             b.addExpression(
               declareFinal(r'$response').assign(functionCall),
             );
-            if (typeHelper.fromReference(function.flattenedReturnType)
-                is VoidType) {
-              b.statements.add(const Code('return;'));
-              return;
-            }
             b.addExpression(
               declareFinal(r'$body').assign(
                 DartTypes.convert.jsonDecode.call([
@@ -151,11 +147,83 @@ final class ClientFunctionsGenerator {
               ),
             );
 
-            final fromJson = jsonGenerator.fromJson(
-              function.flattenedReturnType,
-              refer(r'$body').index(literalString('response')),
+            final returnedBody = typeHelper
+                    .fromReference(function.flattenedReturnType) is VoidType
+                ? const Code('return;')
+                : jsonGenerator
+                    .fromJson(
+                      function.flattenedReturnType,
+                      refer(r'$body').index(literalString('response')),
+                    )
+                    .returned
+                    .statement;
+
+            b.statements.add(
+              returnedBody.wrapWithBlockIf(
+                refer(r'$response')
+                    .property('statusCode')
+                    .equalTo(literalNum(200)),
+              ),
             );
-            b.addExpression(fromJson.returned);
+
+            // Else, handle the error.
+            b
+              ..addExpression(
+                declareFinal(r'$error').assign(
+                  refer(r'$body').index(literalString('error')).asA(
+                        typeHelper.toReference(jsonMapType),
+                      ),
+                ),
+              )
+              ..addExpression(
+                declareFinal(r'$code').assign(
+                  refer(r'$error')
+                      .index(literalString('code'))
+                      .asA(DartTypes.core.string),
+                ),
+              )
+              ..addExpression(
+                declareFinal(r'$details').assign(
+                  refer(r'$error')
+                      .index(literalString('details'))
+                      .asA(typeHelper.toReference(jsonMapType).nullable),
+                ),
+              );
+            b.statements.add(const Code(r'switch ($code) {'));
+            final exceptionTypes = {
+              ...function.exceptionTypes,
+              typeHelper.toReference(typeHelper.badRequestExceptionType),
+              typeHelper.toReference(typeHelper.internalServerExceptionType),
+            };
+            for (final exceptionType in exceptionTypes) {
+              final deserializedException = jsonGenerator.fromJson(
+                exceptionType,
+                refer(r'$details'),
+              );
+              b.statements.addAll([
+                Code("case r'${exceptionType.symbol}': "),
+                deserializedException.thrown.statement,
+              ]);
+            }
+            b.statements.addAll([
+              const Code(r'case _: switch ($response.statusCode) {'),
+              const Code('case 400: '),
+              DartTypes.celest.badRequestException
+                  .newInstance([
+                    refer(r'$code'),
+                  ])
+                  .thrown
+                  .statement,
+              const Code('case _: '),
+              DartTypes.celest.internalServerException
+                  .newInstance([
+                    refer(r'$code'),
+                  ])
+                  .thrown
+                  .statement,
+              const Code('}'),
+              const Code('}'),
+            ]);
           }),
       );
       apiClass.methods.add(functionCall);

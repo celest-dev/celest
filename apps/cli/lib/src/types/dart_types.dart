@@ -588,8 +588,11 @@ class _Celest {
   const _Celest();
 
   static const _url = 'package:celest/celest.dart';
-  static const _coreUrl = 'package:celest_core/celest_core.dart';
   static const _runtimeUrl = 'package:celest/src/runtime.dart';
+
+  /// Creates a [celest.BadRequestException] reference.
+  DartTypeReference get badRequestException =>
+      const DartTypeReference('BadRequestException', _url);
 
   /// Creates a [celest.BuildEnvironment] reference.
   DartTypeReference get buildEnvironment =>
@@ -601,7 +604,7 @@ class _Celest {
 
   /// Creates a [celest_core.CelestEnvironment] reference.
   DartTypeReference get celestEnvironment =>
-      const DartTypeReference('CelestEnvironment', _coreUrl);
+      const DartTypeReference('CelestEnvironment', _url);
 
   /// Creates a [celest_runtime.CelestResponse] reference.
   DartTypeReference get celestResponse =>
@@ -634,6 +637,10 @@ class _Celest {
   DartTypeReference get functionContext =>
       const DartTypeReference('FunctionContext', _url);
 
+  /// Creates a [celest.InternalServerException] reference.
+  DartTypeReference get internalServerException =>
+      const DartTypeReference('InternalServerException', _url);
+
   /// Creates a [celest.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _url);
 
@@ -641,7 +648,7 @@ class _Celest {
   TypeReference serializer([Reference? dartType]) => TypeReference(
         (t) => t
           ..symbol = 'Serializer'
-          ..url = _coreUrl
+          ..url = _url
           ..types.addAll([
             if (dartType != null) dartType,
           ]),
@@ -649,11 +656,11 @@ class _Celest {
 
   /// Creates a [celest_core.SerializationException] reference.
   DartTypeReference get serializationException =>
-      const DartTypeReference('SerializationException', _coreUrl);
+      const DartTypeReference('SerializationException', _url);
 
   /// Creates a [celest_core.Serializers] reference.
   DartTypeReference get serializers =>
-      const DartTypeReference('Serializers', _coreUrl);
+      const DartTypeReference('Serializers', _url);
 
   /// Creates a [celest_runtime.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _runtimeUrl);

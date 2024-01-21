@@ -7,6 +7,7 @@ abstract final class CodeGenerator {
     'type=lint',
     'unused_local_variable',
     'unnecessary_cast',
+    'unnecessary_import',
   ];
   static final _header = 'ignore_for_file: ${_ignoredRules.join(', ')}';
   static final _formatter = DartFormatter(

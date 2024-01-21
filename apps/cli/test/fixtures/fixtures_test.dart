@@ -1644,7 +1644,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': '_Exception',
-                  'message': 'Exception: Something bad happened',
                 },
               },
             ),
@@ -1657,7 +1656,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'FormatException',
-                  'message': 'FormatException: Bad format',
                 },
               },
             ),
@@ -1672,7 +1670,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'Error',
-                  'message': "Instance of 'Error'",
                 },
               },
             ),
@@ -1685,7 +1682,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'ArgumentError',
-                  'message': 'Invalid argument(s) (someArg): Bad argument',
                 },
               },
             ),
@@ -1698,7 +1694,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'CustomException',
-                  'message': 'CustomException: This is a custom exception',
                   'details': {
                     'message': 'This is a custom exception',
                     'additionalInfo': {
@@ -1717,7 +1712,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'CustomExceptionToFromJson',
-                  'message': 'CustomException: This is a custom exception',
                   'details': {
                     'message': 'This is a custom exception',
                     'hello': 'world',
@@ -1735,7 +1729,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'CustomError',
-                  'message': 'CustomError: This is a custom error',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {
@@ -1754,7 +1747,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'CustomErrorToFromJson',
-                  'message': 'CustomError: This is a custom error',
                   'details': {
                     'message': 'This is a custom error',
                     'hello': 'world',
@@ -1772,7 +1764,6 @@ final tests = <String, Test>{
               output: {
                 'error': {
                   'code': 'CustomErrorWithStackTrace',
-                  'message': 'CustomError: This is a custom error',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {

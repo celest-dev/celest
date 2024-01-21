@@ -16,7 +16,7 @@ final class StartCommand extends CelestCommand with Configure {
   @override
   String get name => 'start';
 
-  Future<String> _createProject(Uri pubServer) async {
+  Future<String> _createProject() async {
     if (!pubspec.dependencies.containsKey('flutter')) {
       throw const CelestException(
         'Only Flutter projects are supported at this time.',
@@ -39,7 +39,7 @@ final class StartCommand extends CelestCommand with Configure {
       projectName: projectName,
       appRoot: Directory.current.path,
       projectRoot: projectPaths.projectRoot,
-    ).generate(pubServer);
+    ).generate();
     cliLogger.success('Project generated successfully.');
     return projectName;
   }

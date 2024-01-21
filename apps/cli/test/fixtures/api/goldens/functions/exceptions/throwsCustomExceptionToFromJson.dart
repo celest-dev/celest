@@ -1,29 +1,32 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:api/exceptions.dart' as _i3;
+import 'package:celest/celest.dart' as _i4;
 import 'package:celest/src/runtime.dart' as _i1;
-import 'package:celest_core/celest_core.dart' as _i4;
 
 import '../../../functions/exceptions.dart' as _i2;
 
 final class ThrowsCustomExceptionToFromJsonTarget
     extends _i1.CloudFunctionTarget {
   @override
+  String get name => 'throwsCustomExceptionToFromJson';
+
+  @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
     try {
       _i2.throwsCustomExceptionToFromJson();
       return (statusCode: 200, body: {'response': null});
-    } on _i3.CustomExceptionToFromJson catch (e, st) {
-      print('$e\n$st');
+    } on _i3.CustomExceptionToFromJson catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
       final error =
           _i4.Serializers.instance.serialize<_i3.CustomExceptionToFromJson>(e);
       return (
-        statusCode: 400,
+        statusCode: statusCode,
         body: {
           'error': {
             'code': r'CustomExceptionToFromJson',
-            'message': e.toString(),
             'details': error,
           }
         }

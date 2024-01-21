@@ -31,9 +31,6 @@ environment:
 dependencies:
   celest:
 
-dependency_overrides:
-  celest:
-
 dev_dependencies:
   test:
 ''');
@@ -57,7 +54,6 @@ dev_dependencies:
     }
 
     addConstraints(dependencies, DependencyType.dependency);
-    addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
     addConstraints(devDependencies, DependencyType.devDependency);
 
     return editor.toString();

@@ -23,12 +23,12 @@ class ProjectGenerator {
   final String projectRoot;
 
   /// Generates a new Celest project.
-  Future<void> generate(Uri pubServer) async {
+  Future<void> generate() async {
     await Future.wait(
       [
         const ProjectFile.gitIgnore(),
         const ProjectFile.analysisOptions(),
-        ProjectFile.pubspec(projectName, pubServer),
+        ProjectFile.pubspec(projectName),
         ProjectTemplate.hello(projectName),
       ].map((item) => item.create(projectRoot)),
     );

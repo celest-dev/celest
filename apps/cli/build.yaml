@@ -1,5 +1,8 @@
 targets:
   $default:
+    sources:
+      exclude:
+        - "test/fixtures/**"
     builders:
       json_serializable:
         options:

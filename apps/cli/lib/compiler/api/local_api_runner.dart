@@ -108,18 +108,16 @@ final class LocalApiRunner implements Closeable {
         vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
       } else if (line.startsWith('The Dart VM service is listening on')) {
         // Ignore
+      } else if (line.startsWith('Serving on')) {
+        // Ignore
       } else {
-        // TODO(dnys1): Make API/function specific.
-        stdout.writeln('APP -> $line');
+        stdout.writeln(line);
       }
     });
     localApiProcess.stderr
         .transform(utf8.decoder)
         .transform(const LineSplitter())
-        .listen((line) {
-      // TODO(dnys1): Make API/function specific.
-      stderr.writeln('APP -> $line');
-    });
+        .listen(stderr.writeln);
 
     logger.finer('Waiting for local API to report VM URI...');
     final vmService = await vmServiceCompleter.future.timeout(

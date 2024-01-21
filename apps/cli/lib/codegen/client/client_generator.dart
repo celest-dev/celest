@@ -3,6 +3,7 @@ import 'package:celest_cli/codegen/client/categories/client_functions_generator.
 import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 
 const kClientHeader = [
@@ -17,6 +18,12 @@ final class ClientGenerator {
   }) {
     _library = LibraryBuilder()
       ..name = ''
+      ..directives.addAll([
+        if (fileSystem.file(ClientPaths.exceptions).existsSync())
+          Directive.export('exceptions.dart'),
+        if (fileSystem.file(ClientPaths.models).existsSync())
+          Directive.export('models.dart'),
+      ])
       ..comments.addAll(kClientHeader)
       ..body.addAll([
         _client,

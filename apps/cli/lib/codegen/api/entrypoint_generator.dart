@@ -162,12 +162,22 @@ final class EntrypointGenerator {
           for (final exceptionType in exceptionTypes) {
             b.statements.add(
               Code.scope(
-                (alloc) => '} on ${alloc(exceptionType)} catch (e, st) {',
+                (alloc) => '} on ${alloc(exceptionType)} catch (e) {',
+              ),
+            );
+            b.addExpression(
+              declareConst('statusCode').assign(
+                typeHelper.typeSystem.isSubtypeOf(
+                  typeHelper.fromReference(exceptionType),
+                  typeHelper.coreErrorType,
+                )
+                    ? literalNum(500)
+                    : literalNum(400),
               ),
             );
             b.addExpression(
               refer('print').call([
-                literalString(r'$e\n$st'),
+                literalString(r'$statusCode $e'),
               ]),
             );
             b.addExpression(
@@ -180,16 +190,10 @@ final class EntrypointGenerator {
             );
             b.addExpression(
               literalRecord([], {
-                'statusCode': typeHelper.typeSystem.isSubtypeOf(
-                  typeHelper.fromReference(exceptionType),
-                  typeHelper.coreErrorType,
-                )
-                    ? literalNum(500)
-                    : literalNum(400),
+                'statusCode': refer('statusCode'),
                 'body': literalMap({
                   'error': literalMap({
                     'code': literalString(exceptionType.symbol!, raw: true),
-                    'message': refer('e').property('toString').call([]),
                     'details': refer('error'),
                   }),
                 }),
@@ -230,6 +234,15 @@ final class EntrypointGenerator {
         ..modifier = ClassModifier.final$
         ..extend = DartTypes.celest.cloudFunctionTarget
         ..methods.addAll([
+          Method(
+            (m) => m
+              ..name = 'name'
+              ..annotations.add(DartTypes.core.override)
+              ..returns = DartTypes.core.string
+              ..type = MethodType.getter
+              ..lambda = true
+              ..body = literalString(function.name).code,
+          ),
           handle,
           if (_customSerializers.isNotEmpty)
             Method(

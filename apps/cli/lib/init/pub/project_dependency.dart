@@ -10,23 +10,12 @@ final class ProjectDependency {
 
   static final ProjectDependency celest = ProjectDependency._(
     'celest',
-    HostedDependency(version: Version.parse(packageVersion)),
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(
+        Version.parse(packageVersion),
+      ),
+    ),
   );
-  static ProjectDependency celestLocal(Uri pubServer) => ProjectDependency._(
-        'celest',
-        HostedDependency(
-          version: Version.parse(packageVersion),
-          hosted: HostedDetails('celest', pubServer),
-        ),
-      );
-  static ProjectDependency celestCoreLocal(Uri pubServer) =>
-      ProjectDependency._(
-        'celest_core',
-        HostedDependency(
-          version: Version.parse(packageVersion),
-          hosted: HostedDetails('celest_core', pubServer),
-        ),
-      );
 
   static final ProjectDependency http = ProjectDependency._(
     'http',
@@ -54,27 +43,13 @@ final class ProjectDependency {
     ),
   );
 
-  static Map<String, Dependency> dependencies(Uri pubServer) {
-    final celest = celestLocal(pubServer);
-    return {
-      celest.name: celest.pubDependency,
-      http.name: http.pubDependency,
-    };
-  }
+  static final Map<String, Dependency> dependencies = {
+    celest.name: celest.pubDependency,
+    http.name: http.pubDependency,
+  };
 
-  static Map<String, Dependency> dependencyOverrides(Uri pubServer) {
-    final celest = celestLocal(pubServer);
-    final celestCore = celestCoreLocal(pubServer);
-    return {
-      celest.name: celest.pubDependency,
-      celestCore.name: celestCore.pubDependency,
-    };
-  }
-
-  static Map<String, Dependency> devDependencies(Uri pubServer) {
-    return {
-      lints.name: lints.pubDependency,
-      test.name: test.pubDependency,
-    };
-  }
+  static final Map<String, Dependency> devDependencies = {
+    lints.name: lints.pubDependency,
+    test.name: test.pubDependency,
+  };
 }

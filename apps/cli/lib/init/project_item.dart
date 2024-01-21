@@ -19,8 +19,7 @@ sealed class ProjectFile extends ProjectItem {
 
   const factory ProjectFile.analysisOptions() = _AnalysisOptions;
 
-  const factory ProjectFile.pubspec(String projectName, Uri pubServer) =
-      _Pubspec;
+  const factory ProjectFile.pubspec(String projectName) = _Pubspec;
 
   /// The relative path of the item from the project root.
   String get relativePath;
@@ -41,7 +40,7 @@ final class _GitIgnore extends ProjectFile {
 .dart_tool/
 
 # Celest
-**/.env       # Environment variables
+**/.env
 ''',
     );
   }
@@ -65,10 +64,9 @@ include: package:lints/recommended.yaml
 }
 
 final class _Pubspec extends ProjectFile {
-  const _Pubspec(this.projectName, this.pubServer);
+  const _Pubspec(this.projectName);
 
   final String projectName;
-  final Uri pubServer;
 
   @override
   String get relativePath => 'pubspec.yaml';
@@ -84,9 +82,8 @@ final class _Pubspec extends ProjectFile {
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
       },
-      dependencies: ProjectDependency.dependencies(pubServer),
-      dependencyOverrides: ProjectDependency.dependencyOverrides(pubServer),
-      devDependencies: ProjectDependency.devDependencies(pubServer),
+      dependencies: ProjectDependency.dependencies,
+      devDependencies: ProjectDependency.devDependencies,
     );
     await file.writeAsString(pubspec.toYaml());
   }
@@ -181,6 +178,9 @@ class BadNameException implements Exception {
   const BadNameException(this.message);
 
   final String message;
+
+  @override
+  String toString() => 'Bad name: $message';
 }
 ''',
       ),
