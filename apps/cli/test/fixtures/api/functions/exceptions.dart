@@ -1,4 +1,5 @@
 import 'package:api/exceptions.dart';
+import 'package:api/models.dart';
 
 void throwsException({
   required SupportedExceptionType type,

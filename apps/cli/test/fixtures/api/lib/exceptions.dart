@@ -1,13 +1,3 @@
-enum SupportedExceptionType {
-  Exception,
-  FormatException,
-}
-
-enum SupportedErrorType {
-  Error,
-  ArgumentError,
-}
-
 final class CustomException implements Exception {
   final String message = 'This is a custom exception';
   final Map<String, Object?> additionalInfo = {

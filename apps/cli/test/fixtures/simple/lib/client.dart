@@ -4,6 +4,9 @@
 
 library;
 
+export 'exceptions.dart';
+export 'models.dart';
+
 final Celest celest = Celest();
 
 class Celest {

@@ -29,6 +29,18 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
 
+enum CustomType {
+  model,
+  exception;
+
+  String get expectedPath => switch (this) {
+        CustomType.model =>
+          p.join(projectPaths.projectRoot, 'lib', 'models.dart'),
+        CustomType.exception =>
+          p.join(projectPaths.projectRoot, 'lib', 'exceptions.dart'),
+      };
+}
+
 final class CelestAnalyzer {
   CelestAnalyzer._();
 
@@ -78,9 +90,32 @@ final class CelestAnalyzer {
         .thisType;
   }
 
+  LibraryElementResult? _modelsLibrary;
+  LibraryElementResult? _exceptionsLibrary;
+
+  Future<void> _initTypeLibraries() async {
+    try {
+      _modelsLibrary = await _context.currentSession.getLibraryByUri(
+        Uri.file(CustomType.model.expectedPath).toString(),
+      ) as LibraryElementResult;
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+      _modelsLibrary = null;
+    }
+    try {
+      _exceptionsLibrary = await _context.currentSession.getLibraryByUri(
+        Uri.file(CustomType.exception.expectedPath).toString(),
+      ) as LibraryElementResult;
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+      _exceptionsLibrary = null;
+    }
+  }
+
   Future<CelestAnalysisResult> analyzeProject() async {
-    await init();
     _errors.clear();
+    await init();
+    await _initTypeLibraries();
     final project = await _findProject();
     if (project == null) {
       return CelestAnalysisResult.failure(_errors);
@@ -378,21 +413,47 @@ final class CelestAnalyzer {
   void _ensureClientReferenceable(
     Reference reference,
     SourceSpan location, {
-    String expectedLocation = 'celest/lib/models.dart',
+    required CustomType type,
   }) {
     final url = reference.url;
-    if (url == null) {
+    final symbol = reference.symbol;
+    if (url == null || symbol == null) {
       return;
     }
     final uri = Uri.parse(url);
-    if (uri.scheme case 'package' || 'dart') {
+    if (uri.scheme == 'dart') {
       return;
     }
-    final filepath = projectPaths.denormalizeUri(uri).toFilePath();
-    if (!p.isWithin(projectPaths.projectLib, filepath)) {
+    final filepath = switch (uri.scheme) {
+      'package' => _context.currentSession.uriConverter.uriToPath(uri),
+      _ => projectPaths.denormalizeUri(uri).toFilePath(),
+    };
+    if (filepath == null) {
+      performance
+          .captureError(
+            'Could not resolve URI: $uri',
+            stackTrace: StackTrace.current,
+          )
+          .ignore();
+      return;
+    }
+    if (symbol.startsWith('_')) {
+      // Private types are reported elsewhere.
+      return;
+    }
+    final element = switch (type) {
+      CustomType.model => _modelsLibrary?.element.exportNamespace.get(symbol),
+      CustomType.exception =>
+        _exceptionsLibrary?.element.exportNamespace.get(symbol),
+    };
+    if (element == null) {
+      final expectedPath = p.relative(
+        type.expectedPath,
+        from: projectPaths.projectRoot,
+      );
       _reportError(
-        'Types referenced in APIs must be defined in the `$expectedLocation` '
-        'file or imported from an external package.',
+        'Types referenced in APIs must be defined in the `celest/$expectedPath`'
+        ' file or exported from that file.',
         location: location,
       );
     }
@@ -432,7 +493,7 @@ final class CelestAnalyzer {
           _ensureClientReferenceable(
             typeHelper.toReference(exceptionType),
             exceptionTypeLoc,
-            expectedLocation: 'celest/lib/exceptions.dart',
+            type: CustomType.exception,
           );
           final isSerializable = typeHelper.isSerializable(exceptionType);
           if (!isSerializable.isSerializable) {
@@ -452,7 +513,11 @@ final class CelestAnalyzer {
           parameters: await func.parameters.asyncMap((param) async {
             final paramType = typeHelper.toReference(param.type);
             final paramLoc = param.sourceLocation;
-            _ensureClientReferenceable(paramType, paramLoc);
+            _ensureClientReferenceable(
+              paramType,
+              paramLoc,
+              type: CustomType.model,
+            );
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
               type: paramType,
@@ -522,6 +587,7 @@ final class CelestAnalyzer {
         _ensureClientReferenceable(
           typeHelper.toReference(func.returnType),
           func.sourceLocation,
+          type: CustomType.model,
         );
 
         var hasContext = false;

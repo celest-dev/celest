@@ -28,6 +28,7 @@ Future<CelestProject> newProject({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
+  Map<String, String> lib = const {},
 }) async {
   projectDart ??= _simpleProjectDart(name);
   final celestDir = p.fromUri(
@@ -93,6 +94,8 @@ $contents
     d.dir('lib', [
       d.file('models.dart', models ?? ''),
       d.file('exceptions.dart', exceptions ?? ''),
+      for (final MapEntry(key: fileName, value: contents) in lib.entries)
+        d.file(fileName, contents),
     ]),
   ]);
   await project.create();
@@ -110,6 +113,7 @@ void testNoErrors({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
+  Map<String, String> lib = const {},
   void Function(Project)? expectProject,
 }) {
   testErrors(
@@ -122,6 +126,7 @@ void testNoErrors({
     exceptions: exceptions,
     apis: apis,
     config: config,
+    lib: lib,
     expectProject: expectProject,
   );
 }
@@ -135,6 +140,7 @@ void testErrors({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
+  Map<String, String> lib = const {},
   required List<Object /* String | Matcher */ > errors,
   void Function(Project)? expectProject,
 }) {
@@ -147,6 +153,7 @@ void testErrors({
       exceptions: exceptions,
       apis: apis,
       config: config,
+      lib: lib,
     );
     final analyzer = CelestAnalyzer();
     final CelestAnalysisResult(:project, errors: actual) =
@@ -762,12 +769,52 @@ void sayHello(ValidJsonable param) => print(param);
       );
 
       testErrors(
+        name: 'invalid_model_def_location_in_lib',
+        apis: {
+          'greeting.dart': '''
+import 'package:invalid_model_def_location_in_lib/valid_jsonable.dart';
+
+void sayHello(ValidJsonable param) => print(param);
+''',
+        },
+        lib: {
+          'valid_jsonable.dart': '''
+class ValidJsonable {}
+''',
+        },
+        errors: [
+          'Types referenced in APIs must be defined in the '
+              '`celest/lib/models.dart` file',
+        ],
+      );
+
+      testErrors(
         name: 'invalid_exception_def_location',
         apis: {
           'greeting.dart': '''
 class ValidException implements Exception {}
 
 void sayHello() => throw ValidException();
+''',
+        },
+        errors: [
+          'Types referenced in APIs must be defined in the '
+              '`celest/lib/exceptions.dart` file',
+        ],
+      );
+
+      testErrors(
+        name: 'invalid_exception_def_location_in_lib',
+        apis: {
+          'greeting.dart': '''
+import 'package:invalid_exception_def_location_in_lib/valid_exception.dart';
+
+void sayHello() => throw ValidException();
+''',
+        },
+        lib: {
+          'valid_exception.dart': '''
+class ValidException implements Exception {}
 ''',
         },
         errors: [

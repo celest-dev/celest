@@ -5,7 +5,6 @@
 library;
 
 import 'package:api/models.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 GenericWrappers genericWrappers(GenericWrappers value) => value;
 Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async =>

@@ -8484,7 +8484,7 @@
               "type": {
                 "$": "TypeReference",
                 "symbol": "SupportedExceptionType",
-                "url": "package:api/exceptions.dart",
+                "url": "package:api/src/models/exceptions.dart",
                 "isNullable": false
               },
               "required": true,
@@ -8492,8 +8492,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/exceptions.dart",
-                "start": 96,
-                "end": 100
+                "start": 130,
+                "end": 134
               }
             }
           ],
@@ -8511,8 +8511,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 44,
-            "end": 59
+            "start": 78,
+            "end": 93
           }
         },
         "throwsError": {
@@ -8524,7 +8524,7 @@
               "type": {
                 "$": "TypeReference",
                 "symbol": "SupportedErrorType",
-                "url": "package:api/exceptions.dart",
+                "url": "package:api/src/models/exceptions.dart",
                 "isNullable": false
               },
               "required": true,
@@ -8532,8 +8532,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/exceptions.dart",
-                "start": 365,
-                "end": 369
+                "start": 399,
+                "end": 403
               }
             }
           ],
@@ -8551,8 +8551,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 321,
-            "end": 332
+            "start": 355,
+            "end": 366
           }
         },
         "throwsCustomException": {
@@ -8580,8 +8580,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 559,
-            "end": 580
+            "start": 593,
+            "end": 614
           }
         },
         "throwsCustomExceptionToFromJson": {
@@ -8609,8 +8609,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 620,
-            "end": 651
+            "start": 654,
+            "end": 685
           }
         },
         "throwsCustomError": {
@@ -8638,8 +8638,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 701,
-            "end": 718
+            "start": 735,
+            "end": 752
           }
         },
         "throwsCustomErrorToFromJson": {
@@ -8667,8 +8667,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 754,
-            "end": 781
+            "start": 788,
+            "end": 815
           }
         },
         "throwsCustomErrorWithStackTrace": {
@@ -8696,8 +8696,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/exceptions.dart",
-            "start": 827,
-            "end": 858
+            "start": 861,
+            "end": 892
           }
         }
       },
@@ -12300,8 +12300,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 455,
-                "end": 460
+                "start": 378,
+                "end": 383
               }
             }
           ],
@@ -12323,8 +12323,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "start": 423,
-            "end": 438
+            "start": 346,
+            "end": 361
           }
         },
         "genericWrappersAsync": {
@@ -12344,8 +12344,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 533,
-                "end": 538
+                "start": 456,
+                "end": 461
               }
             }
           ],
@@ -12375,8 +12375,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "start": 496,
-            "end": 516
+            "start": 419,
+            "end": 439
           }
         },
         "genericWrapperParameters": {
@@ -12404,8 +12404,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 628,
-                "end": 640
+                "start": 551,
+                "end": 563
               }
             },
             {
@@ -12429,8 +12429,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 664,
-                "end": 673
+                "start": 587,
+                "end": 596
               }
             },
             {
@@ -12454,8 +12454,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 705,
-                "end": 722
+                "start": 628,
+                "end": 645
               }
             },
             {
@@ -12487,8 +12487,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 756,
-                "end": 774
+                "start": 679,
+                "end": 697
               }
             },
             {
@@ -12520,8 +12520,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 805,
-                "end": 820
+                "start": 728,
+                "end": 743
               }
             },
             {
@@ -12553,8 +12553,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 859,
-                "end": 882
+                "start": 782,
+                "end": 805
               }
             },
             {
@@ -12584,8 +12584,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 916,
-                "end": 927
+                "start": 839,
+                "end": 850
               }
             },
             {
@@ -12615,8 +12615,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 958,
-                "end": 966
+                "start": 881,
+                "end": 889
               }
             },
             {
@@ -12646,8 +12646,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1005,
-                "end": 1021
+                "start": 928,
+                "end": 944
               }
             },
             {
@@ -12685,8 +12685,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1062,
-                "end": 1079
+                "start": 985,
+                "end": 1002
               }
             },
             {
@@ -12724,8 +12724,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1117,
-                "end": 1131
+                "start": 1040,
+                "end": 1054
               }
             },
             {
@@ -12763,8 +12763,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1177,
-                "end": 1199
+                "start": 1100,
+                "end": 1122
               }
             },
             {
@@ -12808,8 +12808,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1247,
-                "end": 1263
+                "start": 1170,
+                "end": 1186
               }
             },
             {
@@ -12853,8 +12853,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1308,
-                "end": 1321
+                "start": 1231,
+                "end": 1244
               }
             },
             {
@@ -12898,8 +12898,8 @@
               "annotations": [],
               "location": {
                 "uri": "project:functions/generic_wrappers.dart",
-                "start": 1374,
-                "end": 1395
+                "start": 1297,
+                "end": 1318
               }
             }
           ],
@@ -12921,8 +12921,8 @@
           "docs": [],
           "location": {
             "uri": "project:functions/generic_wrappers.dart",
-            "start": 576,
-            "end": 600
+            "start": 499,
+            "end": 523
           }
         }
       },

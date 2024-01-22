@@ -1,5 +1,6 @@
 import 'package:api/models.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+export 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class GenericWrappers {
   GenericWrappers({

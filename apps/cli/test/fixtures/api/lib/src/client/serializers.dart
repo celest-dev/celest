@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:api/exceptions.dart';
 import 'package:api/src/models/classes.dart';
 import 'package:api/src/models/cycles.dart';
+import 'package:api/src/models/exceptions.dart';
 import 'package:api/src/models/generic_wrappers.dart';
 import 'package:api/src/models/metadata.dart';
 import 'package:api/src/models/parameter_types.dart';
