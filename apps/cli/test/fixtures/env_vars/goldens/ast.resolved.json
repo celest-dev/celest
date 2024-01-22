@@ -21,6 +21,10 @@
     {
       "name": "IM_COOL",
       "value": "true"
+    },
+    {
+      "name": "MY_WEBSITE",
+      "value": "https://dillonnys.com"
     }
   ]
 }

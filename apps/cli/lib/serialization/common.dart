@@ -28,4 +28,5 @@ final validEnvTypes = TypeChecker.any([
   DartTypes.core.int.checker,
   DartTypes.core.num.checker,
   DartTypes.core.string.checker,
+  DartTypes.core.uri.checker,
 ]);

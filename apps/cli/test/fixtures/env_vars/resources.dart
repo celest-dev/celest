@@ -16,4 +16,6 @@ abstract final class env {
   static const myWeight = _i1.EnvironmentVariable(name: r'MY_WEIGHT');
 
   static const imCool = _i1.EnvironmentVariable(name: r'IM_COOL');
+
+  static const myWebsite = _i1.EnvironmentVariable(name: r'MY_WEBSITE');
 }

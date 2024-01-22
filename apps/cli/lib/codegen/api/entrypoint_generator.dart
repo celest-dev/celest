@@ -80,6 +80,7 @@ final class EntrypointGenerator {
                     'double' => DartTypes.core.double,
                     'bool' => DartTypes.core.bool,
                     'num' => DartTypes.core.num,
+                    'Uri' => DartTypes.core.uri,
                     'String' => null,
                     _ => unreachable(),
                   };

@@ -2343,9 +2343,11 @@ final tests = <String, Test>{
                 'height': 5.83,
                 'weight': 130,
                 'isCool': true,
+                'website': 'https://dillonnys.com',
               },
               logs: [
-                'Dillon is 28 years old, 5.83ft tall, 130 lbs, and is cool.',
+                'Dillon is 28 years old, 5.83ft tall, 130 lbs, and is cool. '
+                    'Find him at https://dillonnys.com.',
               ],
             ),
           ],

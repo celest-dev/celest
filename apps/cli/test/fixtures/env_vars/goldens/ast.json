@@ -44,7 +44,15 @@
       "location": {
         "uri": "project:config/.env",
         "start": 54,
-        "end": 66
+        "end": 67
+      }
+    },
+    {
+      "envName": "MY_WEBSITE",
+      "location": {
+        "uri": "project:config/.env",
+        "start": 67,
+        "end": 101
       }
     }
   ],
