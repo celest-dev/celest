@@ -1,4 +1,4 @@
-name: example_app_celest
+name: celest_backend
 description: The Celest backend for example_app.
 publish_to: none
 
