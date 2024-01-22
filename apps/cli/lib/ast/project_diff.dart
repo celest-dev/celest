@@ -10,6 +10,12 @@ final class ProjectDiff extends AstVisitor<void> {
   var requiresRestart = false;
 
   @override
+  void visitProject(Project project) {
+    project.apis.values.forEach(visitApi);
+    project.envVars.forEach(visitEnvironmentVariable);
+  }
+
+  @override
   void visitApi(Api api) {
     if (!project.apis.containsKey(api.name)) {
       requiresRestart = true;
@@ -36,19 +42,30 @@ final class ProjectDiff extends AstVisitor<void> {
 
   @override
   void visitFunction(CloudFunction function) {
-    if (project.apis[function.apiName]?.functions[function.name] == null) {
+    final oldFunction =
+        project.apis[function.apiName]?.functions[function.name];
+    if (oldFunction == null) {
       requiresRestart = true;
+      return;
     }
-    function.parameters.forEach(visitNode);
+    if (function.returnType != oldFunction.returnType) {
+      requiresRestart = true;
+      return;
+    }
+    for (final parameter in function.parameters) {
+      visitNode(parameter);
+
+      final oldParameter = oldFunction.parameters.firstWhereOrNull(
+        (oldParameter) => oldParameter.name == parameter.name,
+      );
+      if (oldParameter == null || oldParameter != parameter) {
+        requiresRestart = true;
+        return;
+      }
+    }
     function.metadata.forEach(visitNode);
   }
 
   @override
   void visitParameter(CloudFunctionParameter parameter) {}
-
-  @override
-  void visitProject(Project project) {
-    project.apis.values.forEach(visitApi);
-    project.envVars.forEach(visitEnvironmentVariable);
-  }
 }
