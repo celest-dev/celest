@@ -89,7 +89,7 @@ final class CelestAnalyzer {
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: _reportError,
     );
-    _project.envVars.replace(projectPaths.envManager.envVars);
+    _project.envVars.replace(projectPaths.envManager.reload());
     await _collectApis();
     return CelestAnalysisResult.success(
       project: _project.build(),

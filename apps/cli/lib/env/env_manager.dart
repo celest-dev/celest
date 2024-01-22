@@ -27,6 +27,13 @@ final class EnvManager {
         ),
       );
 
+  Iterable<ast.EnvironmentVariable> reload() {
+    final (env, spans) = _load();
+    _env = env;
+    _spans = spans;
+    return envVars;
+  }
+
   (Map<String, String> env, Map<String, FileSpan> spans) _load() {
     if (!_envFile.existsSync()) {
       _envFile.createSync(recursive: true);
