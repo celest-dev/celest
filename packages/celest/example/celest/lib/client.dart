@@ -11,6 +11,9 @@ import 'package:http/http.dart' as http;
 
 import 'src/client/functions.dart';
 
+export 'exceptions.dart';
+export 'models.dart';
+
 final Celest celest = Celest();
 
 class Celest {
