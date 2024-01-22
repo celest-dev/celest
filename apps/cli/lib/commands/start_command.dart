@@ -28,7 +28,7 @@ final class StartCommand extends CelestCommand with Configure {
       // readLineSync is broken on Windows Terminal
       // https://github.com/dart-lang/sdk/issues/54588
       // https://github.com/microsoft/terminal/issues/16223
-      'Windows' => appName.snakeCase,
+      'windows' => appName.snakeCase,
       _ => cliLogger
           .prompt(
             'Enter a name for your project',
