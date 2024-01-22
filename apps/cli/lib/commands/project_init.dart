@@ -51,7 +51,14 @@ base mixin Configure on CelestCommand {
       await createProject();
     }
 
-    // Ensure existing projects are in DB
+    await _addProjectToDb();
+    await _updateAppPubspec();
+
+    this.isExistingProject = isExistingProject;
+  }
+
+  /// Ensures projects are recorded in the DB
+  Future<void> _addProjectToDb() async {
     final celestPubspec = Pubspec.parse(
       fileSystem
           .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
@@ -71,8 +78,10 @@ base mixin Configure on CelestCommand {
       );
       logger.finest('Created project in DB');
     }
+  }
 
-    // Ensure app has dependency on celest project
+  /// Ensures app has dependency on celest project
+  Future<void> _updateAppPubspec() async {
     final appPubspecFile = fileSystem.file(
       p.join(projectPaths.appRoot, 'pubspec.yaml'),
     );
@@ -98,8 +107,6 @@ base mixin Configure on CelestCommand {
         workingDirectory: projectPaths.appRoot,
       );
     }
-
-    this.isExistingProject = isExistingProject;
   }
 
   Future<void> pubGet({
