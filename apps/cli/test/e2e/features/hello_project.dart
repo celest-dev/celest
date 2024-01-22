@@ -10,8 +10,9 @@ final class HelloProjectTest extends Test {
 
   @override
   Future<void> run() async {
-    final helloExample =
-        Directory.current.uri.resolve('../../examples/hello').toFilePath();
+    final helloExample = Directory.current.uri
+        .resolve('../../celest/packages/celest/example')
+        .toFilePath();
     await celestCommand('start')
         .workingDirectory(helloExample)
         .start()
