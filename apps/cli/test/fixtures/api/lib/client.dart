@@ -80,7 +80,7 @@ class Celest {
     Serializers.instance.put(const ComplexClassSerializer());
     Serializers.instance.put(const Record$rmm4wtSerializer());
     Serializers.instance.put(const NamedFieldsRecordSerializer());
-    Serializers.instance.put(const Record$i0m01qSerializer());
+    Serializers.instance.put(const Record$wkpf9qSerializer());
     Serializers.instance.put(const NestedSerializer());
     Serializers.instance.put(const NullableNestedSerializer());
     Serializers.instance.put(const ShapeSerializer());

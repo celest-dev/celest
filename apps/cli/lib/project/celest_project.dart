@@ -6,7 +6,6 @@ import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
-import 'package:pubspec_parse/pubspec_parse.dart';
 
 /// Static information about the current Celest project.
 final class CelestProject {
@@ -42,24 +41,22 @@ final class CelestProject {
     return project;
   }
 
-  late final Pubspec pubspec = Pubspec.parse(
-    fileSystem
-        .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
-        .readAsStringSync(),
-  );
-  String get packageName => pubspec.name;
+  String get packageName => 'celest_backend';
 
   final ProjectPaths projectPaths;
   AnalysisOptions _analysisOptions;
   AnalysisOptions get analysisOptions => _analysisOptions;
 
-  /// The [AnalysisContext] for the current project.
-  late final AnalysisContext analysisContext = AnalysisContextCollectionImpl(
+  late final _analysisContextCollection = AnalysisContextCollectionImpl(
     includedPaths: [projectPaths.projectRoot],
     sdkPath: Sdk.current.sdkPath,
     // Needed for collecting subtypes.
     enableIndex: true,
-  ).contexts.first;
+  );
+
+  /// The [AnalysisContext] for the current project.
+  late final AnalysisContext analysisContext =
+      _analysisContextCollection.contexts.first;
 
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
@@ -76,5 +73,13 @@ final class CelestProject {
     }
     final changedFiles = await analysisContext.applyPendingFileChanges();
     return changedFiles.toSet();
+  }
+
+  Future<void> close() async {
+    await Future.wait([
+      _analysisContextCollection.dispose(forTesting: true),
+      database.close(),
+    ]);
+    _logger.finest('Closed Celest project');
   }
 }

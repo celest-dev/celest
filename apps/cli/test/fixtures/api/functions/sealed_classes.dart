@@ -1,4 +1,4 @@
-import 'package:api/models.dart';
+import 'package:celest_backend/models.dart';
 
 // Should be able to use the base type.
 double area(Shape shape) => shape.area;

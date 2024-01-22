@@ -75,7 +75,7 @@ final class _Pubspec extends ProjectFile {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
     final pubspec = Pubspec(
-      '${projectName}_celest',
+      'celest_backend',
       description: 'The Celest backend for $projectName.',
       publishTo: 'none',
       environment: {

@@ -2,16 +2,16 @@
 
 import 'dart:typed_data';
 
-import 'package:api/exceptions.dart';
-import 'package:api/src/models/classes.dart';
-import 'package:api/src/models/cycles.dart';
-import 'package:api/src/models/exceptions.dart';
-import 'package:api/src/models/generic_wrappers.dart';
-import 'package:api/src/models/metadata.dart';
-import 'package:api/src/models/parameter_types.dart';
-import 'package:api/src/models/records.dart';
-import 'package:api/src/models/sealed_classes.dart';
 import 'package:celest/celest.dart';
+import 'package:celest_backend/exceptions.dart';
+import 'package:celest_backend/src/models/classes.dart';
+import 'package:celest_backend/src/models/cycles.dart';
+import 'package:celest_backend/src/models/exceptions.dart';
+import 'package:celest_backend/src/models/generic_wrappers.dart';
+import 'package:celest_backend/src/models/metadata.dart';
+import 'package:celest_backend/src/models/parameter_types.dart';
+import 'package:celest_backend/src/models/records.dart';
+import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart';
 import 'package:fast_immutable_collections/src/imap/imap.dart';
 
@@ -1361,11 +1361,11 @@ final class NamedFieldsRecordSerializer extends Serializer<NamedFieldsRecord> {
       };
 }
 
-final class Record$i0m01qSerializer extends Serializer<Record$i0m01q> {
-  const Record$i0m01qSerializer();
+final class Record$wkpf9qSerializer extends Serializer<Record$wkpf9q> {
+  const Record$wkpf9qSerializer();
 
   @override
-  Record$i0m01q deserialize(Object? value) {
+  Record$wkpf9q deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       aliased: Serializers.instance
@@ -1377,7 +1377,7 @@ final class Record$i0m01qSerializer extends Serializer<Record$i0m01q> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$i0m01q value) => {
+  Map<String, Object?> serialize(Record$wkpf9q value) => {
         r'aliased':
             Serializers.instance.serialize<NamedFieldsRecord>(value.aliased),
         r'nonAliased': Serializers.instance
@@ -1664,7 +1664,7 @@ final class RectangleWithOverriddenCustomJsonSerializer
 
 typedef Record$k7x4l9 = ({String a, String b, String c});
 typedef Record$rmm4wt = ({String anotherField, String field});
-typedef Record$i0m01q = ({
+typedef Record$wkpf9q = ({
   NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });

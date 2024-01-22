@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:api/models.dart';
+import 'package:celest_backend/models.dart';
 
 Future<void> simple(
   String aString,

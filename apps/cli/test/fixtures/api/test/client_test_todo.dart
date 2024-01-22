@@ -1,4 +1,4 @@
-import 'package:api/client.dart';
+import 'package:celest_backend/client.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -6,15 +6,15 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:typed_data' as _i10;
 
-import 'package:api/src/models/classes.dart' as _i2;
-import 'package:api/src/models/cycles.dart' as _i3;
-import 'package:api/src/models/exceptions.dart' as _i4;
-import 'package:api/src/models/generic_wrappers.dart' as _i8;
-import 'package:api/src/models/metadata.dart' as _i9;
-import 'package:api/src/models/parameter_types.dart' as _i6;
-import 'package:api/src/models/records.dart' as _i11;
-import 'package:api/src/models/sealed_classes.dart' as _i12;
 import 'package:celest/celest.dart' as _i1;
+import 'package:celest_backend/src/models/classes.dart' as _i2;
+import 'package:celest_backend/src/models/cycles.dart' as _i3;
+import 'package:celest_backend/src/models/exceptions.dart' as _i4;
+import 'package:celest_backend/src/models/generic_wrappers.dart' as _i8;
+import 'package:celest_backend/src/models/metadata.dart' as _i9;
+import 'package:celest_backend/src/models/parameter_types.dart' as _i6;
+import 'package:celest_backend/src/models/records.dart' as _i11;
+import 'package:celest_backend/src/models/sealed_classes.dart' as _i12;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i5;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i7;
 

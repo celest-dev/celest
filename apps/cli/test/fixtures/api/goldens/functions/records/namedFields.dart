@@ -1,9 +1,9 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:api/src/models/records.dart' as _i4;
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
+import 'package:celest_backend/src/models/records.dart' as _i4;
 
 import '../../../functions/records.dart' as _i2;
 
@@ -36,7 +36,7 @@ final class NamedFieldsTarget extends _i1.CloudFunctionTarget {
   void init() {
     _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
     _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
-    _i3.Serializers.instance.put(const Record$i0m01qSerializer());
+    _i3.Serializers.instance.put(const Record$wkpf9qSerializer());
   }
 }
 
@@ -46,7 +46,7 @@ Future<void> main(List<String> args) async {
   );
 }
 
-typedef Record$i0m01q = ({
+typedef Record$wkpf9q = ({
   _i4.NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
@@ -91,11 +91,11 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
       };
 }
 
-final class Record$i0m01qSerializer extends _i3.Serializer<Record$i0m01q> {
-  const Record$i0m01qSerializer();
+final class Record$wkpf9qSerializer extends _i3.Serializer<Record$wkpf9q> {
+  const Record$wkpf9qSerializer();
 
   @override
-  Record$i0m01q deserialize(Object? value) {
+  Record$wkpf9q deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       aliased: _i3.Serializers.instance
@@ -107,7 +107,7 @@ final class Record$i0m01qSerializer extends _i3.Serializer<Record$i0m01q> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$i0m01q value) => {
+  Map<String, Object?> serialize(Record$wkpf9q value) => {
         r'aliased': _i3.Serializers.instance
             .serialize<_i4.NamedFieldsRecord>(value.aliased),
         r'nonAliased': _i3.Serializers.instance

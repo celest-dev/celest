@@ -4,7 +4,7 @@
 /// underlying types to JSON (Object Function(T) toJsonT).
 library;
 
-import 'package:api/models.dart';
+import 'package:celest_backend/models.dart';
 
 GenericWrappers genericWrappers(GenericWrappers value) => value;
 Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async =>

@@ -7,16 +7,16 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:api/exceptions.dart';
-import 'package:api/src/models/classes.dart';
-import 'package:api/src/models/cycles.dart';
-import 'package:api/src/models/exceptions.dart';
-import 'package:api/src/models/generic_wrappers.dart';
-import 'package:api/src/models/metadata.dart';
-import 'package:api/src/models/parameter_types.dart';
-import 'package:api/src/models/records.dart';
-import 'package:api/src/models/sealed_classes.dart';
 import 'package:celest/celest.dart';
+import 'package:celest_backend/exceptions.dart';
+import 'package:celest_backend/src/models/classes.dart';
+import 'package:celest_backend/src/models/cycles.dart';
+import 'package:celest_backend/src/models/exceptions.dart';
+import 'package:celest_backend/src/models/generic_wrappers.dart';
+import 'package:celest_backend/src/models/metadata.dart';
+import 'package:celest_backend/src/models/parameter_types.dart';
+import 'package:celest_backend/src/models/records.dart';
+import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart';
 import 'package:fast_immutable_collections/src/imap/imap.dart';
@@ -1528,10 +1528,6 @@ class CelestFunctionsMetadata {
     }
   }
 
-  @MyAnnotation.create(
-    'positional',
-    named: 'named',
-  )
   Future<void> hasNamedConstructedAnnotation() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-named-constructed-annotation'),
@@ -1560,38 +1556,8 @@ class CelestFunctionsMetadata {
     }
   }
 
-  @Literals(
-    string: 'string',
-    intValue: 1,
-    doubleValue: 1.0,
-    boolValue: true,
-    list: ['list'],
-    map: {'map': 'map'},
-    enumValue: LiteralEnum.a,
-    recordValue: const (a: 'a', b: 'b', c: 'c'),
-  )
   Future<void> hasLiteralsAnnotation(
-    @Literals(
-      string: 'string',
-      intValue: 1,
-      doubleValue: 1.0,
-      boolValue: true,
-      list: ['list'],
-      map: {'map': 'map'},
-      enumValue: LiteralEnum.a,
-      recordValue: const (a: 'a', b: 'b', c: 'c'),
-    )
     String value, {
-    @Literals(
-      string: 'string',
-      intValue: 1,
-      doubleValue: 1.0,
-      boolValue: true,
-      list: ['list'],
-      map: {'map': 'map'},
-      enumValue: LiteralEnum.a,
-      recordValue: const (a: 'a', b: 'b', c: 'c'),
-    )
     required String named,
   }) async {
     final $response = await celest.httpClient.post(
@@ -1625,10 +1591,9 @@ class CelestFunctionsMetadata {
     }
   }
 
-  @exportable
   Future<void> hasExportableAnnotation(
-    @exportable String value, {
-    @exportable String named = 'named',
+    String value, {
+    String named = 'named',
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-exportable-annotation'),
@@ -1661,10 +1626,9 @@ class CelestFunctionsMetadata {
     }
   }
 
-  @Exportable()
   Future<void> hasExportableConstructedAnnotation(
-    @Exportable() String value, {
-    @Exportable() String named = 'named',
+    String value, {
+    String named = 'named',
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-exportable-constructed-annotation'),
@@ -1697,10 +1661,9 @@ class CelestFunctionsMetadata {
     }
   }
 
-  @notExportable
   Future<void> hasNotExportableAnnotation(
-    @notExportable String value, {
-    @notExportable String named = 'named',
+    String value, {
+    String named = 'named',
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-not-exportable-annotation'),

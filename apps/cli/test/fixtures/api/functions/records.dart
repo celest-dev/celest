@@ -2,7 +2,7 @@
 /// deserializable.
 library;
 
-import 'package:api/models.dart';
+import 'package:celest_backend/models.dart';
 
 ({
   String field,
