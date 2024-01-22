@@ -124,10 +124,10 @@ final class ClientFunctionsGenerator {
               }),
               // Don't include a body for functions with no parameters to save
               // on a `jsonEncode` call.
-              if (function.parameters.isNotEmpty)
+              if (clientParameters.isNotEmpty)
                 'body': DartTypes.convert.jsonEncode.call([
                   literalMap({
-                    for (final parameter in function.parameters)
+                    for (final parameter in clientParameters)
                       literalString(parameter.name, raw: true):
                           jsonGenerator.toJson(
                         parameter.type,
@@ -231,7 +231,7 @@ final class ClientFunctionsGenerator {
       final allTypes = Set.of(
         [
           function.flattenedReturnType,
-          ...function.parameters.map((p) => p.type),
+          ...clientParameters.map((p) => p.type),
           ...function.exceptionTypes,
         ].where((type) => !type.isFunctionContext),
       );
