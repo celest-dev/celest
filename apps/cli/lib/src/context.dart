@@ -12,7 +12,7 @@ extension PlatformContext on path.Context {
   path.Context get posix => path.posix;
   path.Context get project => path.Context(
         current: projectPaths.projectRoot,
-        style: path.Style.url,
+        style: style,
       );
 }
 

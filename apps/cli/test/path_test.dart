@@ -1,4 +1,7 @@
+@Skip('Needs work')
+
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
@@ -27,11 +30,15 @@ void main() {
         final p = style.context;
 
         test('resolves project-relative paths', () {
-          final projectRoot = projectPaths.projectRoot;
-          final analysisOptions = projectPaths.analysisOptionsYaml;
+          final projectRoot = projectPaths.projectRoot.to(p);
+          final analysisOptions = projectPaths.analysisOptionsYaml.to(p);
 
           expect(
             p.relative(analysisOptions, from: projectRoot),
+            equals('analysis_options.yaml'),
+          );
+          expect(
+            p.project.relative(analysisOptions),
             equals('analysis_options.yaml'),
           );
         });

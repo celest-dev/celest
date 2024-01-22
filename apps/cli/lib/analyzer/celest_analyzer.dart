@@ -16,12 +16,14 @@ import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -34,10 +36,8 @@ enum CustomType {
   exception;
 
   String get expectedPath => switch (this) {
-        CustomType.model =>
-          p.join(projectPaths.projectRoot, 'lib', 'models.dart'),
-        CustomType.exception =>
-          p.join(projectPaths.projectRoot, 'lib', 'exceptions.dart'),
+        CustomType.model => ClientPaths.models,
+        CustomType.exception => ClientPaths.exceptions,
       };
 }
 
@@ -447,10 +447,12 @@ final class CelestAnalyzer {
         _exceptionsLibrary?.element.exportNamespace.get(symbol),
     };
     if (element == null) {
-      final expectedPath = p.relative(
-        type.expectedPath,
-        from: projectPaths.projectRoot,
-      );
+      final expectedPath = p
+          .relative(
+            type.expectedPath,
+            from: projectPaths.projectRoot,
+          )
+          .to(p.url);
       _reportError(
         'Types referenced in APIs must be defined in the `celest/$expectedPath`'
         ' file or exported from that file.',

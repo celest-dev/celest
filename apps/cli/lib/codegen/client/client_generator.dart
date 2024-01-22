@@ -118,7 +118,10 @@ final class ClientGenerator {
               .property('instance')
               .property('put')
               .call([
-            refer(serializer.name, ClientPaths.serializers).constInstance([]),
+            refer(
+              serializer.name,
+              p.toUri(ClientPaths.serializers).toString(),
+            ).constInstance([]),
           ]),
         );
       }

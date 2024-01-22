@@ -1,6 +1,7 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/path.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:path/path.dart' as path;
 
 enum PrefixingStrategy {
   indexed,
@@ -21,6 +22,10 @@ final class CelestAllocator implements Allocator {
   final String forFile;
   final PrefixingStrategy prefixingStrategy;
 
+  late final _fileContext = path.Context(
+    current: p.dirname(forFile),
+    style: p.style,
+  );
   final _imports = <String, String?>{};
   var _keys = 1;
 
@@ -33,26 +38,22 @@ final class CelestAllocator implements Allocator {
     }
     // Fix `file://` and root-relative paths to be relative to the current file.
     final uri = Uri.parse(url);
-    if (uri.scheme == 'file' && p.equals(p.fromUri(uri), forFile)) {
-      return symbol;
+    switch (uri.scheme) {
+      case 'file' || '':
+        final urlPath = p.fromUri(uri);
+        if (p.equals(urlPath, forFile)) {
+          return symbol;
+        }
+        url = p.isRelative(urlPath)
+            ? urlPath.to(p.url)
+            : _fileContext.relative(urlPath).to(p.url);
+      case 'project':
+        url = _fileContext
+            .relative(p.join(projectPaths.projectRoot, uri.path))
+            .to(p.url);
+      case _:
+        break;
     }
-    url = switch (uri.scheme) {
-      'project' => p
-          .relative(
-            p.joinAll([projectPaths.projectRoot, ...p.split(uri.path)]),
-            from: p.dirname(forFile),
-          )
-          .to(p.url),
-      '' || 'file' => p.isRelative(uri.path)
-          ? url.replaceAll(p.separator, p.url.separator)
-          : p
-              .relative(
-                p.fromUri(uri),
-                from: p.dirname(forFile),
-              )
-              .to(p.url),
-      _ => url,
-    };
     return _importFor(url, symbol);
   }
 
