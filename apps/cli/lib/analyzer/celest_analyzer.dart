@@ -373,6 +373,31 @@ final class CelestAnalyzer {
     }
   }
 
+  /// Ensures that a referenced type which will be surfaced in the client
+  /// is defined in the `lib/` directory.
+  void _ensureClientReferenceable(
+    Reference reference,
+    SourceSpan location, {
+    String expectedLocation = 'celest/lib/models.dart',
+  }) {
+    final url = reference.url;
+    if (url == null) {
+      return;
+    }
+    final uri = Uri.parse(url);
+    if (uri.scheme case 'package' || 'dart') {
+      return;
+    }
+    final filepath = projectPaths.denormalizeUri(uri).toFilePath();
+    if (!p.isWithin(projectPaths.projectLib, filepath)) {
+      _reportError(
+        'Types referenced in APIs must be defined in the `$expectedLocation` '
+        'file or imported from an external package.',
+        location: location,
+      );
+    }
+  }
+
   Future<ast.Api?> _collectApi({
     required String apiName,
     required String apiFile,
@@ -402,14 +427,20 @@ final class CelestAnalyzer {
           typeHelper.coreExceptionType,
         ]);
         for (final exceptionType in exceptionTypes) {
+          final exceptionTypeLoc =
+              exceptionCollector.exceptionTypeLocations[exceptionType]!;
+          _ensureClientReferenceable(
+            typeHelper.toReference(exceptionType),
+            exceptionTypeLoc,
+            expectedLocation: 'celest/lib/exceptions.dart',
+          );
           final isSerializable = typeHelper.isSerializable(exceptionType);
           if (!isSerializable.isSerializable) {
             for (final reason in isSerializable.reasons) {
               _reportError(
                 'The type of a thrown exception must be serializable as JSON. '
                 '$exceptionType is not serializable: $reason',
-                location:
-                    exceptionCollector.exceptionTypeLocations[exceptionType],
+                location: exceptionTypeLoc,
               );
             }
           }
@@ -419,12 +450,15 @@ final class CelestAnalyzer {
           name: func.name,
           apiName: apiName,
           parameters: await func.parameters.asyncMap((param) async {
+            final paramType = typeHelper.toReference(param.type);
+            final paramLoc = param.sourceLocation;
+            _ensureClientReferenceable(paramType, paramLoc);
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
-              type: typeHelper.toReference(param.type),
+              type: paramType,
               required: param.isRequired,
               named: param.isNamed,
-              location: param.sourceLocation,
+              location: paramLoc,
               references: _parameterReference(param),
               annotations: param.metadata
                   .map((annotation) => annotation.toCodeBuilder)
@@ -483,6 +517,11 @@ final class CelestAnalyzer {
               .nonNulls
               .toList(),
           docs: func.docLines,
+        );
+
+        _ensureClientReferenceable(
+          typeHelper.toReference(func.returnType),
+          func.sourceLocation,
         );
 
         var hasContext = false;

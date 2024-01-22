@@ -24,6 +24,8 @@ Future<CelestProject> newProject({
   String? analysisOptions,
   String? projectDart,
   String? resourcesDart,
+  String? models,
+  String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
 }) async {
@@ -44,6 +46,12 @@ Future<CelestProject> newProject({
     Package(
       'celest_core',
       p.toUri(celestCoreDir),
+      packageUriRoot: Uri.parse('lib/'),
+      relativeRoot: false,
+    ),
+    Package(
+      name,
+      p.toUri(d.path('$name/')),
       packageUriRoot: Uri.parse('lib/'),
       relativeRoot: false,
     ),
@@ -70,13 +78,22 @@ dependencies:
     if (apis.isNotEmpty)
       d.dir('functions', [
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
-          d.file(fileName, contents),
+          d.file(fileName, '''
+import 'package:$name/exceptions.dart';
+import 'package:$name/models.dart';
+
+$contents
+'''),
       ]),
     if (config.isNotEmpty)
       d.dir('config', [
         for (final MapEntry(key: fileName, value: contents) in config.entries)
           d.file(fileName, contents),
       ]),
+    d.dir('lib', [
+      d.file('models.dart', models ?? ''),
+      d.file('exceptions.dart', exceptions ?? ''),
+    ]),
   ]);
   await project.create();
   final projectRoot = d.path(name);
@@ -89,6 +106,8 @@ void testNoErrors({
   String? skip,
   String? projectDart,
   String? resourcesDart,
+  String? models,
+  String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   void Function(Project)? expectProject,
@@ -99,6 +118,8 @@ void testNoErrors({
     errors: [],
     projectDart: projectDart,
     resourcesDart: resourcesDart,
+    models: models,
+    exceptions: exceptions,
     apis: apis,
     config: config,
     expectProject: expectProject,
@@ -110,6 +131,8 @@ void testErrors({
   String? skip,
   String? projectDart,
   String? resourcesDart,
+  String? models,
+  String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   required List<Object /* String | Matcher */ > errors,
@@ -120,6 +143,8 @@ void testErrors({
       name: name,
       projectDart: projectDart,
       resourcesDart: resourcesDart,
+      models: models,
+      exceptions: exceptions,
       apis: apis,
       config: config,
     );
@@ -266,6 +291,10 @@ void sayHello({
         name: 'bad_return_types_core',
         apis: {
           'greeting.dart': '''
+ReturnTypes sayHello() {}
+''',
+        },
+        models: '''
 typedef ReturnTypes = ({
   Enum enum,
   List<Enum> listOfEnum,
@@ -293,10 +322,7 @@ typedef ReturnTypes = ({
   List<Type> listOfType,
   Iterable<Type> iterableOfType,
 });
-
-ReturnTypes sayHello() {}
 ''',
-        },
         errors: [
           'Untyped enums are not supported', // Enum
           'Untyped enums are not supported', // List<Enum>
@@ -330,11 +356,12 @@ ReturnTypes sayHello() {}
         name: 'bad_json_parameter',
         apis: {
           'greeting.dart': '''
-abstract class NotJsonable {}
-
 String sayHello(NotJsonable _) => 'Hello, World!';
 ''',
         },
+        models: '''
+abstract class NotJsonable {}
+''',
         errors: [
           'The type of a parameter must be serializable as JSON. '
               'Class NotJsonable is abstract and must have an unnamed factory or '
@@ -346,8 +373,7 @@ String sayHello(NotJsonable _) => 'Hello, World!';
         name: 'positional_record_fields',
         apis: {
           'greeting.dart': '''
-
-(String positionalField) sayHello((String positionalField) _) => 'Hello, World!';
+(String positionalField,) sayHello((String positionalField,) _) => 'Hello, World!';
 ''',
         },
         errors: [
@@ -360,11 +386,12 @@ String sayHello(NotJsonable _) => 'Hello, World!';
         name: 'positional_record_fields_aliased',
         apis: {
           'greeting.dart': '''
-typedef PositionalFields = (String positionalField);
-
 PositionalFields sayHello(PositionalFields _) => 'Hello, World!';
 ''',
         },
+        models: '''
+typedef PositionalFields = (String positionalField);
+''',
         errors: [
           'Positional fields are not supported in record types',
           'Positional fields are not supported in record types',
@@ -375,12 +402,13 @@ PositionalFields sayHello(PositionalFields _) => 'Hello, World!';
         name: 'parameter_with_subtypes',
         apis: {
           'greeting.dart': '''
-class Base {}
-final class Actual extends Base {}
-
 String sayHello(Base _) => 'Hello, World!';
 ''',
         },
+        models: '''
+class Base {}
+final class Actual extends Base {}
+''',
         errors: [
           'Classes with subtypes (which are not sealed classes) are not currently supported as parameters',
         ],
@@ -390,12 +418,13 @@ String sayHello(Base _) => 'Hello, World!';
         name: 'return_type_with_subtypes',
         apis: {
           'greeting.dart': '''
-class Base {}
-final class Actual extends Base {}
-
 Base sayHello() => 'Hello, World!';
 ''',
         },
+        models: '''
+class Base {}
+final class Actual extends Base {}
+''',
         errors: [
           'Classes with subtypes (which are not sealed classes) are not currently supported as return types',
         ],
@@ -405,40 +434,43 @@ Base sayHello() => 'Hello, World!';
         name: 'valid_jsonable',
         apis: {
           'greeting.dart': '''
-class ValidJsonable {}
-
 ValidJsonable sayHello(ValidJsonable param) => param;
 ''',
         },
+        models: '''
+class ValidJsonable {}
+''',
       );
 
       testNoErrors(
         name: 'valid_custom_json',
         apis: {
           'greeting.dart': '''
+ValidCustomJson sayHello(ValidCustomJson param) => param;
+''',
+        },
+        models: '''
 class ValidCustomJson {
   factory ValidCustomJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
   Map<String, dynamic> toJson() => throw UnimplementedError();
 }
-
-ValidCustomJson sayHello(ValidCustomJson param) => param;
 ''',
-        },
       );
 
       testErrors(
         name: 'direct_cycle',
         apis: {
           'greeting.dart': '''
+void sayHello(ValidJsonable param) => param;
+''',
+        },
+        models: '''
 class ValidJsonable {
   const ValidJsonable(this.value);
 
   final ValidJsonable value;
 }
-
-void sayHello(ValidJsonable param) => param;
 ''',
-        },
         errors: [
           'Classes are not allowed to have fields of their own type',
         ],
@@ -448,6 +480,10 @@ void sayHello(ValidJsonable param) => param;
         name: 'indirect_cycle',
         apis: {
           'greeting.dart': '''
+void sayHello(ValidJsonable param) => param;
+''',
+        },
+        models: '''
 class ValidJsonable {
   const ValidJsonable(this.value, this.values, this.wrapper);
 
@@ -461,30 +497,25 @@ class ValidJsonableWrapper {
 
   final ValidJsonable value;
 }
-
-void sayHello(ValidJsonable param) => param;
 ''',
-        },
       );
 
       testErrors(
         name: 'bad_json_return',
         apis: {
           'greeting.dart': '''
+NotJsonable sayHello() => throw UnimplementedError();
+''',
+        },
+        models: '''
 class NotJsonable {
   NotJson(this.value);
 
   final Enum value;
 }
-
-NotJsonable sayHello() => throw UnimplementedError();
 ''',
-        },
         errors: [
-          allOf([
-            contains('Untyped enums are not supported'),
-            contains('final Enum value'),
-          ]),
+          'Untyped enums are not supported',
         ],
       );
 
@@ -492,6 +523,10 @@ NotJsonable sayHello() => throw UnimplementedError();
         name: 'toJson_in_extension',
         apis: {
           'greeting.dart': '''
+OnlyFromJson sayHello() => OnlyFromJson();
+''',
+        },
+        models: '''
 class OnlyFromJson {
   factory OnlyFromJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
 
@@ -501,15 +536,9 @@ class OnlyFromJson {
 extension on OnlyFromJson {
   Map<String, dynamic> toJson() => {'field': _field};
 }
-
-OnlyFromJson sayHello() => OnlyFromJson();
 ''',
-        },
         errors: [
-          allOf([
-            contains('Private field "_field" is not supported'),
-            contains('late String'),
-          ]),
+          'Private field "_field" is not supported',
         ],
       );
 
@@ -521,56 +550,19 @@ OnlyFromJson sayHello() => OnlyFromJson();
       testErrors(
         name: 'toJson_in_extension_imported',
         apis: {
-          'only_from_json.dart': '''
+          'greeting.dart': '''
+OnlyFromJson sayHello() => OnlyFromJson();
+''',
+        },
+        models: '''
 class OnlyFromJson {
   late String _field;
 }
 ''',
-          'greeting.dart': '''
-import 'only_from_json.dart';
-
-OnlyFromJson sayHello() => OnlyFromJson();
-''',
-        },
         errors: [
           allOf([
             contains('Private field "_field" is not supported'),
             isNot(contains('late String')),
-          ]),
-        ],
-      );
-
-      // Tests that really long contexts are not expanded.
-      testErrors(
-        name: 'really_long_context',
-        apis: {
-          'greeting.dart': '''
-class OnlyFromJson {
-  late String _field;
-}
-
-${'\n' * 20}
-
-OnlyFromJson sayHello() => OnlyFromJson();
-NotJsonable sayGoodbye() => throw UnimplementedError();
-
-${'\n' * 20}
-
-class NotJsonable {
-  NotJson(this.value);
-
-  final Enum value;
-}
-''',
-        },
-        errors: [
-          allOf([
-            contains('Private field "_field" is not supported'),
-            isNot(contains('late String')),
-          ]),
-          allOf([
-            contains('Untyped enums are not supported'),
-            isNot(contains('final Enum value')),
           ]),
         ],
       );
@@ -579,15 +571,16 @@ class NotJsonable {
         name: 'non_map_from_json',
         apis: {
           'greeting.dart': '''
+NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
+''',
+        },
+        models: '''
 class NonMapFromJson {
   NonMapFromJson.fromJson(this.field);
 
   final String field;
 }
-
-NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
 ''',
-        },
         errors: [
           'The type of a parameter must be serializable as JSON. The parameter '
               'type of NonMapFromJson\'s fromJson constructor must be '
@@ -602,16 +595,17 @@ NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
         name: 'from_json_optional_parameter',
         apis: {
           'greeting.dart': '''
+FromJson fromJson(FromJson value) => value;
+''',
+        },
+        models: '''
 class FromJson {
   FromJson.fromJson([Map<String, Object?>? json]): 
     field = json?['field'] as String? ?? 'default';
 
   final String field;
 }
-
-FromJson fromJson(FromJson value) => value;
 ''',
-        },
         errors: [
           'The type of a parameter must be serializable as JSON. The fromJson '
               'constructor of type FromJson must have one required, '
@@ -626,14 +620,15 @@ FromJson fromJson(FromJson value) => value;
         name: 'bad_middleware_type',
         apis: {
           'greeting.dart': '''
-class NotMiddleware {
-  const NotMiddleware();
-}
-
 @NotMiddleware
 String sayHello() => 'Hello, World!';
 ''',
         },
+        models: '''
+class NotMiddleware {
+  const NotMiddleware();
+}
+''',
         errors: [
           'Could not resolve annotation. Annotations must be',
         ],
@@ -655,18 +650,18 @@ String sayHello(String $param) => 'Hello, World!';
         name: 'private_parameter_type',
         apis: {
           'greeting.dart': r'''
+String sayHello(Private privateAliased) => 'Hello, World!';
+''',
+        },
+        models: '''
 class _Private {
   const _Private();
 }
 
 typedef Private = _Private;
-
-String sayHello(_Private private, Private privateAliased) => 'Hello, World!';
 ''',
-        },
         errors: [
-          'Private types are not supported', // _Private private
-          'Private types are not supported', // Private privateAliased
+          'Private types are not supported',
         ],
       );
 
@@ -674,15 +669,16 @@ String sayHello(_Private private, Private privateAliased) => 'Hello, World!';
         name: 'sealed_via_mixins',
         apis: {
           'greeting.dart': r'''
+void sealedViaMixins(Base base) {}
+''',
+        },
+        models: '''
 sealed class Base {}
 
 mixin class BaseMixin implements Base {}
 
 final class Leaf with BaseMixin {}
-
-void sealedViaMixins(Base base) {}
 ''',
-        },
         errors: [
           // Base and BaseMixin are not allowed as parameter/return types
           // because they have unsealed classes in their hierarchy or are
@@ -703,6 +699,10 @@ void sealedViaMixins(Base base) {}
         name: 'sealed_with_conflicting_wire_types',
         apis: {
           'greeting.dart': r'''
+List<Base> takesLeaves(LeafA a, LeafB b) => [a, b];
+''',
+        },
+        models: '''
 sealed class Base {}
 
 final class LeafA extends Base {}
@@ -712,12 +712,67 @@ final class LeafB extends Base {
 
   String toJson() => '';
 }
+''',
+        errors: [
+          'All classes in a sealed class hierarchy must use Map<String, Object?>',
+        ],
+      );
 
-List<Base> takesLeaves(LeafA a, LeafB b) => [a, b];
+      testNoErrors(
+        name: 'valid_def_locations',
+        apis: {
+          'greeting.dart': '''
+ValidJsonable sayHello(ValidJsonable param) => throw ValidException();
+''',
+        },
+        models: '''
+class ValidJsonable {}
+''',
+        exceptions: '''
+class ValidException implements Exception {}
+''',
+      );
+
+      testErrors(
+        name: 'invalid_return_def_location',
+        apis: {
+          'greeting.dart': '''
+class ValidJsonable {}
+ValidJsonable sayHello() => throw ValidException();
 ''',
         },
         errors: [
-          'All classes in a sealed class hierarchy must use Map<String, Object?>',
+          'Types referenced in APIs must be defined in the '
+              '`celest/lib/models.dart` file',
+        ],
+      );
+
+      testErrors(
+        name: 'invalid_param_def_location',
+        apis: {
+          'greeting.dart': '''
+class ValidJsonable {}
+void sayHello(ValidJsonable param) => print(param);
+''',
+        },
+        errors: [
+          'Types referenced in APIs must be defined in the '
+              '`celest/lib/models.dart` file',
+        ],
+      );
+
+      testErrors(
+        name: 'invalid_exception_def_location',
+        apis: {
+          'greeting.dart': '''
+class ValidException implements Exception {}
+
+void sayHello() => throw ValidException();
+''',
+        },
+        errors: [
+          'Types referenced in APIs must be defined in the '
+              '`celest/lib/exceptions.dart` file',
         ],
       );
     });

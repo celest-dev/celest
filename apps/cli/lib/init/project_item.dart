@@ -143,6 +143,20 @@ void main() {
 }
 ''',
       ),
+      _createFile(
+        p.join(projectRoot, 'lib', 'models.dart'),
+        '''
+// By convention, any custom types used within an API request/response are
+// defined in the `lib/models.dart` file of your Celest project.
+''',
+      ),
+      _createFile(
+        p.join(projectRoot, 'lib', 'exceptions.dart'),
+        '''
+// By convention, any custom exception types thrown by an API are defined in
+// the `lib/exceptions.dart` file of your Celest project.
+''',
+      ),
     ]);
   }
 }
