@@ -184,7 +184,7 @@ final class CelestFrontend implements Closeable {
               projectOutputs: projectOutputs,
             );
             currentProgress.complete(
-              'Celest is running at http://localhost:${projectOutputs.port}',
+              'Celest is running and watching for updates',
             );
 
             _didFirstCompile = true;
