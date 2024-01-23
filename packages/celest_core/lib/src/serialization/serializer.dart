@@ -109,7 +109,8 @@ final class _Serializers extends Serializers {
     final serializer = get<Dart>();
     if (serializer == null) {
       throw SerializationException(
-        'No serializer found for $Dart. Did you forget to put() it?',
+        'No serializer found for $Dart. Did you forget to call `celest.init()` '
+        "at the start of your Flutter app's `main` function?",
       );
     }
     return serializer;
