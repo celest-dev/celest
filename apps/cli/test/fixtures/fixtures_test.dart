@@ -15,7 +15,6 @@ import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -93,14 +92,6 @@ class TestRunner {
         goldensDir.createSync();
         client = Client();
         residentCompiler ??= (await ResidentCompiler.ensureRunning())!;
-      });
-
-      setUp(() {
-        testOverrideErrorData = {};
-      });
-
-      tearDown(() {
-        testOverrideErrorData = null;
       });
 
       tearDownAll(() {
