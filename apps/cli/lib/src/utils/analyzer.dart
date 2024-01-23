@@ -328,10 +328,8 @@ extension ElementAnnotationSourceLocation on ElementAnnotation {
 }
 
 extension SourceToSpan on Source {
-  static final _sourceFiles = <Source, SourceFile>{};
-
   FileSpan toSpan(int start, [int? end]) {
-    final sourceFile = _sourceFiles[this] ??= SourceFile.fromString(
+    final sourceFile = SourceFile.fromString(
       contents.data,
       url: uri,
     );

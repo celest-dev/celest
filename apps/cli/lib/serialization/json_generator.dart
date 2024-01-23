@@ -23,7 +23,7 @@ final class JsonGenerator {
       return ref;
     }
     if (dartType.isDartCoreEnum || dartType.isDartCoreSet) {
-      throw unreachable('Should have been caught in checker');
+      unreachable('Should have been caught in checker');
     }
     if (dartType.isDartCoreIterable || dartType.isDartCoreList) {
       final element = refer('el');

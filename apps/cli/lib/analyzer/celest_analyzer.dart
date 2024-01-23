@@ -342,7 +342,7 @@ final class CelestAnalyzer {
     if (!validEnvTypes.isExactlyType(parameter.type)) {
       _reportError(
         'The type of an environment variable parameter must be one of: '
-        '`String`, `int`, `double`, `num`, or `bool`',
+        '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
         location: parameter.sourceLocation,
       );
       return null;

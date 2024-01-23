@@ -920,7 +920,7 @@ void sayHello(@resources.env.myName List<String> name) => 'Hello, $name';
         },
         errors: [
           'The type of an environment variable parameter must be one of: '
-              '`String`, `int`, `double`, `num`, or `bool`',
+              '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
         ],
       );
 

@@ -30,7 +30,7 @@ base mixin Configure on CelestCommand {
         'No pubspec.yaml file found in the current directory.',
       );
     }
-    final pubspecYaml = pubspecFile.readAsStringSync();
+    final pubspecYaml = await pubspecFile.readAsString();
     pubspec = Pubspec.parse(pubspecYaml);
 
     final (celestDir, isExistingProject) =
@@ -60,9 +60,9 @@ base mixin Configure on CelestCommand {
   /// Ensures projects are recorded in the DB
   Future<void> _addProjectToDb() async {
     final celestPubspec = Pubspec.parse(
-      fileSystem
+      await fileSystem
           .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
-          .readAsStringSync(),
+          .readAsString(),
     );
     logger.finest('Checking if project exists in DB...');
     final dbProject = await celestProject.database
