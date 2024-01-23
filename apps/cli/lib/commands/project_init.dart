@@ -27,7 +27,8 @@ base mixin Configure on CelestCommand {
     );
     if (!pubspecFile.existsSync()) {
       throw const CelestException(
-        'No pubspec.yaml file found in the current directory.',
+        'No pubspec.yaml file found in the current directory. '
+        'Make sure to run this command from your Flutter project directory.',
       );
     }
     final pubspecYaml = await pubspecFile.readAsString();

@@ -23,12 +23,19 @@ final class StartCommand extends CelestCommand with Configure {
       );
     }
 
-    final appName = pubspec.name;
+    final appName = pubspec.name.snakeCase;
+    if (appName == 'celest') {
+      throw const CelestException(
+        'Your Flutter project name cannot be "celest". Please change it in '
+        'pubspec.yaml and run `celest start` again.',
+      );
+    }
+
     final projectName = switch (platform.operatingSystem) {
       // readLineSync is broken on Windows Terminal
       // https://github.com/dart-lang/sdk/issues/54588
       // https://github.com/microsoft/terminal/issues/16223
-      'windows' => appName.snakeCase,
+      'windows' => appName,
       _ => cliLogger
           .prompt(
             'Enter a name for your project',
