@@ -52,7 +52,7 @@ final class CelestUpgrader {
       <String>[
         'powershell',
         '-Command',
-        '{ Add-AppxPackage -Path "${installerAppx.path}" -DeferRegistrationWhenPackagesAreInUse }',
+        'Add-AppxPackage -Path "${installerAppx.path}" -DeferRegistrationWhenPackagesAreInUse',
       ],
       stdoutEncoding: utf8,
       stderrEncoding: utf8,

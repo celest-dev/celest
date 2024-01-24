@@ -94,7 +94,7 @@ class CelestUninstaller {
           [
             'powershell',
             '-Command',
-            '{ Get-AppxPackage -Name "$windowsPackageName" | Remove-AppxPackage -Confirm:\$false }',
+            'Get-AppxPackage -Name "$windowsPackageName" | Remove-AppxPackage -Confirm:\$false',
           ],
           stdoutEncoding: utf8,
           stderrEncoding: utf8,

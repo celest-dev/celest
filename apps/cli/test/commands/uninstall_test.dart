@@ -54,7 +54,7 @@ void main() {
             [
               'powershell',
               '-Command',
-              r'{ Get-AppxPackage -Name "Celest.CLI" | Remove-AppxPackage -Confirm:$false }',
+              r'Get-AppxPackage -Name "Celest.CLI" | Remove-AppxPackage -Confirm:$false',
             ],
             stdoutEncoding: any(named: 'stdoutEncoding'),
             stderrEncoding: any(named: 'stderrEncoding'),
@@ -72,7 +72,7 @@ void main() {
             [
               'powershell',
               '-Command',
-              r'{ Get-AppxPackage -Name "Celest.CLI" | Remove-AppxPackage -Confirm:$false }',
+              r'Get-AppxPackage -Name "Celest.CLI" | Remove-AppxPackage -Confirm:$false',
             ],
             stdoutEncoding: any(named: 'stdoutEncoding'),
             stderrEncoding: any(named: 'stderrEncoding'),
