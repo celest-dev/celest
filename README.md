@@ -14,8 +14,8 @@ And to stay up-to-date on the future of Celest, including managed deployments, j
 To use Celest in your Flutter app, you need the following prerequisites:
 
 1. Install [Flutter](https://docs.flutter.dev/get-started/install)
-2. Create a new Flutter project (or use an existing one)
-3. [Download](/download) and install the Celest CLI
+2. Create a new Flutter project (or choose an existing one)
+3. [Download](https://celest.dev/download) and install the Celest CLI
 
 ### Creating a Celest project
 
