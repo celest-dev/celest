@@ -9,6 +9,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:aws_common/aws_common.dart';
@@ -466,6 +467,23 @@ final class CelestAnalyzer {
     required String apiFile,
   }) async {
     final apiLibraryResult = await _resolveLibrary(apiFile);
+    final apiErrors = apiLibraryResult.units
+        .expand((unit) => unit.errors)
+        .where((error) => error.severity == Severity.error)
+        .toList();
+    if (apiErrors.isNotEmpty) {
+      for (final apiError in apiErrors) {
+        _reportError(
+          apiError.message,
+          location: apiError.source.toSpan(
+            apiError.problemMessage.offset,
+            apiError.problemMessage.offset + apiError.problemMessage.length,
+          ),
+        );
+      }
+      return null;
+    }
+
     final library = apiLibraryResult.element;
     final libraryMetdata = _collectApiMetadata(library);
     final functions = Map.fromEntries(

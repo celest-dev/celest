@@ -50,9 +50,6 @@ final class CelestFrontend implements Closeable {
   final CelestAnalyzer analyzer = CelestAnalyzer();
 
   int _logErrors(List<AnalysisError> errors) {
-    logger.severe(
-      'Project has errors. Please fix them and save the corresponding files to try again.\n',
-    );
     for (final error in errors) {
       logger.severe(error.toString());
     }
@@ -150,9 +147,12 @@ final class CelestFrontend implements Closeable {
         final analysisResult = await _analyzeProject();
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
-            currentProgress.cancel();
+          case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
+            currentProgress.fail(
+              'Project has errors. Please fix them and save the '
+              'corresponding files to try again.',
+            );
             _logErrors(errors);
-          // ignore: unnecessary_null_checks
           case AnalysisSuccessResult(:final project):
             var restartMode = RestartMode.hotReload;
             if (currentProject case final currentProject?) {

@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 
@@ -24,14 +25,23 @@ class FrontendServerClient {
     bool? verbose,
   })  : _verbose = verbose ?? false,
         _state = _ClientState.waitingForFirstCompile {
-    _feServer.stderr.transform(utf8.decoder).listen(stderr.write);
+    _feServer.stderr
+        .transform(utf8.decoder)
+        .listen((err) => _logger.finest('Error in FE server: $err'));
+    _feServer.exitCode.then((_) => closed = true);
   }
+
+  static final _logger = Logger('FrontendServerClient');
+
   final String _entrypoint;
   final Process _feServer;
   final StreamQueue<String> _feServerStdoutLines;
   final bool _verbose;
 
   _ClientState _state;
+
+  /// Whether the frontend server has been closed.
+  var closed = false;
 
   /// Starts the frontend server.
   ///

@@ -188,18 +188,29 @@ final class LocalApiRunner implements Closeable {
   @override
   Future<void> close() async {
     logger.finer('Shutting down local API...');
-    _client.kill();
+    if (!await Future(() => _client.closed)) {
+      _client.kill();
+    }
     await _vmService.dispose();
     _localApiProcess.kill();
     logger.finer('Shut down local API.');
   }
 }
 
+final class CompilationException implements Exception {
+  CompilationException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
 extension on FrontendServerClient {
   String expectOutput(CompileResult result) {
     switch (result) {
       case CompileResult(errorCount: > 0, :final compilerOutputLines):
-        throw StateError(
+        throw CompilationException(
           'Error compiling local API: ${compilerOutputLines.join('\n')}',
         );
       case CompileResult(:final dillOutput?):

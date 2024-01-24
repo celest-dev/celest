@@ -237,15 +237,12 @@ String sayHello() => 'Hello, World!';
         apis: {
           'greeting.dart': '''
 void sayHello({
-  required Enum enum,
+  required Enum myEnum,
   required List<Enum> listOfEnum,
   required Iterable<Enum> iterableOfEnum,
   required void Function() function,
   required List<void Function()> listOfFunction,
   required Iterable<void Function()> iterableOfFunction,
-  required InvalidType invalidType,
-  required List<InvalidType> listOfInvalidType,
-  required Iterable<InvalidType> iterableOfInvalidType,
   required Never never,
   required List<Never> listOfNever,
   required Iterable<Never> iterableOfNever,
@@ -272,9 +269,6 @@ void sayHello({
           'Function types are not supported', // void Function()
           'Function types are not supported', // List<void Function()>
           'Function types are not supported', // Iterable<void Function()>
-          'Invalid type', // InvalidType
-          'Invalid type', // List<InvalidType>
-          'Invalid type', // Iterable<InvalidType>
           'Never types are not supported', // Never
           'Never types are not supported', // List<Never>
           'Never types are not supported', // Iterable<Never>
@@ -298,7 +292,7 @@ void sayHello({
         name: 'bad_return_types_core',
         apis: {
           'greeting.dart': '''
-ReturnTypes sayHello() {}
+ReturnTypes sayHello() => throw UnimplementedError();
 ''',
         },
         models: '''
@@ -380,7 +374,7 @@ abstract class NotJsonable {}
         name: 'positional_record_fields',
         apis: {
           'greeting.dart': '''
-(String positionalField,) sayHello((String positionalField,) _) => 'Hello, World!';
+(String positionalField,) sayHello((String positionalField,) _) => ('Hello, World!',);
 ''',
         },
         errors: [
@@ -393,7 +387,7 @@ abstract class NotJsonable {}
         name: 'positional_record_fields_aliased',
         apis: {
           'greeting.dart': '''
-PositionalFields sayHello(PositionalFields _) => 'Hello, World!';
+PositionalFields sayHello(PositionalFields _) => ('Hello, World!',);
 ''',
         },
         models: '''
@@ -425,7 +419,7 @@ final class Actual extends Base {}
         name: 'return_type_with_subtypes',
         apis: {
           'greeting.dart': '''
-Base sayHello() => 'Hello, World!';
+Base sayHello() => Base();
 ''',
         },
         models: '''
@@ -535,6 +529,7 @@ OnlyFromJson sayHello() => OnlyFromJson();
         },
         models: '''
 class OnlyFromJson {
+  OnlyFromJson();
   factory OnlyFromJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
 
   late String _field;
@@ -620,24 +615,6 @@ class FromJson {
           'The return type of a function must be serializable as JSON. The '
               'fromJson constructor of type FromJson must have one '
               'required, positional parameter.',
-        ],
-      );
-
-      testErrors(
-        name: 'bad_middleware_type',
-        apis: {
-          'greeting.dart': '''
-@NotMiddleware
-String sayHello() => 'Hello, World!';
-''',
-        },
-        models: '''
-class NotMiddleware {
-  const NotMiddleware();
-}
-''',
-        errors: [
-          'Could not resolve annotation. Annotations must be',
         ],
       );
 
@@ -745,7 +722,7 @@ class ValidException implements Exception {}
         apis: {
           'greeting.dart': '''
 class ValidJsonable {}
-ValidJsonable sayHello() => throw ValidException();
+ValidJsonable sayHello() => throw UnimplementedError();
 ''',
         },
         errors: [
@@ -820,6 +797,19 @@ class ValidException implements Exception {}
         errors: [
           'Types referenced in APIs must be defined in the '
               '`celest/lib/exceptions.dart` file',
+        ],
+      );
+
+      testErrors(
+        name: 'function_with_same_name',
+        apis: {
+          'greeting.dart': '''
+void sayHello() {}
+void sayHello() {}
+''',
+        },
+        errors: [
+          "The name 'sayHello' is already defined",
         ],
       );
     });
