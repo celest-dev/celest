@@ -2,7 +2,7 @@
 
 ## Celest
 
-[Celest](https://celest.dev) is the Flutter cloud platform. We enable Flutter and Dart developers to declaratively define their backend infrastructure in Dart.
+Celest is the Flutter cloud platform. We enable Flutter and Dart developers to declaratively define their backend infrastructure in Dart.
 
 <!-- Our initial CLI release is available to download [here](https://celest.dev/download). It includes the full experience of serverless functions in a local environment. To learn more about our CLI and all the features, visit our [documentation](https://celest.dev/docs). -->
 
@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-You have now set up your Celest project and integrated it into your Flutter app. Follow our [guides](/docs/functions/introduction.md) to learn more about using Celest Functions.
+You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](/docs/functions/introduction.md) to learn more about using Celest Functions.
 
 ## Connect with us
 
