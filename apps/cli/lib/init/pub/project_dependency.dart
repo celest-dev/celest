@@ -2,6 +2,11 @@ import 'package:celest_cli/src/version.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
+final Version currentMinorVersion = () {
+  final currentVersion = Version.parse(packageVersion);
+  return Version(currentVersion.major, currentVersion.minor, 0);
+}();
+
 final class ProjectDependency {
   const ProjectDependency._(this.name, this.pubDependency);
 
@@ -11,17 +16,13 @@ final class ProjectDependency {
   static final ProjectDependency celest = ProjectDependency._(
     'celest',
     HostedDependency(
-      version: VersionConstraint.compatibleWith(
-        Version.parse(packageVersion),
-      ),
+      version: VersionConstraint.compatibleWith(currentMinorVersion),
     ),
   );
   static final ProjectDependency celestCore = ProjectDependency._(
     'celest_core',
     HostedDependency(
-      version: VersionConstraint.compatibleWith(
-        Version.parse(packageVersion),
-      ),
+      version: VersionConstraint.compatibleWith(currentMinorVersion),
     ),
   );
 
