@@ -10,6 +10,17 @@ And to stay up-to-date on the future of Celest, including managed deployments, j
 
 ## Getting started with Celest
 
+### Prerequisites
+To use Celest in your Flutter app, you need the following prerequisites:
+
+1. Install [Flutter](https://docs.flutter.dev/get-started/install)
+2. Create a new Flutter project (or use an existing one)
+3. [Download](/download) and install the Celest CLI
+
+### Creating a Celest project
+
+That’s it! You are now ready to start building your backend - all in Dart!
+
 Start by first creating a new Flutter project. If you have an existing Flutter project, you can use that instead. To start a new Flutter project, go to your console and run the following command.
 
 ```shell
