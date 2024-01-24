@@ -24,10 +24,10 @@ Future<ProjectPaths> init({
     projectRoot: projectRoot,
     outputsDir: outputsDir,
   );
-  return projectPaths = celestProject.projectPaths;
+  return celestProject.projectPaths;
 }
 
 late CelestProject celestProject;
-late ProjectPaths projectPaths;
+ProjectPaths get projectPaths => celestProject.projectPaths;
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
