@@ -21,11 +21,7 @@ final class UpgradeCommand extends CelestCommand {
 
     final upgrader = CelestUpgrader();
 
-    final latest = await withProgress(
-      'Retrieving version info',
-      (progress) => retrieveLatestRelease(),
-    );
-
+    final latest = await retrieveLatestRelease();
     if (latest.version <= Version.parse(version)) {
       cliLogger.success('Celest is already up to date!');
       return 0;
