@@ -1,4 +1,5 @@
-<img src="https://github.com/celest-dev/.github/assets/17932473/880aff87-b4ab-4a61-9eb3-a18601ebf0a9" width="160" height="160">
+![Celest Logo](./logo-light.png#gh-light-mode-only)
+![Celest Logo](./logo-dark.png#gh-dark-mode-only)
 
 ## Celest
 
