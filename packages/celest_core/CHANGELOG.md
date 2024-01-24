@@ -1,4 +1,4 @@
-## 0.1.1-wip
+## 0.1.1
 
 - Update README
 - Improve error message of `SerializationException`
