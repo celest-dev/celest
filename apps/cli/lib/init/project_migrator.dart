@@ -1,16 +1,11 @@
 import 'package:celest_cli/init/project_item.dart';
 
-/// Manages the generation of a new Celest project.
-class ProjectGenerator {
-  ProjectGenerator({
-    required this.projectName,
+/// Manages the migration of a Celest project to the latest version.
+class ProjectMigrator {
+  ProjectMigrator({
     required this.appRoot,
     required this.projectRoot,
   });
-
-  /// The name of the project to initialize, as chosen by the user
-  /// when running `celest start` for the first time.
-  final String projectName;
 
   /// The root directory of the enclosing Flutter project.
   ///
@@ -23,13 +18,9 @@ class ProjectGenerator {
   final String projectRoot;
 
   /// Generates a new Celest project.
-  Future<void> generate() async {
+  Future<void> migrate() async {
     await Future.wait(
       [
-        const ProjectFile.gitIgnore(),
-        const ProjectFile.analysisOptions(),
-        ProjectFile.pubspec(projectName),
-        ProjectTemplate.hello(projectName),
         MacOsEntitlements(appRoot),
       ].map((item) => item.create(projectRoot)),
     );

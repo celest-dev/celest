@@ -18,8 +18,11 @@ base mixin Configure on CelestCommand {
         'No Celest project found in the current directory.',
       );
 
+  static void _noOp() {}
+
   Future<void> configure({
     FutureOr<String> Function() createProject = _throwNoProject,
+    FutureOr<void> Function() migrateProject = _noOp,
   }) async {
     final currentDir = Directory.current;
     final pubspecFile = fileSystem.file(
@@ -50,6 +53,8 @@ base mixin Configure on CelestCommand {
 
     if (!isExistingProject) {
       await createProject();
+    } else {
+      await migrateProject();
     }
 
     await _addProjectToDb();

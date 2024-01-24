@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
+import 'package:celest_cli/init/project_migrator.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
@@ -53,11 +52,21 @@ final class StartCommand extends CelestCommand with Configure {
     );
     await ProjectGenerator(
       projectName: projectName,
-      appRoot: Directory.current.path,
+      appRoot: projectPaths.appRoot,
       projectRoot: projectPaths.projectRoot,
     ).generate();
     cliLogger.success('Project generated successfully.');
     return projectName;
+  }
+
+  Future<void> _migrateProject() async {
+    logger.finest(
+      'Migrating project at "${projectPaths.projectRoot}"...',
+    );
+    await ProjectMigrator(
+      appRoot: projectPaths.appRoot,
+      projectRoot: projectPaths.projectRoot,
+    ).migrate();
   }
 
   @override
@@ -76,7 +85,10 @@ final class StartCommand extends CelestCommand with Configure {
       await performance.captureError(e, stackTrace: st);
     }
 
-    await configure(createProject: _createProject);
+    await configure(
+      createProject: _createProject,
+      migrateProject: _migrateProject,
+    );
 
     if (!await fileSystem
         .directory(projectPaths.projectDart)
