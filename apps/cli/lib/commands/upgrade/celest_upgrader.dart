@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
@@ -10,29 +9,9 @@ import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 
 final class CelestUpgrader {
-  static final _releasesEndpoint =
-      CelestReleasesInfo.baseUri.resolve('${Abi.current()}/releases.json');
   static final _logger = Logger('CelestUpgrader');
 
   final _tempDir = fileSystem.systemTempDirectory.childDirectory('celest_cli_');
-
-  Future<CelestReleaseInfo> retrieveLatestRelease() async {
-    final releasesResp = await httpClient.get(_releasesEndpoint);
-    if (releasesResp.statusCode != 200) {
-      throw CelestException(
-        'Failed to fetch the latest releases. Please check your internet '
-        'connection and try again.',
-        additionalContext: {
-          'statusCode': releasesResp.statusCode.toString(),
-          'body': releasesResp.body,
-        },
-      );
-    }
-
-    final releasesJson = jsonDecode(releasesResp.body) as Map<String, dynamic>;
-    final releasesInfo = CelestReleasesInfo.fromJson(releasesJson);
-    return releasesInfo.latest;
-  }
 
   Future<File> downloadRelease(CelestReleaseInfo release) async {
     final downloadUri =

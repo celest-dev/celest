@@ -1,4 +1,5 @@
 import 'package:celest_cli/commands/upgrade/celest_upgrader.dart';
+import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:pub_semver/pub_semver.dart';
 
@@ -22,7 +23,7 @@ final class UpgradeCommand extends CelestCommand {
 
     final latest = await withProgress(
       'Retrieving version info',
-      (progress) => upgrader.retrieveLatestRelease(),
+      (progress) => retrieveLatestRelease(),
     );
 
     if (latest.version <= Version.parse(version)) {

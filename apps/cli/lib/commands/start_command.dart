@@ -4,8 +4,11 @@ import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
+import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 final class StartCommand extends CelestCommand with Configure {
   StartCommand();
@@ -60,6 +63,18 @@ final class StartCommand extends CelestCommand with Configure {
   @override
   Future<int> run() async {
     await super.run();
+
+    try {
+      final latestRelease = await retrieveLatestRelease();
+      if (latestRelease.version > Version.parse(packageVersion)) {
+        cliLogger.warn(
+          'A new version of Celest is available! Run `celest upgrade` '
+          'to get the latest changes.',
+        );
+      }
+    } on Object catch (e, st) {
+      await performance.captureError(e, stackTrace: st);
+    }
 
     await configure(createProject: _createProject);
 
