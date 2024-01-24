@@ -4,8 +4,6 @@
 
 Celest is the Flutter cloud platform. We enable Flutter and Dart developers to declaratively define their backend infrastructure in Dart.
 
-<!-- Our initial CLI release is available to download [here](https://celest.dev/download). It includes the full experience of serverless functions in a local environment. To learn more about our CLI and all the features, visit our [documentation](https://celest.dev/docs). -->
-
 And to stay up-to-date on the future of Celest, including managed deployments, join our waitlist at [celest.dev](https://celest.dev).
 
 ## Getting started with Celest
@@ -39,7 +37,7 @@ Once you are in your Flutter app directory, run the following command to initial
 $ celest start
 ```
 
-Once the command executes, Celest will spin up a local environment and watch for changes made to your backend, and code-generate a Dart client for you to test your changes.
+Once the command executes, Celest will spin up a local environment and watch for changes made to your backend, generating a Dart client for you to test your changes.
 
 The CLI will also create a folder in your project called `celest`, which will include the following files.
 
@@ -51,7 +49,7 @@ flutter_app/
     ├── functions/          # Celest Functions folder
     |   └── greeting.dart   # Example API file
     ├── lib/
-    │   │── client.dart     # Code-generated client for your Flutter app
+    │   │── client.dart     # Generated client for your Flutter app
     │   ├── models.dart     # Custom API models
     │   └── exceptions.dart # Custom API exceptions
     └── test/               # Tests for your backend
@@ -75,13 +73,11 @@ That's all you need to define your API! Now, you can connect your Flutter app to
 
 ```dart
 import 'package:flutter/material.dart';
-// Import the code-generated Celest client
-// highlight-next-line
+// Import the generated Celest client
 import 'package:celest_backend/client.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
-  // highlight-next-line
   celest.init();
   runApp(const MyApp());
 }
@@ -99,7 +95,6 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: FutureBuilder(
             // Call your function using the Celest client
-            // highlight-next-line
             future: celest.functions.greeting.sayHello('Celest'),
             builder: (_, snapshot) => switch (snapshot) {
               AsyncSnapshot(:final data?) => Text(data),
