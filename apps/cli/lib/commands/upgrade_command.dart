@@ -19,7 +19,7 @@ final class UpgradeCommand extends CelestCommand {
   Future<int> run() async {
     await super.run();
 
-    final upgrader = CelestUpgrader();
+    final upgrader = CelestUpgrader(cliLogger: cliLogger);
 
     final latest = await retrieveLatestRelease();
     if (latest.version <= Version.parse(version)) {
@@ -32,11 +32,7 @@ final class UpgradeCommand extends CelestCommand {
       (progres) => upgrader.downloadRelease(latest),
     );
 
-    await withProgress(
-      'Upgrading Celest',
-      onSuccess: 'Celest has been updated to the latest version!',
-      (progress) => upgrader.installRelease(installerFile),
-    );
+    await upgrader.installRelease(installerFile);
 
     return 0;
   }

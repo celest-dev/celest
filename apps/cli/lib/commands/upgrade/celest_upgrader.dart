@@ -4,13 +4,20 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
+import 'package:mason_logger/mason_logger.dart' as mason_logger;
 
 final class CelestUpgrader {
+  CelestUpgrader({
+    required this.cliLogger,
+  });
+
   static final _logger = Logger('CelestUpgrader');
 
+  final mason_logger.Logger cliLogger;
   final _tempDir = fileSystem.systemTempDirectory.childDirectory('celest_cli_');
 
   Future<File> downloadRelease(CelestReleaseInfo release) async {
@@ -35,15 +42,27 @@ final class CelestUpgrader {
   }
 
   Future<void> installRelease(File releasePackage) async {
-    switch (platform.operatingSystem) {
-      case 'macos':
-        return _installMacOS(releasePackage.path);
-      case 'linux':
-        return _installLinux(releasePackage);
-      case 'windows':
-        return _installWindows(releasePackage);
-      default:
-        throw UnimplementedError();
+    mason_logger.Progress? progress;
+    try {
+      // Skip on macOS since the permissions prompt will count towards the
+      // progress timer.
+      if (platform.operatingSystem case 'windows' || 'linux') {
+        progress = cliLogger.progress('Updating Celest');
+      }
+      switch (platform.operatingSystem) {
+        case 'macos':
+          await _installMacOS(releasePackage.path);
+        case 'linux':
+          await _installLinux(releasePackage);
+        case 'windows':
+          await _installWindows(releasePackage);
+        default:
+          unreachable();
+      }
+      progress?.complete('Celest has been updated to the latest version!');
+    } on Object {
+      progress?.cancel();
+      rethrow;
     }
   }
 
