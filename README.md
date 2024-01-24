@@ -1,5 +1,7 @@
-![Celest Logo](./logo-light.png#gh-light-mode-only)
-![Celest Logo](./logo-dark.png#gh-dark-mode-only)
+<p align="center">
+<img src="./logo-dark.png#gh-light-mode-only" width="400">
+<img src="./logo-dark.png#gh-dark-mode-only" width="400">
+</p>
 
 ## Celest
 
