@@ -1,6 +1,8 @@
 include: package:celest_lints/app.yaml
 
 analyzer:
+  exclude:
+    - "**/*.g.dart"
   errors:
     implementation_imports: ignore
     avoid_print: ignore

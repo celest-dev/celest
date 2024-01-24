@@ -33,14 +33,14 @@ const _$CelestReleaseSchemaVersionEnumMap = {
 
 CelestReleaseInfo _$CelestReleaseInfoFromJson(Map<String, dynamic> json) =>
     CelestReleaseInfo(
-      version: json['version'] as String,
+      version: const VersionConverter().fromJson(json['version'] as String),
       installer: json['installer'] as String?,
       zip: json['zip'] as String?,
     );
 
 Map<String, dynamic> _$CelestReleaseInfoToJson(CelestReleaseInfo instance) {
   final val = <String, dynamic>{
-    'version': instance.version,
+    'version': const VersionConverter().toJson(instance.version),
   };
 
   void writeNotNull(String key, dynamic value) {

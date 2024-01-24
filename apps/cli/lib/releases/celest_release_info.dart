@@ -1,4 +1,6 @@
+import 'package:celest_cli/releases/version_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 part 'celest_release_info.g.dart';
 
@@ -7,6 +9,7 @@ enum CelestReleaseSchemaVersion { v1 }
 const _serializable = JsonSerializable(
   explicitToJson: true,
   includeIfNull: false,
+  converters: [VersionConverter()],
 );
 
 @_serializable
@@ -19,6 +22,10 @@ final class CelestReleasesInfo {
 
   factory CelestReleasesInfo.fromJson(Map<String, Object?> json) =>
       _$CelestReleasesInfoFromJson(json);
+
+  static final baseUri = Uri.parse(
+    'https://storage.googleapis.com/celest-release-artifacts/',
+  );
 
   final CelestReleaseSchemaVersion schemaVersion;
   final CelestReleaseInfo latest;
@@ -38,7 +45,7 @@ final class CelestReleaseInfo {
   factory CelestReleaseInfo.fromJson(Map<String, Object?> json) =>
       _$CelestReleaseInfoFromJson(json);
 
-  final String version;
+  final Version version;
   final String? zip;
   final String? installer;
 

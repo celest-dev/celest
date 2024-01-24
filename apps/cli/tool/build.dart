@@ -6,6 +6,7 @@ import 'package:archive/archive_io.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:chunked_stream/chunked_stream.dart';
 import 'package:gcloud/storage.dart';
 import 'package:googleapis/cloudkms/v1.dart';
@@ -14,7 +15,7 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:mustache_template/mustache.dart';
 import 'package:path/path.dart' as p;
-import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 /// The directory containing this script and build assets.
 final Directory toolDir = Directory.fromUri(Platform.script.resolve('.'));
@@ -35,9 +36,7 @@ final http.Client httpClient = http.Client();
 final Abi osArch = Abi.current();
 
 /// The current version of the CLI.
-final String version = Pubspec.parse(
-  File.fromUri(Platform.script.resolve('../pubspec.yaml')).readAsStringSync(),
-).version!.toString();
+const String version = packageVersion;
 
 /// The bundler to use for the current platform.
 final Bundler bundler = Bundler();
@@ -159,7 +158,7 @@ Future<void> main() async {
   }
 
   final latestRelease = CelestReleaseInfo(
-    version: version,
+    version: Version.parse(version),
     installer: switch (Platform.operatingSystem) {
       'windows' || 'macos' => storagePaths.first,
       'linux' => null,
