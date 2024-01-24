@@ -150,7 +150,7 @@ final class CelestFrontend implements Closeable {
           case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
             currentProgress.fail(
               'Project has errors. Please fix them and save the '
-              'corresponding files to try again.',
+              'corresponding files.',
             );
             _logErrors(errors);
           case AnalysisSuccessResult(:final project):
