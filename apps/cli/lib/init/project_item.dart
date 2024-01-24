@@ -27,6 +27,9 @@ final class MacOsEntitlements extends ProjectItem {
 
   @override
   Future<void> create(String projectRoot) async {
+    if (!platform.isMacOS) {
+      return;
+    }
     final macosDir = fileSystem.directory(appRoot).childDirectory('macos');
     if (!await macosDir.exists()) {
       _logger.finest('No macos directory. Skipping entitlements update.');
