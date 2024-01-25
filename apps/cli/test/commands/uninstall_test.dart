@@ -113,27 +113,41 @@ void main() {
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
 
+        const uninstallScript = "[ -d '/opt/celest' ] && rm -r '/opt/celest'; "
+            "[ -h '/usr/local/bin/celest' ] && rm '/usr/local/bin/celest'";
+        when(
+          () => ctx.processManager.run(
+            [
+              'osascript',
+              '-e',
+              'do shell script "$uninstallScript" '
+                  'with prompt "Celest needs your permission to uninstall" '
+                  'with administrator privileges',
+            ],
+            stdoutEncoding: any(named: 'stdoutEncoding'),
+            stderrEncoding: any(named: 'stderrEncoding'),
+          ),
+        ).thenAnswer((_) async => ProcessResult(0, 0, '', ''));
+
         expect(configDir.existsSync(), isTrue);
-        expect(
-          ctx.fileSystem.directory('/opt/celest').existsSync(),
-          isTrue,
-        );
-        expect(
-          ctx.fileSystem.link(CelestUninstaller.macosSymlink).existsSync(),
-          isTrue,
-        );
 
         await const CelestUninstaller().uninstall();
 
         expect(configDir.existsSync(), isFalse);
-        expect(
-          ctx.fileSystem.directory('/opt/celest').existsSync(),
-          isFalse,
-        );
-        expect(
-          ctx.fileSystem.link(CelestUninstaller.macosSymlink).existsSync(),
-          isFalse,
-        );
+
+        verify(
+          () => ctx.processManager.run(
+            [
+              'osascript',
+              '-e',
+              'do shell script "$uninstallScript" '
+                  'with prompt "Celest needs your permission to uninstall" '
+                  'with administrator privileges',
+            ],
+            stdoutEncoding: any(named: 'stdoutEncoding'),
+            stderrEncoding: any(named: 'stderrEncoding'),
+          ),
+        ).called(1);
       });
 
       test('linux', () async {
