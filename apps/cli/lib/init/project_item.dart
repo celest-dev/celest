@@ -226,6 +226,7 @@ void main() {
 // in this file or exported from this file.
 ''',
       ),
+      _createFile(p.join(projectRoot, 'config', '.gitkeep'), ''),
     ]);
   }
 }
