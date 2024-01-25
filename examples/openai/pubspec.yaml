@@ -37,9 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   celest_backend:
     path: celest/
-  go_router: ^13.0.1
-  path_provider: ^2.1.2
-  record: ^5.0.4
   logger: ^2.0.2+1
 
 dev_dependencies:

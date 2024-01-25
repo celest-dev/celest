@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:go_router/go_router.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
 import 'package:logger/logger.dart';
 // Import needed for input formatters
 import 'package:flutter/services.dart';
