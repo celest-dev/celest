@@ -52,7 +52,10 @@ class CelestFunctionsOpenAi {
   Future<String> openAiRequest({
     required String prompt,
     String model = 'gpt-3.5-turbo-instruct',
-    ModelParameters parameters = const ModelParameters(),
+    ModelParameters parameters = const ModelParameters(
+      temperature: 1.0,
+      maxTokens: 100,
+    ),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/open-ai/open-ai-request'),

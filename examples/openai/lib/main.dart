@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
@@ -8,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:logger/logger.dart';
+// Import needed for input formatters
+import 'package:flutter/services.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
@@ -25,9 +25,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   TextEditingController questionController = TextEditingController();
   TextEditingController answerController = TextEditingController();
+  TextEditingController maxTokensController = TextEditingController();
 
   // contains value of selected model from drodown menu
-  String? selectedModelValue;
+  String? _selectedModelValue;
+
+  double? _tempratureSliderValue;
 
   var _loadedModels = false;
   final _modelFuture = celest.functions.openAi.availableModels();
@@ -53,12 +56,14 @@ class _MyAppState extends State<MyApp> {
             child: Padding(
               padding: const EdgeInsets.only(right: 100, left: 100),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(top: 100),
                   ),
-                  const Text("Enter your question here:"),
+                  const Text("AI model settings"),
                   const Padding(padding: EdgeInsets.only(top: 20)),
+                  // adds dropdown with available models from backend
                   FutureBuilder<List<String>>(
                     future: _modelFuture, // Replace with your future
                     builder: (BuildContext context,
@@ -77,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                         );
                         SchedulerBinding.instance.addPostFrameCallback((_) {
                           setState(() {
-                            selectedModelValue = snapshot.data!.first;
+                            _selectedModelValue = snapshot.data!.first;
                             _loadedModels = true;
                           });
                         });
@@ -86,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                           //handle change of dropdown value
                           onChanged: (String? newValue) {
                             setState(() {
-                              selectedModelValue = newValue;
+                              _selectedModelValue = newValue;
                             });
                           },
                           items: snapshot.data!
@@ -103,11 +108,56 @@ class _MyAppState extends State<MyApp> {
                       }
                     },
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Tooltip(
+                        message:
+                            "The maximum number of words to generate from AI",
+                        child: SizedBox(
+                          width: 200,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter
+                                  .digitsOnly, // Allow only digits
+                            ],
+                            decoration: const InputDecoration(
+                              // border: OutlineInputBorder(),
+                              hintText: 'Max tokens',
+                            ),
+                            controller: maxTokensController,
+                          ),
+                        ),
+                      ),
+                      Tooltip(
+                        message:
+                            "The higher the temperature, the more random the text",
+                        child: SizedBox(
+                          width: 200,
+                          child: Slider(
+                            value: _tempratureSliderValue ?? 0,
+                            min: 0,
+                            max: 1,
+                            divisions: 10,
+                            label: _tempratureSliderValue.toString(),
+                            onChanged: (double value) {
+                              // Use setState but limit its scope only to the slider
+                              setState(() {
+                                _tempratureSliderValue = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 20)),
                   TextField(
                     maxLines: 10,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter a search term',
+                      hintText: 'Enter your question here',
                     ),
                     controller: questionController,
                   ),
@@ -119,7 +169,13 @@ class _MyAppState extends State<MyApp> {
                             String response =
                                 await celest.functions.openAi.openAiRequest(
                               prompt: questionController.text,
-                              model: selectedModelValue!,
+                              model: _selectedModelValue!,
+                              parameters: ModelParameters(
+                                maxTokens: maxTokensController.text.isNotEmpty
+                                    ? int.tryParse(maxTokensController.text)
+                                    : null,
+                                temperature: _tempratureSliderValue,
+                              ),
                             );
                             logger.d(response);
                             setState(() {

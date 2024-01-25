@@ -15,32 +15,42 @@ OpenAI _createOpenAI(String key) => OpenAI.instance.build(
 
 /// Returns a list of available models.
 Future<List<String>> availableModels() async =>
-    ['gpt-3.5-turbo-instruct', 'gpt-4', 'another', 'for d-dog'];
+    ['gpt-3.5-turbo-instruct', 'davinci-002'];
 
 /// Says hello to a person called [name].
 Future<String> openAIRequest({
   required String prompt,
-  String? model = 'gpt-3.5-turbo-instruct',
-  ModelParameters parameters = const ModelParameters(),
+  String model = 'gpt-3.5-turbo-instruct',
+  ModelParameters parameters =
+      const ModelParameters(temperature: 1, maxTokens: 100),
   @env.openApiKey required String openApiKey,
 }) async {
-  final openAI = _createOpenAI(openApiKey);
+  try {
+    final openAI = _createOpenAI(openApiKey);
 
-  final request = CompleteText(
-      prompt: prompt, model: ModelFromValue(model: model), maxTokens: 300);
+    final request = CompleteText(
+        prompt: prompt,
+        model: ModelFromValue(model: model),
+        maxTokens: parameters.maxTokens,
+        frequencyPenalty: parameters.frequencyPenalty,
+        temperature: parameters.temperature);
 
-  final response = await openAI.onCompletion(request: request);
+    final response = await openAI.onCompletion(request: request);
 
-  // Logging is handled automatically when you print to the console.
-  print('Saying hello to $response');
+    // Logging is handled automatically when you print to the console.
+    print('Saying hello to $response');
 
-  String promptResponse = '';
+    // placeholder to grab full response from openAI
+    String promptResponse = '';
 
-  for (var choice in response!.choices) {
-    promptResponse = promptResponse + choice.text;
+    for (var choice in response!.choices) {
+      promptResponse = promptResponse + choice.text;
+    }
+
+    return promptResponse;
+  } on Exception catch (e) {
+    return e.toString();
   }
-
-  return 'Hello, $promptResponse!';
 }
 
 Future<String> sayHelloDelete(

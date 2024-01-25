@@ -12,12 +12,13 @@ enum GptModel {
 
 final class ModelParameters {
   const ModelParameters({
-    this.temperature = 0.3,
-    this.maxTokens = 100,
+    double? temperature,
+    int? maxTokens,
     this.topP = 1.0,
     this.frequencyPenalty = 0.0,
     this.presencePenalty = 0.0,
-  });
+  })  : maxTokens = maxTokens ?? 100,
+        temperature = temperature ?? 1.0;
 
   final double temperature;
   final int maxTokens;
