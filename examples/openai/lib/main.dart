@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () async {
                       print("test");
                       String response =
-                          await celest.functions.greeting.openAiRequest(
+                          await celest.functions.openAi.openAiRequest(
                         questionController.text,
                       );
                       print(response);

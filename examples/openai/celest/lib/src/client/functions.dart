@@ -13,14 +13,14 @@ import 'package:celest_core/src/exception/cloud_exception.dart';
 import '../../client.dart';
 
 class CelestFunctions {
-  final greeting = CelestFunctionsGreeting();
+  final openAi = CelestFunctionsOpenAi();
 }
 
-class CelestFunctionsGreeting {
+class CelestFunctionsOpenAi {
   /// Returns a list of available models.
   Future<List<String>> availableModels() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/greeting/available-models'),
+      celest.baseUri.resolve('/open-ai/available-models'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
@@ -55,7 +55,7 @@ class CelestFunctionsGreeting {
     ModelParameters parameters = const ModelParameters(),
   }) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/greeting/open-ai-request'),
+      celest.baseUri.resolve('/open-ai/open-ai-request'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode({
         r'prompt': prompt,
@@ -89,7 +89,7 @@ class CelestFunctionsGreeting {
 
   Future<String> sayHelloDelete(String name) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/greeting/say-hello-delete'),
+      celest.baseUri.resolve('/open-ai/say-hello-delete'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode({r'name': name}),
     );

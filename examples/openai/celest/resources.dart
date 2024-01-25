@@ -8,16 +8,16 @@ import 'package:celest/celest.dart' as _i1;
 import 'package:celest_backend/models.dart' as _i2;
 
 abstract final class apis {
-  static const greeting = _i1.CloudApi(name: r'greeting');
+  static const openAi = _i1.CloudApi(name: r'open_ai');
 }
 
 abstract final class functions {
-  static const greetingAvailableModels = _i1.CloudFunction<void, List<String>>(
-    api: r'greeting',
+  static const openAiAvailableModels = _i1.CloudFunction<void, List<String>>(
+    api: r'open_ai',
     functionName: r'availableModels',
   );
 
-  static const greetingOpenAiRequest = _i1.CloudFunction<
+  static const openAiOpenAiRequest = _i1.CloudFunction<
       (
         String, {
         String model,
@@ -25,13 +25,13 @@ abstract final class functions {
         String openApiKey
       }),
       String>(
-    api: r'greeting',
+    api: r'open_ai',
     functionName: r'openAIRequest',
   );
 
-  static const greetingSayHelloDelete =
+  static const openAiSayHelloDelete =
       _i1.CloudFunction<(String, {String openApiKey}), String>(
-    api: r'greeting',
+    api: r'open_ai',
     functionName: r'sayHelloDelete',
   );
 }
