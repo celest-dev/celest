@@ -1,4 +1,4 @@
-# celest_project
+# Celest OpenAI project
 
 A Flutter project showing examples of connecting to openAI. This project demonstrates:
 
