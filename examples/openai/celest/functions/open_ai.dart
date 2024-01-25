@@ -1,54 +1,73 @@
 // Cloud functions are top-level Dart functions defined in the `functions/`
 // folder of your Celest project.
 
+import 'dart:convert';
+
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+import 'package:chat_gpt_sdk/src/model/chat_complete/response/chat_choice.dart';
 
 import '../resources.dart';
 
 /// Creates an instance of the OpenAI client.
-OpenAI _createOpenAI(String key) => OpenAI.instance.build(
-      token: key,
+OpenAI _createOpenAI(String token) => OpenAI.instance.build(
+      token: token,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
       enableLog: true,
     );
 
-/// Returns a list of available models. You can dymanically update this list of models for your Flutter app.
-Future<List<String>> availableModels() async =>
-    ['gpt-3.5-turbo-instruct', 'davinci-002'];
+/// Returns a list of available models.
+Future<List<String>> availableModels() async => _availableModels;
 
-/// Says hello to a person called [name].
+/// The list of available models.
+///
+/// This is maintained on the server and can be updated without updating the
+/// client or Flutter app.
+const _availableModels = [
+  'gpt-4',
+  'gpt-4-turbo-preview',
+  'gpt-3.5-turbo',
+];
+
+/// Prompts the GPT [model] with the given [prompt] and [parameters].
+///
+/// Returns the generated text.
 Future<String> openAIRequest({
+  required String model,
   required String prompt,
-  String model = 'gpt-3.5-turbo-instruct',
-  ModelParameters parameters =
-      const ModelParameters(temperature: 1, maxTokens: 100),
-  @env.openApiKey required String openApiKey,
+  ModelParameters parameters = const ModelParameters(),
+  @env.openAiToken required String openAiToken,
 }) async {
-  try {
-    final openAI = _createOpenAI(openApiKey);
+  final openAI = _createOpenAI(openAiToken);
 
-    final request = CompleteText(
-        prompt: prompt,
-        model: ModelFromValue(model: model),
-        maxTokens: parameters.maxTokens,
-        frequencyPenalty: parameters.frequencyPenalty,
-        temperature: parameters.temperature);
+  if (!_availableModels.contains(model)) {
+    throw BadRequestException('Invalid model: $model');
+  }
+  final request = ChatCompleteText(
+    messages: [Messages(role: Role.user, content: prompt)],
+    model: ChatModelFromValue(model: model),
+    maxToken: parameters.maxTokens,
+    temperature: parameters.temperature,
+  );
 
-    final response = await openAI.onCompletion(request: request);
+  final requestJson = _prettyJson(request.toJson());
+  print('OpenAI request: $requestJson');
 
-    // Logging is handled automatically when you print to the console.
-    print('Saying hello to $response');
+  final response = await openAI.onChatCompletion(request: request);
 
-    // placeholder to grab full response from openAI
-    String promptResponse = '';
+  final responseJson = _prettyJson(response?.toJson());
+  print('OpenAI response: $responseJson');
 
-    for (var choice in response!.choices) {
-      promptResponse = promptResponse + choice.text;
-    }
-
-    return promptResponse;
-  } on Exception catch (e) {
-    return e.toString();
+  switch (response) {
+    case ChatCTResponse(choices: [ChatChoice(:final message?), ...]):
+      return message.content.trim();
+    default:
+      throw InternalServerException(
+        "Couldn't complete request. Please try again later.",
+      );
   }
 }
+
+String _prettyJson(Object? json) =>
+    const JsonEncoder.withIndent('  ').convert(json);

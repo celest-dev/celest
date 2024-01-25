@@ -19,10 +19,10 @@ abstract final class functions {
 
   static const openAiOpenAiRequest = _i1.CloudFunction<
       ({
-        String prompt,
         String model,
+        String prompt,
         _i2.ModelParameters parameters,
-        String openApiKey
+        String openAiToken
       }),
       String>(
     api: r'open_ai',
@@ -31,5 +31,5 @@ abstract final class functions {
 }
 
 abstract final class env {
-  static const openApiKey = _i1.EnvironmentVariable(name: r'OPEN_API_KEY');
+  static const openAiToken = _i1.EnvironmentVariable(name: r'OPEN_AI_TOKEN');
 }

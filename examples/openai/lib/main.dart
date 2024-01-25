@@ -1,51 +1,109 @@
-import 'package:flutter/material.dart';
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:logger/logger.dart';
-// Import needed for input formatters
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
   celest.init();
-  runApp(const MyApp());
+  runApp(const OpenAiApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class OpenAiApp extends StatefulWidget {
+  const OpenAiApp({super.key});
+
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<OpenAiApp> createState() => _OpenAiAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  TextEditingController questionController = TextEditingController();
-  TextEditingController answerController = TextEditingController();
-  TextEditingController maxTokensController = TextEditingController();
-
-  // contains value of selected model from drodown menu
-  String? _selectedModelValue;
-
-  double? _tempratureSliderValue;
-
-  var _loadedModels = false;
-  final _modelFuture = celest.functions.openAi.availableModels();
-
-  var logger = Logger(
+class _OpenAiAppState extends State<OpenAiApp> {
+  static final _logger = Logger(
     printer: PrettyPrinter(),
   );
+
+  // Controllers for the text fields.
+  final _questionController = TextEditingController();
+  final _answerController = TextEditingController();
+  final _maxTokensController = TextEditingController();
+
+  /// The selected model to use.
+  ///
+  /// This is first set by [_availableModelsDropdown] when the available models
+  /// are loaded from the backend.
+  late String _selectedModel;
+
+  /// The value of the temperature slider.
+  var _temperatureSliderValue = 1.0;
+
+  /// Whether [_availableModelsFuture] has completed and the available models
+  /// have been loaded fromthe backend.
+  var _loadedAvailableModels = false;
+  final _availableModelsFuture = celest.functions.openAi.availableModels();
+
+  /// Sends the prompt request to the backend and updates the UI with the
+  /// response.
+  Future<void> _sendOpenAiRequest() async {
+    try {
+      final response = await celest.functions.openAi.openAiRequest(
+        prompt: _questionController.text,
+        model: _selectedModel,
+        parameters: ModelParameters(
+          maxTokens: _maxTokensController.text.isNotEmpty
+              ? int.parse(_maxTokensController.text)
+              : null,
+          temperature: _temperatureSliderValue,
+        ),
+      );
+      _logger.d(response);
+      setState(() {
+        _answerController.text = response;
+      });
+    } on Exception catch (e) {
+      _logger.e(e);
+      setState(() {
+        _answerController.text = '${e.runtimeType}: $e';
+      });
+    }
+  }
+
+  /// Builds a dropdown menu with the available models loaded from the backend.
+  Widget _availableModelsDropdown(List<String> availableModels) {
+    assert(
+      availableModels.isNotEmpty,
+      'Backend will always return at least one model',
+    );
+    final defaultModel = availableModels.first;
+    if (!_loadedAvailableModels) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _selectedModel = defaultModel;
+          _loadedAvailableModels = true;
+        });
+      });
+    }
+    return DropdownMenu<String>(
+      initialSelection: defaultModel,
+      label: const Text('Model'),
+      onSelected: (newValue) {
+        if (newValue == null) return;
+        setState(() {
+          _selectedModel = newValue;
+        });
+      },
+      dropdownMenuEntries: availableModels
+          .map((value) => DropdownMenuEntry(value: value, label: value))
+          .toList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontSize: 20),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Homepage'),
+          title: const Text('OpenAI Prompt'),
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -54,54 +112,27 @@ class _MyAppState extends State<MyApp> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 100),
+                  const SizedBox(height: 100),
+                  Text(
+                    'GPT Settings',
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  const Text("AI model settings"),
-                  const Padding(padding: EdgeInsets.only(top: 20)),
-                  // adds dropdown with available models from backend
+                  const SizedBox(height: 20),
+                  // Fetches available models from the backend to populate a
+                  // dropdown menu.
                   FutureBuilder<List<String>>(
-                    future: _modelFuture, // Replace with your future
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<String>> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // Show a progress indicator when waiting for the future to complete
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        // Handle the error case
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        // Build the dropdown when data is available
-                        assert(
-                          snapshot.data!.isNotEmpty,
-                          'Backend should always return at least one model',
-                        );
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          setState(() {
-                            _selectedModelValue = snapshot.data!.first;
-                            _loadedModels = true;
-                          });
-                        });
-                        return DropdownButton<String>(
-                          value: snapshot.data!.first,
-                          //handle change of dropdown value
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedModelValue = newValue;
-                            });
-                          },
-                          items: snapshot.data!
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        );
-                      } else {
-                        // Handle the case when the future completes with no data
-                        return const Text("No data available");
-                      }
+                    future: _availableModelsFuture,
+                    builder: (context, snapshot) => switch (snapshot) {
+                      // Build the dropdown when data is available
+                      AsyncSnapshot(:final data?) =>
+                        _availableModelsDropdown(data),
+
+                      // Handle the error case
+                      AsyncSnapshot(:final error?) =>
+                        Text('${error.runtimeType}: $error'),
+
+                      // If waiting, show a progress indicator
+                      _ => const CircularProgressIndicator(),
                     },
                   ),
                   Row(
@@ -109,92 +140,81 @@ class _MyAppState extends State<MyApp> {
                     children: [
                       Tooltip(
                         message:
-                            "The maximum number of words to generate from AI",
+                            'The maximum number of words for the AI to generate',
                         child: SizedBox(
                           width: 200,
                           child: TextField(
                             keyboardType: TextInputType.number,
+                            // Allow only digits
                             inputFormatters: [
-                              FilteringTextInputFormatter
-                                  .digitsOnly, // Allow only digits
+                              FilteringTextInputFormatter.digitsOnly,
                             ],
                             decoration: const InputDecoration(
-                              // border: OutlineInputBorder(),
                               hintText: 'Max tokens',
                             ),
-                            controller: maxTokensController,
+                            controller: _maxTokensController,
                           ),
                         ),
                       ),
                       Tooltip(
                         message:
-                            "The higher the temperature, the more random the text",
-                        child: SizedBox(
-                          width: 200,
-                          child: Slider(
-                            value: _tempratureSliderValue ?? 0,
-                            min: 0,
-                            max: 1,
-                            divisions: 10,
-                            label: _tempratureSliderValue.toString(),
-                            onChanged: (double value) {
-                              // Use setState but limit its scope only to the slider
-                              setState(() {
-                                _tempratureSliderValue = value;
-                              });
-                            },
-                          ),
+                            'The higher the temperature, the more random the text',
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Temperature',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: Slider(
+                                value: _temperatureSliderValue,
+                                min: 0,
+                                max: 2,
+                                divisions: 10,
+                                label: _temperatureSliderValue.toString(),
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _temperatureSliderValue = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 20)),
+                  const SizedBox(height: 20),
                   TextField(
                     maxLines: 10,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter your question here',
                     ),
-                    controller: questionController,
+                    controller: _questionController,
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 20)),
+                  const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: !_loadedModels
-                        ? null
-                        : () async {
-                            String response =
-                                await celest.functions.openAi.openAiRequest(
-                              prompt: questionController.text,
-                              model: _selectedModelValue!,
-                              parameters: ModelParameters(
-                                maxTokens: maxTokensController.text.isNotEmpty
-                                    ? int.tryParse(maxTokensController.text)
-                                    : null,
-                                temperature: _tempratureSliderValue,
-                              ),
-                            );
-                            logger.d(response);
-                            setState(() {
-                              answerController.text = response;
-                            });
-                          },
-                    child: const Text("Ask your question!"),
+                    onPressed:
+                        !_loadedAvailableModels ? null : _sendOpenAiRequest,
+                    child: const Text('Ask your question!'),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
+                  const SizedBox(height: 50),
+                  Text(
+                    'Answer',
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  const Text("Answer: "),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                  ),
+                  const SizedBox(height: 20),
                   TextField(
                     readOnly: true,
                     maxLines: 10,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'your answer will go here',
+                      hintText: 'Your answer will go here',
                     ),
-                    controller: answerController,
+                    controller: _answerController,
                   ),
                 ],
               ),

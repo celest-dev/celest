@@ -17,7 +17,7 @@ class CelestFunctions {
 }
 
 class CelestFunctionsOpenAi {
-  /// Returns a list of available models. You can dymanically update this list of models for your Flutter app.
+  /// Returns a list of available models.
   Future<List<String>> availableModels() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/open-ai/available-models'),
@@ -48,21 +48,20 @@ class CelestFunctionsOpenAi {
     }
   }
 
-  /// Says hello to a person called [name].
+  /// Prompts the GPT [model] with the given [prompt] and [parameters].
+  ///
+  /// Returns the generated text.
   Future<String> openAiRequest({
+    required String model,
     required String prompt,
-    String model = 'gpt-3.5-turbo-instruct',
-    ModelParameters parameters = const ModelParameters(
-      temperature: 1.0,
-      maxTokens: 100,
-    ),
+    ModelParameters parameters = const ModelParameters(),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/open-ai/open-ai-request'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode({
-        r'prompt': prompt,
         r'model': model,
+        r'prompt': prompt,
         r'parameters':
             Serializers.instance.serialize<ModelParameters>(parameters),
       }),
