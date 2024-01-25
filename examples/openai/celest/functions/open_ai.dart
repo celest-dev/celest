@@ -13,7 +13,7 @@ OpenAI _createOpenAI(String key) => OpenAI.instance.build(
       enableLog: true,
     );
 
-/// Returns a list of available models.
+/// Returns a list of available models. You can dymanically update this list of models for your Flutter app.
 Future<List<String>> availableModels() async =>
     ['gpt-3.5-turbo-instruct', 'davinci-002'];
 
@@ -51,11 +51,4 @@ Future<String> openAIRequest({
   } on Exception catch (e) {
     return e.toString();
   }
-}
-
-Future<String> sayHelloDelete(
-  String name, {
-  @env.openApiKey required String openApiKey,
-}) async {
-  return 'Hello, $name!';
 }

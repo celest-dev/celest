@@ -28,12 +28,6 @@ abstract final class functions {
     api: r'open_ai',
     functionName: r'openAIRequest',
   );
-
-  static const openAiSayHelloDelete =
-      _i1.CloudFunction<(String, {String openApiKey}), String>(
-    api: r'open_ai',
-    functionName: r'sayHelloDelete',
-  );
 }
 
 abstract final class env {
