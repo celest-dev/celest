@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:process/src/interface/common.dart';
@@ -57,33 +56,9 @@ base mixin Configure on CelestCommand {
       await migrateProject();
     }
 
-    await _addProjectToDb();
     await _updateAppPubspec();
 
     this.isExistingProject = isExistingProject;
-  }
-
-  /// Ensures projects are recorded in the DB
-  Future<void> _addProjectToDb() async {
-    final celestPubspec = Pubspec.parse(
-      await fileSystem
-          .file(p.join(projectPaths.projectRoot, 'pubspec.yaml'))
-          .readAsString(),
-    );
-    logger.finest('Checking if project exists in DB...');
-    final dbProject = await celestProject.database
-        .findProjectByPath(projectPaths.projectRoot);
-    logger.finest('Found project in DB: $dbProject');
-    if (dbProject == null) {
-      logger.finest('Creating project in DB...');
-      await celestProject.database.createProject(
-        ProjectsCompanion.insert(
-          name: celestPubspec.name,
-          path: projectPaths.projectRoot,
-        ),
-      );
-      logger.finest('Created project in DB');
-    }
   }
 
   /// Ensures app has dependency on celest project

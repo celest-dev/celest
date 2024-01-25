@@ -4,6 +4,7 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:logging/logging.dart';
 import 'package:uuid/uuid.dart';
 
 part 'database.g.dart';
@@ -33,6 +34,8 @@ final class CelestDatabase extends _$CelestDatabase {
   @override
   int get schemaVersion => 1;
 
+  static final Logger _logger = Logger('CelestDatabase');
+
   /// Creates a [project] in the database.
   Future<void> createProject(ProjectsCompanion project) async {
     try {
@@ -41,6 +44,23 @@ final class CelestDatabase extends _$CelestDatabase {
       );
       await into(projects).insert(project);
     } on Object catch (e, st) {
+      _logger.finest('Failed to create project', e, st);
+      await performance.captureError(e, stackTrace: st);
+    }
+  }
+
+  /// Updates a [project] in the database.
+  Future<void> updateProjectName({
+    required String projectPath,
+    required String projectName,
+  }) async {
+    try {
+      projectPath = p.canonicalize(p.normalize(projectPath));
+      await (update(projects)
+            ..where((projects) => projects.path.equals(projectPath)))
+          .write(ProjectsCompanion(name: Value(projectName)));
+    } on Object catch (e, st) {
+      _logger.finest('Failed to update project', e, st);
       await performance.captureError(e, stackTrace: st);
     }
   }
@@ -50,6 +70,7 @@ final class CelestDatabase extends _$CelestDatabase {
     try {
       return await select(projects).get();
     } on Object catch (e, st) {
+      _logger.finest('Failed to list projects', e, st);
       await performance.captureError(e, stackTrace: st);
       return const [];
     }
@@ -63,6 +84,7 @@ final class CelestDatabase extends _$CelestDatabase {
             ..where((project) => project.path.equals(path)))
           .getSingleOrNull();
     } on Object catch (e, st) {
+      _logger.finest('Failed to find project by path', e, st);
       await performance.captureError(e, stackTrace: st);
       return null;
     }

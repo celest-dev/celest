@@ -13,6 +13,7 @@ import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
+import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -111,6 +112,32 @@ final class CelestFrontend implements Closeable {
     ]);
   }
 
+  /// Ensures projects are recorded in the DB
+  Future<void> _addProjectToDb(String projectName) async {
+    logger.finest('Checking if project exists in DB...');
+    final dbProject = await celestProject.database
+        .findProjectByPath(projectPaths.projectRoot);
+    logger.finest('Found project in DB: $dbProject');
+    if (dbProject == null) {
+      logger.finest('Creating project in DB...');
+      await celestProject.database.createProject(
+        ProjectsCompanion.insert(
+          name: projectName,
+          path: projectPaths.projectRoot,
+        ),
+      );
+      logger.finest('Created project in DB');
+    } else if (dbProject.name != projectName) {
+      logger.finest('Updating project name in DB...');
+      await celestProject.database.updateProjectName(
+        projectName: projectName,
+        projectPath: projectPaths.projectRoot,
+      );
+      logger.finest('Updated project name in DB');
+    }
+    // TODO(dnys1): Update if project path changes.
+  }
+
   /// Signals that a SIGINT or SIGTERM event has fired and the CLI needs to
   /// shutdown.
   final _stopSignal = Completer<ProcessSignal>.sync();
@@ -185,7 +212,10 @@ final class CelestFrontend implements Closeable {
               'Celest is running and watching for updates',
             );
 
-            _didFirstCompile = true;
+            if (!_didFirstCompile) {
+              _didFirstCompile = true;
+              await _addProjectToDb(project.name);
+            }
         }
         await _nextChangeSet();
       }
