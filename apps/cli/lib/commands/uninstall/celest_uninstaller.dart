@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -72,13 +73,33 @@ class CelestUninstaller {
           if (p.basename(installPath) != 'celest') {
             throw StateError('Unexpected install path: $installPath');
           }
-          final installDir = fileSystem.directory(installPath);
-          logger.fine('Deleting directory: $installDir');
-          await installDir.delete(recursive: true);
-          final installLink = fileSystem.link(macosSymlink);
-          logger.fine('Deleting symlink: $installLink');
-          if (await installLink.exists()) {
-            await installLink.delete();
+          final uninstallScript =
+              "[ -d '$installPath' ] && rm -r '$installPath'; [ -h '$macosSymlink' ] && rm '$macosSymlink'";
+          final uninstallOutput = await processManager.run(
+            <String>[
+              'osascript',
+              '-e',
+              'do shell script "$uninstallScript" '
+                  'with prompt "Celest needs your permission to uninstall" '
+                  'with administrator privileges',
+            ],
+            stdoutEncoding: utf8,
+            stderrEncoding: utf8,
+          );
+          logger.finest(
+            'Uninstall output:\n'
+            '${uninstallOutput.exitCode}\n'
+            '${uninstallOutput.stdout}\n'
+            '${uninstallOutput.stderr}',
+          );
+          if (uninstallOutput.exitCode != 0) {
+            throw ProcessException(
+              uninstallScript,
+              [],
+              'Failed to uninstall Celest: '
+              '${uninstallOutput.stdout}\n${uninstallOutput.stderr}',
+              uninstallOutput.exitCode,
+            );
           }
         } else if (exe.contains(p.join('apps', 'cli')) ||
             exe.contains('apps/cli')) {
