@@ -25,6 +25,11 @@ class _MyAppState extends State<MyApp> {
   TextEditingController answerController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
@@ -47,6 +52,42 @@ class _MyAppState extends State<MyApp> {
                   ),
                   const Text("Enter your question here:"),
                   const Padding(padding: EdgeInsets.only(top: 20)),
+                  FutureBuilder<List<String>>(
+                    future: celest.functions.openAi
+                        .availableModels(), // Replace with your future
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<String>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Show a progress indicator when waiting for the future to complete
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // Handle the error case
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        // Build the dropdown when data is available
+                        return DropdownButton<String>(
+                          value: snapshot.data!.isNotEmpty
+                              ? snapshot.data!.first
+                              : null,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              // Handle the dropdown value change
+                            });
+                          },
+                          items: snapshot.data!
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        );
+                      } else {
+                        // Handle the case when the future completes with no data
+                        return Text('No data available');
+                      }
+                    },
+                  ),
                   TextField(
                     maxLines: 10,
                     decoration: const InputDecoration(
@@ -63,6 +104,8 @@ class _MyAppState extends State<MyApp> {
                           await celest.functions.openAi.openAiRequest(
                         questionController.text,
                       );
+                      List<String> modelist =
+                          await celest.functions.openAi.availableModels();
                       print(response);
                       setState(() {
                         answerController.text = response;

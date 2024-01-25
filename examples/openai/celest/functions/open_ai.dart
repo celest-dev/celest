@@ -14,7 +14,7 @@ OpenAI _createOpenAI(String key) => OpenAI.instance.build(
     );
 
 /// Returns a list of available models.
-List<String> availableModels() => [
+Future<List<String>> availableModels() async => [
       'gpt-3.5-turbo-instruct',
       'gpt-4',
     ];
