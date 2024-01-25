@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:ffi';
-import 'dart:io';
+import 'dart:io' show ProcessException, stderr, stdout;
 
 import 'package:archive/archive_io.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:chunked_stream/chunked_stream.dart';
+import 'package:file/file.dart';
 import 'package:gcloud/storage.dart';
 import 'package:googleapis/cloudkms/v1.dart';
 import 'package:googleapis/storage/v1.dart' show DetailedApiRequestError;
@@ -18,16 +20,17 @@ import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
 
 /// The directory containing this script and build assets.
-final Directory toolDir = Directory.fromUri(Platform.script.resolve('.'));
+final Directory toolDir = fileSystem.file(platform.script).parent;
 
 /// The directory with the built CLI.
-final String buildPath = Platform.environment['BUILD_DIR'] ?? 'celest';
-final Directory buildDir = Directory.fromUri(
-  Platform.script.resolve('../$buildPath'),
+final String buildPath = platform.environment['BUILD_DIR'] ?? 'celest';
+final Directory buildDir = fileSystem.directory(
+  platform.script.resolve('../$buildPath'),
 );
 
 /// The directory to use for temporary (non-bundled) files.
-final Directory tempDir = Directory.systemTemp.createTempSync('celest_build_');
+final Directory tempDir =
+    fileSystem.systemTempDirectory.createTempSync('celest_build_');
 
 /// The HTTP client to use for downloading files.
 final http.Client httpClient = http.Client();
@@ -44,14 +47,14 @@ final Bundler bundler = Bundler();
 /// The path to the output file, dependent on the OS/arch.
 final String outputFilepath = p.canonicalize(
   p.join(
-    Platform.script.toFilePath(),
+    platform.script.toFilePath(),
     '..',
     'celest-$version-$osArch.${bundler.extension}',
   ),
 );
 
 /// Access token for GCP.
-final String? accessToken = Platform.environment['GCP_ACCESS_TOKEN'];
+final String? accessToken = platform.environment['GCP_ACCESS_TOKEN'];
 
 /// Builds and bundles the CLI for the current platform.
 ///
@@ -68,17 +71,17 @@ Future<void> main() async {
       '--output=$buildPath',
       'bin/celest.dart',
     ],
-    workingDirectory: Platform.script.resolve('..').toFilePath(),
+    workingDirectory: platform.script.resolve('..').toFilePath(),
   );
   if (!buildDir.existsSync()) {
     throw StateError('Build directory does not exist');
   }
 
-  if (!Platform.isWindows) {
-    final exeUri = Platform.script.resolve('../celest/celest.exe');
-    final exe = File.fromUri(exeUri);
+  if (!platform.isWindows) {
+    final exeUri = platform.script.resolve('../celest/celest.exe');
+    final exe = fileSystem.file(exeUri);
     final destExe = p.withoutExtension(p.absolute(exeUri.path));
-    if (!exe.existsSync() && !File(destExe).existsSync()) {
+    if (!exe.existsSync() && !fileSystem.file(destExe).existsSync()) {
       throw StateError('Executable does not exist: $exe');
     }
     exe.renameSync(destExe);
@@ -88,13 +91,13 @@ Future<void> main() async {
 
   print('Successfully wrote $outputFilepath');
 
-  final isCI = Platform.environment['CI'] == 'true';
+  final isCI = platform.environment['CI'] == 'true';
   if (!isCI) {
     return;
   }
 
-  final project = Platform.environment['GCP_BUILD_PROJECT'];
-  final bucketName = Platform.environment['GCP_BUILD_ARTIFACTS'];
+  final project = platform.environment['GCP_BUILD_PROJECT'];
+  final bucketName = platform.environment['GCP_BUILD_ARTIFACTS'];
   if (project == null || bucketName == null || accessToken == null) {
     throw StateError(
       'GCP_BUILD_PROJECT or GCP_BUILD_ARTIFACTS or GCP_ACCESS_TOKEN '
@@ -142,13 +145,13 @@ Future<void> main() async {
     '$osArch/$version/${p.basename(outputFilepath)}',
     '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
   ];
-  final bytes = await File(outputFilepath).readAsBytes();
+  final bytes = await fileSystem.file(outputFilepath).readAsBytes();
   for (final storagePath in storagePaths) {
     await bucket.writeBytes(
       storagePath,
       bytes,
       metadata: objectMetadata,
-      contentType: switch (Platform.operatingSystem) {
+      contentType: switch (platform.operatingSystem) {
         'windows' => 'application/appx',
         'macos' => 'application/octet-stream',
         'linux' => 'application/zip',
@@ -159,12 +162,12 @@ Future<void> main() async {
 
   final latestRelease = CelestReleaseInfo(
     version: Version.parse(version),
-    installer: switch (Platform.operatingSystem) {
+    installer: switch (platform.operatingSystem) {
       'windows' || 'macos' => storagePaths.first,
       'linux' => null,
       _ => unreachable(),
     },
-    zip: switch (Platform.operatingSystem) {
+    zip: switch (platform.operatingSystem) {
       'windows' || 'macos' => null,
       'linux' => storagePaths.first,
       _ => unreachable(),
@@ -210,9 +213,9 @@ abstract class Bundler {
 
 final class MacOSBundler implements Bundler {
   static final String? keychainName = () {
-    final isCI = Platform.environment['CI'] == 'true';
+    final isCI = platform.environment['CI'] == 'true';
     if (isCI) {
-      final keychainName = Platform.environment['KEYCHAIN_NAME'];
+      final keychainName = platform.environment['KEYCHAIN_NAME'];
       if (keychainName.isNullOrEmpty) {
         throw StateError('KEYCHAIN_NAME environment variable is not set');
       }
@@ -222,13 +225,13 @@ final class MacOSBundler implements Bundler {
   }();
 
   /// The Apple ID to use for notarization.
-  static final String appleId = Platform.environment['APPLE_ID']!;
+  static final String appleId = platform.environment['APPLE_ID']!;
 
   /// The app-specific password for the Apple ID to use for notarization.
-  static final String appleIdPass = Platform.environment['APPLE_ID_PASS']!;
+  static final String appleIdPass = platform.environment['APPLE_ID_PASS']!;
 
   /// The Apple Team ID to use for notarization.
-  static final String appleTeamId = Platform.environment['APPLE_TEAM_ID']!;
+  static final String appleTeamId = platform.environment['APPLE_TEAM_ID']!;
 
   /// Codesigning identities for macOS.
   static final String developerApplicationIdentity =
@@ -243,7 +246,8 @@ final class MacOSBundler implements Bundler {
   /// See:
   /// - https://developer.apple.com/documentation/Xcode/signing-a-daemon-with-a-restricted-entitlement
   /// - https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles#Entitlements-on-macOS
-  final appDir = Directory(p.join(tempDir.path, 'celest.app'))..createSync();
+  final appDir = fileSystem.directory(tempDir.path).childDirectory('celest.app')
+    ..createSync();
 
   @override
   String get extension => 'pkg';
@@ -261,29 +265,30 @@ final class MacOSBundler implements Bundler {
   /// - https://scriptingosx.com/2021/07/notarize-a-command-line-tool-with-notarytool/
   /// - https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow
   Future<void> _codesign() async {
-    Directory(p.join(appDir.path, 'Contents', 'MacOS'))
+    final exeDir = appDir.childDirectory('Contents').childDirectory('MacOS')
+      ..createSync(recursive: true);
+    appDir
+        .childDirectory('Contents')
+        .childDirectory('Frameworks')
+        .childDirectory('celest')
         .createSync(recursive: true);
-    Directory(p.join(appDir.path, 'Contents', 'Frameworks', 'celest'))
-        .createSync(recursive: true);
-    final exe = File(p.join(buildDir.path, 'celest'));
-    final toSign = [exe.path];
+    final exe = p.join(appDir.path, 'Contents', 'MacOS', 'celest');
+    final toSign = [exe];
+
+    buildDir.childFile('celest').copySync(exe);
 
     // Updates the LC_RPATH of `celest` to match .app directory structure.
     // https://developer.apple.com/documentation/xcode/embedding-nonstandard-code-structures-in-a-bundle#Adopt-rpath-relative-references
-    // TODO(dnys1): File a bug with Dart to fix this. They include @executable_path/Frameworks which is wrong.
     await _runProcess(
       'install_name_tool',
-      ['-add_rpath', '@executable_path/../Frameworks', exe.path],
-    );
-
-    exe.copySync(
-      p.join(appDir.path, 'Contents', 'MacOS', 'celest'),
+      ['-add_rpath', '@executable_path/../Frameworks', exe],
     );
 
     for (final dylib in buildDir
         .listSync()
         .whereType<File>()
         .where((f) => p.extension(f.path) == '.dylib')) {
+      final dylibFilename = p.basename(dylib.path);
       // Even though rpath is Frameworks/ in the binary, the runtime searches
       // at Frameworks/celest/<dylib>.
       final appDylibPath = p.join(
@@ -291,45 +296,67 @@ final class MacOSBundler implements Bundler {
         'Contents',
         'Frameworks',
         'celest',
-        p.basename(dylib.path),
+        dylibFilename,
       );
       dylib.copySync(appDylibPath);
+      await _runProcess('install_name_tool', [
+        '-id',
+        '@rpath/celest/$dylibFilename',
+        appDylibPath,
+      ]);
+      // Symlink next to exe since native assets are hard-coded this way.
+      fileSystem
+          .link(exeDir.childFile(dylibFilename).path)
+          .createSync('../Frameworks/celest/$dylibFilename');
       toSign.add(appDylibPath);
     }
 
     toSign.add(appDir.path);
 
+    // Print directory structure
+    print('App directory structure');
+    print('---------------------');
+    for (final file in appDir.listSync(recursive: true)) {
+      print(p.relative(file.path, from: appDir.path));
+    }
+    print('---------------------');
+
     // Matches the entitlements needed by `dartaotruntime`:
     // https://github.com/dart-lang/sdk/blob/7e5ce1f688e036dbe4b417f7fd92bbced67b5ec5/runtime/tools/entitlements/dart_precompiled_runtime_product.plist
     final entitlementsPlistPath = p.join(tempDir.path, 'entitlements.xml');
     final entitlementsPlist = Template(
-      File(p.join(toolDir.path, 'macos', 'entitlements.xml'))
+      toolDir
+          .childDirectory('macos')
+          .childFile('entitlements.xml')
           .readAsStringSync(),
     ).renderString({
       'teamId': appleTeamId,
     });
     print('Rendered entitlements.xml:\n\n$entitlementsPlist\n');
-    File(entitlementsPlistPath)
+    fileSystem.file(entitlementsPlistPath)
       ..createSync()
-      ..writeAsStringSync(
-        entitlementsPlist,
-        flush: true,
-      );
+      ..writeAsStringSync(entitlementsPlist);
 
     final infoPlist = Template(
-      File(p.join(toolDir.path, 'macos', 'Info.plist')).readAsStringSync(),
+      toolDir
+          .childDirectory('macos')
+          .childFile('Info.plist')
+          .readAsStringSync(),
     ).renderString({
       'version': version,
       'teamId': appleTeamId,
     });
     print('Rendered Info.plist:\n\n$infoPlist\n');
-    File(p.join(appDir.path, 'Contents', 'Info.plist'))
+    appDir.childDirectory('Contents').childFile('Info.plist')
       ..createSync()
       ..writeAsStringSync(infoPlist);
 
-    File(p.join(toolDir.path, 'macos', 'embedded.provisionprofile')).copySync(
-      p.join(appDir.path, 'Contents', 'embedded.provisionprofile'),
-    );
+    toolDir
+        .childDirectory('macos')
+        .childFile('embedded.provisionprofile')
+        .copySync(
+          p.join(appDir.path, 'Contents', 'embedded.provisionprofile'),
+        );
 
     // Codesign all files in the build directory.
     // TODO(dnys1): Currently we must sign everything in the app directory
@@ -430,10 +457,11 @@ final class MacOSBundler implements Bundler {
     // Create distribution XML file
     // See: https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html
     // TODO(dnys1): enable_currentUserHome="true"? https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html#//apple_ref/doc/uid/TP40005370-CH100-SW35
-    final distributionTmpl =
-        File(p.join(toolDir.path, 'macos', 'distribution.xml'))
-            .readAsStringSync();
-    final distributionFile = File(p.join(tempDir.path, 'distribution.xml'));
+    final distributionTmpl = toolDir
+        .childDirectory('macos')
+        .childFile('distribution.xml')
+        .readAsStringSync();
+    final distributionFile = tempDir.childFile('distribution.xml');
     final distributionXml = Template(distributionTmpl).renderString({
       'filename': p.basename(tmpPkgPath),
       'hostArchitectures': osArch == Abi.macosArm64 ? 'arm64' : 'x86_64',
@@ -552,7 +580,8 @@ final class MacOSBundler implements Bundler {
 final class WindowsBundler implements Bundler {
   static final String _windowsSdkBinDir = () {
     const binDir = r'C:\Program Files (x86)\Windows Kits\10\bin';
-    final allSdks = Directory(binDir)
+    final allSdks = fileSystem
+        .directory(binDir)
         .listSync()
         .whereType<Directory>()
         .map((e) => p.basename(e.path))
@@ -584,14 +613,16 @@ final class WindowsBundler implements Bundler {
     // Fix for firewall rules: https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/desktop-to-uwp-extensions#create-firewall-exception-for-your-app
     final appxManifestPath = p.join(buildDir.path, 'AppxManifest.xml');
     final appxManifest = Template(
-      File(p.join(toolDir.path, 'windows', 'AppxManifest.xml'))
+      toolDir
+          .childDirectory('windows')
+          .childFile('AppxManifest.xml')
           .readAsStringSync(),
     ).renderString({
       'arch': osArch == Abi.windowsArm64 ? 'arm64' : 'x64',
       'version': version,
     });
     print('Rendered AppxManifest.xml:\n\n$appxManifest\n');
-    File(appxManifestPath)
+    fileSystem.file(appxManifestPath)
       ..createSync()
       ..writeAsStringSync(appxManifest, flush: true);
 
@@ -599,13 +630,14 @@ final class WindowsBundler implements Bundler {
     //
     // These are generated using VS Studio 2022's built-in Asset Generator.
     final sourceDir = p.join(
-      p.dirname(p.fromUri(Platform.script)),
+      p.dirname(p.fromUri(platform.script)),
       'windows',
       'Assets',
     );
-    final assetsDir = Directory(p.join(buildDir.path, 'Assets'))
+    final assetsDir = buildDir.childDirectory('Assets')
       ..createSync(recursive: true);
-    for (final logoFile in Directory(sourceDir).listSync().whereType<File>()) {
+    for (final logoFile
+        in fileSystem.directory(sourceDir).listSync().whereType<File>()) {
       logoFile.copySync(p.join(assetsDir.path, p.basename(logoFile.path)));
     }
 
@@ -662,9 +694,9 @@ final class WindowsBundler implements Bundler {
   }
 
   Future<void> _evCodesign(String appxPackage) async {
-    final evKeyRing = Platform.environment['EV_KEY_RING'];
-    final evKeyName = Platform.environment['EV_KEY_NAME'];
-    final certData = Platform.environment['WINDOWS_CERTS_DATA'];
+    final evKeyRing = platform.environment['EV_KEY_RING'];
+    final evKeyName = platform.environment['EV_KEY_NAME'];
+    final certData = platform.environment['WINDOWS_CERTS_DATA'];
 
     if (evKeyRing.isNullOrEmpty ||
         evKeyName.isNullOrEmpty ||
@@ -679,7 +711,7 @@ final class WindowsBundler implements Bundler {
       );
     }
 
-    final windowsCertsFile = File(p.join(tempDir.path, 'windows-certs.p7b'));
+    final windowsCertsFile = tempDir.childFile('windows-certs.p7b');
     await windowsCertsFile.create();
     await windowsCertsFile.writeAsBytes(base64Decode(certData!), flush: true);
 
@@ -693,7 +725,7 @@ final class WindowsBundler implements Bundler {
         '${jsignJarReq.body}',
       );
     }
-    final jsignJar = File(p.join(tempDir.path, 'jsign.jar'));
+    final jsignJar = tempDir.childFile('jsign.jar');
     await jsignJar.create();
     await jsignJar.writeAsBytes(jsignJarReq.bodyBytes, flush: true);
 
@@ -722,9 +754,8 @@ final class WindowsBundler implements Bundler {
     ];
 
     print('Running jsign tool...');
-    final jsignRes = await Process.run(
-      'java',
-      jsignArgs,
+    final jsignRes = await processManager.run(
+      <String>['java', ...jsignArgs],
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );
@@ -749,7 +780,7 @@ final class WindowsBundler implements Bundler {
     );
 
     // Copy the temp appx package to its final output path.
-    await File(appxPackage).copy(outputFilepath);
+    await fileSystem.file(appxPackage).copy(outputFilepath);
 
     print('Successfully codesigned $appxPackage');
   }
@@ -772,9 +803,8 @@ Future<String> _runProcess(
   Future<void> Function(String logs)? onError,
 }) async {
   print('Running process "$executable ${args.join(' ')}"...');
-  final proc = await Process.start(
-    executable,
-    args,
+  final proc = await processManager.start(
+    <String>[executable, ...args],
     workingDirectory: workingDirectory,
   );
 
