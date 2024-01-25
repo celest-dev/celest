@@ -12,6 +12,8 @@ import 'package:logging/logging.dart';
 import 'package:vm_service/vm_service.dart';
 import 'package:vm_service/vm_service_io.dart';
 
+final Logger _logger = Logger('LocalApiRunner');
+
 /// Like [EntrypointCompiler], this class runs Celest API functions as a local
 /// server, watching for changes and hot-reloading when functions are changed.
 final class LocalApiRunner implements Closeable {
@@ -28,7 +30,6 @@ final class LocalApiRunner implements Closeable {
         _vmIsolateId = vmIsolateId,
         _localApiProcess = localApiProcess;
 
-  static final Logger logger = Logger('LocalApiRunner');
   final bool verbose;
   final String path;
 
@@ -69,13 +70,13 @@ final class LocalApiRunner implements Closeable {
         '--no-support-mirrors', // Since it won't be supported in the cloud.
       ],
     );
-    logger.fine('Compiling local API...');
+    _logger.fine('Compiling local API...');
 
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
     final port = await findOpenPort();
-    logger.finer('Starting local API...');
+    _logger.finer('Starting local API...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
       [
@@ -104,7 +105,7 @@ final class LocalApiRunner implements Closeable {
       )) {
         final observatoryUri =
             '${line.split(' ').last.replaceFirst('http', 'ws')}ws';
-        logger.finer('Connecting to local API at: $observatoryUri');
+        _logger.finer('Connecting to local API at: $observatoryUri');
         vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
       } else if (line.startsWith('The Dart VM service is listening on')) {
         // Ignore
@@ -126,7 +127,7 @@ final class LocalApiRunner implements Closeable {
         .transform(const LineSplitter())
         .listen(stderr.writeln);
 
-    logger.finer('Waiting for local API to report VM URI...');
+    _logger.finer('Waiting for local API to report VM URI...');
     final vmService = await vmServiceCompleter.future.timeout(
       const Duration(seconds: 15),
       onTimeout: () {
@@ -137,8 +138,8 @@ final class LocalApiRunner implements Closeable {
       },
     );
 
-    final isolateId = await _waitForIsolate(vmService, logger);
-    logger.fine('Connected to local API.');
+    final isolateId = await _waitForIsolate(vmService, _logger);
+    _logger.fine('Connected to local API.');
 
     return LocalApiRunner._(
       path: path,
@@ -174,7 +175,7 @@ final class LocalApiRunner implements Closeable {
   }
 
   Future<void> hotReload(List<String> pathsToInvalidate) async {
-    logger.fine('Hot reloading local API...');
+    _logger.fine('Hot reloading local API...');
     final result = await _client.compile([
       for (final path in pathsToInvalidate) p.toUri(path),
     ]);
@@ -187,13 +188,13 @@ final class LocalApiRunner implements Closeable {
 
   @override
   Future<void> close() async {
-    logger.finer('Shutting down local API...');
+    _logger.finer('Shutting down local API...');
     if (!await Future(() => _client.closed)) {
       _client.kill();
     }
     await _vmService.dispose();
     _localApiProcess.kill();
-    logger.finer('Shut down local API.');
+    _logger.finer('Shut down local API.');
   }
 }
 
@@ -208,6 +209,7 @@ final class CompilationException implements Exception {
 
 extension on FrontendServerClient {
   String expectOutput(CompileResult result) {
+    _logger.finest('Compile result:\n${result.debugResult}');
     switch (result) {
       case CompileResult(errorCount: > 0, :final compilerOutputLines):
         throw CompilationException(
@@ -220,5 +222,26 @@ extension on FrontendServerClient {
         // `dillOutput` should never be null (see its docs).
         unreachable('An unknown error occurred compiling local API.');
     }
+  }
+}
+
+extension on CompileResult {
+  String get debugResult {
+    final buffer = StringBuffer()
+      ..writeln('dillOutput: $dillOutput')
+      ..writeln('Error count: $errorCount')
+      ..writeln('Compiler output:');
+    for (final line in compilerOutputLines) {
+      buffer.writeln('  $line');
+    }
+    buffer.writeln('New sources:');
+    for (final source in newSources) {
+      buffer.writeln('  $source');
+    }
+    buffer.writeln('Removed sources:');
+    for (final source in removedSources) {
+      buffer.writeln('  $source');
+    }
+    return buffer.toString();
   }
 }
