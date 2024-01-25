@@ -20,7 +20,7 @@ Future<List<String>> availableModels() async =>
 /// Says hello to a person called [name].
 Future<String> openAIRequest({
   required String prompt,
-  String model = 'gpt-3.5-turbo-instruct',
+  String? model = 'gpt-3.5-turbo-instruct',
   ModelParameters parameters = const ModelParameters(),
   @env.openApiKey required String openApiKey,
 }) async {

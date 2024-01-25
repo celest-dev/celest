@@ -3,9 +3,11 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
+import 'package:logger/logger.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
@@ -26,6 +28,13 @@ class _MyAppState extends State<MyApp> {
 
   // contains value of selected model from drodown menu
   String? selectedModelValue;
+
+  var _loadedModels = false;
+  final _modelFuture = celest.functions.openAi.availableModels();
+
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +60,7 @@ class _MyAppState extends State<MyApp> {
                   const Text("Enter your question here:"),
                   const Padding(padding: EdgeInsets.only(top: 20)),
                   FutureBuilder<List<String>>(
-                    future: celest.functions.openAi
-                        .availableModels(), // Replace with your future
+                    future: _modelFuture, // Replace with your future
                     builder: (BuildContext context,
                         AsyncSnapshot<List<String>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -63,10 +71,18 @@ class _MyAppState extends State<MyApp> {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.hasData) {
                         // Build the dropdown when data is available
+                        assert(
+                          snapshot.data!.isNotEmpty,
+                          'Backend should always return at least one model',
+                        );
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          setState(() {
+                            selectedModelValue = snapshot.data!.first;
+                            _loadedModels = true;
+                          });
+                        });
                         return DropdownButton<String>(
-                          value: snapshot.data!.isNotEmpty
-                              ? snapshot.data!.first
-                              : null,
+                          value: snapshot.data!.first,
                           //handle change of dropdown value
                           onChanged: (String? newValue) {
                             setState(() {
@@ -83,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                         );
                       } else {
                         // Handle the case when the future completes with no data
-                        return Text('No data available');
+                        return const Text("No data available");
                       }
                     },
                   ),
@@ -97,20 +113,19 @@ class _MyAppState extends State<MyApp> {
                   ),
                   const Padding(padding: EdgeInsets.only(top: 20)),
                   ElevatedButton(
-                    onPressed: () async {
-                      print("test");
-                      String response =
-                          await celest.functions.openAi.openAiRequest(
-                        prompt: questionController.text,
-                        model: selectedModelValue!,
-                      );
-                      List<String> modelist =
-                          await celest.functions.openAi.availableModels();
-                      print(response);
-                      setState(() {
-                        answerController.text = response;
-                      });
-                    },
+                    onPressed: !_loadedModels
+                        ? null
+                        : () async {
+                            String response =
+                                await celest.functions.openAi.openAiRequest(
+                              prompt: questionController.text,
+                              model: selectedModelValue!,
+                            );
+                            logger.d(response);
+                            setState(() {
+                              answerController.text = response;
+                            });
+                          },
                     child: const Text("Ask your question!"),
                   ),
                   const Padding(
