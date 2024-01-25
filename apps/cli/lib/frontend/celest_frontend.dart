@@ -104,6 +104,7 @@ final class CelestFrontend implements Closeable {
             '$_changedPaths',
           );
           _changedPaths = paths.toSet();
+          return celestProject.invalidate(_changedPaths!);
         },
       ),
       _stopSignal.future,
@@ -141,9 +142,6 @@ final class CelestFrontend implements Closeable {
         );
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
-        if (_didFirstCompile && _changedPaths != null) {
-          _changedPaths = await celestProject.invalidate(_changedPaths!);
-        }
         final analysisResult = await _analyzeProject();
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
