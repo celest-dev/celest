@@ -18,8 +18,8 @@ abstract final class functions {
   );
 
   static const openAiOpenAiRequest = _i1.CloudFunction<
-      (
-        String, {
+      ({
+        String prompt,
         String model,
         _i2.ModelParameters parameters,
         String openApiKey

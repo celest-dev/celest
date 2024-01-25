@@ -14,14 +14,12 @@ OpenAI _createOpenAI(String key) => OpenAI.instance.build(
     );
 
 /// Returns a list of available models.
-Future<List<String>> availableModels() async => [
-      'gpt-3.5-turbo-instruct',
-      'gpt-4',
-    ];
+Future<List<String>> availableModels() async =>
+    ['gpt-3.5-turbo-instruct', 'gpt-4', 'another', 'for d-dog'];
 
 /// Says hello to a person called [name].
-Future<String> openAIRequest(
-  String prompt, {
+Future<String> openAIRequest({
+  required String prompt,
   String model = 'gpt-3.5-turbo-instruct',
   ModelParameters parameters = const ModelParameters(),
   @env.openApiKey required String openApiKey,

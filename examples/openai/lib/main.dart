@@ -24,10 +24,8 @@ class _MyAppState extends State<MyApp> {
   TextEditingController questionController = TextEditingController();
   TextEditingController answerController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // contains value of selected model from drodown menu
+  String? selectedModelValue;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +67,10 @@ class _MyAppState extends State<MyApp> {
                           value: snapshot.data!.isNotEmpty
                               ? snapshot.data!.first
                               : null,
+                          //handle change of dropdown value
                           onChanged: (String? newValue) {
                             setState(() {
-                              // Handle the dropdown value change
+                              selectedModelValue = newValue;
                             });
                           },
                           items: snapshot.data!
@@ -102,7 +101,8 @@ class _MyAppState extends State<MyApp> {
                       print("test");
                       String response =
                           await celest.functions.openAi.openAiRequest(
-                        questionController.text,
+                        prompt: questionController.text,
+                        model: selectedModelValue!,
                       );
                       List<String> modelist =
                           await celest.functions.openAi.availableModels();
