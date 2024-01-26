@@ -108,7 +108,7 @@ class _OpenAiAppState extends State<OpenAiApp> {
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
