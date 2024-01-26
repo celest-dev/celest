@@ -385,6 +385,9 @@ final class MacOSBundler implements Bundler {
             'dev.celest.cli',
             '--options=runtime',
           ],
+          // TODO(dnys1): Fix this
+          // It's signed on arm but not x64 for some reason
+          if (Abi.current() == Abi.macosArm64) '--force',
           '--timestamp',
           '--file-list',
           '-',
