@@ -352,7 +352,7 @@ final class CelestAnalyzer {
     if (name == null) {
       _reportError(
         'The `name` field is required on `EnvironmentVariable` annotations',
-        location: annotation.element?.sourceLocation ?? location,
+        location: location,
       );
       return null;
     }
@@ -367,7 +367,7 @@ final class CelestAnalyzer {
     if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
       _reportError(
         'The environment variable `$name` does not exist',
-        location: annotation.element?.sourceLocation ?? location,
+        location: location,
       );
       return null;
     }
