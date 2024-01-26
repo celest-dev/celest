@@ -104,10 +104,9 @@ LazyDatabase _openConnection(CelestConfig config) {
       // next to the _resolved_ executable, this is straightforward.
       final exeDir = p.dirname(platform.executable);
       final resolvedExeDir = p.dirname(platform.resolvedExecutable);
-      if (!p.equals(exeDir, resolvedExeDir)) {
-        await fileSystem
-            .link(p.join(exeDir, 'dart_sqlite3.dll'))
-            .create(p.join(resolvedExeDir, 'dart_sqlite3.dll'));
+      final dllLink = fileSystem.link(p.join(exeDir, 'dart_sqlite3.dll'));
+      if (!p.equals(exeDir, resolvedExeDir) && !await dllLink.exists()) {
+        await dllLink.create(p.join(resolvedExeDir, 'dart_sqlite3.dll'));
       }
     }
     final file = fileSystem.file(p.join(config.configDir.path, 'celest.db'));
