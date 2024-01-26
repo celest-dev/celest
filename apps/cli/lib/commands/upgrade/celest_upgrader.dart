@@ -138,23 +138,27 @@ final class CelestUpgrader {
         zippedFile.writeContent(output);
         output.flush();
         await output.close();
-        // Make executable
-        if (p.basename(zippedFile.name) == 'celest') {
-          _logger.finest('Making ${file.path} executable');
-          final chmodOutput = await processManager.run(
-            <String>['chmod', '+x', file.path],
-            stdoutEncoding: utf8,
-            stderrEncoding: utf8,
+      }
+      // Make files executable
+      for (final file in [
+        currentExeDir.childFile('celest'),
+        currentExeDir.childFile('launcher.sh'),
+      ]) {
+        if (!await file.exists()) continue;
+        _logger.finest('Making ${file.path} executable');
+        final chmodOutput = await processManager.run(
+          <String>['chmod', '+x', file.path],
+          stdoutEncoding: utf8,
+          stderrEncoding: utf8,
+        );
+        if (chmodOutput.exitCode != 0) {
+          throw ProcessException(
+            'chmod',
+            ['+x', file.path],
+            'Failed to chmod +x ${file.path}: '
+                '${chmodOutput.stdout}\n${chmodOutput.stderr}',
+            chmodOutput.exitCode,
           );
-          if (chmodOutput.exitCode != 0) {
-            throw ProcessException(
-              'chmod',
-              ['+x', file.path],
-              'Failed to chmod +x ${file.path}: '
-                  '${chmodOutput.stdout}\n${chmodOutput.stderr}',
-              chmodOutput.exitCode,
-            );
-          }
         }
       }
     } finally {
