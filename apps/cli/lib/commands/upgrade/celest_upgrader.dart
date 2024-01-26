@@ -59,7 +59,12 @@ final class CelestUpgrader {
         default:
           unreachable();
       }
-      progress?.complete('Celest has been updated to the latest version!');
+      const successMessage = 'Celest has been updated to the latest version!';
+      if (progress != null) {
+        progress.complete(successMessage);
+      } else {
+        cliLogger.success(successMessage);
+      }
     } on Object {
       progress?.cancel();
       rethrow;
