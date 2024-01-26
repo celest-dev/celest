@@ -108,9 +108,10 @@ class _OpenAiAppState extends State<OpenAiApp> {
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(right: 100, left: 100),
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 100),
                   Text(
@@ -135,56 +136,59 @@ class _OpenAiAppState extends State<OpenAiApp> {
                       _ => const CircularProgressIndicator(),
                     },
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Tooltip(
-                        message:
-                            'The maximum number of words for the AI to generate',
-                        child: SizedBox(
-                          width: 200,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            // Allow only digits
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            decoration: const InputDecoration(
-                              hintText: 'Max tokens',
+                  SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceEvenly,
+                      children: [
+                        Tooltip(
+                          message:
+                              'The maximum number of words for the AI to generate',
+                          child: SizedBox(
+                            width: 150,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              // Allow only digits
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              decoration: const InputDecoration(
+                                hintText: 'Max tokens',
+                              ),
+                              controller: _maxTokensController,
                             ),
-                            controller: _maxTokensController,
                           ),
                         ),
-                      ),
-                      Tooltip(
-                        message:
-                            'The higher the temperature, the more random the text',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Temperature',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: Slider(
-                                value: _temperatureSliderValue,
-                                min: 0,
-                                max: 2,
-                                divisions: 10,
-                                label: _temperatureSliderValue.toString(),
-                                onChanged: (double value) {
-                                  setState(() {
-                                    _temperatureSliderValue = value;
-                                  });
-                                },
+                        Tooltip(
+                          message:
+                              'The higher the temperature, the more random the text',
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Temperature',
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 150,
+                                child: Slider(
+                                  value: _temperatureSliderValue,
+                                  min: 0,
+                                  max: 2,
+                                  divisions: 10,
+                                  label: _temperatureSliderValue.toString(),
+                                  onChanged: (double value) {
+                                    setState(() {
+                                      _temperatureSliderValue = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                   TextField(
