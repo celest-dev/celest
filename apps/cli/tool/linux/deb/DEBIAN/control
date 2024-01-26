@@ -2,5 +2,5 @@ Package: Celest
 Depends: libsecret-1-dev
 Version: 0.1.5
 Maintainer: Teo, Inc.
-Architecture: all
+Architecture: "{{ arch }}"
 Description: The CLI for Celest, the Flutter cloud platform

@@ -142,16 +142,20 @@ Future<void> main() async {
 
   // Upload the build artifacts to GCS.
   final withoutExt = p.withoutExtension(p.basename(outputFilepath));
-  final storagePaths = [
-    '$osArch/$version/${p.basename(outputFilepath)}',
-    '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
-    if (platform.isLinux) ...[
-      '$osArch/$version/$withoutExt.deb',
-      '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb',
-    ],
-  ];
-  final bytes = await fileSystem.file(outputFilepath).readAsBytes();
-  for (final storagePath in storagePaths) {
+  final debFilepath = '${p.withoutExtension(outputFilepath)}.deb';
+  final storagePaths = {
+    outputFilepath: '$osArch/$version/${p.basename(outputFilepath)}',
+    outputFilepath:
+        '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
+    if (platform.isLinux) ...{
+      debFilepath: '$osArch/$version/$withoutExt.deb',
+      debFilepath:
+          '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb',
+    },
+  };
+  for (final MapEntry(key: localPath, value: storagePath)
+      in storagePaths.entries) {
+    final bytes = await fileSystem.file(localPath).readAsBytes();
     await bucket.writeBytes(
       storagePath,
       bytes,
@@ -172,13 +176,13 @@ Future<void> main() async {
   final latestRelease = CelestReleaseInfo(
     version: Version.parse(version),
     installer: switch (platform.operatingSystem) {
-      'windows' || 'macos' => storagePaths.first,
-      'linux' => storagePaths[2],
+      'windows' || 'macos' => storagePaths.values.first,
+      'linux' => storagePaths.values.elementAt(2),
       _ => unreachable(),
     },
     zip: switch (platform.operatingSystem) {
       'windows' || 'macos' => null,
-      'linux' => storagePaths.first,
+      'linux' => storagePaths.values.first,
       _ => unreachable(),
     },
   );
@@ -828,10 +832,23 @@ final class LinuxBundler implements Bundler {
 
     final toolDebianDir = toolDir.childDirectory('linux').childDirectory('deb');
 
-    for (final debianFile
+    for (final controlFile
         in toolDebianDir.childDirectory('DEBIAN').listSync().cast<File>()) {
-      debianFile.copySync(
-        p.join(debControlDir.path, p.basename(debianFile.path)),
+      if (p.basename(controlFile.path) == 'control') {
+        final outputControlFile = debControlDir.childFile('control');
+        final outputControl =
+            Template(controlFile.readAsStringSync()).renderString({
+          'arch': switch (osArch) {
+            Abi.linuxArm64 => 'arm64',
+            Abi.linuxX64 => 'amd64',
+            _ => unreachable(),
+          },
+        });
+        print('Writing control contents:\n\n$outputControl\n');
+        await outputControlFile.writeAsString(outputControl);
+      }
+      controlFile.copySync(
+        p.join(debControlDir.path, p.basename(controlFile.path)),
       );
     }
 
