@@ -358,6 +358,10 @@ final class MacOSBundler implements Bundler {
           p.join(appDir.path, 'Contents', 'embedded.provisionprofile'),
         );
 
+    // Sign executable last (working upwards). This was historically done
+    // with `--deep` but Apple has since deprecated this option.
+    toSign.add(exe);
+
     // Codesign all files in the build directory.
     // TODO(dnys1): Currently we must sign everything in the app directory
     /// individually because Dart's native-assets support requires the wrong
@@ -366,10 +370,7 @@ final class MacOSBundler implements Bundler {
     ///
     /// We must also sign the app directory itself because the provisioning
     /// profile is embedded in the app directory.
-    for (final pathToSign in [
-      ...toSign,
-      exe, // Sign executable last (working upwards)
-    ]) {
+    for (final pathToSign in toSign) {
       print('Codesigning $pathToSign...');
       await _runProcess(
         'codesign',
