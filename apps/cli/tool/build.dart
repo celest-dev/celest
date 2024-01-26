@@ -323,12 +323,7 @@ final class MacOSBundler implements Bundler {
     toSign.add(appDir.path);
 
     // Print directory structure
-    print('App directory structure');
-    print('---------------------');
-    for (final file in appDir.listSync(recursive: true)) {
-      print(p.relative(file.path, from: appDir.path));
-    }
-    print('---------------------');
+    _printFs(appDir);
 
     // Matches the entitlements needed by `dartaotruntime`:
     // https://github.com/dart-lang/sdk/blob/7e5ce1f688e036dbe4b417f7fd92bbced67b5ec5/runtime/tools/entitlements/dart_precompiled_runtime_product.plist
@@ -812,43 +807,50 @@ final class LinuxBundler implements Bundler {
     await _createDeb();
   }
 
+  /// Creates the DEB file structure.
+  ///
+  /// DEBIAN/
+  ///  control
+  ///  postinst
+  ///  postrm
+  /// opt/
+  ///  celest/
+  ///   celest
+  ///   launcher.sh
+  ///   libdart_sqlite.so
   Future<void> _createDeb() async {
-    // Create the DEB file structure.
-    //
-    // DEBIAN/
-    //  control
-    //  postinst
-    //  postrm
-    // opt/
-    //  celest/
-    //   celest
-    //   launcher.sh
-    //   libdart_sqlite.so
+    print('Creating Debian archive...');
+
     final debDir = tempDir.childDirectory('deb')..createSync();
-    final debianDir = debDir.childDirectory('DEBIAN')..createSync();
-    final installDir = debDir.childDirectory('opt').childDirectory('celest')
+    final debControlDir = debDir.childDirectory('DEBIAN')..createSync();
+    final debInstallDir = debDir.childDirectory('opt').childDirectory('celest')
       ..createSync(recursive: true);
 
+    final toolDebianDir = toolDir.childDirectory('linux').childDirectory('deb');
+
     for (final debianFile
-        in toolDir.childDirectory('linux/deb/DEBIAN').listSync().cast<File>()) {
+        in toolDebianDir.childDirectory('DEBIAN').listSync().cast<File>()) {
       debianFile.copySync(
-        p.join(debianDir.path, p.basename(debianFile.path)),
+        p.join(debControlDir.path, p.basename(debianFile.path)),
       );
     }
 
     for (final installFile in [
       ...buildDir.listSync().cast<File>(),
-      toolDir.childFile('linux/deb/launcher.sh'),
+      toolDebianDir.childFile('launcher.sh'),
     ]) {
       installFile.copySync(
-        p.join(installDir.path, p.basename(installFile.path)),
+        p.join(debInstallDir.path, p.basename(installFile.path)),
       );
     }
+
+    // Print directory structure
+    _printFs(debDir);
 
     await _runProcess(
       'dpkg-deb',
       ['--build', debDir.path, '${p.withoutExtension(outputFilepath)}.deb'],
-      workingDirectory: p.dirname(outputFilepath),
+      workingDirectory: tempDir.path,
     );
   }
 }
@@ -917,4 +919,20 @@ Future<void> _createZip({
 
 extension on String? {
   bool get isNullOrEmpty => this == null || this!.isEmpty;
+}
+
+void _printFs(Directory dir) {
+  print('${dir.path} file structure:');
+  print('---------------------');
+  for (final entity in dir.listSync(recursive: true)) {
+    final type = switch (fileSystem.typeSync(entity.path)) {
+      FileSystemEntityType.directory => 'D',
+      FileSystemEntityType.file => 'F',
+      FileSystemEntityType.link => 'L',
+      _ => '?',
+    };
+    final relativePath = p.relative(entity.path, from: dir.path);
+    print('$type $relativePath');
+  }
+  print('---------------------');
 }
