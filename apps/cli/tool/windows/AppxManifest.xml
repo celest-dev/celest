@@ -4,11 +4,12 @@
          xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
          xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
          xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
+         xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
          xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
          xmlns:desktop2="http://schemas.microsoft.com/appx/manifest/desktop/windows10/2"
          xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
-         IgnorableNamespaces="uap uap3 uap5 uap6 rescap desktop2">
+         IgnorableNamespaces="uap uap3 uap5 uap6 uap10 rescap desktop2">
   <!-- Publisher must exactly match EV certificate. Need &quot since name has comma in it -->
   <Identity Name="Celest.CLI"
             Version="{{ version }}.0"
@@ -19,18 +20,15 @@
     <PublisherDisplayName>Celest</PublisherDisplayName>
     <Description>The CLI for Celest, the Flutter cloud platform.</Description>
     <Logo>Assets\StoreLogo.png</Logo>
-    <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
-    <desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
   </Properties>
   <Resources>
     <Resource Language="en-US" />
   </Resources>
   <Dependencies>
-    <!-- Minimum supported version is 1809 (October 2018 Update, aka RS5) -->
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19033.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.19041.0" />
   </Dependencies>
   <Applications>
-    <Application Id="celest" Executable="celest.exe" EntryPoint="Windows.FullTrustApplication" >
+    <Application Id="celest" Executable="celest.exe" EntryPoint="Windows.FullTrustApplication" uap10:Subsystem="console" uap10:SupportsMultipleInstances="true">
       <uap:VisualElements DisplayName="NoUIEntryPoints"
                           Description="The CLI for Celest, the Flutter cloud platform." 
                           Square150x150Logo="Assets\Square150x150Logo.png" 
@@ -40,8 +38,8 @@
         <uap:DefaultTile />
       </uap:VisualElements>
       <Extensions>
-        <uap5:Extension Category="windows.appExecutionAlias">
-          <uap5:AppExecutionAlias>
+        <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication" Executable="celest.exe">
+          <uap5:AppExecutionAlias uap10:Subsystem="console">
             <uap5:ExecutionAlias Alias="celest.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
@@ -50,7 +48,6 @@
   </Applications>
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
-    <rescap:Capability Name="unvirtualizedResources" />
 
     <!-- See https://learn.microsoft.com/en-us/previous-versions/windows/apps/hh464936(v=win.10) -->
     <Capability Name="internetClient" />
@@ -58,17 +55,9 @@
     <Capability Name="privateNetworkClientServer" />
   </Capabilities>
   <Extensions>
-    <uap6:Extension Category="windows.loaderSearchPathOverride">
-      <uap6:LoaderSearchPathOverride>
-        <uap6:LoaderSearchPathEntry FolderPath=""/>
-      </uap6:LoaderSearchPathOverride>
-    </uap6:Extension>
     <desktop2:Extension Category="windows.firewallRules">
       <desktop2:FirewallRules Executable="celest.exe">
-        <desktop2:Rule
-          Direction="in"
-          IPProtocol="TCP"
-          Profile="domainAndPrivate"/>
+        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
       </desktop2:FirewallRules>
     </desktop2:Extension>
   </Extensions>
