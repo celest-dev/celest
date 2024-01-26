@@ -141,9 +141,14 @@ Future<void> main() async {
   }
 
   // Upload the build artifacts to GCS.
+  final withoutExt = p.withoutExtension(p.basename(outputFilepath));
   final storagePaths = [
     '$osArch/$version/${p.basename(outputFilepath)}',
     '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
+    if (platform.isLinux) ...[
+      '$osArch/$version/$withoutExt.deb',
+      '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb',
+    ],
   ];
   final bytes = await fileSystem.file(outputFilepath).readAsBytes();
   for (final storagePath in storagePaths) {
@@ -154,7 +159,11 @@ Future<void> main() async {
       contentType: switch (platform.operatingSystem) {
         'windows' => 'application/appx',
         'macos' => 'application/octet-stream',
-        'linux' => 'application/zip',
+        'linux' => switch (p.extension(storagePath)) {
+            '.deb' => 'application/vnd.debian.binary-package',
+            '.zip' => 'application/zip',
+            _ => unreachable(),
+          },
         _ => unreachable(),
       },
     );
@@ -164,7 +173,7 @@ Future<void> main() async {
     version: Version.parse(version),
     installer: switch (platform.operatingSystem) {
       'windows' || 'macos' => storagePaths.first,
-      'linux' => null,
+      'linux' => storagePaths[2],
       _ => unreachable(),
     },
     zip: switch (platform.operatingSystem) {
@@ -796,7 +805,51 @@ final class LinuxBundler implements Bundler {
 
   @override
   Future<void> bundle() async {
+    // Create the ZIP file.
     await _createZip(fromDir: buildDir, outputPath: outputFilepath);
+
+    // Create the DEB installer.
+    await _createDeb();
+  }
+
+  Future<void> _createDeb() async {
+    // Create the DEB file structure.
+    //
+    // DEBIAN/
+    //  control
+    //  postinst
+    //  postrm
+    // opt/
+    //  celest/
+    //   celest
+    //   launcher.sh
+    //   libdart_sqlite.so
+    final debDir = tempDir.childDirectory('deb')..createSync();
+    final debianDir = debDir.childDirectory('DEBIAN')..createSync();
+    final installDir = debDir.childDirectory('opt').childDirectory('celest')
+      ..createSync(recursive: true);
+
+    for (final debianFile
+        in toolDir.childDirectory('linux/deb/DEBIAN').listSync().cast<File>()) {
+      debianFile.copySync(
+        p.join(debianDir.path, p.basename(debianFile.path)),
+      );
+    }
+
+    for (final installFile in [
+      ...buildDir.listSync().cast<File>(),
+      toolDir.childFile('linux/deb/launcher.sh'),
+    ]) {
+      installFile.copySync(
+        p.join(installDir.path, p.basename(installFile.path)),
+      );
+    }
+
+    await _runProcess(
+      'dpkg-deb',
+      ['--build', debDir.path, '${p.withoutExtension(outputFilepath)}.deb'],
+      workingDirectory: p.dirname(outputFilepath),
+    );
   }
 }
 
