@@ -385,7 +385,6 @@ final class MacOSBundler implements Bundler {
             'dev.celest.cli',
             '--options=runtime',
           ],
-          '--force',
           '--timestamp',
           '--file-list',
           '-',
