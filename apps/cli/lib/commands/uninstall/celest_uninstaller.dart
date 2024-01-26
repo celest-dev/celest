@@ -62,10 +62,31 @@ class CelestUninstaller {
     final exe = platform.resolvedExecutable;
     switch (platform.operatingSystem) {
       case 'linux':
-        return logger.warning(
-          'Celest configuration has been removed. To uninstall the CLI, delete '
-          'the downloaded executable and associated files from your computer.',
+        final dpkgOutput = await processManager.run(
+          <String>['dpkg', '-S', exe],
+          stdoutEncoding: utf8,
+          stderrEncoding: utf8,
         );
+        if (dpkgOutput.exitCode != 0) {
+          return logger.warning(
+            'Celest configuration has been removed. To uninstall the CLI, delete '
+            'the downloaded executable and associated files from your computer.',
+          );
+        }
+        final package = (dpkgOutput.stdout as String).split(':').first.trim();
+        if (package != 'celest') {
+          throw StateError('Unexpected package: $package');
+        }
+        final uninstallOutput = await processManager.start(
+          <String>['sudo', 'dpkg', '-r', package],
+          mode: ProcessStartMode.inheritStdio,
+        );
+        if (await uninstallOutput.exitCode != 0) {
+          throw const CelestException(
+            'Celest was partially uninstalled. Please use dpkg to clean up '
+            'remaining files.',
+          );
+        }
       case 'macos':
         if (p.basename(p.dirname(exe)) == 'MacOS') {
           // celest/celest.app/Contents/MacOS/celest
