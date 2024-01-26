@@ -78,7 +78,7 @@ class CelestUninstaller {
           throw StateError('Unexpected package: $package');
         }
         final uninstallOutput = await processManager.start(
-          <String>['sudo', 'dpkg', '-r', package],
+          <String>['sudo', 'dpkg', '--purge', package],
           mode: ProcessStartMode.inheritStdio,
         );
         if (await uninstallOutput.exitCode != 0) {
