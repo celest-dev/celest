@@ -143,18 +143,31 @@ Future<void> main() async {
   // Upload the build artifacts to GCS.
   final withoutExt = p.withoutExtension(p.basename(outputFilepath));
   final debFilepath = '${p.withoutExtension(outputFilepath)}.deb';
-  final storagePaths = {
-    outputFilepath: '$osArch/$version/${p.basename(outputFilepath)}',
-    outputFilepath:
-        '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
-    if (platform.isLinux) ...{
-      debFilepath: '$osArch/$version/$withoutExt.deb',
-      debFilepath:
-          '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb',
-    },
-  };
-  for (final MapEntry(key: localPath, value: storagePath)
-      in storagePaths.entries) {
+  assert(!p.equals(outputFilepath, debFilepath));
+  final storagePaths = [
+    (
+      localPath: outputFilepath,
+      storagePath: '$osArch/$version/${p.basename(outputFilepath)}',
+    ),
+    (
+      localPath: outputFilepath,
+      storagePath:
+          '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}'
+    ),
+    if (platform.isLinux) ...[
+      (
+        localPath: debFilepath,
+        storagePath: '$osArch/$version/$withoutExt.deb',
+      ),
+      (
+        localPath: debFilepath,
+        storagePath:
+            '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb'
+      ),
+    ],
+  ];
+  print('Uploading storage paths: $storagePaths');
+  for (final (:localPath, :storagePath) in storagePaths) {
     final bytes = await fileSystem.file(localPath).readAsBytes();
     await bucket.writeBytes(
       storagePath,
@@ -176,13 +189,13 @@ Future<void> main() async {
   final latestRelease = CelestReleaseInfo(
     version: Version.parse(version),
     installer: switch (platform.operatingSystem) {
-      'windows' || 'macos' => storagePaths.values.first,
-      'linux' => storagePaths.values.elementAt(2),
+      'windows' || 'macos' => storagePaths.first.storagePath,
+      'linux' => storagePaths[2].storagePath,
       _ => unreachable(),
     },
     zip: switch (platform.operatingSystem) {
       'windows' || 'macos' => null,
-      'linux' => storagePaths.values.first,
+      'linux' => storagePaths.first.storagePath,
       _ => unreachable(),
     },
   );
@@ -846,10 +859,11 @@ final class LinuxBundler implements Bundler {
         });
         print('Writing control contents:\n\n$outputControl\n');
         await outputControlFile.writeAsString(outputControl);
+      } else {
+        controlFile.copySync(
+          p.join(debControlDir.path, p.basename(controlFile.path)),
+        );
       }
-      controlFile.copySync(
-        p.join(debControlDir.path, p.basename(controlFile.path)),
-      );
     }
 
     for (final installFile in [
