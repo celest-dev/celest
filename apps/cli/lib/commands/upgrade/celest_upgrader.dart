@@ -48,6 +48,10 @@ final class CelestUpgrader {
       // progress timer.
       if (platform.operatingSystem case 'windows' || 'linux') {
         progress = cliLogger.progress('Updating Celest');
+      } else {
+        cliLogger.detail(
+          'Please enter your password in the dialog that appears.',
+        );
       }
       switch (platform.operatingSystem) {
         case 'macos':
@@ -94,6 +98,7 @@ final class CelestUpgrader {
   }
 
   Future<void> _installLinux(File installerZip) async {
+    _logger.finest('Installing Celest from ${installerZip.path}');
     if (p.extension(installerZip.path) != '.zip') {
       throw StateError('Expected zip file but got: $installerZip');
     }
@@ -104,6 +109,7 @@ final class CelestUpgrader {
       throw StateError('Expected `celest` exe but got: $resolvedExe');
     }
     final currentExeDir = fileSystem.directory(p.dirname(resolvedExe));
+    _logger.finest('Unzipping to ${currentExeDir.path}');
     try {
       for (final zippedFile in archive.files) {
         // Replace current executable
@@ -130,6 +136,7 @@ final class CelestUpgrader {
         }
         final output = OutputFileStream(file.path);
         zippedFile.writeContent(output);
+        output.flush();
         await output.close();
         // Make executable
         if (p.basename(zippedFile.name) == 'celest') {
