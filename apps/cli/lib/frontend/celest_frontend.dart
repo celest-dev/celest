@@ -92,6 +92,13 @@ final class CelestFrontend implements Closeable {
           .where(
             (event) => !p.isWithin(projectPaths.clientOutputsDir, event.path),
           )
+          // Ignore changes to test files
+          .where(
+            (event) => !p.isWithin(
+              p.join(projectPaths.projectRoot, 'test'),
+              event.path,
+            ),
+          )
           .buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
