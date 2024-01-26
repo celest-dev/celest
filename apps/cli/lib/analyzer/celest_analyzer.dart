@@ -18,6 +18,7 @@ import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
+import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
@@ -113,7 +114,9 @@ final class CelestAnalyzer {
     }
   }
 
-  Future<CelestAnalysisResult> analyzeProject() async {
+  Future<CelestAnalysisResult> analyzeProject({
+    bool updateResources = true,
+  }) async {
     _errors.clear();
     await init();
     await _initTypeLibraries();
@@ -126,6 +129,17 @@ final class CelestAnalyzer {
       errorReporter: _reportError,
     );
     _project.envVars.replace(projectPaths.envManager.reload());
+
+    // Regenerate resources.dart before analyzing remaining project files.
+    // TODO(dnys1): Find a better way to do this.
+    if (updateResources) {
+      _logger.fine('Regenerating resources.dart');
+      await fileSystem.file(projectPaths.resourcesDart).writeAsString(
+            CloudCodeGenerator.generateResourcesDart(_project.build()),
+          );
+      await celestProject.invalidate({projectPaths.resourcesDart});
+    }
+
     await _collectApis();
     return CelestAnalysisResult.success(
       project: _project.build(),

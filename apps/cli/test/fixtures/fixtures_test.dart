@@ -115,7 +115,7 @@ class TestRunner {
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject();
+          await analyzer.analyzeProject(updateResources: false);
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -125,11 +125,11 @@ class TestRunner {
       }
       final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
       if (updateGoldens) {
-        goldenAst.writeAsStringSync(
+        await goldenAst.writeAsString(
           const JsonEncoder.withIndent('  ').convert(project!.toJson()),
         );
       } else {
-        final expectedAst = jsonDecode(goldenAst.readAsStringSync());
+        final expectedAst = jsonDecode(await goldenAst.readAsString());
         expect(project!.toJson(), expectedAst);
       }
     });
@@ -138,7 +138,7 @@ class TestRunner {
   void testCodegen() {
     test('codegen', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject();
+          await analyzer.analyzeProject(updateResources: false);
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -153,11 +153,10 @@ class TestRunner {
           in codegen.fileOutputs.entries) {
         final goldenFile = File(path);
         if (updateGoldens) {
-          goldenFile
-            ..createSync(recursive: true)
-            ..writeAsStringSync(content);
+          await goldenFile.create(recursive: true);
+          await goldenFile.writeAsString(content);
         } else {
-          final expected = goldenFile.readAsStringSync();
+          final expected = await goldenFile.readAsString();
           expect(content, equalsIgnoringWhitespace(expected));
         }
       }
@@ -167,7 +166,7 @@ class TestRunner {
   void testResolve() {
     test('resolve', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject();
+          await analyzer.analyzeProject(updateResources: false);
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
@@ -193,7 +192,7 @@ class TestRunner {
   void testClient() {
     test('client', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject();
+          await analyzer.analyzeProject(updateResources: false);
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
