@@ -273,7 +273,7 @@ final class MacOSBundler implements Bundler {
         .childDirectory('celest')
         .createSync(recursive: true);
     final exe = p.join(appDir.path, 'Contents', 'MacOS', 'celest');
-    final toSign = [exe];
+    final toSign = <String>[];
 
     buildDir.childFile('celest').copySync(exe);
 
@@ -366,7 +366,10 @@ final class MacOSBundler implements Bundler {
     ///
     /// We must also sign the app directory itself because the provisioning
     /// profile is embedded in the app directory.
-    for (final pathToSign in toSign) {
+    for (final pathToSign in [
+      ...toSign,
+      exe, // Sign executable last (working upwards)
+    ]) {
       print('Codesigning $pathToSign...');
       await _runProcess(
         'codesign',
