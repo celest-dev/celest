@@ -22,7 +22,7 @@ final class CelestUpgrader {
 
   Future<File> downloadRelease(CelestReleaseInfo release) async {
     final downloadUri =
-        CelestReleasesInfo.baseUri.resolve((release.installer ?? release.zip)!);
+        CelestReleasesInfo.baseUri.resolve((release.zip ?? release.installer)!);
     final downloadResp = await httpClient.get(downloadUri);
     if (downloadResp.statusCode != 200) {
       throw CelestException(
@@ -94,6 +94,9 @@ final class CelestUpgrader {
   }
 
   Future<void> _installLinux(File installerZip) async {
+    if (p.extension(installerZip.path) != '.zip') {
+      throw StateError('Expected zip file but got: $installerZip');
+    }
     final zipStream = InputFileStream(installerZip.path);
     final archive = ZipDecoder().decodeBuffer(zipStream);
     final resolvedExe = platform.resolvedExecutable;

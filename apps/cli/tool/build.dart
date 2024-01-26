@@ -817,6 +817,12 @@ final class LinuxBundler implements Bundler {
 
   @override
   Future<void> bundle() async {
+    // Copy launcher to buildDir
+    toolDir
+        .childDirectory('linux')
+        .childFile('launcher.sh')
+        .copySync(p.join(buildDir.path, 'launcher.sh'));
+
     // Create the ZIP file.
     await _createZip(fromDir: buildDir, outputPath: outputFilepath);
 
@@ -866,10 +872,7 @@ final class LinuxBundler implements Bundler {
       }
     }
 
-    for (final installFile in [
-      ...buildDir.listSync().cast<File>(),
-      toolDebianDir.childFile('launcher.sh'),
-    ]) {
+    for (final installFile in buildDir.listSync().cast<File>()) {
       installFile.copySync(
         p.join(debInstallDir.path, p.basename(installFile.path)),
       );
