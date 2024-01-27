@@ -30,6 +30,48 @@ class Projects extends Table {
 final class CelestDatabase extends _$CelestDatabase {
   CelestDatabase(CelestConfig config) : super(_openConnection(config));
 
+  /// Ensures that on Windows, the SQLite library is available to the running
+  /// process.
+  static Future<void> ensureSqliteLibrary() async {
+    if (platform.isWindows && zReleaseMode) {
+      // On Windows, the execution alias, e.g. `celest.exe` which is invoked
+      // from the terminal, is a symlink to the actual executable. Although
+      // this resolves correctly via `Platform.resolvedExecutable`, it causes
+      // native assets to be unloadable, since their paths are hardcoded as
+      // living directly next to the executable.
+      //
+      // To work around this, we need to symlink the native asset DLLs to be
+      // directly next to the executable. Since they already live directly
+      // next to the _resolved_ executable, this is straightforward.
+      final exeDir = p.dirname(platform.executable);
+      final resolvedExeDir = p.dirname(platform.resolvedExecutable);
+      final dllLink = fileSystem.link(p.join(exeDir, 'dart_sqlite3.dll'));
+      if (p.equals(exeDir, resolvedExeDir)) {
+        return;
+      }
+      if (await dllLink.exists()) {
+        final target = await dllLink.target();
+        if (p.equals(p.dirname(target), resolvedExeDir)) {
+          return;
+        }
+        await dllLink.delete();
+      }
+      await dllLink.create(p.join(resolvedExeDir, 'dart_sqlite3.dll'));
+    }
+  }
+
+  /// Removes any symlinks created to work around Windows issues.
+  static Future<void> removeSqliteLibrary() async {
+    if (platform.isWindows && (zReleaseMode || kCelestTest)) {
+      final exeDir = p.dirname(platform.executable);
+      final resolvedExeDir = p.dirname(platform.resolvedExecutable);
+      final dllLink = fileSystem.link(p.join(exeDir, 'dart_sqlite3.dll'));
+      if (!p.equals(exeDir, resolvedExeDir) && await dllLink.exists()) {
+        await dllLink.delete();
+      }
+    }
+  }
+
   @override
   int get schemaVersion => 1;
 
@@ -92,23 +134,7 @@ final class CelestDatabase extends _$CelestDatabase {
 
 LazyDatabase _openConnection(CelestConfig config) {
   return LazyDatabase(() async {
-    if (platform.isWindows && zReleaseMode) {
-      // On Windows, the execution alias, e.g. `celest.exe` which is invoked
-      // from the terminal, is a symlink to the actual executable. Although
-      // this resolves correctly via `Platform.resolvedExecutable`, it causes
-      // native assets to be unloadable, since their paths are hardcoded as
-      // living directly next to the executable.
-      //
-      // To work around this, we need to symlink the native asset DLLs to be
-      // directly next to the executable. Since they already live directly
-      // next to the _resolved_ executable, this is straightforward.
-      final exeDir = p.dirname(platform.executable);
-      final resolvedExeDir = p.dirname(platform.resolvedExecutable);
-      final dllLink = fileSystem.link(p.join(exeDir, 'dart_sqlite3.dll'));
-      if (!p.equals(exeDir, resolvedExeDir) && !await dllLink.exists()) {
-        await dllLink.create(p.join(resolvedExeDir, 'dart_sqlite3.dll'));
-      }
-    }
+    await CelestDatabase.ensureSqliteLibrary();
     final file = fileSystem.file(p.join(config.configDir.path, 'celest.db'));
     return NativeDatabase.createInBackground(file);
   });

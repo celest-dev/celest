@@ -35,14 +35,18 @@ void main() {
         ctx.fileSystem = MemoryFileSystem.test(
           style: FileSystemStyle.windows,
         );
+
+        const appData = r'C:\Users\test\AppData\Local\Microsoft\WindowsApps';
+        final installFolder =
+            p.windows.join(appData, 'Celest.CLI_6580ymbmddxye');
         ctx.platform = FakePlatform(
           operatingSystem: 'windows',
-          executable: 'celest.exe',
+          executable: p.windows.join(appData, 'celest.exe'),
           script: Uri.file(
-            r'C:\Program Files\WindowsApps\celest.exe',
+            p.windows.join(appData, 'celest.exe'),
             windows: true,
           ),
-          resolvedExecutable: r'C:\Program Files\WindowsApps\celest.exe',
+          resolvedExecutable: p.windows.join(installFolder, 'celest.exe'),
           environment: {
             'APPDATA': ctx.fileSystem.systemTempDirectory.path,
           },
@@ -52,9 +56,24 @@ void main() {
             ctx.fileSystem.systemTempDirectory.childDirectory('Celest');
         configDir.createSync(recursive: true);
 
+        final installDir = ctx.fileSystem
+            .directory(r'C:\')
+            .childDirectory('Users')
+            .childDirectory('test')
+            .childDirectory('AppData')
+            .childDirectory('Local')
+            .childDirectory('Microsoft')
+            .childDirectory('WindowsApps')
+          ..createSync(recursive: true);
+        final sqliteLink = installDir.childLink('dart_sqlite3.dll')
+          ..createSync(
+            p.windows.join(installFolder, 'dart_sqlite3.dll'),
+          );
+
         await init(
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
+
         when(
           () => ctx.processManager.run(
             [
@@ -72,6 +91,7 @@ void main() {
         await const CelestUninstaller().uninstall();
 
         expect(configDir.existsSync(), isFalse);
+        expect(sqliteLink.existsSync(), isFalse);
 
         verify(
           () => ctx.processManager.run(

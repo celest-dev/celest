@@ -11,6 +11,7 @@ Future<void> initTests({
   Platform? platform,
   ProcessManager? processManager,
 }) async {
+  kCelestTest = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     print('${record.level.name}: ${record.message}');

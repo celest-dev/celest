@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -59,6 +60,9 @@ class CelestUninstaller {
   }
 
   Future<void> _uninstallAot() async {
+    // Remove SQLite link if it exists.
+    await CelestDatabase.removeSqliteLibrary();
+
     final exe = platform.resolvedExecutable;
     switch (platform.operatingSystem) {
       case 'linux':
