@@ -8,6 +8,7 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/ast/ast.dart';
+import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
@@ -142,13 +143,12 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final codegen = CloudCodeGenerator();
+      final codegen = CloudCodeGenerator(
+        // Since paths will always be relative, this is okay.
+        pathStrategy: PathStrategy.pretty,
+      );
       project!.accept(codegen);
 
-      if (Platform.isWindows) {
-        // Cannot check/update goldens on Windows due to path differences.
-        return;
-      }
       for (final MapEntry(key: path, value: content)
           in codegen.fileOutputs.entries) {
         final goldenFile = File(path);

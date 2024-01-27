@@ -4,6 +4,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:celest_cli/ast/actions.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/ast/resolved_ast.dart';
+import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
@@ -594,6 +595,10 @@ final class ExpressionSerializer implements PrimitiveSerializer<Expression> {
     Expression object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return CodeGenerator.rawEmit(object, forFile: '');
+    return CodeGenerator.rawEmit(
+      object,
+      forFile: '',
+      pathStrategy: PathStrategy.pretty,
+    );
   }
 }

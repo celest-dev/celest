@@ -16,10 +16,12 @@ abstract final class CodeGenerator {
   static DartEmitter _emitter({
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
+    required PathStrategy pathStrategy,
   }) =>
       DartEmitter(
         allocator: CelestAllocator(
           prefixingStrategy: prefixingStrategy,
+          pathStrategy: pathStrategy,
           forFile: forFile,
         ),
         useNullSafetySyntax: true,
@@ -30,12 +32,14 @@ abstract final class CodeGenerator {
     Spec spec, {
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
+    required PathStrategy pathStrategy,
   }) =>
       spec
           .accept(
             _emitter(
               forFile: forFile,
               prefixingStrategy: prefixingStrategy,
+              pathStrategy: pathStrategy,
             ),
           )
           .toString();
@@ -44,6 +48,7 @@ abstract final class CodeGenerator {
     Spec spec, {
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
+    required PathStrategy pathStrategy,
   }) {
     if (spec is Library) {
       spec = spec.rebuild((lib) => lib.comments.add(_header));
@@ -52,6 +57,7 @@ abstract final class CodeGenerator {
       spec,
       forFile: forFile,
       prefixingStrategy: prefixingStrategy,
+      pathStrategy: pathStrategy,
     );
     try {
       return _formatter.format(code);

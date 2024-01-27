@@ -26,6 +26,7 @@ final class ClientCodeGenerator {
                 library,
                 forFile: path,
                 prefixingStrategy: PrefixingStrategy.none,
+                pathStrategy: PathStrategy.pretty,
               ),
             ),
           ),
