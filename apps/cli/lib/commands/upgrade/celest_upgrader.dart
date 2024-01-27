@@ -49,7 +49,7 @@ final class CelestUpgrader {
       if (platform.operatingSystem case 'windows' || 'linux') {
         progress = cliLogger.progress('Updating Celest');
       } else {
-        cliLogger.detail(
+        cliLogger.info(
           'Please enter your password in the dialog that appears.',
         );
       }
