@@ -13,10 +13,16 @@ import '../common.dart';
 
 final class MockProcessManager extends Mock implements ProcessManager {}
 
+final class MockProcess extends Mock implements Process {}
+
 final class MockPlatform extends Mock implements Platform {}
 
 void main() {
   group('CelestUninstaller', () {
+    setUpAll(() {
+      registerFallbackValue(ProcessStartMode.normal);
+    });
+
     setUp(() {
       return initTests(
         processManager: MockProcessManager(),
@@ -150,36 +156,137 @@ void main() {
         ).called(1);
       });
 
-      test('linux', () async {
-        ctx.fileSystem = MemoryFileSystem.test(
-          style: FileSystemStyle.posix,
-        );
-        final configDir = ctx.fileSystem.systemTempDirectory
-            .childDirectory('.config')
-            .childDirectory('Celest');
-        configDir.createSync(recursive: true);
-        ctx.platform = FakePlatform(
-          operatingSystem: 'linux',
-          executable: 'celest',
-          script: Uri.file(
-            '/opt/celest/celest',
-            windows: false,
-          ),
-          resolvedExecutable: '/opt/celest/celest',
-          environment: {
-            'HOME': ctx.fileSystem.systemTempDirectory.path,
-          },
-        );
+      group('linux', () {
+        test('deb installation', () async {
+          ctx.fileSystem = MemoryFileSystem.test(
+            style: FileSystemStyle.posix,
+          );
+          final configDir = ctx.fileSystem.systemTempDirectory
+              .childDirectory('.config')
+              .childDirectory('Celest');
+          configDir.createSync(recursive: true);
+          ctx.platform = FakePlatform(
+            operatingSystem: 'linux',
+            executable: 'celest',
+            script: Uri.file(
+              '/opt/celest/celest',
+              windows: false,
+            ),
+            resolvedExecutable: '/opt/celest/celest',
+            environment: {
+              'HOME': ctx.fileSystem.systemTempDirectory.path,
+            },
+          );
 
-        await init(
-          projectRoot: ctx.fileSystem.systemTempDirectory.path,
-        );
+          await init(
+            projectRoot: ctx.fileSystem.systemTempDirectory.path,
+          );
 
-        expect(configDir.existsSync(), isTrue);
+          when(
+            () => ctx.processManager.run(
+              [
+                'dpkg',
+                '-S',
+                '/opt/celest/celest',
+              ],
+              stdoutEncoding: any(named: 'stdoutEncoding'),
+              stderrEncoding: any(named: 'stderrEncoding'),
+            ),
+          ).thenAnswer(
+            (_) async => ProcessResult(0, 0, 'celest: /opt/celest/celest', ''),
+          );
 
-        await const CelestUninstaller().uninstall();
+          final purgeProcess = MockProcess();
+          when(
+            () => ctx.processManager.start(
+              [
+                'sudo',
+                'dpkg',
+                '--purge',
+                'celest',
+              ],
+              mode: any(named: 'mode'),
+            ),
+          ).thenAnswer((_) async => purgeProcess);
+          when(
+            () => purgeProcess.exitCode,
+          ).thenAnswer((_) async => 0);
 
-        expect(configDir.existsSync(), isFalse);
+          expect(configDir.existsSync(), isTrue);
+
+          await const CelestUninstaller().uninstall();
+
+          expect(configDir.existsSync(), isFalse);
+
+          verify(
+            () => ctx.processManager.start(
+              [
+                'sudo',
+                'dpkg',
+                '--purge',
+                'celest',
+              ],
+              mode: any(named: 'mode'),
+            ),
+          ).called(1);
+          verify(() => purgeProcess.exitCode).called(1);
+        });
+
+        test('zip installation', () async {
+          ctx.fileSystem = MemoryFileSystem.test(
+            style: FileSystemStyle.posix,
+          );
+          final configDir = ctx.fileSystem.systemTempDirectory
+              .childDirectory('.config')
+              .childDirectory('Celest');
+          configDir.createSync(recursive: true);
+          ctx.platform = FakePlatform(
+            operatingSystem: 'linux',
+            executable: 'celest',
+            script: Uri.file(
+              '/opt/celest/celest',
+              windows: false,
+            ),
+            resolvedExecutable: '/opt/celest/celest',
+            environment: {
+              'HOME': ctx.fileSystem.systemTempDirectory.path,
+            },
+          );
+
+          await init(
+            projectRoot: ctx.fileSystem.systemTempDirectory.path,
+          );
+
+          when(
+            () => ctx.processManager.run(
+              [
+                'dpkg',
+                '-S',
+                '/opt/celest/celest',
+              ],
+              stdoutEncoding: any(named: 'stdoutEncoding'),
+              stderrEncoding: any(named: 'stderrEncoding'),
+            ),
+          ).thenAnswer((_) async => ProcessResult(0, 1, '', ''));
+
+          expect(configDir.existsSync(), isTrue);
+
+          await const CelestUninstaller().uninstall();
+
+          expect(configDir.existsSync(), isFalse);
+
+          verifyNever(
+            () => ctx.processManager.start(
+              [
+                'sudo',
+                'dpkg',
+                '--purge',
+                'celest',
+              ],
+              mode: any(named: 'mode'),
+            ),
+          );
+        });
       });
     });
   });
