@@ -1,7 +1,18 @@
+import 'dart:io';
+
 import 'package:celest_backend/client.dart';
+import 'package:cupertino_http/cupertino_http.dart';
+import 'package:example_app/http_client.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
+  celest.httpClient = CelestHttpClient(
+    projectName: 'example_app',
+    baseClient: Platform.isIOS
+        ? CupertinoClient.defaultSessionConfiguration()
+        : http.Client(),
+  );
   celest.init();
   runApp(const MyApp());
 }

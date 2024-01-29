@@ -36,6 +36,7 @@ Future<void> serve({
     pipeline,
     InternetAddress.anyIPv4,
     port,
+    poweredByHeader: 'Celest',
   );
   print('Serving on http://localhost:$port');
   await StreamGroup.merge([

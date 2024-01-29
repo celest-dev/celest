@@ -1,0 +1,28 @@
+PODS:
+  - cupertino_http (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - nsd_ios (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - cupertino_http (from `.symlinks/plugins/cupertino_http/ios`)
+  - Flutter (from `Flutter`)
+  - nsd_ios (from `.symlinks/plugins/nsd_ios/ios`)
+
+EXTERNAL SOURCES:
+  cupertino_http:
+    :path: ".symlinks/plugins/cupertino_http/ios"
+  Flutter:
+    :path: Flutter
+  nsd_ios:
+    :path: ".symlinks/plugins/nsd_ios/ios"
+
+SPEC CHECKSUMS:
+  cupertino_http: 5f8b1161107fe6c8d94a0c618735a033d93fa7db
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  nsd_ios: 8c37babdc6538e3350dbed3a52674d2edde98173
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.14.3

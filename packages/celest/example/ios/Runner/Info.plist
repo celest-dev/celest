@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Required to discover local network devices</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_celest._tcp</string>
+	</array>
 </dict>
 </plist>
