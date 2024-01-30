@@ -6,6 +6,7 @@
       "functions": {
         "nonAliasedNamedFields": {
           "name": "nonAliasedNamedFields",
+          "route": "/records/non-aliased-named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -27,6 +28,7 @@
         },
         "asyncNonAliasedNamedFields": {
           "name": "asyncNonAliasedNamedFields",
+          "route": "/records/async-non-aliased-named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -48,6 +50,7 @@
         },
         "aliasedNamedFields": {
           "name": "aliasedNamedFields",
+          "route": "/records/aliased-named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -69,6 +72,7 @@
         },
         "asyncAliasedNamedFields": {
           "name": "asyncAliasedNamedFields",
+          "route": "/records/async-aliased-named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -90,6 +94,7 @@
         },
         "namedFields": {
           "name": "namedFields",
+          "route": "/records/named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -111,6 +116,7 @@
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
+          "route": "/records/async-named-fields",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -132,6 +138,7 @@
         },
         "nested": {
           "name": "nested",
+          "route": "/records/nested",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -153,6 +160,7 @@
         },
         "asyncNested": {
           "name": "asyncNested",
+          "route": "/records/async-nested",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -174,6 +182,7 @@
         },
         "nullableNested": {
           "name": "nullableNested",
+          "route": "/records/nullable-nested",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -195,6 +204,7 @@
         },
         "asyncNullableNested": {
           "name": "asyncNullableNested",
+          "route": "/records/async-nullable-nested",
           "apiName": "records",
           "envVars": [],
           "policy": {
@@ -221,6 +231,7 @@
       "functions": {
         "area": {
           "name": "area",
+          "route": "/sealed-classes/area",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -242,6 +253,7 @@
         },
         "sealedClass": {
           "name": "sealedClass",
+          "route": "/sealed-classes/sealed-class",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -263,6 +275,7 @@
         },
         "rectangle": {
           "name": "rectangle",
+          "route": "/sealed-classes/rectangle",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -284,6 +297,7 @@
         },
         "circle": {
           "name": "circle",
+          "route": "/sealed-classes/circle",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -305,6 +319,7 @@
         },
         "sealedClassWithInheritedCustomJson": {
           "name": "sealedClassWithInheritedCustomJson",
+          "route": "/sealed-classes/sealed-class-with-inherited-custom-json",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -326,6 +341,7 @@
         },
         "sealedClassWithCustomJson": {
           "name": "sealedClassWithCustomJson",
+          "route": "/sealed-classes/sealed-class-with-custom-json",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -347,6 +363,7 @@
         },
         "sealedClassWithOverriddenCustomJson": {
           "name": "sealedClassWithOverriddenCustomJson",
+          "route": "/sealed-classes/sealed-class-with-overridden-custom-json",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -368,6 +385,7 @@
         },
         "rectangleWithOverriddenCustomJson": {
           "name": "rectangleWithOverriddenCustomJson",
+          "route": "/sealed-classes/rectangle-with-overridden-custom-json",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -389,6 +407,7 @@
         },
         "circleWithOverriddenCustomJson": {
           "name": "circleWithOverriddenCustomJson",
+          "route": "/sealed-classes/circle-with-overridden-custom-json",
           "apiName": "sealed_classes",
           "envVars": [],
           "policy": {
@@ -415,6 +434,7 @@
       "functions": {
         "simple": {
           "name": "simple",
+          "route": "/parameter-types/simple",
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
@@ -436,6 +456,7 @@
         },
         "simpleOptional": {
           "name": "simpleOptional",
+          "route": "/parameter-types/simple-optional",
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
@@ -457,6 +478,7 @@
         },
         "complex": {
           "name": "complex",
+          "route": "/parameter-types/complex",
           "apiName": "parameter_types",
           "envVars": [],
           "policy": {
@@ -483,6 +505,7 @@
       "functions": {
         "createTree": {
           "name": "createTree",
+          "route": "/cycles/create-tree",
           "apiName": "cycles",
           "envVars": [],
           "policy": {
@@ -504,6 +527,7 @@
         },
         "printTree": {
           "name": "printTree",
+          "route": "/cycles/print-tree",
           "apiName": "cycles",
           "envVars": [],
           "policy": {
@@ -525,6 +549,7 @@
         },
         "combineTrees": {
           "name": "combineTrees",
+          "route": "/cycles/combine-trees",
           "apiName": "cycles",
           "envVars": [],
           "policy": {
@@ -546,6 +571,7 @@
         },
         "selfReferencing": {
           "name": "selfReferencing",
+          "route": "/cycles/self-referencing",
           "apiName": "cycles",
           "envVars": [],
           "policy": {
@@ -572,6 +598,7 @@
       "functions": {
         "asyncVoidReturn": {
           "name": "asyncVoidReturn",
+          "route": "/return-types/async-void-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -593,6 +620,7 @@
         },
         "asyncStringReturn": {
           "name": "asyncStringReturn",
+          "route": "/return-types/async-string-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -614,6 +642,7 @@
         },
         "asyncIntReturn": {
           "name": "asyncIntReturn",
+          "route": "/return-types/async-int-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -635,6 +664,7 @@
         },
         "asyncDoubleReturn": {
           "name": "asyncDoubleReturn",
+          "route": "/return-types/async-double-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -656,6 +686,7 @@
         },
         "asyncBoolReturn": {
           "name": "asyncBoolReturn",
+          "route": "/return-types/async-bool-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -677,6 +708,7 @@
         },
         "asyncIterableReturn": {
           "name": "asyncIterableReturn",
+          "route": "/return-types/async-iterable-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -698,6 +730,7 @@
         },
         "asyncListReturn": {
           "name": "asyncListReturn",
+          "route": "/return-types/async-list-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -719,6 +752,7 @@
         },
         "asyncMapReturn": {
           "name": "asyncMapReturn",
+          "route": "/return-types/async-map-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -740,6 +774,7 @@
         },
         "asyncStructReturn": {
           "name": "asyncStructReturn",
+          "route": "/return-types/async-struct-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -761,6 +796,7 @@
         },
         "asyncStructReturnNullable": {
           "name": "asyncStructReturnNullable",
+          "route": "/return-types/async-struct-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -782,6 +818,7 @@
         },
         "asyncComplexStructReturn": {
           "name": "asyncComplexStructReturn",
+          "route": "/return-types/async-complex-struct-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -803,6 +840,7 @@
         },
         "asyncComplexStructReturnNullable": {
           "name": "asyncComplexStructReturnNullable",
+          "route": "/return-types/async-complex-struct-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -824,6 +862,7 @@
         },
         "asyncComplexClassReturn": {
           "name": "asyncComplexClassReturn",
+          "route": "/return-types/async-complex-class-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -845,6 +884,7 @@
         },
         "asyncClassReturnNullable": {
           "name": "asyncClassReturnNullable",
+          "route": "/return-types/async-class-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -866,6 +906,7 @@
         },
         "asyncOrVoidReturn": {
           "name": "asyncOrVoidReturn",
+          "route": "/return-types/async-or-void-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -887,6 +928,7 @@
         },
         "asyncOrStringReturn": {
           "name": "asyncOrStringReturn",
+          "route": "/return-types/async-or-string-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -908,6 +950,7 @@
         },
         "asyncOrIntReturn": {
           "name": "asyncOrIntReturn",
+          "route": "/return-types/async-or-int-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -929,6 +972,7 @@
         },
         "asyncOrDoubleReturn": {
           "name": "asyncOrDoubleReturn",
+          "route": "/return-types/async-or-double-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -950,6 +994,7 @@
         },
         "asyncOrBoolReturn": {
           "name": "asyncOrBoolReturn",
+          "route": "/return-types/async-or-bool-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -971,6 +1016,7 @@
         },
         "asyncOrIterableReturn": {
           "name": "asyncOrIterableReturn",
+          "route": "/return-types/async-or-iterable-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -992,6 +1038,7 @@
         },
         "asyncOrListReturn": {
           "name": "asyncOrListReturn",
+          "route": "/return-types/async-or-list-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1013,6 +1060,7 @@
         },
         "asyncOrMapReturn": {
           "name": "asyncOrMapReturn",
+          "route": "/return-types/async-or-map-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1034,6 +1082,7 @@
         },
         "asyncOrStructReturn": {
           "name": "asyncOrStructReturn",
+          "route": "/return-types/async-or-struct-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1055,6 +1104,7 @@
         },
         "asyncOrComplexStructReturn": {
           "name": "asyncOrComplexStructReturn",
+          "route": "/return-types/async-or-complex-struct-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1076,6 +1126,7 @@
         },
         "asyncOrVoidReturnNullable": {
           "name": "asyncOrVoidReturnNullable",
+          "route": "/return-types/async-or-void-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1097,6 +1148,7 @@
         },
         "asyncOrStringReturnNullable": {
           "name": "asyncOrStringReturnNullable",
+          "route": "/return-types/async-or-string-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1118,6 +1170,7 @@
         },
         "asyncOrIntReturnNullable": {
           "name": "asyncOrIntReturnNullable",
+          "route": "/return-types/async-or-int-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1139,6 +1192,7 @@
         },
         "asyncOrDoubleReturnNullable": {
           "name": "asyncOrDoubleReturnNullable",
+          "route": "/return-types/async-or-double-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1160,6 +1214,7 @@
         },
         "asyncOrBoolReturnNullable": {
           "name": "asyncOrBoolReturnNullable",
+          "route": "/return-types/async-or-bool-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1181,6 +1236,7 @@
         },
         "asyncOrIterableReturnNullable": {
           "name": "asyncOrIterableReturnNullable",
+          "route": "/return-types/async-or-iterable-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1202,6 +1258,7 @@
         },
         "asyncOrListReturnNullable": {
           "name": "asyncOrListReturnNullable",
+          "route": "/return-types/async-or-list-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1223,6 +1280,7 @@
         },
         "asyncOrMapReturnNullable": {
           "name": "asyncOrMapReturnNullable",
+          "route": "/return-types/async-or-map-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1244,6 +1302,7 @@
         },
         "asyncOrStructReturnNullable": {
           "name": "asyncOrStructReturnNullable",
+          "route": "/return-types/async-or-struct-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1265,6 +1324,7 @@
         },
         "asyncOrComplexStructReturnNullable": {
           "name": "asyncOrComplexStructReturnNullable",
+          "route": "/return-types/async-or-complex-struct-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1286,6 +1346,7 @@
         },
         "asyncOrSimpleClassReturnNullable": {
           "name": "asyncOrSimpleClassReturnNullable",
+          "route": "/return-types/async-or-simple-class-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1307,6 +1368,7 @@
         },
         "asyncOrComplexClassReturnNullable": {
           "name": "asyncOrComplexClassReturnNullable",
+          "route": "/return-types/async-or-complex-class-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1328,6 +1390,7 @@
         },
         "voidReturn": {
           "name": "voidReturn",
+          "route": "/return-types/void-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1349,6 +1412,7 @@
         },
         "stringReturn": {
           "name": "stringReturn",
+          "route": "/return-types/string-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1370,6 +1434,7 @@
         },
         "intReturn": {
           "name": "intReturn",
+          "route": "/return-types/int-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1391,6 +1456,7 @@
         },
         "doubleReturn": {
           "name": "doubleReturn",
+          "route": "/return-types/double-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1412,6 +1478,7 @@
         },
         "boolReturn": {
           "name": "boolReturn",
+          "route": "/return-types/bool-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1433,6 +1500,7 @@
         },
         "iterableReturn": {
           "name": "iterableReturn",
+          "route": "/return-types/iterable-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1454,6 +1522,7 @@
         },
         "listReturn": {
           "name": "listReturn",
+          "route": "/return-types/list-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1475,6 +1544,7 @@
         },
         "mapReturn": {
           "name": "mapReturn",
+          "route": "/return-types/map-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1496,6 +1566,7 @@
         },
         "structReturn": {
           "name": "structReturn",
+          "route": "/return-types/struct-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1517,6 +1588,7 @@
         },
         "complexReturn": {
           "name": "complexReturn",
+          "route": "/return-types/complex-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1538,6 +1610,7 @@
         },
         "simpleClassReturn": {
           "name": "simpleClassReturn",
+          "route": "/return-types/simple-class-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1559,6 +1632,7 @@
         },
         "complexClassReturn": {
           "name": "complexClassReturn",
+          "route": "/return-types/complex-class-return",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1580,6 +1654,7 @@
         },
         "stringReturnNullable": {
           "name": "stringReturnNullable",
+          "route": "/return-types/string-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1601,6 +1676,7 @@
         },
         "intReturnNullable": {
           "name": "intReturnNullable",
+          "route": "/return-types/int-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1622,6 +1698,7 @@
         },
         "doubleReturnNullable": {
           "name": "doubleReturnNullable",
+          "route": "/return-types/double-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1643,6 +1720,7 @@
         },
         "boolReturnNullable": {
           "name": "boolReturnNullable",
+          "route": "/return-types/bool-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1664,6 +1742,7 @@
         },
         "iterableReturnNullable": {
           "name": "iterableReturnNullable",
+          "route": "/return-types/iterable-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1685,6 +1764,7 @@
         },
         "listReturnNullable": {
           "name": "listReturnNullable",
+          "route": "/return-types/list-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1706,6 +1786,7 @@
         },
         "mapReturnNullable": {
           "name": "mapReturnNullable",
+          "route": "/return-types/map-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1727,6 +1808,7 @@
         },
         "structReturnNullable": {
           "name": "structReturnNullable",
+          "route": "/return-types/struct-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1748,6 +1830,7 @@
         },
         "complexReturnNullable": {
           "name": "complexReturnNullable",
+          "route": "/return-types/complex-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1769,6 +1852,7 @@
         },
         "simpleClassReturnNullable": {
           "name": "simpleClassReturnNullable",
+          "route": "/return-types/simple-class-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1790,6 +1874,7 @@
         },
         "complexClassReturnNullable": {
           "name": "complexClassReturnNullable",
+          "route": "/return-types/complex-class-return-nullable",
           "apiName": "return_types",
           "envVars": [],
           "policy": {
@@ -1816,6 +1901,7 @@
       "functions": {
         "empty": {
           "name": "empty",
+          "route": "/classes/empty",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1837,6 +1923,7 @@
         },
         "asyncEmpty": {
           "name": "asyncEmpty",
+          "route": "/classes/async-empty",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1858,6 +1945,7 @@
         },
         "fields": {
           "name": "fields",
+          "route": "/classes/fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1879,6 +1967,7 @@
         },
         "asyncFields": {
           "name": "asyncFields",
+          "route": "/classes/async-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1900,6 +1989,7 @@
         },
         "nullableFields": {
           "name": "nullableFields",
+          "route": "/classes/nullable-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1921,6 +2011,7 @@
         },
         "asyncNullableFields": {
           "name": "asyncNullableFields",
+          "route": "/classes/async-nullable-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1942,6 +2033,7 @@
         },
         "namedFields": {
           "name": "namedFields",
+          "route": "/classes/named-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1963,6 +2055,7 @@
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
+          "route": "/classes/async-named-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -1984,6 +2077,7 @@
         },
         "mixedFields": {
           "name": "mixedFields",
+          "route": "/classes/mixed-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2005,6 +2099,7 @@
         },
         "asyncMixedFields": {
           "name": "asyncMixedFields",
+          "route": "/classes/async-mixed-fields",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2026,6 +2121,7 @@
         },
         "defaultValues": {
           "name": "defaultValues",
+          "route": "/classes/default-values",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2047,6 +2143,7 @@
         },
         "asyncDefaultValues": {
           "name": "asyncDefaultValues",
+          "route": "/classes/async-default-values",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2068,6 +2165,7 @@
         },
         "nestedClass": {
           "name": "nestedClass",
+          "route": "/classes/nested-class",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2089,6 +2187,7 @@
         },
         "asyncNestedClass": {
           "name": "asyncNestedClass",
+          "route": "/classes/async-nested-class",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2110,6 +2209,7 @@
         },
         "onlyFromJson": {
           "name": "onlyFromJson",
+          "route": "/classes/only-from-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2131,6 +2231,7 @@
         },
         "asyncOnlyFromJson": {
           "name": "asyncOnlyFromJson",
+          "route": "/classes/async-only-from-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2152,6 +2253,7 @@
         },
         "onlyToJson": {
           "name": "onlyToJson",
+          "route": "/classes/only-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2173,6 +2275,7 @@
         },
         "asyncOnlyToJson": {
           "name": "asyncOnlyToJson",
+          "route": "/classes/async-only-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2194,6 +2297,7 @@
         },
         "onlyToJsonWithDefaults": {
           "name": "onlyToJsonWithDefaults",
+          "route": "/classes/only-to-json-with-defaults",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2215,6 +2319,7 @@
         },
         "asyncOnlyToJsonWithDefaults": {
           "name": "asyncOnlyToJsonWithDefaults",
+          "route": "/classes/async-only-to-json-with-defaults",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2236,6 +2341,7 @@
         },
         "fromAndToJson": {
           "name": "fromAndToJson",
+          "route": "/classes/from-and-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2257,6 +2363,7 @@
         },
         "asyncFromAndToJson": {
           "name": "asyncFromAndToJson",
+          "route": "/classes/async-from-and-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2278,6 +2385,7 @@
         },
         "nonMapToJson": {
           "name": "nonMapToJson",
+          "route": "/classes/non-map-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2299,6 +2407,7 @@
         },
         "asyncNonMapToJson": {
           "name": "asyncNonMapToJson",
+          "route": "/classes/async-non-map-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2320,6 +2429,7 @@
         },
         "nonMapToJsonWithDefaults": {
           "name": "nonMapToJsonWithDefaults",
+          "route": "/classes/non-map-to-json-with-defaults",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2341,6 +2451,7 @@
         },
         "asyncNonMapToJsonWithDefaults": {
           "name": "asyncNonMapToJsonWithDefaults",
+          "route": "/classes/async-non-map-to-json-with-defaults",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2362,6 +2473,7 @@
         },
         "nonMapFromAndToJson": {
           "name": "nonMapFromAndToJson",
+          "route": "/classes/non-map-from-and-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2383,6 +2495,7 @@
         },
         "asyncNonMapFromAndToJson": {
           "name": "asyncNonMapFromAndToJson",
+          "route": "/classes/async-non-map-from-and-to-json",
           "apiName": "classes",
           "envVars": [],
           "policy": {
@@ -2409,6 +2522,7 @@
       "functions": {
         "throwsException": {
           "name": "throwsException",
+          "route": "/exceptions/throws-exception",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2430,6 +2544,7 @@
         },
         "throwsError": {
           "name": "throwsError",
+          "route": "/exceptions/throws-error",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2451,6 +2566,7 @@
         },
         "throwsCustomException": {
           "name": "throwsCustomException",
+          "route": "/exceptions/throws-custom-exception",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2472,6 +2588,7 @@
         },
         "throwsCustomExceptionToFromJson": {
           "name": "throwsCustomExceptionToFromJson",
+          "route": "/exceptions/throws-custom-exception-to-from-json",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2493,6 +2610,7 @@
         },
         "throwsCustomError": {
           "name": "throwsCustomError",
+          "route": "/exceptions/throws-custom-error",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2514,6 +2632,7 @@
         },
         "throwsCustomErrorToFromJson": {
           "name": "throwsCustomErrorToFromJson",
+          "route": "/exceptions/throws-custom-error-to-from-json",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2535,6 +2654,7 @@
         },
         "throwsCustomErrorWithStackTrace": {
           "name": "throwsCustomErrorWithStackTrace",
+          "route": "/exceptions/throws-custom-error-with-stack-trace",
           "apiName": "exceptions",
           "envVars": [],
           "policy": {
@@ -2561,6 +2681,7 @@
       "functions": {
         "hasDocComments": {
           "name": "hasDocComments",
+          "route": "/metadata/has-doc-comments",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2582,6 +2703,7 @@
         },
         "hasDeprecatedAnnotation": {
           "name": "hasDeprecatedAnnotation",
+          "route": "/metadata/has-deprecated-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2603,6 +2725,7 @@
         },
         "hasConstructedDeprecatedAnnotation": {
           "name": "hasConstructedDeprecatedAnnotation",
+          "route": "/metadata/has-constructed-deprecated-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2624,6 +2747,7 @@
         },
         "hasNamedConstructedAnnotation": {
           "name": "hasNamedConstructedAnnotation",
+          "route": "/metadata/has-named-constructed-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2645,6 +2769,7 @@
         },
         "hasLiteralsAnnotation": {
           "name": "hasLiteralsAnnotation",
+          "route": "/metadata/has-literals-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2666,6 +2791,7 @@
         },
         "hasExportableAnnotation": {
           "name": "hasExportableAnnotation",
+          "route": "/metadata/has-exportable-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2687,6 +2813,7 @@
         },
         "hasExportableConstructedAnnotation": {
           "name": "hasExportableConstructedAnnotation",
+          "route": "/metadata/has-exportable-constructed-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2708,6 +2835,7 @@
         },
         "hasNotExportableAnnotation": {
           "name": "hasNotExportableAnnotation",
+          "route": "/metadata/has-not-exportable-annotation",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2729,6 +2857,7 @@
         },
         "positionalDefaultValues": {
           "name": "positionalDefaultValues",
+          "route": "/metadata/positional-default-values",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2750,6 +2879,7 @@
         },
         "nullablePositionalDefaultValues": {
           "name": "nullablePositionalDefaultValues",
+          "route": "/metadata/nullable-positional-default-values",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2771,6 +2901,7 @@
         },
         "namedDefaultValues": {
           "name": "namedDefaultValues",
+          "route": "/metadata/named-default-values",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2792,6 +2923,7 @@
         },
         "nullableNamedDefaultValues": {
           "name": "nullableNamedDefaultValues",
+          "route": "/metadata/nullable-named-default-values",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2813,6 +2945,7 @@
         },
         "positionalDefaultValueVars": {
           "name": "positionalDefaultValueVars",
+          "route": "/metadata/positional-default-value-vars",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2834,6 +2967,7 @@
         },
         "nullablePositionalDefaultValueVars": {
           "name": "nullablePositionalDefaultValueVars",
+          "route": "/metadata/nullable-positional-default-value-vars",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2855,6 +2989,7 @@
         },
         "namedDefaultValueVars": {
           "name": "namedDefaultValueVars",
+          "route": "/metadata/named-default-value-vars",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2876,6 +3011,7 @@
         },
         "nullableNamedDefaultValueVars": {
           "name": "nullableNamedDefaultValueVars",
+          "route": "/metadata/nullable-named-default-value-vars",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2897,6 +3033,7 @@
         },
         "positionalDefaultValueVarsPrivate": {
           "name": "positionalDefaultValueVarsPrivate",
+          "route": "/metadata/positional-default-value-vars-private",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2918,6 +3055,7 @@
         },
         "nullablePositionalDefaultValueVarsPrivate": {
           "name": "nullablePositionalDefaultValueVarsPrivate",
+          "route": "/metadata/nullable-positional-default-value-vars-private",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2939,6 +3077,7 @@
         },
         "namedDefaultValueVarsPrivate": {
           "name": "namedDefaultValueVarsPrivate",
+          "route": "/metadata/named-default-value-vars-private",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2960,6 +3099,7 @@
         },
         "nullableNamedDefaultValueVarsPrivate": {
           "name": "nullableNamedDefaultValueVarsPrivate",
+          "route": "/metadata/nullable-named-default-value-vars-private",
           "apiName": "metadata",
           "envVars": [],
           "policy": {
@@ -2986,6 +3126,7 @@
       "functions": {
         "optionalPositional": {
           "name": "optionalPositional",
+          "route": "/parameters/optional-positional",
           "apiName": "parameters",
           "envVars": [],
           "policy": {
@@ -3007,6 +3148,7 @@
         },
         "optionalNamed": {
           "name": "optionalNamed",
+          "route": "/parameters/optional-named",
           "apiName": "parameters",
           "envVars": [],
           "policy": {
@@ -3028,6 +3170,7 @@
         },
         "requiredPositional": {
           "name": "requiredPositional",
+          "route": "/parameters/required-positional",
           "apiName": "parameters",
           "envVars": [],
           "policy": {
@@ -3049,6 +3192,7 @@
         },
         "requiredNamed": {
           "name": "requiredNamed",
+          "route": "/parameters/required-named",
           "apiName": "parameters",
           "envVars": [],
           "policy": {
@@ -3075,6 +3219,7 @@
       "functions": {
         "genericWrappers": {
           "name": "genericWrappers",
+          "route": "/generic-wrappers/generic-wrappers",
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {
@@ -3096,6 +3241,7 @@
         },
         "genericWrappersAsync": {
           "name": "genericWrappersAsync",
+          "route": "/generic-wrappers/generic-wrappers-async",
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {
@@ -3117,6 +3263,7 @@
         },
         "genericWrapperParameters": {
           "name": "genericWrapperParameters",
+          "route": "/generic-wrappers/generic-wrapper-parameters",
           "apiName": "generic_wrappers",
           "envVars": [],
           "policy": {

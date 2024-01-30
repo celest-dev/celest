@@ -53,6 +53,7 @@ final class ProjectResolver extends AstVisitor<void> {
           (resolvedFunction) {
             resolvedFunction
               ..name = function.name
+              ..route = function.route
               ..apiName = function.apiName;
             resolvedFunction.policy.statements.add(
               PolicyStatement(

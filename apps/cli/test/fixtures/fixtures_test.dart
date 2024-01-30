@@ -23,6 +23,9 @@ import 'package:test/test.dart';
 import '../common.dart';
 import 'types.dart';
 
+final hubTestsDir =
+    Directory.current.uri.resolve('../../services/hub/test/test_data').path;
+
 void main() {
   final updateGoldens = switch (Platform.environment['UPDATE_GOLDENS']) {
     'true' => true,
@@ -181,7 +184,8 @@ class TestRunner {
           ..createSync(recursive: true)
           ..writeAsStringSync(
             const JsonEncoder.withIndent('  ').convert(resolvedAst),
-          );
+          )
+          ..copySync(p.join(hubTestsDir, '$testName.resolved.json'));
       } else {
         final expectedAst = jsonDecode(resolvedAstFile.readAsStringSync());
         expect(resolvedAst, expectedAst);
