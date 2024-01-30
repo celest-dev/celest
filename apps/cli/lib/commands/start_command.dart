@@ -18,6 +18,9 @@ final class StartCommand extends CelestCommand with Configure {
   @override
   String get name => 'start';
 
+  @override
+  String get category => 'Project';
+
   Future<String> _createProject() async {
     if (!pubspec.dependencies.containsKey('flutter')) {
       throw const CelestException(

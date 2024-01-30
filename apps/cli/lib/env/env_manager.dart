@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/env/env_parser.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_proto/ast.dart' as ast;
 import 'package:source_span/source_span.dart';
 
 final class EnvManager {

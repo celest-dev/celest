@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
 import 'package:celest_cli/commands/upgrade_command.dart';
@@ -37,8 +38,11 @@ void main(List<String> args) async {
         return event;
       },
     ),
-  )
-    ..addCommand(StartCommand())
+  )..addCommand(StartCommand());
+  if (platform.environment.containsKey('ENABLE_CELEST_DEPLOY')) {
+    cli.addCommand(DeployCommand());
+  }
+  cli
     ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand());
   await cli.run(args);

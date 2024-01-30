@@ -20,6 +20,8 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
+  celest_proto:
+    path: ../../packages/celest_proto
   cli_script: ^1.0.0
   code_builder: ^4.8.0
   collection: ^1.18.0
@@ -55,6 +57,20 @@ dependencies:
   watcher: ^1.1.0
   yaml: ^3.1.2
   yaml_edit: ^2.1.1
+
+dependency_overrides:
+  built_value: ^8.9.0
+  celest:
+    path: ../../celest/packages/celest
+  celest_cli_common:
+    path: ../../packages/celest_cli_common
+  celest_core:
+    path: ../../celest/packages/celest_core
+  celest_proto:
+    path: ../../packages/celest_proto
+  # Use vendored sqlite3 to make use of native-assets
+  sqlite3:
+    path: ../../packages/sqlite3/sqlite3
 
 dev_dependencies:
   build: ^2.4.1

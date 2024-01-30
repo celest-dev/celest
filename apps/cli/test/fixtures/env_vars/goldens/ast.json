@@ -10,55 +10,125 @@
     {
       "envName": "MY_NAME",
       "location": {
-        "uri": "project:config/.env",
-        "start": 0,
-        "end": 15
+        "start": {
+          "offset": 0,
+          "uri": ".env",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 15,
+          "uri": ".env",
+          "line": 1,
+          "column": 0
+        },
+        "text": "MY_NAME=Dillon\n"
       }
     },
     {
       "envName": "MY_AGE",
       "location": {
-        "uri": "project:config/.env",
-        "start": 15,
-        "end": 25
+        "start": {
+          "offset": 15,
+          "uri": ".env",
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "offset": 25,
+          "uri": ".env",
+          "line": 2,
+          "column": 0
+        },
+        "text": "MY_AGE=28\n"
       }
     },
     {
       "envName": "MY_HEIGHT",
       "location": {
-        "uri": "project:config/.env",
-        "start": 25,
-        "end": 40
+        "start": {
+          "offset": 25,
+          "uri": ".env",
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "offset": 40,
+          "uri": ".env",
+          "line": 3,
+          "column": 0
+        },
+        "text": "MY_HEIGHT=5.83\n"
       }
     },
     {
       "envName": "MY_WEIGHT",
       "location": {
-        "uri": "project:config/.env",
-        "start": 40,
-        "end": 54
+        "start": {
+          "offset": 40,
+          "uri": ".env",
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "offset": 54,
+          "uri": ".env",
+          "line": 4,
+          "column": 0
+        },
+        "text": "MY_WEIGHT=130\n"
       }
     },
     {
       "envName": "IM_COOL",
       "location": {
-        "uri": "project:config/.env",
-        "start": 54,
-        "end": 67
+        "start": {
+          "offset": 54,
+          "uri": ".env",
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "offset": 67,
+          "uri": ".env",
+          "line": 5,
+          "column": 0
+        },
+        "text": "IM_COOL=true\n"
       }
     },
     {
       "envName": "MY_WEBSITE",
       "location": {
-        "uri": "project:config/.env",
-        "start": 67,
-        "end": 101
+        "start": {
+          "offset": 67,
+          "uri": ".env",
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "offset": 101,
+          "uri": ".env",
+          "line": 5,
+          "column": 34
+        },
+        "text": "MY_WEBSITE=\"https://dillonnys.com\""
       }
     }
   ],
   "location": {
-    "uri": "project:project.dart",
-    "start": 44,
-    "end": 51
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
   }
 }

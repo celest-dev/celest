@@ -1,12 +1,11 @@
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/ast/ast.dart';
-import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/project/resources_generator.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 

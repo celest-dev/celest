@@ -8,8 +8,18 @@
   "apis": {},
   "envVars": [],
   "location": {
-    "uri": "project:project.dart",
-    "start": 44,
-    "end": 51
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
   }
 }

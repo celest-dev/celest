@@ -303,13 +303,13 @@ extension RecordTypeHelper on RecordType {
 }
 
 extension NodeSourceLocation on AstNode {
-  ast.FileSpan sourceLocation(Source source) {
+  FileSpan sourceLocation(Source source) {
     return source.toSpan(offset, end);
   }
 }
 
 extension ElementSourceLocation on Element {
-  ast.FileSpan get sourceLocation {
+  FileSpan get sourceLocation {
     return source!.toSpan(nameOffset, nameOffset + nameLength);
   }
 
@@ -321,7 +321,7 @@ extension ElementSourceLocation on Element {
 }
 
 extension ElementAnnotationSourceLocation on ElementAnnotation {
-  ast.FileSpan sourceLocation(Source source) {
+  FileSpan sourceLocation(Source source) {
     final impl = this as ElementAnnotationImpl;
     return source.toSpan(impl.annotationAst.offset, impl.annotationAst.end);
   }
@@ -440,11 +440,11 @@ final class RecordTypeEquality implements Equality<RecordType> {
   bool isValidKey(Object? o) => o is RecordType;
 }
 
-extension SafeExpand on ast.FileSpan {
+extension SafeExpand on FileSpan {
   /// Allows expanding a span to include another span, but only if they are
   /// in the same file, since [ast.FileSpan.expand] will throw if they are not.
   // TODO(dnys1): Improve expand functionality to allow multi-file splits and better disjoint expands with (...) instead of showing every line.
-  ast.FileSpan safeExpand(ast.FileSpan other) {
+  FileSpan safeExpand(FileSpan other) {
     if (sourceUrl != other.sourceUrl) {
       return this;
     }

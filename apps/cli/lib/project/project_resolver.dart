@@ -1,9 +1,6 @@
-import 'package:celest_cli/ast/actions.dart';
-import 'package:celest_cli/ast/ast.dart' as ast;
-import 'package:celest_cli/ast/resolved_ast.dart';
-import 'package:celest_cli/ast/visitor.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_proto/ast.dart';
 import 'package:collection/collection.dart';
 
 final class ProjectResolver extends AstVisitor<void> {
@@ -11,25 +8,25 @@ final class ProjectResolver extends AstVisitor<void> {
   ResolvedProject get resolvedProject => _resolvedProject.build();
 
   @override
-  void visitProject(ast.Project project) {
+  void visitProject(Project project) {
     _resolvedProject.name = project.name;
     project.apis.values.forEach(visitApi);
     project.envVars.forEach(visitEnvironmentVariable);
   }
 
   @override
-  void visitApi(ast.Api api) {
+  void visitApi(Api api) {
     _resolvedProject.apis[api.name] = ResolvedApi.build((resolvedApi) {
       resolvedApi.name = api.name;
-      final apiAuth = api.metadata.whereType<ast.ApiAuth>().singleOrNull;
+      final apiAuth = api.metadata.whereType<ApiAuth>().singleOrNull;
       if (apiAuth == null) {
         return;
       }
       resolvedApi.policy.statements.add(
         PolicyStatement(
           grantee: switch (apiAuth) {
-            ast.ApiAuthenticated() => Role.authenticated,
-            ast.ApiPublic() => Role.public,
+            ApiAuthenticated() => Role.authenticated,
+            ApiPublic() => Role.public,
           },
           actions: [CloudFunctionAction.invoke],
         ),
@@ -40,16 +37,16 @@ final class ProjectResolver extends AstVisitor<void> {
   }
 
   @override
-  void visitApiAuthenticated(ast.ApiAuthenticated annotation) {}
+  void visitApiAuthenticated(ApiAuthenticated annotation) {}
 
   @override
-  void visitApiPublic(ast.ApiPublic annotation) {}
+  void visitApiPublic(ApiPublic annotation) {}
 
   @override
-  void visitApiMiddleware(ast.ApiMiddleware annotation) {}
+  void visitApiMiddleware(ApiMiddleware annotation) {}
 
   @override
-  void visitFunction(ast.CloudFunction function) {
+  void visitFunction(CloudFunction function) {
     _resolvedProject.apis.updateValue(function.apiName, (resolvedApi) {
       return resolvedApi.rebuild((resolvedApi) {
         resolvedApi.functions[function.name] = ResolvedCloudFunction.build(
@@ -66,9 +63,7 @@ final class ProjectResolver extends AstVisitor<void> {
 
             for (final parameter in function.parameters) {
               if (parameter.references
-                  case ast.NodeReference(
-                        type: ast.NodeType.environmentVariable
-                      ) &&
+                  case NodeReference(type: NodeType.environmentVariable) &&
                       final nodeReference) {
                 resolvedFunction.envVars.add(nodeReference.name);
               }
@@ -80,10 +75,10 @@ final class ProjectResolver extends AstVisitor<void> {
   }
 
   @override
-  void visitParameter(ast.CloudFunctionParameter parameter) {}
+  void visitParameter(CloudFunctionParameter parameter) {}
 
   @override
-  void visitEnvironmentVariable(ast.EnvironmentVariable variable) {
+  void visitEnvironmentVariable(EnvironmentVariable variable) {
     final envName = variable.envName;
     final envValue = projectPaths.envManager.get(envName);
     if (envValue == null) {

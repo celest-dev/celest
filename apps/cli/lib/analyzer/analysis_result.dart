@@ -1,5 +1,5 @@
 import 'package:celest_cli/analyzer/analysis_error.dart';
-import 'package:celest_cli/ast/ast.dart' as ast;
+import 'package:celest_proto/ast.dart' as ast;
 
 sealed class CelestAnalysisResult {
   const CelestAnalysisResult();

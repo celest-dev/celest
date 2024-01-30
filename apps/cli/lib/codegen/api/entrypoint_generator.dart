@@ -2,13 +2,13 @@ import 'dart:collection';
 
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class EntrypointGenerator {

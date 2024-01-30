@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 
 const _header = [

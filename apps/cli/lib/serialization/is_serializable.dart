@@ -5,7 +5,6 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
-import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -14,6 +13,7 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as code_builder;
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
+import 'package:source_span/source_span.dart';
 
 enum _TypePosition { parameter, return$ }
 
