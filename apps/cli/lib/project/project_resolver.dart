@@ -9,7 +9,9 @@ final class ProjectResolver extends AstVisitor<void> {
 
   @override
   void visitProject(Project project) {
-    _resolvedProject.name = project.name;
+    _resolvedProject
+      ..name = project.name
+      ..sdkInfo.replace(project.sdkInfo);
     project.apis.values.forEach(visitApi);
     project.envVars.forEach(visitEnvironmentVariable);
   }

@@ -26,5 +26,9 @@
       "name": "MY_WEBSITE",
       "value": "https://dillonnys.com"
     }
-  ]
+  ],
+  "sdkInfo": {
+    "enabledExperiments": [],
+    "sdkVersion": "^3.0.0"
+  }
 }

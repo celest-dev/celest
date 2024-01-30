@@ -3286,5 +3286,9 @@
       }
     }
   },
-  "envVars": []
+  "envVars": [],
+  "sdkInfo": {
+    "enabledExperiments": [],
+    "sdkVersion": "^3.0.0"
+  }
 }

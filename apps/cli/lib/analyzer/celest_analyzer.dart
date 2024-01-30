@@ -26,6 +26,7 @@ import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_proto/ast.dart' as ast;
+import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
@@ -269,6 +270,12 @@ final class CelestAnalyzer {
       ..reference = refer(
         projectDefinitionElement.name,
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
+      )
+      ..sdkInfo.replace(
+        SdkInfo(
+          sdkVersion: celestProject.pubspec.environment?['sdk'],
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        ),
       )
       ..location = projectDefineLocation;
   }

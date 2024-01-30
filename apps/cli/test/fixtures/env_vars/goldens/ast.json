@@ -116,6 +116,10 @@
       }
     }
   ],
+  "sdkInfo": {
+    "enabledExperiments": [],
+    "sdkVersion": "^3.0.0"
+  },
   "location": {
     "start": {
       "offset": 44,

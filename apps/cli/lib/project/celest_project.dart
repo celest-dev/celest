@@ -6,6 +6,7 @@ import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 
 /// Static information about the current Celest project.
 final class CelestProject {
@@ -63,6 +64,11 @@ final class CelestProject {
 
   /// The [CelestDatabase] for the current project.
   late final database = CelestDatabase(config);
+
+  Pubspec get pubspec => Pubspec.parse(
+        fileSystem.file(projectPaths.projectYaml).readAsStringSync(),
+        sourceUrl: Uri.file(projectPaths.projectYaml),
+      );
 
   Future<Set<String>> invalidate(Set<String> files) async {
     for (final file in files) {
