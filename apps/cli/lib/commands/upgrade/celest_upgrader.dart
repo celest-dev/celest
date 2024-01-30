@@ -119,18 +119,16 @@ final class CelestUpgrader {
         if (exists) {
           // Need to rm (unlink) before replacing
           // https://stackoverflow.com/questions/1712033/replacing-a-running-executable-in-linux
-          final rmOutput = await processManager.run(
-            <String>['rm', file.path],
-            stdoutEncoding: utf8,
-            stderrEncoding: utf8,
+          final rmOutput = await processManager.start(
+            <String>['sudo', 'rm', file.path],
+            mode: ProcessStartMode.inheritStdio,
           );
-          if (rmOutput.exitCode != 0) {
+          if (await rmOutput.exitCode case final exitCode && != 0) {
             throw ProcessException(
               'rm',
               [file.path],
-              'Failed to rm ${file.path}: '
-                  '${rmOutput.stdout}\n${rmOutput.stderr}',
-              rmOutput.exitCode,
+              'Failed to rm ${file.path}',
+              exitCode,
             );
           }
         }
@@ -146,18 +144,16 @@ final class CelestUpgrader {
       ]) {
         if (!await file.exists()) continue;
         _logger.finest('Making ${file.path} executable');
-        final chmodOutput = await processManager.run(
-          <String>['chmod', '+x', file.path],
-          stdoutEncoding: utf8,
-          stderrEncoding: utf8,
+        final chmodOutput = await processManager.start(
+          <String>['sudo', 'chmod', '+x', file.path],
+          mode: ProcessStartMode.inheritStdio,
         );
-        if (chmodOutput.exitCode != 0) {
+        if (await chmodOutput.exitCode case final exitCode && != 0) {
           throw ProcessException(
             'chmod',
             ['+x', file.path],
-            'Failed to chmod +x ${file.path}: '
-                '${chmodOutput.stdout}\n${chmodOutput.stderr}',
-            chmodOutput.exitCode,
+            'Failed to chmod +x ${file.path}',
+            exitCode,
           );
         }
       }
