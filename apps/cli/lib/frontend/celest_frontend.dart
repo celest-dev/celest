@@ -105,12 +105,16 @@ final class CelestFrontend implements Closeable {
     await Future.any([
       _watcher!.next.then(
         (events) {
-          final paths = events.map((event) => event.path).toList();
+          (_changedPaths ??= {}).addAll(
+            events.map((event) => event.path),
+          );
           logger.finest(
             '${events.length} watcher events since last compile: ',
-            '$_changedPaths',
+            _changedPaths!.join('\n'),
           );
-          _changedPaths = paths.toSet();
+          // TODO(dnys1): Improve cache invalidation to only invalidate
+          // necessary types.
+          typeHelper.reset();
           return celestProject.invalidate(_changedPaths!);
         },
       ),
@@ -222,7 +226,14 @@ final class CelestFrontend implements Closeable {
               _didFirstCompile = true;
               await _addProjectToDb(project.name);
             }
+
+            // Only clear changed paths once a full restart has been completed
+            // which included those changes. Replacing the changed paths before
+            // this happens could mean a loop where the changes are dropped
+            // because the project had errors.
+            _changedPaths = null;
         }
+
         await _nextChangeSet();
       }
       return 0;

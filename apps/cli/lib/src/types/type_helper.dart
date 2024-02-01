@@ -94,7 +94,7 @@ final class TypeHelper {
   );
   final _referenceToDartType = <codegen.Reference, DartType>{};
   final _wireTypeToDartType = <String, DartType>{};
-  final _serializationVerdicts = HashMap<DartType, Verdict>(
+  final serializationVerdicts = HashMap<DartType, Verdict>(
     equals: const DartTypeEquality().equals,
     hashCode: const DartTypeEquality().hash,
   );
@@ -165,7 +165,7 @@ final class TypeHelper {
   ///   all fields present. For these classes, we generate custom serialization
   ///   code.
   Verdict isSerializable(DartType type) =>
-      _serializationVerdicts[type] ??= runZoned(
+      serializationVerdicts[type] ??= runZoned(
         () => type.accept(const IsSerializable()),
         zoneValues: {
           _seenKey: Zone.current[_seenKey] ??
@@ -197,6 +197,15 @@ final class TypeHelper {
   }
 
   final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
+
+  /// Reset all caches.
+  void reset() {
+    _dartTypeToReference.clear();
+    _referenceToDartType.clear();
+    _wireTypeToDartType.clear();
+    serializationVerdicts.clear();
+    subtypes.clear();
+  }
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
