@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
+import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/port.dart';
@@ -56,13 +57,18 @@ final class LocalApiRunner implements Closeable {
       }
       env[envVar] = value;
     }
+    final packageConfig = await transformPackageConfig(
+      packageConfigPath: projectPaths.packagesConfig,
+      fromRoot: projectPaths.projectRoot,
+      toRoot: projectPaths.outputsDir,
+    );
     final client = await FrontendServerClient.start(
       p.toUri(path).toString(), // entrypoint
       path.replaceFirst(RegExp(r'.dart$'), '.dill'), // dill
       p.toUri(Sdk.current.vmPlatformDill).toString(),
       target: 'vm',
       verbose: verbose,
-      packagesJson: projectPaths.packagesConfig,
+      packagesJson: packageConfig,
       enabledExperiments: celestProject.analysisOptions.enabledExperiments,
       frontendServerPath: Sdk.current.frontendServerAotSnapshot,
       additionalSources: additionalSources,
@@ -84,10 +90,10 @@ final class LocalApiRunner implements Closeable {
         // Start VM service on a random port.
         '--enable-vm-service=0',
         '--packages',
-        projectPaths.packagesConfig,
+        packageConfig,
         dillOutput,
       ],
-      workingDirectory: projectPaths.projectRoot,
+      workingDirectory: projectPaths.outputsDir,
       environment: {
         // The HTTP port to serve Celest on.
         'PORT': Platform.environment['PORT'] ?? '$port',

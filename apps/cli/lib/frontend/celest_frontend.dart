@@ -43,6 +43,15 @@ final class CelestFrontend implements Closeable {
         _stopSignal.complete(signal);
       }
     });
+    _reloadStream = StreamQueue(
+      // Windows doesn't support listening for SIGUSR1 and SIGUSR2 signals.
+      platform.isWindows
+          ? Stream.fromFuture(Completer<ProcessSignal>().future)
+          : StreamGroup.mergeBroadcast([
+              ProcessSignal.sigusr1.watch(),
+              ProcessSignal.sigusr2.watch(),
+            ]).sample(_readyForChanges.stream),
+    );
   }
 
   static CelestFrontend? instance;
@@ -78,33 +87,18 @@ final class CelestFrontend implements Closeable {
           .events
           // Ignore creation of new directories and files (they'll be empty)
           .where((event) => event.type != ChangeType.ADD)
-          // Ignore events from the .dart_tool directory
-          .where(
-            (event) => !p.isWithin(
-              p.join(projectPaths.projectRoot, '.dart_tool'),
-              event.path,
-            ),
-          )
-          // Ignore changes to generated files
-          .where((event) => !p.equals(projectPaths.resourcesDart, event.path))
-          .where((event) => !p.equals(ClientTypes.clientClass.uri, event.path))
-          .where(
-            (event) => !p.isWithin(projectPaths.clientOutputsDir, event.path),
-          )
-          // Ignore changes to test files
-          .where(
-            (event) => !p.isWithin(
-              p.join(projectPaths.projectRoot, 'test'),
-              event.path,
-            ),
-          )
+          .where((event) => _isReloadablePath(event.path))
           .buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
 
-    await Future.any([
+    var reloading = false;
+    final reloadComplete = Completer<void>.sync();
+    unawaited(
       _watcher!.next.then(
-        (events) {
+        (events) async {
+          if (reloading) return;
+          reloading = true;
           (_changedPaths ??= {}).addAll(
             events.map((event) => event.path),
           );
@@ -115,11 +109,66 @@ final class CelestFrontend implements Closeable {
           // TODO(dnys1): Improve cache invalidation to only invalidate
           // necessary types.
           typeHelper.reset();
-          return celestProject.invalidate(_changedPaths!);
+          await celestProject.invalidate(_changedPaths!);
+          reloadComplete.complete();
         },
       ),
+    );
+    unawaited(
+      _reloadStream.next.then((signal) async {
+        if (reloading) return;
+        reloading = true;
+        logger.fine('Got reload signal: $signal');
+        final allProjectFiles = await fileSystem
+            .directory(projectPaths.projectRoot)
+            .list(recursive: true)
+            .whereType<File>()
+            .toList();
+        // Invalidate all paths.
+        typeHelper.reset();
+        final toInvalidate = allProjectFiles
+            .map((f) => f.path)
+            .where(_isReloadablePath)
+            .toList();
+        logger.finest('Invaliding paths: $toInvalidate');
+        await celestProject.invalidate(toInvalidate);
+        reloadComplete.complete();
+      }),
+    );
+
+    await Future.any([
+      reloadComplete.future,
       _stopSignal.future,
     ]);
+  }
+
+  /// Whether [path] is eligible for watching and reloading.
+  bool _isReloadablePath(String path) {
+    // Ignore files from the .dart_tool directory
+    if (p.isWithin(
+      p.join(projectPaths.projectRoot, '.dart_tool'),
+      path,
+    )) {
+      return false;
+    }
+    // Ignore generated files
+    if (p.equals(projectPaths.resourcesDart, path)) {
+      return false;
+    }
+    if (p.equals(ClientTypes.clientClass.uri, path)) {
+      return false;
+    }
+    if (p.isWithin(projectPaths.clientOutputsDir, path)) {
+      return false;
+    }
+    // Ignore test files
+    if (p.isWithin(
+      p.join(projectPaths.projectRoot, 'test'),
+      path,
+    )) {
+      return false;
+    }
+    return true;
   }
 
   /// Ensures projects are recorded in the DB
@@ -160,6 +209,13 @@ final class CelestFrontend implements Closeable {
   /// forwards to [_stopSignal] when triggered.
   late final StreamSubscription<ProcessSignal> _stopSub;
 
+  /// A broadcast stream of [ProcessSignal.sigusr1] and [ProcessSignal.sigusr2]
+  /// signals which triggers a hot reload.
+  ///
+  /// This mimicks the `flutter run` command which responds to these signals by
+  /// performing a hot reload (SIGUSR1) and a full restart (SIGUSR2).
+  late final StreamQueue<ProcessSignal> _reloadStream;
+
   ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
   var _didFirstCompile = false;
@@ -179,15 +235,22 @@ final class CelestFrontend implements Closeable {
         );
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
+        void fail(List<AnalysisError> errors) {
+          currentProgress!.fail(
+            'Project has errors. Please fix them and save the '
+            'corresponding files.',
+          );
+          _logErrors(errors);
+        }
+
         final analysisResult = await _analyzeProject();
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
-          case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
-            currentProgress.fail(
-              'Project has errors. Please fix them and save the '
-              'corresponding files.',
-            );
-            _logErrors(errors);
+            fail(errors);
+          case AnalysisSuccessResult(:final project, :final errors)
+              when errors.isNotEmpty:
+            currentProject = project;
+            fail(errors);
           case AnalysisSuccessResult(:final project):
             var restartMode = RestartMode.hotReload;
             if (currentProject case final currentProject?) {
@@ -198,6 +261,7 @@ final class CelestFrontend implements Closeable {
                 restartMode = RestartMode.fullRestart;
               }
             }
+            logger.finest('Performing reload with mode: ${restartMode.name}');
             currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
@@ -218,9 +282,6 @@ final class CelestFrontend implements Closeable {
               project: project,
               projectOutputs: projectOutputs,
             );
-            currentProgress.complete(
-              'Celest is running and watching for updates',
-            );
 
             if (!_didFirstCompile) {
               _didFirstCompile = true;
@@ -232,6 +293,10 @@ final class CelestFrontend implements Closeable {
             // this happens could mean a loop where the changes are dropped
             // because the project had errors.
             _changedPaths = null;
+
+            currentProgress.complete(
+              'Celest is running and watching for updates',
+            );
         }
 
         await _nextChangeSet();
@@ -356,6 +421,7 @@ final class CelestFrontend implements Closeable {
         logger.finest('Stopping Celest frontend...');
         await _stopSub.cancel();
         await _watcher?.cancel(immediate: true);
+        await _reloadStream.cancel(immediate: true);
         await _readyForChanges.close();
         await _localApiRunner?.close();
         logger.finest('Stopped Celest frontend');

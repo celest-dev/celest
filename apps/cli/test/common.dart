@@ -11,12 +11,18 @@ Future<void> initTests({
   Platform? platform,
   ProcessManager? processManager,
 }) async {
+  if (kCelestTest) {
+    return;
+  }
   kCelestTest = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.message}');
+    print('[${record.loggerName}] ${record.level.name}: ${record.message}');
     if (record.error != null) {
       print(record.error);
+    }
+    if (record.stackTrace != null) {
+      print(record.stackTrace);
     }
   });
   await Cli.configure(

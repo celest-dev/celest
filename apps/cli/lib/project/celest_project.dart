@@ -70,7 +70,7 @@ final class CelestProject {
         sourceUrl: Uri.file(projectPaths.projectYaml),
       );
 
-  Future<Set<String>> invalidate(Set<String> files) async {
+  Future<Set<String>> invalidate(Iterable<String> files) async {
     for (final file in files) {
       analysisContext.changeFile(file);
       if (p.basename(file) == 'analysis_options.yaml') {
