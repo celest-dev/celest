@@ -46,6 +46,7 @@ base mixin Configure on CelestCommand {
     };
 
     final projectRoot = celestDir.path;
+    this.isExistingProject = isExistingProject;
     await init(
       projectRoot: projectRoot,
     );
@@ -57,8 +58,6 @@ base mixin Configure on CelestCommand {
     }
 
     await _updateAppPubspec();
-
-    this.isExistingProject = isExistingProject;
   }
 
   /// Ensures app has dependency on celest project

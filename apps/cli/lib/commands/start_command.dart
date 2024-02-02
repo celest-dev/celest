@@ -7,6 +7,7 @@ import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 final class StartCommand extends CelestCommand with Configure {
@@ -20,6 +21,8 @@ final class StartCommand extends CelestCommand with Configure {
 
   @override
   String get category => 'Project';
+
+  late Progress _currentProgress;
 
   Future<String> _createProject() async {
     if (!pubspec.dependencies.containsKey('flutter')) {
@@ -53,12 +56,14 @@ final class StartCommand extends CelestCommand with Configure {
       'Generating project for "$projectName" at '
       '"${projectPaths.projectRoot}"...',
     );
-    await ProjectGenerator(
-      projectName: projectName,
-      appRoot: projectPaths.appRoot,
-      projectRoot: projectPaths.projectRoot,
-    ).generate();
-    cliLogger.success('Project generated successfully.');
+    _currentProgress = cliLogger.progress('Generating project...');
+    await performance.trace('StartCommand', 'createProject', () async {
+      await ProjectGenerator(
+        appRoot: projectPaths.appRoot,
+        projectRoot: projectPaths.projectRoot,
+        projectName: projectName,
+      ).generate();
+    });
     return projectName;
   }
 
@@ -66,10 +71,15 @@ final class StartCommand extends CelestCommand with Configure {
     logger.finest(
       'Migrating project at "${projectPaths.projectRoot}"...',
     );
-    await ProjectMigrator(
-      appRoot: projectPaths.appRoot,
-      projectRoot: projectPaths.projectRoot,
-    ).migrate();
+    await performance.trace('StartCommand', 'migrateProject', () async {
+      await ProjectMigrator(
+        appRoot: projectPaths.appRoot,
+        projectRoot: projectPaths.projectRoot,
+      ).migrate();
+    });
+    if (!isExistingProject) {
+      _currentProgress.complete('Project generated successfully');
+    }
   }
 
   @override
@@ -93,6 +103,8 @@ final class StartCommand extends CelestCommand with Configure {
       migrateProject: _migrateProject,
     );
 
+    _currentProgress = cliLogger.progress('Starting Celest...');
+
     if (!await fileSystem
         .directory(projectPaths.projectDart)
         .childDirectory('.dart_tool')
@@ -102,6 +114,8 @@ final class StartCommand extends CelestCommand with Configure {
     }
 
     // Start the Celest Frontend Loop
-    return CelestFrontend().run();
+    return CelestFrontend().run(
+      currentProgress: _currentProgress,
+    );
   }
 }

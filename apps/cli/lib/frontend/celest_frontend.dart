@@ -230,17 +230,18 @@ final class CelestFrontend implements Closeable {
   /// analyzed yet.
   ast.Project? currentProject;
 
-  Future<int> run() async {
-    Progress? currentProgress;
+  Future<int> run({
+    required Progress currentProgress,
+  }) async {
     try {
       while (!stopped) {
-        currentProgress = cliLogger.progress(
-          _didFirstCompile ? 'Reloading Celest...' : 'Starting Celest...',
-        );
+        if (_didFirstCompile) {
+          currentProgress = cliLogger.progress('Reloading Celest...');
+        }
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
-          currentProgress!.fail(
+          currentProgress.fail(
             'Project has errors. Please fix them and save the '
             'corresponding files.',
           );
@@ -309,7 +310,7 @@ final class CelestFrontend implements Closeable {
     } on CancellationException {
       return 0;
     } finally {
-      currentProgress?.cancel();
+      currentProgress.cancel();
       await close();
     }
   }
