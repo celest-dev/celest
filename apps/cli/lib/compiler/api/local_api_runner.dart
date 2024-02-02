@@ -123,7 +123,7 @@ final class LocalApiRunner implements Closeable {
           properties: {
             'route': line,
           },
-        ).ignore();
+        );
       } else {
         stdout.writeln(line);
       }

@@ -69,7 +69,7 @@ final class MacOsEntitlements extends ProjectItem {
         if (add.stderr.toString().contains('Entry Already Exists')) {
           _logger.fine('Network client entitlement already exists.');
         } else {
-          await performance.captureError(
+          performance.captureError(
             'Failed to add network client entitlement to ${entitlements.path}: '
             '${add.stdout}\n${add.stderr}',
           );

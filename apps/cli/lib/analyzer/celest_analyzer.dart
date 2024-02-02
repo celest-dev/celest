@@ -103,7 +103,7 @@ final class CelestAnalyzer {
         Uri.file(CustomType.model.expectedPath).toString(),
       ) as LibraryElementResult;
     } on Object catch (e, st) {
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
       _modelsLibrary = null;
     }
     try {
@@ -111,7 +111,7 @@ final class CelestAnalyzer {
         Uri.file(CustomType.exception.expectedPath).toString(),
       ) as LibraryElementResult;
     } on Object catch (e, st) {
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
       _exceptionsLibrary = null;
     }
   }
@@ -452,12 +452,10 @@ final class CelestAnalyzer {
       _ => projectPaths.denormalizeUri(uri).toFilePath(),
     };
     if (filepath == null) {
-      performance
-          .captureError(
-            'Could not resolve URI: $uri',
-            stackTrace: StackTrace.current,
-          )
-          .ignore();
+      performance.captureError(
+        'Could not resolve URI: $uri',
+        stackTrace: StackTrace.current,
+      );
       return;
     }
     if (symbol.startsWith('_')) {

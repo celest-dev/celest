@@ -86,7 +86,7 @@ final class CelestDatabase extends _$CelestDatabase {
       await into(projects).insert(project);
     } on Object catch (e, st) {
       _logger.finest('Failed to create project', e, st);
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
     }
   }
 
@@ -102,7 +102,7 @@ final class CelestDatabase extends _$CelestDatabase {
           .write(ProjectsCompanion(name: Value(projectName)));
     } on Object catch (e, st) {
       _logger.finest('Failed to update project', e, st);
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
     }
   }
 
@@ -112,7 +112,7 @@ final class CelestDatabase extends _$CelestDatabase {
       return await select(projects).get();
     } on Object catch (e, st) {
       _logger.finest('Failed to list projects', e, st);
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
       return const [];
     }
   }
@@ -126,7 +126,7 @@ final class CelestDatabase extends _$CelestDatabase {
           .getSingleOrNull();
     } on Object catch (e, st) {
       _logger.finest('Failed to find project by path', e, st);
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
       return null;
     }
   }

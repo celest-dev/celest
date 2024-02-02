@@ -85,7 +85,7 @@ final class StartCommand extends CelestCommand with Configure {
         );
       }
     } on Object catch (e, st) {
-      await performance.captureError(e, stackTrace: st);
+      performance.captureError(e, stackTrace: st);
     }
 
     await configure(
