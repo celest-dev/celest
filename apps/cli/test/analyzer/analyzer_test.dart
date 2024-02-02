@@ -259,6 +259,8 @@ void sayHello({
   required Type type,
   required List<Type> listOfType,
   required Iterable<Type> iterableOfType,
+  required Stream<String> streamOfStrings,
+  required Stream streamOfDynamics,
 }) {}
 ''',
         },
@@ -285,6 +287,8 @@ void sayHello({
           'Type literals are not supported', // Type
           'Type literals are not supported', // List<Type>
           'Type literals are not supported', // Iterable<Type>
+          'Stream types are not supported', // Stream<String>
+          'Stream types are not supported', // Stream
         ],
       );
 
@@ -322,6 +326,8 @@ typedef ReturnTypes = ({
   Type type,
   List<Type> listOfType,
   Iterable<Type> iterableOfType,
+  Stream<String> streamOfStrings,
+  Stream streamOfDynamics,
 });
 ''',
         errors: [
@@ -350,6 +356,8 @@ typedef ReturnTypes = ({
           'Type literals are not supported', // Type
           'Type literals are not supported', // List<Type>
           'Type literals are not supported', // Iterable<Type>
+          'Stream types are not supported', // Stream<String>
+          'Stream types are not supported', // Stream
         ],
       );
 

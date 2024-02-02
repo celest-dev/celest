@@ -490,6 +490,11 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       }
       return typeHelper.isSerializable(type.typeArguments[1]);
     }
+    if (type.isDartAsyncStream) {
+      return const VerdictNo([
+        VerdictReason('Stream types are not supported'),
+      ]);
+    }
 
     if (type.isEnum) {
       return const Verdict.yes().withSpec(
