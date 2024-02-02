@@ -22,7 +22,7 @@ final class StartCommand extends CelestCommand with Configure {
   @override
   String get category => 'Project';
 
-  late Progress _currentProgress;
+  Progress? _currentProgress;
 
   Future<String> _createProject() async {
     if (!pubspec.dependencies.containsKey('flutter')) {
@@ -77,9 +77,6 @@ final class StartCommand extends CelestCommand with Configure {
         projectRoot: projectPaths.projectRoot,
       ).migrate();
     });
-    if (!isExistingProject) {
-      _currentProgress.complete('Project generated successfully');
-    }
   }
 
   @override
@@ -103,6 +100,7 @@ final class StartCommand extends CelestCommand with Configure {
       migrateProject: _migrateProject,
     );
 
+    _currentProgress?.complete('Project generated successfully');
     _currentProgress = cliLogger.progress('Starting Celest...');
 
     if (!await fileSystem
@@ -115,7 +113,7 @@ final class StartCommand extends CelestCommand with Configure {
 
     // Start the Celest Frontend Loop
     return CelestFrontend().run(
-      currentProgress: _currentProgress,
+      currentProgress: _currentProgress!,
     );
   }
 }

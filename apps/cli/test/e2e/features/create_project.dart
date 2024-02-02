@@ -20,6 +20,9 @@ final class CreateProjectTest extends Test {
     if (!platform.isWindows) {
       celest.expectNext('Enter a name for your project').writeLine('hello');
     }
-    await celest.expectNext('Project generated successfully').run();
+    await celest
+        .expectNext('Generating project')
+        .expectNext('Project generated successfully')
+        .run();
   }
 }
