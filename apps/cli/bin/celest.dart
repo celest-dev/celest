@@ -38,9 +38,11 @@ void main(List<String> args) async {
         return event;
       },
     ),
-  )
-    ..addCommand(StartCommand())
-    ..addCommand(DeployCommand())
+  )..addCommand(StartCommand());
+  if (platform.environment.containsKey('CELEST_ENABLE_DEPLOY')) {
+    cli.addCommand(DeployCommand());
+  }
+  cli
     ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand());
   await cli.run(args);
