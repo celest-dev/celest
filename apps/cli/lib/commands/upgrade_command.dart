@@ -21,18 +21,31 @@ final class UpgradeCommand extends CelestCommand {
 
     final upgrader = CelestUpgrader(cliLogger: cliLogger);
 
-    final latest = await retrieveLatestRelease();
-    if (latest.version <= Version.parse(version)) {
-      cliLogger.success('Celest is already up to date!');
-      return 0;
+    try {
+      final latest = await retrieveLatestRelease();
+      if (latest.version <= Version.parse(version)) {
+        cliLogger.success('Celest is already up to date!');
+        return 0;
+      }
+
+      final installerFile = await withProgress(
+        'Downloading Celest ${latest.version}',
+        (progres) => upgrader.downloadRelease(latest),
+      );
+
+      await upgrader.installRelease(installerFile);
+    } on Object catch (e, st) {
+      Error.throwWithStackTrace(
+        CelestException(
+          'Failed to upgrade Celest. Please visit https://celest.dev/download '
+          'to upgrade manually.',
+          additionalContext: {
+            'error': '$e',
+          },
+        ),
+        st,
+      );
     }
-
-    final installerFile = await withProgress(
-      'Downloading Celest ${latest.version}',
-      (progres) => upgrader.downloadRelease(latest),
-    );
-
-    await upgrader.installRelease(installerFile);
 
     return 0;
   }
