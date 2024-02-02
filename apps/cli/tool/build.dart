@@ -56,6 +56,9 @@ final String outputFilepath = p.canonicalize(
 /// Access token for GCP.
 final String? accessToken = platform.environment['GCP_ACCESS_TOKEN'];
 
+/// The current SHA of the branch being built.
+final String? currentSha = platform.environment['GITHUB_SHA'];
+
 /// Builds and bundles the CLI for the current platform.
 ///
 /// This script is used by the GitHub workflow `apps_cli_release.yaml` to create
@@ -67,6 +70,7 @@ Future<void> main() async {
     'dart',
     [
       '--enable-experiment=native-assets',
+      if (currentSha case final currentSha?) '-DgitSha=$currentSha',
       'build',
       '--output=$buildPath',
       'bin/celest.dart',
