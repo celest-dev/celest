@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
@@ -9,13 +10,16 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:celest_proto/ast.dart';
+import 'package:celest_proto/celest_proto.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -310,6 +314,53 @@ final class CelestFrontend implements Closeable {
     }
   }
 
+  /// Builds the current project for deployment to the cloud.
+  Future<int> build({
+    required String email,
+  }) async {
+    Progress? currentProgress;
+    try {
+      currentProgress = cliLogger.progress('Deploying Celest project...');
+      _residentCompiler ??= await ResidentCompiler.ensureRunning();
+
+      void fail(List<AnalysisError> errors) {
+        currentProgress!.fail(
+          'Project has errors. Please fix them and save the '
+          'corresponding files, then run `celest deploy` again.',
+        );
+        _logErrors(errors);
+      }
+
+      final analysisResult = await _analyzeProject();
+      switch (analysisResult) {
+        case AnalysisFailureResult(:final errors):
+        case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
+          fail(errors);
+        case AnalysisSuccessResult(:final project):
+          await _generateBackendCode(project);
+          final resolvedProject = await _resolveProject(project);
+          final projectOutputs = await _deployProject(
+            email: email,
+            resolvedProject: resolvedProject,
+          );
+          await _generateClientCode(
+            project: project,
+            projectOutputs: projectOutputs,
+          );
+
+          currentProgress.complete(
+            '🚀 Your Celest project has been deployed!',
+          );
+      }
+      return 0;
+    } on CancellationException {
+      return 0;
+    } finally {
+      currentProgress?.cancel();
+      await close();
+    }
+  }
+
   /// Analyzes the project and reports if there are any errors.
   Future<CelestAnalysisResult> _analyzeProject() =>
       performance.trace('CelestFrontend', 'analyzeProject', () async {
@@ -401,6 +452,94 @@ final class CelestFrontend implements Closeable {
       port: _localApiRunner!.port,
     );
   }
+
+  S _checkDeployState<S extends DeployState>(DeployState state) {
+    if (state case DeployFailed(:final error)) {
+      throw CelestException(error.message);
+    }
+    if (state is! S) {
+      throw StateError('Expected $S got ${state.runtimeType}');
+    }
+    return state;
+  }
+
+  Future<ast.RemoteDeployedProject> _deployProject({
+    required String email,
+    required ast.ResolvedProject resolvedProject,
+  }) =>
+      performance.trace('CelestFrontend', 'deployProject', () async {
+        final baseUri = Uri.http('localhost:8080');
+        final entrypointCompiler = EntrypointCompiler(
+          logger: logger,
+          verbose: verbose,
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        );
+        final assets = <ast.NodeId, EntrypointResult>{};
+        for (final api in resolvedProject.apis.values) {
+          for (final function in api.functions.values) {
+            assets[function.id] = await entrypointCompiler.compile(function);
+          }
+        }
+        final deployService = DeployClient(
+          baseUri: baseUri,
+          httpClient: httpClient,
+        );
+        logger.fine('Creating deployment');
+        final createResult = await deployService.createDeployment(
+          email: email,
+          projectName: resolvedProject.name,
+          ast: resolvedProject,
+        );
+        final DeployCreated(
+          :deploymentId,
+          :missingAssetIds,
+        ) = _checkDeployState<DeployCreated>(createResult);
+        logger.fine('Created deployment: $deploymentId');
+        logger.finest('Missing assets: ${missingAssetIds.join('\n')}');
+        for (final missingAsset in missingAssetIds) {
+          final compilationResult = assets[missingAsset.node];
+          if (compilationResult == null) {
+            throw StateError('Missing compilation result for $missingAsset');
+          }
+          logger.fine('Submitting asset for: ${missingAsset.node}');
+          final submitAssetResult = await deployService.submitAsset(
+            deploymentId: deploymentId,
+            assetId: missingAsset,
+            asset: compilationResult.outputDill,
+            assetSha256: Uint8List.fromList(
+              compilationResult.outputDillSha256.bytes,
+            ),
+          );
+          logger.fine('Submitted asset');
+          _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
+        }
+        logger.fine('Starting deployment');
+        final startResult =
+            await deployService.startDeployment(deploymentId: deploymentId);
+        _checkDeployState<DeployStarted>(startResult);
+        logger.fine('Deployment started');
+        while (!stopped) {
+          final deployState = await deployService.getDeployment(
+            deploymentId: deploymentId,
+          );
+          logger.fine('Deploy state: $deployState');
+          switch (deployState) {
+            case DeploySucceeded(:final deployedProject):
+              return deployedProject;
+            case DeployFailed(:final error):
+              throw CelestException(error.message);
+            case DeployCanceled():
+              throw const CelestException('Deployment was canceled');
+            default:
+              break;
+          }
+          await Future.any([
+            Future<void>.delayed(const Duration(seconds: 5)),
+            _stopSignal.future,
+          ]);
+        }
+        throw const CancellationException();
+      });
 
   Future<void> _generateClientCode({
     required ast.Project project,

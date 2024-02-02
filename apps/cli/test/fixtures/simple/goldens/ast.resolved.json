@@ -3,7 +3,7 @@
   "apis": {},
   "envVars": [],
   "sdkInfo": {
-    "enabledExperiments": [],
-    "sdkVersion": "^3.0.0"
+    "sdkVersion": "3.3.0-263.0.dev",
+    "enabledExperiments": []
   }
 }

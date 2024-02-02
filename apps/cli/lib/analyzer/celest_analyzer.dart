@@ -25,11 +25,13 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -273,7 +275,7 @@ final class CelestAnalyzer {
       )
       ..sdkInfo.replace(
         SdkInfo(
-          sdkVersion: celestProject.pubspec.environment?['sdk'],
+          sdkVersion: Version.parse(Sdk.current.version),
           enabledExperiments: celestProject.analysisOptions.enabledExperiments,
         ),
       )

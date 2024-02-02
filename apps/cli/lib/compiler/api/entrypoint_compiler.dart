@@ -1,22 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:mason_logger/mason_logger.dart';
-import 'package:package_config/package_config.dart';
+import 'package:celest_proto/ast.dart';
+import 'package:crypto/crypto.dart';
+import 'package:logging/logging.dart';
 
 final class EntrypointDefinition {
   EntrypointDefinition({
     required this.functionName,
     required this.apiName,
-    this.packageConfig,
   });
 
   final String functionName;
   final String apiName;
-  final PackageConfig? packageConfig;
 
   String get name => '$apiName/$functionName';
   late final String path =
@@ -27,27 +28,24 @@ final class EntrypointDefinition {
         'name': name,
         'apiName': apiName,
         'path': path,
-        'packageConfig':
-            packageConfig == null ? null : PackageConfig.toJson(packageConfig!),
       });
 }
 
 final class EntrypointResult {
   const EntrypointResult({
-    required this.functionName,
-    required this.apiName,
-    required this.outputPath,
+    required this.outputDillPath,
+    required this.outputDill,
+    required this.outputDillSha256,
   });
 
-  final String functionName;
-  final String apiName;
-  final String outputPath;
+  final String outputDillPath;
+  final Uint8List outputDill;
+  final Digest outputDillSha256;
 
   @override
   String toString() => prettyPrintJson({
-        'functionName': functionName,
-        'apiName': apiName,
-        'outputPath': outputPath,
+        'outputDillPath': outputDillPath,
+        'outputDillSha256': outputDillSha256.toString(),
       });
 }
 
@@ -62,70 +60,67 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
-  Future<void> compileAll(List<EntrypointDefinition> entrypoints) async {}
-
-  Future<EntrypointResult> compile(EntrypointDefinition entrypoint) async {
-    logger.detail('Compiling entrypoint: $entrypoint');
-    final compileProgress = logger.progress('Compiling ${entrypoint.name}...');
-    try {
-      final pathWithoutDart =
-          entrypoint.path.substring(0, entrypoint.path.length - 5);
-      if (!FileSystemEntity.isFileSync(entrypoint.path)) {
-        throw StateError(
-          'Entrypoint file does not exist or is not a file: '
-          '${entrypoint.path}',
-        );
-      }
-      String? packageConfigPath;
-      if (entrypoint.packageConfig case final packageConfig?) {
-        packageConfigPath = '$pathWithoutDart.packages.json';
-        final packageConfigFile = fileSystem.file(packageConfigPath);
-        logger.detail('Writing package config to ${packageConfigFile.path}');
-        final packageConfigString = StringBuffer();
-        PackageConfig.writeString(packageConfig, packageConfigString);
-        await packageConfigFile.writeAsString(packageConfigString.toString());
-      }
-      final outputPath = '$pathWithoutDart.dill';
-      final buildArgs = [
-        '--snapshot-kind=kernel',
-        '--snapshot=${p.canonicalize(outputPath)}',
-        if (packageConfigPath != null) '--packages=$packageConfigPath',
-        if (enabledExperiments.isNotEmpty)
-          '--enable-experiment=${enabledExperiments.join(',')}',
-        if (verbose) '-v',
-        // TODO(dnys1): Dart defines?
-        p.canonicalize(entrypoint.path),
-      ];
-      logger.detail('Compiling with args: $buildArgs');
-      final result = await Process.run(
-        Sdk.current.dart,
-        buildArgs,
-        workingDirectory: projectPaths.projectRoot,
-        includeParentEnvironment: true,
-        stdoutEncoding: utf8,
-        stderrEncoding: utf8,
+  Future<EntrypointResult> compile(ResolvedCloudFunction entrypoint) async {
+    final entrypointPath = projectPaths.functionEntrypoint(
+      entrypoint.apiName,
+      entrypoint.name,
+    );
+    logger.fine('Compiling entrypoint: $entrypointPath');
+    if (!fileSystem.isFileSync(entrypointPath)) {
+      throw StateError(
+        'Entrypoint file does not exist or is not a file: '
+        '$entrypointPath',
       );
-      final ProcessResult(:exitCode, :stdout as String, :stderr as String) =
-          result;
-      logger.detail('Compilation finished with status $exitCode');
-      if (exitCode == 0) {
-        logger.detail('Compilation succeeded');
-        compileProgress.complete('Compiled ${entrypoint.name}');
-        return EntrypointResult(
-          functionName: entrypoint.functionName,
-          apiName: entrypoint.apiName,
-          outputPath: outputPath,
-        );
-      }
+    }
+    final pathWithoutDart =
+        entrypointPath.substring(0, entrypointPath.length - 5);
+    final packageConfig = await transformPackageConfig(
+      packageConfigPath: projectPaths.packagesConfig,
+      fromRoot: projectPaths.projectRoot,
+      toRoot: projectPaths.outputsDir,
+    );
+    final outputPath = '$pathWithoutDart.dill';
+    final buildArgs = <String>[
+      Sdk.current.dartAotRuntime,
+      Sdk.current.genKernelAotSnapshot,
+      '--aot',
+      '--platform=${Sdk.current.vmPlatformProductDill}',
+      '-Ddart.vm.product=true',
+      '--output=$outputPath',
+      '--packages=$packageConfig',
+      if (enabledExperiments.isNotEmpty)
+        '--enable-experiment=${enabledExperiments.join(',')}',
+      p.canonicalize(entrypointPath),
+    ];
+    logger.finer('Compiling with args: $buildArgs');
+    final result = await processManager.run(
+      buildArgs,
+      workingDirectory: projectPaths.outputsDir,
+      includeParentEnvironment: true,
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
+    final ProcessResult(
+      :exitCode,
+      :stdout as String,
+      :stderr as String,
+    ) = result;
+    logger.fine('Compilation finished with status $exitCode');
+    if (exitCode != 0) {
       throw ProcessException(
         Sdk.current.dart,
         buildArgs,
         'Compilation failed:\n$stdout\n$stderr',
         exitCode,
       );
-    } on Object {
-      compileProgress.fail('Failed to compile entrypoint');
-      rethrow;
     }
+    logger.finer('Compilation succeeded');
+    final outputDill = await fileSystem.file(outputPath).readAsBytes();
+    final outputDillSha256 = sha256.convert(outputDill);
+    return EntrypointResult(
+      outputDillPath: outputPath,
+      outputDill: outputDill,
+      outputDillSha256: outputDillSha256,
+    );
   }
 }
