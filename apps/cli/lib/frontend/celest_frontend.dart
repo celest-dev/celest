@@ -457,6 +457,9 @@ final class CelestFrontend implements Closeable {
     if (state case DeployFailed(:final error)) {
       throw CelestException(error.message);
     }
+    if (state is DeployCanceled) {
+      throw const CancellationException();
+    }
     if (state is! S) {
       throw StateError('Expected $S got ${state.runtimeType}');
     }
@@ -469,17 +472,6 @@ final class CelestFrontend implements Closeable {
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
         final baseUri = Uri.http('localhost:8080');
-        final entrypointCompiler = EntrypointCompiler(
-          logger: logger,
-          verbose: verbose,
-          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
-        );
-        final assets = <ast.NodeId, EntrypointResult>{};
-        for (final api in resolvedProject.apis.values) {
-          for (final function in api.functions.values) {
-            assets[function.id] = await entrypointCompiler.compile(function);
-          }
-        }
         final deployService = DeployClient(
           baseUri: baseUri,
           httpClient: httpClient,
@@ -490,29 +482,47 @@ final class CelestFrontend implements Closeable {
           projectName: resolvedProject.name,
           ast: resolvedProject,
         );
+        if (stopped) {
+          throw const CancellationException();
+        }
         final DeployCreated(
           :deploymentId,
           :missingAssetIds,
+          :ongoingDeployments,
         ) = _checkDeployState<DeployCreated>(createResult);
+        if (ongoingDeployments.isNotEmpty) {}
+        final entrypointCompiler = EntrypointCompiler(
+          logger: logger,
+          verbose: verbose,
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        );
+        final assets = Stream.fromFutures([
+          for (final api in resolvedProject.apis.values)
+            for (final function in api.functions.values)
+              entrypointCompiler.compile(function),
+        ]);
         logger.fine('Created deployment: $deploymentId');
         logger.finest('Missing assets: ${missingAssetIds.join('\n')}');
-        for (final missingAsset in missingAssetIds) {
-          final compilationResult = assets[missingAsset.node];
-          if (compilationResult == null) {
-            throw StateError('Missing compilation result for $missingAsset');
+        await assets.concurrentAsyncMap((compilationResult) async {
+          logger.fine('Submitting asset for: ${compilationResult.nodeId}');
+          if (stopped) {
+            throw const CancellationException();
           }
-          logger.fine('Submitting asset for: ${missingAsset.node}');
           final submitAssetResult = await deployService.submitAsset(
             deploymentId: deploymentId,
-            assetId: missingAsset,
+            assetId: AssetId(
+              node: compilationResult.nodeId,
+              type: AssetType.dartKernel,
+            ),
             asset: compilationResult.outputDill,
             assetSha256: Uint8List.fromList(
               compilationResult.outputDillSha256.bytes,
             ),
           );
-          logger.fine('Submitted asset');
-          _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
-        }
+          final checkedResult =
+              _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
+          logger.fine('Submitted asset: ${checkedResult.assetId}');
+        }).drain<void>();
         logger.fine('Starting deployment');
         final startResult =
             await deployService.startDeployment(deploymentId: deploymentId);
@@ -538,6 +548,7 @@ final class CelestFrontend implements Closeable {
             _stopSignal.future,
           ]);
         }
+        await deployService.cancelDeployment(deploymentId: deploymentId);
         throw const CancellationException();
       });
 

@@ -33,17 +33,20 @@ final class EntrypointDefinition {
 
 final class EntrypointResult {
   const EntrypointResult({
+    required this.nodeId,
     required this.outputDillPath,
     required this.outputDill,
     required this.outputDillSha256,
   });
 
+  final NodeId nodeId;
   final String outputDillPath;
   final Uint8List outputDill;
   final Digest outputDillSha256;
 
   @override
   String toString() => prettyPrintJson({
+        'nodeId': nodeId.toJson(),
         'outputDillPath': outputDillPath,
         'outputDillSha256': outputDillSha256.toString(),
       });
@@ -118,6 +121,7 @@ final class EntrypointCompiler {
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
     final outputDillSha256 = sha256.convert(outputDill);
     return EntrypointResult(
+      nodeId: entrypoint.id,
       outputDillPath: outputPath,
       outputDill: outputDill,
       outputDillSha256: outputDillSha256,

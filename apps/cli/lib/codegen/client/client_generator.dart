@@ -59,21 +59,27 @@ final class ClientGenerator {
             ..modifier = FieldModifier.final$
             ..type = DartTypes.core.uri
             ..name = 'baseUri'
-            ..assignment = DartTypes.globals.kIsWeb
-                .or(DartTypes.io.platform.property('isAndroid').negate())
-                .conditional(
-                  DartTypes.core.uri.property('parse').call([
-                    literalString(
-                      'http://localhost:${(projectOutputs as ast.LocalDeployedProject).port}',
-                    ),
-                  ]),
-                  DartTypes.core.uri.property('parse').call([
-                    literalString(
-                      'http://10.0.2.2:${(projectOutputs as ast.LocalDeployedProject).port}',
-                    ),
-                  ]),
-                )
-                .code,
+            ..assignment = switch (projectOutputs) {
+              final ast.LocalDeployedProject local => DartTypes.globals.kIsWeb
+                  .or(DartTypes.io.platform.property('isAndroid').negate())
+                  .conditional(
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(
+                        'http://localhost:${local.port}',
+                      ),
+                    ]),
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(
+                        'http://10.0.2.2:${local.port}',
+                      ),
+                    ]),
+                  )
+                  .code,
+              final ast.RemoteDeployedProject remote =>
+                DartTypes.core.uri.property('parse').call([
+                  literalString(remote.baseUri.toString()),
+                ]).code,
+            },
         ),
       ],
     ]);
