@@ -530,6 +530,93 @@ const complexStruct = <String, dynamic>{
 final tests = <String, Test>{
   'api': Test(
     apis: {
+      'collections': ApiTest(
+        functionTests: {
+          'simpleList': [
+            FunctionTestSuccess(
+              name: 'simpleList',
+              input: {
+                'list': ['hello', 'world'],
+              },
+              output: ['hello', 'world'],
+            ),
+          ],
+          'complexList': [
+            FunctionTestSuccess(
+              name: 'complexList',
+              input: {
+                'list': [simpleStruct, simpleStruct],
+              },
+              output: [simpleStruct, simpleStruct],
+            ),
+          ],
+          'simpleMap': [
+            FunctionTestSuccess(
+              name: 'simpleMap',
+              input: {
+                'map': {
+                  'hello': 'world',
+                },
+              },
+              output: {
+                'hello': 'world',
+              },
+            ),
+          ],
+          'dynamicMap': [
+            FunctionTestSuccess(
+              name: 'dynamicMap',
+              input: {
+                'map': {
+                  'hello': 'world',
+                },
+              },
+              output: {
+                'hello': 'world',
+              },
+            ),
+          ],
+          'objectMap': [
+            FunctionTestSuccess(
+              name: 'objectMap',
+              input: {
+                'map': {
+                  'hello': 'world',
+                },
+              },
+              output: {
+                'hello': 'world',
+              },
+            ),
+          ],
+          'objectNullableMap': [
+            FunctionTestSuccess(
+              name: 'objectNullableMap',
+              input: {
+                'map': {
+                  'hello': 'world',
+                },
+              },
+              output: {
+                'hello': 'world',
+              },
+            ),
+          ],
+          'complexMap': [
+            FunctionTestSuccess(
+              name: 'complexMap',
+              input: {
+                'map': {
+                  'hello': simpleStruct,
+                },
+              },
+              output: {
+                'hello': simpleStruct,
+              },
+            ),
+          ],
+        },
+      ),
       'parameter_types': ApiTest(
         functionTests: {
           'simple': [

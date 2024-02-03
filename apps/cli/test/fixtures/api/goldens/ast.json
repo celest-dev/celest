@@ -16484,6 +16484,776 @@
         "text": ""
       }
     },
+    "collections": {
+      "name": "collections",
+      "metadata": [],
+      "functions": {
+        "simpleList": {
+          "name": "simpleList",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "list",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 193,
+                  "uri": "collections.dart",
+                  "line": 6,
+                  "column": 45
+                },
+                "end": {
+                  "offset": 197,
+                  "uri": "collections.dart",
+                  "line": 6,
+                  "column": 49
+                },
+                "text": "list"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 169,
+              "uri": "collections.dart",
+              "line": 6,
+              "column": 21
+            },
+            "end": {
+              "offset": 179,
+              "uri": "collections.dart",
+              "line": 6,
+              "column": 31
+            },
+            "text": "simpleList"
+          }
+        },
+        "complexList": {
+          "name": "complexList",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "list",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "package:celest_backend/src/models/parameter_types.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 270,
+                  "uri": "collections.dart",
+                  "line": 7,
+                  "column": 56
+                },
+                "end": {
+                  "offset": 274,
+                  "uri": "collections.dart",
+                  "line": 7,
+                  "column": 60
+                },
+                "text": "list"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "package:celest_backend/src/models/parameter_types.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "List",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "SimpleClass",
+                "url": "package:celest_backend/src/models/parameter_types.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 240,
+              "uri": "collections.dart",
+              "line": 7,
+              "column": 26
+            },
+            "end": {
+              "offset": 251,
+              "uri": "collections.dart",
+              "line": 7,
+              "column": 37
+            },
+            "text": "complexList"
+          }
+        },
+        "simpleMap": {
+          "name": "simpleMap",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "map",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 350,
+                  "uri": "collections.dart",
+                  "line": 9,
+                  "column": 58
+                },
+                "end": {
+                  "offset": 353,
+                  "uri": "collections.dart",
+                  "line": 9,
+                  "column": 61
+                },
+                "text": "map"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 320,
+              "uri": "collections.dart",
+              "line": 9,
+              "column": 28
+            },
+            "end": {
+              "offset": 329,
+              "uri": "collections.dart",
+              "line": 9,
+              "column": 37
+            },
+            "text": "simpleMap"
+          }
+        },
+        "dynamicMap": {
+          "name": "dynamicMap",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "map",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 430,
+                  "uri": "collections.dart",
+                  "line": 10,
+                  "column": 61
+                },
+                "end": {
+                  "offset": 433,
+                  "uri": "collections.dart",
+                  "line": 10,
+                  "column": 64
+                },
+                "text": "map"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "Reference",
+                "symbol": "dynamic",
+                "url": "dart:core"
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 398,
+              "uri": "collections.dart",
+              "line": 10,
+              "column": 29
+            },
+            "end": {
+              "offset": 408,
+              "uri": "collections.dart",
+              "line": 10,
+              "column": 39
+            },
+            "text": "dynamicMap"
+          }
+        },
+        "objectMap": {
+          "name": "objectMap",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "map",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Object",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 507,
+                  "uri": "collections.dart",
+                  "line": 11,
+                  "column": 58
+                },
+                "end": {
+                  "offset": 510,
+                  "uri": "collections.dart",
+                  "line": 11,
+                  "column": 61
+                },
+                "text": "map"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Object",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "Object",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 477,
+              "uri": "collections.dart",
+              "line": 11,
+              "column": 28
+            },
+            "end": {
+              "offset": 486,
+              "uri": "collections.dart",
+              "line": 11,
+              "column": 37
+            },
+            "text": "objectMap"
+          }
+        },
+        "objectNullableMap": {
+          "name": "objectNullableMap",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "map",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Object",
+                    "url": "dart:core",
+                    "isNullable": true
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 597,
+                  "uri": "collections.dart",
+                  "line": 13,
+                  "column": 23
+                },
+                "end": {
+                  "offset": 600,
+                  "uri": "collections.dart",
+                  "line": 13,
+                  "column": 26
+                },
+                "text": "map"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Object",
+                    "url": "dart:core",
+                    "isNullable": true
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "Object",
+                "url": "dart:core",
+                "isNullable": true
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 555,
+              "uri": "collections.dart",
+              "line": 12,
+              "column": 29
+            },
+            "end": {
+              "offset": 572,
+              "uri": "collections.dart",
+              "line": 12,
+              "column": 46
+            },
+            "text": "objectNullableMap"
+          }
+        },
+        "complexMap": {
+          "name": "complexMap",
+          "apiName": "collections",
+          "parameters": [
+            {
+              "name": "map",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "package:celest_backend/src/models/parameter_types.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 694,
+                  "uri": "collections.dart",
+                  "line": 17,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 697,
+                  "uri": "collections.dart",
+                  "line": 17,
+                  "column": 30
+                },
+                "text": "map"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "SimpleClass",
+                    "url": "package:celest_backend/src/models/parameter_types.dart",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "SimpleClass",
+                "url": "package:celest_backend/src/models/parameter_types.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 655,
+              "uri": "collections.dart",
+              "line": 16,
+              "column": 33
+            },
+            "end": {
+              "offset": 665,
+              "uri": "collections.dart",
+              "line": 16,
+              "column": 43
+            },
+            "text": "complexMap"
+          }
+        }
+      },
+      "docs": [
+        "/// Tests that collections (e.g. Lists/Maps) can be used as parameter and",
+        "/// return types."
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "collections.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "collections.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
     "generic_wrappers": {
       "name": "generic_wrappers",
       "metadata": [],

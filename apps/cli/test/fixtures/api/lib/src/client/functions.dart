@@ -28,6 +28,10 @@ class CelestFunctions {
   /// serializable and deserializable.
   final classes = CelestFunctionsClasses();
 
+  /// Tests that collections (e.g. Lists/Maps) can be used as parameter and
+  /// return types.
+  final collections = CelestFunctionsCollections();
+
   /// Tests that some cycles are allowed, e.g. when there is at least one level
   /// of indirection.
   final cycles = CelestFunctionsCycles();
@@ -903,6 +907,253 @@ class CelestFunctionsClasses {
     if ($response.statusCode == 200) {
       return Serializers.instance
           .deserialize<NonMapFromAndToJson>($body['response']);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+}
+
+/// Tests that collections (e.g. Lists/Maps) can be used as parameter and
+/// return types.
+class CelestFunctionsCollections {
+  Future<List<String>> simpleList(List<String> list) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/simple-list'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({r'list': list}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) => (el as String))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<SimpleClass>> complexList(List<SimpleClass> list) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/complex-list'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'list': list
+            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Map<String, String>> simpleMap(Map<String, String> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/simple-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({r'map': map}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Map<String, Object?>).map((
+        key,
+        value,
+      ) =>
+          MapEntry(
+            key,
+            (value as String),
+          ));
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Map<String, dynamic>> dynamicMap(Map<String, dynamic> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/dynamic-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({r'map': map}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Map<String, Object?>);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Map<String, Object>> objectMap(Map<String, Object> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/object-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({r'map': map}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Map<String, Object?>).map((
+        key,
+        value,
+      ) =>
+          MapEntry(
+            key,
+            value!,
+          ));
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Map<String, Object?>> objectNullableMap(
+      Map<String, Object?> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/object-nullable-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({r'map': map}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Map<String, Object?>);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Map<String, SimpleClass>> complexMap(
+      Map<String, SimpleClass> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/complex-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'map': map.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              Serializers.instance.serialize<SimpleClass>(value),
+            ))
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Map<String, Object?>).map((
+        key,
+        value,
+      ) =>
+          MapEntry(
+            key,
+            Serializers.instance.deserialize<SimpleClass>(value),
+          ));
     }
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);

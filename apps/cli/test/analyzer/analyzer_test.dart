@@ -250,6 +250,8 @@ void sayHello({
   required List<void> listOfVoid,
   required Iterable<void> iterableOfVoid,
   required Set<String> set,
+  required Object obj,
+  required Object? nullableObj,
   required dynamic dyn,
   required List<dynamic> listOfDyn,
   required Iterable<dynamic> iterableOfDyn,
@@ -278,6 +280,8 @@ void sayHello({
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
+          'Object types are not supported', // Object
+          'Object types are not supported', // Object?
           'Dynamic values are not supported', // dynamic
           'Dynamic values are not supported', // List<dynamic>
           'Dynamic values are not supported', // Iterable<dynamic>
@@ -317,6 +321,8 @@ typedef ReturnTypes = ({
   List<void> listOfVoid,
   Iterable<void> iterableOfVoid,
   Set<String> set,
+  Object obj,
+  Object? nullableObj,
   dynamic dyn,
   List<dynamic> listOfDyn,
   Iterable<dynamic> iterableOfDyn,
@@ -347,6 +353,8 @@ typedef ReturnTypes = ({
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
+          'Object types are not supported', // Object
+          'Object types are not supported', // Object?
           'Dynamic values are not supported', // dynamic
           'Dynamic values are not supported', // List<dynamic>
           'Dynamic values are not supported', // Iterable<dynamic>
@@ -358,6 +366,33 @@ typedef ReturnTypes = ({
           'Type literals are not supported', // Iterable<Type>
           'Stream types are not supported', // Stream<String>
           'Stream types are not supported', // Stream
+        ],
+      );
+
+      testNoErrors(
+        name: 'allows_map_string_dynamic_object',
+        apis: {
+          'greeting.dart': '''
+Map<String, dynamic> mapStringDynamic(Map<String, dynamic> map) => map;
+Map<String, Object> mapStringObject(Map<String, Object> map) => map;
+Map<String, Object?> mapStringObjectNullable(Map<String, Object?> map) => map;
+''',
+        },
+      );
+
+      testErrors(
+        name: 'disallows_list_dynamic_object',
+        apis: {
+          'greeting.dart': '''
+List<dynamic> listDynamic() => [];
+List<Object> listObject() => [];
+List<Object?> listObjectNullable() => [];
+''',
+        },
+        errors: [
+          'Dynamic values are not supported',
+          'Object types are not supported',
+          'Object types are not supported',
         ],
       );
 

@@ -9,6 +9,9 @@ extension ReferenceHelper on Reference {
       symbol == 'FunctionContext' &&
       (url?.startsWith('package:celest') ?? false);
 
+  bool get isDynamic => symbol == 'dynamic' && url == 'dart:core';
+  bool get isDartCoreObject => symbol == 'Object' && url == 'dart:core';
+
   TypeReference get toTypeReference => switch (this) {
         final TypeReference type => type,
         final RecordType recordType => TypeReference((t) {

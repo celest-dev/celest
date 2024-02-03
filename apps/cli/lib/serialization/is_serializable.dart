@@ -265,8 +265,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         type.isDartCoreInt ||
         type.isDartCoreNum || // TODO(dnys1): test
         type.isDartCoreString ||
-        type.isDartCoreNull ||
-        type.isDartCoreObject) {
+        type.isDartCoreNull) {
       return const Verdict.yes();
     }
     if (type.isDartCoreEnum) {
@@ -289,22 +288,42 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         VerdictReason('Type literals are not supported'),
       ]);
     }
+    // Cannot make a verdict.
+    return null;
+  }
+
+  Verdict _isJson(DartType type) {
+    const invalidJson = VerdictNo([
+      VerdictReason('Type is not valid JSON'),
+    ]);
+    if (type is! InterfaceType) {
+      return invalidJson;
+    }
+    if (_isSimpleJson(type) case final verdict?) {
+      return verdict;
+    }
+    if (type.isDartCoreObject) {
+      return const Verdict.yes();
+    }
     if (type.isDartCoreIterable || type.isDartCoreList) {
-      return _isSimpleJson(type.typeArguments.single);
+      return _isJson(type.typeArguments.single);
     }
     if (type.isDartCoreMap) {
-      if (!type.typeArguments[0].isDartCoreString) {
+      final [keyType, valueType] = type.typeArguments;
+      if (!keyType.isDartCoreString) {
         return const VerdictNo([
           VerdictReason('Map keys must be strings'),
         ]);
       }
-      return switch (type.typeArguments[1]) {
-        DynamicType() => const Verdict.yes(),
-        final type => _isSimpleJson(type),
+      return switch (valueType) {
+        // This is the only case where `Object`/`dynamic` are allowed.
+        InterfaceType(isDartCoreObject: true) ||
+        DynamicType() =>
+          const Verdict.yes(),
+        _ => _isJson(valueType),
       };
     }
-    // Cannot make a verdict.
-    return null;
+    return invalidJson;
   }
 
   @override
@@ -456,7 +475,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       }
     }
     final returnType = toJsonMethod.returnType;
-    verdict &= switch (_isSimpleJson(returnType)) {
+    verdict &= switch (_isJson(returnType)) {
       VerdictYes() => const Verdict.yes(),
       _ => Verdict.no(
           'Invalid return type of ${type.element.name}\'s toJson method: '
@@ -481,14 +500,26 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return verdict;
     }
 
+    if (type.isDartCoreObject) {
+      return const VerdictNo([
+        VerdictReason('Object types are not supported'),
+      ]);
+    }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       return typeHelper.isSerializable(type.typeArguments.single);
     }
     if (type.isDartCoreMap) {
-      if (!type.typeArguments[0].isDartCoreString) {
+      final [keyType, valueType] = type.typeArguments;
+      if (!keyType.isDartCoreString) {
         return Verdict.no('Map keys must be strings');
       }
-      return typeHelper.isSerializable(type.typeArguments[1]);
+      return switch (valueType) {
+        // This is the only case where `Object`/`dynamic` are allowed.
+        InterfaceType(isDartCoreObject: true) ||
+        DynamicType() =>
+          const Verdict.yes(),
+        _ => typeHelper.isSerializable(valueType),
+      };
     }
     if (type.isDartAsyncStream) {
       return const VerdictNo([

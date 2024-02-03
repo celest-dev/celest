@@ -224,6 +224,19 @@ final class NonMapFromAndToJsonSerializer
   String serialize(NonMapFromAndToJson value) => value.toJson();
 }
 
+final class SimpleClassSerializer extends Serializer<SimpleClass> {
+  const SimpleClassSerializer();
+
+  @override
+  SimpleClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, dynamic>>(value);
+    return SimpleClass.fromJson(serialized);
+  }
+
+  @override
+  Map<String, dynamic> serialize(SimpleClass value) => value.toJson();
+}
+
 final class NodeSerializer extends Serializer<Node> {
   const NodeSerializer();
 
@@ -481,19 +494,6 @@ final class IListUriSerializer extends Serializer<IList<Uri>> {
   @override
   Object serialize(IList<Uri> value) =>
       value.toJson((value) => Serializers.instance.serialize<Uri>(value));
-}
-
-final class SimpleClassSerializer extends Serializer<SimpleClass> {
-  const SimpleClassSerializer();
-
-  @override
-  SimpleClass deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, dynamic>>(value);
-    return SimpleClass.fromJson(serialized);
-  }
-
-  @override
-  Map<String, dynamic> serialize(SimpleClass value) => value.toJson();
 }
 
 final class IListSimpleClassSerializer extends Serializer<IList<SimpleClass>> {

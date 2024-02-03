@@ -50,13 +50,16 @@ final class JsonGenerator {
           .call([]);
     }
     if (dartType.isDartCoreMap) {
-      final keyType = type.toTypeReference.types[0];
+      final [keyType, valueType] = type.toTypeReference.types.toList();
       final dartKeyType = typeHelper.fromReference(keyType);
       if (!dartKeyType.isDartCoreString) {
         throw unreachable('Should have been caught in checker');
       }
       final value = refer('value');
-      final serializedValue = toJson(type.toTypeReference.types[1], value);
+      if (valueType.isDynamic || valueType.isDartCoreObject) {
+        return ref;
+      }
+      final serializedValue = toJson(valueType, value);
       if (value == serializedValue) {
         return ref;
       }
@@ -165,7 +168,7 @@ final class JsonGenerator {
           .call([]);
     }
     if (dartType.isDartCoreMap) {
-      final keyType = type.toTypeReference.types[0];
+      final [keyType, valueType] = type.toTypeReference.types.toList();
       final dartKeyType = typeHelper.fromReference(keyType);
       if (!dartKeyType.isDartCoreString) {
         throw unreachable('Should have been caught in checker');
@@ -179,8 +182,15 @@ final class JsonGenerator {
             .withNullability(type.isNullableOrFalse),
       );
       final value = refer('value');
-      final valueType = type.toTypeReference.types[1];
-      final serializedValue = fromJson(valueType, value);
+      // Special handling for Map<String, dynamic> and Map<String, Object>
+      late Expression serializedValue;
+      if (valueType.isDartCoreObject && !valueType.isNullableOrFalse) {
+        serializedValue = value.nullChecked;
+      } else if (valueType.isDynamic || valueType.isDartCoreObject) {
+        return cast;
+      } else {
+        serializedValue = fromJson(valueType, value);
+      }
       if (value == serializedValue) {
         return cast;
       }
@@ -207,7 +217,7 @@ final class JsonGenerator {
     final serializationVerdict = typeHelper.isSerializable(dartType);
     assert(
       serializationVerdict is VerdictYes,
-      'Should not have passed analyzer if no',
+      'Should not have passed analyzer if no: $serializationVerdict',
     );
     return DartTypes.celest.serializers
         .property('instance')

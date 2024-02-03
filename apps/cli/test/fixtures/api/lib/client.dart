@@ -41,6 +41,7 @@ class Celest {
     Serializers.instance.put(const NonMapToJsonSerializer());
     Serializers.instance.put(const NonMapToJsonWithDefaultsSerializer());
     Serializers.instance.put(const NonMapFromAndToJsonSerializer());
+    Serializers.instance.put(const SimpleClassSerializer());
     Serializers.instance.put(const NodeSerializer());
     Serializers.instance.put(const ParentSerializer());
     Serializers.instance.put(const ChildSerializer());
@@ -55,7 +56,6 @@ class Celest {
     Serializers.instance.put(const CustomErrorWithStackTraceSerializer());
     Serializers.instance.put(const IListStringSerializer());
     Serializers.instance.put(const IListUriSerializer());
-    Serializers.instance.put(const SimpleClassSerializer());
     Serializers.instance.put(const IListSimpleClassSerializer());
     Serializers.instance.put(const IListIListStringSerializer());
     Serializers.instance.put(const IListIListUriSerializer());

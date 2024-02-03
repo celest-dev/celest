@@ -8,18 +8,20 @@ import 'dart:typed_data' as _i10;
 
 import 'package:celest/celest.dart' as _i1;
 import 'package:celest_backend/src/models/classes.dart' as _i2;
-import 'package:celest_backend/src/models/cycles.dart' as _i3;
-import 'package:celest_backend/src/models/exceptions.dart' as _i4;
+import 'package:celest_backend/src/models/cycles.dart' as _i4;
+import 'package:celest_backend/src/models/exceptions.dart' as _i5;
 import 'package:celest_backend/src/models/generic_wrappers.dart' as _i8;
 import 'package:celest_backend/src/models/metadata.dart' as _i9;
-import 'package:celest_backend/src/models/parameter_types.dart' as _i6;
+import 'package:celest_backend/src/models/parameter_types.dart' as _i3;
 import 'package:celest_backend/src/models/records.dart' as _i11;
 import 'package:celest_backend/src/models/sealed_classes.dart' as _i12;
-import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i5;
+import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i6;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i7;
 
 abstract final class apis {
   static const classes = _i1.CloudApi(name: r'classes');
+
+  static const collections = _i1.CloudApi(name: r'collections');
 
   static const cycles = _i1.CloudApi(name: r'cycles');
 
@@ -205,24 +207,66 @@ abstract final class functions {
     functionName: r'onlyToJsonWithDefaults',
   );
 
+  static const collectionsComplexList =
+      _i1.CloudFunction<List<_i3.SimpleClass>, List<_i3.SimpleClass>>(
+    api: r'collections',
+    functionName: r'complexList',
+  );
+
+  static const collectionsComplexMap = _i1.CloudFunction<
+      Map<String, _i3.SimpleClass>, Map<String, _i3.SimpleClass>>(
+    api: r'collections',
+    functionName: r'complexMap',
+  );
+
+  static const collectionsDynamicMap =
+      _i1.CloudFunction<Map<String, dynamic>, Map<String, dynamic>>(
+    api: r'collections',
+    functionName: r'dynamicMap',
+  );
+
+  static const collectionsObjectMap =
+      _i1.CloudFunction<Map<String, Object>, Map<String, Object>>(
+    api: r'collections',
+    functionName: r'objectMap',
+  );
+
+  static const collectionsObjectNullableMap =
+      _i1.CloudFunction<Map<String, Object?>, Map<String, Object?>>(
+    api: r'collections',
+    functionName: r'objectNullableMap',
+  );
+
+  static const collectionsSimpleList =
+      _i1.CloudFunction<List<String>, List<String>>(
+    api: r'collections',
+    functionName: r'simpleList',
+  );
+
+  static const collectionsSimpleMap =
+      _i1.CloudFunction<Map<String, String>, Map<String, String>>(
+    api: r'collections',
+    functionName: r'simpleMap',
+  );
+
   static const cyclesCombineTrees = _i1.CloudFunction<
-      (_i3.Node, _i3.Parent?, _i3.Node?, List<_i3.Node?>), _i3.Node>(
+      (_i4.Node, _i4.Parent?, _i4.Node?, List<_i4.Node?>), _i4.Node>(
     api: r'cycles',
     functionName: r'combineTrees',
   );
 
-  static const cyclesCreateTree = _i1.CloudFunction<void, _i3.Node>(
+  static const cyclesCreateTree = _i1.CloudFunction<void, _i4.Node>(
     api: r'cycles',
     functionName: r'createTree',
   );
 
-  static const cyclesPrintTree = _i1.CloudFunction<_i3.Node, void>(
+  static const cyclesPrintTree = _i1.CloudFunction<_i4.Node, void>(
     api: r'cycles',
     functionName: r'printTree',
   );
 
   static const cyclesSelfReferencing =
-      _i1.CloudFunction<_i3.SelfReferencing, _i3.SelfReferencing>(
+      _i1.CloudFunction<_i4.SelfReferencing, _i4.SelfReferencing>(
     api: r'cycles',
     functionName: r'selfReferencing',
   );
@@ -256,35 +300,35 @@ abstract final class functions {
   );
 
   static const exceptionsThrowsError =
-      _i1.CloudFunction<_i4.SupportedErrorType, void>(
+      _i1.CloudFunction<_i5.SupportedErrorType, void>(
     api: r'exceptions',
     functionName: r'throwsError',
   );
 
   static const exceptionsThrowsException =
-      _i1.CloudFunction<_i4.SupportedExceptionType, void>(
+      _i1.CloudFunction<_i5.SupportedExceptionType, void>(
     api: r'exceptions',
     functionName: r'throwsException',
   );
 
   static const genericWrappersGenericWrapperParameters = _i1.CloudFunction<
       ({
-        _i5.IList<String> listOfString,
-        _i5.IList<Uri> listOfUri,
-        _i5.IList<_i6.SimpleClass> listOfSimpleClass,
-        _i5.IList<_i5.IList<String>> listOfListOfString,
-        _i5.IList<_i5.IList<Uri>> listOfListOfUri,
-        _i5.IList<_i5.IList<_i6.SimpleClass>> listOfListOfSimpleClass,
+        _i6.IList<String> listOfString,
+        _i6.IList<Uri> listOfUri,
+        _i6.IList<_i3.SimpleClass> listOfSimpleClass,
+        _i6.IList<_i6.IList<String>> listOfListOfString,
+        _i6.IList<_i6.IList<Uri>> listOfListOfUri,
+        _i6.IList<_i6.IList<_i3.SimpleClass>> listOfListOfSimpleClass,
         _i7.IMap<String, String> mapOfString,
         _i7.IMap<String, Uri> mapOfUri,
-        _i7.IMap<String, _i6.SimpleClass> mapOfSimpleClass,
-        _i7.IMap<String, _i5.IList<String>> mapOfListOfString,
-        _i7.IMap<String, _i5.IList<Uri>> mapOfListOfUri,
-        _i7.IMap<String, _i5.IList<_i6.SimpleClass>> mapOfListOfSimpleClass,
+        _i7.IMap<String, _i3.SimpleClass> mapOfSimpleClass,
+        _i7.IMap<String, _i6.IList<String>> mapOfListOfString,
+        _i7.IMap<String, _i6.IList<Uri>> mapOfListOfUri,
+        _i7.IMap<String, _i6.IList<_i3.SimpleClass>> mapOfListOfSimpleClass,
         _i7.IMap<String, _i7.IMap<String, String>> mapOfMapOfString,
         _i7.IMap<String, _i7.IMap<String, Uri>> mapOfMapOfUri,
         _i7
-        .IMap<String, _i7.IMap<String, _i6.SimpleClass>> mapOfMapOfSimpleClass
+        .IMap<String, _i7.IMap<String, _i3.SimpleClass>> mapOfMapOfSimpleClass
       }),
       _i8.GenericWrappers>(
     api: r'generic_wrappers',
@@ -568,54 +612,54 @@ abstract final class functions {
 
   static const parameterTypesComplex = _i1.CloudFunction<
       (
-        _i6.SimpleStruct,
-        _i6.ComplexStruct,
-        _i6.SimpleClass,
-        _i6.ComplexClass,
-        _i6.SimpleStruct?,
-        _i6.ComplexStruct?,
-        _i6.SimpleClass?,
-        _i6.ComplexClass?,
-        Iterable<_i6.SimpleStruct>,
-        Iterable<_i6.ComplexStruct>,
-        Iterable<_i6.SimpleClass>,
-        Iterable<_i6.ComplexClass>,
-        Iterable<_i6.SimpleStruct>?,
-        Iterable<_i6.ComplexStruct>?,
-        Iterable<_i6.SimpleClass>?,
-        Iterable<_i6.ComplexClass>?,
-        Iterable<_i6.SimpleStruct?>,
-        Iterable<_i6.ComplexStruct?>,
-        Iterable<_i6.SimpleClass?>,
-        Iterable<_i6.ComplexClass?>,
-        List<_i6.SimpleStruct>,
-        List<_i6.ComplexStruct>,
-        List<_i6.SimpleClass>,
-        List<_i6.ComplexClass>,
-        List<_i6.SimpleStruct>?,
-        List<_i6.ComplexStruct>?,
-        List<_i6.SimpleClass>?,
-        List<_i6.ComplexClass>?,
-        List<_i6.SimpleStruct?>,
-        List<_i6.ComplexStruct?>,
-        List<_i6.SimpleClass?>,
-        List<_i6.ComplexClass?>,
-        Map<String, _i6.SimpleStruct>,
-        Map<String, _i6.ComplexStruct>,
-        Map<String, _i6.SimpleClass>,
-        Map<String, _i6.ComplexClass>,
-        Map<String, _i6.SimpleStruct>?,
-        Map<String, _i6.ComplexStruct>?,
-        Map<String, _i6.SimpleClass>?,
-        Map<String, _i6.ComplexClass>?,
-        Map<String, _i6.SimpleStruct?>,
-        Map<String, _i6.ComplexStruct?>,
-        Map<String, _i6.SimpleClass?>,
-        Map<String, _i6.ComplexClass?>,
-        Map<String, _i6.SimpleStruct?>?,
-        Map<String, _i6.ComplexStruct?>?,
-        Map<String, _i6.SimpleClass?>?,
-        Map<String, _i6.ComplexClass?>?
+        _i3.SimpleStruct,
+        _i3.ComplexStruct,
+        _i3.SimpleClass,
+        _i3.ComplexClass,
+        _i3.SimpleStruct?,
+        _i3.ComplexStruct?,
+        _i3.SimpleClass?,
+        _i3.ComplexClass?,
+        Iterable<_i3.SimpleStruct>,
+        Iterable<_i3.ComplexStruct>,
+        Iterable<_i3.SimpleClass>,
+        Iterable<_i3.ComplexClass>,
+        Iterable<_i3.SimpleStruct>?,
+        Iterable<_i3.ComplexStruct>?,
+        Iterable<_i3.SimpleClass>?,
+        Iterable<_i3.ComplexClass>?,
+        Iterable<_i3.SimpleStruct?>,
+        Iterable<_i3.ComplexStruct?>,
+        Iterable<_i3.SimpleClass?>,
+        Iterable<_i3.ComplexClass?>,
+        List<_i3.SimpleStruct>,
+        List<_i3.ComplexStruct>,
+        List<_i3.SimpleClass>,
+        List<_i3.ComplexClass>,
+        List<_i3.SimpleStruct>?,
+        List<_i3.ComplexStruct>?,
+        List<_i3.SimpleClass>?,
+        List<_i3.ComplexClass>?,
+        List<_i3.SimpleStruct?>,
+        List<_i3.ComplexStruct?>,
+        List<_i3.SimpleClass?>,
+        List<_i3.ComplexClass?>,
+        Map<String, _i3.SimpleStruct>,
+        Map<String, _i3.ComplexStruct>,
+        Map<String, _i3.SimpleClass>,
+        Map<String, _i3.ComplexClass>,
+        Map<String, _i3.SimpleStruct>?,
+        Map<String, _i3.ComplexStruct>?,
+        Map<String, _i3.SimpleClass>?,
+        Map<String, _i3.ComplexClass>?,
+        Map<String, _i3.SimpleStruct?>,
+        Map<String, _i3.ComplexStruct?>,
+        Map<String, _i3.SimpleClass?>,
+        Map<String, _i3.ComplexClass?>,
+        Map<String, _i3.SimpleStruct?>?,
+        Map<String, _i3.ComplexStruct?>?,
+        Map<String, _i3.SimpleClass?>?,
+        Map<String, _i3.ComplexClass?>?
       ),
       void>(
     api: r'parameter_types',
@@ -628,7 +672,7 @@ abstract final class functions {
         int,
         double,
         bool,
-        _i6.MyEnum,
+        _i3.MyEnum,
         Null,
         BigInt,
         DateTime,
@@ -644,7 +688,7 @@ abstract final class functions {
         List<int>,
         List<double>,
         List<bool>,
-        List<_i6.MyEnum>,
+        List<_i3.MyEnum>,
         List<Null>,
         List<BigInt>,
         List<DateTime>,
@@ -658,7 +702,7 @@ abstract final class functions {
         Map<String, int>,
         Map<String, double>,
         Map<String, bool>,
-        Map<String, _i6.MyEnum>,
+        Map<String, _i3.MyEnum>,
         Map<String, Null>,
         Map<String, BigInt>,
         Map<String, DateTime>,
@@ -680,7 +724,7 @@ abstract final class functions {
         int?,
         double?,
         bool?,
-        _i6.MyEnum?,
+        _i3.MyEnum?,
         Null,
         BigInt?,
         DateTime?,
@@ -696,7 +740,7 @@ abstract final class functions {
         List<int>?,
         List<double>?,
         List<bool>?,
-        List<_i6.MyEnum>?,
+        List<_i3.MyEnum>?,
         List<Null>?,
         List<BigInt>?,
         List<DateTime>?,
@@ -710,7 +754,7 @@ abstract final class functions {
         Map<String, int>?,
         Map<String, double>?,
         Map<String, bool>?,
-        Map<String, _i6.MyEnum>?,
+        Map<String, _i3.MyEnum>?,
         Map<String, Null>?,
         Map<String, BigInt>?,
         Map<String, DateTime>?,
@@ -830,25 +874,25 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncClassReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncClassReturnNullable',
   );
 
   static const returnTypesAsyncComplexClassReturn =
-      _i1.CloudFunction<void, _i6.ComplexClass>(
+      _i1.CloudFunction<void, _i3.ComplexClass>(
     api: r'return_types',
     functionName: r'asyncComplexClassReturn',
   );
 
   static const returnTypesAsyncComplexStructReturn =
-      _i1.CloudFunction<void, _i6.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturn',
   );
 
   static const returnTypesAsyncComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i6.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncComplexStructReturnNullable',
   );
@@ -893,19 +937,19 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i6.ComplexClass?>(
+      _i1.CloudFunction<void, _i3.ComplexClass?>(
     api: r'return_types',
     functionName: r'asyncOrComplexClassReturnNullable',
   );
 
   static const returnTypesAsyncOrComplexStructReturn =
-      _i1.CloudFunction<void, _i6.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturn',
   );
 
   static const returnTypesAsyncOrComplexStructReturnNullable =
-      _i1.CloudFunction<void, _i6.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturnNullable',
   );
@@ -969,7 +1013,7 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'asyncOrSimpleClassReturnNullable',
   );
@@ -986,13 +1030,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncOrStructReturn =
-      _i1.CloudFunction<void, _i6.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
   static const returnTypesAsyncOrStructReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
@@ -1014,13 +1058,13 @@ abstract final class functions {
   );
 
   static const returnTypesAsyncStructReturn =
-      _i1.CloudFunction<void, _i6.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
   static const returnTypesAsyncStructReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
@@ -1041,25 +1085,25 @@ abstract final class functions {
   );
 
   static const returnTypesComplexClassReturn =
-      _i1.CloudFunction<void, _i6.ComplexClass>(
+      _i1.CloudFunction<void, _i3.ComplexClass>(
     api: r'return_types',
     functionName: r'complexClassReturn',
   );
 
   static const returnTypesComplexClassReturnNullable =
-      _i1.CloudFunction<void, _i6.ComplexClass?>(
+      _i1.CloudFunction<void, _i3.ComplexClass?>(
     api: r'return_types',
     functionName: r'complexClassReturnNullable',
   );
 
   static const returnTypesComplexReturn =
-      _i1.CloudFunction<void, _i6.ComplexStruct>(
+      _i1.CloudFunction<void, _i3.ComplexStruct>(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
   static const returnTypesComplexReturnNullable =
-      _i1.CloudFunction<void, _i6.ComplexStruct?>(
+      _i1.CloudFunction<void, _i3.ComplexStruct?>(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
@@ -1121,13 +1165,13 @@ abstract final class functions {
   );
 
   static const returnTypesSimpleClassReturn =
-      _i1.CloudFunction<void, _i6.SimpleClass>(
+      _i1.CloudFunction<void, _i3.SimpleClass>(
     api: r'return_types',
     functionName: r'simpleClassReturn',
   );
 
   static const returnTypesSimpleClassReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleClass?>(
+      _i1.CloudFunction<void, _i3.SimpleClass?>(
     api: r'return_types',
     functionName: r'simpleClassReturnNullable',
   );
@@ -1144,13 +1188,13 @@ abstract final class functions {
   );
 
   static const returnTypesStructReturn =
-      _i1.CloudFunction<void, _i6.SimpleStruct>(
+      _i1.CloudFunction<void, _i3.SimpleStruct>(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
   static const returnTypesStructReturnNullable =
-      _i1.CloudFunction<void, _i6.SimpleStruct?>(
+      _i1.CloudFunction<void, _i3.SimpleStruct?>(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );

@@ -3214,6 +3214,165 @@
         }
       }
     },
+    "collections": {
+      "name": "collections",
+      "functions": {
+        "simpleList": {
+          "name": "simpleList",
+          "route": "/collections/simple-list",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "complexList": {
+          "name": "complexList",
+          "route": "/collections/complex-list",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "simpleMap": {
+          "name": "simpleMap",
+          "route": "/collections/simple-map",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "dynamicMap": {
+          "name": "dynamicMap",
+          "route": "/collections/dynamic-map",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "objectMap": {
+          "name": "objectMap",
+          "route": "/collections/object-map",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "objectNullableMap": {
+          "name": "objectNullableMap",
+          "route": "/collections/object-nullable-map",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "complexMap": {
+          "name": "complexMap",
+          "route": "/collections/complex-map",
+          "apiName": "collections",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     "generic_wrappers": {
       "name": "generic_wrappers",
       "functions": {
