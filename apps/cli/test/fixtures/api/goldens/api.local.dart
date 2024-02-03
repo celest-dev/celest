@@ -150,18 +150,25 @@ import 'functions/return_types/stringReturnNullable.dart' as _i143;
 import 'functions/return_types/structReturn.dart' as _i144;
 import 'functions/return_types/structReturnNullable.dart' as _i145;
 import 'functions/return_types/voidReturn.dart' as _i146;
-import 'functions/sealed_classes/area.dart' as _i147;
-import 'functions/sealed_classes/circle.dart' as _i148;
-import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i149;
-import 'functions/sealed_classes/rectangle.dart' as _i150;
+import 'functions/sealed_classes/aliasedErrShapeResults.dart' as _i147;
+import 'functions/sealed_classes/aliasedOkShapeResults.dart' as _i148;
+import 'functions/sealed_classes/aliasedShapeResults.dart' as _i149;
+import 'functions/sealed_classes/area.dart' as _i150;
+import 'functions/sealed_classes/circle.dart' as _i151;
+import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i152;
+import 'functions/sealed_classes/errShapeResults.dart' as _i153;
+import 'functions/sealed_classes/okShapeResults.dart' as _i154;
+import 'functions/sealed_classes/rectangle.dart' as _i155;
 import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
-    as _i151;
-import 'functions/sealed_classes/sealedClass.dart' as _i152;
-import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i153;
+    as _i156;
+import 'functions/sealed_classes/sealedClass.dart' as _i157;
+import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i158;
 import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
-    as _i154;
+    as _i159;
 import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
-    as _i155;
+    as _i160;
+import 'functions/sealed_classes/shapeResults.dart' as _i161;
+import 'functions/sealed_classes/swappedResult.dart' as _i162;
 
 void main() {
   _i1.serve(targets: {
@@ -356,19 +363,28 @@ void main() {
     '/return-types/struct-return': _i144.StructReturnTarget(),
     '/return-types/struct-return-nullable': _i145.StructReturnNullableTarget(),
     '/return-types/void-return': _i146.VoidReturnTarget(),
-    '/sealed-classes/area': _i147.AreaTarget(),
-    '/sealed-classes/circle': _i148.CircleTarget(),
+    '/sealed-classes/aliased-err-shape-results':
+        _i147.AliasedErrShapeResultsTarget(),
+    '/sealed-classes/aliased-ok-shape-results':
+        _i148.AliasedOkShapeResultsTarget(),
+    '/sealed-classes/aliased-shape-results': _i149.AliasedShapeResultsTarget(),
+    '/sealed-classes/area': _i150.AreaTarget(),
+    '/sealed-classes/circle': _i151.CircleTarget(),
     '/sealed-classes/circle-with-overridden-custom-json':
-        _i149.CircleWithOverriddenCustomJsonTarget(),
-    '/sealed-classes/rectangle': _i150.RectangleTarget(),
+        _i152.CircleWithOverriddenCustomJsonTarget(),
+    '/sealed-classes/err-shape-results': _i153.ErrShapeResultsTarget(),
+    '/sealed-classes/ok-shape-results': _i154.OkShapeResultsTarget(),
+    '/sealed-classes/rectangle': _i155.RectangleTarget(),
     '/sealed-classes/rectangle-with-overridden-custom-json':
-        _i151.RectangleWithOverriddenCustomJsonTarget(),
-    '/sealed-classes/sealed-class': _i152.SealedClassTarget(),
+        _i156.RectangleWithOverriddenCustomJsonTarget(),
+    '/sealed-classes/sealed-class': _i157.SealedClassTarget(),
     '/sealed-classes/sealed-class-with-custom-json':
-        _i153.SealedClassWithCustomJsonTarget(),
+        _i158.SealedClassWithCustomJsonTarget(),
     '/sealed-classes/sealed-class-with-inherited-custom-json':
-        _i154.SealedClassWithInheritedCustomJsonTarget(),
+        _i159.SealedClassWithInheritedCustomJsonTarget(),
     '/sealed-classes/sealed-class-with-overridden-custom-json':
-        _i155.SealedClassWithOverriddenCustomJsonTarget(),
+        _i160.SealedClassWithOverriddenCustomJsonTarget(),
+    '/sealed-classes/shape-results': _i161.ShapeResultsTarget(),
+    '/sealed-classes/swapped-result': _i162.SwappedResultTarget(),
   });
 }

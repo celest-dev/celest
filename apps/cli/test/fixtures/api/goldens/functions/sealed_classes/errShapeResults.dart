@@ -7,21 +7,22 @@ import 'package:celest_backend/src/models/sealed_classes.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class SealedClassTarget extends _i1.CloudFunctionTarget {
+final class ErrShapeResultsTarget extends _i1.CloudFunctionTarget {
   @override
-  String get name => 'sealedClass';
+  String get name => 'errShapeResults';
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
-    final response = _i2.sealedClass(
-        shapes: (request[r'shapes'] as Iterable<Object?>)
+    final response = _i2.errShapeResults(
+        (request[r'shapes'] as Iterable<Object?>)
             .map((el) => _i3.Serializers.instance.deserialize<_i4.Shape>(el))
             .toList());
     return (
       statusCode: 200,
       body: {
         'response': response
-            .map((el) => _i3.Serializers.instance.serialize<_i4.Shape>(el))
+            .map((el) =>
+                _i3.Serializers.instance.serialize<_i4.ErrResult<String>>(el))
             .toList()
       }
     );
@@ -29,6 +30,7 @@ final class SealedClassTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
+    _i3.Serializers.instance.put(const ErrResultStringSerializer());
     _i3.Serializers.instance.put(const ShapeSerializer());
     _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const RectangleSerializer());
@@ -37,8 +39,23 @@ final class SealedClassTarget extends _i1.CloudFunctionTarget {
 
 Future<void> main(List<String> args) async {
   await _i1.serve(
-    targets: {'/': SealedClassTarget()},
+    targets: {'/': ErrShapeResultsTarget()},
   );
+}
+
+final class ErrResultStringSerializer
+    extends _i3.Serializer<_i4.ErrResult<String>> {
+  const ErrResultStringSerializer();
+
+  @override
+  _i4.ErrResult<String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.ErrResult<String>((serialized[r'error'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.ErrResult<String> value) =>
+      {r'error': value.error};
 }
 
 final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {

@@ -82,8 +82,10 @@ final class SerializerGenerator {
                           .property('values')
                           .property('byName')
                           .call([
-                        refer('serialized'),
-                      ]),
+                            refer('serialized'),
+                          ])
+                          .returned
+                          .statement,
                     ),
                   _ => (
                       castType.withNullability(mayBeAbsent),
@@ -99,7 +101,7 @@ final class SerializerGenerator {
                     ]),
                   ),
                 );
-                b.addExpression(deserialized.returned);
+                b.statements.add(deserialized);
               }),
           ),
           Method(
@@ -114,7 +116,6 @@ final class SerializerGenerator {
                 ),
               )
               ..annotations.add(DartTypes.core.override)
-              ..lambda = true
               ..body = switch (type) {
                 ast.InterfaceType() when type.isEnum =>
                   refer('value').property('name').code,
@@ -189,11 +190,6 @@ final class SerializerGenerator {
           .property('serialize');
       return CodeExpression(
         Block((b) {
-          b.statements.addAll([
-            const Code('switch ('),
-            ref.code,
-            const Code(') {'),
-          ]);
           for (final subtype in serializationSpec.subtypes) {
             final subtypeRef = typeHelper.toReference(subtype.type);
             final subtypeCase = serialize(
@@ -201,20 +197,35 @@ final class SerializerGenerator {
               {},
               [subtypeRef],
             ).asA(wireType);
-            b.statements.addAll([
-              Code.scope((alloc) => '${alloc(subtypeRef)}() => '),
-              literalMap({
-                literalSpread(): subtypeCase,
-                literalString(r'$type', raw: true): literalString(
-                  subtype.type.element!.name!,
-                  raw: true,
-                ),
-              }).code,
-              const Code(','),
-            ]);
+            final serialized = literalMap({
+              literalSpread(): subtypeCase,
+              literalString(r'$type', raw: true): literalString(
+                subtype.type.element!.name!,
+                raw: true,
+              ),
+            });
+            b.statements.add(
+              serialized.returned.wrapWithBlockIf(ref.isA(subtypeRef)),
+            );
           }
-          b.statements.add(
-            const Code('}'),
+          b.addExpression(
+            DartTypes.celest.serializationException.newInstance([
+              DartTypes.core.stringBuffer
+                  .newInstance([
+                    literalString('Unknown subtype of '),
+                  ])
+                  .cascade('write')
+                  .call([
+                    literalString(type.element!.name!, raw: true),
+                  ])
+                  .cascade('write')
+                  .call([literalString(r': ')])
+                  .cascade('write')
+                  .call([ref.property('runtimeType')])
+                  .parenthesized
+                  .property('toString')
+                  .call([]),
+            ]).thrown,
           );
         }),
       );
@@ -229,7 +240,7 @@ final class SerializerGenerator {
     return literalMap(serialized);
   }
 
-  Expression _deserialize(
+  Code _deserialize(
     String from, {
     required bool mayBeAbsent,
   }) {
@@ -272,9 +283,9 @@ final class SerializerGenerator {
         ...genericDeserializers,
       ]);
       if (usesParent) {
-        return deserialized.asA(typeReference);
+        return deserialized.asA(typeReference).returned.statement;
       }
-      return deserialized;
+      return deserialized.returned.statement;
     }
     if (serializationSpec.subtypes.isNotEmpty) {
       assert(!mayBeAbsent, 'Classes with subtypes must have a map');
@@ -282,51 +293,41 @@ final class SerializerGenerator {
       final deserialize = DartTypes.celest.serializers
           .property('instance')
           .property('deserialize');
-      return CodeExpression(
-        Block((b) {
-          final type = ref.index(literalString(r'$type', raw: true));
-          b.statements.addAll([
-            const Code('switch ('),
-            type.code,
-            const Code(') {'),
-          ]);
-          for (final subtype in serializationSpec.subtypes) {
-            final subtypeName = subtype.type.element!.name;
-            final subtypeCase = deserialize(
-              [ref],
-              {},
-              [typeHelper.toReference(subtype.type)],
-            );
-            b.statements.addAll([
-              Code("r'$subtypeName' => "),
-              subtypeCase.code,
-              const Code(','),
-            ]);
-          }
-          b.statements.addAll([
-            const Code('final unknownType => '),
-            DartTypes.celest.serializationException
+      return Block((b) {
+        final type = ref.index(literalString(r'$type', raw: true));
+        for (final subtype in serializationSpec.subtypes) {
+          final subtypeName = subtype.type.element!.name;
+          final subtypeCase = deserialize(
+            [ref],
+            {},
+            [typeHelper.toReference(subtype.type)],
+          );
+          b.statements.add(
+            subtypeCase.returned.wrapWithBlockIf(
+              type.equalTo(literalString(subtypeName!, raw: true)),
+            ),
+          );
+        }
+        b.addExpression(
+          DartTypes.celest.serializationException.newInstance([
+            DartTypes.core.stringBuffer
                 .newInstance([
-                  DartTypes.core.stringBuffer
-                      .newInstance([
-                        literalString('Unknown subtype of '),
-                      ])
-                      .cascade('write')
-                      .call(
-                        [literalString(this.type.element!.name!, raw: true)],
-                      )
-                      .cascade('write')
-                      .call([literalString(r': $unknownType')])
-                      .parenthesized
-                      .property('toString')
-                      .call([]),
+                  literalString('Unknown subtype of '),
                 ])
-                .thrown
-                .code,
-            const Code(', }'),
-          ]);
-        }),
-      );
+                .cascade('write')
+                .call([
+                  literalString(this.type.element!.name!, raw: true),
+                ])
+                .cascade('write')
+                .call([literalString(r': ')])
+                .cascade('write')
+                .call([type])
+                .parenthesized
+                .property('toString')
+                .call([]),
+          ]).thrown,
+        );
+      });
     }
     final ref = _reference(from, isNullable: mayBeAbsent);
     final deserializedPositional = <Expression>[];
@@ -356,7 +357,9 @@ final class SerializerGenerator {
           deserializedNamed,
         ),
       _ => unreachable('Unsupported type ${serializationSpec.type}'),
-    };
+    }
+        .returned
+        .statement;
   }
 
   Reference _reference(

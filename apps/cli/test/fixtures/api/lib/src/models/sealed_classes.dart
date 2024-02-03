@@ -12,6 +12,9 @@ class Rectangle extends Shape {
 
   @override
   double get area => width * height;
+
+  @override
+  String toString() => 'Rectangle: $width x $height';
 }
 
 class Circle extends Shape {
@@ -21,6 +24,9 @@ class Circle extends Shape {
 
   @override
   double get area => pi * radius * radius;
+
+  @override
+  String toString() => 'Circle: $radius';
 }
 
 sealed class ShapeWithInheritedCustomJson {
@@ -176,4 +182,37 @@ class CircleWithOverriddenCustomJson extends ShapeWithOverriddenCustomJson {
           'radius': radius,
         },
       };
+}
+
+// TODO(dnys1): Enforce subtypes of sealed classes are `final` so that we can
+//  guarantee every serializer will be exhaustive.
+sealed class Result<T, E> {
+  const Result();
+
+  const factory Result.ok(T data) = OkResult;
+  const factory Result.err(E error) = ErrResult;
+}
+
+final class OkResult<T> extends Result<T, Never> {
+  const OkResult(this.data);
+
+  final T data;
+}
+
+final class ErrResult<E> extends Result<Never, E> {
+  const ErrResult(this.error);
+
+  final E error;
+}
+
+typedef ShapeResult<E> = Result<Shape, E>;
+
+// final class OkShapeResult extends OkResult<Shape> {
+//   const OkShapeResult(Shape data) : super(data);
+// }
+
+final class SwappedResult<T, E> extends Result<E, T> {
+  const SwappedResult(this.result);
+
+  final Result<T, E> result;
 }

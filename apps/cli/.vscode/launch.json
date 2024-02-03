@@ -5,8 +5,10 @@
       "name": "CLI / E2E (--update-goldens)",
       "request": "launch",
       "type": "dart",
-      "program": "e2e/run_tests.dart",
-      "args": ["--update-goldens"],
+      "program": "test/fixtures/fixtures_test.dart",
+      "env": {
+        "UPDATE_GOLDENS": "true"
+      },
       "vmAdditionalArgs": [
         "--enable-experiment=native-assets",
       ]

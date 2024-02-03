@@ -5,6 +5,8 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
+import 'package:analyzer/src/dart/element/member.dart';
+import 'package:analyzer/src/dart/element/type_algebra.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -618,7 +620,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       wireType: wireType,
       castType: fromJsonCtor?.parameters.first.type,
       fields: [
-        for (final field in element.sortedFields)
+        for (final field in element.sortedFields(type))
           FieldSpec(name: field.displayName, type: field.type),
       ],
       parameters: [
@@ -637,8 +639,44 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     );
     verdict = verdict.withSpec(spec);
 
-    final subtypes =
-        typeHelper.subtypes[type.element] ?? const <InterfaceType>[];
+    InterfaceType instantiateSubtype(InterfaceType subtype) {
+      final superParameters = type.element.typeParameters;
+      final superArguments = type.typeArguments;
+      assert(superParameters.length == superArguments.length);
+      var subtypeSupertype = subtype.superclass!;
+      while (subtypeSupertype.element is ClassElement &&
+          !subtypeSupertype.isDartCoreObject) {
+        if (subtypeSupertype.element.declaration != type.element) {
+          final superSuper = subtypeSupertype.superclass;
+          assert(
+            superSuper?.element is ClassElement &&
+                (superSuper!.element as ClassElement).isDartCoreObject,
+          );
+          subtypeSupertype = superSuper!;
+          continue;
+        }
+        final substitutionMap = <TypeParameterElement, DartType>{};
+        final subtypeSuperArgs = subtypeSupertype.typeArguments;
+        for (var i = 0; i < subtypeSuperArgs.length; i++) {
+          final subParameter = subtypeSuperArgs[i].element;
+          if (subParameter is TypeParameterElement) {
+            substitutionMap[subParameter] = superArguments[i];
+          }
+        }
+        return Substitution.fromMap(substitutionMap).mapInterfaceType(subtype);
+      }
+      unreachable();
+    }
+
+    final subtypes = [
+      for (final subtype
+          in typeHelper.subtypes[type.element] ?? const <InterfaceType>[])
+        switch (subtype) {
+          InterfaceType(:final typeArguments) when typeArguments.isNotEmpty =>
+            instantiateSubtype(subtype),
+          _ => subtype,
+        },
+    ];
     for (final subtype in subtypes) {
       final subtypeVerdict = typeHelper.isSerializable(subtype);
       switch (subtypeVerdict) {
@@ -745,7 +783,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         location: element.sourceLocation,
       );
     }
-    final fields = element.sortedFields;
+    final fields = element.sortedFields(type);
     var verdict = const Verdict.yes();
     var fieldsVerdict = const Verdict.yes();
     for (final field in fields) {
@@ -779,7 +817,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       verdict &= fieldsVerdict;
     }
     var constructorVerdict = const Verdict.yes();
-    final unnamedConstructor = element.constructors.firstWhereOrNull((ctor) {
+    final unnamedConstructor = type.constructors.firstWhereOrNull((ctor) {
       if (ctor.name.isNotEmpty) {
         return false;
       }
@@ -803,7 +841,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           );
           return false;
         }
-        if (!fields.contains(parameterField)) {
+        if (fields.none((f) => f.name == parameterField.name)) {
           constructorVerdict &= Verdict.no(
             'Constructor parameter "${parameter.displayName}" is not '
             'a field of the class ${element.displayName}.',
@@ -858,7 +896,7 @@ extension on ClassElement {
   /// Returns a [List] of all instance [FieldElement] items for this class and
   /// super classes, sorted first by their location in the inheritance hierarchy
   /// (super first) and then by their location in the source file.
-  List<FieldElement> get sortedFields {
+  List<FieldElement> sortedFields(InterfaceType type) {
     // Get all of the fields that need to be assigned
     final elementInstanceFields = Map.fromEntries(
       this
@@ -866,15 +904,26 @@ extension on ClassElement {
           // Note: Unlike `json_serializable` we do not support synthetic fields,
           // i.e. those fields which are synthesized from getters/setters.
           .where((e) => !e.isStatic && !e.isSynthetic)
-          .map((e) => MapEntry(e.name, e)),
+          .map((e) {
+        final member = inheritanceManager.getMember(
+          type,
+          Name(e.library.source.uri, e.name),
+        );
+        if (member case final PropertyAccessorMember member
+            when member.isGetter) {
+          assert(member.variable is FieldElement);
+          return MapEntry(e.name, member.variable as FieldElement);
+        }
+        return MapEntry(e.name, e);
+      }),
     );
 
     final inheritedFields = <String, FieldElement>{};
-    final manager = InheritanceManager3();
 
     const dartCoreObject = TypeChecker.fromUrl('dart:core#Object');
 
-    for (final v in manager.getInheritedConcreteMap2(this).values) {
+    // ignore: deprecated_member_use
+    for (final v in inheritanceManager.getInheritedConcreteMap(type).values) {
       assert(v is! FieldElement);
       if (dartCoreObject.isExactly(v.enclosingElement)) {
         continue;

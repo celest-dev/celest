@@ -243,30 +243,41 @@ final class NodeSerializer extends Serializer<Node> {
   @override
   Node deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return switch (serialized[r'$type']) {
-      r'Parent' => Serializers.instance.deserialize<Parent>(serialized),
-      r'Child' => Serializers.instance.deserialize<Child>(serialized),
-      final unknownType =>
-        throw SerializationException((StringBuffer('Unknown subtype of ')
-              ..write(r'Node')
-              ..write(': $unknownType'))
-            .toString()),
-    };
+    if (serialized[r'$type'] == r'Parent') {
+      return Serializers.instance.deserialize<Parent>(serialized);
+    }
+    if (serialized[r'$type'] == r'Child') {
+      return Serializers.instance.deserialize<Child>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Node')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(Node value) => switch (value) {
-        Parent() => {
-            ...(Serializers.instance.serialize<Parent>(value)
-                as Map<String, Object?>),
-            r'$type': r'Parent',
-          },
-        Child() => {
-            ...(Serializers.instance.serialize<Child>(value)
-                as Map<String, Object?>),
-            r'$type': r'Child',
-          },
+  Map<String, Object?> serialize(Node value) {
+    if (value is Parent) {
+      return {
+        ...(Serializers.instance.serialize<Parent>(value)
+            as Map<String, Object?>),
+        r'$type': r'Parent',
       };
+    }
+    if (value is Child) {
+      return {
+        ...(Serializers.instance.serialize<Child>(value)
+            as Map<String, Object?>),
+        r'$type': r'Child',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Node')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
 final class ParentSerializer extends Serializer<Parent> {
@@ -1429,30 +1440,54 @@ final class ShapeSerializer extends Serializer<Shape> {
   @override
   Shape deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return switch (serialized[r'$type']) {
-      r'Rectangle' => Serializers.instance.deserialize<Rectangle>(serialized),
-      r'Circle' => Serializers.instance.deserialize<Circle>(serialized),
-      final unknownType =>
-        throw SerializationException((StringBuffer('Unknown subtype of ')
-              ..write(r'Shape')
-              ..write(': $unknownType'))
-            .toString()),
-    };
+    if (serialized[r'$type'] == r'Circle') {
+      return Serializers.instance.deserialize<Circle>(serialized);
+    }
+    if (serialized[r'$type'] == r'Rectangle') {
+      return Serializers.instance.deserialize<Rectangle>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Shape')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(Shape value) => switch (value) {
-        Rectangle() => {
-            ...(Serializers.instance.serialize<Rectangle>(value)
-                as Map<String, Object?>),
-            r'$type': r'Rectangle',
-          },
-        Circle() => {
-            ...(Serializers.instance.serialize<Circle>(value)
-                as Map<String, Object?>),
-            r'$type': r'Circle',
-          },
+  Map<String, Object?> serialize(Shape value) {
+    if (value is Circle) {
+      return {
+        ...(Serializers.instance.serialize<Circle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Circle',
       };
+    }
+    if (value is Rectangle) {
+      return {
+        ...(Serializers.instance.serialize<Rectangle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Rectangle',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Shape')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
+}
+
+final class CircleSerializer extends Serializer<Circle> {
+  const CircleSerializer();
+
+  @override
+  Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return Circle((serialized[r'radius'] as num).toDouble());
+  }
+
+  @override
+  Map<String, Object?> serialize(Circle value) => {r'radius': value.radius};
 }
 
 final class RectangleSerializer extends Serializer<Rectangle> {
@@ -1474,19 +1509,6 @@ final class RectangleSerializer extends Serializer<Rectangle> {
       };
 }
 
-final class CircleSerializer extends Serializer<Circle> {
-  const CircleSerializer();
-
-  @override
-  Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(Circle value) => {r'radius': value.radius};
-}
-
 final class ShapeWithInheritedCustomJsonSerializer
     extends Serializer<ShapeWithInheritedCustomJson> {
   const ShapeWithInheritedCustomJsonSerializer();
@@ -1501,29 +1523,11 @@ final class ShapeWithInheritedCustomJsonSerializer
   Map<String, Object?> serialize(ShapeWithInheritedCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          CircleWithInheritedCustomJson() => r'CircleWithInheritedCustomJson',
           RectangleWithInheritedCustomJson() =>
             r'RectangleWithInheritedCustomJson',
+          CircleWithInheritedCustomJson() => r'CircleWithInheritedCustomJson',
         },
       };
-}
-
-final class CircleWithInheritedCustomJsonSerializer
-    extends Serializer<CircleWithInheritedCustomJson> {
-  const CircleWithInheritedCustomJsonSerializer();
-
-  @override
-  CircleWithInheritedCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (ShapeWithInheritedCustomJson.fromJson({
-      r'$type': r'CircleWithInheritedCustomJson',
-      ...serialized,
-    }) as CircleWithInheritedCustomJson);
-  }
-
-  @override
-  Map<String, Object?> serialize(CircleWithInheritedCustomJson value) =>
-      value.toJson();
 }
 
 final class RectangleWithInheritedCustomJsonSerializer
@@ -1544,6 +1548,24 @@ final class RectangleWithInheritedCustomJsonSerializer
       value.toJson();
 }
 
+final class CircleWithInheritedCustomJsonSerializer
+    extends Serializer<CircleWithInheritedCustomJson> {
+  const CircleWithInheritedCustomJsonSerializer();
+
+  @override
+  CircleWithInheritedCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (ShapeWithInheritedCustomJson.fromJson({
+      r'$type': r'CircleWithInheritedCustomJson',
+      ...serialized,
+    }) as CircleWithInheritedCustomJson);
+  }
+
+  @override
+  Map<String, Object?> serialize(CircleWithInheritedCustomJson value) =>
+      value.toJson();
+}
+
 final class ShapeWithCustomJsonSerializer
     extends Serializer<ShapeWithCustomJson> {
   const ShapeWithCustomJsonSerializer();
@@ -1551,32 +1573,42 @@ final class ShapeWithCustomJsonSerializer
   @override
   ShapeWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return switch (serialized[r'$type']) {
-      r'RectangleWithCustomJson' =>
-        Serializers.instance.deserialize<RectangleWithCustomJson>(serialized),
-      r'CircleWithCustomJson' =>
-        Serializers.instance.deserialize<CircleWithCustomJson>(serialized),
-      final unknownType =>
-        throw SerializationException((StringBuffer('Unknown subtype of ')
-              ..write(r'ShapeWithCustomJson')
-              ..write(': $unknownType'))
-            .toString()),
-    };
+    if (serialized[r'$type'] == r'RectangleWithCustomJson') {
+      return Serializers.instance
+          .deserialize<RectangleWithCustomJson>(serialized);
+    }
+    if (serialized[r'$type'] == r'CircleWithCustomJson') {
+      return Serializers.instance.deserialize<CircleWithCustomJson>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeWithCustomJson')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(ShapeWithCustomJson value) => switch (value) {
-        RectangleWithCustomJson() => {
-            ...(Serializers.instance.serialize<RectangleWithCustomJson>(value)
-                as Map<String, Object?>),
-            r'$type': r'RectangleWithCustomJson',
-          },
-        CircleWithCustomJson() => {
-            ...(Serializers.instance.serialize<CircleWithCustomJson>(value)
-                as Map<String, Object?>),
-            r'$type': r'CircleWithCustomJson',
-          },
+  Map<String, Object?> serialize(ShapeWithCustomJson value) {
+    if (value is RectangleWithCustomJson) {
+      return {
+        ...(Serializers.instance.serialize<RectangleWithCustomJson>(value)
+            as Map<String, Object?>),
+        r'$type': r'RectangleWithCustomJson',
       };
+    }
+    if (value is CircleWithCustomJson) {
+      return {
+        ...(Serializers.instance.serialize<CircleWithCustomJson>(value)
+            as Map<String, Object?>),
+        r'$type': r'CircleWithCustomJson',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeWithCustomJson')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
 final class RectangleWithCustomJsonSerializer
@@ -1622,26 +1654,11 @@ final class ShapeWithOverriddenCustomJsonSerializer
   Map<String, Object?> serialize(ShapeWithOverriddenCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          CircleWithOverriddenCustomJson() => r'CircleWithOverriddenCustomJson',
           RectangleWithOverriddenCustomJson() =>
             r'RectangleWithOverriddenCustomJson',
+          CircleWithOverriddenCustomJson() => r'CircleWithOverriddenCustomJson',
         },
       };
-}
-
-final class CircleWithOverriddenCustomJsonSerializer
-    extends Serializer<CircleWithOverriddenCustomJson> {
-  const CircleWithOverriddenCustomJsonSerializer();
-
-  @override
-  CircleWithOverriddenCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return CircleWithOverriddenCustomJson.fromJson(serialized);
-  }
-
-  @override
-  Map<String, Object?> serialize(CircleWithOverriddenCustomJson value) =>
-      value.toJson();
 }
 
 final class RectangleWithOverriddenCustomJsonSerializer
@@ -1660,6 +1677,225 @@ final class RectangleWithOverriddenCustomJsonSerializer
   @override
   Map<String, Object?> serialize(RectangleWithOverriddenCustomJson value) =>
       value.toJson();
+}
+
+final class CircleWithOverriddenCustomJsonSerializer
+    extends Serializer<CircleWithOverriddenCustomJson> {
+  const CircleWithOverriddenCustomJsonSerializer();
+
+  @override
+  CircleWithOverriddenCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return CircleWithOverriddenCustomJson.fromJson(serialized);
+  }
+
+  @override
+  Map<String, Object?> serialize(CircleWithOverriddenCustomJson value) =>
+      value.toJson();
+}
+
+final class OkResultShapeSerializer extends Serializer<OkResult<Shape>> {
+  const OkResultShapeSerializer();
+
+  @override
+  OkResult<Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return OkResult<Shape>(
+        Serializers.instance.deserialize<Shape>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(OkResult<Shape> value) =>
+      {r'data': Serializers.instance.serialize<Shape>(value.data)};
+}
+
+final class ErrResultStringSerializer extends Serializer<ErrResult<String>> {
+  const ErrResultStringSerializer();
+
+  @override
+  ErrResult<String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ErrResult<String>((serialized[r'error'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(ErrResult<String> value) =>
+      {r'error': value.error};
+}
+
+final class ResultShapeStringSerializer
+    extends Serializer<Result<Shape, String>> {
+  const ResultShapeStringSerializer();
+
+  @override
+  Result<Shape, String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'ErrResult') {
+      return Serializers.instance.deserialize<ErrResult<String>>(serialized);
+    }
+    if (serialized[r'$type'] == r'SwappedResult') {
+      return Serializers.instance
+          .deserialize<SwappedResult<String, Shape>>(serialized);
+    }
+    if (serialized[r'$type'] == r'OkResult') {
+      return Serializers.instance.deserialize<OkResult<Shape>>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Map<String, Object?> serialize(Result<Shape, String> value) {
+    if (value is ErrResult<String>) {
+      return {
+        ...(Serializers.instance.serialize<ErrResult<String>>(value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
+    if (value is SwappedResult<String, Shape>) {
+      return {
+        ...(Serializers.instance.serialize<SwappedResult<String, Shape>>(value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
+      };
+    }
+    if (value is OkResult<Shape>) {
+      return {
+        ...(Serializers.instance.serialize<OkResult<Shape>>(value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
+}
+
+final class SwappedResultStringShapeSerializer
+    extends Serializer<SwappedResult<String, Shape>> {
+  const SwappedResultStringShapeSerializer();
+
+  @override
+  SwappedResult<String, Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return SwappedResult<String, Shape>(Serializers.instance
+        .deserialize<Result<String, Shape>>(serialized[r'result']));
+  }
+
+  @override
+  Map<String, Object?> serialize(SwappedResult<String, Shape> value) => {
+        r'result':
+            Serializers.instance.serialize<Result<String, Shape>>(value.result)
+      };
+}
+
+final class ResultStringShapeSerializer
+    extends Serializer<Result<String, Shape>> {
+  const ResultStringShapeSerializer();
+
+  @override
+  Result<String, Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'ErrResult') {
+      return Serializers.instance.deserialize<ErrResult<Shape>>(serialized);
+    }
+    if (serialized[r'$type'] == r'SwappedResult') {
+      return Serializers.instance
+          .deserialize<SwappedResult<Shape, String>>(serialized);
+    }
+    if (serialized[r'$type'] == r'OkResult') {
+      return Serializers.instance.deserialize<OkResult<String>>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Map<String, Object?> serialize(Result<String, Shape> value) {
+    if (value is ErrResult<Shape>) {
+      return {
+        ...(Serializers.instance.serialize<ErrResult<Shape>>(value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
+    if (value is SwappedResult<Shape, String>) {
+      return {
+        ...(Serializers.instance.serialize<SwappedResult<Shape, String>>(value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
+      };
+    }
+    if (value is OkResult<String>) {
+      return {
+        ...(Serializers.instance.serialize<OkResult<String>>(value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
+}
+
+final class ErrResultShapeSerializer extends Serializer<ErrResult<Shape>> {
+  const ErrResultShapeSerializer();
+
+  @override
+  ErrResult<Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ErrResult<Shape>(
+        Serializers.instance.deserialize<Shape>(serialized[r'error']));
+  }
+
+  @override
+  Map<String, Object?> serialize(ErrResult<Shape> value) =>
+      {r'error': Serializers.instance.serialize<Shape>(value.error)};
+}
+
+final class SwappedResultShapeStringSerializer
+    extends Serializer<SwappedResult<Shape, String>> {
+  const SwappedResultShapeStringSerializer();
+
+  @override
+  SwappedResult<Shape, String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return SwappedResult<Shape, String>(Serializers.instance
+        .deserialize<Result<Shape, String>>(serialized[r'result']));
+  }
+
+  @override
+  Map<String, Object?> serialize(SwappedResult<Shape, String> value) => {
+        r'result':
+            Serializers.instance.serialize<Result<Shape, String>>(value.result)
+      };
+}
+
+final class OkResultStringSerializer extends Serializer<OkResult<String>> {
+  const OkResultStringSerializer();
+
+  @override
+  OkResult<String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return OkResult<String>((serialized[r'data'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(OkResult<String> value) =>
+      {r'data': value.data};
 }
 
 typedef Record$k7x4l9 = ({String a, String b, String c});

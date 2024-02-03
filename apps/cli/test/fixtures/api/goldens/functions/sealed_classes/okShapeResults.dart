@@ -7,21 +7,22 @@ import 'package:celest_backend/src/models/sealed_classes.dart' as _i4;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class SealedClassTarget extends _i1.CloudFunctionTarget {
+final class OkShapeResultsTarget extends _i1.CloudFunctionTarget {
   @override
-  String get name => 'sealedClass';
+  String get name => 'okShapeResults';
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
-    final response = _i2.sealedClass(
-        shapes: (request[r'shapes'] as Iterable<Object?>)
+    final response = _i2.okShapeResults(
+        (request[r'shapes'] as Iterable<Object?>)
             .map((el) => _i3.Serializers.instance.deserialize<_i4.Shape>(el))
             .toList());
     return (
       statusCode: 200,
       body: {
         'response': response
-            .map((el) => _i3.Serializers.instance.serialize<_i4.Shape>(el))
+            .map((el) =>
+                _i3.Serializers.instance.serialize<_i4.OkResult<_i4.Shape>>(el))
             .toList()
       }
     );
@@ -32,12 +33,13 @@ final class SealedClassTarget extends _i1.CloudFunctionTarget {
     _i3.Serializers.instance.put(const ShapeSerializer());
     _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const RectangleSerializer());
+    _i3.Serializers.instance.put(const OkResultShapeSerializer());
   }
 }
 
 Future<void> main(List<String> args) async {
   await _i1.serve(
-    targets: {'/': SealedClassTarget()},
+    targets: {'/': OkShapeResultsTarget()},
   );
 }
 
@@ -114,4 +116,20 @@ final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
         r'width': value.width,
         r'height': value.height,
       };
+}
+
+final class OkResultShapeSerializer
+    extends _i3.Serializer<_i4.OkResult<_i4.Shape>> {
+  const OkResultShapeSerializer();
+
+  @override
+  _i4.OkResult<_i4.Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.OkResult<_i4.Shape>(
+        _i3.Serializers.instance.deserialize<_i4.Shape>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
+      {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
 }

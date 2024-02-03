@@ -5867,4 +5867,254 @@ class CelestFunctionsSealedClasses {
         }
     }
   }
+
+  Future<List<OkResult<Shape>>> okShapeResults(List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/ok-shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) => Serializers.instance.deserialize<OkResult<Shape>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<ErrResult<String>>> errShapeResults(List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/err-shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) => Serializers.instance.deserialize<ErrResult<String>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<Result<Shape, String>>> shapeResults(List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) =>
+              Serializers.instance.deserialize<Result<Shape, String>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<Result<Shape, String>>> aliasedOkShapeResults(
+      List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/aliased-ok-shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) =>
+              Serializers.instance.deserialize<Result<Shape, String>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<Result<Shape, String>>> aliasedErrShapeResults(
+      List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/aliased-err-shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) =>
+              Serializers.instance.deserialize<Result<Shape, String>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<Result<Shape, String>>> aliasedShapeResults(
+      List<Shape> shapes) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/aliased-shape-results'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .toList()
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) =>
+              Serializers.instance.deserialize<Result<Shape, String>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<SwappedResult<Shape, String>> swappedResult(
+      Result<Shape, String> result) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/swapped-result'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'result': Serializers.instance.serialize<Result<Shape, String>>(result)
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance
+          .deserialize<SwappedResult<Shape, String>>($body['response']);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
 }

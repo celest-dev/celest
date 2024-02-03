@@ -2118,6 +2118,271 @@ final tests = <String, Test>{
               },
             ),
           ],
+          'shapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Circle: 5.0)',
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
+                }
+              ],
+            ),
+          ],
+          'okShapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  'data': {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                }
+              ],
+            ),
+          ],
+          'errShapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  'error': 'Bad shape: (Circle: 5.0)',
+                },
+                {
+                  'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
+                }
+              ],
+            ),
+          ],
+          'aliasedShapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Circle: 5.0)',
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
+                }
+              ],
+            ),
+          ],
+          'aliasedOkShapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                }
+              ],
+            ),
+          ],
+          'aliasedErrShapeResults': [
+            FunctionTestSuccess(
+              name: 'all shapes',
+              input: {
+                'shapes': [
+                  {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                  {
+                    r'$type': 'Rectangle',
+                    'width': 5.0,
+                    'height': 5.0,
+                  },
+                ],
+              },
+              output: [
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Circle: 5.0)',
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
+                }
+              ],
+            ),
+          ],
+          // 'okShapeResult': [
+          //   FunctionTestSuccess(
+          //     name: 'circle',
+          //     input: {
+          //       'shape': {
+          //         r'$type': 'Circle',
+          //         'radius': 5.0,
+          //       },
+          //     },
+          //     output: {
+          //       'data': {
+          //         r'$type': 'Circle',
+          //         'radius': 5.0,
+          //       },
+          //     },
+          //   ),
+          //   FunctionTestSuccess(
+          //     name: 'rectangle',
+          //     input: {
+          //       'shape': {
+          //         r'$type': 'Rectangle',
+          //         'width': 5.0,
+          //         'height': 5.0,
+          //       },
+          //     },
+          //     output: {
+          //       'data': {
+          //         r'$type': 'Rectangle',
+          //         'width': 5.0,
+          //         'height': 5.0,
+          //       },
+          //     },
+          //   ),
+          // ],
+          'swappedResult': [
+            FunctionTestSuccess(
+              name: 'swappedResult',
+              input: {
+                'result': {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+              output: {
+                'result': {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+            ),
+          ],
         },
       ),
       'cycles': ApiTest(

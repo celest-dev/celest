@@ -1204,6 +1204,24 @@ abstract final class functions {
     functionName: r'voidReturn',
   );
 
+  static const sealedClassesAliasedErrShapeResults = _i1.CloudFunction<
+      List<_i12.Shape>, List<_i12.Result<_i12.Shape, String>>>(
+    api: r'sealed_classes',
+    functionName: r'aliasedErrShapeResults',
+  );
+
+  static const sealedClassesAliasedOkShapeResults = _i1.CloudFunction<
+      List<_i12.Shape>, List<_i12.Result<_i12.Shape, String>>>(
+    api: r'sealed_classes',
+    functionName: r'aliasedOkShapeResults',
+  );
+
+  static const sealedClassesAliasedShapeResults = _i1.CloudFunction<
+      List<_i12.Shape>, List<_i12.Result<_i12.Shape, String>>>(
+    api: r'sealed_classes',
+    functionName: r'aliasedShapeResults',
+  );
+
   static const sealedClassesArea = _i1.CloudFunction<_i12.Shape, double>(
     api: r'sealed_classes',
     functionName: r'area',
@@ -1219,6 +1237,18 @@ abstract final class functions {
       _i12.ShapeWithOverriddenCustomJson, _i12.CircleWithOverriddenCustomJson>(
     api: r'sealed_classes',
     functionName: r'circleWithOverriddenCustomJson',
+  );
+
+  static const sealedClassesErrShapeResults =
+      _i1.CloudFunction<List<_i12.Shape>, List<_i12.ErrResult<String>>>(
+    api: r'sealed_classes',
+    functionName: r'errShapeResults',
+  );
+
+  static const sealedClassesOkShapeResults =
+      _i1.CloudFunction<List<_i12.Shape>, List<_i12.OkResult<_i12.Shape>>>(
+    api: r'sealed_classes',
+    functionName: r'okShapeResults',
   );
 
   static const sealedClassesRectangle =
@@ -1263,5 +1293,17 @@ abstract final class functions {
           List<_i12.ShapeWithOverriddenCustomJson>>(
     api: r'sealed_classes',
     functionName: r'sealedClassWithOverriddenCustomJson',
+  );
+
+  static const sealedClassesShapeResults = _i1.CloudFunction<List<_i12.Shape>,
+      List<_i12.Result<_i12.Shape, String>>>(
+    api: r'sealed_classes',
+    functionName: r'shapeResults',
+  );
+
+  static const sealedClassesSwappedResult = _i1.CloudFunction<
+      _i12.Result<_i12.Shape, String>, _i12.SwappedResult<_i12.Shape, String>>(
+    api: r'sealed_classes',
+    functionName: r'swappedResult',
   );
 }

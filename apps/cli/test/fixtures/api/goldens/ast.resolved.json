@@ -426,6 +426,160 @@
               }
             ]
           }
+        },
+        "okShapeResults": {
+          "name": "okShapeResults",
+          "route": "/sealed-classes/ok-shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "errShapeResults": {
+          "name": "errShapeResults",
+          "route": "/sealed-classes/err-shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "shapeResults": {
+          "name": "shapeResults",
+          "route": "/sealed-classes/shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "aliasedOkShapeResults": {
+          "name": "aliasedOkShapeResults",
+          "route": "/sealed-classes/aliased-ok-shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "aliasedErrShapeResults": {
+          "name": "aliasedErrShapeResults",
+          "route": "/sealed-classes/aliased-err-shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "aliasedShapeResults": {
+          "name": "aliasedShapeResults",
+          "route": "/sealed-classes/aliased-shape-results",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "swappedResult": {
+          "name": "swappedResult",
+          "route": "/sealed-classes/swapped-result",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
     },

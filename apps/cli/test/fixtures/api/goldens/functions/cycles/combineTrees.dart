@@ -50,30 +50,41 @@ final class NodeSerializer extends _i3.Serializer<_i4.Node> {
   @override
   _i4.Node deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return switch (serialized[r'$type']) {
-      r'Parent' => _i3.Serializers.instance.deserialize<_i4.Parent>(serialized),
-      r'Child' => _i3.Serializers.instance.deserialize<_i4.Child>(serialized),
-      final unknownType =>
-        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
-              ..write(r'Node')
-              ..write(': $unknownType'))
-            .toString()),
-    };
+    if (serialized[r'$type'] == r'Parent') {
+      return _i3.Serializers.instance.deserialize<_i4.Parent>(serialized);
+    }
+    if (serialized[r'$type'] == r'Child') {
+      return _i3.Serializers.instance.deserialize<_i4.Child>(serialized);
+    }
+    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Node')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Node value) => switch (value) {
-        _i4.Parent() => {
-            ...(_i3.Serializers.instance.serialize<_i4.Parent>(value)
-                as Map<String, Object?>),
-            r'$type': r'Parent',
-          },
-        _i4.Child() => {
-            ...(_i3.Serializers.instance.serialize<_i4.Child>(value)
-                as Map<String, Object?>),
-            r'$type': r'Child',
-          },
+  Map<String, Object?> serialize(_i4.Node value) {
+    if (value is _i4.Parent) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.Parent>(value)
+            as Map<String, Object?>),
+        r'$type': r'Parent',
       };
+    }
+    if (value is _i4.Child) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.Child>(value)
+            as Map<String, Object?>),
+        r'$type': r'Child',
+      };
+    }
+    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Node')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
 final class ParentSerializer extends _i3.Serializer<_i4.Parent> {

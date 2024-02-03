@@ -71,10 +71,10 @@ final class ShapeWithOverriddenCustomJsonSerializer
   Map<String, Object?> serialize(_i4.ShapeWithOverriddenCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          _i4.CircleWithOverriddenCustomJson() =>
-            r'CircleWithOverriddenCustomJson',
           _i4.RectangleWithOverriddenCustomJson() =>
             r'RectangleWithOverriddenCustomJson',
+          _i4.CircleWithOverriddenCustomJson() =>
+            r'CircleWithOverriddenCustomJson',
         },
       };
 }

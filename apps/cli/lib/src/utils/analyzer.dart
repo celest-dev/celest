@@ -219,17 +219,13 @@ extension DartTypeHelper on DartType {
     for (final subtype in subtypes) {
       hasAllowedSubtypes &= await subtype.hasAllowedSubtypes();
     }
-    if (element is ClassElement && element.isSealed) {
-      final allowed = hasAllowedSubtypes.allowed && subtypes.isNotEmpty;
-      return (
-        allowed: allowed,
-        disallowedTypes: {
-          if (!allowed) type,
-          ...hasAllowedSubtypes.disallowedTypes,
-        },
-      );
-    }
-    final allowed = hasAllowedSubtypes.allowed && subtypes.isEmpty;
+    final allowed = switch (element) {
+      ClassElement(isSealed: true) =>
+        // We can't instantiate a sealed class, so we need subtypes
+        hasAllowedSubtypes.allowed && subtypes.isNotEmpty,
+      ClassElement(isFinal: true) => hasAllowedSubtypes.allowed,
+      _ => hasAllowedSubtypes.allowed && subtypes.isEmpty,
+    };
     return (
       allowed: allowed,
       disallowedTypes: {
@@ -261,10 +257,11 @@ extension on InterfaceElement {
   AnalysisDriver get _driver =>
       (library.session.analysisContext as DriverBasedAnalysisContext).driver;
 
+  static final _searchedFiles = SearchedFiles();
+
   /// Collects all subtypes of the given [type].
   Future<List<InterfaceType>> collectSubtypes() async {
-    final searchedFiles = SearchedFiles();
-    final subtypes = await _driver.search.subTypes(this, searchedFiles);
+    final subtypes = await _driver.search.subTypes(this, _searchedFiles);
     return subtypes
         .where((res) {
           return switch (res.kind) {

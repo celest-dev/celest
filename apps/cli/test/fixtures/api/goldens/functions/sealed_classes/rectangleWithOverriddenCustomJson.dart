@@ -32,9 +32,9 @@ final class RectangleWithOverriddenCustomJsonTarget
     _i3.Serializers.instance
         .put(const ShapeWithOverriddenCustomJsonSerializer());
     _i3.Serializers.instance
-        .put(const CircleWithOverriddenCustomJsonSerializer());
-    _i3.Serializers.instance
         .put(const RectangleWithOverriddenCustomJsonSerializer());
+    _i3.Serializers.instance
+        .put(const CircleWithOverriddenCustomJsonSerializer());
   }
 }
 
@@ -58,27 +58,12 @@ final class ShapeWithOverriddenCustomJsonSerializer
   Map<String, Object?> serialize(_i4.ShapeWithOverriddenCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          _i4.CircleWithOverriddenCustomJson() =>
-            r'CircleWithOverriddenCustomJson',
           _i4.RectangleWithOverriddenCustomJson() =>
             r'RectangleWithOverriddenCustomJson',
+          _i4.CircleWithOverriddenCustomJson() =>
+            r'CircleWithOverriddenCustomJson',
         },
       };
-}
-
-final class CircleWithOverriddenCustomJsonSerializer
-    extends _i3.Serializer<_i4.CircleWithOverriddenCustomJson> {
-  const CircleWithOverriddenCustomJsonSerializer();
-
-  @override
-  _i4.CircleWithOverriddenCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.CircleWithOverriddenCustomJson.fromJson(serialized);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.CircleWithOverriddenCustomJson value) =>
-      value.toJson();
 }
 
 final class RectangleWithOverriddenCustomJsonSerializer
@@ -96,5 +81,20 @@ final class RectangleWithOverriddenCustomJsonSerializer
 
   @override
   Map<String, Object?> serialize(_i4.RectangleWithOverriddenCustomJson value) =>
+      value.toJson();
+}
+
+final class CircleWithOverriddenCustomJsonSerializer
+    extends _i3.Serializer<_i4.CircleWithOverriddenCustomJson> {
+  const CircleWithOverriddenCustomJsonSerializer();
+
+  @override
+  _i4.CircleWithOverriddenCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.CircleWithOverriddenCustomJson.fromJson(serialized);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.CircleWithOverriddenCustomJson value) =>
       value.toJson();
 }

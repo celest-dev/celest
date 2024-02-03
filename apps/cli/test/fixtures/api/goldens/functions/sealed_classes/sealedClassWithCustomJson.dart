@@ -50,35 +50,44 @@ final class ShapeWithCustomJsonSerializer
   @override
   _i4.ShapeWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return switch (serialized[r'$type']) {
-      r'RectangleWithCustomJson' => _i3.Serializers.instance
-          .deserialize<_i4.RectangleWithCustomJson>(serialized),
-      r'CircleWithCustomJson' => _i3.Serializers.instance
-          .deserialize<_i4.CircleWithCustomJson>(serialized),
-      final unknownType =>
-        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
-              ..write(r'ShapeWithCustomJson')
-              ..write(': $unknownType'))
-            .toString()),
-    };
+    if (serialized[r'$type'] == r'RectangleWithCustomJson') {
+      return _i3.Serializers.instance
+          .deserialize<_i4.RectangleWithCustomJson>(serialized);
+    }
+    if (serialized[r'$type'] == r'CircleWithCustomJson') {
+      return _i3.Serializers.instance
+          .deserialize<_i4.CircleWithCustomJson>(serialized);
+    }
+    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeWithCustomJson')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ShapeWithCustomJson value) =>
-      switch (value) {
-        _i4.RectangleWithCustomJson() => {
-            ...(_i3.Serializers.instance
-                    .serialize<_i4.RectangleWithCustomJson>(value)
-                as Map<String, Object?>),
-            r'$type': r'RectangleWithCustomJson',
-          },
-        _i4.CircleWithCustomJson() => {
-            ...(_i3.Serializers.instance
-                    .serialize<_i4.CircleWithCustomJson>(value)
-                as Map<String, Object?>),
-            r'$type': r'CircleWithCustomJson',
-          },
+  Map<String, Object?> serialize(_i4.ShapeWithCustomJson value) {
+    if (value is _i4.RectangleWithCustomJson) {
+      return {
+        ...(_i3.Serializers.instance
+                .serialize<_i4.RectangleWithCustomJson>(value)
+            as Map<String, Object?>),
+        r'$type': r'RectangleWithCustomJson',
       };
+    }
+    if (value is _i4.CircleWithCustomJson) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.CircleWithCustomJson>(value)
+            as Map<String, Object?>),
+        r'$type': r'CircleWithCustomJson',
+      };
+    }
+    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeWithCustomJson')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
 final class RectangleWithCustomJsonSerializer

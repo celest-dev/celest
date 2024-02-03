@@ -1,3 +1,4 @@
+import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
@@ -29,5 +30,6 @@ Future<ProjectPaths> init({
 
 late CelestProject celestProject;
 ProjectPaths get projectPaths => celestProject.projectPaths;
+final InheritanceManager3 inheritanceManager = InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
