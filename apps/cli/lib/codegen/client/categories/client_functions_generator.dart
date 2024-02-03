@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:analyzer/dart/element/element.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' hide RecordType;
 import 'package:aws_common/aws_common.dart';
@@ -71,8 +72,9 @@ final class ClientFunctionsGenerator {
         (m) => m
           ..name = function.name.camelCase
           ..returns = DartTypes.core.future(
-            function.flattenedReturnType,
+            function.flattenedReturnType.noBound,
           )
+          ..types.addAll(function.typeParameters)
           ..modifier = MethodModifier.async
           ..docs.addAll(function.docs)
           ..annotations.addAll(
@@ -83,7 +85,7 @@ final class ClientFunctionsGenerator {
                   (param) => Parameter(
                     (p) => p
                       ..name = param.name
-                      ..type = param.type
+                      ..type = param.type.noBound
                       ..defaultTo = param.defaultTo?.code
                       ..annotations.addAll(
                         param.annotations
@@ -97,7 +99,7 @@ final class ClientFunctionsGenerator {
                   (param) => Parameter(
                     (p) => p
                       ..name = param.name
-                      ..type = param.type
+                      ..type = param.type.noBound
                       ..named = param.named
                       ..required = param.required
                       ..defaultTo = param.defaultTo?.code
@@ -109,6 +111,26 @@ final class ClientFunctionsGenerator {
                 ),
           )
           ..body = Block((b) {
+            final typeMaps = <Reference, String>{};
+            for (final typeParameter in function.typeParameters) {
+              final typeParameterType = typeHelper.fromReference(typeParameter)
+                  as dart_ast.TypeParameterType;
+              final typeParameterBound =
+                  typeParameterType.bound.element as dart_ast.InterfaceElement;
+              final typeMap = <Expression, Expression>{};
+              final bound = typeHelper.toReference(typeParameterType.bound);
+              typeMap[bound] = literalString(bound.symbol!, raw: true);
+              for (final subtype in typeHelper.subtypes[typeParameterBound]!) {
+                final subtypeReference = typeHelper.toReference(subtype);
+                typeMap[subtypeReference] =
+                    literalString(subtypeReference.symbol!, raw: true);
+              }
+              final typeMapName = '\$${typeParameter.symbol!}';
+              b.addExpression(
+                declareConst(typeMapName).assign(literalConstMap(typeMap)),
+              );
+              typeMaps[typeParameter] = typeMapName;
+            }
             final output = apiOutputs[api.name]!.functions[function.name]!;
             final httpClient =
                 ClientTypes.topLevelClient.ref.property('httpClient');
@@ -125,9 +147,15 @@ final class ClientFunctionsGenerator {
               }),
               // Don't include a body for functions with no parameters to save
               // on a `jsonEncode` call.
-              if (clientParameters.isNotEmpty)
+              if (clientParameters.isNotEmpty ||
+                  function.typeParameters.isNotEmpty)
                 'body': DartTypes.convert.jsonEncode.call([
                   literalMap({
+                    for (final typeParameter in function.typeParameters)
+                      literalString(typeMaps[typeParameter]!, raw: true):
+                          refer(typeMaps[typeParameter]!)
+                              .index(refer(typeParameter.symbol!))
+                              .nullChecked,
                     for (final parameter in clientParameters)
                       literalString(parameter.name, raw: true):
                           jsonGenerator.toJson(

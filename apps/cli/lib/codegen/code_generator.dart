@@ -61,6 +61,8 @@ abstract final class CodeGenerator {
     );
     try {
       return _formatter.format(code);
+    } on FormatException {
+      rethrow;
     } on Object catch (e) {
       throw FormatException(e.toString(), code);
     }

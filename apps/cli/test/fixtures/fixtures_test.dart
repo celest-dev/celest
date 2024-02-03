@@ -2383,6 +2383,107 @@ final tests = <String, Test>{
               },
             ),
           ],
+          'genericResult': [
+            FunctionTestSuccess(
+              name: 'with type',
+              input: {
+                r'$T': 'Circle',
+                'data': {
+                  'radius': 5.0,
+                },
+              },
+              output: {
+                'data': {
+                  'radius': 5.0,
+                },
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'without type',
+              input: {
+                'data': {
+                  r'$type': 'Circle',
+                  'radius': 5.0,
+                },
+              },
+              output: {
+                'data': {
+                  r'$type': 'Circle',
+                  'radius': 5.0,
+                },
+              },
+            ),
+          ],
+          'multipleGenericResult': [
+            FunctionTestSuccess(
+              name: 'with types',
+              input: {
+                r'$T': 'Circle',
+                r'$E': 'BadShapeException',
+                'data': {
+                  'radius': 5.0,
+                },
+                'error': {
+                  'shape': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+              output: [
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': {
+                    'shape': {
+                      r'$type': 'Circle',
+                      'radius': 5.0,
+                    },
+                  },
+                },
+              ],
+            ),
+            FunctionTestSuccess(
+              name: 'without types',
+              input: {
+                'data': {
+                  r'$type': 'Circle',
+                  'radius': 5.0,
+                },
+                'error': {
+                  r'$type': 'BadShapeException',
+                  'shape': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+              output: [
+                {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+                {
+                  r'$type': 'ErrResult',
+                  'error': {
+                    r'$type': 'BadShapeException',
+                    'shape': {
+                      r'$type': 'Circle',
+                      'radius': 5.0,
+                    },
+                  },
+                },
+              ],
+            ),
+          ],
         },
       ),
       'cycles': ApiTest(

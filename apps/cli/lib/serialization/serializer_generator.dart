@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/type.dart' as ast;
+import 'package:analyzer/dart/element/type_visitor.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
@@ -17,6 +18,13 @@ final class SerializerGenerator {
 
   final SerializationSpec serializationSpec;
   final SerializationSpec? _parent;
+  late final Set<Reference> _generics = _collectGenerics();
+
+  Set<Reference> _collectGenerics() {
+    final collector = _GenericsCollector();
+    serializationSpec.type.accept(collector);
+    return collector.generics;
+  }
 
   bool get isSubtype => _parent != null;
 
@@ -42,7 +50,7 @@ final class SerializerGenerator {
   }
 
   late final type = serializationSpec.type;
-  late final typeReference = typeHelper.toReference(type).nonNullable;
+  late final typeReference = typeHelper.toReference(type).nonNullable.noBound;
   late final wireType = typeHelper.toReference(serializationSpec.wireType);
   late final castType = typeHelper.toReference(serializationSpec.castType);
 
@@ -50,7 +58,8 @@ final class SerializerGenerator {
         b
           ..modifier = ClassModifier.final$
           ..name = '${type.classNamePrefix}Serializer'
-          ..extend = DartTypes.celest.serializer(typeReference);
+          ..extend = DartTypes.celest.serializer(typeReference)
+          ..types.addAll(_generics);
 
         // Create unnamed constant constructor
         b.constructors.add(
@@ -191,7 +200,7 @@ final class SerializerGenerator {
       return CodeExpression(
         Block((b) {
           for (final subtype in serializationSpec.subtypes) {
-            final subtypeRef = typeHelper.toReference(subtype.type);
+            final subtypeRef = typeHelper.toReference(subtype.type).noBound;
             final subtypeCase = serialize(
               [ref],
               {},
@@ -273,7 +282,7 @@ final class SerializerGenerator {
         if (usesParent)
           literalMap({
             literalString(r'$type', raw: true): literalString(
-              typeReference.symbol,
+              typeReference.symbol!,
               raw: true,
             ),
             literalSpread(): ref,
@@ -297,10 +306,11 @@ final class SerializerGenerator {
         final type = ref.index(literalString(r'$type', raw: true));
         for (final subtype in serializationSpec.subtypes) {
           final subtypeName = subtype.type.element!.name;
+          final subtypeRef = typeHelper.toReference(subtype.type).noBound;
           final subtypeCase = deserialize(
             [ref],
             {},
-            [typeHelper.toReference(subtype.type)],
+            [subtypeRef],
           );
           b.statements.add(
             subtypeCase.returned.wrapWithBlockIf(
@@ -393,4 +403,49 @@ extension on ast.DartType {
       _ => null,
     };
   }
+}
+
+final class _GenericsCollector extends ast.TypeVisitor<void> {
+  _GenericsCollector();
+
+  final Set<Reference> generics = {};
+  final Set<ast.DartType> _seen = {};
+
+  @override
+  void visitInterfaceType(ast.InterfaceType type) {
+    if (!_seen.add(type)) {
+      return;
+    }
+    for (final typeArgument in type.typeArguments) {
+      typeArgument.accept(this);
+    }
+  }
+
+  @override
+  void visitTypeParameterType(ast.TypeParameterType type) {
+    if (!_seen.add(type)) {
+      return;
+    }
+    generics.add(typeHelper.toReference(type));
+  }
+
+  @override
+  void visitDynamicType(ast.DynamicType type) {}
+
+  @override
+  void visitFunctionType(ast.FunctionType type) {}
+
+  @override
+  void visitInvalidType(ast.InvalidType type) {}
+
+  @override
+  void visitNeverType(ast.NeverType type) {}
+
+  @override
+  void visitRecordType(ast.RecordType type) {
+    // TODO(dnys1): Generic records
+  }
+
+  @override
+  void visitVoidType(ast.VoidType type) {}
 }

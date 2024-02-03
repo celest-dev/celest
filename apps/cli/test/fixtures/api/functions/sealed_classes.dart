@@ -1,3 +1,4 @@
+import 'package:celest_backend/exceptions.dart';
 import 'package:celest_backend/models.dart';
 
 // Should be able to use the base type.
@@ -74,6 +75,14 @@ List<ShapeResult<String>> aliasedShapeResults(List<Shape> shapes) => [
 
 SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
     SwappedResult(result);
+
+OkResult<T> genericResult<T extends Shape>(T data) => OkResult(data);
+List<Result<T, E>>
+    multipleGenericResult<T extends Shape, E extends ShapeException>(
+  T data,
+  E error,
+) =>
+        [OkResult(data), ErrResult(error)];
 
 // TODO(dnys1): rework subtype checks with finals so that OkShapeResult is not
 // OkShapeResult okShapeResult(Shape shape) => OkShapeResult(shape);

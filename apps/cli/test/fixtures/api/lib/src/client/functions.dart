@@ -6117,4 +6117,90 @@ class CelestFunctionsSealedClasses {
         }
     }
   }
+
+  Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
+    const $T = {
+      Shape: r'Shape',
+      Circle: r'Circle',
+      Rectangle: r'Rectangle',
+    };
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/generic-result'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'$T': $T[T]!,
+        r'data': Serializers.instance.serialize<T>(data),
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<OkResult<T>>($body['response']);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<List<Result<T, E>>>
+      multipleGenericResult<T extends Shape, E extends ShapeException>(
+    T data,
+    E error,
+  ) async {
+    const $T = {
+      Shape: r'Shape',
+      Circle: r'Circle',
+      Rectangle: r'Rectangle',
+    };
+    const $E = {
+      ShapeException: r'ShapeException',
+      BadShapeException: r'BadShapeException',
+    };
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/multiple-generic-result'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'$T': $T[T]!,
+        r'$E': $E[E]!,
+        r'data': Serializers.instance.serialize<T>(data),
+        r'error': Serializers.instance.serialize<E>(error),
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return ($body['response'] as Iterable<Object?>)
+          .map((el) => Serializers.instance.deserialize<Result<T, E>>(el))
+          .toList();
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
 }

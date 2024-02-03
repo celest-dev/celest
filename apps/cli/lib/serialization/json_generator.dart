@@ -95,7 +95,7 @@ final class JsonGenerator {
         .call(
       [ref],
       {},
-      [type],
+      [type.noBound],
     );
   }
 
@@ -225,7 +225,7 @@ final class JsonGenerator {
         .call(
       [ref],
       {},
-      [type],
+      [type.noBound],
     );
   }
 }

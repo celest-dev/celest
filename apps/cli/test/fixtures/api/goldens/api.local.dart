@@ -157,18 +157,20 @@ import 'functions/sealed_classes/area.dart' as _i150;
 import 'functions/sealed_classes/circle.dart' as _i151;
 import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i152;
 import 'functions/sealed_classes/errShapeResults.dart' as _i153;
-import 'functions/sealed_classes/okShapeResults.dart' as _i154;
-import 'functions/sealed_classes/rectangle.dart' as _i155;
+import 'functions/sealed_classes/genericResult.dart' as _i154;
+import 'functions/sealed_classes/multipleGenericResult.dart' as _i155;
+import 'functions/sealed_classes/okShapeResults.dart' as _i156;
+import 'functions/sealed_classes/rectangle.dart' as _i157;
 import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
-    as _i156;
-import 'functions/sealed_classes/sealedClass.dart' as _i157;
-import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i158;
+    as _i158;
+import 'functions/sealed_classes/sealedClass.dart' as _i159;
+import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i160;
 import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
-    as _i159;
+    as _i161;
 import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
-    as _i160;
-import 'functions/sealed_classes/shapeResults.dart' as _i161;
-import 'functions/sealed_classes/swappedResult.dart' as _i162;
+    as _i162;
+import 'functions/sealed_classes/shapeResults.dart' as _i163;
+import 'functions/sealed_classes/swappedResult.dart' as _i164;
 
 void main() {
   _i1.serve(targets: {
@@ -373,18 +375,21 @@ void main() {
     '/sealed-classes/circle-with-overridden-custom-json':
         _i152.CircleWithOverriddenCustomJsonTarget(),
     '/sealed-classes/err-shape-results': _i153.ErrShapeResultsTarget(),
-    '/sealed-classes/ok-shape-results': _i154.OkShapeResultsTarget(),
-    '/sealed-classes/rectangle': _i155.RectangleTarget(),
+    '/sealed-classes/generic-result': _i154.GenericResultTarget(),
+    '/sealed-classes/multiple-generic-result':
+        _i155.MultipleGenericResultTarget(),
+    '/sealed-classes/ok-shape-results': _i156.OkShapeResultsTarget(),
+    '/sealed-classes/rectangle': _i157.RectangleTarget(),
     '/sealed-classes/rectangle-with-overridden-custom-json':
-        _i156.RectangleWithOverriddenCustomJsonTarget(),
-    '/sealed-classes/sealed-class': _i157.SealedClassTarget(),
+        _i158.RectangleWithOverriddenCustomJsonTarget(),
+    '/sealed-classes/sealed-class': _i159.SealedClassTarget(),
     '/sealed-classes/sealed-class-with-custom-json':
-        _i158.SealedClassWithCustomJsonTarget(),
+        _i160.SealedClassWithCustomJsonTarget(),
     '/sealed-classes/sealed-class-with-inherited-custom-json':
-        _i159.SealedClassWithInheritedCustomJsonTarget(),
+        _i161.SealedClassWithInheritedCustomJsonTarget(),
     '/sealed-classes/sealed-class-with-overridden-custom-json':
-        _i160.SealedClassWithOverriddenCustomJsonTarget(),
-    '/sealed-classes/shape-results': _i161.ShapeResultsTarget(),
-    '/sealed-classes/swapped-result': _i162.SwappedResultTarget(),
+        _i162.SealedClassWithOverriddenCustomJsonTarget(),
+    '/sealed-classes/shape-results': _i163.ShapeResultsTarget(),
+    '/sealed-classes/swapped-result': _i164.SwappedResultTarget(),
   });
 }

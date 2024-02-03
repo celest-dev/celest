@@ -113,11 +113,10 @@ final class TypeHelper {
     // Perform for nullable version of [type] so that subsequent
     // nullable/non-nullable promotions which require [fromReference] succeed.
     if (!reference.isNullableOrFalse) {
-      final nullableType = (type as TypeImpl)
-          .withNullability(NullabilitySuffix.question)
-        ..alias = type.alias;
-      final nullableReference = reference.withNullability(true);
-      _referenceToDartType[nullableReference] ??= nullableType;
+      _referenceToDartType[reference.withNullability(true)] ??=
+          (type as TypeImpl).withNullability(NullabilitySuffix.question)
+            ..alias = type.alias;
+      _referenceToDartType[reference.withNullability(false)] ??= type;
     }
     if (toUri(type) case final wireType?) {
       _wireTypeToDartType[wireType] ??= type;

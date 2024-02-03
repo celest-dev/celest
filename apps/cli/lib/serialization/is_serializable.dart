@@ -752,8 +752,44 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitTypeParameterType(TypeParameterType type) {
-    // TODO(dnys1): Generic tests and support?
-    return Verdict.no('Generic types are not supported');
+    // TODO(dnys1): Tests for different branches
+    switch (type.bound) {
+      case InterfaceType(:final ClassElement element) when element.isSealed:
+        analytics.capture(
+          'type_parameter',
+          properties: {
+            'type': type.getDisplayString(withNullability: false),
+            'bound': 'sealed',
+          },
+        );
+        return typeHelper.isSerializable(type.bound);
+      case DynamicType():
+        analytics.capture(
+          'type_parameter',
+          properties: {
+            'type': type.getDisplayString(withNullability: false),
+            'bound': 'unbounded',
+          },
+        );
+        return const VerdictNo([
+          VerdictReason('Unbounded generic types are not supported'),
+        ]);
+      default:
+        analytics.capture(
+          'type_parameter',
+          properties: {
+            'type': type.getDisplayString(withNullability: false),
+            'bound': 'other',
+          },
+        );
+        return VerdictNo([
+          VerdictReason(
+            'Unsupported generic bound: ${type.bound}. Only sealed classes '
+            'can be used as bounds.',
+            location: type.element.sourceLocation,
+          ),
+        ]);
+    }
   }
 
   @override

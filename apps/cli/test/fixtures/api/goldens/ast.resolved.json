@@ -580,6 +580,50 @@
               }
             ]
           }
+        },
+        "genericResult": {
+          "name": "genericResult",
+          "route": "/sealed-classes/generic-result",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "multipleGenericResult": {
+          "name": "multipleGenericResult",
+          "route": "/sealed-classes/multiple-generic-result",
+          "apiName": "sealed_classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
     },

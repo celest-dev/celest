@@ -8,6 +8,7 @@ import 'package:analyzer/dart/analysis/uri_converter.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
@@ -550,6 +551,30 @@ final class CelestAnalyzer {
         final function = ast.CloudFunction(
           name: func.name,
           apiName: apiName,
+          typeParameters: await func.typeParameters.asyncMap((type) async {
+            final typeRef = typeHelper.toReference(
+              type.instantiate(nullabilitySuffix: NullabilitySuffix.none),
+            );
+            final bound = type.bound;
+            if (bound == null) {
+              // Will be caught in serializer.
+              // TODO(dnys1): Verify that generics are used in parameters/returns
+              return typeRef;
+            }
+            final hasAllowedSubtypes = await bound.hasAllowedSubtypes();
+            if (!hasAllowedSubtypes.allowed) {
+              final disallowedTypes = hasAllowedSubtypes.disallowedTypes
+                  .map((type) => type.element.name)
+                  .join(', ');
+              _reportError(
+                'Classes with subtypes (which are not sealed classes) are not '
+                'currently supported as bounds. Disallowed subtypes: '
+                '$disallowedTypes',
+                location: type.sourceLocation,
+              );
+            }
+            return typeRef;
+          }),
           parameters: await func.parameters.asyncMap((param) async {
             final paramType = typeHelper.toReference(param.type);
             final paramLoc = param.sourceLocation;

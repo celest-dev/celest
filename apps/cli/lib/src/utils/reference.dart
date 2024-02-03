@@ -50,6 +50,17 @@ extension ReferenceHelper on Reference {
     return toTypeReference.rebuild((t) => t.isNullable = false);
   }
 
+  Reference get noBound {
+    return switch (this) {
+      final TypeReference type => type.rebuild(
+          (t) => t
+            ..bound = null
+            ..types.map((t) => t.toTypeReference.noBound),
+        ),
+      _ => this,
+    };
+  }
+
   Reference withNullability(bool isNullable) => switch (this) {
         final RecordType recordType =>
           recordType.rebuild((t) => t..isNullable = isNullable),

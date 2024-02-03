@@ -105,5 +105,11 @@ class Celest {
     Serializers.instance.put(const ErrResultShapeSerializer());
     Serializers.instance.put(const SwappedResultShapeStringSerializer());
     Serializers.instance.put(const OkResultStringSerializer());
+    Serializers.instance.put(const OkResultSerializer());
+    Serializers.instance.put(const ShapeExceptionSerializer());
+    Serializers.instance.put(const BadShapeExceptionSerializer());
+    Serializers.instance.put(const ResultSerializer());
+    Serializers.instance.put(const ErrResultSerializer());
+    Serializers.instance.put(const SwappedResultSerializer());
   }
 }

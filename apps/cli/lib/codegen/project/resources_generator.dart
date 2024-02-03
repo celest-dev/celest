@@ -4,7 +4,6 @@ import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -70,26 +69,26 @@ final class ResourcesGenerator {
         }).code,
     );
     for (final function in api.functions.values) {
-      final inputParameters =
-          function.parameters.where((p) => !p.type.isFunctionContext).toList();
-      final inputType = switch (inputParameters) {
-        [] => refer('void'),
-        [final single] => single.type,
-        final multiple => RecordType(
-            (r) => r
-              // TODO(dnys1): Treat all parameters the same (named/optional)?
-              // This is only a Dart concept and we can handle the mapping to/from.
-              // i.e. it does not affect the actual HTTP API.
-              ..positionalFieldTypes.addAll([
-                for (final parameter in multiple.where((p) => !p.named))
-                  parameter.type,
-              ])
-              ..namedFieldTypes.addAll({
-                for (final parameter in multiple.where((p) => p.named))
-                  parameter.name: parameter.type,
-              }),
-          ),
-      };
+      // final inputParameters =
+      //     function.parameters.where((p) => !p.type.isFunctionContext).toList();
+      // // final inputType = switch (inputParameters) {
+      // //   [] => refer('void'),
+      // //   [final single] => single.type,
+      // //   final multiple => RecordType(
+      // //       (r) => r
+      // //         // `TODO`(dnys1): Treat all parameters the same (named/optional)?
+      // //         // This is only a Dart concept and we can handle the mapping to/from.
+      // //         // i.e. it does not affect the actual HTTP API.
+      // //         ..positionalFieldTypes.addAll([
+      // //           for (final parameter in multiple.where((p) => !p.named))
+      // //             parameter.type,
+      // //         ])
+      // //         ..namedFieldTypes.addAll({
+      // //           for (final parameter in multiple.where((p) => p.named))
+      // //             parameter.name: parameter.type,
+      // //         }),
+      // //     ),
+      // // };
       final functionFieldName = '${api.name}_${function.name}'.camelCase;
       functions[functionFieldName] ??= Field(
         (f) => f
@@ -98,9 +97,10 @@ final class ResourcesGenerator {
           ..modifier = FieldModifier.constant
           ..assignment = DartTypes.celest
               .cloudFunction(
-            inputType,
-            function.flattenedReturnType,
-          )
+                  // TODO(dnys1): How to support generics here?
+                  // inputType,
+                  // function.flattenedReturnType,
+                  )
               .constInstance([], {
             'api': literalString(api.name, raw: true),
             'functionName': literalString(function.name, raw: true),

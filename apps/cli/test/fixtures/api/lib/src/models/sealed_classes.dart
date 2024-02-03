@@ -184,8 +184,6 @@ class CircleWithOverriddenCustomJson extends ShapeWithOverriddenCustomJson {
       };
 }
 
-// TODO(dnys1): Enforce subtypes of sealed classes are `final` so that we can
-//  guarantee every serializer will be exhaustive.
 sealed class Result<T, E> {
   const Result();
 
@@ -206,10 +204,6 @@ final class ErrResult<E> extends Result<Never, E> {
 }
 
 typedef ShapeResult<E> = Result<Shape, E>;
-
-// final class OkShapeResult extends OkResult<Shape> {
-//   const OkShapeResult(Shape data) : super(data);
-// }
 
 final class SwappedResult<T, E> extends Result<E, T> {
   const SwappedResult(this.result);

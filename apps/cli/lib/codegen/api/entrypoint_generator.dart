@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/serialization/common.dart';
@@ -36,11 +37,11 @@ final class EntrypointGenerator {
     //   ...api.metadata,
     //   ...function.metadata,
     // ].whereType<ApiMiddleware>().toList();
-    final handle = Method(
+    final innerHandle = Method(
       (m) => m
         ..returns = DartTypes.core.future(DartTypes.celest.celestResponse)
-        ..annotations.add(DartTypes.core.override)
-        ..name = 'handle'
+        ..name = 'innerHandle'
+        ..types.addAll(function.typeParameters)
         ..requiredParameters.add(
           Parameter(
             (p) => p
@@ -115,6 +116,7 @@ final class EntrypointGenerator {
           var response = functionReference.call(
             positionalParams,
             namedParams,
+            function.typeParameters.map((t) => t.noBound).toList(),
           );
           final returnType = function.returnType;
           final flattenedReturnType = function.flattenedReturnType;
@@ -207,6 +209,86 @@ final class EntrypointGenerator {
         }),
     );
 
+    final Code handleBody;
+    if (function.typeParameters.isEmpty) {
+      handleBody =
+          refer('innerHandle').call([refer('request')]).returned.statement;
+    } else {
+      handleBody = Block((b) {
+        final request = refer('request');
+        final types = <Reference>[];
+        for (final typeParameter in function.typeParameters) {
+          final typeMapName = '\$${typeParameter.symbol!}';
+          b.addExpression(
+            declareFinal(typeMapName).assign(
+              request
+                  .index(literalString(typeMapName, raw: true))
+                  .asA(DartTypes.core.string.nullable),
+            ),
+          );
+          types.add(refer(typeMapName));
+        }
+        b.addExpression(
+          declareFinal(r'$types').assign(
+            literalRecord(types, {}),
+          ),
+        );
+        b.statements.addAll([
+          const Code(r'return switch($types) {'),
+          for (final typeParameters in _combinations(
+            function.typeParameters.map(_subtypes),
+          )) ...[
+            literalRecord(
+              typeParameters
+                  .map(
+                    (t) => switch (t) {
+                      _BoundReference(:final reference) =>
+                        literalString(reference.symbol!, raw: true)
+                            .or(literalNull),
+                      _SubtypeReference(:final reference) =>
+                        literalString(reference.symbol!, raw: true),
+                    },
+                  )
+                  .toList(),
+              {},
+            ).code,
+            const Code(' => '),
+            refer('innerHandle').call(
+              [request],
+              {},
+              typeParameters.references,
+            ).code,
+            const Code(','),
+          ],
+          const Code('_ => '),
+          // TODO(dnys1): Test this
+          DartTypes.celest.serializationException
+              .newInstance([
+                literalString(r'Invalid type parameters: ${$types}'),
+              ])
+              .thrown
+              .code,
+          const Code(',};'),
+        ]);
+      });
+    }
+
+    final handle = Method(
+      (m) => m
+        ..returns = DartTypes.core.future(DartTypes.celest.celestResponse)
+        ..annotations.add(DartTypes.core.override)
+        ..name = 'handle'
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'request'
+              ..type = typeHelper.toReference(jsonMapType),
+          ),
+        )
+        ..modifier = MethodModifier.async
+        ..body = handleBody,
+    );
+
     final allTypes = Set.of(
       [
         function.flattenedReturnType,
@@ -244,7 +326,13 @@ final class EntrypointGenerator {
               ..lambda = true
               ..body = literalString(function.name).code,
           ),
-          handle,
+          if (function.typeParameters.isEmpty)
+            innerHandle.rebuild(
+              (m) => m
+                ..name = 'handle'
+                ..annotations.add(DartTypes.core.override),
+            )
+          else ...[handle, innerHandle],
           if (_customSerializers.isNotEmpty)
             Method(
               (m) => m
@@ -261,6 +349,22 @@ final class EntrypointGenerator {
                         refer(serializer.name).constInstance([]),
                       ]),
                     );
+                    for (final subtypes in _combinations(
+                      serializer.types.map(_subtypes),
+                    )) {
+                      b.addExpression(
+                        DartTypes.celest.serializers
+                            .property('instance')
+                            .property('put')
+                            .call([
+                          refer(serializer.name).constInstance(
+                            [],
+                            {},
+                            subtypes.references,
+                          ),
+                        ]),
+                      );
+                    }
                   }
                 }),
             ),
@@ -301,4 +405,71 @@ final class EntrypointGenerator {
     ]);
     return library.build();
   }
+}
+
+List<_Reference> _subtypes(Reference typeParameter) {
+  final typeParameterType =
+      typeHelper.fromReference(typeParameter) as ast.TypeParameterType;
+  final typeParameterBound =
+      typeParameterType.bound.element as ast.InterfaceElement;
+  final subtypes = <_Reference>{
+    _BoundReference(typeHelper.toReference(typeParameterType.bound)),
+  };
+  for (final subtype in typeHelper.subtypes[typeParameterBound]!) {
+    subtypes.add(
+      _SubtypeReference(typeHelper.toReference(subtype)),
+    );
+  }
+  return subtypes.toList();
+}
+
+Iterable<List<_Reference>> _combinations(
+  Iterable<Iterable<_Reference>> types,
+) sync* {
+  if (types.isEmpty) {
+    return;
+  }
+  if (types.length == 1) {
+    yield* types.first.map((t) => [t]);
+    return;
+  }
+  final type = types.first;
+  final rest = types.skip(1);
+  for (final t in type) {
+    for (final r in _combinations(rest)) {
+      yield [t, ...r];
+    }
+  }
+}
+
+sealed class _Reference {
+  const _Reference(this.reference);
+
+  final Reference reference;
+}
+
+final class _SubtypeReference extends _Reference {
+  _SubtypeReference(super.reference);
+
+  @override
+  bool operator ==(Object other) =>
+      other is _SubtypeReference && reference == other.reference;
+
+  @override
+  int get hashCode => reference.hashCode;
+}
+
+final class _BoundReference extends _Reference {
+  _BoundReference(super.reference);
+
+  @override
+  bool operator ==(Object other) =>
+      other is _BoundReference && reference == other.reference;
+
+  @override
+  int get hashCode => reference.hashCode;
+}
+
+extension on Iterable<_Reference> {
+  List<Reference> get references => map((r) => r.reference).toList();
 }

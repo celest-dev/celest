@@ -1,3 +1,5 @@
+import 'package:celest_backend/models.dart';
+
 final class CustomException implements Exception {
   final String message = 'This is a custom exception';
   final Map<String, Object?> additionalInfo = {
@@ -63,4 +65,17 @@ final class CustomErrorWithStackTrace extends Error {
 
   @override
   String toString() => 'CustomError: $message';
+}
+
+sealed class ShapeException {
+  const ShapeException();
+}
+
+final class BadShapeException extends ShapeException {
+  final Shape shape;
+
+  BadShapeException(this.shape);
+
+  @override
+  String toString() => 'Bad shape: ($shape)';
 }

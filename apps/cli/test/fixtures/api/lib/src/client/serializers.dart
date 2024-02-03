@@ -1898,6 +1898,156 @@ final class OkResultStringSerializer extends Serializer<OkResult<String>> {
       {r'data': value.data};
 }
 
+final class OkResultSerializer<T extends Shape>
+    extends Serializer<OkResult<T>> {
+  const OkResultSerializer();
+
+  @override
+  OkResult<T> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return OkResult<T>(
+        Serializers.instance.deserialize<T>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(OkResult<T> value) =>
+      {r'data': Serializers.instance.serialize<T>(value.data)};
+}
+
+final class ShapeExceptionSerializer extends Serializer<ShapeException> {
+  const ShapeExceptionSerializer();
+
+  @override
+  ShapeException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'BadShapeException') {
+      return Serializers.instance.deserialize<BadShapeException>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeException')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Map<String, Object?> serialize(ShapeException value) {
+    if (value is BadShapeException) {
+      return {
+        ...(Serializers.instance.serialize<BadShapeException>(value)
+            as Map<String, Object?>),
+        r'$type': r'BadShapeException',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeException')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
+}
+
+final class BadShapeExceptionSerializer extends Serializer<BadShapeException> {
+  const BadShapeExceptionSerializer();
+
+  @override
+  BadShapeException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return BadShapeException(
+        Serializers.instance.deserialize<Shape>(serialized[r'shape']));
+  }
+
+  @override
+  Map<String, Object?> serialize(BadShapeException value) =>
+      {r'shape': Serializers.instance.serialize<Shape>(value.shape)};
+}
+
+final class ResultSerializer<T extends Shape, E extends ShapeException>
+    extends Serializer<Result<T, E>> {
+  const ResultSerializer();
+
+  @override
+  Result<T, E> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'ErrResult') {
+      return Serializers.instance.deserialize<ErrResult<E>>(serialized);
+    }
+    if (serialized[r'$type'] == r'SwappedResult') {
+      return Serializers.instance.deserialize<SwappedResult<E, T>>(serialized);
+    }
+    if (serialized[r'$type'] == r'OkResult') {
+      return Serializers.instance.deserialize<OkResult<T>>(serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Map<String, Object?> serialize(Result<T, E> value) {
+    if (value is ErrResult<E>) {
+      return {
+        ...(Serializers.instance.serialize<ErrResult<E>>(value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
+    if (value is SwappedResult<E, T>) {
+      return {
+        ...(Serializers.instance.serialize<SwappedResult<E, T>>(value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
+      };
+    }
+    if (value is OkResult<T>) {
+      return {
+        ...(Serializers.instance.serialize<OkResult<T>>(value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
+}
+
+final class ErrResultSerializer<E extends ShapeException>
+    extends Serializer<ErrResult<E>> {
+  const ErrResultSerializer();
+
+  @override
+  ErrResult<E> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ErrResult<E>(
+        Serializers.instance.deserialize<E>(serialized[r'error']));
+  }
+
+  @override
+  Map<String, Object?> serialize(ErrResult<E> value) =>
+      {r'error': Serializers.instance.serialize<E>(value.error)};
+}
+
+final class SwappedResultSerializer<E extends ShapeException, T extends Shape>
+    extends Serializer<SwappedResult<E, T>> {
+  const SwappedResultSerializer();
+
+  @override
+  SwappedResult<E, T> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return SwappedResult<E, T>(
+        Serializers.instance.deserialize<Result<E, T>>(serialized[r'result']));
+  }
+
+  @override
+  Map<String, Object?> serialize(SwappedResult<E, T> value) =>
+      {r'result': Serializers.instance.serialize<Result<E, T>>(value.result)};
+}
+
 typedef Record$k7x4l9 = ({String a, String b, String c});
 typedef Record$rmm4wt = ({String anotherField, String field});
 typedef Record$wkpf9q = ({
