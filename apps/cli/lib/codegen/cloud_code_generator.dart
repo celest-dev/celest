@@ -27,6 +27,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
     return CodeGenerator.emit(
       resources,
       forFile: resourcesFile,
+      prefixingStrategy: PrefixingStrategy.none,
       pathStrategy: PathStrategy.pretty,
     );
   }

@@ -2,851 +2,847 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'package:celest/celest.dart' as _i1;
+import 'package:celest/celest.dart';
 
 abstract final class apis {
-  static const classes = _i1.CloudApi(name: r'classes');
+  static const classes = CloudApi(name: r'classes');
 
-  static const collections = _i1.CloudApi(name: r'collections');
+  static const collections = CloudApi(name: r'collections');
 
-  static const cycles = _i1.CloudApi(name: r'cycles');
+  static const cycles = CloudApi(name: r'cycles');
 
-  static const exceptions = _i1.CloudApi(name: r'exceptions');
+  static const exceptions = CloudApi(name: r'exceptions');
 
-  static const genericWrappers = _i1.CloudApi(name: r'generic_wrappers');
+  static const genericWrappers = CloudApi(name: r'generic_wrappers');
 
-  static const metadata = _i1.CloudApi(name: r'metadata');
+  static const metadata = CloudApi(name: r'metadata');
 
-  static const parameterTypes = _i1.CloudApi(name: r'parameter_types');
+  static const parameterTypes = CloudApi(name: r'parameter_types');
 
-  static const parameters = _i1.CloudApi(name: r'parameters');
+  static const parameters = CloudApi(name: r'parameters');
 
-  static const records = _i1.CloudApi(name: r'records');
+  static const records = CloudApi(name: r'records');
 
-  static const returnTypes = _i1.CloudApi(name: r'return_types');
+  static const returnTypes = CloudApi(name: r'return_types');
 
-  static const sealedClasses = _i1.CloudApi(name: r'sealed_classes');
+  static const sealedClasses = CloudApi(name: r'sealed_classes');
 }
 
 abstract final class functions {
-  static const classesAsyncDefaultValues = _i1.CloudFunction(
+  static const classesAsyncDefaultValues = CloudFunction(
     api: r'classes',
     functionName: r'asyncDefaultValues',
   );
 
-  static const classesAsyncEmpty = _i1.CloudFunction(
+  static const classesAsyncEmpty = CloudFunction(
     api: r'classes',
     functionName: r'asyncEmpty',
   );
 
-  static const classesAsyncFields = _i1.CloudFunction(
+  static const classesAsyncFields = CloudFunction(
     api: r'classes',
     functionName: r'asyncFields',
   );
 
-  static const classesAsyncFromAndToJson = _i1.CloudFunction(
+  static const classesAsyncFromAndToJson = CloudFunction(
     api: r'classes',
     functionName: r'asyncFromAndToJson',
   );
 
-  static const classesAsyncMixedFields = _i1.CloudFunction(
+  static const classesAsyncMixedFields = CloudFunction(
     api: r'classes',
     functionName: r'asyncMixedFields',
   );
 
-  static const classesAsyncNamedFields = _i1.CloudFunction(
+  static const classesAsyncNamedFields = CloudFunction(
     api: r'classes',
     functionName: r'asyncNamedFields',
   );
 
-  static const classesAsyncNestedClass = _i1.CloudFunction(
+  static const classesAsyncNestedClass = CloudFunction(
     api: r'classes',
     functionName: r'asyncNestedClass',
   );
 
-  static const classesAsyncNonMapFromAndToJson = _i1.CloudFunction(
+  static const classesAsyncNonMapFromAndToJson = CloudFunction(
     api: r'classes',
     functionName: r'asyncNonMapFromAndToJson',
   );
 
-  static const classesAsyncNonMapToJson = _i1.CloudFunction(
+  static const classesAsyncNonMapToJson = CloudFunction(
     api: r'classes',
     functionName: r'asyncNonMapToJson',
   );
 
-  static const classesAsyncNonMapToJsonWithDefaults = _i1.CloudFunction(
+  static const classesAsyncNonMapToJsonWithDefaults = CloudFunction(
     api: r'classes',
     functionName: r'asyncNonMapToJsonWithDefaults',
   );
 
-  static const classesAsyncNullableFields = _i1.CloudFunction(
+  static const classesAsyncNullableFields = CloudFunction(
     api: r'classes',
     functionName: r'asyncNullableFields',
   );
 
-  static const classesAsyncOnlyFromJson = _i1.CloudFunction(
+  static const classesAsyncOnlyFromJson = CloudFunction(
     api: r'classes',
     functionName: r'asyncOnlyFromJson',
   );
 
-  static const classesAsyncOnlyToJson = _i1.CloudFunction(
+  static const classesAsyncOnlyToJson = CloudFunction(
     api: r'classes',
     functionName: r'asyncOnlyToJson',
   );
 
-  static const classesAsyncOnlyToJsonWithDefaults = _i1.CloudFunction(
+  static const classesAsyncOnlyToJsonWithDefaults = CloudFunction(
     api: r'classes',
     functionName: r'asyncOnlyToJsonWithDefaults',
   );
 
-  static const classesDefaultValues = _i1.CloudFunction(
+  static const classesDefaultValues = CloudFunction(
     api: r'classes',
     functionName: r'defaultValues',
   );
 
-  static const classesEmpty = _i1.CloudFunction(
+  static const classesEmpty = CloudFunction(
     api: r'classes',
     functionName: r'empty',
   );
 
-  static const classesFields = _i1.CloudFunction(
+  static const classesFields = CloudFunction(
     api: r'classes',
     functionName: r'fields',
   );
 
-  static const classesFromAndToJson = _i1.CloudFunction(
+  static const classesFromAndToJson = CloudFunction(
     api: r'classes',
     functionName: r'fromAndToJson',
   );
 
-  static const classesMixedFields = _i1.CloudFunction(
+  static const classesMixedFields = CloudFunction(
     api: r'classes',
     functionName: r'mixedFields',
   );
 
-  static const classesNamedFields = _i1.CloudFunction(
+  static const classesNamedFields = CloudFunction(
     api: r'classes',
     functionName: r'namedFields',
   );
 
-  static const classesNestedClass = _i1.CloudFunction(
+  static const classesNestedClass = CloudFunction(
     api: r'classes',
     functionName: r'nestedClass',
   );
 
-  static const classesNonMapFromAndToJson = _i1.CloudFunction(
+  static const classesNonMapFromAndToJson = CloudFunction(
     api: r'classes',
     functionName: r'nonMapFromAndToJson',
   );
 
-  static const classesNonMapToJson = _i1.CloudFunction(
+  static const classesNonMapToJson = CloudFunction(
     api: r'classes',
     functionName: r'nonMapToJson',
   );
 
-  static const classesNonMapToJsonWithDefaults = _i1.CloudFunction(
+  static const classesNonMapToJsonWithDefaults = CloudFunction(
     api: r'classes',
     functionName: r'nonMapToJsonWithDefaults',
   );
 
-  static const classesNullableFields = _i1.CloudFunction(
+  static const classesNullableFields = CloudFunction(
     api: r'classes',
     functionName: r'nullableFields',
   );
 
-  static const classesOnlyFromJson = _i1.CloudFunction(
+  static const classesOnlyFromJson = CloudFunction(
     api: r'classes',
     functionName: r'onlyFromJson',
   );
 
-  static const classesOnlyToJson = _i1.CloudFunction(
+  static const classesOnlyToJson = CloudFunction(
     api: r'classes',
     functionName: r'onlyToJson',
   );
 
-  static const classesOnlyToJsonWithDefaults = _i1.CloudFunction(
+  static const classesOnlyToJsonWithDefaults = CloudFunction(
     api: r'classes',
     functionName: r'onlyToJsonWithDefaults',
   );
 
-  static const collectionsComplexList = _i1.CloudFunction(
+  static const collectionsComplexList = CloudFunction(
     api: r'collections',
     functionName: r'complexList',
   );
 
-  static const collectionsComplexMap = _i1.CloudFunction(
+  static const collectionsComplexMap = CloudFunction(
     api: r'collections',
     functionName: r'complexMap',
   );
 
-  static const collectionsDynamicMap = _i1.CloudFunction(
+  static const collectionsDynamicMap = CloudFunction(
     api: r'collections',
     functionName: r'dynamicMap',
   );
 
-  static const collectionsObjectMap = _i1.CloudFunction(
+  static const collectionsObjectMap = CloudFunction(
     api: r'collections',
     functionName: r'objectMap',
   );
 
-  static const collectionsObjectNullableMap = _i1.CloudFunction(
+  static const collectionsObjectNullableMap = CloudFunction(
     api: r'collections',
     functionName: r'objectNullableMap',
   );
 
-  static const collectionsSimpleList = _i1.CloudFunction(
+  static const collectionsSimpleList = CloudFunction(
     api: r'collections',
     functionName: r'simpleList',
   );
 
-  static const collectionsSimpleMap = _i1.CloudFunction(
+  static const collectionsSimpleMap = CloudFunction(
     api: r'collections',
     functionName: r'simpleMap',
   );
 
-  static const cyclesCombineTrees = _i1.CloudFunction(
+  static const cyclesCombineTrees = CloudFunction(
     api: r'cycles',
     functionName: r'combineTrees',
   );
 
-  static const cyclesCreateTree = _i1.CloudFunction(
+  static const cyclesCreateTree = CloudFunction(
     api: r'cycles',
     functionName: r'createTree',
   );
 
-  static const cyclesPrintTree = _i1.CloudFunction(
+  static const cyclesPrintTree = CloudFunction(
     api: r'cycles',
     functionName: r'printTree',
   );
 
-  static const cyclesSelfReferencing = _i1.CloudFunction(
+  static const cyclesSelfReferencing = CloudFunction(
     api: r'cycles',
     functionName: r'selfReferencing',
   );
 
-  static const exceptionsThrowsCustomError = _i1.CloudFunction(
+  static const exceptionsThrowsCustomError = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsCustomError',
   );
 
-  static const exceptionsThrowsCustomErrorToFromJson = _i1.CloudFunction(
+  static const exceptionsThrowsCustomErrorToFromJson = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsCustomErrorToFromJson',
   );
 
-  static const exceptionsThrowsCustomErrorWithStackTrace = _i1.CloudFunction(
+  static const exceptionsThrowsCustomErrorWithStackTrace = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsCustomErrorWithStackTrace',
   );
 
-  static const exceptionsThrowsCustomException = _i1.CloudFunction(
+  static const exceptionsThrowsCustomException = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsCustomException',
   );
 
-  static const exceptionsThrowsCustomExceptionToFromJson = _i1.CloudFunction(
+  static const exceptionsThrowsCustomExceptionToFromJson = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsCustomExceptionToFromJson',
   );
 
-  static const exceptionsThrowsError = _i1.CloudFunction(
+  static const exceptionsThrowsError = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsError',
   );
 
-  static const exceptionsThrowsException = _i1.CloudFunction(
+  static const exceptionsThrowsException = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsException',
   );
 
-  static const genericWrappersGenericWrapperParameters = _i1.CloudFunction(
+  static const genericWrappersGenericWrapperParameters = CloudFunction(
     api: r'generic_wrappers',
     functionName: r'genericWrapperParameters',
   );
 
-  static const genericWrappersGenericWrappers = _i1.CloudFunction(
+  static const genericWrappersGenericWrappers = CloudFunction(
     api: r'generic_wrappers',
     functionName: r'genericWrappers',
   );
 
-  static const genericWrappersGenericWrappersAsync = _i1.CloudFunction(
+  static const genericWrappersGenericWrappersAsync = CloudFunction(
     api: r'generic_wrappers',
     functionName: r'genericWrappersAsync',
   );
 
-  static const metadataHasConstructedDeprecatedAnnotation = _i1.CloudFunction(
+  static const metadataHasConstructedDeprecatedAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasConstructedDeprecatedAnnotation',
   );
 
-  static const metadataHasDeprecatedAnnotation = _i1.CloudFunction(
+  static const metadataHasDeprecatedAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasDeprecatedAnnotation',
   );
 
-  static const metadataHasDocComments = _i1.CloudFunction(
+  static const metadataHasDocComments = CloudFunction(
     api: r'metadata',
     functionName: r'hasDocComments',
   );
 
-  static const metadataHasExportableAnnotation = _i1.CloudFunction(
+  static const metadataHasExportableAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasExportableAnnotation',
   );
 
-  static const metadataHasExportableConstructedAnnotation = _i1.CloudFunction(
+  static const metadataHasExportableConstructedAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasExportableConstructedAnnotation',
   );
 
-  static const metadataHasLiteralsAnnotation = _i1.CloudFunction(
+  static const metadataHasLiteralsAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasLiteralsAnnotation',
   );
 
-  static const metadataHasNamedConstructedAnnotation = _i1.CloudFunction(
+  static const metadataHasNamedConstructedAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasNamedConstructedAnnotation',
   );
 
-  static const metadataHasNotExportableAnnotation = _i1.CloudFunction(
+  static const metadataHasNotExportableAnnotation = CloudFunction(
     api: r'metadata',
     functionName: r'hasNotExportableAnnotation',
   );
 
-  static const metadataNamedDefaultValueVars = _i1.CloudFunction(
+  static const metadataNamedDefaultValueVars = CloudFunction(
     api: r'metadata',
     functionName: r'namedDefaultValueVars',
   );
 
-  static const metadataNamedDefaultValueVarsPrivate = _i1.CloudFunction(
+  static const metadataNamedDefaultValueVarsPrivate = CloudFunction(
     api: r'metadata',
     functionName: r'namedDefaultValueVarsPrivate',
   );
 
-  static const metadataNamedDefaultValues = _i1.CloudFunction(
+  static const metadataNamedDefaultValues = CloudFunction(
     api: r'metadata',
     functionName: r'namedDefaultValues',
   );
 
-  static const metadataNullableNamedDefaultValueVars = _i1.CloudFunction(
+  static const metadataNullableNamedDefaultValueVars = CloudFunction(
     api: r'metadata',
     functionName: r'nullableNamedDefaultValueVars',
   );
 
-  static const metadataNullableNamedDefaultValueVarsPrivate = _i1.CloudFunction(
+  static const metadataNullableNamedDefaultValueVarsPrivate = CloudFunction(
     api: r'metadata',
     functionName: r'nullableNamedDefaultValueVarsPrivate',
   );
 
-  static const metadataNullableNamedDefaultValues = _i1.CloudFunction(
+  static const metadataNullableNamedDefaultValues = CloudFunction(
     api: r'metadata',
     functionName: r'nullableNamedDefaultValues',
   );
 
-  static const metadataNullablePositionalDefaultValueVars = _i1.CloudFunction(
+  static const metadataNullablePositionalDefaultValueVars = CloudFunction(
     api: r'metadata',
     functionName: r'nullablePositionalDefaultValueVars',
   );
 
   static const metadataNullablePositionalDefaultValueVarsPrivate =
-      _i1.CloudFunction(
+      CloudFunction(
     api: r'metadata',
     functionName: r'nullablePositionalDefaultValueVarsPrivate',
   );
 
-  static const metadataNullablePositionalDefaultValues = _i1.CloudFunction(
+  static const metadataNullablePositionalDefaultValues = CloudFunction(
     api: r'metadata',
     functionName: r'nullablePositionalDefaultValues',
   );
 
-  static const metadataPositionalDefaultValueVars = _i1.CloudFunction(
+  static const metadataPositionalDefaultValueVars = CloudFunction(
     api: r'metadata',
     functionName: r'positionalDefaultValueVars',
   );
 
-  static const metadataPositionalDefaultValueVarsPrivate = _i1.CloudFunction(
+  static const metadataPositionalDefaultValueVarsPrivate = CloudFunction(
     api: r'metadata',
     functionName: r'positionalDefaultValueVarsPrivate',
   );
 
-  static const metadataPositionalDefaultValues = _i1.CloudFunction(
+  static const metadataPositionalDefaultValues = CloudFunction(
     api: r'metadata',
     functionName: r'positionalDefaultValues',
   );
 
-  static const parameterTypesComplex = _i1.CloudFunction(
+  static const parameterTypesComplex = CloudFunction(
     api: r'parameter_types',
     functionName: r'complex',
   );
 
-  static const parameterTypesSimple = _i1.CloudFunction(
+  static const parameterTypesSimple = CloudFunction(
     api: r'parameter_types',
     functionName: r'simple',
   );
 
-  static const parameterTypesSimpleOptional = _i1.CloudFunction(
+  static const parameterTypesSimpleOptional = CloudFunction(
     api: r'parameter_types',
     functionName: r'simpleOptional',
   );
 
-  static const parametersOptionalNamed = _i1.CloudFunction(
+  static const parametersOptionalNamed = CloudFunction(
     api: r'parameters',
     functionName: r'optionalNamed',
   );
 
-  static const parametersOptionalPositional = _i1.CloudFunction(
+  static const parametersOptionalPositional = CloudFunction(
     api: r'parameters',
     functionName: r'optionalPositional',
   );
 
-  static const parametersRequiredNamed = _i1.CloudFunction(
+  static const parametersRequiredNamed = CloudFunction(
     api: r'parameters',
     functionName: r'requiredNamed',
   );
 
-  static const parametersRequiredPositional = _i1.CloudFunction(
+  static const parametersRequiredPositional = CloudFunction(
     api: r'parameters',
     functionName: r'requiredPositional',
   );
 
-  static const recordsAliasedNamedFields = _i1.CloudFunction(
+  static const recordsAliasedNamedFields = CloudFunction(
     api: r'records',
     functionName: r'aliasedNamedFields',
   );
 
-  static const recordsAsyncAliasedNamedFields = _i1.CloudFunction(
+  static const recordsAsyncAliasedNamedFields = CloudFunction(
     api: r'records',
     functionName: r'asyncAliasedNamedFields',
   );
 
-  static const recordsAsyncNamedFields = _i1.CloudFunction(
+  static const recordsAsyncNamedFields = CloudFunction(
     api: r'records',
     functionName: r'asyncNamedFields',
   );
 
-  static const recordsAsyncNested = _i1.CloudFunction(
+  static const recordsAsyncNested = CloudFunction(
     api: r'records',
     functionName: r'asyncNested',
   );
 
-  static const recordsAsyncNonAliasedNamedFields = _i1.CloudFunction(
+  static const recordsAsyncNonAliasedNamedFields = CloudFunction(
     api: r'records',
     functionName: r'asyncNonAliasedNamedFields',
   );
 
-  static const recordsAsyncNullableNested = _i1.CloudFunction(
+  static const recordsAsyncNullableNested = CloudFunction(
     api: r'records',
     functionName: r'asyncNullableNested',
   );
 
-  static const recordsNamedFields = _i1.CloudFunction(
+  static const recordsNamedFields = CloudFunction(
     api: r'records',
     functionName: r'namedFields',
   );
 
-  static const recordsNested = _i1.CloudFunction(
+  static const recordsNested = CloudFunction(
     api: r'records',
     functionName: r'nested',
   );
 
-  static const recordsNonAliasedNamedFields = _i1.CloudFunction(
+  static const recordsNonAliasedNamedFields = CloudFunction(
     api: r'records',
     functionName: r'nonAliasedNamedFields',
   );
 
-  static const recordsNullableNested = _i1.CloudFunction(
+  static const recordsNullableNested = CloudFunction(
     api: r'records',
     functionName: r'nullableNested',
   );
 
-  static const returnTypesAsyncBoolReturn = _i1.CloudFunction(
+  static const returnTypesAsyncBoolReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncBoolReturn',
   );
 
-  static const returnTypesAsyncClassReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncClassReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncClassReturnNullable',
   );
 
-  static const returnTypesAsyncComplexClassReturn = _i1.CloudFunction(
+  static const returnTypesAsyncComplexClassReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncComplexClassReturn',
   );
 
-  static const returnTypesAsyncComplexStructReturn = _i1.CloudFunction(
+  static const returnTypesAsyncComplexStructReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncComplexStructReturn',
   );
 
-  static const returnTypesAsyncComplexStructReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncComplexStructReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncComplexStructReturnNullable',
   );
 
-  static const returnTypesAsyncDoubleReturn = _i1.CloudFunction(
+  static const returnTypesAsyncDoubleReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncDoubleReturn',
   );
 
-  static const returnTypesAsyncIntReturn = _i1.CloudFunction(
+  static const returnTypesAsyncIntReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncIntReturn',
   );
 
-  static const returnTypesAsyncIterableReturn = _i1.CloudFunction(
+  static const returnTypesAsyncIterableReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncIterableReturn',
   );
 
-  static const returnTypesAsyncListReturn = _i1.CloudFunction(
+  static const returnTypesAsyncListReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncListReturn',
   );
 
-  static const returnTypesAsyncMapReturn = _i1.CloudFunction(
+  static const returnTypesAsyncMapReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncMapReturn',
   );
 
-  static const returnTypesAsyncOrBoolReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrBoolReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrBoolReturn',
   );
 
-  static const returnTypesAsyncOrBoolReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrBoolReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrBoolReturnNullable',
   );
 
-  static const returnTypesAsyncOrComplexClassReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrComplexClassReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrComplexClassReturnNullable',
   );
 
-  static const returnTypesAsyncOrComplexStructReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrComplexStructReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturn',
   );
 
-  static const returnTypesAsyncOrComplexStructReturnNullable =
-      _i1.CloudFunction(
+  static const returnTypesAsyncOrComplexStructReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrComplexStructReturnNullable',
   );
 
-  static const returnTypesAsyncOrDoubleReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrDoubleReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturn',
   );
 
-  static const returnTypesAsyncOrDoubleReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrDoubleReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrDoubleReturnNullable',
   );
 
-  static const returnTypesAsyncOrIntReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrIntReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrIntReturn',
   );
 
-  static const returnTypesAsyncOrIntReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrIntReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrIntReturnNullable',
   );
 
-  static const returnTypesAsyncOrIterableReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrIterableReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrIterableReturn',
   );
 
-  static const returnTypesAsyncOrIterableReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrIterableReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrIterableReturnNullable',
   );
 
-  static const returnTypesAsyncOrListReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrListReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrListReturn',
   );
 
-  static const returnTypesAsyncOrListReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrListReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrListReturnNullable',
   );
 
-  static const returnTypesAsyncOrMapReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrMapReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrMapReturn',
   );
 
-  static const returnTypesAsyncOrMapReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrMapReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrMapReturnNullable',
   );
 
-  static const returnTypesAsyncOrSimpleClassReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrSimpleClassReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrSimpleClassReturnNullable',
   );
 
-  static const returnTypesAsyncOrStringReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrStringReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrStringReturn',
   );
 
-  static const returnTypesAsyncOrStringReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrStringReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrStringReturnNullable',
   );
 
-  static const returnTypesAsyncOrStructReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrStructReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrStructReturn',
   );
 
-  static const returnTypesAsyncOrStructReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrStructReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrStructReturnNullable',
   );
 
-  static const returnTypesAsyncOrVoidReturn = _i1.CloudFunction(
+  static const returnTypesAsyncOrVoidReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrVoidReturn',
   );
 
-  static const returnTypesAsyncOrVoidReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncOrVoidReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncOrVoidReturnNullable',
   );
 
-  static const returnTypesAsyncStringReturn = _i1.CloudFunction(
+  static const returnTypesAsyncStringReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncStringReturn',
   );
 
-  static const returnTypesAsyncStructReturn = _i1.CloudFunction(
+  static const returnTypesAsyncStructReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncStructReturn',
   );
 
-  static const returnTypesAsyncStructReturnNullable = _i1.CloudFunction(
+  static const returnTypesAsyncStructReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'asyncStructReturnNullable',
   );
 
-  static const returnTypesAsyncVoidReturn = _i1.CloudFunction(
+  static const returnTypesAsyncVoidReturn = CloudFunction(
     api: r'return_types',
     functionName: r'asyncVoidReturn',
   );
 
-  static const returnTypesBoolReturn = _i1.CloudFunction(
+  static const returnTypesBoolReturn = CloudFunction(
     api: r'return_types',
     functionName: r'boolReturn',
   );
 
-  static const returnTypesBoolReturnNullable = _i1.CloudFunction(
+  static const returnTypesBoolReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'boolReturnNullable',
   );
 
-  static const returnTypesComplexClassReturn = _i1.CloudFunction(
+  static const returnTypesComplexClassReturn = CloudFunction(
     api: r'return_types',
     functionName: r'complexClassReturn',
   );
 
-  static const returnTypesComplexClassReturnNullable = _i1.CloudFunction(
+  static const returnTypesComplexClassReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'complexClassReturnNullable',
   );
 
-  static const returnTypesComplexReturn = _i1.CloudFunction(
+  static const returnTypesComplexReturn = CloudFunction(
     api: r'return_types',
     functionName: r'complexReturn',
   );
 
-  static const returnTypesComplexReturnNullable = _i1.CloudFunction(
+  static const returnTypesComplexReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'complexReturnNullable',
   );
 
-  static const returnTypesDoubleReturn = _i1.CloudFunction(
+  static const returnTypesDoubleReturn = CloudFunction(
     api: r'return_types',
     functionName: r'doubleReturn',
   );
 
-  static const returnTypesDoubleReturnNullable = _i1.CloudFunction(
+  static const returnTypesDoubleReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'doubleReturnNullable',
   );
 
-  static const returnTypesIntReturn = _i1.CloudFunction(
+  static const returnTypesIntReturn = CloudFunction(
     api: r'return_types',
     functionName: r'intReturn',
   );
 
-  static const returnTypesIntReturnNullable = _i1.CloudFunction(
+  static const returnTypesIntReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'intReturnNullable',
   );
 
-  static const returnTypesIterableReturn = _i1.CloudFunction(
+  static const returnTypesIterableReturn = CloudFunction(
     api: r'return_types',
     functionName: r'iterableReturn',
   );
 
-  static const returnTypesIterableReturnNullable = _i1.CloudFunction(
+  static const returnTypesIterableReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'iterableReturnNullable',
   );
 
-  static const returnTypesListReturn = _i1.CloudFunction(
+  static const returnTypesListReturn = CloudFunction(
     api: r'return_types',
     functionName: r'listReturn',
   );
 
-  static const returnTypesListReturnNullable = _i1.CloudFunction(
+  static const returnTypesListReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'listReturnNullable',
   );
 
-  static const returnTypesMapReturn = _i1.CloudFunction(
+  static const returnTypesMapReturn = CloudFunction(
     api: r'return_types',
     functionName: r'mapReturn',
   );
 
-  static const returnTypesMapReturnNullable = _i1.CloudFunction(
+  static const returnTypesMapReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'mapReturnNullable',
   );
 
-  static const returnTypesSimpleClassReturn = _i1.CloudFunction(
+  static const returnTypesSimpleClassReturn = CloudFunction(
     api: r'return_types',
     functionName: r'simpleClassReturn',
   );
 
-  static const returnTypesSimpleClassReturnNullable = _i1.CloudFunction(
+  static const returnTypesSimpleClassReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'simpleClassReturnNullable',
   );
 
-  static const returnTypesStringReturn = _i1.CloudFunction(
+  static const returnTypesStringReturn = CloudFunction(
     api: r'return_types',
     functionName: r'stringReturn',
   );
 
-  static const returnTypesStringReturnNullable = _i1.CloudFunction(
+  static const returnTypesStringReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'stringReturnNullable',
   );
 
-  static const returnTypesStructReturn = _i1.CloudFunction(
+  static const returnTypesStructReturn = CloudFunction(
     api: r'return_types',
     functionName: r'structReturn',
   );
 
-  static const returnTypesStructReturnNullable = _i1.CloudFunction(
+  static const returnTypesStructReturnNullable = CloudFunction(
     api: r'return_types',
     functionName: r'structReturnNullable',
   );
 
-  static const returnTypesVoidReturn = _i1.CloudFunction(
+  static const returnTypesVoidReturn = CloudFunction(
     api: r'return_types',
     functionName: r'voidReturn',
   );
 
-  static const sealedClassesAliasedErrShapeResults = _i1.CloudFunction(
+  static const sealedClassesAliasedErrShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'aliasedErrShapeResults',
   );
 
-  static const sealedClassesAliasedOkShapeResults = _i1.CloudFunction(
+  static const sealedClassesAliasedOkShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'aliasedOkShapeResults',
   );
 
-  static const sealedClassesAliasedShapeResults = _i1.CloudFunction(
+  static const sealedClassesAliasedShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'aliasedShapeResults',
   );
 
-  static const sealedClassesArea = _i1.CloudFunction(
+  static const sealedClassesArea = CloudFunction(
     api: r'sealed_classes',
     functionName: r'area',
   );
 
-  static const sealedClassesCircle = _i1.CloudFunction(
+  static const sealedClassesCircle = CloudFunction(
     api: r'sealed_classes',
     functionName: r'circle',
   );
 
-  static const sealedClassesCircleWithOverriddenCustomJson = _i1.CloudFunction(
+  static const sealedClassesCircleWithOverriddenCustomJson = CloudFunction(
     api: r'sealed_classes',
     functionName: r'circleWithOverriddenCustomJson',
   );
 
-  static const sealedClassesErrShapeResults = _i1.CloudFunction(
+  static const sealedClassesErrShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'errShapeResults',
   );
 
-  static const sealedClassesGenericResult = _i1.CloudFunction(
+  static const sealedClassesGenericResult = CloudFunction(
     api: r'sealed_classes',
     functionName: r'genericResult',
   );
 
-  static const sealedClassesMultipleGenericResult = _i1.CloudFunction(
+  static const sealedClassesMultipleGenericResult = CloudFunction(
     api: r'sealed_classes',
     functionName: r'multipleGenericResult',
   );
 
-  static const sealedClassesOkShapeResults = _i1.CloudFunction(
+  static const sealedClassesOkShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'okShapeResults',
   );
 
-  static const sealedClassesRectangle = _i1.CloudFunction(
+  static const sealedClassesRectangle = CloudFunction(
     api: r'sealed_classes',
     functionName: r'rectangle',
   );
 
-  static const sealedClassesRectangleWithOverriddenCustomJson =
-      _i1.CloudFunction(
+  static const sealedClassesRectangleWithOverriddenCustomJson = CloudFunction(
     api: r'sealed_classes',
     functionName: r'rectangleWithOverriddenCustomJson',
   );
 
-  static const sealedClassesSealedClass = _i1.CloudFunction(
+  static const sealedClassesSealedClass = CloudFunction(
     api: r'sealed_classes',
     functionName: r'sealedClass',
   );
 
-  static const sealedClassesSealedClassWithCustomJson = _i1.CloudFunction(
+  static const sealedClassesSealedClassWithCustomJson = CloudFunction(
     api: r'sealed_classes',
     functionName: r'sealedClassWithCustomJson',
   );
 
-  static const sealedClassesSealedClassWithInheritedCustomJson =
-      _i1.CloudFunction(
+  static const sealedClassesSealedClassWithInheritedCustomJson = CloudFunction(
     api: r'sealed_classes',
     functionName: r'sealedClassWithInheritedCustomJson',
   );
 
-  static const sealedClassesSealedClassWithOverriddenCustomJson =
-      _i1.CloudFunction(
+  static const sealedClassesSealedClassWithOverriddenCustomJson = CloudFunction(
     api: r'sealed_classes',
     functionName: r'sealedClassWithOverriddenCustomJson',
   );
 
-  static const sealedClassesShapeResults = _i1.CloudFunction(
+  static const sealedClassesShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'shapeResults',
   );
 
-  static const sealedClassesSwappedResult = _i1.CloudFunction(
+  static const sealedClassesSwappedResult = CloudFunction(
     api: r'sealed_classes',
     functionName: r'swappedResult',
   );

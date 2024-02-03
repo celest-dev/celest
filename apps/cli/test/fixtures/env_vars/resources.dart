@@ -2,20 +2,20 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'package:celest/celest.dart' as _i1;
+import 'package:celest/celest.dart';
 
 abstract final class env {
-  static const myName = _i1.EnvironmentVariable(name: r'MY_NAME');
+  static const myName = EnvironmentVariable(name: r'MY_NAME');
 
-  static const myAge = _i1.EnvironmentVariable(name: r'MY_AGE');
+  static const myAge = EnvironmentVariable(name: r'MY_AGE');
 
-  static const myHeight = _i1.EnvironmentVariable(name: r'MY_HEIGHT');
+  static const myHeight = EnvironmentVariable(name: r'MY_HEIGHT');
 
-  static const myWeight = _i1.EnvironmentVariable(name: r'MY_WEIGHT');
+  static const myWeight = EnvironmentVariable(name: r'MY_WEIGHT');
 
-  static const imCool = _i1.EnvironmentVariable(name: r'IM_COOL');
+  static const imCool = EnvironmentVariable(name: r'IM_COOL');
 
-  static const myWebsite = _i1.EnvironmentVariable(name: r'MY_WEBSITE');
+  static const myWebsite = EnvironmentVariable(name: r'MY_WEBSITE');
 }
