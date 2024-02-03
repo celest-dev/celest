@@ -1,9 +1,9 @@
-import 'dart:developer';
-
+// Import the generated Celest client
 import 'package:celest_backend/client.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // Initializes Celest in your Flutter app
   celest.init();
   runApp(const MyApp());
 }
@@ -42,11 +42,11 @@ class TodoListState extends State<TodoList> {
     super.initState();
   }
 
+//fetches the list of tasks from the backend
   Future<void> fetchTasks() async {
     setState(() {
       isFetching = true;
     });
-    log('fetching tasks');
     try {
       tasks = await celest.functions.tasks.alltasks();
     } catch (e) {
@@ -74,18 +74,20 @@ class TodoListState extends State<TodoList> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                           children: tasks
-                              .map((e) => Dismissible(
+                              .map((task) => Dismissible(
                                     confirmDismiss: (dir) async {
                                       if (dir == DismissDirection.endToStart) {
                                         return true;
                                       } else if (dir ==
                                           DismissDirection.startToEnd) {
-                                        if (e.isCompleted) {
+                                        if (task.isCompleted) {
+                                          // sneds request to the Celest backend to mark the Task as incomplete
                                           await celest.functions.tasks
-                                              .markAsIncomplete(id: e.id);
+                                              .markAsIncomplete(id: task.id);
                                         } else {
+                                           // sneds request to the Celest backend to mark the Ttask as completed
                                           await celest.functions.tasks
-                                              .markAsCompleted(id: e.id);
+                                              .markAsCompleted(id: task.id);
                                         }
 
                                         tasks = await celest.functions.tasks
@@ -97,8 +99,9 @@ class TodoListState extends State<TodoList> {
                                     },
                                     onDismissed: (dir) async {
                                       if (dir == DismissDirection.endToStart) {
+                                        //sends a request to Celest backend to delete the Task
                                         tasks = await celest.functions.tasks
-                                            .deleteTask(id: e.id);
+                                            .deleteTask(id: task.id);
                                         setState(() {});
                                       } else if (dir ==
                                           DismissDirection.startToEnd) {}
@@ -110,7 +113,7 @@ class TodoListState extends State<TodoList> {
                                           child: Container(
                                               alignment: Alignment.centerLeft,
                                               color: Colors.green,
-                                              child: e.isCompleted
+                                              child: task.isCompleted
                                                   ? const Icon(
                                                       Icons.cancel,
                                                       color: Colors.red,
@@ -130,23 +133,23 @@ class TodoListState extends State<TodoList> {
                                     ),
                                     key: UniqueKey(),
                                     child: Card(
-                                      color: e.importance.toLowerCase() == 'low'
+                                      color: task.importance.toLowerCase() == 'low'
                                           ? Colors.blue
-                                          : e.importance.toLowerCase() ==
+                                          : task.importance.toLowerCase() ==
                                                   'medium'
                                               ? Colors.yellow
                                               : Colors.orange,
                                       child: ListTile(
                                         title: Text(
-                                          e.title,
+                                          task.title,
                                           style: TextStyle(
-                                              decoration: e.isCompleted
+                                              decoration: task.isCompleted
                                                   ? TextDecoration.lineThrough
                                                   : null),
                                         ),
                                         trailing: CircleAvatar(
                                             radius: 10,
-                                            backgroundColor: e.isCompleted
+                                            backgroundColor: task.isCompleted
                                                 ? Colors.green
                                                 : Colors.red),
                                       ),
@@ -165,6 +168,7 @@ class TodoListState extends State<TodoList> {
     );
   }
 
+//Dialog to add a new Task
   _showAddTodoDialog(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     String selectedImportance = 'Low';
@@ -234,18 +238,24 @@ class TodoListState extends State<TodoList> {
               ),
               TextButton(
                 onPressed: () async {
+                  //sends a request to the Celest backend to create a new task if the titlecontroller is not empty
                   if (titleController.text.isNotEmpty) {
                     try {
                       tasks = await celest.functions.tasks.addTask(
                           importance: selectedImportance,
                           title: titleController.text);
-                    } on ServerException catch (e) {
+                    } 
+                    //catch custom exception from celest backend and display them in a snackbar
+                    on ServerException catch (e) {
+
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Error: ${e.message}')));
                       titleController.clear();
                       return;
-                    } catch (e) {
+                    } 
+                    //catch other exceptions and display them in a snackbar
+                    catch (e) {
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Unable to connect to server')));
