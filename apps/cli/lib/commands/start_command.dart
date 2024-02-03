@@ -84,7 +84,11 @@ final class StartCommand extends CelestCommand with Configure {
     await super.run();
 
     try {
-      final latestRelease = await retrieveLatestRelease();
+      final latestRelease = await performance.trace(
+        'StartCommand',
+        'retrieveLatestRelease',
+        () => retrieveLatestRelease().timeout(const Duration(seconds: 3)),
+      );
       if (latestRelease.version > Version.parse(packageVersion)) {
         cliLogger.warn(
           'A new version of Celest is available! Run `celest upgrade` '
