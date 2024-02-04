@@ -10,5 +10,11 @@
             "request": "launch",
             "type": "dart"
         },
+        {
+            "name": "Todo Example",
+            "cwd": "examples/todo",
+            "request": "launch",
+            "type": "dart"
+        },
     ]
 }
