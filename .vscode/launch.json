@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "OpenAI Example",
+            "cwd": "examples/openai",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
             "name": "Todo Example",
             "cwd": "examples/todo",
             "request": "launch",

@@ -14,41 +14,7 @@ import 'package:celest_core/src/exception/cloud_exception.dart';
 import '../../client.dart';
 
 class CelestFunctions {
-  final greeting = CelestFunctionsGreeting();
-
   final tasks = CelestFunctionsTasks();
-}
-
-class CelestFunctionsGreeting {
-  /// Says hello to a person called [name].
-  Future<String> sayHello(String name) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/greeting/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'name': name}),
-    );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String);
-    }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
-  }
 }
 
 class CelestFunctionsTasks {
