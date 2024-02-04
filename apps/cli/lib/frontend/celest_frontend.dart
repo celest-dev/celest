@@ -321,43 +321,50 @@ final class CelestFrontend implements Closeable {
   }) async {
     Progress? currentProgress;
     try {
-      currentProgress = cliLogger.progress('Deploying Celest project...');
-      _residentCompiler ??= await ResidentCompiler.ensureRunning();
+      while (!stopped) {
+        currentProgress = cliLogger.progress('Deploying Celest project...');
+        _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
-      void fail(List<AnalysisError> errors) {
-        currentProgress!.fail(
-          'Project has errors. Please fix them and save the '
-          'corresponding files, then run `celest deploy` again.',
-        );
-        _logErrors(errors);
-      }
+        void fail(List<AnalysisError> errors) {
+          currentProgress!.fail(
+            'Project has errors. Please fix them and save the '
+            'corresponding files, then run `celest deploy` again.',
+          );
+          _logErrors(errors);
+        }
 
-      final analysisResult = await _analyzeProject();
-      switch (analysisResult) {
-        case AnalysisFailureResult(:final errors):
-        case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
-          fail(errors);
-        case AnalysisSuccessResult(:final project):
-          await _generateBackendCode(project);
-          final resolvedProject = await _resolveProject(project);
-          final projectOutputs = await _deployProject(
-            email: email,
-            resolvedProject: resolvedProject,
-          );
-          await _generateClientCode(
-            project: project,
-            projectOutputs: projectOutputs,
-          );
+        final analysisResult = await _analyzeProject();
+        switch (analysisResult) {
+          case AnalysisFailureResult(:final errors):
+          case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
+            fail(errors);
+            await _nextChangeSet();
+          case AnalysisSuccessResult(:final project):
+            await _generateBackendCode(project);
+            final resolvedProject = await _resolveProject(project);
+            final projectOutputs = await _deployProject(
+              email: email,
+              resolvedProject: resolvedProject,
+            );
+            await _generateClientCode(
+              project: project,
+              projectOutputs: projectOutputs,
+            );
 
-          currentProgress.complete(
-            '🚀 Your Celest project has been deployed!',
-          );
+            currentProgress.complete(
+              '🚀 Your Celest project has been deployed!',
+            );
+            return 0;
+        }
       }
       return 0;
     } on CancellationException {
+      currentProgress?.fail('Canceled deployment');
       return 0;
-    } finally {
+    } on Object {
       currentProgress?.cancel();
+      rethrow;
+    } finally {
       await close();
     }
   }
@@ -498,9 +505,10 @@ final class CelestFrontend implements Closeable {
           enabledExperiments: celestProject.analysisOptions.enabledExperiments,
         );
         final assets = Stream.fromFutures([
-          for (final api in resolvedProject.apis.values)
-            for (final function in api.functions.values)
-              entrypointCompiler.compile(function),
+          entrypointCompiler.compile(
+            resolvedProject.id,
+            projectPaths.localApiEntrypoint,
+          ),
         ]);
         logger.fine('Created deployment: $deploymentId');
         logger.finest('Missing assets: ${missingAssetIds.join('\n')}');

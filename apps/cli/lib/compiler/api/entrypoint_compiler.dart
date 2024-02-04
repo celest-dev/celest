@@ -63,11 +63,7 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
-  Future<EntrypointResult> compile(ResolvedCloudFunction entrypoint) async {
-    final entrypointPath = projectPaths.functionEntrypoint(
-      entrypoint.apiName,
-      entrypoint.name,
-    );
+  Future<EntrypointResult> compile(NodeId id, String entrypointPath) async {
     logger.fine('Compiling entrypoint: $entrypointPath');
     if (!fileSystem.isFileSync(entrypointPath)) {
       throw StateError(
@@ -121,7 +117,7 @@ final class EntrypointCompiler {
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
     final outputDillSha256 = sha256.convert(outputDill);
     return EntrypointResult(
-      nodeId: entrypoint.id,
+      nodeId: id,
       outputDillPath: outputPath,
       outputDill: outputDill,
       outputDillSha256: outputDillSha256,
