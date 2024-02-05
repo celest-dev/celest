@@ -6154,8 +6154,8 @@ class CelestFunctionsSealedClasses {
   Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
     const $T = {
       Shape: r'Shape',
-      Circle: r'Circle',
       Rectangle: r'Rectangle',
+      Circle: r'Circle',
     };
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/generic-result'),
@@ -6195,8 +6195,8 @@ class CelestFunctionsSealedClasses {
   ) async {
     const $T = {
       Shape: r'Shape',
-      Circle: r'Circle',
       Rectangle: r'Rectangle',
+      Circle: r'Circle',
     };
     const $E = {
       ShapeException: r'ShapeException',

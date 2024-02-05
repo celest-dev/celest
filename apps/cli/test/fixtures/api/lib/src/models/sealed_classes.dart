@@ -191,20 +191,24 @@ sealed class Result<T, E> {
   const factory Result.err(E error) = ErrResult;
 }
 
+// Tests `extends`
 final class OkResult<T> extends Result<T, Never> {
   const OkResult(this.data);
 
   final T data;
 }
 
-final class ErrResult<E> extends Result<Never, E> {
+// Tests `implements`
+final class ErrResult<E> implements Result<Never, E> {
   const ErrResult(this.error);
 
   final E error;
 }
 
+// Tests `typedef` (aliased sealed class)
 typedef ShapeResult<E> = Result<Shape, E>;
 
+// Tests type parameters are matched up correctly
 final class SwappedResult<T, E> extends Result<E, T> {
   const SwappedResult(this.result);
 

@@ -30,16 +30,16 @@ final class ShapeResultsTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance.put(const ShapeSerializer());
-    _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const RectangleSerializer());
+    _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const ResultShapeStringSerializer());
+    _i3.Serializers.instance.put(const OkResultShapeSerializer());
     _i3.Serializers.instance.put(const ErrResultStringSerializer());
     _i3.Serializers.instance.put(const SwappedResultStringShapeSerializer());
-    _i3.Serializers.instance.put(const OkResultShapeSerializer());
     _i3.Serializers.instance.put(const ResultStringShapeSerializer());
+    _i3.Serializers.instance.put(const OkResultStringSerializer());
     _i3.Serializers.instance.put(const ErrResultShapeSerializer());
     _i3.Serializers.instance.put(const SwappedResultShapeStringSerializer());
-    _i3.Serializers.instance.put(const OkResultStringSerializer());
   }
 }
 
@@ -55,11 +55,11 @@ final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
   @override
   _i4.Shape deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'Circle') {
-      return _i3.Serializers.instance.deserialize<_i4.Circle>(serialized);
-    }
     if (serialized[r'$type'] == r'Rectangle') {
       return _i3.Serializers.instance.deserialize<_i4.Rectangle>(serialized);
+    }
+    if (serialized[r'$type'] == r'Circle') {
+      return _i3.Serializers.instance.deserialize<_i4.Circle>(serialized);
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Shape')
@@ -70,18 +70,18 @@ final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
 
   @override
   Map<String, Object?> serialize(_i4.Shape value) {
-    if (value is _i4.Circle) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.Circle>(value)
-            as Map<String, Object?>),
-        r'$type': r'Circle',
-      };
-    }
     if (value is _i4.Rectangle) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.Rectangle>(value)
             as Map<String, Object?>),
         r'$type': r'Rectangle',
+      };
+    }
+    if (value is _i4.Circle) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.Circle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Circle',
       };
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
@@ -90,19 +90,6 @@ final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
-  const CircleSerializer();
-
-  @override
-  _i4.Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
 }
 
 final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
@@ -124,6 +111,19 @@ final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
       };
 }
 
+final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
+  const CircleSerializer();
+
+  @override
+  _i4.Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.Circle((serialized[r'radius'] as num).toDouble());
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
+}
+
 final class ResultShapeStringSerializer
     extends _i3.Serializer<_i4.Result<_i4.Shape, String>> {
   const ResultShapeStringSerializer();
@@ -131,6 +131,10 @@ final class ResultShapeStringSerializer
   @override
   _i4.Result<_i4.Shape, String> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'OkResult') {
+      return _i3.Serializers.instance
+          .deserialize<_i4.OkResult<_i4.Shape>>(serialized);
+    }
     if (serialized[r'$type'] == r'ErrResult') {
       return _i3.Serializers.instance
           .deserialize<_i4.ErrResult<String>>(serialized);
@@ -138,10 +142,6 @@ final class ResultShapeStringSerializer
     if (serialized[r'$type'] == r'SwappedResult') {
       return _i3.Serializers.instance
           .deserialize<_i4.SwappedResult<String, _i4.Shape>>(serialized);
-    }
-    if (serialized[r'$type'] == r'OkResult') {
-      return _i3.Serializers.instance
-          .deserialize<_i4.OkResult<_i4.Shape>>(serialized);
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -152,6 +152,13 @@ final class ResultShapeStringSerializer
 
   @override
   Map<String, Object?> serialize(_i4.Result<_i4.Shape, String> value) {
+    if (value is _i4.OkResult<_i4.Shape>) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.OkResult<_i4.Shape>>(value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
     if (value is _i4.ErrResult<String>) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.ErrResult<String>>(value)
@@ -167,19 +174,28 @@ final class ResultShapeStringSerializer
         r'$type': r'SwappedResult',
       };
     }
-    if (value is _i4.OkResult<_i4.Shape>) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.OkResult<_i4.Shape>>(value)
-            as Map<String, Object?>),
-        r'$type': r'OkResult',
-      };
-    }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
           ..write(': ')
           ..write(value.runtimeType))
         .toString());
   }
+}
+
+final class OkResultShapeSerializer
+    extends _i3.Serializer<_i4.OkResult<_i4.Shape>> {
+  const OkResultShapeSerializer();
+
+  @override
+  _i4.OkResult<_i4.Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.OkResult<_i4.Shape>(
+        _i3.Serializers.instance.deserialize<_i4.Shape>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
+      {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
 }
 
 final class ErrResultStringSerializer
@@ -216,22 +232,6 @@ final class SwappedResultStringShapeSerializer
       };
 }
 
-final class OkResultShapeSerializer
-    extends _i3.Serializer<_i4.OkResult<_i4.Shape>> {
-  const OkResultShapeSerializer();
-
-  @override
-  _i4.OkResult<_i4.Shape> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.OkResult<_i4.Shape>(
-        _i3.Serializers.instance.deserialize<_i4.Shape>(serialized[r'data']));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
-      {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
-}
-
 final class ResultStringShapeSerializer
     extends _i3.Serializer<_i4.Result<String, _i4.Shape>> {
   const ResultStringShapeSerializer();
@@ -239,6 +239,10 @@ final class ResultStringShapeSerializer
   @override
   _i4.Result<String, _i4.Shape> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
+    if (serialized[r'$type'] == r'OkResult') {
+      return _i3.Serializers.instance
+          .deserialize<_i4.OkResult<String>>(serialized);
+    }
     if (serialized[r'$type'] == r'ErrResult') {
       return _i3.Serializers.instance
           .deserialize<_i4.ErrResult<_i4.Shape>>(serialized);
@@ -246,10 +250,6 @@ final class ResultStringShapeSerializer
     if (serialized[r'$type'] == r'SwappedResult') {
       return _i3.Serializers.instance
           .deserialize<_i4.SwappedResult<_i4.Shape, String>>(serialized);
-    }
-    if (serialized[r'$type'] == r'OkResult') {
-      return _i3.Serializers.instance
-          .deserialize<_i4.OkResult<String>>(serialized);
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -260,6 +260,13 @@ final class ResultStringShapeSerializer
 
   @override
   Map<String, Object?> serialize(_i4.Result<String, _i4.Shape> value) {
+    if (value is _i4.OkResult<String>) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.OkResult<String>>(value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
     if (value is _i4.ErrResult<_i4.Shape>) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.ErrResult<_i4.Shape>>(value)
@@ -275,19 +282,27 @@ final class ResultStringShapeSerializer
         r'$type': r'SwappedResult',
       };
     }
-    if (value is _i4.OkResult<String>) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.OkResult<String>>(value)
-            as Map<String, Object?>),
-        r'$type': r'OkResult',
-      };
-    }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
           ..write(': ')
           ..write(value.runtimeType))
         .toString());
   }
+}
+
+final class OkResultStringSerializer
+    extends _i3.Serializer<_i4.OkResult<String>> {
+  const OkResultStringSerializer();
+
+  @override
+  _i4.OkResult<String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.OkResult<String>((serialized[r'data'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.OkResult<String> value) =>
+      {r'data': value.data};
 }
 
 final class ErrResultShapeSerializer
@@ -323,19 +338,4 @@ final class SwappedResultShapeStringSerializer
         r'result': _i3.Serializers.instance
             .serialize<_i4.Result<_i4.Shape, String>>(value.result)
       };
-}
-
-final class OkResultStringSerializer
-    extends _i3.Serializer<_i4.OkResult<String>> {
-  const OkResultStringSerializer();
-
-  @override
-  _i4.OkResult<String> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.OkResult<String>((serialized[r'data'] as String));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.OkResult<String> value) =>
-      {r'data': value.data};
 }

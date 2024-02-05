@@ -267,7 +267,6 @@ extension on InterfaceElement {
           return switch (res.kind) {
             SearchResultKind.REFERENCE_IN_EXTENDS_CLAUSE ||
             SearchResultKind.REFERENCE_IN_IMPLEMENTS_CLAUSE ||
-            // TODO(dnys1): Test these.
             SearchResultKind.REFERENCE_IN_ON_CLAUSE ||
             SearchResultKind.REFERENCE_IN_WITH_CLAUSE =>
               true,

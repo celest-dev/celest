@@ -81,27 +81,27 @@ class Celest {
     Serializers.instance.put(const NestedSerializer());
     Serializers.instance.put(const NullableNestedSerializer());
     Serializers.instance.put(const ShapeSerializer());
-    Serializers.instance.put(const CircleSerializer());
     Serializers.instance.put(const RectangleSerializer());
+    Serializers.instance.put(const CircleSerializer());
     Serializers.instance.put(const ShapeWithInheritedCustomJsonSerializer());
     Serializers.instance
         .put(const RectangleWithInheritedCustomJsonSerializer());
     Serializers.instance.put(const CircleWithInheritedCustomJsonSerializer());
     Serializers.instance.put(const ShapeWithCustomJsonSerializer());
-    Serializers.instance.put(const RectangleWithCustomJsonSerializer());
     Serializers.instance.put(const CircleWithCustomJsonSerializer());
+    Serializers.instance.put(const RectangleWithCustomJsonSerializer());
     Serializers.instance.put(const ShapeWithOverriddenCustomJsonSerializer());
+    Serializers.instance.put(const CircleWithOverriddenCustomJsonSerializer());
     Serializers.instance
         .put(const RectangleWithOverriddenCustomJsonSerializer());
-    Serializers.instance.put(const CircleWithOverriddenCustomJsonSerializer());
     Serializers.instance.put(const OkResultShapeSerializer());
     Serializers.instance.put(const ErrResultStringSerializer());
     Serializers.instance.put(const ResultShapeStringSerializer());
     Serializers.instance.put(const SwappedResultStringShapeSerializer());
     Serializers.instance.put(const ResultStringShapeSerializer());
+    Serializers.instance.put(const OkResultStringSerializer());
     Serializers.instance.put(const ErrResultShapeSerializer());
     Serializers.instance.put(const SwappedResultShapeStringSerializer());
-    Serializers.instance.put(const OkResultStringSerializer());
     Serializers.instance.put(const OkResultSerializer());
     Serializers.instance.put(const ShapeExceptionSerializer());
     Serializers.instance.put(const BadShapeExceptionSerializer());

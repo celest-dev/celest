@@ -17,8 +17,8 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
     final $types = ($T,);
     return switch ($types) {
       (r'Shape' || null,) => innerHandle<_i2.Shape>(request),
-      (r'Circle',) => innerHandle<_i2.Circle>(request),
       (r'Rectangle',) => innerHandle<_i2.Rectangle>(request),
+      (r'Circle',) => innerHandle<_i2.Circle>(request),
       _ =>
         throw _i3.SerializationException('Invalid type parameters: ${$types}'),
     };
@@ -40,12 +40,12 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance.put(const ShapeSerializer());
-    _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const RectangleSerializer());
+    _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const OkResultSerializer());
     _i3.Serializers.instance.put(const OkResultSerializer<_i2.Shape>());
-    _i3.Serializers.instance.put(const OkResultSerializer<_i2.Circle>());
     _i3.Serializers.instance.put(const OkResultSerializer<_i2.Rectangle>());
+    _i3.Serializers.instance.put(const OkResultSerializer<_i2.Circle>());
   }
 }
 
@@ -61,11 +61,11 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
   @override
   _i2.Shape deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'Circle') {
-      return _i3.Serializers.instance.deserialize<_i2.Circle>(serialized);
-    }
     if (serialized[r'$type'] == r'Rectangle') {
       return _i3.Serializers.instance.deserialize<_i2.Rectangle>(serialized);
+    }
+    if (serialized[r'$type'] == r'Circle') {
+      return _i3.Serializers.instance.deserialize<_i2.Circle>(serialized);
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Shape')
@@ -76,18 +76,18 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
 
   @override
   Map<String, Object?> serialize(_i2.Shape value) {
-    if (value is _i2.Circle) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i2.Circle>(value)
-            as Map<String, Object?>),
-        r'$type': r'Circle',
-      };
-    }
     if (value is _i2.Rectangle) {
       return {
         ...(_i3.Serializers.instance.serialize<_i2.Rectangle>(value)
             as Map<String, Object?>),
         r'$type': r'Rectangle',
+      };
+    }
+    if (value is _i2.Circle) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i2.Circle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Circle',
       };
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
@@ -96,19 +96,6 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
-  const CircleSerializer();
-
-  @override
-  _i2.Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
 }
 
 final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
@@ -128,6 +115,19 @@ final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
         r'width': value.width,
         r'height': value.height,
       };
+}
+
+final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
+  const CircleSerializer();
+
+  @override
+  _i2.Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.Circle((serialized[r'radius'] as num).toDouble());
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
 }
 
 final class OkResultSerializer<T extends _i2.Shape>

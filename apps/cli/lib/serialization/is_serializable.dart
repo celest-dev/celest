@@ -643,27 +643,19 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       final superParameters = type.element.typeParameters;
       final superArguments = type.typeArguments;
       assert(superParameters.length == superArguments.length);
-      var subtypeSupertype = subtype.superclass!;
-      while (subtypeSupertype.element is ClassElement &&
-          !subtypeSupertype.isDartCoreObject) {
-        if (subtypeSupertype.element.declaration != type.element) {
-          final superSuper = subtypeSupertype.superclass;
-          assert(
-            superSuper?.element is ClassElement &&
-                (superSuper!.element as ClassElement).isDartCoreObject,
-          );
-          subtypeSupertype = superSuper!;
-          continue;
-        }
-        final substitutionMap = <TypeParameterElement, DartType>{};
-        final subtypeSuperArgs = subtypeSupertype.typeArguments;
-        for (var i = 0; i < subtypeSuperArgs.length; i++) {
-          final subParameter = subtypeSuperArgs[i].element;
-          if (subParameter is TypeParameterElement) {
-            substitutionMap[subParameter] = superArguments[i];
+      for (final subtypeSupertype in subtype.allSupertypes) {
+        if (subtypeSupertype.element.declaration == type.element) {
+          final substitutionMap = <TypeParameterElement, DartType>{};
+          final subtypeSuperArgs = subtypeSupertype.typeArguments;
+          for (var i = 0; i < subtypeSuperArgs.length; i++) {
+            final subParameter = subtypeSuperArgs[i].element;
+            if (subParameter is TypeParameterElement) {
+              substitutionMap[subParameter] = superArguments[i];
+            }
           }
+          return Substitution.fromMap(substitutionMap)
+              .mapInterfaceType(subtype);
         }
-        return Substitution.fromMap(substitutionMap).mapInterfaceType(subtype);
       }
       unreachable();
     }

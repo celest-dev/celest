@@ -32,8 +32,8 @@ final class SealedClassWithCustomJsonTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance.put(const ShapeWithCustomJsonSerializer());
-    _i3.Serializers.instance.put(const RectangleWithCustomJsonSerializer());
     _i3.Serializers.instance.put(const CircleWithCustomJsonSerializer());
+    _i3.Serializers.instance.put(const RectangleWithCustomJsonSerializer());
   }
 }
 
@@ -50,13 +50,13 @@ final class ShapeWithCustomJsonSerializer
   @override
   _i4.ShapeWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'RectangleWithCustomJson') {
-      return _i3.Serializers.instance
-          .deserialize<_i4.RectangleWithCustomJson>(serialized);
-    }
     if (serialized[r'$type'] == r'CircleWithCustomJson') {
       return _i3.Serializers.instance
           .deserialize<_i4.CircleWithCustomJson>(serialized);
+    }
+    if (serialized[r'$type'] == r'RectangleWithCustomJson') {
+      return _i3.Serializers.instance
+          .deserialize<_i4.RectangleWithCustomJson>(serialized);
     }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'ShapeWithCustomJson')
@@ -67,6 +67,13 @@ final class ShapeWithCustomJsonSerializer
 
   @override
   Map<String, Object?> serialize(_i4.ShapeWithCustomJson value) {
+    if (value is _i4.CircleWithCustomJson) {
+      return {
+        ...(_i3.Serializers.instance.serialize<_i4.CircleWithCustomJson>(value)
+            as Map<String, Object?>),
+        r'$type': r'CircleWithCustomJson',
+      };
+    }
     if (value is _i4.RectangleWithCustomJson) {
       return {
         ...(_i3.Serializers.instance
@@ -75,34 +82,12 @@ final class ShapeWithCustomJsonSerializer
         r'$type': r'RectangleWithCustomJson',
       };
     }
-    if (value is _i4.CircleWithCustomJson) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.CircleWithCustomJson>(value)
-            as Map<String, Object?>),
-        r'$type': r'CircleWithCustomJson',
-      };
-    }
     throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'ShapeWithCustomJson')
           ..write(': ')
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class RectangleWithCustomJsonSerializer
-    extends _i3.Serializer<_i4.RectangleWithCustomJson> {
-  const RectangleWithCustomJsonSerializer();
-
-  @override
-  _i4.RectangleWithCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.RectangleWithCustomJson.fromJson(serialized);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.RectangleWithCustomJson value) =>
-      value.toJson();
 }
 
 final class CircleWithCustomJsonSerializer
@@ -117,5 +102,20 @@ final class CircleWithCustomJsonSerializer
 
   @override
   Map<String, Object?> serialize(_i4.CircleWithCustomJson value) =>
+      value.toJson();
+}
+
+final class RectangleWithCustomJsonSerializer
+    extends _i3.Serializer<_i4.RectangleWithCustomJson> {
+  const RectangleWithCustomJsonSerializer();
+
+  @override
+  _i4.RectangleWithCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.RectangleWithCustomJson.fromJson(serialized);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.RectangleWithCustomJson value) =>
       value.toJson();
 }
