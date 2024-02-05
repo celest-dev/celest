@@ -866,6 +866,7 @@ final class LinuxBundler implements Bundler {
             Abi.linuxX64 => 'amd64',
             _ => unreachable(),
           },
+          'version': version,
         });
         print('Writing control contents:\n\n$outputControl\n');
         await outputControlFile.writeAsString(outputControl);

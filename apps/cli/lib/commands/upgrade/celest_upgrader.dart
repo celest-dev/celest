@@ -7,8 +7,11 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
+import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' as mason_logger;
+
+enum ReleaseType { zip, installer }
 
 final class CelestUpgrader {
   CelestUpgrader({
@@ -20,24 +23,47 @@ final class CelestUpgrader {
   final mason_logger.Logger cliLogger;
   final _tempDir = fileSystem.systemTempDirectory.childDirectory('celest_cli_');
 
+  late final ReleaseType _releaseType = () {
+    switch (platform.operatingSystem) {
+      case 'windows' || 'macos':
+        return ReleaseType.installer;
+      case 'linux':
+        final isDpkg = processManager.runSync(
+              <String>['dpkg', '-S', platform.resolvedExecutable],
+              stdoutEncoding: utf8,
+              stderrEncoding: utf8,
+            ).exitCode ==
+            0;
+        return isDpkg ? ReleaseType.installer : ReleaseType.zip;
+      default:
+        unreachable();
+    }
+  }();
+
   Future<File> downloadRelease(CelestReleaseInfo release) async {
-    final downloadUri =
-        CelestReleasesInfo.baseUri.resolve((release.zip ?? release.installer)!);
-    final downloadResp = await httpClient.get(downloadUri);
+    final downloadUri = CelestReleasesInfo.baseUri.resolve(
+      switch (_releaseType) {
+        ReleaseType.zip => release.zip!,
+        ReleaseType.installer => release.installer!,
+      },
+    );
+    final downloadResp = await httpClient.send(
+      http.Request('GET', downloadUri),
+    );
     if (downloadResp.statusCode != 200) {
       throw CelestException(
         'Failed to download Celest. Please check your internet '
         'connection and try again.',
         additionalContext: {
           'statusCode': downloadResp.statusCode.toString(),
-          'body': downloadResp.body,
+          'body': await downloadResp.stream.bytesToString(),
         },
       );
     }
 
     final downloadFile = _tempDir.childFile(p.url.basename(downloadUri.path));
     await downloadFile.create(recursive: true);
-    await downloadFile.writeAsBytes(downloadResp.bodyBytes);
+    await downloadResp.stream.pipe(downloadFile.openWrite());
     return downloadFile;
   }
 
@@ -46,9 +72,12 @@ final class CelestUpgrader {
     try {
       // Skip on macOS since the permissions prompt will count towards the
       // progress timer.
-      if (platform.operatingSystem case 'windows' || 'linux') {
+      // Skip on Linux installer since we shell out to dpkg which conflicts
+      // with our CLI spinner.
+      if ((platform.operatingSystem, _releaseType)
+          case ('windows', _) || ('linux', ReleaseType.zip)) {
         progress = cliLogger.progress('Updating Celest');
-      } else {
+      } else if (platform.isMacOS) {
         cliLogger.info(
           'Please enter your password in the dialog that appears.',
         );
@@ -97,7 +126,7 @@ final class CelestUpgrader {
     }
   }
 
-  Future<void> _installLinux(File installerZip) async {
+  Future<void> _installLinuxZip(File installerZip) async {
     _logger.finest('Installing Celest from ${installerZip.path}');
     if (p.extension(installerZip.path) != '.zip') {
       throw StateError('Expected zip file but got: $installerZip');
@@ -160,6 +189,36 @@ final class CelestUpgrader {
     } finally {
       await zipStream.close();
     }
+  }
+
+  Future<void> _installLinuxInstaller(File installer) async {
+    if (p.extension(installer.path) != '.deb') {
+      throw StateError('Expected zip file but got: $installer');
+    }
+    final installOutput = await processManager.start(
+      <String>[
+        'sudo',
+        'dpkg',
+        '-i',
+        installer.path,
+      ],
+      mode: ProcessStartMode.inheritStdio,
+    );
+    if (await installOutput.exitCode != 0) {
+      throw CelestException(
+        'Failed to upgrade Celest. Please try again later.',
+        additionalContext: {
+          'exitCode': installOutput.exitCode.toString(),
+        },
+      );
+    }
+  }
+
+  Future<void> _installLinux(File installerZip) async {
+    return switch (_releaseType) {
+      ReleaseType.zip => _installLinuxZip(installerZip),
+      ReleaseType.installer => _installLinuxInstaller(installerZip),
+    };
   }
 
   Future<void> _installMacOS(String installerFile) async {
