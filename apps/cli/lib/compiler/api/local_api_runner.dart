@@ -179,7 +179,7 @@ final class LocalApiRunner implements Closeable {
     var vm = await vmService.getVM();
     var isolates = vm.isolates;
     final stopwatch = Stopwatch()..start();
-    const timeout = Duration(seconds: 5);
+    const timeout = Duration(seconds: 10);
     while (isolates == null || isolates.isEmpty) {
       if (stopwatch.elapsed > timeout) {
         throw TimeoutException('Timed out waiting for VM to start.');
