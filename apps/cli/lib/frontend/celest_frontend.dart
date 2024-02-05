@@ -489,7 +489,7 @@ final class CelestFrontend implements Closeable {
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        final baseUri = Uri.https('hub-adgehsdada-uw.a.run.app');
+        final baseUri = Uri.https('hub-v76lntiq7q-uw.a.run.app');
         final deployService = DeployClient(
           baseUri: baseUri,
           httpClient: httpClient,
