@@ -19307,6 +19307,66 @@
         },
         "text": ""
       }
+    },
+    "asserts": {
+      "name": "asserts",
+      "metadata": [],
+      "functions": {
+        "assertsEnabled": {
+          "name": "assertsEnabled",
+          "apiName": "asserts",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "bool",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [
+            "/// Tests that asserts are enabled when running the local API."
+          ],
+          "location": {
+            "start": {
+              "offset": 68,
+              "uri": "asserts.dart",
+              "line": 1,
+              "column": 5
+            },
+            "end": {
+              "offset": 82,
+              "uri": "asserts.dart",
+              "line": 1,
+              "column": 19
+            },
+            "text": "assertsEnabled"
+          }
+        }
+      },
+      "docs": [],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "asserts.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "asserts.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
     }
   },
   "envVars": [],

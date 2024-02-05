@@ -1,10 +1,6 @@
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:logging/logging.dart';
 import 'package:package_config/package_config.dart';
 import 'package:package_config/src/package_config_io.dart';
-
-final _logger = Logger('PackageConfigTransformer');
 
 /// Transforms a package config to use the new root.
 Future<String> transformPackageConfig({
@@ -36,10 +32,6 @@ Future<String> transformPackageConfig({
   final newPackageConfig = PackageConfig(
     newPackages,
     extraData: packageConfig.extraData,
-  );
-  _logger.finest(
-    'Transformed for new root ($toRoot):\n'
-    '${prettyPrintJson(PackageConfig.toJson(newPackageConfig))}',
   );
   final toRootDir = fileSystem.directory(toRoot);
   await writePackageConfigJsonFile(

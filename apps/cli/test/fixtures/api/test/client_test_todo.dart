@@ -1,4 +1,5 @@
 import 'package:celest_backend/client.dart';
+import 'package:celest_backend/models.dart';
 import 'package:test/test.dart';
 
 void main() {

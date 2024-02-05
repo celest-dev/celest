@@ -10,6 +10,7 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:vm_service/vm_service.dart';
 import 'package:vm_service/vm_service_io.dart';
 
@@ -47,7 +48,13 @@ final class LocalApiRunner implements Closeable {
     required Iterable<String> envVars,
     required bool verbose,
     List<String> additionalSources = const [],
+    @visibleForTesting StringSink? stdoutPipe,
+    @visibleForTesting StringSink? stderrPipe,
+    @visibleForTesting PortFinder portFinder = const DefaultPortFinder(),
   }) async {
+    stdoutPipe ??= stdout;
+    stderrPipe ??= stderr;
+
     final env = <String, String>{};
     for (final envVar in envVars) {
       final value =
@@ -81,14 +88,15 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
-    final port = await findOpenPort();
-    _logger.finer('Starting local API...');
+    final port = await portFinder.findOpenPort();
+    _logger.finer('Starting local API on port $port...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,
       [
         'run',
         // Start VM service on a random port.
         '--enable-vm-service=0',
+        '--enable-asserts',
         '--packages',
         packageConfig,
         dillOutput,
@@ -96,12 +104,13 @@ final class LocalApiRunner implements Closeable {
       workingDirectory: projectPaths.outputsDir,
       environment: {
         // The HTTP port to serve Celest on.
-        'PORT': Platform.environment['PORT'] ?? '$port',
+        'PORT': platform.environment['PORT'] ?? '$port',
         ...env,
       },
     );
 
     final vmServiceCompleter = Completer<VmService>();
+    final serverStartedCompleter = Completer<void>();
     localApiProcess.stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
@@ -116,7 +125,9 @@ final class LocalApiRunner implements Closeable {
       } else if (line.startsWith('The Dart VM service is listening on')) {
         // Ignore
       } else if (line.startsWith('Serving on')) {
-        // Ignore
+        if (!serverStartedCompleter.isCompleted) {
+          serverStartedCompleter.complete();
+        }
       } else if (line.startsWith('/')) {
         analytics.capture(
           'local_api_call',
@@ -125,13 +136,13 @@ final class LocalApiRunner implements Closeable {
           },
         );
       } else {
-        stdout.writeln(line);
+        stdoutPipe!.writeln(line);
       }
     });
     localApiProcess.stderr
         .transform(utf8.decoder)
         .transform(const LineSplitter())
-        .listen(stderr.writeln);
+        .listen(stderrPipe.writeln);
 
     _logger.finer('Waiting for local API to report VM URI...');
     final vmService = await vmServiceCompleter.future.timeout(
@@ -145,6 +156,8 @@ final class LocalApiRunner implements Closeable {
     );
 
     final isolateId = await _waitForIsolate(vmService, _logger);
+
+    await serverStartedCompleter.future;
     _logger.fine('Connected to local API.');
 
     return LocalApiRunner._(

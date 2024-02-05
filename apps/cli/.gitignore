@@ -6,3 +6,4 @@
 celest/
 
 tool/debug
+**/*.dill

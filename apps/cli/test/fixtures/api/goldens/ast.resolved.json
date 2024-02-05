@@ -3641,6 +3641,33 @@
           }
         }
       }
+    },
+    "asserts": {
+      "name": "asserts",
+      "functions": {
+        "assertsEnabled": {
+          "name": "assertsEnabled",
+          "route": "/asserts/asserts-enabled",
+          "apiName": "asserts",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "envVars": [],

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -10,10 +9,10 @@ import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_proto/ast.dart';
 import 'package:http/http.dart';
@@ -256,46 +255,25 @@ class TestRunner {
     List<FunctionTest> tests,
   ) {
     group(functionName, () {
-      late Process functionProc;
       late Uri apiUri;
       final logs = <String>[];
+      final logSink = LogSink(logs);
+      late LocalApiRunner apiRunner;
 
       setUpAll(() async {
-        final port = await findOpenPort();
-        apiUri = Uri.parse('http://localhost:$port');
         final entrypoint = projectPaths.functionEntrypoint(
           apiName,
           functionName,
         );
-        functionProc = await Process.start(
-          Platform.executable,
-          [
-            'run',
-            '--packages',
-            projectPaths.packagesConfig,
-            entrypoint,
-          ],
-          workingDirectory: projectPaths.projectRoot,
-          environment: {
-            'PORT': '$port',
-            'CELEST_ENV': 'local',
-            ...projectPaths.envManager.env,
-          },
+        apiRunner = await LocalApiRunner.start(
+          path: entrypoint,
+          envVars: projectPaths.envManager.env.keys,
+          verbose: false,
+          stdoutPipe: logSink,
+          stderrPipe: logSink,
+          portFinder: const RandomPortFinder(),
         );
-        functionProc
-          ..captureStdout()
-          ..captureStdout(sink: logs.add)
-          ..captureStderr()
-          ..captureStderr(sink: logs.add);
-        // Wait for failure or first "Listening on" message.
-        await Future.any([
-          functionProc.exitCode.then((exitCode) => expect(exitCode, 0)),
-          ProcessUtil(functionProc).stdout.first,
-          ProcessUtil(functionProc)
-              .stderr
-              .first
-              .then((e) => fail('Failed to start function: ${utf8.decode(e)}')),
-        ]).timeout(const Duration(seconds: 15));
+        apiUri = Uri.parse('http://localhost:${apiRunner.port}');
 
         await expectLater(
           client.get(apiUri),
@@ -306,8 +284,7 @@ class TestRunner {
       setUp(logs.clear);
 
       tearDownAll(() async {
-        functionProc.kill();
-        await functionProc.exitCode;
+        await apiRunner.close();
       });
 
       for (final testCase in tests) {
@@ -346,6 +323,32 @@ class TestRunner {
         });
       }
     });
+  }
+}
+
+final class LogSink implements StringSink {
+  LogSink(this.logs);
+
+  final List<String> logs;
+
+  @override
+  void write(Object? object) {
+    logs.add('$object');
+  }
+
+  @override
+  void writeAll(Iterable<Object?> objects, [String separator = '']) {
+    logs.addAll(objects.join(separator).split('\n'));
+  }
+
+  @override
+  void writeCharCode(int charCode) {
+    logs.add(String.fromCharCode(charCode));
+  }
+
+  @override
+  void writeln([Object? object = '']) {
+    logs.add('$object');
   }
 }
 
@@ -530,6 +533,17 @@ const complexStruct = <String, dynamic>{
 final tests = <String, Test>{
   'api': Test(
     apis: {
+      'asserts': ApiTest(
+        functionTests: {
+          'assertsEnabled': [
+            FunctionTestSuccess(
+              name: 'assertsEnabled',
+              input: {},
+              output: true,
+            ),
+          ],
+        },
+      ),
       'collections': ApiTest(
         functionTests: {
           'simpleList': [
