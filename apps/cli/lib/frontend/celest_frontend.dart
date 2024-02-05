@@ -270,19 +270,29 @@ final class CelestFrontend implements Closeable {
             currentProject = project;
             final generatedOutputs = await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
-            final projectOutputs = await _startLocalApi(
-              [
-                ...generatedOutputs,
-                if (_changedPaths != null)
-                  ..._changedPaths!
-                else
-                  ...project.apis.values.map(
-                    (api) => projectPaths.api(api.name),
-                  ),
-              ],
-              resolvedProject: resolvedProject,
-              restartMode: restartMode,
-            );
+            final LocalDeployedProject projectOutputs;
+            try {
+              projectOutputs = await _startLocalApi(
+                [
+                  ...generatedOutputs,
+                  if (_changedPaths != null)
+                    ..._changedPaths!
+                  else
+                    ...project.apis.values.map(
+                      (api) => projectPaths.api(api.name),
+                    ),
+                ],
+                resolvedProject: resolvedProject,
+                restartMode: restartMode,
+              );
+            } on CompilationException catch (e, st) {
+              cliLogger.err(
+                'Project has errors. Please fix them and save the '
+                'corresponding files.',
+              );
+              performance.captureError(e, stackTrace: st);
+              break;
+            }
             await _generateClientCode(
               project: project,
               projectOutputs: projectOutputs,
@@ -400,7 +410,7 @@ final class CelestFrontend implements Closeable {
               in codeGenerator.fileOutputs.entries)
             Future<void>(() async {
               assert(p.isAbsolute(path));
-              final file = File(path);
+              final file = fileSystem.file(path);
               await file.create(recursive: true);
               await file.writeAsString(contents);
             }),
