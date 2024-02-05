@@ -16,14 +16,14 @@ abstract final class functions {
     functionName: r'addTask',
   );
 
-  static const tasksAlltasks = CloudFunction(
-    api: r'tasks',
-    functionName: r'alltasks',
-  );
-
   static const tasksDeleteTask = CloudFunction(
     api: r'tasks',
     functionName: r'deleteTask',
+  );
+
+  static const tasksListAllTasks = CloudFunction(
+    api: r'tasks',
+    functionName: r'listAllTasks',
   );
 
   static const tasksMarkAsCompleted = CloudFunction(

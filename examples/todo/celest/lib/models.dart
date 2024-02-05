@@ -1,51 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 // By convention, any custom types used within an API request/response must be
 // defined in this file or exported from this file.
 
-class Task {
-  String id;
-  String title;
-  String importance;
-  bool isCompleted;
+enum Importance { low, medium, high }
 
-  Task({
+class Task {
+  const Task({
     required this.id,
     required this.title,
     required this.importance,
-     this.isCompleted = false ,
+    this.isCompleted = false,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'title': title,
-      'importance': importance,
-      'completed': isCompleted,
-    };
-  }
-
-  factory Task.fromMap(Map<String, dynamic> map) {
-    return Task(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      importance: map['importance'] as String,
-      isCompleted: map['completed'] as bool,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Task.fromJson(String source) => Task.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() => 'Task(id: $id, title: $title, importance: $importance,  completed: $isCompleted)';
+  final String id;
+  final String title;
+  final Importance importance;
+  final bool isCompleted;
 
   Task copyWith({
     String? id,
     String? title,
-    String? importance,
+    Importance? importance,
     bool? isCompleted,
   }) {
     return Task(
@@ -55,4 +29,8 @@ class Task {
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
+
+  @override
+  String toString() =>
+      'Task(id: $id, title: $title, importance: $importance,  completed: $isCompleted)';
 }
