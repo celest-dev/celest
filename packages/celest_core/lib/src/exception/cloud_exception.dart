@@ -21,7 +21,7 @@ class BadRequestException implements CloudException {
 /// An exception thrown by a Cloud Function when an unrecoverable internal error
 /// occurs.
 /// {@endtemplate}
-final class InternalServerException implements CloudException {
+class InternalServerException implements CloudException {
   /// Creates a [InternalServerException] with the given [message].
   ///
   /// {@macro celest_core_exception_internal_server_exception}
