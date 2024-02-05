@@ -61,31 +61,34 @@ abstract mixin class Serializers {
   static final Serializers _instance = Serializers();
 
   /// Serializes [value] to the wire type.
-  Object? serialize<T>(T value) {
-    final serializer = expect<T>();
+  Object? serialize<T>(T value, [TypeToken<T>? typeToken]) {
+    final serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.serialize)
         : serializer.serialize(value);
   }
 
   /// Deserializes [value] to [T].
-  T deserialize<T>(Object? value) {
-    final serializer = expect<T>();
+  T deserialize<T>(Object? value, [TypeToken<T>? typeToken]) {
+    final serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.deserialize) as T
         : serializer.deserialize(value);
   }
 
   /// Gets the [Serializer] for type [Dart].
-  Serializer<Dart>? get<Dart>();
+  Serializer<Dart>? get<Dart>([TypeToken<Dart>? typeToken]);
 
   /// Gets the [Serializer] for type [Dart] and asserts its existence.
-  Serializer<Dart> expect<Dart>();
+  Serializer<Dart> expect<Dart>([TypeToken<Dart>? typeToken]);
 
   /// Puts a [Serializer] for type [Dart].
   ///
   /// Returns the previously registered [Serializer] if it existed.
-  Serializer<Dart>? put<Dart>(Serializer<Dart> serializer);
+  Serializer<Dart>? put<Dart>(
+    Serializer<Dart> serializer, [
+    TypeToken<Dart>? typeToken,
+  ]);
 }
 
 final class _Serializers extends Serializers {
@@ -102,29 +105,55 @@ final class _Serializers extends Serializers {
     put<InternalServerException>(const InternalServerExceptionSerializer());
   }
 
-  final _serializersByType = <Type, Serializer>{};
+  final _serializersByType = <TypeToken<Object?>, Serializer>{};
 
   @override
-  Serializer<Dart> expect<Dart>() {
-    final serializer = get<Dart>();
+  Serializer<Dart> expect<Dart>([TypeToken<Dart>? typeToken]) {
+    typeToken ??= TypeToken<Dart>();
+    final serializer = get<Dart>(typeToken);
     if (serializer == null) {
       throw SerializationException(
-        'No serializer found for $Dart. Did you forget to call `celest.init()` '
-        "at the start of your Flutter app's `main` function?",
+        'No serializer found for $typeToken. Did you forget to call '
+        "`celest.init()` at the start of your Flutter app's `main` function?",
       );
     }
     return serializer;
   }
 
   @override
-  Serializer<Dart>? get<Dart>() =>
-      _serializersByType[Dart] as Serializer<Dart>?;
+  Serializer<Dart>? get<Dart>([TypeToken<Dart>? typeToken]) =>
+      _serializersByType[typeToken ?? TypeToken<Dart>()] as Serializer<Dart>?;
 
   @override
-  Serializer<Dart>? put<Dart>(Serializer<Dart> serializer) {
-    final existing = get<Dart>();
-    _serializersByType[Dart] = serializer;
-    _serializersByType[_Nullable<Dart>] = serializer;
+  Serializer<Dart>? put<Dart>(
+    Serializer<Dart> serializer, [
+    TypeToken<Dart>? typeToken,
+  ]) {
+    typeToken ??= TypeToken<Dart>();
+    final existing = get<Dart>(typeToken);
+    _serializersByType[typeToken] = serializer;
+    _serializersByType[typeToken.nullable] = serializer;
     return existing;
   }
+}
+
+final class TypeToken<T> {
+  const TypeToken([this._typeName]);
+
+  final String? _typeName;
+
+  String get typeName => _typeName ?? '$T';
+  Type get type => T;
+
+  TypeToken<Object?> get nullable => TypeToken<_Nullable<T>>(_typeName);
+
+  @override
+  bool operator ==(Object other) =>
+      other is TypeToken && other._typeName == _typeName && other.type == type;
+
+  @override
+  int get hashCode => Object.hash(_typeName, type);
+
+  @override
+  String toString() => typeName;
 }
