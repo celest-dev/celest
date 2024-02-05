@@ -18,12 +18,6 @@ final class ClientGenerator {
   }) {
     _library = LibraryBuilder()
       ..name = ''
-      ..directives.addAll([
-        if (fileSystem.file(ClientPaths.exceptions).existsSync())
-          Directive.export('exceptions.dart'),
-        if (fileSystem.file(ClientPaths.models).existsSync())
-          Directive.export('models.dart'),
-      ])
       ..comments.addAll(kClientHeader)
       ..body.addAll([
         _client,
