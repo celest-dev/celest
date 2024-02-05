@@ -1,50 +1,50 @@
-import 'package:celest_backend/client.dart';
+import 'package:celest_backend/exceptions.dart';
 import 'package:celest_backend/models.dart';
 import 'package:uuid/uuid.dart';
 
-List<Task> tasks = [];
+Map<String, Task> tasks = {};
 
-List<Task> alltasks() {
+Future<Map<String, Task>> listAllTasks() async {
   print('fetching tasks');
   return tasks;
 }
 
-Future<List<Task>> addTask(
-    {required String title, required String importance}) async {
+Future<void> addTask({
+  required String title,
+  required Importance importance,
+}) async {
   print('creating new task');
-  if(title.trim().isEmpty){
+  if (title.trim().isEmpty) {
     throw ServerException('Title cannot be empty');
   }
   var uuid = Uuid();
   final newTask = Task(
-      id: uuid.v1(),
-      title: title,
-      importance: importance,
-      );
-  tasks.add(newTask);
-  return alltasks();
+    id: uuid.v1(),
+    title: title,
+    importance: importance,
+  );
+  tasks[newTask.id] = newTask;
 }
 
-Future<List<Task>> deleteTask({required String id}) async {
+Future<void> deleteTask({required String id}) async {
   print('removing task $id');
-  tasks.removeWhere((element) => element.id == id);
-  return alltasks();
+  tasks.remove(id);
 }
 
 Future<void> markAsCompleted({required String id}) async {
   print('marking as completed');
-  Task task = tasks.where((element) => element.id == id).first;
-  int index = tasks.indexOf(task);
-  print('index of completed task: $index');
-  tasks.removeAt(index);
-  tasks.insert(index, task.copyWith(id: DateTime.now().microsecondsSinceEpoch.toString(), isCompleted: true));
+  final task = tasks[id];
+  if (task == null) {
+    throw ServerException('Task not found');
+  }
+  tasks[id] = task.copyWith(isCompleted: true);
 }
 
 Future<void> markAsIncomplete({required String id}) async {
   print('marking as incomplete');
-  Task task = tasks.where((element) => element.id == id).first;
-  int index = tasks.indexOf(task);
-  print('index of completed task: $index');
-  tasks.removeAt(index);
-  tasks.insert(index, task.copyWith(id: DateTime.now().microsecondsSinceEpoch.toString(),isCompleted: false));
+  final task = tasks[id];
+  if (task == null) {
+    throw ServerException('Task not found');
+  }
+  tasks[id] = task.copyWith(isCompleted: false);
 }

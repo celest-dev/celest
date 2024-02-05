@@ -18,16 +18,21 @@ class CelestFunctions {
 }
 
 class CelestFunctionsTasks {
-  Future<List<Task>> alltasks() async {
+  Future<Map<String, Task>> listAllTasks() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/tasks/alltasks'),
+      celest.baseUri.resolve('/tasks/list-all-tasks'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Task>(el))
-          .toList();
+      return ($body['response'] as Map<String, Object?>).map((
+        key,
+        value,
+      ) =>
+          MapEntry(
+            key,
+            Serializers.instance.deserialize<Task>(value),
+          ));
     }
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
@@ -48,23 +53,21 @@ class CelestFunctionsTasks {
     }
   }
 
-  Future<List<Task>> addTask({
+  Future<void> addTask({
     required String title,
-    required String importance,
+    required Importance importance,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/add-task'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode({
         r'title': title,
-        r'importance': importance,
+        r'importance': Serializers.instance.serialize<Importance>(importance),
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Task>(el))
-          .toList();
+      return;
     }
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
@@ -87,7 +90,7 @@ class CelestFunctionsTasks {
     }
   }
 
-  Future<List<Task>> deleteTask({required String id}) async {
+  Future<void> deleteTask({required String id}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/delete-task'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -95,9 +98,7 @@ class CelestFunctionsTasks {
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Task>(el))
-          .toList();
+      return;
     }
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
@@ -132,6 +133,8 @@ class CelestFunctionsTasks {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'ServerException':
+        throw Serializers.instance.deserialize<ServerException>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
@@ -161,6 +164,8 @@ class CelestFunctionsTasks {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'ServerException':
+        throw Serializers.instance.deserialize<ServerException>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':

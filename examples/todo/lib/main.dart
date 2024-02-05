@@ -1,279 +1,285 @@
 // Import the generated Celest client
+import 'dart:async';
+
 import 'package:celest_backend/client.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
   celest.init();
-  runApp(const MyApp());
+  runApp(const TaskApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TaskApp extends StatelessWidget {
+  const TaskApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodoList(),
+      home: TaskList(),
     );
   }
 }
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key});
+class TaskList extends StatefulWidget {
+  const TaskList({super.key});
 
   @override
-  TodoListState createState() => TodoListState();
+  State<TaskList> createState() => _TaskListState();
 }
 
-class TodoListState extends State<TodoList> {
-  List<Task> tasks = [];
-  bool isFetching = false;
-  String error = '';
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      fetchTasks();
-      setState(() {});
-    });
-
-    super.initState();
-  }
-
-//fetches the list of tasks from the backend
-  Future<void> fetchTasks() async {
-    setState(() {
-      isFetching = true;
-    });
-    try {
-      tasks = await celest.functions.tasks.alltasks();
-    } catch (e) {
-      error = 'Unable to connect to server';
-    }
-    isFetching = false;
-    setState(() {});
-  }
+class _TaskListState extends State<TaskList> {
+  var tasks = <String, Task>{};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo App'),
+        title: const Text('Task App'),
       ),
-      body: isFetching == true
-          ? const Center(child: CircularProgressIndicator())
-          : error.isNotEmpty
-              ? Center(child: Text('Error Occured: $error'))
-              : tasks.isEmpty
-                  ? const Center(
-                      child: Text('No avaiable Tasks'),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                          children: tasks
-                              .map((task) => Dismissible(
-                                    confirmDismiss: (dir) async {
-                                      if (dir == DismissDirection.endToStart) {
-                                        return true;
-                                      } else if (dir ==
-                                          DismissDirection.startToEnd) {
-                                        if (task.isCompleted) {
-                                          // sneds request to the Celest backend to mark the Task as incomplete
-                                          await celest.functions.tasks
-                                              .markAsIncomplete(id: task.id);
-                                        } else {
-                                           // sneds request to the Celest backend to mark the Ttask as completed
-                                          await celest.functions.tasks
-                                              .markAsCompleted(id: task.id);
-                                        }
-
-                                        tasks = await celest.functions.tasks
-                                            .alltasks();
-                                        setState(() {});
-                                        return false;
-                                      }
-                                      return false;
-                                    },
-                                    onDismissed: (dir) async {
-                                      if (dir == DismissDirection.endToStart) {
-                                        //sends a request to Celest backend to delete the Task
-                                        tasks = await celest.functions.tasks
-                                            .deleteTask(id: task.id);
-                                        setState(() {});
-                                      } else if (dir ==
-                                          DismissDirection.startToEnd) {}
-                                    },
-                                    background: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                              alignment: Alignment.centerLeft,
-                                              color: Colors.green,
-                                              child: task.isCompleted
-                                                  ? const Icon(
-                                                      Icons.cancel,
-                                                      color: Colors.red,
-                                                    )
-                                                  : const Icon(
-                                                      Icons.check,
-                                                      color: Colors.white,
-                                                    )),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                              alignment: Alignment.centerRight,
-                                              color: Colors.red,
-                                              child: const Icon(Icons.delete)),
-                                        ),
-                                      ],
-                                    ),
-                                    key: UniqueKey(),
-                                    child: Card(
-                                      color: task.importance.toLowerCase() == 'low'
-                                          ? Colors.blue
-                                          : task.importance.toLowerCase() ==
-                                                  'medium'
-                                              ? Colors.yellow
-                                              : Colors.orange,
-                                      child: ListTile(
-                                        title: Text(
-                                          task.title,
-                                          style: TextStyle(
-                                              decoration: task.isCompleted
-                                                  ? TextDecoration.lineThrough
-                                                  : null),
-                                        ),
-                                        trailing: CircleAvatar(
-                                            radius: 10,
-                                            backgroundColor: task.isCompleted
-                                                ? Colors.green
-                                                : Colors.red),
-                                      ),
-                                    ),
-                                  ))
-                              .toList()),
-                    ),
+      body: Center(
+        child: FutureBuilder(
+          future: _loadTasks(),
+          builder: (context, snapshot) => switch (snapshot) {
+            AsyncSnapshot(connectionState: ConnectionState.done) => _tasksView,
+            AsyncSnapshot(:final error?) =>
+              Text('Failed to fetch tasks: $error'),
+            _ => const CircularProgressIndicator(),
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Add logic to add a new task
-          await _showAddTodoDialog(context);
-          setState(() {});
-        },
+        // Add logic to add a new task
+        onPressed: _showAddTaskDialog,
         child: const Icon(Icons.add),
       ),
     );
   }
 
-//Dialog to add a new Task
-  _showAddTodoDialog(BuildContext context) {
-    TextEditingController titleController = TextEditingController();
-    String selectedImportance = 'Low';
-    int selectedIndex = 0;
-    List<Color> importance = [Colors.blue, Colors.yellow, Colors.red];
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, StateSetter setStateS) {
-          return AlertDialog(
-            title: const Text('Add New Task'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(labelText: 'Task Title'),
-                ),
-                const SizedBox(height: 16),
-                const Text('Select Difficulty'),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ...List.generate(
-                        3,
-                        (index) => InkWell(
-                              onTap: () {
-                                setStateS(() {
-                                  selectedIndex = index;
-                                });
-                                switch (index) {
-                                  case 0:
-                                    selectedImportance = 'Low';
-                                    break;
-                                  case 1:
-                                    selectedImportance = 'Medium';
-                                    break;
-                                  case 2:
-                                    selectedImportance = 'High';
-                                    break;
-                                  default:
-                                }
-                              },
-                              child: CircleAvatar(
-                                radius: 18,
-                                backgroundColor: index == selectedIndex
-                                    ? const Color.fromARGB(105, 76, 175, 79)
-                                    : null,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: importance[index],
-                                ),
-                              ),
-                            ))
-                  ],
-                )
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  //sends a request to the Celest backend to create a new task if the titlecontroller is not empty
-                  if (titleController.text.isNotEmpty) {
-                    try {
-                      tasks = await celest.functions.tasks.addTask(
-                          importance: selectedImportance,
-                          title: titleController.text);
-                    } 
-                    //catch custom exception from celest backend and display them in a snackbar
-                    on ServerException catch (e) {
-
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: ${e.message}')));
-                      titleController.clear();
-                      return;
-                    } 
-                    //catch other exceptions and display them in a snackbar
-                    catch (e) {
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Unable to connect to server')));
-                      titleController.clear();
-                      return;
-                    }
-
-                    setState(() {});
-                    if (!mounted) return;
-                    Navigator.of(context).pop();
+  Widget get _tasksView {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          for (final task in tasks.values)
+            Dismissible(
+              key: ValueKey(task),
+              confirmDismiss: (dir) async {
+                if (dir == DismissDirection.endToStart) {
+                  return true;
+                } else if (dir == DismissDirection.startToEnd) {
+                  if (task.isCompleted) {
+                    // sneds request to the Celest backend to mark the Task as incomplete
+                    await celest.functions.tasks.markAsIncomplete(id: task.id);
+                  } else {
+                    // sneds request to the Celest backend to mark the Ttask as completed
+                    await celest.functions.tasks.markAsCompleted(id: task.id);
                   }
-                },
-                child: const Text('Add'),
+                  setState(() {});
+                  return false;
+                }
+                return false;
+              },
+              onDismissed: (dir) {
+                if (dir == DismissDirection.endToStart) {
+                  unawaited(_deleteTask(task));
+                  tasks.remove(task.id);
+                }
+              },
+              background: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      color: Colors.green,
+                      child: task.isCompleted
+                          ? const Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      color: Colors.red,
+                      child: const Icon(Icons.delete),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          );
-        });
-      },
+              child: Card(
+                color: task.importance.color,
+                child: ListTile(
+                  title: Text(
+                    task.title,
+                    style: TextStyle(
+                      decoration:
+                          task.isCompleted ? TextDecoration.lineThrough : null,
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 10,
+                    backgroundColor:
+                        task.isCompleted ? Colors.green : Colors.red,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
+
+  Future<void> _loadTasks() async {
+    tasks = await celest.functions.tasks.listAllTasks();
+  }
+
+  Future<void> _createTask({
+    required String title,
+    required Importance importance,
+  }) async {
+    try {
+      await celest.functions.tasks.addTask(
+        title: title,
+        importance: importance,
+      );
+      setState(() {});
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      if (mounted) {
+        _showError(context, 'Failed to add task: $e');
+      }
+    }
+  }
+
+  Future<void> _deleteTask(Task task) async {
+    try {
+      await celest.functions.tasks.deleteTask(id: task.id);
+      setState(() {});
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      if (mounted) {
+        _showError(context, 'Failed to delete task: $e');
+      }
+    }
+  }
+
+  // Dialog to add a new Task
+  Future<void> _showAddTaskDialog() async {
+    final data = await showDialog<AddTaskData>(
+      context: context,
+      builder: (context) => const AddTaskDialog(),
+    );
+    if (data case (final title, final importance)) {
+      await _createTask(title: title, importance: importance);
+    }
+  }
+}
+
+typedef AddTaskData = (String title, Importance importance);
+
+final class AddTaskDialog extends StatefulWidget {
+  const AddTaskDialog({super.key});
+
+  @override
+  State<AddTaskDialog> createState() => _AddTaskDialogState();
+}
+
+final class _AddTaskDialogState extends State<AddTaskDialog> {
+  final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  var _selectedImportance = Importance.low;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Add New Task'),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(labelText: 'Task Title'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a title';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            const Text('Select Difficulty'),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                for (final importance in Importance.values)
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _selectedImportance = importance;
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundColor: importance == _selectedImportance
+                          ? const Color.fromARGB(105, 76, 175, 79)
+                          : null,
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: importance.color,
+                      ),
+                    ),
+                  ),
+              ],
+            )
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              Navigator.of(context).pop(
+                (_titleController.text, _selectedImportance),
+              );
+            }
+          },
+          child: const Text('Add'),
+        ),
+      ],
+    );
+  }
+}
+
+void _showError(BuildContext context, String message) {
+  ScaffoldMessenger.of(context)
+    ..clearSnackBars()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+}
+
+extension on Importance {
+  Color get color => switch (this) {
+        Importance.low => Colors.blue,
+        Importance.medium => Colors.yellow,
+        Importance.high => Colors.red,
+      };
 }

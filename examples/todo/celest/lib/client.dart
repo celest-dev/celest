@@ -22,12 +22,13 @@ class Celest {
   late http.Client httpClient = http.Client();
 
   late final Uri baseUri = kIsWeb || !Platform.isAndroid
-      ? Uri.parse('http://localhost:7777')
-      : Uri.parse('http://10.0.2.2:7777');
+      ? Uri.parse('http://localhost:7783')
+      : Uri.parse('http://10.0.2.2:7783');
 
   final functions = CelestFunctions();
 
   void init() {
+    Serializers.instance.put(const ImportanceSerializer());
     Serializers.instance.put(const TaskSerializer());
     Serializers.instance.put(const ServerExceptionSerializer());
   }
