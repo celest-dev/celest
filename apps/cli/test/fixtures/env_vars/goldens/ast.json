@@ -5,7 +5,344 @@
     "symbol": "project",
     "url": "project:project.dart"
   },
-  "apis": {},
+  "apis": {
+    "injected": {
+      "name": "injected",
+      "metadata": [],
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "apiName": "injected",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 146,
+                  "uri": "injected.dart",
+                  "line": 5,
+                  "column": 40
+                },
+                "end": {
+                  "offset": 150,
+                  "uri": "injected.dart",
+                  "line": 5,
+                  "column": 44
+                },
+                "text": "name"
+              },
+              "references": {
+                "name": "MY_NAME",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "age",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "int",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 188,
+                  "uri": "injected.dart",
+                  "line": 6,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 191,
+                  "uri": "injected.dart",
+                  "line": 6,
+                  "column": 39
+                },
+                "text": "age"
+              },
+              "references": {
+                "name": "MY_AGE",
+                "type": "environmentVariable"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 95,
+              "uri": "injected.dart",
+              "line": 4,
+              "column": 7
+            },
+            "end": {
+              "offset": 103,
+              "uri": "injected.dart",
+              "line": 4,
+              "column": 15
+            },
+            "text": "sayHello"
+          }
+        },
+        "sayHelloPerson": {
+          "name": "sayHelloPerson",
+          "apiName": "injected",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 312,
+                  "uri": "injected.dart",
+                  "line": 12,
+                  "column": 40
+                },
+                "end": {
+                  "offset": 316,
+                  "uri": "injected.dart",
+                  "line": 12,
+                  "column": 44
+                },
+                "text": "name"
+              },
+              "references": {
+                "name": "MY_NAME",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "age",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "int",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 354,
+                  "uri": "injected.dart",
+                  "line": 13,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 357,
+                  "uri": "injected.dart",
+                  "line": 13,
+                  "column": 39
+                },
+                "text": "age"
+              },
+              "references": {
+                "name": "MY_AGE",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "height",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "double",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 401,
+                  "uri": "injected.dart",
+                  "line": 14,
+                  "column": 42
+                },
+                "end": {
+                  "offset": 407,
+                  "uri": "injected.dart",
+                  "line": 14,
+                  "column": 48
+                },
+                "text": "height"
+              },
+              "references": {
+                "name": "MY_HEIGHT",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "weight",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "num",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 448,
+                  "uri": "injected.dart",
+                  "line": 15,
+                  "column": 39
+                },
+                "end": {
+                  "offset": 454,
+                  "uri": "injected.dart",
+                  "line": 15,
+                  "column": 45
+                },
+                "text": "weight"
+              },
+              "references": {
+                "name": "MY_WEIGHT",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "isCool",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "bool",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 494,
+                  "uri": "injected.dart",
+                  "line": 16,
+                  "column": 38
+                },
+                "end": {
+                  "offset": 500,
+                  "uri": "injected.dart",
+                  "line": 16,
+                  "column": 44
+                },
+                "text": "isCool"
+              },
+              "references": {
+                "name": "IM_COOL",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "website",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Uri",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 542,
+                  "uri": "injected.dart",
+                  "line": 17,
+                  "column": 40
+                },
+                "end": {
+                  "offset": 549,
+                  "uri": "injected.dart",
+                  "line": 17,
+                  "column": 47
+                },
+                "text": "website"
+              },
+              "references": {
+                "name": "MY_WEBSITE",
+                "type": "environmentVariable"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Person",
+            "url": "package:celest_backend/models.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Person",
+            "url": "package:celest_backend/models.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 255,
+              "uri": "injected.dart",
+              "line": 11,
+              "column": 7
+            },
+            "end": {
+              "offset": 269,
+              "uri": "injected.dart",
+              "line": 11,
+              "column": 21
+            },
+            "text": "sayHelloPerson"
+          }
+        }
+      },
+      "docs": [],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "injected.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "injected.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
   "envVars": [
     {
       "envName": "MY_NAME",

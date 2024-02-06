@@ -1,6 +1,66 @@
 {
   "name": "env_vars",
-  "apis": {},
+  "apis": {
+    "injected": {
+      "name": "injected",
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "route": "/injected/say-hello",
+          "apiName": "injected",
+          "envVars": [
+            "MY_NAME",
+            "MY_AGE"
+          ],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "sayHelloPerson": {
+          "name": "sayHelloPerson",
+          "route": "/injected/say-hello-person",
+          "apiName": "injected",
+          "envVars": [
+            "MY_NAME",
+            "MY_AGE",
+            "MY_HEIGHT",
+            "MY_WEIGHT",
+            "IM_COOL",
+            "MY_WEBSITE"
+          ],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
   "envVars": [
     {
       "name": "MY_NAME",

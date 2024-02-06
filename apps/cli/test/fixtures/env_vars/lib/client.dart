@@ -4,8 +4,27 @@
 
 library;
 
+import 'dart:io';
+
+import 'package:celest/celest.dart';
+import 'package:celest_core/src/util/globals.dart';
+import 'package:http/http.dart' as http;
+
+import 'src/client/functions.dart';
+import 'src/client/serializers.dart';
+
 final Celest celest = Celest();
 
 class Celest {
-  void init() {}
+  late http.Client httpClient = http.Client();
+
+  late final Uri baseUri = kIsWeb || !Platform.isAndroid
+      ? Uri.parse('http://localhost:7777')
+      : Uri.parse('http://10.0.2.2:7777');
+
+  final functions = CelestFunctions();
+
+  void init() {
+    Serializers.instance.put(const PersonSerializer());
+  }
 }

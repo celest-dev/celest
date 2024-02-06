@@ -1,3 +1,5 @@
+import 'package:celest_backend/models.dart';
+
 import '../resources.dart' as resources;
 
 String sayHello({
@@ -5,24 +7,6 @@ String sayHello({
   @resources.env.myAge required int age,
 }) {
   return 'Hello, $name! I am $age years old.';
-}
-
-class Person {
-  const Person({
-    required this.name,
-    required this.age,
-    required this.height,
-    required this.weight,
-    required this.isCool,
-    required this.website,
-  });
-
-  final String name;
-  final int age;
-  final double height;
-  final num weight;
-  final bool isCool;
-  final Uri website;
 }
 
 Person sayHelloPerson({

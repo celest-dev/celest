@@ -6,6 +6,22 @@ library;
 
 import 'package:celest/celest.dart';
 
+abstract final class apis {
+  static const injected = CloudApi(name: r'injected');
+}
+
+abstract final class functions {
+  static const injectedSayHello = CloudFunction(
+    api: r'injected',
+    functionName: r'sayHello',
+  );
+
+  static const injectedSayHelloPerson = CloudFunction(
+    api: r'injected',
+    functionName: r'sayHelloPerson',
+  );
+}
+
 abstract final class env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
 
