@@ -2,34 +2,26 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'package:celest/celest.dart' as _i1;
-import 'package:celest_backend/models.dart' as _i2;
+import 'package:celest/celest.dart';
 
 abstract final class apis {
-  static const openAi = _i1.CloudApi(name: r'open_ai');
+  static const openAi = CloudApi(name: r'open_ai');
 }
 
 abstract final class functions {
-  static const openAiAvailableModels = _i1.CloudFunction<void, List<String>>(
+  static const openAiAvailableModels = CloudFunction(
     api: r'open_ai',
     functionName: r'availableModels',
   );
 
-  static const openAiOpenAiRequest = _i1.CloudFunction<
-      ({
-        String model,
-        String prompt,
-        _i2.ModelParameters parameters,
-        String openAiToken
-      }),
-      String>(
+  static const openAiOpenAiRequest = CloudFunction(
     api: r'open_ai',
     functionName: r'openAIRequest',
   );
 }
 
 abstract final class env {
-  static const openAiToken = _i1.EnvironmentVariable(name: r'OPEN_AI_TOKEN');
+  static const openAiToken = EnvironmentVariable(name: r'OPEN_AI_TOKEN');
 }

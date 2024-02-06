@@ -1,5 +1,6 @@
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
+import 'package:celest_backend/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';

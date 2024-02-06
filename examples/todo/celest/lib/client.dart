@@ -13,17 +13,14 @@ import 'package:http/http.dart' as http;
 import 'src/client/functions.dart';
 import 'src/client/serializers.dart';
 
-export 'exceptions.dart';
-export 'models.dart';
-
 final Celest celest = Celest();
 
 class Celest {
   late http.Client httpClient = http.Client();
 
   late final Uri baseUri = kIsWeb || !Platform.isAndroid
-      ? Uri.parse('http://localhost:7783')
-      : Uri.parse('http://10.0.2.2:7783');
+      ? Uri.parse('http://localhost:7777')
+      : Uri.parse('http://10.0.2.2:7777');
 
   final functions = CelestFunctions();
 

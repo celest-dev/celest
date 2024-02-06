@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:celest_backend/client.dart';
+import 'package:celest_backend/models.dart';
 import 'package:flutter/material.dart';
 
 void main() {
