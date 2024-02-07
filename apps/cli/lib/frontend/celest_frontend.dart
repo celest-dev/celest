@@ -332,7 +332,7 @@ final class CelestFrontend implements Closeable {
     Progress? currentProgress;
     try {
       while (!stopped) {
-        currentProgress = cliLogger.progress('Deploying Celest project...');
+        currentProgress = cliLogger.progress('💙 Deploying Celest project');
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
@@ -352,6 +352,20 @@ final class CelestFrontend implements Closeable {
           case AnalysisSuccessResult(:final project):
             await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
+
+            var i = 0;
+            final timer = Timer.periodic(const Duration(seconds: 10), (_) {
+              const messages = [
+                '🔥 Warming up the engines',
+                '🚀 Preparing the launchpad',
+                '✨ Contacting the Celestials',
+                '🌩️  Deploying to the cloud',
+              ];
+              currentProgress!.update(messages[i]);
+              if (i < messages.length - 1) {
+                i++;
+              }
+            });
             final projectOutputs = await _deployProject(
               email: email,
               resolvedProject: resolvedProject,
@@ -361,9 +375,9 @@ final class CelestFrontend implements Closeable {
               projectOutputs: projectOutputs,
             );
 
-            currentProgress.complete(
-              '🚀 Your Celest project has been deployed!',
-            );
+            timer.cancel();
+            currentProgress.complete('🚀 We have liftoff!');
+            cliLogger.success('Your Celest project has been deployed!');
             return 0;
         }
       }
@@ -489,7 +503,7 @@ final class CelestFrontend implements Closeable {
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        final baseUri = Uri.https('hub-v76lntiq7q-uw.a.run.app');
+        final baseUri = Uri.https('api-preview.celest.dev');
         final deployService = DeployClient(
           baseUri: baseUri,
           httpClient: httpClient,
@@ -508,67 +522,97 @@ final class CelestFrontend implements Closeable {
           :missingAssetIds,
           :ongoingDeployments,
         ) = _checkDeployState<DeployCreated>(createResult);
-        if (ongoingDeployments.isNotEmpty) {}
-        final entrypointCompiler = EntrypointCompiler(
-          logger: logger,
-          verbose: verbose,
-          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
-        );
-        final assets = Stream.fromFutures([
-          entrypointCompiler.compile(
-            resolvedProject.id,
-            projectPaths.localApiEntrypoint,
-          ),
-        ]);
-        logger.fine('Created deployment: $deploymentId');
-        logger.finest('Missing assets: ${missingAssetIds.join('\n')}');
-        await assets.concurrentAsyncMap((compilationResult) async {
-          logger.fine('Submitting asset for: ${compilationResult.nodeId}');
-          if (stopped) {
-            throw const CancellationException();
-          }
-          final submitAssetResult = await deployService.submitAsset(
-            deploymentId: deploymentId,
-            assetId: AssetId(
-              node: compilationResult.nodeId,
-              type: AssetType.dartKernel,
-            ),
-            asset: compilationResult.outputDill,
-            assetSha256: Uint8List.fromList(
-              compilationResult.outputDillSha256.bytes,
-            ),
-          );
-          final checkedResult =
-              _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
-          logger.fine('Submitted asset: ${checkedResult.assetId}');
-        }).drain<void>();
-        logger.fine('Starting deployment');
-        final startResult =
-            await deployService.startDeployment(deploymentId: deploymentId);
-        _checkDeployState<DeployStarted>(startResult);
-        logger.fine('Deployment started');
-        while (!stopped) {
-          final deployState = await deployService.getDeployment(
-            deploymentId: deploymentId,
-          );
-          logger.fine('Deploy state: $deployState');
-          switch (deployState) {
-            case DeploySucceeded(:final deployedProject):
-              return deployedProject;
-            case DeployFailed(:final error):
-              throw CelestException(error.message);
-            case DeployCanceled():
-              throw const CelestException('Deployment was canceled');
-            default:
-              break;
-          }
-          await Future.any([
-            Future<void>.delayed(const Duration(seconds: 5)),
-            _stopSignal.future,
-          ]);
+        if (ongoingDeployments.isNotEmpty) {
+          // TODO: Handle multiple ongoing deployments
         }
-        await deployService.cancelDeployment(deploymentId: deploymentId);
-        throw const CancellationException();
+        try {
+          final entrypointCompiler = EntrypointCompiler(
+            logger: logger,
+            verbose: verbose,
+            enabledExperiments:
+                celestProject.analysisOptions.enabledExperiments,
+          );
+          final assets = Stream.fromFutures([
+            entrypointCompiler.compile(
+              resolvedProject.id,
+              projectPaths.localApiEntrypoint,
+            ),
+          ]);
+          logger.fine('Created deployment: $deploymentId');
+          logger.finest('Missing assets: ${missingAssetIds.join('\n')}');
+          await assets.concurrentAsyncMap((compilationResult) async {
+            logger.fine('Submitting asset for: ${compilationResult.nodeId}');
+            if (stopped) {
+              throw const CancellationException();
+            }
+            final submitAssetResult = await deployService.submitAsset(
+              deploymentId: deploymentId,
+              assetId: AssetId(
+                node: compilationResult.nodeId,
+                type: AssetType.dartKernel,
+              ),
+              asset: compilationResult.outputDill,
+              assetSha256: Uint8List.fromList(
+                compilationResult.outputDillSha256.bytes,
+              ),
+            );
+            final checkedResult =
+                _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
+            logger.fine('Submitted asset: ${checkedResult.assetId}');
+          }).drain<void>();
+          logger.fine('Starting deployment');
+          final startResult =
+              await deployService.startDeployment(deploymentId: deploymentId);
+          _checkDeployState<DeployStarted>(startResult);
+          logger.fine('Deployment started');
+          // Maximum allowable time. If it takes longer than this, something is
+          // really wrong.
+          const timeoutDuration = Duration(minutes: 3);
+          final timeout = Future<void>.delayed(timeoutDuration);
+          while (!stopped) {
+            final deployState = await deployService.getDeployment(
+              deploymentId: deploymentId,
+            );
+            logger.fine('Deploy state: $deployState');
+            switch (deployState) {
+              case DeploySucceeded(:final deployedProject):
+                return deployedProject;
+              case DeployFailed(:final error):
+                throw CelestException(error.message);
+              case DeployCanceled():
+                throw const CelestException('Deployment was canceled');
+              default:
+                break;
+            }
+            await Future.any([
+              Future<void>.delayed(const Duration(seconds: 5)),
+              _stopSignal.future,
+              timeout.then(
+                (_) => throw TimeoutException(
+                  'Timed out after $timeoutDuration',
+                ),
+              ),
+            ]);
+          }
+          logger.info('Canceling deployment');
+          await deployService.cancelDeployment(deploymentId: deploymentId);
+          throw const CelestException('Deployment was canceled');
+        } on Exception catch (e, st) {
+          if (e case CancellationException() || CelestException()) {
+            rethrow;
+          }
+          Error.throwWithStackTrace(
+            CelestException(
+              'Failed to deploy project. Please contact the Celest team and '
+              'reference deployment ID: $deploymentId',
+              additionalContext: {
+                'deploymentId': deploymentId,
+                'error': '$e',
+              },
+            ),
+            st,
+          );
+        }
       });
 
   Future<void> _generateClientCode({

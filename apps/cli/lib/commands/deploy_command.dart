@@ -21,7 +21,7 @@ final class DeployCommand extends CelestCommand with Configure {
     await configure();
 
     cliLogger.warn(
-      'Deployment is currently invite-only. If you have an invite code, '
+      'Celest Cloud is currently invite-only. If you have an invite code, '
       'please enter it below.',
     );
     final email = cliLogger.prompt('Invite code:');
