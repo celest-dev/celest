@@ -357,7 +357,7 @@ final class CelestFrontend implements Closeable {
             final resolvedProject = await _resolveProject(project);
 
             var iteration = 0;
-            final timer = Timer.periodic(const Duration(seconds: 20), (_) {
+            final timer = Timer.periodic(const Duration(seconds: 10), (_) {
               const messages = [
                 '✨ Contacting the Celestials',
                 '🚀 Deploying to Celest Cloud',
