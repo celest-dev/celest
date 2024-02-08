@@ -44,8 +44,7 @@ final class DeployCommand extends CelestCommand with Configure {
         'organization_id': organizationId,
       },
     );
-    await celestProject.config.settings.setOrganizationId(organizationId);
-    return organizationId;
+    return storage.set('organizationId', organizationId);
   }
 
   @override
@@ -53,8 +52,7 @@ final class DeployCommand extends CelestCommand with Configure {
     await super.run();
     await configure();
 
-    var organizationId =
-        await celestProject.config.settings.getOrganizationId();
+    var organizationId = await storage.get('organizationId');
 
     final Progress currentProgress;
     if (organizationId == null) {

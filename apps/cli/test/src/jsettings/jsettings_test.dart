@@ -1,3 +1,8 @@
+@OnPlatform({
+  'windows': Skip('ChrootFileSystem is not working in GH actions'),
+})
+library;
+
 import 'dart:convert';
 
 import 'package:celest_cli/src/jsettings/jsettings.dart';
