@@ -90,7 +90,7 @@ abstract base class CloudFunctionTarget {
 
 Handler _heartbeatMiddleware(Handler inner) {
   return (request) async {
-    print(request.handlerPath);
+    print(request.requestedUri.path);
     return inner(request);
   };
 }
