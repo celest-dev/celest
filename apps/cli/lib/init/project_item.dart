@@ -114,7 +114,7 @@ final class ProjectDependencyUpdater extends ProjectItem {
               ProjectDependency.devDependencies[entry.key] ?? entry.value,
       },
     );
-    await pubspecFile.writeAsString(updatedPubspec.toYaml());
+    await pubspecFile.writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
     final pubGetRes = await processManager.run(
       [Sdk.current.dart, 'pub', 'get'],
       workingDirectory: projectRoot,

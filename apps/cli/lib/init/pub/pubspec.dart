@@ -44,7 +44,7 @@ extension PubspecCopyWith on Pubspec {
 }
 
 extension PubspecToYaml on Pubspec {
-  String toYaml() {
+  String toYaml({String? source}) {
     final pubspecYaml = StringBuffer('''
 name: $name
 ''');
@@ -54,7 +54,9 @@ name: $name
     if (publishTo != null) {
       pubspecYaml.writeln('publish_to: $publishTo');
     }
-    final editor = YamlEditor('''
+    final editor = YamlEditor(
+      source ??
+          '''
 $pubspecYaml
 environment:
   sdk:
@@ -64,7 +66,8 @@ dependencies:
 
 dev_dependencies:
   test:
-''');
+''',
+    );
     if (environment case final environment?) {
       environment.forEach((key, constraint) {
         editor.update(

@@ -15,7 +15,6 @@ import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
-import 'package:celest_cli/init/pub/pubspec.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -505,7 +504,8 @@ final class CelestFrontend implements Closeable {
 
   Future<void> _saveProjectId(String projectId) async {
     logger.finer('Saving project ID to pubspec.yaml: $projectId');
-    final pubspec = YamlEditor(celestProject.pubspec.toYaml());
+    final pubspecFile = fileSystem.file(projectPaths.projectYaml);
+    final pubspec = YamlEditor(await pubspecFile.readAsString());
     pubspec.update(
       ['celest'],
       {
@@ -514,9 +514,7 @@ final class CelestFrontend implements Closeable {
         },
       },
     );
-    await fileSystem
-        .file(projectPaths.projectYaml)
-        .writeAsString(pubspec.toString());
+    await pubspecFile.writeAsString(pubspec.toString());
   }
 
   Future<ast.RemoteDeployedProject> _deployProject({
