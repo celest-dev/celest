@@ -118,7 +118,7 @@ final class ProjectDependencyUpdater extends ProjectItem {
     final pubGetRes = await processManager.run(
       [Sdk.current.dart, 'pub', 'get'],
       workingDirectory: projectRoot,
-    ).timeout(const Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 30));
     if (pubGetRes.exitCode != 0) {
       throw ProcessException(
         Sdk.current.dart,
