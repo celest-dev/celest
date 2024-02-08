@@ -4,6 +4,9 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 
 final Version currentMinorVersion = () {
   final currentVersion = Version.parse(packageVersion);
+  if (currentVersion.isPreRelease) {
+    return Version(currentVersion.major, currentVersion.minor, 0, pre: '0');
+  }
   return Version(currentVersion.major, currentVersion.minor, 0);
 }();
 
