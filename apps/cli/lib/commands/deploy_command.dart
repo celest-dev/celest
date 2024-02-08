@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/src/context.dart';
@@ -23,11 +25,19 @@ final class DeployCommand extends CelestCommand with Configure {
         await deployService.acceptInvite(inviteCode: inviteCode);
     final organizationId = switch (acceptedInvite) {
       DeployAcceptedInvite(:final organizationId) => organizationId,
-      DeployFailed() || _ => throw const CelestException(
+      DeployFailed() || _ => throw CelestException(
           'Invite code is invalid. If you would like to get access to '
           'Celest Cloud, email us at contact@celest.dev',
+          additionalContext: {
+            'response': jsonEncode(acceptedInvite.toJson()),
+          },
         ),
     };
+    analytics.identifyUser(
+      setOnce: {
+        'email': inviteCode,
+      },
+    );
     analytics.capture(
       'accept_invite',
       properties: {
