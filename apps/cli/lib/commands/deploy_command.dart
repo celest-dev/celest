@@ -23,8 +23,10 @@ final class DeployCommand extends CelestCommand with Configure {
         await deployService.acceptInvite(inviteCode: inviteCode);
     final organizationId = switch (acceptedInvite) {
       DeployAcceptedInvite(:final organizationId) => organizationId,
-      DeployFailed(:final error) => throw CelestException(error.message),
-      _ => throw StateError('Unexpected response: $acceptedInvite'),
+      DeployFailed() || _ => throw const CelestException(
+          'Invite code is invalid. If you would like to get access to '
+          'Celest Cloud, email us at contact@celest.dev',
+        ),
     };
     analytics.capture(
       'accept_invite',
