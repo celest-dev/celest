@@ -188,7 +188,7 @@ const project = Project(
 // folder of your Celest project.
 
 /// Says hello to a person called [name].
-Future<String> sayHello(String name) async {
+Future<String> sayHello({required String name}) async {
   // Logging is handled automatically when you print to the console.
   print('Saying hello to $name');
 
@@ -206,7 +206,7 @@ import '../../functions/greeting.dart';
 void main() {
   group('greeting', () {
     test('sayHello', () async {
-      expect(await sayHello('Celest'), 'Hello, Celest!');
+      expect(await sayHello(name: 'Celest'), 'Hello, Celest!');
     });
   });
 }
