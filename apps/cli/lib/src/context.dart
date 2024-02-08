@@ -3,6 +3,8 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli_common/src/context.dart' as ctx;
+import 'package:celest_proto/celest_proto.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';
@@ -33,3 +35,9 @@ ProjectPaths get projectPaths => celestProject.projectPaths;
 final InheritanceManager3 inheritanceManager = InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
+
+final baseUri = Uri.https('api-preview.celest.dev');
+DeployClient get deployService => DeployClient(
+      baseUri: baseUri,
+      httpClient: ctx.httpClient,
+    );

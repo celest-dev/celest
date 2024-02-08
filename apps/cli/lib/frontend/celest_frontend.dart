@@ -329,7 +329,7 @@ final class CelestFrontend implements Closeable {
 
   /// Builds the current project for deployment to the cloud.
   Future<int> build({
-    required String email,
+    required String organizationId,
   }) async {
     Progress? currentProgress;
     try {
@@ -369,7 +369,7 @@ final class CelestFrontend implements Closeable {
               }
             });
             final projectOutputs = await _deployProject(
-              email: email,
+              organizationId: organizationId,
               resolvedProject: resolvedProject,
             );
             await _generateClientCode(
@@ -517,18 +517,13 @@ final class CelestFrontend implements Closeable {
   }
 
   Future<ast.RemoteDeployedProject> _deployProject({
-    required String email,
+    required String organizationId,
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        final baseUri = Uri.https('api-preview.celest.dev');
-        final deployService = DeployClient(
-          baseUri: baseUri,
-          httpClient: httpClient,
-        );
         logger.fine('Creating deployment');
         final createResult = await deployService.createDeployment(
-          email: email,
+          organizationId: organizationId,
           projectName: resolvedProject.name,
           ast: resolvedProject,
         );

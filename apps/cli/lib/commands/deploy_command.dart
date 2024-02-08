@@ -1,6 +1,8 @@
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_proto/celest_proto.dart';
 
 final class DeployCommand extends CelestCommand with Configure {
   @override
@@ -15,20 +17,44 @@ final class DeployCommand extends CelestCommand with Configure {
   @override
   bool get hidden => true;
 
+  Future<String> _acceptInviteCode(String inviteCode) async {
+    final acceptedInvite =
+        await deployService.acceptInvite(inviteCode: inviteCode);
+    final organizationId = switch (acceptedInvite) {
+      DeployAcceptedInvite(:final organizationId) => organizationId,
+      DeployFailed(:final error) => throw CelestException(error.message),
+      _ => throw StateError('Unexpected response: $acceptedInvite'),
+    };
+    analytics.capture(
+      'accept_invite',
+      properties: {
+        'organization_id': organizationId,
+      },
+    );
+    await celestProject.config.settings.setOrganizationId(organizationId);
+    return organizationId;
+  }
+
   @override
   Future<int> run() async {
     await super.run();
     await configure();
 
-    cliLogger.warn(
-      'Celest Cloud is currently invite-only. If you have an invite code, '
-      'please enter it below.',
-    );
-    final email = cliLogger.prompt('Invite code:');
-    if (email.isEmpty) {
-      return 1;
+    var organizationId =
+        await celestProject.config.settings.getOrganizationId();
+
+    if (organizationId == null) {
+      cliLogger.warn(
+        'Celest Cloud is currently invite-only. If you have an invite code, '
+        'please enter it below.',
+      );
+      final email = cliLogger.prompt('Invite code:');
+      if (email.isEmpty) {
+        return 1;
+      }
+      organizationId = await _acceptInviteCode(email);
     }
 
-    return CelestFrontend().build(email: email);
+    return CelestFrontend().build(organizationId: organizationId);
   }
 }
