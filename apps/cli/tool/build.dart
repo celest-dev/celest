@@ -651,7 +651,20 @@ final class WindowsBundler implements Bundler {
           .readAsStringSync(),
     ).renderString({
       'arch': osArch == Abi.windowsArm64 ? 'arm64' : 'x64',
-      'version': version,
+      // Expects format major.minor.build.revision
+      'version': switch (Version.parse(version)) {
+        Version(
+          isPreRelease: true,
+          :final major,
+          :final minor,
+          :final patch,
+          :final preRelease
+        ) =>
+          // Use the first number in the pre-release as the build number
+          // e.g. `1.2.0-dev.1` -> `1.2.0.1`
+          '${Version(major, minor, patch)}.${preRelease.whereType<int>().firstOrNull ?? 0}',
+        _ => '$version.0',
+      },
     });
     print('Rendered AppxManifest.xml:\n\n$appxManifest\n');
     fileSystem.file(appxManifestPath)
