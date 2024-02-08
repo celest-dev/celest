@@ -1,4 +1,3 @@
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../common/common.dart';
@@ -16,11 +15,11 @@ final class CreateProjectTest extends Test {
     await command('flutter', ['create', '.'])
         .workingDirectory(dir.io.path)
         .expectSuccess();
-    final celest = celestCommand('start').workingDirectory(dir.io.path).start();
-    if (!platform.isWindows) {
-      celest.expectNext('Enter a name for your project').writeLine('hello');
-    }
-    await celest
+    await celestCommand('start')
+        .workingDirectory(dir.io.path)
+        .start()
+        .expectNext('Enter a name for your project')
+        .writeLine('hello')
         .expectNext('Generating project')
         .expectNext('Project generated successfully')
         .run();

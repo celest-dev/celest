@@ -39,18 +39,12 @@ final class StartCommand extends CelestCommand with Configure {
       );
     }
 
-    final projectName = switch (platform.operatingSystem) {
-      // readLineSync is broken on Windows Terminal
-      // https://github.com/dart-lang/sdk/issues/54588
-      // https://github.com/microsoft/terminal/issues/16223
-      'windows' => appName,
-      _ => cliLogger
-          .prompt(
-            'Enter a name for your project',
-            defaultValue: appName,
-          )
-          .snakeCase,
-    };
+    final projectName = cliLogger
+        .prompt(
+          'Enter a name for your project',
+          defaultValue: appName,
+        )
+        .snakeCase;
 
     logger.finest(
       'Generating project for "$projectName" at '

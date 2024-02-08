@@ -1,4 +1,3 @@
-import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 
 import '../common/common.dart';
@@ -12,11 +11,11 @@ final class AddRemoveFieldsTest extends Test {
 
   @override
   Future<void> run() async {
-    final celest =
-        celestCommand('start').workingDirectory(flutterProjectDir.path).start();
-    if (!platform.isWindows) {
-      celest.expectNext('Enter a name for your project').writeLine('hello');
-    }
+    final celest = celestCommand('start')
+        .workingDirectory(flutterProjectDir.path)
+        .start()
+        .expectNext('Enter a name for your project')
+        .writeLine('hello');
     print('Waiting for initial start');
     await celest
         .expectLater('Starting Celest')

@@ -18,15 +18,9 @@ final class UninstallCommand extends CelestCommand {
   Future<int> run() async {
     await super.run();
 
-    final areYouSure = switch (platform.operatingSystem) {
-      // Cannot use prompts on Windows
-      // https://github.com/dart-lang/sdk/issues/54588
-      // https://github.com/microsoft/terminal/issues/16223
-      'windows' => true,
-      _ => cliLogger.confirm(
-          'Are you sure you want to uninstall Celest and all associated data?',
-        ),
-    };
+    final areYouSure = cliLogger.confirm(
+      'Are you sure you want to uninstall Celest and all associated data?',
+    );
     if (!areYouSure) {
       cliLogger.info('Aborted uninstall');
       return 0;
