@@ -7,7 +7,7 @@ sealed class CloudException implements CelestException {}
 /// An exception thrown by a Cloud Function when a request contains invalid
 /// data or otherwise lead to a recoverable exception.
 /// {@endtemplate}
-final class BadRequestException implements CloudException {
+class BadRequestException implements CloudException {
   /// Creates a [BadRequestException] with the given [message].
   ///
   /// {@macro celest_core_exception_bad_request_exception}
