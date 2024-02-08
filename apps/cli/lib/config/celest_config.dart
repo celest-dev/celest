@@ -1,7 +1,7 @@
 import 'package:celest_cli/config/find_application_home.dart';
+import 'package:celest_cli/src/jsettings/jsettings.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
-import 'package:jsettings/jsettings.dart';
 
 final class CelestConfig {
   CelestConfig._(

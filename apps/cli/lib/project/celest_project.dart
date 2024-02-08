@@ -27,10 +27,13 @@ final class CelestProject {
       projectRoot,
       outputsDir: outputsDir,
     );
-    final (config, analysisOptions) = await (
+    final [
+      config as CelestConfig,
+      analysisOptions as AnalysisOptions,
+    ] = await Future.wait([
       CelestConfig.load(),
       AnalysisOptions.load(projectPaths.analysisOptionsYaml),
-    ).wait;
+    ]);
     _logger
       ..finest('Loaded analysis options: $analysisOptions')
       ..finest('Loaded Celest config: $config');

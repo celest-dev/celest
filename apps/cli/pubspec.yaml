@@ -33,7 +33,6 @@ dependencies:
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1
   http: ^1.1.2
-  jsettings: ^0.1.1
   json_annotation: ^4.8.1
   logging: ^1.2.0
   mason_logger: ^0.2.10
