@@ -14,6 +14,7 @@ import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
+import 'package:celest_cli/init/pub/pubspec.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -24,6 +25,7 @@ import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
+import 'package:yaml_edit/yaml_edit.dart';
 
 enum RestartMode {
   hotReload,
@@ -498,6 +500,22 @@ final class CelestFrontend implements Closeable {
     return state;
   }
 
+  Future<void> _saveProjectId(String projectId) async {
+    logger.finer('Saving project ID to pubspec.yaml: $projectId');
+    final pubspec = YamlEditor(celestProject.pubspec.toYaml());
+    pubspec.update(
+      ['celest'],
+      {
+        'project': {
+          'id': projectId,
+        },
+      },
+    );
+    await fileSystem
+        .file(projectPaths.projectYaml)
+        .writeAsString(pubspec.toString());
+  }
+
   Future<ast.RemoteDeployedProject> _deployProject({
     required String email,
     required ast.ResolvedProject resolvedProject,
@@ -575,7 +593,8 @@ final class CelestFrontend implements Closeable {
             );
             logger.fine('Deploy state: $deployState');
             switch (deployState) {
-              case DeploySucceeded(:final deployedProject):
+              case DeploySucceeded(:final projectId, :final deployedProject):
+                await _saveProjectId(projectId);
                 return deployedProject;
               case DeployFailed(:final error):
                 throw CelestException(error.message);
