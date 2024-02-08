@@ -1,4 +1,5 @@
 import 'package:celest_cli/init/pub/pub_dependency.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
@@ -10,6 +11,36 @@ enum DependencyType {
   const DependencyType(this.key);
 
   final String key;
+}
+
+extension PubspecCopyWith on Pubspec {
+  Pubspec copyWith({
+    String? name,
+    Version? version,
+    String? description,
+    String? publishTo,
+    Uri? repository,
+    Uri? issueTracker,
+    Map<String, VersionConstraint>? environment,
+    Map<String, Dependency>? dependencies,
+    Map<String, Dependency>? devDependencies,
+    Map<String, Dependency>? dependencyOverrides,
+    Map<String, Dependency>? flutter,
+  }) {
+    return Pubspec(
+      name ?? this.name,
+      version: version ?? this.version,
+      description: description ?? this.description,
+      repository: repository ?? this.repository,
+      issueTracker: issueTracker ?? this.issueTracker,
+      publishTo: publishTo ?? this.publishTo,
+      environment: environment ?? this.environment,
+      dependencies: dependencies ?? this.dependencies,
+      devDependencies: devDependencies ?? this.devDependencies,
+      dependencyOverrides: dependencyOverrides ?? this.dependencyOverrides,
+      flutter: flutter ?? this.flutter,
+    );
+  }
 }
 
 extension PubspecToYaml on Pubspec {

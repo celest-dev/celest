@@ -14,7 +14,7 @@ final class ProjectDependency {
   const ProjectDependency._(this.name, this.pubDependency);
 
   final String name;
-  final Dependency pubDependency;
+  final HostedDependency pubDependency;
 
   static final ProjectDependency celest = ProjectDependency._(
     'celest',

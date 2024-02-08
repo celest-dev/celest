@@ -22,6 +22,7 @@ class ProjectMigrator {
     await Future.wait(
       [
         MacOsEntitlements(appRoot),
+        ProjectDependencyUpdater(projectRoot),
       ].map((item) => item.create(projectRoot)),
     );
   }

@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:celest_cli/init/pub/project_dependency.dart';
 import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli/init/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -77,6 +79,55 @@ final class MacOsEntitlements extends ProjectItem {
         continue;
       }
     }
+  }
+}
+
+final class ProjectDependencyUpdater extends ProjectItem {
+  const ProjectDependencyUpdater(this.projectRoot);
+
+  final String projectRoot;
+
+  static final _logger = Logger('ProjectDependencyUpdater');
+
+  @override
+  Future<void> create(String projectRoot) async {
+    _logger.fine('Updating project dependencies...');
+    final pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
+    final pubspecYaml = await pubspecFile.readAsString();
+    final pubspec = Pubspec.parse(pubspecYaml);
+    final currentCelestVersion =
+        (pubspec.dependencies['celest'] as HostedDependency).version;
+    final latestCelestVersion = ProjectDependency.celest.pubDependency.version;
+    if (currentCelestVersion == latestCelestVersion) {
+      _logger.fine('Project dependencies are up to date.');
+      return;
+    }
+    _logger.fine('Updating project dependencies to $latestCelestVersion...');
+    final updatedPubspec = pubspec.copyWith(
+      dependencies: {
+        for (final entry in pubspec.dependencies.entries)
+          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
+      },
+      devDependencies: {
+        for (final entry in pubspec.devDependencies.entries)
+          entry.key:
+              ProjectDependency.devDependencies[entry.key] ?? entry.value,
+      },
+    );
+    await pubspecFile.writeAsString(updatedPubspec.toYaml());
+    final pubGetRes = await processManager.run(
+      [Sdk.current.dart, 'pub', 'get'],
+      workingDirectory: projectRoot,
+    ).timeout(const Duration(seconds: 10));
+    if (pubGetRes.exitCode != 0) {
+      throw ProcessException(
+        Sdk.current.dart,
+        ['pub', 'get'],
+        '${pubGetRes.stdout}\n${pubGetRes.stderr}',
+        pubGetRes.exitCode,
+      );
+    }
+    _logger.fine('Project dependencies updated.');
   }
 }
 
