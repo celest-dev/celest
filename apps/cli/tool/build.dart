@@ -197,7 +197,7 @@ Future<void> main() async {
     version: Version.parse(version),
     installer: switch (platform.operatingSystem) {
       'windows' || 'macos' => storagePaths.first.storagePath,
-      'linux' => storagePaths[2].storagePath,
+      'linux' => storagePaths[setLatest ? 2 : 1].storagePath,
       _ => unreachable(),
     },
     zip: switch (platform.operatingSystem) {
