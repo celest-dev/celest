@@ -106,13 +106,13 @@ final class ResourcesGenerator {
             'functionName': literalString(function.name, raw: true),
           }).code,
       );
-      _allResources[api] = 'apis.$apiFieldName';
-      _allResources[function] = 'functions.$functionFieldName';
+      _allResources[api] = 'Apis.$apiFieldName';
+      _allResources[function] = 'Functions.$functionFieldName';
     }
   }
 
   void _generateEnv(Iterable<EnvironmentVariable> envVars) {
-    final env = _beginClass('env');
+    final env = _beginClass('Env');
     for (final envVar in envVars) {
       final fieldName = envVar.envName.camelCase;
       env.fields.add(
@@ -127,7 +127,7 @@ final class ResourcesGenerator {
             }).code,
         ),
       );
-      _allResources[envVar] = 'env.$fieldName';
+      _allResources[envVar] = 'Env.$fieldName';
     }
   }
 
@@ -144,8 +144,8 @@ final class ResourcesGenerator {
           functions: functions,
         );
       }
-      _beginClass('apis').fields.addAll(apis.build().values);
-      _beginClass('functions').fields.addAll(functions.build().values);
+      _beginClass('Apis').fields.addAll(apis.build().values);
+      _beginClass('Functions').fields.addAll(functions.build().values);
     }
     if (project.envVars.isNotEmpty) {
       _generateEnv(project.envVars);

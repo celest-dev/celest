@@ -27,16 +27,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 146,
+                  "offset": 123,
                   "uri": "injected.dart",
                   "line": 5,
-                  "column": 40
+                  "column": 30
                 },
                 "end": {
-                  "offset": 150,
+                  "offset": 127,
                   "uri": "injected.dart",
                   "line": 5,
-                  "column": 44
+                  "column": 34
                 },
                 "text": "name"
               },
@@ -57,16 +57,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 188,
+                  "offset": 155,
                   "uri": "injected.dart",
                   "line": 6,
-                  "column": 36
+                  "column": 26
                 },
                 "end": {
-                  "offset": 191,
+                  "offset": 158,
                   "uri": "injected.dart",
                   "line": 6,
-                  "column": 39
+                  "column": 29
                 },
                 "text": "age"
               },
@@ -93,13 +93,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 95,
+              "offset": 82,
               "uri": "injected.dart",
               "line": 4,
               "column": 7
             },
             "end": {
-              "offset": 103,
+              "offset": 90,
               "uri": "injected.dart",
               "line": 4,
               "column": 15
@@ -124,16 +124,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 312,
+                  "offset": 269,
                   "uri": "injected.dart",
                   "line": 12,
-                  "column": 40
+                  "column": 30
                 },
                 "end": {
-                  "offset": 316,
+                  "offset": 273,
                   "uri": "injected.dart",
                   "line": 12,
-                  "column": 44
+                  "column": 34
                 },
                 "text": "name"
               },
@@ -154,16 +154,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 354,
+                  "offset": 301,
                   "uri": "injected.dart",
                   "line": 13,
-                  "column": 36
+                  "column": 26
                 },
                 "end": {
-                  "offset": 357,
+                  "offset": 304,
                   "uri": "injected.dart",
                   "line": 13,
-                  "column": 39
+                  "column": 29
                 },
                 "text": "age"
               },
@@ -184,16 +184,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 401,
+                  "offset": 338,
                   "uri": "injected.dart",
                   "line": 14,
-                  "column": 42
+                  "column": 32
                 },
                 "end": {
-                  "offset": 407,
+                  "offset": 344,
                   "uri": "injected.dart",
                   "line": 14,
-                  "column": 48
+                  "column": 38
                 },
                 "text": "height"
               },
@@ -214,16 +214,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 448,
+                  "offset": 375,
                   "uri": "injected.dart",
                   "line": 15,
-                  "column": 39
+                  "column": 29
                 },
                 "end": {
-                  "offset": 454,
+                  "offset": 381,
                   "uri": "injected.dart",
                   "line": 15,
-                  "column": 45
+                  "column": 35
                 },
                 "text": "weight"
               },
@@ -244,16 +244,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 494,
+                  "offset": 411,
                   "uri": "injected.dart",
                   "line": 16,
-                  "column": 38
+                  "column": 28
                 },
                 "end": {
-                  "offset": 500,
+                  "offset": 417,
                   "uri": "injected.dart",
                   "line": 16,
-                  "column": 44
+                  "column": 34
                 },
                 "text": "isCool"
               },
@@ -274,16 +274,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 542,
+                  "offset": 449,
                   "uri": "injected.dart",
                   "line": 17,
-                  "column": 40
+                  "column": 30
                 },
                 "end": {
-                  "offset": 549,
+                  "offset": 456,
                   "uri": "injected.dart",
                   "line": 17,
-                  "column": 47
+                  "column": 37
                 },
                 "text": "website"
               },
@@ -310,13 +310,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 255,
+              "offset": 222,
               "uri": "injected.dart",
               "line": 11,
               "column": 7
             },
             "end": {
-              "offset": 269,
+              "offset": 236,
               "uri": "injected.dart",
               "line": 11,
               "column": 21

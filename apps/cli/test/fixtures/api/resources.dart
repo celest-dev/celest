@@ -6,7 +6,7 @@ library;
 
 import 'package:celest/celest.dart';
 
-abstract final class apis {
+abstract final class Apis {
   static const asserts = CloudApi(name: r'asserts');
 
   static const classes = CloudApi(name: r'classes');
@@ -32,7 +32,7 @@ abstract final class apis {
   static const sealedClasses = CloudApi(name: r'sealed_classes');
 }
 
-abstract final class functions {
+abstract final class Functions {
   static const assertsAssertsEnabled = CloudFunction(
     api: r'asserts',
     functionName: r'assertsEnabled',

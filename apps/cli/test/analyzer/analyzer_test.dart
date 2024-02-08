@@ -869,7 +869,7 @@ MY_AGE=28
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class env {
+abstract final class Env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
   static const myAge = EnvironmentVariable(name: r'MY_AGE');
 }
@@ -881,13 +881,13 @@ import 'package:celest/celest.dart';
 import '../resources.dart' as resources;
 
 void sayHelloPositional(
-  @resources.env.myName String name,
-  @resources.env.myAge int age,
+  @resources.Env.myName String name,
+  @resources.Env.myAge int age,
 ) => 'Hello, $name. I am $age years old.';
 
 void sayHelloNamed({
-  @resources.env.myName required String name,
-  @resources.env.myAge required int age,  
+  @resources.Env.myName required String name,
+  @resources.Env.myAge required int age,  
 }) => 'Hello, $name. I am $age years old.';
 ''',
         },
@@ -938,7 +938,7 @@ MY_NAME=Celest
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class env {
+abstract final class Env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
 }
 ''',
@@ -948,7 +948,7 @@ import 'package:celest/celest.dart';
 
 import '../resources.dart' as resources;
 
-void sayHello(@resources.env.myName List<String> name) => 'Hello, $name';
+void sayHello(@resources.Env.myName List<String> name) => 'Hello, $name';
 ''',
         },
         errors: [
@@ -967,7 +967,7 @@ PORT=8080
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class env {
+abstract final class Env {
   static const port = EnvironmentVariable(name: r'PORT');
 }
 ''',
@@ -977,7 +977,7 @@ import 'package:celest/celest.dart';
 
 import '../resources.dart' as resources;
 
-void sayHello(@resources.env.port int port) => 'Hello, $port';
+void sayHello(@resources.Env.port int port) => 'Hello, $port';
 ''',
         },
         errors: [
@@ -995,7 +995,7 @@ PORT=8080
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class env {
+abstract final class Env {
   static const port = EnvironmentVariable(name: r'PORT');
 }
 ''',
@@ -1006,8 +1006,8 @@ import 'package:celest/celest.dart';
 import '../resources.dart' as resources;
 
 void sayHello(
-  @resources.env.port
-  @resources.env.port
+  @resources.Env.port
+  @resources.Env.port
     int port,
 ) => 'Hello, $port';
 ''',
