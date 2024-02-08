@@ -3,6 +3,7 @@ import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/celest_proto.dart';
+import 'package:mason_logger/mason_logger.dart';
 
 final class DeployCommand extends CelestCommand with Configure {
   @override
@@ -43,6 +44,7 @@ final class DeployCommand extends CelestCommand with Configure {
     var organizationId =
         await celestProject.config.settings.getOrganizationId();
 
+    final Progress currentProgress;
     if (organizationId == null) {
       cliLogger.warn(
         'Celest Cloud is currently invite-only. If you have an invite code, '
@@ -52,9 +54,15 @@ final class DeployCommand extends CelestCommand with Configure {
       if (email.isEmpty) {
         return 1;
       }
+      currentProgress = cliLogger.progress('🔥 Warming up the engines');
       organizationId = await _acceptInviteCode(email);
+    } else {
+      currentProgress = cliLogger.progress('🔥 Warming up the engines');
     }
 
-    return CelestFrontend().build(organizationId: organizationId);
+    return CelestFrontend().build(
+      organizationId: organizationId,
+      currentProgress: currentProgress,
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
@@ -329,12 +330,12 @@ final class CelestFrontend implements Closeable {
 
   /// Builds the current project for deployment to the cloud.
   Future<int> build({
+    required Progress? currentProgress,
     required String organizationId,
   }) async {
-    Progress? currentProgress;
     try {
       while (!stopped) {
-        currentProgress = cliLogger.progress('💙 Deploying Celest project');
+        currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
@@ -342,6 +343,7 @@ final class CelestFrontend implements Closeable {
             'Project has errors. Please fix them and save the '
             'corresponding files, then run `celest deploy` again.',
           );
+          currentProgress = null;
           _logErrors(errors);
         }
 
@@ -355,18 +357,19 @@ final class CelestFrontend implements Closeable {
             await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
 
-            var i = 0;
-            final timer = Timer.periodic(const Duration(seconds: 10), (_) {
+            var iteration = 0;
+            final timer = Timer.periodic(const Duration(seconds: 20), (_) {
               const messages = [
-                '🔥 Warming up the engines',
-                '🚀 Preparing the launchpad',
                 '✨ Contacting the Celestials',
-                '🌩️  Deploying to the cloud',
+                '🚀 Deploying to Celest Cloud',
               ];
-              currentProgress!.update(messages[i]);
-              if (i < messages.length - 1) {
-                i++;
+              final index = min(iteration, messages.length - 1);
+              final message = messages[index];
+              if (iteration < messages.length) {
+                currentProgress!.complete();
+                currentProgress = cliLogger.progress(message);
               }
+              iteration++;
             });
             final projectOutputs = await _deployProject(
               organizationId: organizationId,
@@ -378,8 +381,8 @@ final class CelestFrontend implements Closeable {
             );
 
             timer.cancel();
-            currentProgress.complete('🚀 We have liftoff!');
-            cliLogger.success('Your Celest project has been deployed!');
+            currentProgress!.complete();
+            cliLogger.success('💙 Your Celest project has been deployed!');
             return 0;
         }
       }
@@ -608,7 +611,7 @@ final class CelestFrontend implements Closeable {
               ),
             ]);
           }
-          logger.info('Canceling deployment');
+          logger.finer('Canceling deployment');
           await deployService.cancelDeployment(deploymentId: deploymentId);
           throw const CelestException('Deployment was canceled');
         } on Exception catch (e, st) {
