@@ -18,7 +18,7 @@ const int defaultCelestPort = 7777;
 Future<void> serve({
   required Map<String, CloudFunctionTarget> targets,
 }) async {
-  final router = Router();
+  final router = Router()..get('/_health', (_) => Response.ok('OK'));
   for (final MapEntry(key: route, value: target) in targets.entries) {
     router.post(route, target._handler);
   }
