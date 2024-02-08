@@ -8,6 +8,7 @@ import 'package:celest_cli/commands/upgrade_command.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:sentry/sentry.dart';
 
 final _jsonUtf8 = JsonUtf8Encoder('  ');
@@ -39,7 +40,7 @@ void main(List<String> args) async {
       },
     ),
   )..addCommand(StartCommand());
-  if (platform.environment.containsKey('CELEST_ENABLE_DEPLOY')) {
+  if (Version.parse(packageVersion).isPreRelease) {
     cli.addCommand(DeployCommand());
   }
   cli
