@@ -148,26 +148,29 @@ Future<void> main() async {
   final withoutExt = p.withoutExtension(p.basename(outputFilepath));
   final debFilepath = '${p.withoutExtension(outputFilepath)}.deb';
   assert(!p.equals(outputFilepath, debFilepath));
+  final setLatest = !Version.parse(version).isPreRelease;
   final storagePaths = [
     (
       localPath: outputFilepath,
       storagePath: '$osArch/$version/${p.basename(outputFilepath)}',
     ),
-    (
-      localPath: outputFilepath,
-      storagePath:
-          '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}'
-    ),
+    if (setLatest)
+      (
+        localPath: outputFilepath,
+        storagePath:
+            '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}'
+      ),
     if (platform.isLinux) ...[
       (
         localPath: debFilepath,
         storagePath: '$osArch/$version/$withoutExt.deb',
       ),
-      (
-        localPath: debFilepath,
-        storagePath:
-            '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb'
-      ),
+      if (setLatest)
+        (
+          localPath: debFilepath,
+          storagePath:
+              '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb'
+        ),
     ],
   ];
   print('Uploading storage paths: $storagePaths');
@@ -204,7 +207,7 @@ Future<void> main() async {
     },
   );
   final updatedReleasesInfo = CelestReleasesInfo(
-    latest: latestRelease,
+    latest: setLatest ? latestRelease : currentReleasesInfo!.latest,
     releases: {
       ...?currentReleasesInfo?.releases,
       version: latestRelease,
