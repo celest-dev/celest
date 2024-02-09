@@ -536,6 +536,13 @@ final class CelestFrontend implements Closeable {
           :missingAssetIds,
           :ongoingDeployments,
         ) = _checkDeployState<DeployCreated>(createResult);
+        analytics.capture(
+          'start_deployment',
+          properties: {
+            'deployment_id': deploymentId,
+            'organization_id': organizationId,
+          },
+        );
         if (ongoingDeployments.isNotEmpty) {
           // TODO: Handle multiple ongoing deployments
         }
@@ -614,6 +621,13 @@ final class CelestFrontend implements Closeable {
           throw const CelestException('Deployment was canceled');
         } on Exception catch (e, st) {
           if (e case CancellationException() || CelestException()) {
+            analytics.capture(
+              'cancel_deployment',
+              properties: {
+                'deployment_id': deploymentId,
+                'organization_id': organizationId,
+              },
+            );
             rethrow;
           }
           Error.throwWithStackTrace(
