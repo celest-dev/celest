@@ -50,7 +50,7 @@ final class StartCommand extends CelestCommand with Configure {
       'Generating project for "$projectName" at '
       '"${projectPaths.projectRoot}"...',
     );
-    _currentProgress = cliLogger.progress('Generating project...');
+    _currentProgress = cliLogger.progress('Generating project');
     await performance.trace('StartCommand', 'createProject', () async {
       await ProjectGenerator(
         appRoot: projectPaths.appRoot,
@@ -99,7 +99,7 @@ final class StartCommand extends CelestCommand with Configure {
     );
 
     _currentProgress?.complete('Project generated successfully');
-    _currentProgress = cliLogger.progress('Starting Celest...');
+    _currentProgress = cliLogger.progress('Starting Celest');
 
     if (!await fileSystem
         .directory(projectPaths.projectDart)

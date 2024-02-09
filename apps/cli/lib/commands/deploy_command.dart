@@ -57,8 +57,8 @@ final class DeployCommand extends CelestCommand with Configure {
     final Progress currentProgress;
     if (organizationId == null) {
       cliLogger.warn(
-        'Celest Cloud is currently invite-only. If you have an invite code, '
-        'please enter it below.',
+        'Celest Cloud is available now for our early-bird customers. '
+        'If you have an invite code, please enter it below.',
       );
       final email = cliLogger.prompt('Invite code:');
       if (email.isEmpty) {

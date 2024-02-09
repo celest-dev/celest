@@ -238,7 +238,7 @@ final class CelestFrontend implements Closeable {
     try {
       while (!stopped) {
         if (_didFirstCompile) {
-          currentProgress = cliLogger.progress('Reloading Celest...');
+          currentProgress = cliLogger.progress('Reloading Celest');
         }
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
