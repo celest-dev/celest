@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:celest_cli/init/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:process/src/interface/common.dart';
@@ -75,40 +75,22 @@ base mixin Configure on CelestCommand {
           {'path': 'celest/'},
         );
       await appPubspecFile.writeAsString(updatedPubspec.toString());
-      await pubGet(
-        exe: getExecutablePath(
+      try {
+        await runPub(
+          exe: getExecutablePath(
+                'flutter',
+                fileSystem.currentDirectory.path,
+                platform: platform,
+                fs: fileSystem,
+                throwOnFailure: false,
+              ) ??
               'flutter',
-              fileSystem.currentDirectory.path,
-              platform: platform,
-              fs: fileSystem,
-              throwOnFailure: false,
-            ) ??
-            'flutter',
-        workingDirectory: projectPaths.appRoot,
-      );
-    }
-  }
-
-  Future<void> pubGet({
-    String? exe,
-    String? workingDirectory,
-  }) async {
-    exe ??= Sdk.current.dart;
-    final projectRoot = projectPaths.projectRoot;
-    logger.fine('Running pub get in "$projectRoot"...');
-    final result = await processManager.run(
-      [exe, 'pub', 'upgrade'],
-      workingDirectory: workingDirectory,
-      stdoutEncoding: utf8,
-      stderrEncoding: utf8,
-    );
-    if (result.exitCode != 0) {
-      throw ProcessException(
-        exe,
-        ['pub', 'upgrade'],
-        '${result.stdout}\n${result.stderr}',
-        result.exitCode,
-      );
+          action: PubAction.get,
+          workingDirectory: projectPaths.appRoot,
+        );
+      } on Exception catch (e, st) {
+        performance.captureError(e, stackTrace: st);
+      }
     }
   }
 }

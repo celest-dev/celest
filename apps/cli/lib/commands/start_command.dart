@@ -3,6 +3,7 @@ import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/init/project_migrator.dart';
+import 'package:celest_cli/init/pub/pub_action.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
@@ -106,7 +107,10 @@ final class StartCommand extends CelestCommand with Configure {
         .childDirectory('.dart_tool')
         .childFile('package_config.json')
         .exists()) {
-      await pubGet(workingDirectory: projectPaths.projectRoot);
+      await runPub(
+        action: PubAction.get,
+        workingDirectory: projectPaths.projectRoot,
+      );
     }
 
     // Start the Celest Frontend Loop

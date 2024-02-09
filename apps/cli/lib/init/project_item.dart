@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:celest_cli/init/pub/project_dependency.dart';
+import 'package:celest_cli/init/pub/pub_action.dart';
 import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli/init/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -115,19 +114,12 @@ final class ProjectDependencyUpdater extends ProjectItem {
       },
     );
     await pubspecFile.writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
-    final pubGetRes = await processManager.run(
-      [Sdk.current.dart, 'pub', 'get'],
+    _logger.fine('Running pub get in "$projectRoot"...');
+    await runPub(
+      action: PubAction.get,
       workingDirectory: projectRoot,
-    ).timeout(const Duration(seconds: 30));
-    if (pubGetRes.exitCode != 0) {
-      throw ProcessException(
-        Sdk.current.dart,
-        ['pub', 'get'],
-        '${pubGetRes.stdout}\n${pubGetRes.stderr}',
-        pubGetRes.exitCode,
-      );
-    }
-    _logger.fine('Project dependencies updated.');
+    );
+    _logger.fine('Project dependencies updated');
   }
 }
 
