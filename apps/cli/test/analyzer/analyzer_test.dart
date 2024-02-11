@@ -6,6 +6,7 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';
+import 'package:checks/checks.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -23,6 +24,7 @@ Future<CelestProject> newProject({
   required String name,
   String? analysisOptions,
   String? projectDart,
+  String? authDart,
   String? resourcesDart,
   String? models,
   String? exceptions,
@@ -76,6 +78,9 @@ dependencies:
 '''),
     d.file('project.dart', projectDart),
     if (resourcesDart != null) d.file('resources.dart', resourcesDart),
+    d.dir('auth', [
+      if (authDart != null) d.file('auth.dart', authDart),
+    ]),
     if (apis.isNotEmpty)
       d.dir('functions', [
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
@@ -108,6 +113,7 @@ void testNoErrors({
   required String name,
   String? skip,
   String? projectDart,
+  String? authDart,
   String? resourcesDart,
   String? models,
   String? exceptions,
@@ -121,6 +127,7 @@ void testNoErrors({
     skip: skip,
     errors: [],
     projectDart: projectDart,
+    authDart: authDart,
     resourcesDart: resourcesDart,
     models: models,
     exceptions: exceptions,
@@ -135,6 +142,7 @@ void testErrors({
   required String name,
   String? skip,
   String? projectDart,
+  String? authDart,
   String? resourcesDart,
   String? models,
   String? exceptions,
@@ -148,6 +156,7 @@ void testErrors({
     celestProject = await newProject(
       name: name,
       projectDart: projectDart,
+      authDart: authDart,
       resourcesDart: resourcesDart,
       models: models,
       exceptions: exceptions,
@@ -1014,6 +1023,86 @@ void sayHello(
         },
         errors: [
           'Only one annotation may be specified on a parameter',
+        ],
+      );
+    });
+
+    group('auth', () {
+      testErrors(
+        name: 'no_auth',
+        authDart: '',
+        errors: [
+          'No `Auth` type found',
+        ],
+      );
+
+      testNoErrors(
+        name: 'valid_inline_provider',
+        authDart: '''
+import 'package:celest/celest.dart';
+
+const auth = Auth(
+  providers: [
+    AuthProvider.google(),
+  ],
+);
+''',
+        expectProject: (project) {
+          check(project.auth)
+              .isNotNull()
+              .has((it) => it.providers, 'providers')
+              .single
+              .has((it) => it.type, 'type')
+              .equals(AuthProviderType.google);
+        },
+      );
+
+      testNoErrors(
+        name: 'valid_referenced_provider',
+        authDart: '''
+import 'package:celest/celest.dart';
+
+const google = AuthProvider.google();
+const auth = Auth(
+  providers: [google],
+);
+''',
+        expectProject: (project) {
+          check(project.auth)
+              .isNotNull()
+              .has((it) => it.providers, 'providers')
+              .single
+              .has((it) => it.type, 'type')
+              .equals(AuthProviderType.google);
+        },
+      );
+
+      testErrors(
+        name: 'no_providers',
+        authDart: '''
+import 'package:celest/celest.dart';
+
+const auth = Auth(
+  providers: [],
+);
+''',
+        errors: [
+          'At least one Auth provider must be specified',
+        ],
+      );
+
+      testErrors(
+        name: 'duplicate_provider',
+        authDart: '''
+import 'package:celest/celest.dart';
+
+const google = AuthProvider.google();
+const auth = Auth(
+  providers: [google, google],
+);
+''',
+        errors: [
+          'Duplicate auth provider',
         ],
       );
     });

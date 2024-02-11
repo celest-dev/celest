@@ -34,6 +34,8 @@ final class ProjectPaths {
 
   late final EnvManager envManager = EnvManager(envFile);
 
+  late final String authDart = p.join(projectRoot, 'auth', 'auth.dart');
+
   String api(String apiName) => p.join(apisDir, '$apiName.dart');
   String apiOutput(String apiName) => p.join(outputsDir, 'functions', apiName);
   String functionEntrypoint(String apiName, String functionName) => p.join(

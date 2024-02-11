@@ -94,4 +94,14 @@ final class ProjectResolver extends AstVisitor<void> {
       ),
     );
   }
+
+  @override
+  void visitAuth(Auth auth) {
+    throw UnimplementedError();
+  }
+
+  @override
+  void visitAuthProvider(AuthProvider provider) {
+    throw UnimplementedError();
+  }
 }

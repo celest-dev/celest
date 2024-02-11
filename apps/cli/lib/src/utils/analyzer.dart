@@ -64,6 +64,18 @@ extension DartTypeHelper on DartType {
 
   bool get isPackageCelest => element?.library?.isPackageCelest ?? false;
 
+  bool get isAuth => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'Auth' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isAuthProviderGoogle => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_GoogleAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'Project' && library.isPackageCelest,

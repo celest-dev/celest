@@ -144,6 +144,7 @@ final class CelestAnalyzer {
     }
 
     await _collectApis();
+    await _collectAuth();
     return CelestAnalysisResult.success(
       project: _project.build(),
       errors: _errors,
@@ -196,47 +197,9 @@ final class CelestAnalyzer {
     //     ),
     //   );
     // }
-    final topLevelVariables = projectFile.element.topLevelElements
-        .whereType<TopLevelVariableElement>()
-        .where((variable) => !variable.isPrivate);
-    var hasConstantEvalErrors = false;
-    final topLevelConstants =
-        <({TopLevelVariableElement element, DartObject value})>[];
-    for (final topLevelVariable in topLevelVariables) {
-      if (!topLevelVariable.isConst) {
-        _reportError(
-          'All top-level variables must be `const`',
-          location: topLevelVariable.sourceLocation,
-        );
-        hasConstantEvalErrors = true;
-        continue;
-      }
-      switch (topLevelVariable.computeConstantValue()) {
-        case final DartObject constantValue:
-          topLevelConstants.add(
-            (element: topLevelVariable, value: constantValue),
-          );
-        default:
-          _reportError(
-            'Top-level constant could not be evaluated',
-            location: topLevelVariable.sourceLocation,
-          );
-          hasConstantEvalErrors = true;
-      }
-    }
-    _logger.finest(
-      () => 'Resolved top-level constants: ${prettyPrintJson({
-            'hasConstantEvalErrors': '$hasConstantEvalErrors',
-            'constants': {
-              for (final constant in topLevelConstants)
-                constant.element.name: {
-                  'type': constant.element.type.toString(),
-                  'value': constant.value.toString(),
-                },
-            },
-          })}',
-    );
-    if (hasConstantEvalErrors) {
+    final (topLevelConstants, hasErrors) =
+        projectFile.element.topLevelConstants(onError: _reportError);
+    if (hasErrors) {
       return null;
     }
     final projectDefinition =
@@ -401,7 +364,7 @@ final class CelestAnalyzer {
   }
 
   Future<void> _collectApis() async {
-    final apiDir = Directory(projectPaths.apisDir);
+    final apiDir = fileSystem.directory(projectPaths.apisDir);
     if (!await apiDir.exists()) {
       return;
     }
@@ -712,6 +675,97 @@ final class CelestAnalyzer {
       docs: library.docLines,
     );
   }
+
+  Future<void> _collectAuth() async {
+    final authFilepath = projectPaths.authDart;
+    final authFile = fileSystem.file(authFilepath);
+    if (!authFile.existsSync()) {
+      return;
+    }
+
+    final authLibrary = await _resolveLibrary(authFile.path);
+    final authErrors = authLibrary.units
+        .expand((unit) => unit.errors)
+        .where((error) => error.severity == Severity.error)
+        .toList();
+    if (authErrors.isNotEmpty) {
+      for (final authError in authErrors) {
+        _reportError(
+          authError.message,
+          location: authError.source.toSpan(
+            authError.problemMessage.offset,
+            authError.problemMessage.offset + authError.problemMessage.length,
+          ),
+        );
+      }
+      return;
+    }
+
+    final (topLevelConstants, hasErrors) =
+        authLibrary.element.topLevelConstants(onError: _reportError);
+    if (hasErrors) {
+      return;
+    }
+    final authDefinition =
+        topLevelConstants.firstWhereOrNull((el) => el.element.type.isAuth);
+    if (authDefinition == null) {
+      _reportError('$authFilepath: No `Auth` type found');
+      return;
+    }
+
+    final (
+      element: authDefinitionElement,
+      value: authDefinitionValue,
+    ) = authDefinition;
+
+    // Validate `auth` variable.
+    final authDefinitionLocation = authDefinitionElement.sourceLocation;
+    final authProviders =
+        authDefinitionValue.getField('providers')?.toListValue();
+    if (authProviders == null) {
+      _reportError(
+        'The `providers` field is required on `Auth` definitions',
+        location: authDefinitionLocation,
+      );
+      return;
+    }
+    if (authProviders.isEmpty) {
+      _reportError(
+        'At least one Auth provider must be specified in `providers`',
+        location: authDefinitionLocation,
+      );
+      return;
+    }
+
+    final uniqueAuthProviders = <ast.AuthProvider>{};
+    for (final authProvider in authProviders) {
+      final ast.AuthProviderType type;
+      switch (authProvider.type) {
+        case InterfaceType(isAuthProviderGoogle: true):
+          type = ast.AuthProviderType.google;
+        default:
+          _reportError(
+            'Unknown auth provider type: ${authProvider.type}',
+            location: authDefinitionLocation,
+          );
+          continue;
+      }
+      final astAuthProvider = ast.AuthProvider(
+        type: type,
+        location: authDefinitionLocation,
+      );
+      if (!uniqueAuthProviders.add(astAuthProvider)) {
+        _reportError(
+          'Duplicate auth provider: $type',
+          location: authDefinitionLocation,
+        );
+      }
+    }
+
+    _project.auth
+      ..location = authDefinitionLocation
+      ..providers.addAll(uniqueAuthProviders);
+  }
 }
 
 final class _ScopedWidgetCollector {
@@ -823,3 +877,59 @@ final class ExceptionTypeCollector extends RecursiveAstVisitor<void> {
     exceptionTypes.add(staticType);
   }
 }
+
+extension TopLevelConstants on LibraryElement {
+  static final _logger = Logger('TopLevelConstants');
+
+  (List<TopLevelConstant>, bool hasErrors) topLevelConstants({
+    required AnalysisErrorReporter onError,
+  }) {
+    var hasConstantEvalErrors = false;
+    final topLevelConstants = <TopLevelConstant>[];
+    final topLevelVariables = topLevelElements
+        .whereType<TopLevelVariableElement>()
+        .where((variable) => !variable.isPrivate);
+    for (final topLevelVariable in topLevelVariables) {
+      if (!topLevelVariable.isConst) {
+        onError(
+          'All top-level variables must be `const`',
+          location: topLevelVariable.sourceLocation,
+        );
+        hasConstantEvalErrors = true;
+        continue;
+      }
+      switch (topLevelVariable.computeConstantValue()) {
+        case final DartObject constantValue:
+          topLevelConstants.add(
+            (element: topLevelVariable, value: constantValue),
+          );
+        default:
+          onError(
+            'Top-level constant could not be evaluated',
+            location: topLevelVariable.sourceLocation,
+          );
+          hasConstantEvalErrors = true;
+      }
+    }
+    _logger.finest(() {
+      final constantInfo = {
+        'hasConstantEvalErrors': '$hasConstantEvalErrors',
+        'constants': {
+          for (final constant in topLevelConstants)
+            constant.element.name: {
+              'type': constant.element.type.toString(),
+              'value': constant.value.toString(),
+            },
+        },
+      };
+      return 'Resolved top-level constants in ${source.uri}: '
+          '${prettyPrintJson(constantInfo)}';
+    });
+    return (topLevelConstants, hasConstantEvalErrors);
+  }
+}
+
+typedef TopLevelConstant = ({
+  TopLevelVariableElement element,
+  DartObject value
+});
