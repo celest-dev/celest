@@ -208,6 +208,7 @@ Future<void> main() async {
   );
   final updatedReleasesInfo = CelestReleasesInfo(
     latest: setLatest ? latestRelease : currentReleasesInfo!.latest,
+    latestDev: setLatest ? currentReleasesInfo!.latestDev : latestRelease,
     releases: {
       ...?currentReleasesInfo?.releases,
       version: latestRelease,

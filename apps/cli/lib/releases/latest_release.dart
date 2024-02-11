@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:celest_cli/releases/celest_release_info.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 final _releasesEndpoint =
     CelestReleasesInfo.baseUri.resolve('${Abi.current()}/releases.json');
 
-Future<CelestReleaseInfo> retrieveLatestRelease() async {
+Future<CelestReleasesInfo> _retrieveCliReleases() async {
   final releasesResp = await httpClient.get(_releasesEndpoint);
   if (releasesResp.statusCode != 200) {
     throw CelestException(
@@ -21,6 +23,22 @@ Future<CelestReleaseInfo> retrieveLatestRelease() async {
   }
 
   final releasesJson = jsonDecode(releasesResp.body) as Map<String, dynamic>;
-  final releasesInfo = CelestReleasesInfo.fromJson(releasesJson);
-  return releasesInfo.latest;
+  return CelestReleasesInfo.fromJson(releasesJson);
+}
+
+Future<CelestReleaseInfo> retrieveLatestRelease() async {
+  final releasesInfo = await _retrieveCliReleases();
+  return switch (Version.parse(packageVersion)) {
+    Version(isPreRelease: true) => () {
+        if (releasesInfo.latestDev case final latestDev?) {
+          return latestDev;
+        }
+        final entries = releasesInfo.releases.entries.toList();
+        entries.sort((a, b) {
+          return Version.parse(a.key).compareTo(Version.parse(b.key));
+        });
+        return entries.last.value;
+      }(),
+    _ => releasesInfo.latest,
+  };
 }

@@ -17,6 +17,7 @@ final class CelestReleasesInfo {
   const CelestReleasesInfo({
     this.schemaVersion = CelestReleaseSchemaVersion.v1,
     required this.latest,
+    this.latestDev,
     required this.releases,
   });
 
@@ -29,6 +30,7 @@ final class CelestReleasesInfo {
 
   final CelestReleaseSchemaVersion schemaVersion;
   final CelestReleaseInfo latest;
+  final CelestReleaseInfo? latestDev;
   final Map<String, CelestReleaseInfo> releases;
 
   Map<String, Object?> toJson() => _$CelestReleasesInfoToJson(this);
