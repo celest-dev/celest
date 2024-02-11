@@ -450,6 +450,19 @@ final class CelestAnalyzer {
     required String apiName,
     required String apiFile,
   }) async {
+    if (apiName.startsWith('_')) {
+      // This would lead to private fields being generated in the client. It
+      // also allows us to reserve all `_` paths for internal usage.
+      _reportError(
+        'API names may not start with an underscore (`_`)',
+        location: SourceFile.fromString(
+          await fileSystem.file(apiFile).readAsString(),
+          url: p.toUri(apiFile),
+        ).span(0, 0),
+      );
+      return null;
+    }
+
     final apiLibraryResult = await _resolveLibrary(apiFile);
     final apiErrors = apiLibraryResult.units
         .expand((unit) => unit.errors)

@@ -242,6 +242,18 @@ String sayHello() => 'Hello, World!';
       );
 
       testErrors(
+        name: 'bad_file_name_underscore',
+        apis: {
+          '_greeting.dart': '''
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'API names may not start with an underscore',
+        ],
+      );
+
+      testErrors(
         name: 'bad_parameter_types_core',
         apis: {
           'greeting.dart': '''
