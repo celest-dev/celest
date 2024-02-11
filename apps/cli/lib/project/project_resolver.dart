@@ -97,11 +97,12 @@ final class ProjectResolver extends AstVisitor<void> {
 
   @override
   void visitAuth(Auth auth) {
-    throw UnimplementedError();
+    _resolvedProject.auth.providers.addAll([
+      for (final provider in auth.providers)
+        ResolvedAuthProvider(name: provider.name, type: provider.type),
+    ]);
   }
 
   @override
-  void visitAuthProvider(AuthProvider provider) {
-    throw UnimplementedError();
-  }
+  void visitAuthProvider(AuthProvider provider) {}
 }
