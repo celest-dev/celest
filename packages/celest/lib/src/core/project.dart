@@ -11,8 +11,14 @@ class Project implements CloudWidget {
   /// {@macro celest.core.project}
   const Project({
     required this.name,
+    this.logoUrl,
   });
 
   /// The name of the project as its identified in your Celest backend.
   final String name;
+
+  /// The hosted URL of your project's logo.
+  ///
+  /// This is used by widgets like [Auth] to craft a custom login page.
+  final String? logoUrl;
 }

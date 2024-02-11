@@ -3,6 +3,10 @@ library celest;
 
 export 'package:celest_core/celest_core.dart';
 
+/// Auth
+export 'src/auth/auth.dart';
+export 'src/auth/auth_provider.dart';
+
 /// Config
 export 'src/config/env.dart';
 
