@@ -59,6 +59,9 @@ final String? accessToken = platform.environment['GCP_ACCESS_TOKEN'];
 /// The current SHA of the branch being built.
 final String? currentSha = platform.environment['GITHUB_SHA'];
 
+/// Whether we're running in CI.
+final isCI = platform.environment['CI'] == 'true';
+
 /// Builds and bundles the CLI for the current platform.
 ///
 /// This script is used by the GitHub workflow `apps_cli_release.yaml` to create
@@ -95,7 +98,6 @@ Future<void> main() async {
 
   print('Successfully wrote $outputFilepath');
 
-  final isCI = platform.environment['CI'] == 'true';
   if (!isCI) {
     return;
   }
@@ -636,7 +638,11 @@ final class WindowsBundler implements Bundler {
   @override
   Future<void> bundle() async {
     final appxPackage = await _createAppx();
-    await _evCodesign(appxPackage);
+    if (isCI) {
+      await _evCodesign(appxPackage);
+    } else {
+      await fileSystem.file(appxPackage).copy(outputFilepath);
+    }
   }
 
   /// Creates an APPX installer package for the CLI.

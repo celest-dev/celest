@@ -15,6 +15,7 @@ import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -286,6 +287,7 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
+                port: (await storage.getLocalUri(project.name)).port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -297,7 +299,13 @@ final class CelestFrontend implements Closeable {
             }
             await _generateClientCode(
               project: project,
-              projectOutputs: projectOutputs,
+              projectUris: (
+                localUri: await storage.setLocalUri(
+                  project.name,
+                  Uri.http('localhost:${projectOutputs.port}'),
+                ),
+                productionUri: await storage.getProductionUri(project.name),
+              ),
             );
 
             if (!_didFirstCompile) {
@@ -376,7 +384,13 @@ final class CelestFrontend implements Closeable {
             );
             await _generateClientCode(
               project: project,
-              projectOutputs: projectOutputs,
+              projectUris: (
+                localUri: await storage.getLocalUri(project.name),
+                productionUri: await storage.setProductionUri(
+                  project.name,
+                  projectOutputs.baseUri,
+                ),
+              ),
             );
 
             timer.cancel();
@@ -452,6 +466,7 @@ final class CelestFrontend implements Closeable {
     List<String> invalidatedPaths, {
     required ResolvedProject resolvedProject,
     RestartMode restartMode = RestartMode.hotReload,
+    int? port,
   }) async {
     final envVars = resolvedProject.envVars.map((envVar) => envVar.name);
     if (_localApiRunner == null) {
@@ -460,6 +475,7 @@ final class CelestFrontend implements Closeable {
           path: projectPaths.localApiEntrypoint,
           envVars: envVars,
           verbose: verbose,
+          port: port,
         );
       });
     } else {
@@ -476,6 +492,7 @@ final class CelestFrontend implements Closeable {
               path: projectPaths.localApiEntrypoint,
               envVars: envVars,
               verbose: verbose,
+              port: port,
             );
           });
       }
@@ -646,13 +663,13 @@ final class CelestFrontend implements Closeable {
 
   Future<void> _generateClientCode({
     required ast.Project project,
-    required ast.DeployedProject projectOutputs,
+    required CelestProjectUris projectUris,
   }) =>
       performance.trace('CelestFrontend', 'generateClientCode', () async {
         logger.fine('Generating client code...');
         final generator = ClientCodeGenerator(
           project: project,
-          projectOutputs: projectOutputs,
+          projectUris: projectUris,
         );
         await generator.generate().write();
       });

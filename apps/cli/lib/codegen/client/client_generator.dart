@@ -1,7 +1,9 @@
 import 'package:celest_cli/codegen/client/categories/client_functions_generator.dart';
 import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:code_builder/code_builder.dart';
@@ -14,19 +16,20 @@ const kClientHeader = [
 final class ClientGenerator {
   ClientGenerator({
     required this.project,
-    required this.projectOutputs,
+    required this.projectUris,
   }) {
     _library = LibraryBuilder()
       ..name = ''
       ..comments.addAll(kClientHeader)
       ..body.addAll([
         _client,
+        _celestEnvironment,
         lazySpec(_clientClass.build),
       ]);
   }
 
   final ast.Project project;
-  final ast.DeployedProject projectOutputs;
+  final CelestProjectUris projectUris;
   late final LibraryBuilder _library;
 
   final _client = Field(
@@ -36,9 +39,121 @@ final class ClientGenerator {
       ..name = ClientTypes.topLevelClient.name
       ..assignment = ClientTypes.clientClass.ref.newInstance([]).code,
   );
+  late final _celestEnvironment = Enum(
+    (e) => e
+      ..name = 'CelestEnvironment'
+      ..methods.addAll([
+        Method(
+          (m) => m
+            ..type = MethodType.getter
+            ..returns = DartTypes.core.uri
+            ..name = 'baseUri'
+            ..lambda = true
+            ..body = Block.of([
+              const Code('switch (this) {'),
+              const Code('local => '),
+              DartTypes.globals.kIsWeb
+                  .or(DartTypes.io.platform.property('isAndroid').negate())
+                  .conditional(
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(projectUris.localUri.toString()),
+                    ]),
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(
+                        'http://10.0.2.2:${projectUris.localUri.port}',
+                      ),
+                    ]),
+                  )
+                  .code,
+              const Code(','),
+              if (projectUris.productionUri case final productionUri?) ...[
+                const Code('production => '),
+                DartTypes.core.uri.property('parse').call([
+                  literalString(productionUri.toString()),
+                ]).code,
+                const Code(','),
+              ],
+              const Code('}'),
+            ]),
+        ),
+      ])
+      ..values.addAll([
+        EnumValue((v) => v..name = 'local'),
+        if (projectUris.productionUri != null)
+          EnumValue((v) => v..name = 'production'),
+      ]),
+  );
   late final _clientClass = ClassBuilder()
     ..name = ClientTypes.clientClass.name
+    ..methods.addAll([
+      Method(
+        (m) => m
+          ..returns = refer('T')
+          ..name = '_checkInitialized'
+          ..types.add(refer('T'))
+          ..requiredParameters.add(
+            Parameter(
+              (p) => p
+                ..name = 'value'
+                ..type = FunctionType((f) => f..returnType = refer('T')),
+            ),
+          )
+          ..body = Block(
+            (b) => b
+              ..statements.add(
+                DartTypes.core.stateError
+                    .newInstance([
+                      literalString(
+                        'Celest has not been initialized. Make sure to call '
+                        '`celest.init()` at the start of your `main` method.',
+                      ),
+                    ])
+                    .thrown
+                    .wrapWithBlockIf(
+                      refer('_initialized').negate(),
+                    ),
+              )
+              ..addExpression(
+                refer('value').call([]).returned,
+              ),
+          ),
+      ),
+      Method(
+        (m) => m
+          ..returns = refer('CelestEnvironment')
+          ..type = MethodType.getter
+          ..name = 'currentEnvironment'
+          ..lambda = true
+          ..body = refer('_checkInitialized').call([
+            Method((m) => m..body = refer('_currentEnvironment').code).closure,
+          ]).code,
+      ),
+      if (project.apis.isNotEmpty) ...[
+        Method(
+          (m) => m
+            ..returns = DartTypes.core.uri
+            ..type = MethodType.getter
+            ..name = 'baseUri'
+            ..lambda = true
+            ..body = refer('_checkInitialized').call([
+              Method((m) => m..body = refer('_baseUri').code).closure,
+            ]).code,
+        ),
+      ],
+    ])
     ..fields.addAll([
+      Field(
+        (f) => f
+          ..modifier = FieldModifier.var$
+          ..name = '_initialized'
+          ..assignment = literalBool(false).code,
+      ),
+      Field(
+        (f) => f
+          ..late = true
+          ..type = refer('CelestEnvironment')
+          ..name = '_currentEnvironment',
+      ),
       if (project.apis.values.isNotEmpty) ...[
         Field(
           (f) => f
@@ -50,30 +165,8 @@ final class ClientGenerator {
         Field(
           (f) => f
             ..late = true
-            ..modifier = FieldModifier.final$
             ..type = DartTypes.core.uri
-            ..name = 'baseUri'
-            ..assignment = switch (projectOutputs) {
-              final ast.LocalDeployedProject local => DartTypes.globals.kIsWeb
-                  .or(DartTypes.io.platform.property('isAndroid').negate())
-                  .conditional(
-                    DartTypes.core.uri.property('parse').call([
-                      literalString(
-                        'http://localhost:${local.port}',
-                      ),
-                    ]),
-                    DartTypes.core.uri.property('parse').call([
-                      literalString(
-                        'http://10.0.2.2:${local.port}',
-                      ),
-                    ]),
-                  )
-                  .code,
-              final ast.RemoteDeployedProject remote =>
-                DartTypes.core.uri.property('parse').call([
-                  literalString(remote.baseUri.toString()),
-                ]).code,
-            },
+            ..name = '_baseUri',
         ),
       ],
     ]);
@@ -83,6 +176,11 @@ final class ClientGenerator {
 
     final clientInitBody = BlockBuilder();
 
+    // Common setup work
+    clientInitBody.addExpression(
+      refer('_currentEnvironment').assign(refer('environment')),
+    );
+
     var customSerializers = <Class>{};
     var anonymousRecordTypes = <String, RecordType>{};
 
@@ -90,19 +188,36 @@ final class ClientGenerator {
     if (apis.isNotEmpty) {
       final functionsGenerator = ClientFunctionsGenerator(
         apis: apis.toList(),
-        apiOutputs: projectOutputs.apis.asMap(),
       );
       libraries[ClientPaths.functions] = functionsGenerator.generate();
-      _clientClass.fields.add(
-        Field(
-          (f) => f
-            ..modifier = FieldModifier.final$
-            ..name = 'functions'
-            ..assignment = ClientTypes.functionsClass.ref.newInstance([]).code,
-        ),
-      );
+      _clientClass
+        ..fields.add(
+          Field(
+            (f) => f
+              ..modifier = FieldModifier.final$
+              ..name = '_functions'
+              ..assignment =
+                  ClientTypes.functionsClass.ref.newInstance([]).code,
+          ),
+        )
+        ..methods.add(
+          Method(
+            (m) => m
+              ..returns = ClientTypes.functionsClass.ref
+              ..type = MethodType.getter
+              ..name = 'functions'
+              ..lambda = true
+              ..body = refer('_checkInitialized').call([
+                Method((m) => m..body = refer('_functions').code).closure,
+              ]).code,
+          ),
+        );
       customSerializers = functionsGenerator.customSerializers;
       anonymousRecordTypes = functionsGenerator.anonymousRecordTypes;
+
+      clientInitBody.addExpression(
+        refer('_baseUri').assign(refer('environment').property('baseUri')),
+      );
     }
 
     if (customSerializers.isNotEmpty) {
@@ -127,11 +242,24 @@ final class ClientGenerator {
       }
     }
 
+    clientInitBody.addExpression(
+      refer('_initialized').assign(literalBool(true)),
+    );
+
     // Add client methods
     final clientInit = Method(
       (m) => m
         ..name = 'init'
         ..returns = DartTypes.core.void$
+        ..optionalParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'environment'
+              ..type = refer('CelestEnvironment')
+              ..named = true
+              ..defaultTo = refer('CelestEnvironment').property('local').code,
+          ),
+        )
         ..body = clientInitBody.build(),
     );
     _clientClass.methods.add(clientInit);

@@ -7,6 +7,7 @@ final class CodeOutputs extends DelegatingMap<String, String> {
   Future<void> write() async {
     final outputFutures = <Future<void>>[];
     forEach((path, library) {
+      assert(p.isAbsolute(path), 'Path must be absolute: $path');
       outputFutures.add(
         Future<void>(() async {
           final file = fileSystem.file(path);

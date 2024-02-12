@@ -15,16 +15,47 @@ import 'src/client/serializers.dart';
 
 final Celest celest = Celest();
 
+enum CelestEnvironment {
+  local,
+  production;
+
+  Uri get baseUri => switch (this) {
+        local => kIsWeb || !Platform.isAndroid
+            ? Uri.parse('http://localhost:7777')
+            : Uri.parse('http://10.0.2.2:7777'),
+        production => Uri.parse('https://example.celest.run'),
+      };
+}
+
 class Celest {
+  var _initialized = false;
+
+  late CelestEnvironment _currentEnvironment;
+
   late http.Client httpClient = http.Client();
 
-  late final Uri baseUri = kIsWeb || !Platform.isAndroid
-      ? Uri.parse('http://localhost:7777')
-      : Uri.parse('http://10.0.2.2:7777');
+  late Uri _baseUri;
 
-  final functions = CelestFunctions();
+  final _functions = CelestFunctions();
 
-  void init() {
+  T _checkInitialized<T>(T Function() value) {
+    if (!_initialized) {
+      throw StateError(
+          'Celest has not been initialized. Make sure to call `celest.init()` at the start of your `main` method.');
+    }
+    return value();
+  }
+
+  CelestEnvironment get currentEnvironment =>
+      _checkInitialized(() => _currentEnvironment);
+
+  Uri get baseUri => _checkInitialized(() => _baseUri);
+
+  CelestFunctions get functions => _checkInitialized(() => _functions);
+
+  void init({CelestEnvironment environment = CelestEnvironment.local}) {
+    _currentEnvironment = environment;
+    _baseUri = environment.baseUri;
     Serializers.instance.put(const EmptySerializer());
     Serializers.instance.put(const FieldsSerializer());
     Serializers.instance.put(const NamedFieldsSerializer());
@@ -108,5 +139,6 @@ class Celest {
     Serializers.instance.put(const ResultSerializer());
     Serializers.instance.put(const ErrResultSerializer());
     Serializers.instance.put(const SwappedResultSerializer());
+    _initialized = true;
   }
 }

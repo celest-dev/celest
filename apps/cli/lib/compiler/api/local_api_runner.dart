@@ -48,6 +48,7 @@ final class LocalApiRunner implements Closeable {
     required Iterable<String> envVars,
     required bool verbose,
     List<String> additionalSources = const [],
+    int? port,
     @visibleForTesting StringSink? stdoutPipe,
     @visibleForTesting StringSink? stderrPipe,
     @visibleForTesting PortFinder portFinder = const DefaultPortFinder(),
@@ -88,7 +89,14 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
-    final port = await portFinder.findOpenPort();
+    if (port == null) {
+      port = await portFinder.findOpenPort();
+    } else {
+      final portIsOpen = await portFinder.checkPort(port);
+      if (!portIsOpen) {
+        port = await portFinder.findOpenPort();
+      }
+    }
     _logger.finer('Starting local API on port $port...');
     final localApiProcess = await Process.start(
       Sdk.current.dart,

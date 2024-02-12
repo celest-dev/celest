@@ -3,14 +3,29 @@ import 'dart:io';
 
 import 'package:celest/src/runtime/serve.dart';
 
-abstract interface class PortFinder {
+abstract class PortFinder {
+  const PortFinder._();
+
   const factory PortFinder([int initialPort]) = DefaultPortFinder;
+
+  Future<bool> checkPort(int port) async {
+    try {
+      final socket = await ServerSocket.bind(
+        InternetAddress.anyIPv4,
+        port,
+      );
+      await socket.close();
+      return true;
+    } on SocketException {
+      return false;
+    }
+  }
 
   Future<int> findOpenPort();
 }
 
-final class DefaultPortFinder implements PortFinder {
-  const DefaultPortFinder([this.initialPort = defaultCelestPort]);
+final class DefaultPortFinder extends PortFinder {
+  const DefaultPortFinder([this.initialPort = defaultCelestPort]) : super._();
 
   final int initialPort;
 
@@ -41,8 +56,8 @@ final class DefaultPortFinder implements PortFinder {
   }
 }
 
-final class RandomPortFinder implements PortFinder {
-  const RandomPortFinder();
+final class RandomPortFinder extends PortFinder {
+  const RandomPortFinder() : super._();
 
   @override
   Future<int> findOpenPort() async {

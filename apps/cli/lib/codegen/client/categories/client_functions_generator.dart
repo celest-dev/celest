@@ -18,7 +18,6 @@ import 'package:code_builder/code_builder.dart';
 final class ClientFunctionsGenerator {
   ClientFunctionsGenerator({
     required this.apis,
-    required this.apiOutputs,
   }) {
     apis.sort((a, b) => a.name.compareTo(b.name));
     _library = LibraryBuilder()
@@ -28,7 +27,6 @@ final class ClientFunctionsGenerator {
   }
 
   final List<ast.Api> apis;
-  final Map<String, ast.DeployedApi> apiOutputs;
 
   final customSerializers = LinkedHashSet<Class>(
     equals: (a, b) => a.name == b.name,
@@ -131,13 +129,12 @@ final class ClientFunctionsGenerator {
               );
               typeMaps[typeParameter] = typeMapName;
             }
-            final output = apiOutputs[api.name]!.functions[function.name]!;
             final httpClient =
                 ClientTypes.topLevelClient.ref.property('httpClient');
             final baseUri = ClientTypes.topLevelClient.ref.property('baseUri');
             final functionCall = httpClient.property('post').call([
               baseUri.property('resolve').call([
-                literalString(output.uri.path),
+                literalString(function.route),
               ]),
             ], {
               'headers': literalConstMap({

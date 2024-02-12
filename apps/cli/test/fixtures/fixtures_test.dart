@@ -14,7 +14,6 @@ import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/port.dart';
-import 'package:celest_proto/ast.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -199,15 +198,11 @@ class TestRunner {
       expect(project, isNotNull);
       expect(errors, isEmpty);
 
-      final projectResolver = ProjectResolver();
-      project!.accept(projectResolver);
-      final resolvedProject = projectResolver.resolvedProject;
-
       final clientGen = ClientCodeGenerator(
-        project: project,
-        projectOutputs: LocalDeployedProject.from(
-          projectAst: resolvedProject,
-          port: defaultCelestPort,
+        project: project!,
+        projectUris: (
+          localUri: Uri.http('localhost:$defaultCelestPort'),
+          productionUri: Uri.parse('https://example.celest.run'),
         ),
       );
       final outputs = clientGen.generate();

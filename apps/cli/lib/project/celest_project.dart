@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
+import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
@@ -90,5 +91,34 @@ final class CelestProject {
       database.close(),
     ]);
     _logger.finest('Closed Celest project');
+  }
+}
+
+typedef CelestProjectUris = ({
+  Uri localUri,
+  Uri? productionUri,
+});
+
+extension CelestProjectUriStorage on Storage {
+  Future<Uri?> getUri(String key) async => switch (await get(key)) {
+        final uri? => Uri.parse(uri),
+        _ => null,
+      };
+
+  Future<Uri?> getProductionUri(String projectName) =>
+      getUri('$projectName.productionUri');
+  Future<Uri> setProductionUri(String projectName, Uri uri) async {
+    await set('$projectName.productionUri', uri.toString());
+    return uri;
+  }
+
+  Future<Uri> getLocalUri(String projectName) async {
+    final uri = await getUri('$projectName.localUri');
+    return uri ?? Uri.parse('http://localhost:$defaultCelestPort');
+  }
+
+  Future<Uri> setLocalUri(String projectName, Uri uri) async {
+    await set('$projectName.localUri', uri.toString());
+    return uri;
   }
 }
