@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Gemini Example",
+            "cwd": "examples/gemini",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
             "name": "OpenAI Example",
             "cwd": "examples/openai",
             "request": "launch",
