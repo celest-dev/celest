@@ -7,4 +7,5 @@ export 'src/exception/cloud_exception.dart';
 export 'src/exception/serialization_exception.dart';
 
 /// Serialization
+export 'src/serialization/json_value.dart';
 export 'src/serialization/serializer.dart';
