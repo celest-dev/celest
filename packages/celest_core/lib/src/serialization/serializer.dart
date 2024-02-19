@@ -137,6 +137,7 @@ final class _Serializers extends Serializers {
   }
 }
 
+@immutable
 final class TypeToken<T> {
   const TypeToken([this._typeName]);
 
