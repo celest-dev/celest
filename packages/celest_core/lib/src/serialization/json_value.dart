@@ -87,17 +87,12 @@ extension type const JsonDouble(double value) implements JsonNum, double {
 extension type const JsonBool(bool value) implements JsonValue, bool {}
 
 /// A [JsonValue] which represents a [List].
-extension type const JsonList._(List<JsonValue?> value)
-    implements JsonValue, List<JsonValue?> {
-  const JsonList(List<Object?> value) : this._(value as List<JsonValue?>);
-}
+extension type const JsonList(List<Object?> value)
+    implements JsonValue, List<Object?> {}
 
 /// A [JsonValue] which represents a [Map].
-extension type const JsonMap._(Map<String, JsonValue?> value)
-    implements JsonValue, Map<String, JsonValue?> {
-  const JsonMap(Map<String, Object?> value)
-      : this._(value as Map<String, JsonValue?>);
-
+extension type const JsonMap(Map<String, Object?> value)
+    implements JsonValue, Map<String, Object?> {
   /// Returns the string associated with [key] or `null` if [key] is not in the
   /// map.
   JsonString? optionalString(String key) {
