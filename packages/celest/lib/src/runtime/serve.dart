@@ -121,18 +121,6 @@ Handler _cloudExceptionMiddleware(Handler inner) {
   return (request) async {
     try {
       return await inner(request);
-    } on BadRequestException catch (e) {
-      print('Bad request: ${e.message}');
-      return _badRequest(
-        code: 'BadRequestException',
-        details: Serializers.instance.serialize(e),
-      );
-    } on InternalServerException catch (e) {
-      print('Internal server error: ${e.message}');
-      return _internalServerError(
-        code: 'InternalServerException',
-        details: Serializers.instance.serialize(e),
-      );
     } on Exception catch (e, st) {
       print('An unexpected error occurred: $e');
       print(st);
