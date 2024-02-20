@@ -55,5 +55,5 @@ final class StringXPrivateCtorSerializer
   }
 
   @override
-  String serialize(_i4.StringXPrivateCtor value) => value.s;
+  Object? serialize(_i4.StringXPrivateCtor value) => value.s;
 }

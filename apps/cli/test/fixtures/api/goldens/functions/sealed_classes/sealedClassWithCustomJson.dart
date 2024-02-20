@@ -54,8 +54,7 @@ final class CircleWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.CircleWithCustomJson value) =>
-      value.toJson();
+  Object? serialize(_i4.CircleWithCustomJson value) => value.toJson();
 }
 
 final class RectangleWithCustomJsonSerializer
@@ -69,8 +68,7 @@ final class RectangleWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.RectangleWithCustomJson value) =>
-      value.toJson();
+  Object? serialize(_i4.RectangleWithCustomJson value) => value.toJson();
 }
 
 final class ShapeWithCustomJsonSerializer
@@ -96,7 +94,7 @@ final class ShapeWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ShapeWithCustomJson value) {
+  Object? serialize(_i4.ShapeWithCustomJson value) {
     if (value is _i4.CircleWithCustomJson) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.CircleWithCustomJson>(value)

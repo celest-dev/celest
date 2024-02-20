@@ -56,6 +56,5 @@ final class CustomErrorToFromJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.CustomErrorToFromJson value) =>
-      value.toJson();
+  Object? serialize(_i3.CustomErrorToFromJson value) => value.toJson();
 }

@@ -48,7 +48,7 @@ final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Rectangle value) => {
+  Object? serialize(_i4.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };

@@ -75,7 +75,7 @@ final class ExportableSerializer extends _i3.Serializer<_i4.Exportable> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Exportable value) => {};
+  Object? serialize(_i4.Exportable value) => {};
 }
 
 final class LiteralEnumSerializer extends _i3.Serializer<_i4.LiteralEnum> {
@@ -88,7 +88,7 @@ final class LiteralEnumSerializer extends _i3.Serializer<_i4.LiteralEnum> {
   }
 
   @override
-  String serialize(_i4.LiteralEnum value) => value.name;
+  Object? serialize(_i4.LiteralEnum value) => value.name;
 }
 
 final class Record$k7x4l9Serializer extends _i3.Serializer<Record$k7x4l9> {
@@ -105,7 +105,7 @@ final class Record$k7x4l9Serializer extends _i3.Serializer<Record$k7x4l9> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$k7x4l9 value) => {
+  Object? serialize(Record$k7x4l9 value) => {
         r'a': value.a,
         r'b': value.b,
         r'c': value.c,
@@ -122,6 +122,5 @@ final class SerializableSerializer extends _i3.Serializer<_i4.Serializable> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Serializable value) =>
-      {r'type': value.type};
+  Object? serialize(_i4.Serializable value) => {r'type': value.type};
 }

@@ -8622,6 +8622,510 @@
             "text": "stringPrivateCtorImpl"
           }
         },
+        "value": {
+          "name": "value",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Value",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 932,
+                  "uri": "extension_types.dart",
+                  "line": 22,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 933,
+                  "uri": "extension_types.dart",
+                  "line": 22,
+                  "column": 19
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Value",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Value",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 920,
+              "uri": "extension_types.dart",
+              "line": 22,
+              "column": 6
+            },
+            "end": {
+              "offset": 925,
+              "uri": "extension_types.dart",
+              "line": 22,
+              "column": 11
+            },
+            "text": "value"
+          }
+        },
+        "valueX": {
+          "name": "valueX",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueX",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 962,
+                  "uri": "extension_types.dart",
+                  "line": 23,
+                  "column": 21
+                },
+                "end": {
+                  "offset": 963,
+                  "uri": "extension_types.dart",
+                  "line": 23,
+                  "column": 22
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueX",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueX",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 948,
+              "uri": "extension_types.dart",
+              "line": 23,
+              "column": 7
+            },
+            "end": {
+              "offset": 954,
+              "uri": "extension_types.dart",
+              "line": 23,
+              "column": 13
+            },
+            "text": "valueX"
+          }
+        },
+        "valueXImpl": {
+          "name": "valueXImpl",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXImpl",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1004,
+                  "uri": "extension_types.dart",
+                  "line": 24,
+                  "column": 33
+                },
+                "end": {
+                  "offset": 1005,
+                  "uri": "extension_types.dart",
+                  "line": 24,
+                  "column": 34
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 982,
+              "uri": "extension_types.dart",
+              "line": 24,
+              "column": 11
+            },
+            "end": {
+              "offset": 992,
+              "uri": "extension_types.dart",
+              "line": 24,
+              "column": 21
+            },
+            "text": "valueXImpl"
+          }
+        },
+        "valueXToFromJson": {
+          "name": "valueXToFromJson",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXToFromJson",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1064,
+                  "uri": "extension_types.dart",
+                  "line": 25,
+                  "column": 51
+                },
+                "end": {
+                  "offset": 1065,
+                  "uri": "extension_types.dart",
+                  "line": 25,
+                  "column": 52
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToFromJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToFromJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1030,
+              "uri": "extension_types.dart",
+              "line": 25,
+              "column": 17
+            },
+            "end": {
+              "offset": 1046,
+              "uri": "extension_types.dart",
+              "line": 25,
+              "column": 33
+            },
+            "text": "valueXToFromJson"
+          }
+        },
+        "valueXToJson": {
+          "name": "valueXToJson",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXToJson",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1112,
+                  "uri": "extension_types.dart",
+                  "line": 26,
+                  "column": 39
+                },
+                "end": {
+                  "offset": 1113,
+                  "uri": "extension_types.dart",
+                  "line": 26,
+                  "column": 40
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1086,
+              "uri": "extension_types.dart",
+              "line": 26,
+              "column": 13
+            },
+            "end": {
+              "offset": 1098,
+              "uri": "extension_types.dart",
+              "line": 26,
+              "column": 25
+            },
+            "text": "valueXToJson"
+          }
+        },
+        "valueXToJsonImpl": {
+          "name": "valueXToJsonImpl",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXToJsonImpl",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1172,
+                  "uri": "extension_types.dart",
+                  "line": 27,
+                  "column": 51
+                },
+                "end": {
+                  "offset": 1173,
+                  "uri": "extension_types.dart",
+                  "line": 27,
+                  "column": 52
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToJsonImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXToJsonImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1138,
+              "uri": "extension_types.dart",
+              "line": 27,
+              "column": 17
+            },
+            "end": {
+              "offset": 1154,
+              "uri": "extension_types.dart",
+              "line": 27,
+              "column": 33
+            },
+            "text": "valueXToJsonImpl"
+          }
+        },
+        "valueXFromJson": {
+          "name": "valueXFromJson",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXFromJson",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1226,
+                  "uri": "extension_types.dart",
+                  "line": 28,
+                  "column": 45
+                },
+                "end": {
+                  "offset": 1227,
+                  "uri": "extension_types.dart",
+                  "line": 28,
+                  "column": 46
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXFromJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXFromJson",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1196,
+              "uri": "extension_types.dart",
+              "line": 28,
+              "column": 15
+            },
+            "end": {
+              "offset": 1210,
+              "uri": "extension_types.dart",
+              "line": 28,
+              "column": 29
+            },
+            "text": "valueXFromJson"
+          }
+        },
+        "valueXFromJsonImpl": {
+          "name": "valueXFromJsonImpl",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "v",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "ValueXFromJsonImpl",
+                "url": "package:celest_backend/src/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1292,
+                  "uri": "extension_types.dart",
+                  "line": 29,
+                  "column": 57
+                },
+                "end": {
+                  "offset": 1293,
+                  "uri": "extension_types.dart",
+                  "line": 29,
+                  "column": 58
+                },
+                "text": "v"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXFromJsonImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "ValueXFromJsonImpl",
+            "url": "package:celest_backend/src/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1254,
+              "uri": "extension_types.dart",
+              "line": 29,
+              "column": 19
+            },
+            "end": {
+              "offset": 1272,
+              "uri": "extension_types.dart",
+              "line": 29,
+              "column": 37
+            },
+            "text": "valueXFromJsonImpl"
+          }
+        },
         "jsonValue": {
           "name": "jsonValue",
           "apiName": "extension_types",
@@ -8639,15 +9143,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 944,
+                  "offset": 1332,
                   "uri": "extension_types.dart",
-                  "line": 22,
+                  "line": 31,
                   "column": 30
                 },
                 "end": {
-                  "offset": 949,
+                  "offset": 1337,
                   "uri": "extension_types.dart",
-                  "line": 22,
+                  "line": 31,
                   "column": 35
                 },
                 "text": "value"
@@ -8671,15 +9175,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 924,
+              "offset": 1312,
               "uri": "extension_types.dart",
-              "line": 22,
+              "line": 31,
               "column": 10
             },
             "end": {
-              "offset": 933,
+              "offset": 1321,
               "uri": "extension_types.dart",
-              "line": 22,
+              "line": 31,
               "column": 19
             },
             "text": "jsonValue"
@@ -8702,15 +9206,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 994,
+                  "offset": 1382,
                   "uri": "extension_types.dart",
-                  "line": 23,
+                  "line": 32,
                   "column": 33
                 },
                 "end": {
-                  "offset": 999,
+                  "offset": 1387,
                   "uri": "extension_types.dart",
-                  "line": 23,
+                  "line": 32,
                   "column": 38
                 },
                 "text": "value"
@@ -8734,15 +9238,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 972,
+              "offset": 1360,
               "uri": "extension_types.dart",
-              "line": 23,
+              "line": 32,
               "column": 11
             },
             "end": {
-              "offset": 982,
+              "offset": 1370,
               "uri": "extension_types.dart",
-              "line": 23,
+              "line": 32,
               "column": 21
             },
             "text": "jsonString"
@@ -8765,15 +9269,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1035,
+                  "offset": 1423,
                   "uri": "extension_types.dart",
-                  "line": 24,
+                  "line": 33,
                   "column": 24
                 },
                 "end": {
-                  "offset": 1040,
+                  "offset": 1428,
                   "uri": "extension_types.dart",
-                  "line": 24,
+                  "line": 33,
                   "column": 29
                 },
                 "text": "value"
@@ -8797,15 +9301,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1019,
+              "offset": 1407,
               "uri": "extension_types.dart",
-              "line": 24,
+              "line": 33,
               "column": 8
             },
             "end": {
-              "offset": 1026,
+              "offset": 1414,
               "uri": "extension_types.dart",
-              "line": 24,
+              "line": 33,
               "column": 15
             },
             "text": "jsonNum"
@@ -8828,15 +9332,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1076,
+                  "offset": 1464,
                   "uri": "extension_types.dart",
-                  "line": 25,
+                  "line": 34,
                   "column": 24
                 },
                 "end": {
-                  "offset": 1081,
+                  "offset": 1469,
                   "uri": "extension_types.dart",
-                  "line": 25,
+                  "line": 34,
                   "column": 29
                 },
                 "text": "value"
@@ -8860,15 +9364,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1060,
+              "offset": 1448,
               "uri": "extension_types.dart",
-              "line": 25,
+              "line": 34,
               "column": 8
             },
             "end": {
-              "offset": 1067,
+              "offset": 1455,
               "uri": "extension_types.dart",
-              "line": 25,
+              "line": 34,
               "column": 15
             },
             "text": "jsonInt"
@@ -8891,15 +9395,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1126,
+                  "offset": 1514,
                   "uri": "extension_types.dart",
-                  "line": 26,
+                  "line": 35,
                   "column": 33
                 },
                 "end": {
-                  "offset": 1131,
+                  "offset": 1519,
                   "uri": "extension_types.dart",
-                  "line": 26,
+                  "line": 35,
                   "column": 38
                 },
                 "text": "value"
@@ -8923,15 +9427,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1104,
+              "offset": 1492,
               "uri": "extension_types.dart",
-              "line": 26,
+              "line": 35,
               "column": 11
             },
             "end": {
-              "offset": 1114,
+              "offset": 1502,
               "uri": "extension_types.dart",
-              "line": 26,
+              "line": 35,
               "column": 21
             },
             "text": "jsonDouble"
@@ -8954,15 +9458,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1170,
+                  "offset": 1558,
                   "uri": "extension_types.dart",
-                  "line": 27,
+                  "line": 36,
                   "column": 27
                 },
                 "end": {
-                  "offset": 1175,
+                  "offset": 1563,
                   "uri": "extension_types.dart",
-                  "line": 27,
+                  "line": 36,
                   "column": 32
                 },
                 "text": "value"
@@ -8986,15 +9490,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1152,
+              "offset": 1540,
               "uri": "extension_types.dart",
-              "line": 27,
+              "line": 36,
               "column": 9
             },
             "end": {
-              "offset": 1160,
+              "offset": 1548,
               "uri": "extension_types.dart",
-              "line": 27,
+              "line": 36,
               "column": 17
             },
             "text": "jsonBool"
@@ -9017,15 +9521,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1214,
+                  "offset": 1602,
                   "uri": "extension_types.dart",
-                  "line": 28,
+                  "line": 37,
                   "column": 27
                 },
                 "end": {
-                  "offset": 1219,
+                  "offset": 1607,
                   "uri": "extension_types.dart",
-                  "line": 28,
+                  "line": 37,
                   "column": 32
                 },
                 "text": "value"
@@ -9049,15 +9553,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1196,
+              "offset": 1584,
               "uri": "extension_types.dart",
-              "line": 28,
+              "line": 37,
               "column": 9
             },
             "end": {
-              "offset": 1204,
+              "offset": 1592,
               "uri": "extension_types.dart",
-              "line": 28,
+              "line": 37,
               "column": 17
             },
             "text": "jsonList"
@@ -9080,15 +9584,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1255,
+                  "offset": 1643,
                   "uri": "extension_types.dart",
-                  "line": 29,
+                  "line": 38,
                   "column": 24
                 },
                 "end": {
-                  "offset": 1260,
+                  "offset": 1648,
                   "uri": "extension_types.dart",
-                  "line": 29,
+                  "line": 38,
                   "column": 29
                 },
                 "text": "value"
@@ -9112,15 +9616,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1239,
+              "offset": 1627,
               "uri": "extension_types.dart",
-              "line": 29,
+              "line": 38,
               "column": 8
             },
             "end": {
-              "offset": 1246,
+              "offset": 1634,
               "uri": "extension_types.dart",
-              "line": 29,
+              "line": 38,
               "column": 15
             },
             "text": "jsonMap"

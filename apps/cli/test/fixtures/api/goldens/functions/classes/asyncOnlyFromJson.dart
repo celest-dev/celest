@@ -46,6 +46,5 @@ final class OnlyFromJsonSerializer extends _i3.Serializer<_i4.OnlyFromJson> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.OnlyFromJson value) =>
-      {r'field': value.field};
+  Object? serialize(_i4.OnlyFromJson value) => {r'field': value.field};
 }

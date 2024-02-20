@@ -42,7 +42,7 @@ final class ChildSerializer extends _i3.Serializer<_i4.Child> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Child value) => {r'name': value.name};
+  Object? serialize(_i4.Child value) => {r'name': value.name};
 }
 
 final class NodeSerializer extends _i3.Serializer<_i4.Node> {
@@ -65,7 +65,7 @@ final class NodeSerializer extends _i3.Serializer<_i4.Node> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Node value) {
+  Object? serialize(_i4.Node value) {
     if (value is _i4.Parent) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.Parent>(value)
@@ -103,7 +103,7 @@ final class ParentSerializer extends _i3.Serializer<_i4.Parent> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Parent value) => {
+  Object? serialize(_i4.Parent value) => {
         r'name': value.name,
         r'children': value.children
             .map((el) => _i3.Serializers.instance.serialize<_i4.Node>(el))

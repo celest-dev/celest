@@ -20,7 +20,7 @@ final class PersonSerializer extends Serializer<Person> {
   }
 
   @override
-  Map<String, Object?> serialize(Person value) => {
+  Object? serialize(Person value) => {
         r'name': value.name,
         r'age': value.age,
         r'height': value.height,

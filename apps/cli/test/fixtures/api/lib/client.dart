@@ -132,6 +132,35 @@ class Celest {
       const StringXPrivateCtorImplSerializer(),
       const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
     );
+    Serializers.instance.put(const ValueSerializer());
+    Serializers.instance.put(
+      const ValueXSerializer(),
+      const TypeToken<ValueX>('ValueX'),
+    );
+    Serializers.instance.put(
+      const ValueXImplSerializer(),
+      const TypeToken<ValueXImpl>('ValueXImpl'),
+    );
+    Serializers.instance.put(
+      const ValueXToFromJsonSerializer(),
+      const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+    );
+    Serializers.instance.put(
+      const ValueXToJsonSerializer(),
+      const TypeToken<ValueXToJson>('ValueXToJson'),
+    );
+    Serializers.instance.put(
+      const ValueXToJsonImplSerializer(),
+      const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+    );
+    Serializers.instance.put(
+      const ValueXFromJsonSerializer(),
+      const TypeToken<ValueXFromJson>('ValueXFromJson'),
+    );
+    Serializers.instance.put(
+      const ValueXFromJsonImplSerializer(),
+      const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+    );
     Serializers.instance.put(
       const JsonValueSerializer(),
       const TypeToken<JsonValue>('JsonValue'),

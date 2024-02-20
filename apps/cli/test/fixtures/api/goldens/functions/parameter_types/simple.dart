@@ -217,5 +217,5 @@ final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
   }
 
   @override
-  String serialize(_i4.MyEnum value) => value.name;
+  Object? serialize(_i4.MyEnum value) => value.name;
 }

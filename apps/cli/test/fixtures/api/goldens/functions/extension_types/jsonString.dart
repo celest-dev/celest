@@ -54,5 +54,5 @@ final class JsonStringSerializer extends _i3.Serializer<_i4.JsonString> {
   }
 
   @override
-  String serialize(_i4.JsonString value) => value;
+  Object? serialize(_i4.JsonString value) => value;
 }

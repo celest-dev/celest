@@ -54,5 +54,5 @@ final class JsonValueSerializer extends _i3.Serializer<_i4.JsonValue> {
   }
 
   @override
-  Object serialize(_i4.JsonValue value) => value.value;
+  Object? serialize(_i4.JsonValue value) => value.value;
 }

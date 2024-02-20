@@ -54,5 +54,5 @@ final class JsonBoolSerializer extends _i3.Serializer<_i4.JsonBool> {
   }
 
   @override
-  bool serialize(_i4.JsonBool value) => value;
+  Object? serialize(_i4.JsonBool value) => value;
 }

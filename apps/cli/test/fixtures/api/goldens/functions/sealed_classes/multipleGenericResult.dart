@@ -116,7 +116,7 @@ final class BadShapeExceptionSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.BadShapeException value) =>
+  Object? serialize(_i3.BadShapeException value) =>
       {r'shape': _i4.Serializers.instance.serialize<_i2.Shape>(value.shape)};
 }
 
@@ -130,7 +130,7 @@ final class CircleSerializer extends _i4.Serializer<_i2.Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
+  Object? serialize(_i2.Circle value) => {r'radius': value.radius};
 }
 
 final class ErrResultSerializer<E extends _i3.ShapeException>
@@ -145,7 +145,7 @@ final class ErrResultSerializer<E extends _i3.ShapeException>
   }
 
   @override
-  Map<String, Object?> serialize(_i2.ErrResult<E> value) =>
+  Object? serialize(_i2.ErrResult<E> value) =>
       {r'error': _i4.Serializers.instance.serialize<E>(value.error)};
 }
 
@@ -161,7 +161,7 @@ final class OkResultSerializer<T extends _i2.Shape>
   }
 
   @override
-  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
+  Object? serialize(_i2.OkResult<T> value) =>
       {r'data': _i4.Serializers.instance.serialize<T>(value.data)};
 }
 
@@ -178,7 +178,7 @@ final class RectangleSerializer extends _i4.Serializer<_i2.Rectangle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Rectangle value) => {
+  Object? serialize(_i2.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };
@@ -209,7 +209,7 @@ final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Result<T, E> value) {
+  Object? serialize(_i2.Result<T, E> value) {
     if (value is _i2.OkResult<T>) {
       return {
         ...(_i4.Serializers.instance.serialize<_i2.OkResult<T>>(value)
@@ -258,7 +258,7 @@ final class ShapeExceptionSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.ShapeException value) {
+  Object? serialize(_i3.ShapeException value) {
     if (value is _i3.BadShapeException) {
       return {
         ...(_i4.Serializers.instance.serialize<_i3.BadShapeException>(value)
@@ -294,7 +294,7 @@ final class ShapeSerializer extends _i4.Serializer<_i2.Shape> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Shape value) {
+  Object? serialize(_i2.Shape value) {
     if (value is _i2.Rectangle) {
       return {
         ...(_i4.Serializers.instance.serialize<_i2.Rectangle>(value)
@@ -329,7 +329,7 @@ final class SwappedResultSerializer<E extends _i3.ShapeException,
   }
 
   @override
-  Map<String, Object?> serialize(_i2.SwappedResult<E, T> value) => {
+  Object? serialize(_i2.SwappedResult<E, T> value) => {
         r'result':
             _i4.Serializers.instance.serialize<_i2.Result<E, T>>(value.result)
       };

@@ -149,7 +149,7 @@ final class GenericWrappersSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i7.GenericWrappers value) => {
+  Object? serialize(_i7.GenericWrappers value) => {
         r'listOfString': _i3.Serializers.instance
             .serialize<_i4.IList<String>>(value.listOfString),
         r'listOfUri':
@@ -205,7 +205,7 @@ final class IListIListSimpleClassSerializer
   }
 
   @override
-  Object serialize(_i4.IList<_i4.IList<_i5.SimpleClass>> value) =>
+  Object? serialize(_i4.IList<_i4.IList<_i5.SimpleClass>> value) =>
       value.toJson((value) => _i3.Serializers.instance
           .serialize<_i4.IList<_i5.SimpleClass>>(value));
 }
@@ -224,7 +224,7 @@ final class IListIListStringSerializer
   }
 
   @override
-  Object serialize(_i4.IList<_i4.IList<String>> value) => value.toJson(
+  Object? serialize(_i4.IList<_i4.IList<String>> value) => value.toJson(
       (value) => _i3.Serializers.instance.serialize<_i4.IList<String>>(value));
 }
 
@@ -242,7 +242,7 @@ final class IListIListUriSerializer
   }
 
   @override
-  Object serialize(_i4.IList<_i4.IList<Uri>> value) => value.toJson(
+  Object? serialize(_i4.IList<_i4.IList<Uri>> value) => value.toJson(
       (value) => _i3.Serializers.instance.serialize<_i4.IList<Uri>>(value));
 }
 
@@ -260,7 +260,7 @@ final class IListSimpleClassSerializer
   }
 
   @override
-  Object serialize(_i4.IList<_i5.SimpleClass> value) => value.toJson(
+  Object? serialize(_i4.IList<_i5.SimpleClass> value) => value.toJson(
       (value) => _i3.Serializers.instance.serialize<_i5.SimpleClass>(value));
 }
 
@@ -277,7 +277,7 @@ final class IListStringSerializer extends _i3.Serializer<_i4.IList<String>> {
   }
 
   @override
-  Object serialize(_i4.IList<String> value) => value.toJson((value) => value);
+  Object? serialize(_i4.IList<String> value) => value.toJson((value) => value);
 }
 
 final class IListUriSerializer extends _i3.Serializer<_i4.IList<Uri>> {
@@ -293,7 +293,7 @@ final class IListUriSerializer extends _i3.Serializer<_i4.IList<Uri>> {
   }
 
   @override
-  Object serialize(_i4.IList<Uri> value) =>
+  Object? serialize(_i4.IList<Uri> value) =>
       value.toJson((value) => _i3.Serializers.instance.serialize<Uri>(value));
 }
 
@@ -313,7 +313,7 @@ final class IMapStringIListSimpleClassSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i4.IList<_i5.SimpleClass>> value) =>
+  Object? serialize(_i6.IMap<String, _i4.IList<_i5.SimpleClass>> value) =>
       value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance
@@ -336,7 +336,7 @@ final class IMapStringIListStringSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i4.IList<String>> value) => value.toJson(
+  Object? serialize(_i6.IMap<String, _i4.IList<String>> value) => value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance.serialize<_i4.IList<String>>(value),
       );
@@ -357,7 +357,7 @@ final class IMapStringIListUriSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i4.IList<Uri>> value) => value.toJson(
+  Object? serialize(_i6.IMap<String, _i4.IList<Uri>> value) => value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance.serialize<_i4.IList<Uri>>(value),
       );
@@ -380,7 +380,8 @@ final class IMapStringIMapStringSimpleClassSerializer extends _i3
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i6.IMap<String, _i5.SimpleClass>> value) =>
+  Object? serialize(
+          _i6.IMap<String, _i6.IMap<String, _i5.SimpleClass>> value) =>
       value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance
@@ -404,7 +405,7 @@ final class IMapStringIMapStringStringSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i6.IMap<String, String>> value) =>
+  Object? serialize(_i6.IMap<String, _i6.IMap<String, String>> value) =>
       value.toJson(
         (value) => value,
         (value) =>
@@ -428,7 +429,7 @@ final class IMapStringIMapStringUriSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i6.IMap<String, Uri>> value) =>
+  Object? serialize(_i6.IMap<String, _i6.IMap<String, Uri>> value) =>
       value.toJson(
         (value) => value,
         (value) =>
@@ -451,7 +452,7 @@ final class IMapStringSimpleClassSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, _i5.SimpleClass> value) => value.toJson(
+  Object? serialize(_i6.IMap<String, _i5.SimpleClass> value) => value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance.serialize<_i5.SimpleClass>(value),
       );
@@ -472,7 +473,7 @@ final class IMapStringStringSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, String> value) => value.toJson(
+  Object? serialize(_i6.IMap<String, String> value) => value.toJson(
         (value) => value,
         (value) => value,
       );
@@ -493,7 +494,7 @@ final class IMapStringUriSerializer
   }
 
   @override
-  Object serialize(_i6.IMap<String, Uri> value) => value.toJson(
+  Object? serialize(_i6.IMap<String, Uri> value) => value.toJson(
         (value) => value,
         (value) => _i3.Serializers.instance.serialize<Uri>(value),
       );
@@ -509,5 +510,5 @@ final class SimpleClassSerializer extends _i3.Serializer<_i5.SimpleClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(_i5.SimpleClass value) => value.toJson();
+  Object? serialize(_i5.SimpleClass value) => value.toJson();
 }

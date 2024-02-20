@@ -49,7 +49,7 @@ final class MixedFieldsSerializer extends _i3.Serializer<_i4.MixedFields> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.MixedFields value) => {
+  Object? serialize(_i4.MixedFields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };

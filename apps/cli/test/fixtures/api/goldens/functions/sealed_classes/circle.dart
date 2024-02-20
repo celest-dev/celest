@@ -45,5 +45,5 @@ final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
+  Object? serialize(_i4.Circle value) => {r'radius': value.radius};
 }

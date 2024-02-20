@@ -48,7 +48,7 @@ final class FieldsSerializer extends _i3.Serializer<_i4.Fields> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Fields value) => {
+  Object? serialize(_i4.Fields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };

@@ -165,7 +165,9 @@ final class SerializationSpec {
 
   bool get hasToJson {
     var hasToJson = _hasToJson;
-    var parent = this.parent;
+    var parent = (!isExtensionType && type.implementsRepresentationType)
+        ? this.parent
+        : null;
     while (parent != null) {
       hasToJson |= parent.hasToJson;
       parent = parent.parent;
@@ -574,6 +576,19 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                   extensionType: primarySpec..parent = erasurePrimaySpec,
                 ),
                 additionalSpecs: {
+                  // If a fromJson or toJson method is not provided and the
+                  // extension type does not implement its representation type
+                  // then we must add the serialization spec for the
+                  // representation type since it will be referenced by the
+                  // extension type serializer.
+                  if ((!primarySpec.hasToJson || !primarySpec.hasFromJson) &&
+                      !type.implementsRepresentationType)
+                    erasurePrimaySpec.copyWith(
+                      wireType: typeHelper.toReference(jsonMapType),
+                      castType: typeHelper.toReference(jsonMapType),
+                      hasFromJson: false,
+                      hasToJson: false,
+                    ),
                   ...additionalSpecs,
                   ...erasureVerdict.additionalSpecs,
                 },
@@ -599,8 +614,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             return false;
           });
         }
-        final (fields: _, :toJsonMethod, :fromJsonCtor) =
-            element.interfaceMembers(type);
+        final (fields: _, :toJsonMethod, :fromJsonCtor, wireType: _) =
+            type.interfaceMembers;
         // The representation type is either a built-in or a primitive at
         // this point.
         final wireType =
@@ -646,8 +661,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   Verdict _visitCustomInterfaceType(InterfaceType type) {
     final element = type.element;
-    final (:fields, :toJsonMethod, :fromJsonCtor) =
-        element.interfaceMembers(type);
+    final (:fields, :toJsonMethod, :fromJsonCtor, :wireType) =
+        type.interfaceMembers;
 
     // Check if non-SDK class is serializable.
     //
@@ -666,11 +681,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     if (hasToJson) {
       verdict &= _checkCustomSerializer(type, toJsonMethod);
     } else {
-      verdict &= type.accept(
+      // When no toJson method is provided, we must check the representation
+      // type's fields and constructor, even if this is an extension type, since
+      // we will just cast into the extension type at the end, but we only have
+      // access to all fields and constructors on the representation type.
+      verdict &= type.extensionTypeErasure.accept(
         const _IsSerializableClass(_TypePosition.return$),
       );
     }
-    final wireType = toJsonMethod?.returnType ?? jsonMapType;
 
     // Check fromJson
     final hasFromJson = fromJsonCtor != null;
@@ -681,7 +699,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         wireType,
       );
     } else {
-      verdict &= type.accept(
+      // Same rationale as the toJson check re: erasure type.
+      verdict &= type.extensionTypeErasure.accept(
         const _IsSerializableClass(_TypePosition.parameter),
       );
     }
@@ -1065,16 +1084,10 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   @override
   Verdict visitInterfaceType(InterfaceType type) {
     final element = type.element;
-    switch (element) {
-      case ClassElement():
-        return _visitClass(type, element);
-      default:
-        return Verdict.no(
-          'The type ${element.displayName} is not serializable since it is not '
-          'a class or does not have a fromJson/toJson method.',
-          location: element.sourceLocation,
-        );
+    if (element is! ClassElement) {
+      unreachable('Only classes should reach here');
     }
+    return _visitClass(type, element);
   }
 
   @override
@@ -1098,25 +1111,27 @@ typedef InterfaceMembers = ({
   List<FieldElement> fields,
   MethodElement? toJsonMethod,
   ConstructorElement? fromJsonCtor,
+  DartType wireType,
 });
 
-extension on InterfaceElement {
-  InterfaceMembers interfaceMembers(InterfaceType type) {
-    final element = this;
+extension on InterfaceType {
+  InterfaceMembers get interfaceMembers {
     switch (element) {
       case EnumElement():
         unreachable('Handled before this');
       case MixinElement():
         unreachable('Mixins are not supported');
-      case final ClassElement classElement:
+      case final ClassElement element:
+        final toJsonMethod = element.getMethod('toJson');
         return (
-          fields: classElement.sortedFields(type),
-          toJsonMethod: type.getMethod('toJson'),
-          fromJsonCtor: classElement.constructors
+          fields: element.sortedFields(this),
+          toJsonMethod: toJsonMethod,
+          fromJsonCtor: element.constructors
               .firstWhereOrNull((ctor) => ctor.name == 'fromJson'),
+          wireType: toJsonMethod?.returnType ?? jsonMapType,
         );
-      case ExtensionTypeElement():
-        final representationType = type.extensionTypeErasure;
+      case final ExtensionTypeElement element:
+        final representationType = extensionTypeErasure;
         if (representationType is! InterfaceType) {
           unreachable('Extension type erasure is not an interface type');
         }
@@ -1131,25 +1146,26 @@ extension on InterfaceElement {
         // An extension type which does not implement its representation type
         // and does not provide its own toJson/fromJson methods indicates that
         // Celest should generate its own fromJson/toJson methods.
-        final repMembers = representationType.element.interfaceMembers(type);
-        final fields = repMembers.fields;
-        MethodElement? repToJsonMethod;
-        ConstructorElement? repFromJsonCtor;
-        if (element.allSupertypes.contains(representationType)) {
-          repToJsonMethod = repMembers.toJsonMethod;
-          repFromJsonCtor = repMembers.fromJsonCtor;
+        final repMembers = representationType.interfaceMembers;
+        DartType? repWireType;
+        if (implementsRepresentationType) {
+          repWireType = repMembers.wireType;
         }
+        final toJsonMethod = element.getMethod('toJson');
         final members = (
-          fields: fields,
-          toJsonMethod: element.getMethod('toJson') ?? repToJsonMethod,
+          fields: [element.representation],
+          toJsonMethod: toJsonMethod,
           fromJsonCtor: element.constructors
-                  .firstWhereOrNull((ctor) => ctor.name == 'fromJson') ??
-              repFromJsonCtor,
+              .firstWhereOrNull((ctor) => ctor.name == 'fromJson'),
+          // For the purpose of determining the wire type, we use the
+          // representation's wire type if it implements it. Otherwise, we
+          // fallback to the JSON map type (same as classes).
+          wireType: toJsonMethod?.returnType ?? repWireType ?? jsonMapType,
         );
         analytics.capture(
           'extension_type',
           properties: {
-            'type': type.getDisplayString(withNullability: false),
+            'type': getDisplayString(withNullability: false),
             'representationType': representationType.getDisplayString(
               withNullability: false,
             ),
@@ -1198,6 +1214,9 @@ extension on ClassElement {
     final inheritedFields = <String, FieldElement>{};
 
     const dartCoreObject = TypeChecker.fromUrl('dart:core#Object');
+    if (dartCoreObject.isExactly(this)) {
+      return const [];
+    }
 
     // ignore: deprecated_member_use
     for (final v in inheritanceManager.getInheritedConcreteMap(type).values) {

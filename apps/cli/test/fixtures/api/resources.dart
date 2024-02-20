@@ -360,6 +360,46 @@ abstract final class Functions {
     functionName: r'stringToJsonImpl',
   );
 
+  static const extensionTypesValue = CloudFunction(
+    api: r'extension_types',
+    functionName: r'value',
+  );
+
+  static const extensionTypesValueXFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXFromJson',
+  );
+
+  static const extensionTypesValueXFromJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXFromJsonImpl',
+  );
+
+  static const extensionTypesValueXImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXImpl',
+  );
+
+  static const extensionTypesValueXToFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXToFromJson',
+  );
+
+  static const extensionTypesValueXToJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXToJson',
+  );
+
+  static const extensionTypesValueXToJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXToJsonImpl',
+  );
+
+  static const extensionTypesValuex = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueX',
+  );
+
   static const genericWrappersGenericWrapperParameters = CloudFunction(
     api: r'generic_wrappers',
     functionName: r'genericWrapperParameters',

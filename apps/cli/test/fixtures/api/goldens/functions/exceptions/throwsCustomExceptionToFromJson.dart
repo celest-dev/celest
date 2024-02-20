@@ -57,6 +57,5 @@ final class CustomExceptionToFromJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.CustomExceptionToFromJson value) =>
-      value.toJson();
+  Object? serialize(_i3.CustomExceptionToFromJson value) => value.toJson();
 }

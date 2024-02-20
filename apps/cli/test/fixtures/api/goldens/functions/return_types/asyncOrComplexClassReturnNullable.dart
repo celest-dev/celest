@@ -46,5 +46,5 @@ final class ComplexClassSerializer extends _i3.Serializer<_i4.ComplexClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(_i4.ComplexClass value) => value.toJson();
+  Object? serialize(_i4.ComplexClass value) => value.toJson();
 }

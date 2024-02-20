@@ -55,5 +55,5 @@ final class StringXFromJsonImplSerializer
   }
 
   @override
-  String serialize(_i4.StringXFromJsonImpl value) => value;
+  Object? serialize(_i4.StringXFromJsonImpl value) => value;
 }

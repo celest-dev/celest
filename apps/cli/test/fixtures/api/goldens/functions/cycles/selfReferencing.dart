@@ -60,7 +60,7 @@ final class SelfReferencingSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SelfReferencing value) => {
+  Object? serialize(_i4.SelfReferencing value) => {
         r'value': _i3.Serializers.instance
             .serialize<_i4.SelfReferencing?>(value.value),
         r'wrapper': _i3.Serializers.instance
@@ -85,7 +85,7 @@ final class SelfReferencingWrapperSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SelfReferencingWrapper value) => {
+  Object? serialize(_i4.SelfReferencingWrapper value) => {
         r'value':
             _i3.Serializers.instance.serialize<_i4.SelfReferencing>(value.value)
       };

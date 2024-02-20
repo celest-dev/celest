@@ -50,7 +50,7 @@ final class FieldsSerializer extends _i3.Serializer<_i4.Fields> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Fields value) => {
+  Object? serialize(_i4.Fields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
@@ -70,7 +70,7 @@ final class NestedClassSerializer extends _i3.Serializer<_i4.NestedClass> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.NestedClass value) => {
+  Object? serialize(_i4.NestedClass value) => {
         r'fields': _i3.Serializers.instance.serialize<_i4.Fields>(value.fields),
         r'nullableFields': _i3.Serializers.instance
             .serialize<_i4.Fields?>(value.nullableFields),

@@ -52,7 +52,7 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$rmm4wt value) => {
+  Object? serialize(Record$rmm4wt value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };

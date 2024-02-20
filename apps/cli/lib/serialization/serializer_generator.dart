@@ -37,7 +37,9 @@ final class SerializerGenerator {
     if (serializationSpec.hasFromJson) {
       typeReference = this.typeReference;
     }
-    var parent = serializationSpec.parent;
+    var parent = (!_isExtensionType || type.implementsRepresentationType)
+        ? _parent
+        : null;
     while (typeReference == null && parent != null) {
       if (parent.hasFromJson) {
         typeReference = typeHelper.toReference(parent.type);
@@ -118,7 +120,7 @@ final class SerializerGenerator {
           Method(
             (b) => b
               ..name = 'serialize'
-              ..returns = wireType
+              ..returns = DartTypes.core.object.nullable
               ..requiredParameters.add(
                 Parameter(
                   (b) => b

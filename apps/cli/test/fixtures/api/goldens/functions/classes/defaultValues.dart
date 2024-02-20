@@ -51,7 +51,7 @@ final class DefaultValuesSerializer extends _i3.Serializer<_i4.DefaultValues> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.DefaultValues value) => {
+  Object? serialize(_i4.DefaultValues value) => {
         r'field': value.field,
         r'nullableField': value.nullableField,
         r'nullableFieldWithDefault': value.nullableFieldWithDefault,

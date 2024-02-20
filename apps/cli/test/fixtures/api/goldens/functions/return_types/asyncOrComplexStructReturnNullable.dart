@@ -270,7 +270,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ComplexStruct value) => {
+  Object? serialize(_i4.ComplexStruct value) => {
         r'aBigInt': _i3.Serializers.instance.serialize<BigInt>(value.aBigInt),
         r'aBool': value.aBool,
         r'aDateTime':
@@ -444,7 +444,7 @@ final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
   }
 
   @override
-  String serialize(_i4.MyEnum value) => value.name;
+  Object? serialize(_i4.MyEnum value) => value.name;
 }
 
 final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
@@ -457,7 +457,7 @@ final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(_i4.SimpleClass value) => value.toJson();
+  Object? serialize(_i4.SimpleClass value) => value.toJson();
 }
 
 final class SimpleStructSerializer extends _i3.Serializer<_i4.SimpleStruct> {
@@ -470,5 +470,5 @@ final class SimpleStructSerializer extends _i3.Serializer<_i4.SimpleStruct> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SimpleStruct value) => {};
+  Object? serialize(_i4.SimpleStruct value) => {};
 }

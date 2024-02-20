@@ -65,7 +65,7 @@ final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
+  Object? serialize(_i2.Circle value) => {r'radius': value.radius};
 }
 
 final class OkResultSerializer<T extends _i2.Shape>
@@ -80,7 +80,7 @@ final class OkResultSerializer<T extends _i2.Shape>
   }
 
   @override
-  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
+  Object? serialize(_i2.OkResult<T> value) =>
       {r'data': _i3.Serializers.instance.serialize<T>(value.data)};
 }
 
@@ -97,7 +97,7 @@ final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Rectangle value) => {
+  Object? serialize(_i2.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };
@@ -123,7 +123,7 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Shape value) {
+  Object? serialize(_i2.Shape value) {
     if (value is _i2.Rectangle) {
       return {
         ...(_i3.Serializers.instance.serialize<_i2.Rectangle>(value)

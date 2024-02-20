@@ -42,5 +42,5 @@ final class SupportedExceptionTypeSerializer
   }
 
   @override
-  String serialize(_i4.SupportedExceptionType value) => value.name;
+  Object? serialize(_i4.SupportedExceptionType value) => value.name;
 }

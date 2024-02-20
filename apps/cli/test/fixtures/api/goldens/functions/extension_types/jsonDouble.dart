@@ -54,5 +54,5 @@ final class JsonDoubleSerializer extends _i3.Serializer<_i4.JsonDouble> {
   }
 
   @override
-  double serialize(_i4.JsonDouble value) => value;
+  Object? serialize(_i4.JsonDouble value) => value;
 }

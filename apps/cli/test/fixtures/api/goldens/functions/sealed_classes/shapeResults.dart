@@ -59,7 +59,7 @@ final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
+  Object? serialize(_i4.Circle value) => {r'radius': value.radius};
 }
 
 final class ErrResultShapeSerializer
@@ -74,7 +74,7 @@ final class ErrResultShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ErrResult<_i4.Shape> value) =>
+  Object? serialize(_i4.ErrResult<_i4.Shape> value) =>
       {r'error': _i3.Serializers.instance.serialize<_i4.Shape>(value.error)};
 }
 
@@ -89,8 +89,7 @@ final class ErrResultStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ErrResult<String> value) =>
-      {r'error': value.error};
+  Object? serialize(_i4.ErrResult<String> value) => {r'error': value.error};
 }
 
 final class OkResultShapeSerializer
@@ -105,7 +104,7 @@ final class OkResultShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
+  Object? serialize(_i4.OkResult<_i4.Shape> value) =>
       {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
 }
 
@@ -120,8 +119,7 @@ final class OkResultStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.OkResult<String> value) =>
-      {r'data': value.data};
+  Object? serialize(_i4.OkResult<String> value) => {r'data': value.data};
 }
 
 final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
@@ -137,7 +135,7 @@ final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Rectangle value) => {
+  Object? serialize(_i4.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };
@@ -170,7 +168,7 @@ final class ResultShapeStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Result<_i4.Shape, String> value) {
+  Object? serialize(_i4.Result<_i4.Shape, String> value) {
     if (value is _i4.OkResult<_i4.Shape>) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.OkResult<_i4.Shape>>(value)
@@ -228,7 +226,7 @@ final class ResultStringShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Result<String, _i4.Shape> value) {
+  Object? serialize(_i4.Result<String, _i4.Shape> value) {
     if (value is _i4.OkResult<String>) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.OkResult<String>>(value)
@@ -279,7 +277,7 @@ final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Shape value) {
+  Object? serialize(_i4.Shape value) {
     if (value is _i4.Rectangle) {
       return {
         ...(_i3.Serializers.instance.serialize<_i4.Rectangle>(value)
@@ -314,8 +312,7 @@ final class SwappedResultShapeStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SwappedResult<_i4.Shape, String> value) =>
-      {
+  Object? serialize(_i4.SwappedResult<_i4.Shape, String> value) => {
         r'result': _i3.Serializers.instance
             .serialize<_i4.Result<_i4.Shape, String>>(value.result)
       };
@@ -333,8 +330,7 @@ final class SwappedResultStringShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SwappedResult<String, _i4.Shape> value) =>
-      {
+  Object? serialize(_i4.SwappedResult<String, _i4.Shape> value) => {
         r'result': _i3.Serializers.instance
             .serialize<_i4.Result<String, _i4.Shape>>(value.result)
       };

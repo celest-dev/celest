@@ -706,6 +706,90 @@ final tests = <String, Test>{
               output: 'hello',
             ),
           ],
+          'value': [
+            FunctionTestSuccess(
+              name: 'value',
+              input: {
+                'v': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'valueX': [
+            FunctionTestSuccess(
+              name: 'valueX',
+              input: {
+                'v': {
+                  'value': 'hello',
+                },
+              },
+              output: {
+                'value': 'hello',
+              },
+            ),
+          ],
+          'valueXImpl': [
+            FunctionTestSuccess(
+              name: 'valueXImpl',
+              input: {
+                'v': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'valueXToFromJson': [
+            FunctionTestSuccess(
+              name: 'valueXImpl',
+              input: {
+                'v': 'hello',
+              },
+              output: 'helloFromJsonToJson',
+            ),
+          ],
+          'valueXToJson': [
+            FunctionTestSuccess(
+              name: 'valueXToJson',
+              input: {
+                'v': {
+                  'value': 'hello',
+                },
+              },
+              output: {
+                'value': 'helloToJson',
+              },
+            ),
+          ],
+          'valueXToJsonImpl': [
+            FunctionTestSuccess(
+              name: 'valueXToJson',
+              input: {
+                'v': 'hello',
+              },
+              output: 'helloToJson',
+            ),
+          ],
+          'valueXFromJson': [
+            FunctionTestSuccess(
+              name: 'valueXFromJson',
+              input: {
+                'v': {
+                  'value': 'hello',
+                },
+              },
+              output: {
+                'value': 'helloFromJson',
+              },
+            ),
+          ],
+          'valueXFromJsonImpl': [
+            FunctionTestSuccess(
+              name: 'valueXFromJsonImpl',
+              input: {
+                'v': 'hello',
+              },
+              output: 'helloFromJson',
+            ),
+          ],
           'jsonValue': [
             FunctionTestSuccess(
               name: 'string',

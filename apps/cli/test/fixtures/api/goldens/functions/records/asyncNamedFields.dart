@@ -66,7 +66,7 @@ final class NamedFieldsRecordSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.NamedFieldsRecord value) => {
+  Object? serialize(_i4.NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
@@ -85,7 +85,7 @@ final class Record$rmm4wtSerializer extends _i3.Serializer<Record$rmm4wt> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$rmm4wt value) => {
+  Object? serialize(Record$rmm4wt value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
@@ -107,7 +107,7 @@ final class Record$wkpf9qSerializer extends _i3.Serializer<Record$wkpf9q> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$wkpf9q value) => {
+  Object? serialize(Record$wkpf9q value) => {
         r'aliased': _i3.Serializers.instance
             .serialize<_i4.NamedFieldsRecord>(value.aliased),
         r'nonAliased': _i3.Serializers.instance

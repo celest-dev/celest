@@ -54,5 +54,5 @@ final class StringXSerializer extends _i3.Serializer<_i4.StringX> {
   }
 
   @override
-  String serialize(_i4.StringX value) => value.s;
+  Object? serialize(_i4.StringX value) => value.s;
 }

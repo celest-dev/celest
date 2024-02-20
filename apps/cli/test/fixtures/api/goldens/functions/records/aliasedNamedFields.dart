@@ -51,7 +51,7 @@ final class NamedFieldsRecordSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.NamedFieldsRecord value) => {
+  Object? serialize(_i4.NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };

@@ -55,5 +55,5 @@ final class StringXToFromJsonSerializer
   }
 
   @override
-  String serialize(_i4.StringXToFromJson value) => value.toJson();
+  Object? serialize(_i4.StringXToFromJson value) => value.toJson();
 }

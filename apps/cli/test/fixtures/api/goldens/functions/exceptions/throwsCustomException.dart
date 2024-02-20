@@ -60,7 +60,7 @@ final class CustomExceptionSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.CustomException value) => {
+  Object? serialize(_i3.CustomException value) => {
         r'message': value.message,
         r'additionalInfo': _i4.Serializers.instance.serialize<_i5.JsonMap>(
           value.additionalInfo,
@@ -79,5 +79,5 @@ final class JsonMapSerializer extends _i4.Serializer<_i5.JsonMap> {
   }
 
   @override
-  Map<String, Object?> serialize(_i5.JsonMap value) => value;
+  Object? serialize(_i5.JsonMap value) => value;
 }

@@ -1080,6 +1080,182 @@
             ]
           }
         },
+        "value": {
+          "name": "value",
+          "route": "/extension-types/value",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueX": {
+          "name": "valueX",
+          "route": "/extension-types/valuex",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXImpl": {
+          "name": "valueXImpl",
+          "route": "/extension-types/value-x-impl",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXToFromJson": {
+          "name": "valueXToFromJson",
+          "route": "/extension-types/value-x-to-from-json",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXToJson": {
+          "name": "valueXToJson",
+          "route": "/extension-types/value-x-to-json",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXToJsonImpl": {
+          "name": "valueXToJsonImpl",
+          "route": "/extension-types/value-x-to-json-impl",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXFromJson": {
+          "name": "valueXFromJson",
+          "route": "/extension-types/value-x-from-json",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXFromJsonImpl": {
+          "name": "valueXFromJsonImpl",
+          "route": "/extension-types/value-x-from-json-impl",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
         "jsonValue": {
           "name": "jsonValue",
           "route": "/extension-types/json-value",

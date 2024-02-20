@@ -35,7 +35,7 @@ final class BadShapeExceptionSerializer extends Serializer<BadShapeException> {
   }
 
   @override
-  Map<String, Object?> serialize(BadShapeException value) =>
+  Object? serialize(BadShapeException value) =>
       {r'shape': Serializers.instance.serialize<Shape>(value.shape)};
 }
 
@@ -49,7 +49,7 @@ final class ChildSerializer extends Serializer<Child> {
   }
 
   @override
-  Map<String, Object?> serialize(Child value) => {r'name': value.name};
+  Object? serialize(Child value) => {r'name': value.name};
 }
 
 final class CircleSerializer extends Serializer<Circle> {
@@ -62,7 +62,7 @@ final class CircleSerializer extends Serializer<Circle> {
   }
 
   @override
-  Map<String, Object?> serialize(Circle value) => {r'radius': value.radius};
+  Object? serialize(Circle value) => {r'radius': value.radius};
 }
 
 final class CircleWithCustomJsonSerializer
@@ -76,7 +76,7 @@ final class CircleWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CircleWithCustomJson value) => value.toJson();
+  Object? serialize(CircleWithCustomJson value) => value.toJson();
 }
 
 final class CircleWithInheritedCustomJsonSerializer
@@ -93,8 +93,7 @@ final class CircleWithInheritedCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CircleWithInheritedCustomJson value) =>
-      value.toJson();
+  Object? serialize(CircleWithInheritedCustomJson value) => value.toJson();
 }
 
 final class CircleWithOverriddenCustomJsonSerializer
@@ -108,8 +107,7 @@ final class CircleWithOverriddenCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CircleWithOverriddenCustomJson value) =>
-      value.toJson();
+  Object? serialize(CircleWithOverriddenCustomJson value) => value.toJson();
 }
 
 final class ComplexClassSerializer extends Serializer<ComplexClass> {
@@ -122,7 +120,7 @@ final class ComplexClassSerializer extends Serializer<ComplexClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(ComplexClass value) => value.toJson();
+  Object? serialize(ComplexClass value) => value.toJson();
 }
 
 final class ComplexStructSerializer extends Serializer<ComplexStruct> {
@@ -348,7 +346,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
   }
 
   @override
-  Map<String, Object?> serialize(ComplexStruct value) => {
+  Object? serialize(ComplexStruct value) => {
         r'aBigInt': Serializers.instance.serialize<BigInt>(value.aBigInt),
         r'aBool': value.aBool,
         r'aDateTime': Serializers.instance.serialize<DateTime>(value.aDateTime),
@@ -516,7 +514,7 @@ final class CustomErrorSerializer extends Serializer<CustomError> {
   }
 
   @override
-  Map<String, Object?> serialize(CustomError value) => {
+  Object? serialize(CustomError value) => {
         r'message': value.message,
         r'additionalInfo': Serializers.instance.serialize<JsonMap>(
           value.additionalInfo,
@@ -536,7 +534,7 @@ final class CustomErrorToFromJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CustomErrorToFromJson value) => value.toJson();
+  Object? serialize(CustomErrorToFromJson value) => value.toJson();
 }
 
 final class CustomErrorWithStackTraceSerializer
@@ -553,7 +551,7 @@ final class CustomErrorWithStackTraceSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CustomErrorWithStackTrace value) => {
+  Object? serialize(CustomErrorWithStackTrace value) => {
         r'stackTrace':
             Serializers.instance.serialize<StackTrace>(value.stackTrace),
         r'message': value.message,
@@ -574,7 +572,7 @@ final class CustomExceptionSerializer extends Serializer<CustomException> {
   }
 
   @override
-  Map<String, Object?> serialize(CustomException value) => {
+  Object? serialize(CustomException value) => {
         r'message': value.message,
         r'additionalInfo': Serializers.instance.serialize<JsonMap>(
           value.additionalInfo,
@@ -594,8 +592,7 @@ final class CustomExceptionToFromJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(CustomExceptionToFromJson value) =>
-      value.toJson();
+  Object? serialize(CustomExceptionToFromJson value) => value.toJson();
 }
 
 final class DefaultValuesSerializer extends Serializer<DefaultValues> {
@@ -613,7 +610,7 @@ final class DefaultValuesSerializer extends Serializer<DefaultValues> {
   }
 
   @override
-  Map<String, Object?> serialize(DefaultValues value) => {
+  Object? serialize(DefaultValues value) => {
         r'field': value.field,
         r'nullableField': value.nullableField,
         r'nullableFieldWithDefault': value.nullableFieldWithDefault,
@@ -631,7 +628,7 @@ final class EmptySerializer extends Serializer<Empty> {
   }
 
   @override
-  Map<String, Object?> serialize(Empty value) => {};
+  Object? serialize(Empty value) => {};
 }
 
 final class ErrResultSerializer<E extends ShapeException>
@@ -646,7 +643,7 @@ final class ErrResultSerializer<E extends ShapeException>
   }
 
   @override
-  Map<String, Object?> serialize(ErrResult<E> value) =>
+  Object? serialize(ErrResult<E> value) =>
       {r'error': Serializers.instance.serialize<E>(value.error)};
 }
 
@@ -661,7 +658,7 @@ final class ErrResultShapeSerializer extends Serializer<ErrResult<Shape>> {
   }
 
   @override
-  Map<String, Object?> serialize(ErrResult<Shape> value) =>
+  Object? serialize(ErrResult<Shape> value) =>
       {r'error': Serializers.instance.serialize<Shape>(value.error)};
 }
 
@@ -675,8 +672,7 @@ final class ErrResultStringSerializer extends Serializer<ErrResult<String>> {
   }
 
   @override
-  Map<String, Object?> serialize(ErrResult<String> value) =>
-      {r'error': value.error};
+  Object? serialize(ErrResult<String> value) => {r'error': value.error};
 }
 
 final class ExportableSerializer extends Serializer<Exportable> {
@@ -689,7 +685,7 @@ final class ExportableSerializer extends Serializer<Exportable> {
   }
 
   @override
-  Map<String, Object?> serialize(Exportable value) => {};
+  Object? serialize(Exportable value) => {};
 }
 
 final class FieldsSerializer extends Serializer<Fields> {
@@ -705,7 +701,7 @@ final class FieldsSerializer extends Serializer<Fields> {
   }
 
   @override
-  Map<String, Object?> serialize(Fields value) => {
+  Object? serialize(Fields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
@@ -721,7 +717,7 @@ final class FromJsonAndToJsonSerializer extends Serializer<FromJsonAndToJson> {
   }
 
   @override
-  Map<String, Object?> serialize(FromJsonAndToJson value) => value.toJson();
+  Object? serialize(FromJsonAndToJson value) => value.toJson();
 }
 
 final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
@@ -772,7 +768,7 @@ final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
   }
 
   @override
-  Map<String, Object?> serialize(GenericWrappers value) => {
+  Object? serialize(GenericWrappers value) => {
         r'listOfString':
             Serializers.instance.serialize<IList<String>>(value.listOfString),
         r'listOfUri':
@@ -824,7 +820,7 @@ final class IListIListSimpleClassSerializer
   }
 
   @override
-  Object serialize(IList<IList<SimpleClass>> value) => value.toJson(
+  Object? serialize(IList<IList<SimpleClass>> value) => value.toJson(
       (value) => Serializers.instance.serialize<IList<SimpleClass>>(value));
 }
 
@@ -842,7 +838,7 @@ final class IListIListStringSerializer
   }
 
   @override
-  Object serialize(IList<IList<String>> value) => value
+  Object? serialize(IList<IList<String>> value) => value
       .toJson((value) => Serializers.instance.serialize<IList<String>>(value));
 }
 
@@ -859,7 +855,7 @@ final class IListIListUriSerializer extends Serializer<IList<IList<Uri>>> {
   }
 
   @override
-  Object serialize(IList<IList<Uri>> value) => value
+  Object? serialize(IList<IList<Uri>> value) => value
       .toJson((value) => Serializers.instance.serialize<IList<Uri>>(value));
 }
 
@@ -876,7 +872,7 @@ final class IListSimpleClassSerializer extends Serializer<IList<SimpleClass>> {
   }
 
   @override
-  Object serialize(IList<SimpleClass> value) => value
+  Object? serialize(IList<SimpleClass> value) => value
       .toJson((value) => Serializers.instance.serialize<SimpleClass>(value));
 }
 
@@ -893,7 +889,7 @@ final class IListStringSerializer extends Serializer<IList<String>> {
   }
 
   @override
-  Object serialize(IList<String> value) => value.toJson((value) => value);
+  Object? serialize(IList<String> value) => value.toJson((value) => value);
 }
 
 final class IListUriSerializer extends Serializer<IList<Uri>> {
@@ -909,7 +905,7 @@ final class IListUriSerializer extends Serializer<IList<Uri>> {
   }
 
   @override
-  Object serialize(IList<Uri> value) =>
+  Object? serialize(IList<Uri> value) =>
       value.toJson((value) => Serializers.instance.serialize<Uri>(value));
 }
 
@@ -928,7 +924,7 @@ final class IMapStringIListSimpleClassSerializer
   }
 
   @override
-  Object serialize(IMap<String, IList<SimpleClass>> value) => value.toJson(
+  Object? serialize(IMap<String, IList<SimpleClass>> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<IList<SimpleClass>>(value),
       );
@@ -949,7 +945,7 @@ final class IMapStringIListStringSerializer
   }
 
   @override
-  Object serialize(IMap<String, IList<String>> value) => value.toJson(
+  Object? serialize(IMap<String, IList<String>> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<IList<String>>(value),
       );
@@ -970,7 +966,7 @@ final class IMapStringIListUriSerializer
   }
 
   @override
-  Object serialize(IMap<String, IList<Uri>> value) => value.toJson(
+  Object? serialize(IMap<String, IList<Uri>> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<IList<Uri>>(value),
       );
@@ -992,7 +988,7 @@ final class IMapStringIMapStringSimpleClassSerializer
   }
 
   @override
-  Object serialize(IMap<String, IMap<String, SimpleClass>> value) =>
+  Object? serialize(IMap<String, IMap<String, SimpleClass>> value) =>
       value.toJson(
         (value) => value,
         (value) =>
@@ -1015,7 +1011,7 @@ final class IMapStringIMapStringStringSerializer
   }
 
   @override
-  Object serialize(IMap<String, IMap<String, String>> value) => value.toJson(
+  Object? serialize(IMap<String, IMap<String, String>> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<IMap<String, String>>(value),
       );
@@ -1036,7 +1032,7 @@ final class IMapStringIMapStringUriSerializer
   }
 
   @override
-  Object serialize(IMap<String, IMap<String, Uri>> value) => value.toJson(
+  Object? serialize(IMap<String, IMap<String, Uri>> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<IMap<String, Uri>>(value),
       );
@@ -1057,7 +1053,7 @@ final class IMapStringSimpleClassSerializer
   }
 
   @override
-  Object serialize(IMap<String, SimpleClass> value) => value.toJson(
+  Object? serialize(IMap<String, SimpleClass> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<SimpleClass>(value),
       );
@@ -1078,7 +1074,7 @@ final class IMapStringStringSerializer
   }
 
   @override
-  Object serialize(IMap<String, String> value) => value.toJson(
+  Object? serialize(IMap<String, String> value) => value.toJson(
         (value) => value,
         (value) => value,
       );
@@ -1098,7 +1094,7 @@ final class IMapStringUriSerializer extends Serializer<IMap<String, Uri>> {
   }
 
   @override
-  Object serialize(IMap<String, Uri> value) => value.toJson(
+  Object? serialize(IMap<String, Uri> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<Uri>(value),
       );
@@ -1114,7 +1110,7 @@ final class JsonBoolSerializer extends Serializer<JsonBool> {
   }
 
   @override
-  bool serialize(JsonBool value) => value;
+  Object? serialize(JsonBool value) => value;
 }
 
 final class JsonDoubleSerializer extends Serializer<JsonDouble> {
@@ -1127,7 +1123,7 @@ final class JsonDoubleSerializer extends Serializer<JsonDouble> {
   }
 
   @override
-  double serialize(JsonDouble value) => value;
+  Object? serialize(JsonDouble value) => value;
 }
 
 final class JsonIntSerializer extends Serializer<JsonInt> {
@@ -1140,7 +1136,7 @@ final class JsonIntSerializer extends Serializer<JsonInt> {
   }
 
   @override
-  int serialize(JsonInt value) => value;
+  Object? serialize(JsonInt value) => value;
 }
 
 final class JsonListSerializer extends Serializer<JsonList> {
@@ -1153,7 +1149,7 @@ final class JsonListSerializer extends Serializer<JsonList> {
   }
 
   @override
-  List<Object?> serialize(JsonList value) => value;
+  Object? serialize(JsonList value) => value;
 }
 
 final class JsonMapSerializer extends Serializer<JsonMap> {
@@ -1166,7 +1162,7 @@ final class JsonMapSerializer extends Serializer<JsonMap> {
   }
 
   @override
-  Map<String, Object?> serialize(JsonMap value) => value;
+  Object? serialize(JsonMap value) => value;
 }
 
 final class JsonNumSerializer extends Serializer<JsonNum> {
@@ -1179,7 +1175,7 @@ final class JsonNumSerializer extends Serializer<JsonNum> {
   }
 
   @override
-  num serialize(JsonNum value) => value;
+  Object? serialize(JsonNum value) => value;
 }
 
 final class JsonStringSerializer extends Serializer<JsonString> {
@@ -1192,7 +1188,7 @@ final class JsonStringSerializer extends Serializer<JsonString> {
   }
 
   @override
-  String serialize(JsonString value) => value;
+  Object? serialize(JsonString value) => value;
 }
 
 final class JsonValueSerializer extends Serializer<JsonValue> {
@@ -1205,7 +1201,7 @@ final class JsonValueSerializer extends Serializer<JsonValue> {
   }
 
   @override
-  Object serialize(JsonValue value) => value.value;
+  Object? serialize(JsonValue value) => value.value;
 }
 
 final class LiteralEnumSerializer extends Serializer<LiteralEnum> {
@@ -1218,7 +1214,7 @@ final class LiteralEnumSerializer extends Serializer<LiteralEnum> {
   }
 
   @override
-  String serialize(LiteralEnum value) => value.name;
+  Object? serialize(LiteralEnum value) => value.name;
 }
 
 final class MixedFieldsSerializer extends Serializer<MixedFields> {
@@ -1234,7 +1230,7 @@ final class MixedFieldsSerializer extends Serializer<MixedFields> {
   }
 
   @override
-  Map<String, Object?> serialize(MixedFields value) => {
+  Object? serialize(MixedFields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
@@ -1250,7 +1246,7 @@ final class MyEnumSerializer extends Serializer<MyEnum> {
   }
 
   @override
-  String serialize(MyEnum value) => value.name;
+  Object? serialize(MyEnum value) => value.name;
 }
 
 final class NamedFieldsRecordSerializer extends Serializer<NamedFieldsRecord> {
@@ -1266,7 +1262,7 @@ final class NamedFieldsRecordSerializer extends Serializer<NamedFieldsRecord> {
   }
 
   @override
-  Map<String, Object?> serialize(NamedFieldsRecord value) => {
+  Object? serialize(NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
@@ -1285,7 +1281,7 @@ final class NamedFieldsSerializer extends Serializer<NamedFields> {
   }
 
   @override
-  Map<String, Object?> serialize(NamedFields value) => {
+  Object? serialize(NamedFields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
@@ -1304,7 +1300,7 @@ final class NestedClassSerializer extends Serializer<NestedClass> {
   }
 
   @override
-  Map<String, Object?> serialize(NestedClass value) => {
+  Object? serialize(NestedClass value) => {
         r'fields': Serializers.instance.serialize<Fields>(value.fields),
         r'nullableFields':
             Serializers.instance.serialize<Fields?>(value.nullableFields),
@@ -1324,7 +1320,7 @@ final class NestedSerializer extends Serializer<Nested> {
   }
 
   @override
-  Map<String, Object?> serialize(Nested value) => {
+  Object? serialize(Nested value) => {
         r'namedFields':
             Serializers.instance.serialize<NamedFieldsRecord>(value.namedFields)
       };
@@ -1350,7 +1346,7 @@ final class NodeSerializer extends Serializer<Node> {
   }
 
   @override
-  Map<String, Object?> serialize(Node value) {
+  Object? serialize(Node value) {
     if (value is Parent) {
       return {
         ...(Serializers.instance.serialize<Parent>(value)
@@ -1384,7 +1380,7 @@ final class NonMapFromAndToJsonSerializer
   }
 
   @override
-  String serialize(NonMapFromAndToJson value) => value.toJson();
+  Object? serialize(NonMapFromAndToJson value) => value.toJson();
 }
 
 final class NonMapToJsonSerializer extends Serializer<NonMapToJson> {
@@ -1397,7 +1393,7 @@ final class NonMapToJsonSerializer extends Serializer<NonMapToJson> {
   }
 
   @override
-  String serialize(NonMapToJson value) => value.toJson();
+  Object? serialize(NonMapToJson value) => value.toJson();
 }
 
 final class NonMapToJsonWithDefaultsSerializer
@@ -1411,7 +1407,7 @@ final class NonMapToJsonWithDefaultsSerializer
   }
 
   @override
-  String serialize(NonMapToJsonWithDefaults value) => value.toJson();
+  Object? serialize(NonMapToJsonWithDefaults value) => value.toJson();
 }
 
 final class NullableNestedSerializer extends Serializer<NullableNested> {
@@ -1427,7 +1423,7 @@ final class NullableNestedSerializer extends Serializer<NullableNested> {
   }
 
   @override
-  Map<String, Object?> serialize(NullableNested value) => {
+  Object? serialize(NullableNested value) => {
         r'namedFields': Serializers.instance
             .serialize<NamedFieldsRecord?>(value.namedFields)
       };
@@ -1445,7 +1441,7 @@ final class OkResultSerializer<T extends Shape>
   }
 
   @override
-  Map<String, Object?> serialize(OkResult<T> value) =>
+  Object? serialize(OkResult<T> value) =>
       {r'data': Serializers.instance.serialize<T>(value.data)};
 }
 
@@ -1460,7 +1456,7 @@ final class OkResultShapeSerializer extends Serializer<OkResult<Shape>> {
   }
 
   @override
-  Map<String, Object?> serialize(OkResult<Shape> value) =>
+  Object? serialize(OkResult<Shape> value) =>
       {r'data': Serializers.instance.serialize<Shape>(value.data)};
 }
 
@@ -1474,8 +1470,7 @@ final class OkResultStringSerializer extends Serializer<OkResult<String>> {
   }
 
   @override
-  Map<String, Object?> serialize(OkResult<String> value) =>
-      {r'data': value.data};
+  Object? serialize(OkResult<String> value) => {r'data': value.data};
 }
 
 final class OnlyFromJsonSerializer extends Serializer<OnlyFromJson> {
@@ -1488,7 +1483,7 @@ final class OnlyFromJsonSerializer extends Serializer<OnlyFromJson> {
   }
 
   @override
-  Map<String, Object?> serialize(OnlyFromJson value) => {r'field': value.field};
+  Object? serialize(OnlyFromJson value) => {r'field': value.field};
 }
 
 final class OnlyToJsonSerializer extends Serializer<OnlyToJson> {
@@ -1501,7 +1496,7 @@ final class OnlyToJsonSerializer extends Serializer<OnlyToJson> {
   }
 
   @override
-  Map<String, Object?> serialize(OnlyToJson value) => value.toJson();
+  Object? serialize(OnlyToJson value) => value.toJson();
 }
 
 final class OnlyToJsonWithDefaultsSerializer
@@ -1516,8 +1511,7 @@ final class OnlyToJsonWithDefaultsSerializer
   }
 
   @override
-  Map<String, Object?> serialize(OnlyToJsonWithDefaults value) =>
-      value.toJson();
+  Object? serialize(OnlyToJsonWithDefaults value) => value.toJson();
 }
 
 final class ParentSerializer extends Serializer<Parent> {
@@ -1535,7 +1529,7 @@ final class ParentSerializer extends Serializer<Parent> {
   }
 
   @override
-  Map<String, Object?> serialize(Parent value) => {
+  Object? serialize(Parent value) => {
         r'name': value.name,
         r'children': value.children
             .map((el) => Serializers.instance.serialize<Node>(el))
@@ -1557,7 +1551,7 @@ final class Record$k7x4l9Serializer extends Serializer<Record$k7x4l9> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$k7x4l9 value) => {
+  Object? serialize(Record$k7x4l9 value) => {
         r'a': value.a,
         r'b': value.b,
         r'c': value.c,
@@ -1577,7 +1571,7 @@ final class Record$rmm4wtSerializer extends Serializer<Record$rmm4wt> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$rmm4wt value) => {
+  Object? serialize(Record$rmm4wt value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
@@ -1599,7 +1593,7 @@ final class Record$wkpf9qSerializer extends Serializer<Record$wkpf9q> {
   }
 
   @override
-  Map<String, Object?> serialize(Record$wkpf9q value) => {
+  Object? serialize(Record$wkpf9q value) => {
         r'aliased':
             Serializers.instance.serialize<NamedFieldsRecord>(value.aliased),
         r'nonAliased': Serializers.instance
@@ -1620,7 +1614,7 @@ final class RectangleSerializer extends Serializer<Rectangle> {
   }
 
   @override
-  Map<String, Object?> serialize(Rectangle value) => {
+  Object? serialize(Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };
@@ -1637,8 +1631,7 @@ final class RectangleWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(RectangleWithCustomJson value) =>
-      value.toJson();
+  Object? serialize(RectangleWithCustomJson value) => value.toJson();
 }
 
 final class RectangleWithInheritedCustomJsonSerializer
@@ -1655,8 +1648,7 @@ final class RectangleWithInheritedCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(RectangleWithInheritedCustomJson value) =>
-      value.toJson();
+  Object? serialize(RectangleWithInheritedCustomJson value) => value.toJson();
 }
 
 final class RectangleWithOverriddenCustomJsonSerializer
@@ -1673,8 +1665,7 @@ final class RectangleWithOverriddenCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(RectangleWithOverriddenCustomJson value) =>
-      value.toJson();
+  Object? serialize(RectangleWithOverriddenCustomJson value) => value.toJson();
 }
 
 final class ResultSerializer<T extends Shape, E extends ShapeException>
@@ -1701,7 +1692,7 @@ final class ResultSerializer<T extends Shape, E extends ShapeException>
   }
 
   @override
-  Map<String, Object?> serialize(Result<T, E> value) {
+  Object? serialize(Result<T, E> value) {
     if (value is OkResult<T>) {
       return {
         ...(Serializers.instance.serialize<OkResult<T>>(value)
@@ -1756,7 +1747,7 @@ final class ResultShapeStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(Result<Shape, String> value) {
+  Object? serialize(Result<Shape, String> value) {
     if (value is OkResult<Shape>) {
       return {
         ...(Serializers.instance.serialize<OkResult<Shape>>(value)
@@ -1811,7 +1802,7 @@ final class ResultStringShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(Result<String, Shape> value) {
+  Object? serialize(Result<String, Shape> value) {
     if (value is OkResult<String>) {
       return {
         ...(Serializers.instance.serialize<OkResult<String>>(value)
@@ -1861,7 +1852,7 @@ final class SelfReferencingSerializer extends Serializer<SelfReferencing> {
   }
 
   @override
-  Map<String, Object?> serialize(SelfReferencing value) => {
+  Object? serialize(SelfReferencing value) => {
         r'value': Serializers.instance.serialize<SelfReferencing?>(value.value),
         r'wrapper': Serializers.instance
             .serialize<SelfReferencingWrapper?>(value.wrapper),
@@ -1884,7 +1875,7 @@ final class SelfReferencingWrapperSerializer
   }
 
   @override
-  Map<String, Object?> serialize(SelfReferencingWrapper value) =>
+  Object? serialize(SelfReferencingWrapper value) =>
       {r'value': Serializers.instance.serialize<SelfReferencing>(value.value)};
 }
 
@@ -1898,7 +1889,7 @@ final class SerializableSerializer extends Serializer<Serializable> {
   }
 
   @override
-  Map<String, Object?> serialize(Serializable value) => {r'type': value.type};
+  Object? serialize(Serializable value) => {r'type': value.type};
 }
 
 final class ShapeExceptionSerializer extends Serializer<ShapeException> {
@@ -1918,7 +1909,7 @@ final class ShapeExceptionSerializer extends Serializer<ShapeException> {
   }
 
   @override
-  Map<String, Object?> serialize(ShapeException value) {
+  Object? serialize(ShapeException value) {
     if (value is BadShapeException) {
       return {
         ...(Serializers.instance.serialize<BadShapeException>(value)
@@ -1954,7 +1945,7 @@ final class ShapeSerializer extends Serializer<Shape> {
   }
 
   @override
-  Map<String, Object?> serialize(Shape value) {
+  Object? serialize(Shape value) {
     if (value is Rectangle) {
       return {
         ...(Serializers.instance.serialize<Rectangle>(value)
@@ -1999,7 +1990,7 @@ final class ShapeWithCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(ShapeWithCustomJson value) {
+  Object? serialize(ShapeWithCustomJson value) {
     if (value is CircleWithCustomJson) {
       return {
         ...(Serializers.instance.serialize<CircleWithCustomJson>(value)
@@ -2033,7 +2024,7 @@ final class ShapeWithInheritedCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(ShapeWithInheritedCustomJson value) => {
+  Object? serialize(ShapeWithInheritedCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
           RectangleWithInheritedCustomJson() =>
@@ -2054,7 +2045,7 @@ final class ShapeWithOverriddenCustomJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(ShapeWithOverriddenCustomJson value) => {
+  Object? serialize(ShapeWithOverriddenCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
           CircleWithOverriddenCustomJson() => r'CircleWithOverriddenCustomJson',
@@ -2074,7 +2065,7 @@ final class SimpleClassSerializer extends Serializer<SimpleClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(SimpleClass value) => value.toJson();
+  Object? serialize(SimpleClass value) => value.toJson();
 }
 
 final class SimpleStructSerializer extends Serializer<SimpleStruct> {
@@ -2087,7 +2078,7 @@ final class SimpleStructSerializer extends Serializer<SimpleStruct> {
   }
 
   @override
-  Map<String, Object?> serialize(SimpleStruct value) => {};
+  Object? serialize(SimpleStruct value) => {};
 }
 
 final class StringXFromJsonImplSerializer
@@ -2101,7 +2092,7 @@ final class StringXFromJsonImplSerializer
   }
 
   @override
-  String serialize(StringXFromJsonImpl value) => value;
+  Object? serialize(StringXFromJsonImpl value) => value;
 }
 
 final class StringXFromJsonSerializer extends Serializer<StringXFromJson> {
@@ -2114,7 +2105,7 @@ final class StringXFromJsonSerializer extends Serializer<StringXFromJson> {
   }
 
   @override
-  String serialize(StringXFromJson value) => value.s;
+  Object? serialize(StringXFromJson value) => value.s;
 }
 
 final class StringXImplSerializer extends Serializer<StringXImpl> {
@@ -2127,7 +2118,7 @@ final class StringXImplSerializer extends Serializer<StringXImpl> {
   }
 
   @override
-  String serialize(StringXImpl value) => value;
+  Object? serialize(StringXImpl value) => value;
 }
 
 final class StringXPrivateCtorImplSerializer
@@ -2141,7 +2132,7 @@ final class StringXPrivateCtorImplSerializer
   }
 
   @override
-  String serialize(StringXPrivateCtorImpl value) => value;
+  Object? serialize(StringXPrivateCtorImpl value) => value;
 }
 
 final class StringXPrivateCtorSerializer
@@ -2155,7 +2146,7 @@ final class StringXPrivateCtorSerializer
   }
 
   @override
-  String serialize(StringXPrivateCtor value) => value.s;
+  Object? serialize(StringXPrivateCtor value) => value.s;
 }
 
 final class StringXPrivateFieldImplSerializer
@@ -2169,7 +2160,7 @@ final class StringXPrivateFieldImplSerializer
   }
 
   @override
-  String serialize(StringXPrivateFieldImpl value) => value;
+  Object? serialize(StringXPrivateFieldImpl value) => value;
 }
 
 final class StringXPrivateFieldSerializer
@@ -2183,7 +2174,7 @@ final class StringXPrivateFieldSerializer
   }
 
   @override
-  String serialize(StringXPrivateField value) => (value as String);
+  Object? serialize(StringXPrivateField value) => (value as String);
 }
 
 final class StringXSerializer extends Serializer<StringX> {
@@ -2196,7 +2187,7 @@ final class StringXSerializer extends Serializer<StringX> {
   }
 
   @override
-  String serialize(StringX value) => value.s;
+  Object? serialize(StringX value) => value.s;
 }
 
 final class StringXToFromJsonSerializer extends Serializer<StringXToFromJson> {
@@ -2209,7 +2200,7 @@ final class StringXToFromJsonSerializer extends Serializer<StringXToFromJson> {
   }
 
   @override
-  String serialize(StringXToFromJson value) => value.toJson();
+  Object? serialize(StringXToFromJson value) => value.toJson();
 }
 
 final class StringXToJsonImplSerializer extends Serializer<StringXToJsonImpl> {
@@ -2222,7 +2213,7 @@ final class StringXToJsonImplSerializer extends Serializer<StringXToJsonImpl> {
   }
 
   @override
-  String serialize(StringXToJsonImpl value) => value.toJson();
+  Object? serialize(StringXToJsonImpl value) => value.toJson();
 }
 
 final class StringXToJsonSerializer extends Serializer<StringXToJson> {
@@ -2235,7 +2226,7 @@ final class StringXToJsonSerializer extends Serializer<StringXToJson> {
   }
 
   @override
-  String serialize(StringXToJson value) => value.toJson();
+  Object? serialize(StringXToJson value) => value.toJson();
 }
 
 final class SupportedErrorTypeSerializer
@@ -2249,7 +2240,7 @@ final class SupportedErrorTypeSerializer
   }
 
   @override
-  String serialize(SupportedErrorType value) => value.name;
+  Object? serialize(SupportedErrorType value) => value.name;
 }
 
 final class SupportedExceptionTypeSerializer
@@ -2263,7 +2254,7 @@ final class SupportedExceptionTypeSerializer
   }
 
   @override
-  String serialize(SupportedExceptionType value) => value.name;
+  Object? serialize(SupportedExceptionType value) => value.name;
 }
 
 final class SwappedResultSerializer<E extends ShapeException, T extends Shape>
@@ -2278,7 +2269,7 @@ final class SwappedResultSerializer<E extends ShapeException, T extends Shape>
   }
 
   @override
-  Map<String, Object?> serialize(SwappedResult<E, T> value) =>
+  Object? serialize(SwappedResult<E, T> value) =>
       {r'result': Serializers.instance.serialize<Result<E, T>>(value.result)};
 }
 
@@ -2294,7 +2285,7 @@ final class SwappedResultShapeStringSerializer
   }
 
   @override
-  Map<String, Object?> serialize(SwappedResult<Shape, String> value) => {
+  Object? serialize(SwappedResult<Shape, String> value) => {
         r'result':
             Serializers.instance.serialize<Result<Shape, String>>(value.result)
       };
@@ -2312,8 +2303,115 @@ final class SwappedResultStringShapeSerializer
   }
 
   @override
-  Map<String, Object?> serialize(SwappedResult<String, Shape> value) => {
+  Object? serialize(SwappedResult<String, Shape> value) => {
         r'result':
             Serializers.instance.serialize<Result<String, Shape>>(value.result)
       };
+}
+
+final class ValueSerializer extends Serializer<Value> {
+  const ValueSerializer();
+
+  @override
+  Value deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return Value.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(Value value) => value.toJson();
+}
+
+final class ValueXFromJsonImplSerializer
+    extends Serializer<ValueXFromJsonImpl> {
+  const ValueXFromJsonImplSerializer();
+
+  @override
+  ValueXFromJsonImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ValueXFromJsonImpl.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ValueXFromJsonImpl value) => value.toJson();
+}
+
+final class ValueXFromJsonSerializer extends Serializer<ValueXFromJson> {
+  const ValueXFromJsonSerializer();
+
+  @override
+  ValueXFromJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ValueXFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ValueXFromJson value) =>
+      Serializers.instance.serialize<Value>(value.v);
+}
+
+final class ValueXImplSerializer extends Serializer<ValueXImpl> {
+  const ValueXImplSerializer();
+
+  @override
+  ValueXImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Value.fromJson(serialized) as ValueXImpl);
+  }
+
+  @override
+  Object? serialize(ValueXImpl value) => value.toJson();
+}
+
+final class ValueXSerializer extends Serializer<ValueX> {
+  const ValueXSerializer();
+
+  @override
+  ValueX deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ValueX(Serializers.instance.deserialize<Value>(serialized));
+  }
+
+  @override
+  Object? serialize(ValueX value) =>
+      Serializers.instance.serialize<Value>(value.v);
+}
+
+final class ValueXToFromJsonSerializer extends Serializer<ValueXToFromJson> {
+  const ValueXToFromJsonSerializer();
+
+  @override
+  ValueXToFromJson deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ValueXToFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ValueXToFromJson value) => value.toJson();
+}
+
+final class ValueXToJsonImplSerializer extends Serializer<ValueXToJsonImpl> {
+  const ValueXToJsonImplSerializer();
+
+  @override
+  ValueXToJsonImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Value.fromJson(serialized) as ValueXToJsonImpl);
+  }
+
+  @override
+  Object? serialize(ValueXToJsonImpl value) => value.toJson();
+}
+
+final class ValueXToJsonSerializer extends Serializer<ValueXToJson> {
+  const ValueXToJsonSerializer();
+
+  @override
+  ValueXToJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ValueXToJson(Serializers.instance.deserialize<Value>(serialized));
+  }
+
+  @override
+  Object? serialize(ValueXToJson value) => value.toJson();
 }

@@ -46,5 +46,5 @@ final class NonMapToJsonSerializer extends _i3.Serializer<_i4.NonMapToJson> {
   }
 
   @override
-  String serialize(_i4.NonMapToJson value) => value.toJson();
+  Object? serialize(_i4.NonMapToJson value) => value.toJson();
 }

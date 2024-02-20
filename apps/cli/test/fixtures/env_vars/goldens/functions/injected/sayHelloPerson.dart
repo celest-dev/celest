@@ -61,7 +61,7 @@ final class PersonSerializer extends _i4.Serializer<_i5.Person> {
   }
 
   @override
-  Map<String, Object?> serialize(_i5.Person value) => {
+  Object? serialize(_i5.Person value) => {
         r'name': value.name,
         r'age': value.age,
         r'height': value.height,

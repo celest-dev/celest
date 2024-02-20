@@ -65,7 +65,7 @@ final class CustomErrorWithStackTraceSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i3.CustomErrorWithStackTrace value) => {
+  Object? serialize(_i3.CustomErrorWithStackTrace value) => {
         r'stackTrace':
             _i4.Serializers.instance.serialize<StackTrace>(value.stackTrace),
         r'message': value.message,
@@ -86,5 +86,5 @@ final class JsonMapSerializer extends _i4.Serializer<_i5.JsonMap> {
   }
 
   @override
-  Map<String, Object?> serialize(_i5.JsonMap value) => value;
+  Object? serialize(_i5.JsonMap value) => value;
 }

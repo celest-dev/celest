@@ -20,6 +20,15 @@ StringXPrivateFieldImpl stringPrivateFieldImpl(StringXPrivateFieldImpl s) => s;
 StringXPrivateCtor stringPrivateCtor(StringXPrivateCtor s) => s;
 StringXPrivateCtorImpl stringPrivateCtorImpl(StringXPrivateCtorImpl s) => s;
 
+Value value(Value v) => v;
+ValueX valueX(ValueX v) => v;
+ValueXImpl valueXImpl(ValueXImpl v) => v;
+ValueXToFromJson valueXToFromJson(ValueXToFromJson v) => v;
+ValueXToJson valueXToJson(ValueXToJson v) => v;
+ValueXToJsonImpl valueXToJsonImpl(ValueXToJsonImpl v) => v;
+ValueXFromJson valueXFromJson(ValueXFromJson v) => v;
+ValueXFromJsonImpl valueXFromJsonImpl(ValueXFromJsonImpl v) => v;
+
 JsonValue jsonValue(JsonValue value) => value;
 JsonString jsonString(JsonString value) => value;
 JsonNum jsonNum(JsonNum value) => value;

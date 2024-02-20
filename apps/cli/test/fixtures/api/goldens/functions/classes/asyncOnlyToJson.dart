@@ -45,5 +45,5 @@ final class OnlyToJsonSerializer extends _i3.Serializer<_i4.OnlyToJson> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.OnlyToJson value) => value.toJson();
+  Object? serialize(_i4.OnlyToJson value) => value.toJson();
 }

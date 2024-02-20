@@ -45,5 +45,5 @@ final class EmptySerializer extends _i3.Serializer<_i4.Empty> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Empty value) => {};
+  Object? serialize(_i4.Empty value) => {};
 }

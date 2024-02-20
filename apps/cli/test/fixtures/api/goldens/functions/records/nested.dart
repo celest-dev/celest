@@ -50,7 +50,7 @@ final class NamedFieldsRecordSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.NamedFieldsRecord value) => {
+  Object? serialize(_i4.NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
@@ -69,7 +69,7 @@ final class NestedSerializer extends _i3.Serializer<_i4.Nested> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.Nested value) => {
+  Object? serialize(_i4.Nested value) => {
         r'namedFields': _i3.Serializers.instance
             .serialize<_i4.NamedFieldsRecord>(value.namedFields)
       };

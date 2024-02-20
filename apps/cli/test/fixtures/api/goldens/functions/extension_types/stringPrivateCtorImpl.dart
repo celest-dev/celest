@@ -57,5 +57,5 @@ final class StringXPrivateCtorImplSerializer
   }
 
   @override
-  String serialize(_i4.StringXPrivateCtorImpl value) => value;
+  Object? serialize(_i4.StringXPrivateCtorImpl value) => value;
 }

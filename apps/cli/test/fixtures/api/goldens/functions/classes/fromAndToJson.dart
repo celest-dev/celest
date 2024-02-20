@@ -47,5 +47,5 @@ final class FromJsonAndToJsonSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.FromJsonAndToJson value) => value.toJson();
+  Object? serialize(_i4.FromJsonAndToJson value) => value.toJson();
 }

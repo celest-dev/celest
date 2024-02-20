@@ -47,5 +47,5 @@ final class NonMapToJsonWithDefaultsSerializer
   }
 
   @override
-  String serialize(_i4.NonMapToJsonWithDefaults value) => value.toJson();
+  Object? serialize(_i4.NonMapToJsonWithDefaults value) => value.toJson();
 }

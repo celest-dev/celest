@@ -59,5 +59,5 @@ final class StringXPrivateFieldImplSerializer
   }
 
   @override
-  String serialize(_i4.StringXPrivateFieldImpl value) => value;
+  Object? serialize(_i4.StringXPrivateFieldImpl value) => value;
 }

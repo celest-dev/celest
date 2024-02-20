@@ -45,5 +45,5 @@ final class SimpleStructSerializer extends _i3.Serializer<_i4.SimpleStruct> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.SimpleStruct value) => {};
+  Object? serialize(_i4.SimpleStruct value) => {};
 }

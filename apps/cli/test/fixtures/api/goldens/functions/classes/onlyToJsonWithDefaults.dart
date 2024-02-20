@@ -48,6 +48,5 @@ final class OnlyToJsonWithDefaultsSerializer
   }
 
   @override
-  Map<String, Object?> serialize(_i4.OnlyToJsonWithDefaults value) =>
-      value.toJson();
+  Object? serialize(_i4.OnlyToJsonWithDefaults value) => value.toJson();
 }

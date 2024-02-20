@@ -45,5 +45,5 @@ final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
   }
 
   @override
-  Map<String, dynamic> serialize(_i4.SimpleClass value) => value.toJson();
+  Object? serialize(_i4.SimpleClass value) => value.toJson();
 }

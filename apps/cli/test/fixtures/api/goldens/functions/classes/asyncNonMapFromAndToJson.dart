@@ -47,5 +47,5 @@ final class NonMapFromAndToJsonSerializer
   }
 
   @override
-  String serialize(_i4.NonMapFromAndToJson value) => value.toJson();
+  Object? serialize(_i4.NonMapFromAndToJson value) => value.toJson();
 }
