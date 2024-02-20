@@ -120,6 +120,9 @@ final class JsonGenerator {
 
   Expression _fromJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
+    if (dartType.isDartCoreObject) {
+      return ref;
+    }
     if (dartType.isDartCoreBool ||
         dartType.isDartCoreNum ||
         dartType.isDartCoreString ||
@@ -153,7 +156,7 @@ final class JsonGenerator {
       final elementType = type.toTypeReference.types.single;
       final serializedElement = fromJson(elementType, element);
       if (element == serializedElement) {
-        return cast;
+        return cast.nullableProperty('toList', type.isNullableOrFalse).call([]);
       }
       return cast
           .nullableProperty('map', type.isNullableOrFalse)

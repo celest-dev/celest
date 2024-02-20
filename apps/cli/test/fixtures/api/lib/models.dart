@@ -1,3 +1,5 @@
+export 'package:celest_core/celest_core.dart';
+
 export 'src/models/classes.dart';
 export 'src/models/cycles.dart';
 export 'src/models/exceptions.dart';

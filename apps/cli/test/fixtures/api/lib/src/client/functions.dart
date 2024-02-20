@@ -19,6 +19,7 @@ import 'package:celest_backend/src/models/parameter_types.dart';
 import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart';
 import 'package:fast_immutable_collections/src/imap/imap.dart';
 
@@ -2031,6 +2032,302 @@ class CelestFunctionsExtensionTypes {
       return Serializers.instance.deserialize<StringXPrivateCtorImpl>(
         $body['response'],
         const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonValue> jsonValue(JsonValue value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-value'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonValue>(
+          value,
+          const TypeToken<JsonValue>('JsonValue'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonValue>(
+        $body['response'],
+        const TypeToken<JsonValue>('JsonValue'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonString> jsonString(JsonString value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-string'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonString>(
+          value,
+          const TypeToken<JsonString>('JsonString'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonString>(
+        $body['response'],
+        const TypeToken<JsonString>('JsonString'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonNum> jsonNum(JsonNum value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-num'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonNum>(
+          value,
+          const TypeToken<JsonNum>('JsonNum'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonNum>(
+        $body['response'],
+        const TypeToken<JsonNum>('JsonNum'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonInt> jsonInt(JsonInt value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-int'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonInt>(
+          value,
+          const TypeToken<JsonInt>('JsonInt'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonInt>(
+        $body['response'],
+        const TypeToken<JsonInt>('JsonInt'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonDouble> jsonDouble(JsonDouble value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-double'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonDouble>(
+          value,
+          const TypeToken<JsonDouble>('JsonDouble'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonDouble>(
+        $body['response'],
+        const TypeToken<JsonDouble>('JsonDouble'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonBool> jsonBool(JsonBool value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-bool'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonBool>(
+          value,
+          const TypeToken<JsonBool>('JsonBool'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonBool>(
+        $body['response'],
+        const TypeToken<JsonBool>('JsonBool'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonList> jsonList(JsonList value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-list'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonList>(
+          value,
+          const TypeToken<JsonList>('JsonList'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonList>(
+        $body['response'],
+        const TypeToken<JsonList>('JsonList'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<JsonMap> jsonMap(JsonMap value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/json-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'value': Serializers.instance.serialize<JsonMap>(
+          value,
+          const TypeToken<JsonMap>('JsonMap'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<JsonMap>(
+        $body['response'],
+        const TypeToken<JsonMap>('JsonMap'),
       );
     }
     final $error = ($body['error'] as Map<String, Object?>);

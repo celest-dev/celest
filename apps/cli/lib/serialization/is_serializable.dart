@@ -544,7 +544,15 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     ExtensionTypeElement element,
   ) {
     final erasureType = type.extensionTypeErasure;
-    final erasureVerdict = typeHelper.isSerializable(erasureType);
+    var erasureVerdict = typeHelper.isSerializable(erasureType);
+    // If it's a no but only because it is not allowed as a raw JSON type, then
+    // allow it if it's a JsonX type from package:celest.
+    if (erasureVerdict is VerdictNo) {
+      final jsonVerdict = _isJson(erasureType);
+      if (jsonVerdict is VerdictYes && type.isJsonExtensionType) {
+        erasureVerdict = jsonVerdict;
+      }
+    }
     switch (erasureVerdict) {
       case VerdictNo():
         return VerdictNo([

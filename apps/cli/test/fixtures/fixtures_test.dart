@@ -745,6 +745,191 @@ final tests = <String, Test>{
               output: 'hello',
             ),
           ],
+          'jsonValue': [
+            FunctionTestSuccess(
+              name: 'string',
+              input: {
+                'value': 'hello',
+              },
+              output: 'hello',
+            ),
+            FunctionTestSuccess(
+              name: 'int',
+              input: {
+                'value': 123,
+              },
+              output: 123,
+            ),
+            FunctionTestSuccess(
+              name: 'double',
+              input: {
+                'value': 123.456,
+              },
+              output: 123.456,
+            ),
+            FunctionTestSuccess(
+              name: 'bool',
+              input: {
+                'value': true,
+              },
+              output: true,
+            ),
+            FunctionTestSuccess(
+              name: 'list',
+              input: {
+                'value': ['hello', 123, 123.456, true],
+              },
+              output: ['hello', 123, 123.456, true],
+            ),
+            FunctionTestSuccess(
+              name: 'map',
+              input: {
+                'value': {
+                  'hello': 'world',
+                  'int': 123,
+                  'double': 123.456,
+                  'bool': true,
+                },
+              },
+              output: {
+                'hello': 'world',
+                'int': 123,
+                'double': 123.456,
+                'bool': true,
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'nested',
+              input: {
+                'value': {
+                  'hello': 'world',
+                  'int': 123,
+                  'double': 123.456,
+                  'bool': true,
+                  'list': ['hello', 123, 123.456, true],
+                  'map': {
+                    'hello': 'world',
+                    'int': 123,
+                    'double': 123.456,
+                    'bool': true,
+                  },
+                },
+              },
+              output: {
+                'hello': 'world',
+                'int': 123,
+                'double': 123.456,
+                'bool': true,
+                'list': ['hello', 123, 123.456, true],
+                'map': {
+                  'hello': 'world',
+                  'int': 123,
+                  'double': 123.456,
+                  'bool': true,
+                },
+              },
+            ),
+          ],
+          'jsonString': [
+            FunctionTestSuccess(
+              name: 'jsonString',
+              input: {
+                'value': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'jsonNum': [
+            FunctionTestSuccess(
+              name: 'int',
+              input: {
+                'value': 123,
+              },
+              output: 123,
+            ),
+            FunctionTestSuccess(
+              name: 'double',
+              input: {
+                'value': 123.456,
+              },
+              output: 123.456,
+            ),
+          ],
+          'jsonInt': [
+            FunctionTestSuccess(
+              name: 'jsonInt',
+              input: {
+                'value': 123,
+              },
+              output: 123,
+            ),
+          ],
+          'jsonDouble': [
+            FunctionTestSuccess(
+              name: 'jsonDouble',
+              input: {
+                'value': 123.456,
+              },
+              output: 123.456,
+            ),
+          ],
+          'jsonBool': [
+            FunctionTestSuccess(
+              name: 'jsonBool',
+              input: {
+                'value': true,
+              },
+              output: true,
+            ),
+          ],
+          'jsonList': [
+            FunctionTestSuccess(
+              name: 'simple',
+              input: {
+                'value': ['hello', 123, 123.456, true],
+              },
+              output: ['hello', 123, 123.456, true],
+            ),
+            FunctionTestSuccess(
+              name: 'complex',
+              input: {
+                'value': [complexStruct, complexStruct],
+              },
+              output: [complexStruct, complexStruct],
+            ),
+          ],
+          'jsonMap': [
+            FunctionTestSuccess(
+              name: 'simple',
+              input: {
+                'value': {
+                  'hello': 'world',
+                  'int': 123,
+                  'double': 123.456,
+                  'bool': true,
+                },
+              },
+              output: {
+                'hello': 'world',
+                'int': 123,
+                'double': 123.456,
+                'bool': true,
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'complex',
+              input: {
+                'value': {
+                  'a': complexStruct,
+                  'b': complexStruct,
+                },
+              },
+              output: {
+                'a': complexStruct,
+                'b': complexStruct,
+              },
+            ),
+          ],
         },
       ),
       'parameter_types': ApiTest(

@@ -13,6 +13,7 @@ import 'package:celest_backend/src/models/metadata.dart';
 import 'package:celest_backend/src/models/parameter_types.dart';
 import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart';
 import 'package:fast_immutable_collections/src/imap/imap.dart';
 
@@ -1092,6 +1093,110 @@ final class IMapStringUriSerializer extends Serializer<IMap<String, Uri>> {
         (value) => value,
         (value) => Serializers.instance.serialize<Uri>(value),
       );
+}
+
+final class JsonBoolSerializer extends Serializer<JsonBool> {
+  const JsonBoolSerializer();
+
+  @override
+  JsonBool deserialize(Object? value) {
+    final serialized = assertWireType<bool>(value);
+    return JsonBool((serialized as bool));
+  }
+
+  @override
+  bool serialize(JsonBool value) => value;
+}
+
+final class JsonDoubleSerializer extends Serializer<JsonDouble> {
+  const JsonDoubleSerializer();
+
+  @override
+  JsonDouble deserialize(Object? value) {
+    final serialized = assertWireType<double>(value);
+    return JsonDouble((serialized as num).toDouble());
+  }
+
+  @override
+  double serialize(JsonDouble value) => value;
+}
+
+final class JsonIntSerializer extends Serializer<JsonInt> {
+  const JsonIntSerializer();
+
+  @override
+  JsonInt deserialize(Object? value) {
+    final serialized = assertWireType<int>(value);
+    return JsonInt((serialized as num).toInt());
+  }
+
+  @override
+  int serialize(JsonInt value) => value;
+}
+
+final class JsonListSerializer extends Serializer<JsonList> {
+  const JsonListSerializer();
+
+  @override
+  JsonList deserialize(Object? value) {
+    final serialized = assertWireType<List<Object?>>(value);
+    return JsonList((serialized as Iterable<Object?>).toList());
+  }
+
+  @override
+  List<Object?> serialize(JsonList value) => value.value;
+}
+
+final class JsonMapSerializer extends Serializer<JsonMap> {
+  const JsonMapSerializer();
+
+  @override
+  JsonMap deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return JsonMap((serialized as Map<String, Object?>));
+  }
+
+  @override
+  Map<String, Object?> serialize(JsonMap value) => value.value;
+}
+
+final class JsonNumSerializer extends Serializer<JsonNum> {
+  const JsonNumSerializer();
+
+  @override
+  JsonNum deserialize(Object? value) {
+    final serialized = assertWireType<num>(value);
+    return JsonNum((serialized as num));
+  }
+
+  @override
+  num serialize(JsonNum value) => value;
+}
+
+final class JsonStringSerializer extends Serializer<JsonString> {
+  const JsonStringSerializer();
+
+  @override
+  JsonString deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return JsonString((serialized as String));
+  }
+
+  @override
+  String serialize(JsonString value) => value;
+}
+
+final class JsonValueSerializer extends Serializer<JsonValue> {
+  const JsonValueSerializer();
+
+  @override
+  JsonValue deserialize(Object? value) {
+    final serialized = assertWireType<Object>(value);
+    return JsonValue(serialized);
+  }
+
+  @override
+  Object serialize(JsonValue value) => value.value;
 }
 
 final class LiteralEnumSerializer extends Serializer<LiteralEnum> {

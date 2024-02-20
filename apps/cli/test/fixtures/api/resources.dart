@@ -280,6 +280,46 @@ abstract final class Functions {
     functionName: r'asyncString',
   );
 
+  static const extensionTypesJsonBool = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonBool',
+  );
+
+  static const extensionTypesJsonDouble = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonDouble',
+  );
+
+  static const extensionTypesJsonInt = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonInt',
+  );
+
+  static const extensionTypesJsonList = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonList',
+  );
+
+  static const extensionTypesJsonMap = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonMap',
+  );
+
+  static const extensionTypesJsonNum = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonNum',
+  );
+
+  static const extensionTypesJsonString = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonString',
+  );
+
+  static const extensionTypesJsonValue = CloudFunction(
+    api: r'extension_types',
+    functionName: r'jsonValue',
+  );
+
   static const extensionTypesString = CloudFunction(
     api: r'extension_types',
     functionName: r'string',

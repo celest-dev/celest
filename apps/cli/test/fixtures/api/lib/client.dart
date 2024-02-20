@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/src/models/extension_types.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as http;
 
@@ -126,6 +127,38 @@ class Celest {
     Serializers.instance.put(
       const StringXPrivateCtorImplSerializer(),
       const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+    );
+    Serializers.instance.put(
+      const JsonValueSerializer(),
+      const TypeToken<JsonValue>('JsonValue'),
+    );
+    Serializers.instance.put(
+      const JsonStringSerializer(),
+      const TypeToken<JsonString>('JsonString'),
+    );
+    Serializers.instance.put(
+      const JsonNumSerializer(),
+      const TypeToken<JsonNum>('JsonNum'),
+    );
+    Serializers.instance.put(
+      const JsonIntSerializer(),
+      const TypeToken<JsonInt>('JsonInt'),
+    );
+    Serializers.instance.put(
+      const JsonDoubleSerializer(),
+      const TypeToken<JsonDouble>('JsonDouble'),
+    );
+    Serializers.instance.put(
+      const JsonBoolSerializer(),
+      const TypeToken<JsonBool>('JsonBool'),
+    );
+    Serializers.instance.put(
+      const JsonListSerializer(),
+      const TypeToken<JsonList>('JsonList'),
+    );
+    Serializers.instance.put(
+      const JsonMapSerializer(),
+      const TypeToken<JsonMap>('JsonMap'),
     );
     Serializers.instance.put(const GenericWrappersSerializer());
     Serializers.instance.put(const IMapStringIMapStringSimpleClassSerializer());

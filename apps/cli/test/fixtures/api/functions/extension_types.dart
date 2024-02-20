@@ -19,3 +19,12 @@ StringXPrivateField stringPrivateField(StringXPrivateField s) => s;
 StringXPrivateFieldImpl stringPrivateFieldImpl(StringXPrivateFieldImpl s) => s;
 StringXPrivateCtor stringPrivateCtor(StringXPrivateCtor s) => s;
 StringXPrivateCtorImpl stringPrivateCtorImpl(StringXPrivateCtorImpl s) => s;
+
+JsonValue jsonValue(JsonValue value) => value;
+JsonString jsonString(JsonString value) => value;
+JsonNum jsonNum(JsonNum value) => value;
+JsonInt jsonInt(JsonInt value) => value;
+JsonDouble jsonDouble(JsonDouble value) => value;
+JsonBool jsonBool(JsonBool value) => value;
+JsonList jsonList(JsonList value) => value;
+JsonMap jsonMap(JsonMap value) => value;

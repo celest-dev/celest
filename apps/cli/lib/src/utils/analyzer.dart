@@ -65,6 +65,12 @@ extension DartTypeHelper on DartType {
 
   bool get isPackageCelest => element?.library?.isPackageCelest ?? false;
 
+  bool get isJsonExtensionType => switch (element) {
+        ExtensionTypeElement(:final name, :final library) =>
+          name.startsWith('Json') && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isAuth => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'Auth' && library.isPackageCelest,

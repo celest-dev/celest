@@ -8621,6 +8621,510 @@
             },
             "text": "stringPrivateCtorImpl"
           }
+        },
+        "jsonValue": {
+          "name": "jsonValue",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 944,
+                  "uri": "extension_types.dart",
+                  "line": 22,
+                  "column": 30
+                },
+                "end": {
+                  "offset": 949,
+                  "uri": "extension_types.dart",
+                  "line": 22,
+                  "column": 35
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonValue",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonValue",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 924,
+              "uri": "extension_types.dart",
+              "line": 22,
+              "column": 10
+            },
+            "end": {
+              "offset": 933,
+              "uri": "extension_types.dart",
+              "line": 22,
+              "column": 19
+            },
+            "text": "jsonValue"
+          }
+        },
+        "jsonString": {
+          "name": "jsonString",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonString",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 994,
+                  "uri": "extension_types.dart",
+                  "line": 23,
+                  "column": 33
+                },
+                "end": {
+                  "offset": 999,
+                  "uri": "extension_types.dart",
+                  "line": 23,
+                  "column": 38
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonString",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonString",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 972,
+              "uri": "extension_types.dart",
+              "line": 23,
+              "column": 11
+            },
+            "end": {
+              "offset": 982,
+              "uri": "extension_types.dart",
+              "line": 23,
+              "column": 21
+            },
+            "text": "jsonString"
+          }
+        },
+        "jsonNum": {
+          "name": "jsonNum",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonNum",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1035,
+                  "uri": "extension_types.dart",
+                  "line": 24,
+                  "column": 24
+                },
+                "end": {
+                  "offset": 1040,
+                  "uri": "extension_types.dart",
+                  "line": 24,
+                  "column": 29
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonNum",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonNum",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1019,
+              "uri": "extension_types.dart",
+              "line": 24,
+              "column": 8
+            },
+            "end": {
+              "offset": 1026,
+              "uri": "extension_types.dart",
+              "line": 24,
+              "column": 15
+            },
+            "text": "jsonNum"
+          }
+        },
+        "jsonInt": {
+          "name": "jsonInt",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonInt",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1076,
+                  "uri": "extension_types.dart",
+                  "line": 25,
+                  "column": 24
+                },
+                "end": {
+                  "offset": 1081,
+                  "uri": "extension_types.dart",
+                  "line": 25,
+                  "column": 29
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonInt",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonInt",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1060,
+              "uri": "extension_types.dart",
+              "line": 25,
+              "column": 8
+            },
+            "end": {
+              "offset": 1067,
+              "uri": "extension_types.dart",
+              "line": 25,
+              "column": 15
+            },
+            "text": "jsonInt"
+          }
+        },
+        "jsonDouble": {
+          "name": "jsonDouble",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonDouble",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1126,
+                  "uri": "extension_types.dart",
+                  "line": 26,
+                  "column": 33
+                },
+                "end": {
+                  "offset": 1131,
+                  "uri": "extension_types.dart",
+                  "line": 26,
+                  "column": 38
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonDouble",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonDouble",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1104,
+              "uri": "extension_types.dart",
+              "line": 26,
+              "column": 11
+            },
+            "end": {
+              "offset": 1114,
+              "uri": "extension_types.dart",
+              "line": 26,
+              "column": 21
+            },
+            "text": "jsonDouble"
+          }
+        },
+        "jsonBool": {
+          "name": "jsonBool",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonBool",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1170,
+                  "uri": "extension_types.dart",
+                  "line": 27,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 1175,
+                  "uri": "extension_types.dart",
+                  "line": 27,
+                  "column": 32
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonBool",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonBool",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1152,
+              "uri": "extension_types.dart",
+              "line": 27,
+              "column": 9
+            },
+            "end": {
+              "offset": 1160,
+              "uri": "extension_types.dart",
+              "line": 27,
+              "column": 17
+            },
+            "text": "jsonBool"
+          }
+        },
+        "jsonList": {
+          "name": "jsonList",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonList",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1214,
+                  "uri": "extension_types.dart",
+                  "line": 28,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 1219,
+                  "uri": "extension_types.dart",
+                  "line": 28,
+                  "column": 32
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonList",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonList",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1196,
+              "uri": "extension_types.dart",
+              "line": 28,
+              "column": 9
+            },
+            "end": {
+              "offset": 1204,
+              "uri": "extension_types.dart",
+              "line": 28,
+              "column": 17
+            },
+            "text": "jsonList"
+          }
+        },
+        "jsonMap": {
+          "name": "jsonMap",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonMap",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 1255,
+                  "uri": "extension_types.dart",
+                  "line": 29,
+                  "column": 24
+                },
+                "end": {
+                  "offset": 1260,
+                  "uri": "extension_types.dart",
+                  "line": 29,
+                  "column": 29
+                },
+                "text": "value"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "JsonMap",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonMap",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "exceptionTypes": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1239,
+              "uri": "extension_types.dart",
+              "line": 29,
+              "column": 8
+            },
+            "end": {
+              "offset": 1246,
+              "uri": "extension_types.dart",
+              "line": 29,
+              "column": 15
+            },
+            "text": "jsonMap"
+          }
         }
       },
       "docs": [
