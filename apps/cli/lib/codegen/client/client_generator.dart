@@ -181,7 +181,7 @@ final class ClientGenerator {
       refer('_currentEnvironment').assign(refer('environment')),
     );
 
-    var customSerializers = <Class>{};
+    var customSerializers = <Class, Expression?>{};
     var anonymousRecordTypes = <String, RecordType>{};
 
     final apis = project.apis.values;
@@ -227,7 +227,8 @@ final class ClientGenerator {
       );
       libraries[ClientPaths.serializers] = clientSerializers.generate();
 
-      for (final serializer in customSerializers) {
+      for (final MapEntry(key: serializer, value: typeToken)
+          in customSerializers.entries) {
         clientInitBody.addExpression(
           DartTypes.celest.serializers
               .property('instance')
@@ -237,6 +238,7 @@ final class ClientGenerator {
               serializer.name,
               p.toUri(ClientPaths.serializers).toString(),
             ).constInstance([]),
+            if (typeToken != null) typeToken,
           ]),
         );
       }

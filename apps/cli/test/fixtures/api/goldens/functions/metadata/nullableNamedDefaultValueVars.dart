@@ -66,6 +66,19 @@ Future<void> main(List<String> args) async {
 
 typedef Record$k7x4l9 = ({String a, String b, String c});
 
+final class ExportableSerializer extends _i3.Serializer<_i4.Exportable> {
+  const ExportableSerializer();
+
+  @override
+  _i4.Exportable deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return _i4.Exportable();
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Exportable value) => {};
+}
+
 final class LiteralEnumSerializer extends _i3.Serializer<_i4.LiteralEnum> {
   const LiteralEnumSerializer();
 
@@ -98,19 +111,6 @@ final class Record$k7x4l9Serializer extends _i3.Serializer<Record$k7x4l9> {
         r'b': value.b,
         r'c': value.c,
       };
-}
-
-final class ExportableSerializer extends _i3.Serializer<_i4.Exportable> {
-  const ExportableSerializer();
-
-  @override
-  _i4.Exportable deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
-    return _i4.Exportable();
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Exportable value) => {};
 }
 
 final class SerializableSerializer extends _i3.Serializer<_i4.Serializable> {

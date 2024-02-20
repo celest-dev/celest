@@ -11,13 +11,15 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class SerializerGenerator {
-  SerializerGenerator(
-    this.serializationSpec, {
-    SerializationSpec? parent,
-  }) : _parent = parent;
+  SerializerGenerator(SerializationSpec serializationSpec)
+      : _isExtensionType = serializationSpec.isExtensionType,
+        serializationSpec = serializationSpec.isExtensionType
+            ? serializationSpec.extensionType!
+            : serializationSpec;
 
   final SerializationSpec serializationSpec;
-  final SerializationSpec? _parent;
+  final bool _isExtensionType;
+  late final SerializationSpec? _parent = serializationSpec.parent;
   late final Set<Reference> _generics = _collectGenerics();
 
   Set<Reference> _collectGenerics() {
@@ -51,8 +53,8 @@ final class SerializerGenerator {
 
   late final type = serializationSpec.type;
   late final typeReference = typeHelper.toReference(type).nonNullable.noBound;
-  late final wireType = typeHelper.toReference(serializationSpec.wireType);
-  late final castType = typeHelper.toReference(serializationSpec.castType);
+  late final wireType = serializationSpec.wireType;
+  late final castType = serializationSpec.castType;
 
   Class build() => Class((b) {
         b
@@ -239,6 +241,18 @@ final class SerializerGenerator {
         }),
       );
     }
+    if (_isExtensionType) {
+      return jsonGenerator.toJson(
+        typeHelper.toReference(_parent!.type),
+        type.implementsRepresentationType
+            ? ref
+            : switch (serializationSpec.fields) {
+                [final field] => ref.property(field.name),
+                // No public field to reference. Just cast into representation.
+                _ => ref.asA(typeHelper.toReference(_parent.type)),
+              },
+      );
+    }
     final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.fields) {
       serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
@@ -279,7 +293,7 @@ final class SerializerGenerator {
         // If a subtype uses a parent's fromJson method, then the discriminator
         // key is needed so that the parent's fromJson method can distinguish the
         // map.
-        if (usesParent)
+        if (usesParent && !_isExtensionType)
           literalMap({
             literalString(r'$type', raw: true): literalString(
               typeReference.symbol!,
@@ -340,13 +354,27 @@ final class SerializerGenerator {
       });
     }
     final ref = _reference(from, isNullable: mayBeAbsent);
+    if (_isExtensionType) {
+      final deserialized = jsonGenerator.fromJson(
+        typeHelper.toReference(_parent!.type),
+        ref,
+      );
+      // No params means no constructor. Just cast into the extension type.
+      if (serializationSpec.parameters.isEmpty) {
+        return deserialized.asA(typeReference).returned.statement;
+      }
+      return typeReference.nonNullable
+          .newInstance([deserialized])
+          .returned
+          .statement;
+    }
     final deserializedPositional = <Expression>[];
     final deserializedNamed = <String, Expression>{};
     for (final parameter in serializationSpec.parameters) {
       final reference = typeHelper.toReference(parameter.type);
       final deserialized = jsonGenerator.fromJson(
         reference,
-        serializationSpec.wireType.isDartCoreMap
+        typeHelper.fromReference(serializationSpec.wireType).isDartCoreMap
             ? ref.index(literalString(parameter.name, raw: true))
             : ref,
         defaultValue: parameter.defaultValue,
@@ -376,8 +404,9 @@ final class SerializerGenerator {
     String variable, {
     required bool isNullable,
   }) {
-    if (!TypeChecker.fromStatic(serializationSpec.wireType)
-        .isExactlyType(jsonMapType)) {
+    if (!TypeChecker.fromStatic(
+      typeHelper.fromReference(serializationSpec.wireType),
+    ).isExactlyType(jsonMapType)) {
       return refer(variable);
     }
     return switch (isNullable) {
@@ -388,19 +417,19 @@ final class SerializerGenerator {
 }
 
 extension on ast.DartType {
-  String? get classNamePrefix {
+  String get classNamePrefix {
     return switch (this) {
       ast.InterfaceType(:final typeArguments) => () {
           final name = StringBuffer(element!.displayName);
           if (typeArguments.isNotEmpty) {
             name.writeAll(
-              typeArguments.map((t) => t.classNamePrefix).nonNulls,
+              typeArguments.map((t) => t.classNamePrefix),
             );
           }
           return name.toString();
         }(),
       final ast.RecordType recordType => recordType.symbol,
-      _ => null,
+      _ => '',
     };
   }
 }

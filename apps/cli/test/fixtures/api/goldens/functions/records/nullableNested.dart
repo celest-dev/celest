@@ -26,8 +26,8 @@ final class NullableNestedTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
     _i3.Serializers.instance.put(const NullableNestedSerializer());
+    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
   }
 }
 

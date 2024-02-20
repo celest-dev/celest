@@ -43,6 +43,36 @@ Future<void> main(List<String> args) async {
   );
 }
 
+final class CircleWithCustomJsonSerializer
+    extends _i3.Serializer<_i4.CircleWithCustomJson> {
+  const CircleWithCustomJsonSerializer();
+
+  @override
+  _i4.CircleWithCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.CircleWithCustomJson.fromJson(serialized);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.CircleWithCustomJson value) =>
+      value.toJson();
+}
+
+final class RectangleWithCustomJsonSerializer
+    extends _i3.Serializer<_i4.RectangleWithCustomJson> {
+  const RectangleWithCustomJsonSerializer();
+
+  @override
+  _i4.RectangleWithCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.RectangleWithCustomJson.fromJson(serialized);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.RectangleWithCustomJson value) =>
+      value.toJson();
+}
+
 final class ShapeWithCustomJsonSerializer
     extends _i3.Serializer<_i4.ShapeWithCustomJson> {
   const ShapeWithCustomJsonSerializer();
@@ -88,34 +118,4 @@ final class ShapeWithCustomJsonSerializer
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class CircleWithCustomJsonSerializer
-    extends _i3.Serializer<_i4.CircleWithCustomJson> {
-  const CircleWithCustomJsonSerializer();
-
-  @override
-  _i4.CircleWithCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.CircleWithCustomJson.fromJson(serialized);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.CircleWithCustomJson value) =>
-      value.toJson();
-}
-
-final class RectangleWithCustomJsonSerializer
-    extends _i3.Serializer<_i4.RectangleWithCustomJson> {
-  const RectangleWithCustomJsonSerializer();
-
-  @override
-  _i4.RectangleWithCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.RectangleWithCustomJson.fromJson(serialized);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.RectangleWithCustomJson value) =>
-      value.toJson();
 }

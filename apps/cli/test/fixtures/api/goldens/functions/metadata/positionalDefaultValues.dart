@@ -77,20 +77,6 @@ final class ExportableSerializer extends _i3.Serializer<_i4.Exportable> {
   Map<String, Object?> serialize(_i4.Exportable value) => {};
 }
 
-final class SerializableSerializer extends _i3.Serializer<_i4.Serializable> {
-  const SerializableSerializer();
-
-  @override
-  _i4.Serializable deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
-    return _i4.Serializable(((serialized?[r'type'] as String?)) ?? null);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Serializable value) =>
-      {r'type': value.type};
-}
-
 final class LiteralEnumSerializer extends _i3.Serializer<_i4.LiteralEnum> {
   const LiteralEnumSerializer();
 
@@ -123,4 +109,18 @@ final class Record$k7x4l9Serializer extends _i3.Serializer<Record$k7x4l9> {
         r'b': value.b,
         r'c': value.c,
       };
+}
+
+final class SerializableSerializer extends _i3.Serializer<_i4.Serializable> {
+  const SerializableSerializer();
+
+  @override
+  _i4.Serializable deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return _i4.Serializable(((serialized?[r'type'] as String?)) ?? null);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Serializable value) =>
+      {r'type': value.type};
 }

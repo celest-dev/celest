@@ -21,6 +21,7 @@ import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
@@ -78,21 +79,26 @@ final class CelestAnalyzer {
   Future<void> _init() async {
     final dartCore = await _context.currentSession.getLibraryByUri('dart:core')
         as LibraryElementResult;
-    typeHelper.coreExceptionType =
-        (dartCore.element.exportNamespace.get('Exception') as ClassElement)
-            .thisType;
-    typeHelper.coreErrorType =
-        (dartCore.element.exportNamespace.get('Error') as ClassElement)
-            .thisType;
+    final dartTypedData = await _context.currentSession
+        .getLibraryByUri('dart:typed_data') as LibraryElementResult;
     final celestCore = await _context.currentSession
             .getLibraryByUri('package:celest_core/celest_core.dart')
         as LibraryElementResult;
-    typeHelper.badRequestExceptionType = (celestCore.element.exportNamespace
-            .get('BadRequestException') as ClassElement)
-        .thisType;
-    typeHelper.internalServerExceptionType = (celestCore.element.exportNamespace
-            .get('InternalServerException') as ClassElement)
-        .thisType;
+    typeHelper.coreTypes = CoreTypes(
+      coreExceptionType: dartCore.getClassType('Exception'),
+      coreErrorType: dartCore.getClassType('Error'),
+      coreBigIntType: dartCore.getClassType('BigInt'),
+      coreDateTimeType: dartCore.getClassType('DateTime'),
+      coreDurationType: dartCore.getClassType('Duration'),
+      coreRegExpType: dartCore.getClassType('RegExp'),
+      coreStackTraceType: dartCore.getClassType('StackTrace'),
+      coreUriType: dartCore.getClassType('Uri'),
+      coreUriDataType: dartCore.getClassType('UriData'),
+      typedDataUint8ListType: dartTypedData.getClassType('Uint8List'),
+      badRequestExceptionType: celestCore.getClassType('BadRequestException'),
+      internalServerExceptionType:
+          celestCore.getClassType('InternalServerException'),
+    );
   }
 
   LibraryElementResult? _modelsLibrary;
@@ -501,8 +507,8 @@ final class CelestAnalyzer {
         final exceptionTypes = exceptionCollector.exceptionTypes;
         // These are supported but are handled by the common runtime.
         exceptionTypes.removeAll([
-          typeHelper.coreErrorType,
-          typeHelper.coreExceptionType,
+          typeHelper.coreTypes.coreExceptionType,
+          typeHelper.coreTypes.coreErrorType,
         ]);
         for (final exceptionType in exceptionTypes) {
           final exceptionTypeLoc =
@@ -946,3 +952,8 @@ typedef TopLevelConstant = ({
   TopLevelVariableElement element,
   DartObject value
 });
+
+extension on LibraryElementResult {
+  DartType getClassType(String name) =>
+      (element.exportNamespace.get(name) as ClassElement).thisType;
+}

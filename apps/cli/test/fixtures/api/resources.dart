@@ -17,6 +17,8 @@ abstract final class Apis {
 
   static const exceptions = CloudApi(name: r'exceptions');
 
+  static const extensionTypes = CloudApi(name: r'extension_types');
+
   static const genericWrappers = CloudApi(name: r'generic_wrappers');
 
   static const metadata = CloudApi(name: r'metadata');
@@ -266,6 +268,71 @@ abstract final class Functions {
   static const exceptionsThrowsException = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsException',
+  );
+
+  static const extensionTypesAsyncOrString = CloudFunction(
+    api: r'extension_types',
+    functionName: r'asyncOrString',
+  );
+
+  static const extensionTypesAsyncString = CloudFunction(
+    api: r'extension_types',
+    functionName: r'asyncString',
+  );
+
+  static const extensionTypesString = CloudFunction(
+    api: r'extension_types',
+    functionName: r'string',
+  );
+
+  static const extensionTypesStringFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringFromJson',
+  );
+
+  static const extensionTypesStringFromJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringFromJsonImpl',
+  );
+
+  static const extensionTypesStringImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringImpl',
+  );
+
+  static const extensionTypesStringPrivateCtor = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringPrivateCtor',
+  );
+
+  static const extensionTypesStringPrivateCtorImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringPrivateCtorImpl',
+  );
+
+  static const extensionTypesStringPrivateField = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringPrivateField',
+  );
+
+  static const extensionTypesStringPrivateFieldImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringPrivateFieldImpl',
+  );
+
+  static const extensionTypesStringToFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringToFromJson',
+  );
+
+  static const extensionTypesStringToJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringToJson',
+  );
+
+  static const extensionTypesStringToJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringToJsonImpl',
   );
 
   static const genericWrappersGenericWrapperParameters = CloudFunction(

@@ -26,8 +26,8 @@ final class AsyncNestedClassTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const FieldsSerializer());
     _i3.Serializers.instance.put(const NestedClassSerializer());
+    _i3.Serializers.instance.put(const FieldsSerializer());
   }
 }
 

@@ -7,6 +7,7 @@ library;
 import 'dart:io';
 
 import 'package:celest/celest.dart';
+import 'package:celest_backend/src/models/extension_types.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as http;
 
@@ -73,8 +74,8 @@ class Celest {
     Serializers.instance.put(const NodeSerializer());
     Serializers.instance.put(const ParentSerializer());
     Serializers.instance.put(const ChildSerializer());
-    Serializers.instance.put(const SelfReferencingWrapperSerializer());
     Serializers.instance.put(const SelfReferencingSerializer());
+    Serializers.instance.put(const SelfReferencingWrapperSerializer());
     Serializers.instance.put(const SupportedExceptionTypeSerializer());
     Serializers.instance.put(const SupportedErrorTypeSerializer());
     Serializers.instance.put(const CustomExceptionSerializer());
@@ -82,22 +83,66 @@ class Celest {
     Serializers.instance.put(const CustomErrorSerializer());
     Serializers.instance.put(const CustomErrorToFromJsonSerializer());
     Serializers.instance.put(const CustomErrorWithStackTraceSerializer());
-    Serializers.instance.put(const IListStringSerializer());
-    Serializers.instance.put(const IListUriSerializer());
-    Serializers.instance.put(const IListSimpleClassSerializer());
-    Serializers.instance.put(const IListIListStringSerializer());
-    Serializers.instance.put(const IListIListUriSerializer());
-    Serializers.instance.put(const IListIListSimpleClassSerializer());
-    Serializers.instance.put(const IMapStringStringSerializer());
-    Serializers.instance.put(const IMapStringUriSerializer());
-    Serializers.instance.put(const IMapStringSimpleClassSerializer());
-    Serializers.instance.put(const IMapStringIListStringSerializer());
-    Serializers.instance.put(const IMapStringIListUriSerializer());
-    Serializers.instance.put(const IMapStringIListSimpleClassSerializer());
-    Serializers.instance.put(const IMapStringIMapStringStringSerializer());
-    Serializers.instance.put(const IMapStringIMapStringUriSerializer());
-    Serializers.instance.put(const IMapStringIMapStringSimpleClassSerializer());
+    Serializers.instance.put(
+      const StringXSerializer(),
+      const TypeToken<StringX>('StringX'),
+    );
+    Serializers.instance.put(
+      const StringXImplSerializer(),
+      const TypeToken<StringXImpl>('StringXImpl'),
+    );
+    Serializers.instance.put(
+      const StringXToFromJsonSerializer(),
+      const TypeToken<StringXToFromJson>('StringXToFromJson'),
+    );
+    Serializers.instance.put(
+      const StringXToJsonSerializer(),
+      const TypeToken<StringXToJson>('StringXToJson'),
+    );
+    Serializers.instance.put(
+      const StringXToJsonImplSerializer(),
+      const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+    );
+    Serializers.instance.put(
+      const StringXFromJsonSerializer(),
+      const TypeToken<StringXFromJson>('StringXFromJson'),
+    );
+    Serializers.instance.put(
+      const StringXFromJsonImplSerializer(),
+      const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+    );
+    Serializers.instance.put(
+      const StringXPrivateFieldSerializer(),
+      const TypeToken<StringXPrivateField>('StringXPrivateField'),
+    );
+    Serializers.instance.put(
+      const StringXPrivateFieldImplSerializer(),
+      const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+    );
+    Serializers.instance.put(
+      const StringXPrivateCtorSerializer(),
+      const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+    );
+    Serializers.instance.put(
+      const StringXPrivateCtorImplSerializer(),
+      const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+    );
     Serializers.instance.put(const GenericWrappersSerializer());
+    Serializers.instance.put(const IMapStringIMapStringSimpleClassSerializer());
+    Serializers.instance.put(const IMapStringIMapStringUriSerializer());
+    Serializers.instance.put(const IMapStringIMapStringStringSerializer());
+    Serializers.instance.put(const IMapStringIListSimpleClassSerializer());
+    Serializers.instance.put(const IMapStringIListUriSerializer());
+    Serializers.instance.put(const IMapStringIListStringSerializer());
+    Serializers.instance.put(const IMapStringSimpleClassSerializer());
+    Serializers.instance.put(const IMapStringUriSerializer());
+    Serializers.instance.put(const IMapStringStringSerializer());
+    Serializers.instance.put(const IListIListSimpleClassSerializer());
+    Serializers.instance.put(const IListIListUriSerializer());
+    Serializers.instance.put(const IListIListStringSerializer());
+    Serializers.instance.put(const IListSimpleClassSerializer());
+    Serializers.instance.put(const IListUriSerializer());
+    Serializers.instance.put(const IListStringSerializer());
     Serializers.instance.put(const ExportableSerializer());
     Serializers.instance.put(const SerializableSerializer());
     Serializers.instance.put(const LiteralEnumSerializer());
@@ -134,11 +179,11 @@ class Celest {
     Serializers.instance.put(const ErrResultShapeSerializer());
     Serializers.instance.put(const SwappedResultShapeStringSerializer());
     Serializers.instance.put(const OkResultSerializer());
-    Serializers.instance.put(const ShapeExceptionSerializer());
-    Serializers.instance.put(const BadShapeExceptionSerializer());
     Serializers.instance.put(const ResultSerializer());
     Serializers.instance.put(const ErrResultSerializer());
     Serializers.instance.put(const SwappedResultSerializer());
+    Serializers.instance.put(const ShapeExceptionSerializer());
+    Serializers.instance.put(const BadShapeExceptionSerializer());
     _initialized = true;
   }
 }

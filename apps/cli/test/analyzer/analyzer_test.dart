@@ -111,6 +111,7 @@ $contents
 
 void testNoErrors({
   required String name,
+  String? analysisOptions,
   String? skip,
   String? projectDart,
   String? authDart,
@@ -124,6 +125,7 @@ void testNoErrors({
 }) {
   testErrors(
     name: name,
+    analysisOptions: analysisOptions,
     skip: skip,
     errors: [],
     projectDart: projectDart,
@@ -140,6 +142,7 @@ void testNoErrors({
 
 void testErrors({
   required String name,
+  String? analysisOptions,
   String? skip,
   String? projectDart,
   String? authDart,
@@ -155,6 +158,7 @@ void testErrors({
   test(name, skip: skip, () async {
     celestProject = await newProject(
       name: name,
+      analysisOptions: analysisOptions,
       projectDart: projectDart,
       authDart: authDart,
       resourcesDart: resourcesDart,
@@ -318,6 +322,112 @@ void sayHello({
       );
 
       testErrors(
+        name: 'bad_parameter_extension_types_core',
+        apis: {
+          'greeting.dart': '''
+void sayHello({
+  required EnumX myEnum,
+  required ListOfEnumX listOfEnum,
+  required IterableOfEnumX iterableOfEnum,
+  required FunctionX function,
+  required ListOfFunctionX listOfFunction,
+  required IterableOfFunctionX iterableOfFunction,
+  required VoidX void_,
+  required ListOfVoidX listOfVoid,
+  required IterableOfVoidX iterableOfVoid,
+  required SetX set,
+  required ObjectX obj,
+  required NullableObjectX nullableObj,
+  required DynamicX dyn,
+  required ListOfDynamicX listOfDyn,
+  required IterableOfDynamicX iterableOfDyn,
+  required SymbolX symbol,
+  required ListOfSymbolX listOfSymbol,
+  required IterableOfSymbolX iterableOfSymbol,
+  required TypeX type,
+  required ListOfTypeX listOfType,
+  required IterableOfTypeX iterableOfType,
+  required StreamOfStringsX streamOfStrings,
+  required StreamX streamOfDynamics,
+}) {}
+''',
+        },
+        models: '''
+extension type EnumX(Enum _) {}
+extension type ListOfEnumX(List<Enum> _) {}
+extension type IterableOfEnumX(Iterable<Enum> _) {}
+extension type FunctionX(void Function() _) {}
+extension type ListOfFunctionX(List<void Function()> _) {}
+extension type IterableOfFunctionX(Iterable<void Function()> _) {}
+extension type VoidX(void _) {}
+extension type ListOfVoidX(List<void> _) {}
+extension type IterableOfVoidX(Iterable<void> _) {}
+extension type SetX(Set<String> _) {}
+extension type ObjectX(Object _) {}
+extension type NullableObjectX(Object? _) {}
+extension type DynamicX(dynamic _) {}
+extension type ListOfDynamicX(List<dynamic> _) {}
+extension type IterableOfDynamicX(Iterable<dynamic> _) {}
+extension type SymbolX(Symbol _) {}
+extension type ListOfSymbolX(List<Symbol> _) {}
+extension type IterableOfSymbolX(Iterable<Symbol> _) {}
+extension type TypeX(Type _) {}
+extension type ListOfTypeX(List<Type> _) {}
+extension type IterableOfTypeX(Iterable<Type> _) {}
+extension type StreamOfStringsX(Stream<String> _) {}
+extension type StreamX(Stream _) {}
+''',
+        errors: [
+          'The representation type of EnumX is not serializable',
+          'Untyped enums are not supported', // Enum
+          'The representation type of ListOfEnumX is not serializable',
+          'Untyped enums are not supported', // List<Enum>
+          'The representation type of IterableOfEnumX is not serializable',
+          'Untyped enums are not supported', // Iterable<Enum>
+          'The representation type of FunctionX is not serializable',
+          'Function types are not supported', // void Function()
+          'The representation type of ListOfFunctionX is not serializable',
+          'Function types are not supported', // List<void Function()>
+          'The representation type of IterableOfFunctionX is not serializable',
+          'Function types are not supported', // Iterable<void Function()>
+          'The representation type of VoidX is not serializable',
+          'Void types are not supported', // void
+          'The representation type of ListOfVoidX is not serializable',
+          'Void types are not supported', // List<void>
+          'The representation type of IterableOfVoidX is not serializable',
+          'Void types are not supported', // Iterable<void>
+          'The representation type of SetX is not serializable',
+          'Set types are not supported', // Set<String>
+          'The representation type of ObjectX is not serializable',
+          'Object types are not supported', // Object
+          'The representation type of NullableObjectX is not serializable',
+          'Object types are not supported', // Object?
+          'The representation type of DynamicX is not serializable',
+          'Dynamic values are not supported', // dynamic
+          'The representation type of ListOfDynamicX is not serializable',
+          'Dynamic values are not supported', // List<dynamic>
+          'The representation type of IterableOfDynamicX is not serializable',
+          'Dynamic values are not supported', // Iterable<dynamic>
+          'The representation type of SymbolX is not serializable',
+          'Symbol types are not supported', // Symbol
+          'The representation type of ListOfSymbolX is not serializable',
+          'Symbol types are not supported', // List<Symbol>
+          'The representation type of IterableOfSymbolX is not serializable',
+          'Symbol types are not supported', // Iterable<Symbol>
+          'The representation type of TypeX is not serializable',
+          'Type literals are not supported', // Type
+          'The representation type of ListOfTypeX is not serializable',
+          'Type literals are not supported', // List<Type>
+          'The representation type of IterableOfTypeX is not serializable',
+          'Type literals are not supported', // Iterable<Type>
+          'The representation type of StreamOfStringsX is not serializable',
+          'Stream types are not supported', // Stream<String>
+          'The representation type of StreamX is not serializable',
+          'Stream types are not supported', // Stream
+        ],
+      );
+
+      testErrors(
         name: 'bad_return_types_core',
         apis: {
           'greeting.dart': '''
@@ -388,6 +498,128 @@ typedef ReturnTypes = ({
           'Stream types are not supported', // Stream<String>
           'Stream types are not supported', // Stream
         ],
+      );
+
+      testErrors(
+        name: 'bad_return_extension_types_core',
+        apis: {
+          'greeting.dart': '''
+ReturnTypes sayHello() => throw UnimplementedError();
+''',
+        },
+        models: '''
+extension type EnumX(Enum _) {}
+extension type ListOfEnumX(List<Enum> _) {}
+extension type IterableOfEnumX(Iterable<Enum> _) {}
+extension type FunctionX(void Function() _) {}
+extension type ListOfFunctionX(List<void Function()> _) {}
+extension type IterableOfFunctionX(Iterable<void Function()> _) {}
+extension type VoidX(void _) {}
+extension type ListOfVoidX(List<void> _) {}
+extension type IterableOfVoidX(Iterable<void> _) {}
+extension type SetX(Set<String> _) {}
+extension type ObjectX(Object _) {}
+extension type NullableObjectX(Object? _) {}
+extension type DynamicX(dynamic _) {}
+extension type ListOfDynamicX(List<dynamic> _) {}
+extension type IterableOfDynamicX(Iterable<dynamic> _) {}
+extension type SymbolX(Symbol _) {}
+extension type ListOfSymbolX(List<Symbol> _) {}
+extension type IterableOfSymbolX(Iterable<Symbol> _) {}
+extension type TypeX(Type _) {}
+extension type ListOfTypeX(List<Type> _) {}
+extension type IterableOfTypeX(Iterable<Type> _) {}
+extension type StreamOfStringsX(Stream<String> _) {}
+extension type StreamX(Stream _) {}
+
+typedef ReturnTypes = ({
+  EnumX enum,
+  ListOfEnumX listOfEnum,
+  IterableOfEnumX iterableOfEnum,
+  FunctionX function,
+  ListOfFunctionX listOfFunction,
+  IterableOfFunctionX iterableOfFunction,
+  VoidX void_,
+  ListOfVoidX listOfVoid,
+  IterableOfVoidX iterableOfVoid,
+  SetX set,
+  ObjectX obj,
+  NullableObjectX nullableObj,
+  DynamicX dyn,
+  ListOfDynamicX listOfDyn,
+  IterableOfDynamicX iterableOfDyn,
+  SymbolX symbol,
+  ListOfSymbolX listOfSymbol,
+  IterableOfSymbolX iterableOfSymbol,
+  TypeX type,
+  ListOfTypeX listOfType,
+  IterableOfTypeX iterableOfType,
+  StreamOfStringsX streamOfStrings,
+  StreamX streamOfDynamics,
+});
+''',
+        errors: [
+          'The representation type of EnumX is not serializable',
+          'Untyped enums are not supported', // Enum
+          'The representation type of ListOfEnumX is not serializable',
+          'Untyped enums are not supported', // List<Enum>
+          'The representation type of IterableOfEnumX is not serializable',
+          'Untyped enums are not supported', // Iterable<Enum>
+          'The representation type of FunctionX is not serializable',
+          'Function types are not supported', // void Function()
+          'The representation type of ListOfFunctionX is not serializable',
+          'Function types are not supported', // List<void Function()>
+          'The representation type of IterableOfFunctionX is not serializable',
+          'Function types are not supported', // Iterable<void Function()>
+          'The representation type of VoidX is not serializable',
+          'Void types are not supported', // void
+          'The representation type of ListOfVoidX is not serializable',
+          'Void types are not supported', // List<void>
+          'The representation type of IterableOfVoidX is not serializable',
+          'Void types are not supported', // Iterable<void>
+          'The representation type of SetX is not serializable',
+          'Set types are not supported', // Set<String>
+          'The representation type of ObjectX is not serializable',
+          'Object types are not supported', // Object
+          'The representation type of NullableObjectX is not serializable',
+          'Object types are not supported', // Object?
+          'The representation type of DynamicX is not serializable',
+          'Dynamic values are not supported', // dynamic
+          'The representation type of ListOfDynamicX is not serializable',
+          'Dynamic values are not supported', // List<dynamic>
+          'The representation type of IterableOfDynamicX is not serializable',
+          'Dynamic values are not supported', // Iterable<dynamic>
+          'The representation type of SymbolX is not serializable',
+          'Symbol types are not supported', // Symbol
+          'The representation type of ListOfSymbolX is not serializable',
+          'Symbol types are not supported', // List<Symbol>
+          'The representation type of IterableOfSymbolX is not serializable',
+          'Symbol types are not supported', // Iterable<Symbol>
+          'The representation type of TypeX is not serializable',
+          'Type literals are not supported', // Type
+          'The representation type of ListOfTypeX is not serializable',
+          'Type literals are not supported', // List<Type>
+          'The representation type of IterableOfTypeX is not serializable',
+          'Type literals are not supported', // Iterable<Type>
+          'The representation type of StreamOfStringsX is not serializable',
+          'Stream types are not supported', // Stream<String>
+          'The representation type of StreamX is not serializable',
+          'Stream types are not supported', // Stream
+        ],
+      );
+
+      testNoErrors(
+        name: 'extension_type_primitives',
+        apis: {
+          'greeting.dart': '''
+StringX string(StringX s) => s;
+StringXString stringString(StringXString s) => s;
+''',
+        },
+        models: '''
+extension type StringX(String s) {}
+extension type StringXString(String s) implements String {}
+''',
       );
 
       testNoErrors(

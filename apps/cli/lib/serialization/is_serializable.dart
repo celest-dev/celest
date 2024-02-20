@@ -9,9 +9,11 @@ import 'package:analyzer/src/dart/element/member.dart';
 import 'package:analyzer/src/dart/element/type_algebra.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart' as code_builder;
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
@@ -23,7 +25,8 @@ sealed class Verdict {
   const Verdict();
 
   const factory Verdict.yes({
-    Set<SerializationSpec> serializationSpecs,
+    SerializationSpec? primarySpec,
+    Set<SerializationSpec> additionalSpecs,
   }) = VerdictYes;
   factory Verdict.no(
     String reason, {
@@ -35,13 +38,21 @@ sealed class Verdict {
 
   Verdict operator &(Verdict other) => switch ((this, other)) {
         (
-          VerdictYes(serializationSpecs: final serializationSpecsThis),
-          VerdictYes(serializationSpecs: final serializationSpecsOther)
+          VerdictYes(
+            primarySpec: final primarySpecThis,
+            additionalSpecs: final additionalSpecsThis
+          ),
+          VerdictYes(
+            primarySpec: final primarySpecOther,
+            additionalSpecs: final additionalSpecsOther
+          )
         ) =>
           Verdict.yes(
-            serializationSpecs: {
-              ...serializationSpecsThis,
-              ...serializationSpecsOther,
+            primarySpec: primarySpecThis,
+            additionalSpecs: {
+              if (primarySpecOther != null) primarySpecOther,
+              ...additionalSpecsThis,
+              ...additionalSpecsOther,
             },
           ),
         (VerdictYes(), final VerdictNo no) ||
@@ -54,23 +65,33 @@ sealed class Verdict {
           VerdictNo([...reasonsThis, ...reasonsOther]),
       };
 
-  Verdict withSpec(SerializationSpec spec);
+  Verdict withPrimarySpec(SerializationSpec spec);
+  Verdict withAdditionalSpec(SerializationSpec spec);
 }
 
 final class VerdictYes extends Verdict {
   const VerdictYes({
-    this.serializationSpecs = const {},
+    this.primarySpec,
+    this.additionalSpecs = const {},
   });
 
   @override
   bool get isSerializable => true;
 
-  final Set<SerializationSpec> serializationSpecs;
+  final SerializationSpec? primarySpec;
+  final Set<SerializationSpec> additionalSpecs;
 
   @override
-  Verdict withSpec(SerializationSpec spec) => Verdict.yes(
-        serializationSpecs: {
-          ...serializationSpecs,
+  Verdict withPrimarySpec(SerializationSpec spec) => Verdict.yes(
+        primarySpec: spec,
+        additionalSpecs: additionalSpecs,
+      );
+
+  @override
+  Verdict withAdditionalSpec(SerializationSpec spec) => Verdict.yes(
+        primarySpec: primarySpec,
+        additionalSpecs: {
+          ...additionalSpecs,
           spec,
         },
       );
@@ -93,7 +114,10 @@ final class VerdictNo extends Verdict {
   final List<VerdictReason> reasons;
 
   @override
-  Verdict withSpec(SerializationSpec spec) => this;
+  Verdict withPrimarySpec(SerializationSpec spec) => this;
+
+  @override
+  Verdict withAdditionalSpec(SerializationSpec spec) => this;
 
   @override
   String toString() => reasons.join('; ');
@@ -113,25 +137,26 @@ final class SerializationSpec {
   SerializationSpec({
     required this.type,
     required this.wireType,
-    DartType? castType,
+    code_builder.Reference? castType,
     required this.fields,
     required this.parameters,
     required this.hasFromJson,
     required bool hasToJson,
+    this.extensionType,
   })  : castType = castType ?? wireType,
         _hasToJson = hasToJson;
 
   final DartType type;
 
   /// The type returned by the `toJson` method.
-  final DartType wireType;
+  final code_builder.Reference wireType;
 
   /// The type expected by the `fromJson` constructor, if a `fromJson`
   /// constructor is provided.
   ///
   /// Otherwise, the class is constructed directly and this defaults to the
   /// [wireType].
-  final DartType castType;
+  final code_builder.Reference castType;
 
   final List<FieldSpec> fields;
   final List<ParameterSpec> parameters;
@@ -150,14 +175,38 @@ final class SerializationSpec {
 
   SerializationSpec? parent;
   final List<SerializationSpec> subtypes = [];
+  final SerializationSpec? extensionType;
+
+  bool get isExtensionType => extensionType != null;
+
+  SerializationSpec copyWith({
+    DartType? type,
+    code_builder.Reference? wireType,
+    code_builder.Reference? castType,
+    List<FieldSpec>? fields,
+    List<ParameterSpec>? parameters,
+    bool? hasFromJson,
+    bool? hasToJson,
+    SerializationSpec? extensionType,
+  }) =>
+      SerializationSpec(
+        type: type ?? this.type,
+        wireType: wireType ?? this.wireType,
+        castType: castType ?? this.castType,
+        fields: fields ?? this.fields,
+        parameters: parameters ?? this.parameters,
+        hasFromJson: hasFromJson ?? this.hasFromJson,
+        hasToJson: hasToJson ?? this.hasToJson,
+        extensionType: extensionType ?? this.extensionType,
+      );
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SerializationSpec &&
         const DartTypeEquality().equals(type, other.type) &&
-        const DartTypeEquality().equals(wireType, other.wireType) &&
-        const DartTypeEquality().equals(castType, other.castType) &&
+        wireType == other.wireType &&
+        castType == other.castType &&
         const ListEquality<FieldSpec>().equals(fields, other.fields) &&
         const ListEquality<ParameterSpec>()
             .equals(parameters, other.parameters) &&
@@ -165,20 +214,22 @@ final class SerializationSpec {
         _hasToJson == other._hasToJson &&
         parent?.type == other.parent?.type &&
         const ListEquality<SerializationSpec>()
-            .equals(subtypes, other.subtypes);
+            .equals(subtypes, other.subtypes) &&
+        extensionType == other.extensionType;
   }
 
   @override
   int get hashCode => Object.hash(
         const DartTypeEquality().hash(type),
-        const DartTypeEquality().hash(wireType),
-        const DartTypeEquality().hash(castType),
+        wireType,
+        castType,
         const ListEquality<FieldSpec>().hash(fields),
         const ListEquality<ParameterSpec>().hash(parameters),
         hasFromJson,
         _hasToJson,
         parent == null ? null : const DartTypeEquality().hash(parent!.type),
         const ListEquality<SerializationSpec>().hash(subtypes),
+        extensionType,
       );
 }
 
@@ -488,81 +539,107 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     return verdict;
   }
 
-  @override
-  Verdict visitInterfaceType(InterfaceType type) {
-    // TODO(dnys1): Test private aliases
-    if (type.element.isPrivate) {
-      return Verdict.no(
-        'Private types are not supported',
-        location: type.element.sourceLocation,
-      );
-    }
-
-    if (_isSimpleJson(type) case final verdict?) {
-      return verdict;
-    }
-
-    if (type.isDartCoreObject) {
-      return const VerdictNo([
-        VerdictReason('Object types are not supported'),
-      ]);
-    }
-    if (type.isDartCoreIterable || type.isDartCoreList) {
-      return typeHelper.isSerializable(type.typeArguments.single);
-    }
-    if (type.isDartCoreMap) {
-      final [keyType, valueType] = type.typeArguments;
-      if (!keyType.isDartCoreString) {
-        return Verdict.no('Map keys must be strings');
-      }
-      return switch (valueType) {
-        // This is the only case where `Object`/`dynamic` are allowed.
-        InterfaceType(isDartCoreObject: true) ||
-        DynamicType() =>
-          const Verdict.yes(),
-        _ => typeHelper.isSerializable(valueType),
-      };
-    }
-    if (type.isDartAsyncStream) {
-      return const VerdictNo([
-        VerdictReason('Stream types are not supported'),
-      ]);
-    }
-
-    if (type.isEnum) {
-      return const Verdict.yes().withSpec(
-        SerializationSpec(
-          type: type,
-          wireType: typeHelper.typeProvider.stringType,
-          fields: const [],
-          parameters: const [],
+  Verdict _visitExtensionType(
+    InterfaceType type,
+    ExtensionTypeElement element,
+  ) {
+    final erasureType = type.extensionTypeErasure;
+    final erasureVerdict = typeHelper.isSerializable(erasureType);
+    switch (erasureVerdict) {
+      case VerdictNo():
+        return VerdictNo([
+          VerdictReason(
+            'The representation type of ${element.name} is not serializable',
+            location: element.sourceLocation,
+          ),
+          ...erasureVerdict.reasons,
+        ]);
+      case VerdictYes(primarySpec: final erasurePrimaySpec):
+        if (erasurePrimaySpec != null) {
+          final verdict = _visitCustomInterfaceType(type);
+          return switch (verdict) {
+            VerdictNo() => verdict,
+            // ignore: unnecessary_null_checks
+            VerdictYes(:final primarySpec!, :final additionalSpecs) =>
+              Verdict.yes(
+                primarySpec: erasurePrimaySpec.copyWith(
+                  extensionType: primarySpec..parent = erasurePrimaySpec,
+                ),
+                additionalSpecs: {
+                  ...additionalSpecs,
+                  ...erasureVerdict.additionalSpecs,
+                },
+              ),
+          };
+        }
+        // If primarySpec is null, then this is a builtin interface type and
+        // we must create the serialization spec for it.
+        ConstructorElement? constructor;
+        if (element.primaryConstructor.name.isEmpty &&
+            !element.primaryConstructor.isPrivate) {
+          constructor = element.primaryConstructor;
+        } else {
+          constructor = element.constructors.firstWhereOrNull((ctor) {
+            if (ctor.name.isNotEmpty || ctor.isPrivate) {
+              return false;
+            }
+            if (ctor.parameters case [final parameter]
+                when TypeChecker.fromStatic(parameter.type)
+                    .isExactlyType(erasureType)) {
+              return true;
+            }
+            return false;
+          });
+        }
+        final (fields: _, :toJsonMethod, :fromJsonCtor) =
+            element.interfaceMembers(type);
+        // The representation type is either a built-in or a primitive at
+        // this point.
+        final wireType =
+            builtInTypes[erasureType] ?? typeHelper.toReference(erasureType);
+        final spec = SerializationSpec(
+          type: erasureType,
+          wireType: wireType,
+          fields: [],
+          parameters: [],
           hasFromJson: false,
           hasToJson: false,
-        ),
-      );
+        );
+        return erasureVerdict.withPrimarySpec(
+          spec.copyWith(
+            extensionType: SerializationSpec(
+              type: type,
+              wireType: wireType,
+              fields: [
+                if (element.representation.isPublic)
+                  FieldSpec(
+                    name: element.representation.name,
+                    type: element.representation.type,
+                  ),
+              ],
+              parameters: [
+                if (constructor != null)
+                  ParameterSpec(
+                    name: constructor.parameters.single.name,
+                    type: erasureType,
+                    isPositional: true,
+                    isOptional: false,
+                    isNamed: false,
+                    defaultValue: null,
+                  ),
+              ],
+              hasFromJson: fromJsonCtor != null,
+              hasToJson: toJsonMethod != null,
+            )..parent = spec,
+          ),
+        );
     }
+  }
 
-    // TODO(dnys1): Test
-    // TODO(dnys1): Test for extends/implements these types
-    // TODO(dnys1): Test for extends/implements these types w/ custom serde
-    if (supportedDartSdkType.isExactlyType(type)) {
-      return const Verdict.yes();
-    }
-
-    if (!typeHelper.seen.add(type)) {
-      // Cycle detected. If there is a level of indirection, this is okay.
-      // We have this check to prevent stack overflow, and ensure a proper level
-      // of indirection in [_IsSerializableClass] below.
-      return const Verdict.yes();
-    }
-
+  Verdict _visitCustomInterfaceType(InterfaceType type) {
     final element = type.element;
-    if (element is! ClassElement) {
-      return Verdict.no(
-        'The type "${element.displayName}" is not serializable since it is not '
-        'a class or does not have a fromJson/toJson method.',
-      );
-    }
+    final (:fields, :toJsonMethod, :fromJsonCtor) =
+        element.interfaceMembers(type);
 
     // Check if non-SDK class is serializable.
     //
@@ -577,7 +654,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
 
     // Check toJson
-    final toJsonMethod = type.getMethod('toJson');
     final hasToJson = toJsonMethod != null;
     if (hasToJson) {
       verdict &= _checkCustomSerializer(type, toJsonMethod);
@@ -589,9 +665,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     final wireType = toJsonMethod?.returnType ?? jsonMapType;
 
     // Check fromJson
-    final fromJsonCtor = type.constructors.singleWhereOrNull(
-      (element) => element.name == 'fromJson',
-    );
     final hasFromJson = fromJsonCtor != null;
     if (hasFromJson) {
       verdict &= _checkCustomDeserializer(
@@ -617,10 +690,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
     final spec = SerializationSpec(
       type: type,
-      wireType: wireType,
-      castType: fromJsonCtor?.parameters.first.type,
+      wireType: typeHelper.toReference(wireType),
+      castType: fromJsonCtor?.parameters.first.type.let(typeHelper.toReference),
       fields: [
-        for (final field in element.sortedFields(type))
+        for (final field in fields)
           FieldSpec(name: field.displayName, type: field.type),
       ],
       parameters: [
@@ -637,7 +710,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       hasFromJson: fromJsonCtor != null,
       hasToJson: toJsonMethod != null,
     );
-    verdict = verdict.withSpec(spec);
+    verdict = verdict.withPrimarySpec(spec);
 
     InterfaceType instantiateSubtype(InterfaceType subtype) {
       final superParameters = type.element.typeParameters;
@@ -674,27 +747,111 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       switch (subtypeVerdict) {
         case VerdictNo():
           verdict &= subtypeVerdict;
-        case VerdictYes(:final serializationSpecs):
+        case VerdictYes(:final primarySpec, :final additionalSpecs):
+          final serializationSpecs = [
+            if (primarySpec != null) primarySpec,
+            ...additionalSpecs,
+          ];
           for (final subtypeSpec in serializationSpecs) {
             if (subtypes.contains(subtypeSpec.type)) {
+              final subtypeWireType =
+                  typeHelper.fromReference(subtypeSpec.wireType);
               if (!TypeChecker.fromStatic(jsonMapType)
-                  .isExactlyType(subtypeSpec.wireType)) {
+                  .isExactlyType(subtypeWireType)) {
                 verdict &= Verdict.no(
                   'All classes in a sealed class hierarchy must use '
                   'Map<String, Object?> as their wire type but '
                   '${subtypeSpec.type.element!.name!} uses '
-                  '${subtypeSpec.wireType.getDisplayString(withNullability: false)}',
+                  '${subtypeWireType.getDisplayString(withNullability: false)}',
                 );
               }
               spec.subtypes.add(subtypeSpec..parent = spec);
             } else {
-              verdict = verdict.withSpec(subtypeSpec);
+              verdict = verdict.withAdditionalSpec(subtypeSpec);
             }
           }
       }
     }
 
     return verdict;
+  }
+
+  @override
+  Verdict visitInterfaceType(InterfaceType type) {
+    // TODO(dnys1): Test private aliases
+    if (type.element.isPrivate) {
+      return Verdict.no(
+        'Private types are not supported',
+        location: type.element.sourceLocation,
+      );
+    }
+
+    // Extension types are always represented as an InterfaceType over their
+    // erasure, which may not be an interface type.
+    if (type.element case final ExtensionTypeElement extensionType) {
+      return _visitExtensionType(type, extensionType);
+    }
+
+    if (_isSimpleJson(type) case final verdict?) {
+      return verdict;
+    }
+
+    if (type.isDartCoreObject) {
+      return const VerdictNo([
+        VerdictReason('Object types are not supported'),
+      ]);
+    }
+    if (type.isDartCoreIterable || type.isDartCoreList) {
+      return typeHelper.isSerializable(type.typeArguments.single);
+    }
+    if (type.isDartCoreMap) {
+      final [keyType, valueType] = type.typeArguments;
+      if (!keyType.isDartCoreString) {
+        return Verdict.no('Map keys must be strings');
+      }
+      return switch (valueType) {
+        // This is the only case where `Object`/`dynamic` are allowed.
+        InterfaceType(isDartCoreObject: true) ||
+        DynamicType() =>
+          const Verdict.yes(),
+        _ => typeHelper.isSerializable(valueType),
+      };
+    }
+    if (type.isDartAsyncStream) {
+      return const VerdictNo([
+        VerdictReason('Stream types are not supported'),
+      ]);
+    }
+
+    if (type.isEnum) {
+      return Verdict.yes(
+        // TODO(dnys1): Serialization of extension typed enums
+        primarySpec: SerializationSpec(
+          type: type,
+          wireType: DartTypes.core.string,
+          fields: const [],
+          parameters: const [],
+          hasFromJson: false,
+          hasToJson: false,
+        ),
+      );
+    }
+
+    // TODO(dnys1): Test
+    // TODO(dnys1): Test for extends/implements these types
+    // TODO(dnys1): Test for extends/implements these types w/ custom serde
+    if (supportedDartSdkType.isExactlyType(type)) {
+      return const Verdict.yes();
+    }
+
+    if (!typeHelper.seen.add(type)) {
+      // Cycle detected. If there is a level of indirection, this is okay.
+      // We have this check to prevent stack overflow, and ensure a proper level
+      // of indirection in [_IsSerializableClass] below.
+      return const Verdict.yes();
+    }
+
+    return _visitCustomInterfaceType(type);
   }
 
   @override
@@ -713,14 +870,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         location: type.alias?.element.sourceLocation,
       );
     }
-    var verdict = const Verdict.yes();
-    for (final field in type.namedFields) {
-      verdict &= typeHelper.isSerializable(field.type);
-    }
-    return verdict.withSpec(
-      SerializationSpec(
+    var verdict = Verdict.yes(
+      primarySpec: SerializationSpec(
         type: type,
-        wireType: jsonMapType,
+        wireType: typeHelper.toReference(jsonMapType),
         fields: [
           for (final field in type.namedFields)
             FieldSpec(name: field.name, type: field.type),
@@ -740,6 +893,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         hasToJson: false,
       ),
     );
+    for (final field in type.namedFields) {
+      verdict &= typeHelper.isSerializable(field.type);
+    }
+    return verdict;
   }
 
   @override
@@ -801,16 +958,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   Verdict visitFunctionType(FunctionType type) =>
       unreachable('Not a class type');
 
-  @override
-  Verdict visitInterfaceType(InterfaceType type) {
-    final element = type.element;
-    if (element is! ClassElement) {
-      return Verdict.no(
-        'The type ${element.displayName} is not serializable since it is not '
-        'a class or does not have a fromJson/toJson method.',
-        location: element.sourceLocation,
-      );
-    }
+  Verdict _visitClass(InterfaceType type, ClassElement element) {
     final fields = element.sortedFields(type);
     var verdict = const Verdict.yes();
     var fieldsVerdict = const Verdict.yes();
@@ -902,6 +1050,21 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   }
 
   @override
+  Verdict visitInterfaceType(InterfaceType type) {
+    final element = type.element;
+    switch (element) {
+      case ClassElement():
+        return _visitClass(type, element);
+      default:
+        return Verdict.no(
+          'The type ${element.displayName} is not serializable since it is not '
+          'a class or does not have a fromJson/toJson method.',
+          location: element.sourceLocation,
+        );
+    }
+  }
+
+  @override
   Verdict visitInvalidType(InvalidType type) => unreachable('Not a class type');
 
   @override
@@ -916,6 +1079,79 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
 
   @override
   Verdict visitVoidType(VoidType type) => unreachable('Not a class type');
+}
+
+typedef InterfaceMembers = ({
+  List<FieldElement> fields,
+  MethodElement? toJsonMethod,
+  ConstructorElement? fromJsonCtor,
+});
+
+extension on InterfaceElement {
+  InterfaceMembers interfaceMembers(InterfaceType type) {
+    final element = this;
+    switch (element) {
+      case EnumElement():
+        unreachable('Handled before this');
+      case MixinElement():
+        unreachable('Mixins are not supported');
+      case final ClassElement classElement:
+        return (
+          fields: classElement.sortedFields(type),
+          toJsonMethod: type.getMethod('toJson'),
+          fromJsonCtor: classElement.constructors
+              .firstWhereOrNull((ctor) => ctor.name == 'fromJson'),
+        );
+      case ExtensionTypeElement():
+        final representationType = type.extensionTypeErasure;
+        if (representationType is! InterfaceType) {
+          unreachable('Extension type erasure is not an interface type');
+        }
+
+        // Extension types can be used to override their representation type's
+        // toJson/fromJson methods.
+        //
+        // If the extension type implements its representation types, this
+        // indicates that the representation type's fromJson/toJson methods are
+        // valid fallbacks for the extension type.
+        //
+        // An extension type which does not implement its representation type
+        // and does not provide its own toJson/fromJson methods indicates that
+        // Celest should generate its own fromJson/toJson methods.
+        final repMembers = representationType.element.interfaceMembers(type);
+        final fields = repMembers.fields;
+        MethodElement? repToJsonMethod;
+        ConstructorElement? repFromJsonCtor;
+        if (element.allSupertypes.contains(representationType)) {
+          repToJsonMethod = repMembers.toJsonMethod;
+          repFromJsonCtor = repMembers.fromJsonCtor;
+        }
+        final members = (
+          fields: fields,
+          toJsonMethod: element.getMethod('toJson') ?? repToJsonMethod,
+          fromJsonCtor: element.constructors
+                  .firstWhereOrNull((ctor) => ctor.name == 'fromJson') ??
+              repFromJsonCtor,
+        );
+        analytics.capture(
+          'extension_type',
+          properties: {
+            'type': type.getDisplayString(withNullability: false),
+            'representationType': representationType.getDisplayString(
+              withNullability: false,
+            ),
+            'hasToJson': members.toJsonMethod != null,
+            'hasFromJson': members.fromJsonCtor != null,
+          },
+        );
+        return members;
+      case final unknownElement:
+        unreachable(
+          'Unknown interface element (${unknownElement.runtimeType}): '
+          '$unknownElement',
+        );
+    }
+  }
 }
 
 // Below is copied from `package:json_serializable`.

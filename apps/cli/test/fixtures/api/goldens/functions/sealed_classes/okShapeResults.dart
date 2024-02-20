@@ -30,10 +30,10 @@ final class OkShapeResultsTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
+    _i3.Serializers.instance.put(const OkResultShapeSerializer());
     _i3.Serializers.instance.put(const ShapeSerializer());
     _i3.Serializers.instance.put(const RectangleSerializer());
     _i3.Serializers.instance.put(const CircleSerializer());
-    _i3.Serializers.instance.put(const OkResultShapeSerializer());
   }
 }
 
@@ -41,6 +41,54 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': OkShapeResultsTarget()},
   );
+}
+
+final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
+  const CircleSerializer();
+
+  @override
+  _i4.Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.Circle((serialized[r'radius'] as num).toDouble());
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
+}
+
+final class OkResultShapeSerializer
+    extends _i3.Serializer<_i4.OkResult<_i4.Shape>> {
+  const OkResultShapeSerializer();
+
+  @override
+  _i4.OkResult<_i4.Shape> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.OkResult<_i4.Shape>(
+        _i3.Serializers.instance.deserialize<_i4.Shape>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
+      {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
+}
+
+final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
+  const RectangleSerializer();
+
+  @override
+  _i4.Rectangle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.Rectangle(
+      (serialized[r'width'] as num).toDouble(),
+      (serialized[r'height'] as num).toDouble(),
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Rectangle value) => {
+        r'width': value.width,
+        r'height': value.height,
+      };
 }
 
 final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
@@ -84,52 +132,4 @@ final class ShapeSerializer extends _i3.Serializer<_i4.Shape> {
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class RectangleSerializer extends _i3.Serializer<_i4.Rectangle> {
-  const RectangleSerializer();
-
-  @override
-  _i4.Rectangle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Rectangle(
-      (serialized[r'width'] as num).toDouble(),
-      (serialized[r'height'] as num).toDouble(),
-    );
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Rectangle value) => {
-        r'width': value.width,
-        r'height': value.height,
-      };
-}
-
-final class CircleSerializer extends _i3.Serializer<_i4.Circle> {
-  const CircleSerializer();
-
-  @override
-  _i4.Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Circle value) => {r'radius': value.radius};
-}
-
-final class OkResultShapeSerializer
-    extends _i3.Serializer<_i4.OkResult<_i4.Shape>> {
-  const OkResultShapeSerializer();
-
-  @override
-  _i4.OkResult<_i4.Shape> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.OkResult<_i4.Shape>(
-        _i3.Serializers.instance.deserialize<_i4.Shape>(serialized[r'data']));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.OkResult<_i4.Shape> value) =>
-      {r'data': _i3.Serializers.instance.serialize<_i4.Shape>(value.data)};
 }

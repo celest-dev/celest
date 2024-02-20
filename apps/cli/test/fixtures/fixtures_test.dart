@@ -307,7 +307,7 @@ class TestRunner {
               case FunctionTestSuccess(:final output):
                 expect(result.isValue, isTrue);
                 final resp = result.asValue!.value;
-                expect(resp.statusCode, 200);
+                expect(resp.statusCode, 200, reason: resp.body);
                 final respJson = jsonDecode(resp.body);
                 expect(respJson, output);
             }
@@ -622,6 +622,127 @@ final tests = <String, Test>{
               output: {
                 'hello': simpleStruct,
               },
+            ),
+          ],
+        },
+      ),
+      'extension_types': ApiTest(
+        functionTests: {
+          'string': [
+            FunctionTestSuccess(
+              name: 'stringString',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'asyncOrString': [
+            FunctionTestSuccess(
+              name: 'asyncOrString',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'asyncString': [
+            FunctionTestSuccess(
+              name: 'asyncString',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'stringImpl': [
+            FunctionTestSuccess(
+              name: 'stringImpl',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'stringToFromJson': [
+            FunctionTestSuccess(
+              name: 'stringToFromJson',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
+          'stringToJson': [
+            FunctionTestSuccess(
+              name: 'stringToJson',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
+          'stringToJsonImpl': [
+            FunctionTestSuccess(
+              name: 'stringToJsonImpl',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
+          'stringFromJson': [
+            FunctionTestSuccess(
+              name: 'stringFromJson',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
+          'stringFromJsonImpl': [
+            FunctionTestSuccess(
+              name: 'stringFromJsonImpl',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
+          'stringPrivateField': [
+            FunctionTestSuccess(
+              name: 'stringPrivateField',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'stringPrivateFieldImpl': [
+            FunctionTestSuccess(
+              name: 'stringPrivateFieldImpl',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'stringPrivateCtor': [
+            FunctionTestSuccess(
+              name: 'stringPrivateCtor',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'stringPrivateCtorImpl': [
+            FunctionTestSuccess(
+              name: 'stringPrivateCtorImpl',
+              input: {
+                's': 'hello',
+              },
+              output: 'hello',
             ),
           ],
         },

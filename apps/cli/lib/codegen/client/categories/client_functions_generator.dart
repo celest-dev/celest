@@ -28,7 +28,7 @@ final class ClientFunctionsGenerator {
 
   final List<ast.Api> apis;
 
-  final customSerializers = LinkedHashSet<Class>(
+  final customSerializers = LinkedHashMap<Class, Expression?>(
     equals: (a, b) => a.name == b.name,
     hashCode: (a) => a.name.hashCode,
   );
@@ -219,8 +219,12 @@ final class ClientFunctionsGenerator {
             b.statements.add(const Code(r'switch ($code) {'));
             final exceptionTypes = {
               ...function.exceptionTypes,
-              typeHelper.toReference(typeHelper.badRequestExceptionType),
-              typeHelper.toReference(typeHelper.internalServerExceptionType),
+              typeHelper.toReference(
+                typeHelper.coreTypes.badRequestExceptionType,
+              ),
+              typeHelper.toReference(
+                typeHelper.coreTypes.internalServerExceptionType,
+              ),
             };
             for (final exceptionType in exceptionTypes) {
               final deserializedException = jsonGenerator.fromJson(
@@ -263,8 +267,10 @@ final class ClientFunctionsGenerator {
       );
       for (final type in allTypes) {
         final dartType = typeHelper.fromReference(type);
-        customSerializers.addAll(
-          typeHelper.customSerializers(dartType),
+        customSerializers.addEntries(
+          typeHelper
+              .customSerializers(dartType)
+              .map((el) => MapEntry(el.$1, el.$2)),
         );
         if ((dartType, type)
             case (

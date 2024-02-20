@@ -55,11 +55,6 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance.put(const ShapeSerializer());
-    _i4.Serializers.instance.put(const RectangleSerializer());
-    _i4.Serializers.instance.put(const CircleSerializer());
-    _i4.Serializers.instance.put(const ShapeExceptionSerializer());
-    _i4.Serializers.instance.put(const BadShapeExceptionSerializer());
     _i4.Serializers.instance.put(const ResultSerializer());
     _i4.Serializers.instance
         .put(const ResultSerializer<_i2.Shape, _i3.ShapeException>());
@@ -95,6 +90,11 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
         const SwappedResultSerializer<_i3.BadShapeException, _i2.Rectangle>());
     _i4.Serializers.instance.put(
         const SwappedResultSerializer<_i3.BadShapeException, _i2.Circle>());
+    _i4.Serializers.instance.put(const ShapeExceptionSerializer());
+    _i4.Serializers.instance.put(const BadShapeExceptionSerializer());
+    _i4.Serializers.instance.put(const ShapeSerializer());
+    _i4.Serializers.instance.put(const RectangleSerializer());
+    _i4.Serializers.instance.put(const CircleSerializer());
   }
 }
 
@@ -104,47 +104,65 @@ Future<void> main(List<String> args) async {
   );
 }
 
-final class ShapeSerializer extends _i4.Serializer<_i2.Shape> {
-  const ShapeSerializer();
+final class BadShapeExceptionSerializer
+    extends _i4.Serializer<_i3.BadShapeException> {
+  const BadShapeExceptionSerializer();
 
   @override
-  _i2.Shape deserialize(Object? value) {
+  _i3.BadShapeException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'Rectangle') {
-      return _i4.Serializers.instance.deserialize<_i2.Rectangle>(serialized);
-    }
-    if (serialized[r'$type'] == r'Circle') {
-      return _i4.Serializers.instance.deserialize<_i2.Circle>(serialized);
-    }
-    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'Shape')
-          ..write(': ')
-          ..write(serialized[r'$type']))
-        .toString());
+    return _i3.BadShapeException(
+        _i4.Serializers.instance.deserialize<_i2.Shape>(serialized[r'shape']));
   }
 
   @override
-  Map<String, Object?> serialize(_i2.Shape value) {
-    if (value is _i2.Rectangle) {
-      return {
-        ...(_i4.Serializers.instance.serialize<_i2.Rectangle>(value)
-            as Map<String, Object?>),
-        r'$type': r'Rectangle',
-      };
-    }
-    if (value is _i2.Circle) {
-      return {
-        ...(_i4.Serializers.instance.serialize<_i2.Circle>(value)
-            as Map<String, Object?>),
-        r'$type': r'Circle',
-      };
-    }
-    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'Shape')
-          ..write(': ')
-          ..write(value.runtimeType))
-        .toString());
+  Map<String, Object?> serialize(_i3.BadShapeException value) =>
+      {r'shape': _i4.Serializers.instance.serialize<_i2.Shape>(value.shape)};
+}
+
+final class CircleSerializer extends _i4.Serializer<_i2.Circle> {
+  const CircleSerializer();
+
+  @override
+  _i2.Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.Circle((serialized[r'radius'] as num).toDouble());
   }
+
+  @override
+  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
+}
+
+final class ErrResultSerializer<E extends _i3.ShapeException>
+    extends _i4.Serializer<_i2.ErrResult<E>> {
+  const ErrResultSerializer();
+
+  @override
+  _i2.ErrResult<E> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.ErrResult<E>(
+        _i4.Serializers.instance.deserialize<E>(serialized[r'error']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.ErrResult<E> value) =>
+      {r'error': _i4.Serializers.instance.serialize<E>(value.error)};
+}
+
+final class OkResultSerializer<T extends _i2.Shape>
+    extends _i4.Serializer<_i2.OkResult<T>> {
+  const OkResultSerializer();
+
+  @override
+  _i2.OkResult<T> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.OkResult<T>(
+        _i4.Serializers.instance.deserialize<T>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
+      {r'data': _i4.Serializers.instance.serialize<T>(value.data)};
 }
 
 final class RectangleSerializer extends _i4.Serializer<_i2.Rectangle> {
@@ -164,70 +182,6 @@ final class RectangleSerializer extends _i4.Serializer<_i2.Rectangle> {
         r'width': value.width,
         r'height': value.height,
       };
-}
-
-final class CircleSerializer extends _i4.Serializer<_i2.Circle> {
-  const CircleSerializer();
-
-  @override
-  _i2.Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
-}
-
-final class ShapeExceptionSerializer
-    extends _i4.Serializer<_i3.ShapeException> {
-  const ShapeExceptionSerializer();
-
-  @override
-  _i3.ShapeException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'BadShapeException') {
-      return _i4.Serializers.instance
-          .deserialize<_i3.BadShapeException>(serialized);
-    }
-    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'ShapeException')
-          ..write(': ')
-          ..write(serialized[r'$type']))
-        .toString());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i3.ShapeException value) {
-    if (value is _i3.BadShapeException) {
-      return {
-        ...(_i4.Serializers.instance.serialize<_i3.BadShapeException>(value)
-            as Map<String, Object?>),
-        r'$type': r'BadShapeException',
-      };
-    }
-    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'ShapeException')
-          ..write(': ')
-          ..write(value.runtimeType))
-        .toString());
-  }
-}
-
-final class BadShapeExceptionSerializer
-    extends _i4.Serializer<_i3.BadShapeException> {
-  const BadShapeExceptionSerializer();
-
-  @override
-  _i3.BadShapeException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i3.BadShapeException(
-        _i4.Serializers.instance.deserialize<_i2.Shape>(serialized[r'shape']));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i3.BadShapeException value) =>
-      {r'shape': _i4.Serializers.instance.serialize<_i2.Shape>(value.shape)};
 }
 
 final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
@@ -285,36 +239,82 @@ final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
   }
 }
 
-final class OkResultSerializer<T extends _i2.Shape>
-    extends _i4.Serializer<_i2.OkResult<T>> {
-  const OkResultSerializer();
+final class ShapeExceptionSerializer
+    extends _i4.Serializer<_i3.ShapeException> {
+  const ShapeExceptionSerializer();
 
   @override
-  _i2.OkResult<T> deserialize(Object? value) {
+  _i3.ShapeException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.OkResult<T>(
-        _i4.Serializers.instance.deserialize<T>(serialized[r'data']));
+    if (serialized[r'$type'] == r'BadShapeException') {
+      return _i4.Serializers.instance
+          .deserialize<_i3.BadShapeException>(serialized);
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeException')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
-      {r'data': _i4.Serializers.instance.serialize<T>(value.data)};
+  Map<String, Object?> serialize(_i3.ShapeException value) {
+    if (value is _i3.BadShapeException) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i3.BadShapeException>(value)
+            as Map<String, Object?>),
+        r'$type': r'BadShapeException',
+      };
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'ShapeException')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
-final class ErrResultSerializer<E extends _i3.ShapeException>
-    extends _i4.Serializer<_i2.ErrResult<E>> {
-  const ErrResultSerializer();
+final class ShapeSerializer extends _i4.Serializer<_i2.Shape> {
+  const ShapeSerializer();
 
   @override
-  _i2.ErrResult<E> deserialize(Object? value) {
+  _i2.Shape deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.ErrResult<E>(
-        _i4.Serializers.instance.deserialize<E>(serialized[r'error']));
+    if (serialized[r'$type'] == r'Rectangle') {
+      return _i4.Serializers.instance.deserialize<_i2.Rectangle>(serialized);
+    }
+    if (serialized[r'$type'] == r'Circle') {
+      return _i4.Serializers.instance.deserialize<_i2.Circle>(serialized);
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Shape')
+          ..write(': ')
+          ..write(serialized[r'$type']))
+        .toString());
   }
 
   @override
-  Map<String, Object?> serialize(_i2.ErrResult<E> value) =>
-      {r'error': _i4.Serializers.instance.serialize<E>(value.error)};
+  Map<String, Object?> serialize(_i2.Shape value) {
+    if (value is _i2.Rectangle) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.Rectangle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Rectangle',
+      };
+    }
+    if (value is _i2.Circle) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.Circle>(value)
+            as Map<String, Object?>),
+        r'$type': r'Circle',
+      };
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Shape')
+          ..write(': ')
+          ..write(value.runtimeType))
+        .toString());
+  }
 }
 
 final class SwappedResultSerializer<E extends _i3.ShapeException,

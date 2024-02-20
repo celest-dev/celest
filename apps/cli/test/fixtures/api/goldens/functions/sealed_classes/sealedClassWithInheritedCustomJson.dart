@@ -47,26 +47,22 @@ Future<void> main(List<String> args) async {
   );
 }
 
-final class ShapeWithInheritedCustomJsonSerializer
-    extends _i3.Serializer<_i4.ShapeWithInheritedCustomJson> {
-  const ShapeWithInheritedCustomJsonSerializer();
+final class CircleWithInheritedCustomJsonSerializer
+    extends _i3.Serializer<_i4.CircleWithInheritedCustomJson> {
+  const CircleWithInheritedCustomJsonSerializer();
 
   @override
-  _i4.ShapeWithInheritedCustomJson deserialize(Object? value) {
+  _i4.CircleWithInheritedCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.ShapeWithInheritedCustomJson.fromJson(serialized);
+    return (_i4.ShapeWithInheritedCustomJson.fromJson({
+      r'$type': r'CircleWithInheritedCustomJson',
+      ...serialized,
+    }) as _i4.CircleWithInheritedCustomJson);
   }
 
   @override
-  Map<String, Object?> serialize(_i4.ShapeWithInheritedCustomJson value) => {
-        ...value.toJson(),
-        r'$type': switch (value) {
-          _i4.RectangleWithInheritedCustomJson() =>
-            r'RectangleWithInheritedCustomJson',
-          _i4.CircleWithInheritedCustomJson() =>
-            r'CircleWithInheritedCustomJson',
-        },
-      };
+  Map<String, Object?> serialize(_i4.CircleWithInheritedCustomJson value) =>
+      value.toJson();
 }
 
 final class RectangleWithInheritedCustomJsonSerializer
@@ -87,20 +83,24 @@ final class RectangleWithInheritedCustomJsonSerializer
       value.toJson();
 }
 
-final class CircleWithInheritedCustomJsonSerializer
-    extends _i3.Serializer<_i4.CircleWithInheritedCustomJson> {
-  const CircleWithInheritedCustomJsonSerializer();
+final class ShapeWithInheritedCustomJsonSerializer
+    extends _i3.Serializer<_i4.ShapeWithInheritedCustomJson> {
+  const ShapeWithInheritedCustomJsonSerializer();
 
   @override
-  _i4.CircleWithInheritedCustomJson deserialize(Object? value) {
+  _i4.ShapeWithInheritedCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return (_i4.ShapeWithInheritedCustomJson.fromJson({
-      r'$type': r'CircleWithInheritedCustomJson',
-      ...serialized,
-    }) as _i4.CircleWithInheritedCustomJson);
+    return _i4.ShapeWithInheritedCustomJson.fromJson(serialized);
   }
 
   @override
-  Map<String, Object?> serialize(_i4.CircleWithInheritedCustomJson value) =>
-      value.toJson();
+  Map<String, Object?> serialize(_i4.ShapeWithInheritedCustomJson value) => {
+        ...value.toJson(),
+        r'$type': switch (value) {
+          _i4.RectangleWithInheritedCustomJson() =>
+            r'RectangleWithInheritedCustomJson',
+          _i4.CircleWithInheritedCustomJson() =>
+            r'CircleWithInheritedCustomJson',
+        },
+      };
 }

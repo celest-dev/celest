@@ -15,6 +15,7 @@ import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
 import 'package:celest/src/runtime/serve.dart' as celest_runtime;
 import 'package:celest_cli/src/types/type_checker.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
 import 'package:code_builder/code_builder.dart';
@@ -28,12 +29,11 @@ final class DartTypeReference extends Reference {
   const DartTypeReference(
     super.symbol, [
     super.url,
-    this._wireType,
+    this.wireType,
   ]);
 
   String get typeUri => '$url#$symbol';
-  String get wireTypeUri => _wireType ?? typeUri;
-  final String? _wireType;
+  final Reference? wireType;
 
   static final _checkerCache = <DartTypeReference, TypeChecker>{};
 
@@ -157,10 +157,10 @@ class _Core {
       const DartTypeReference('AssertionError', _url);
 
   /// Creates a [BigInt] reference.
-  DartTypeReference get bigInt => const DartTypeReference(
+  DartTypeReference get bigInt => DartTypeReference(
         'BigInt',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Creates a [bool] reference.
@@ -171,10 +171,10 @@ class _Core {
       const DartTypeReference('ConcurrentModificationError', _url);
 
   /// Creates a [DateTime] reference.
-  DartTypeReference get dateTime => const DartTypeReference(
+  DartTypeReference get dateTime => DartTypeReference(
         'DateTime',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Creates a [Deprecated] reference.
@@ -185,10 +185,10 @@ class _Core {
   DartTypeReference get double => const DartTypeReference('double', _url);
 
   /// Creates a [Duration] reference.
-  DartTypeReference get duration => const DartTypeReference(
+  DartTypeReference get duration => DartTypeReference(
         'Duration',
         _url,
-        'dart:core#Map',
+        map(string, object.nullable),
       );
 
   /// Creates a [dynamic] reference.
@@ -286,10 +286,10 @@ class _Core {
       const DartTypeReference('RangeError', _url);
 
   /// Creates a [RegExp] reference.
-  DartTypeReference get regExp => const DartTypeReference(
+  DartTypeReference get regExp => DartTypeReference(
         'RegExp',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Creates a [Set] reference.
@@ -305,10 +305,10 @@ class _Core {
       const DartTypeReference('StackOverflowError', _url);
 
   /// Creates a [StackTrace] reference.
-  DartTypeReference get stackTrace => const DartTypeReference(
+  DartTypeReference get stackTrace => DartTypeReference(
         'StackTrace',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Create a [StateError] reference.
@@ -347,17 +347,17 @@ class _Core {
       const DartTypeReference('UnsupportedError', _url);
 
   /// Creates a [Uri] reference.
-  DartTypeReference get uri => const DartTypeReference(
+  DartTypeReference get uri => DartTypeReference(
         'Uri',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Creates a [UriData] reference.
-  DartTypeReference get uriData => const DartTypeReference(
+  DartTypeReference get uriData => DartTypeReference(
         'UriData',
         _url,
-        'dart:core#String',
+        string,
       );
 
   /// Creates a `void` reference.
@@ -677,6 +677,9 @@ class _Celest {
   DartTypeReference get serializers =>
       const DartTypeReference('Serializers', _url);
 
+  /// Creates a [celest_core.TypeToken] reference.
+  DartTypeReference get typeToken => const DartTypeReference('TypeToken', _url);
+
   /// Creates a [celest_runtime.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _runtimeUrl);
 
@@ -850,9 +853,9 @@ class _TypedData {
   static const _url = 'dart:typed_data';
 
   /// Creates a [Uint8List] reference.
-  DartTypeReference get uint8List => const DartTypeReference(
+  DartTypeReference get uint8List => DartTypeReference(
         'Uint8List',
         _url,
-        'dart:core#String',
+        DartTypes.core.string,
       );
 }

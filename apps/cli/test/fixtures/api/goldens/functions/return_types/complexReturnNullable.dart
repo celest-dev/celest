@@ -27,10 +27,10 @@ final class ComplexReturnNullableTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const MyEnumSerializer());
-    _i3.Serializers.instance.put(const SimpleClassSerializer());
-    _i3.Serializers.instance.put(const SimpleStructSerializer());
     _i3.Serializers.instance.put(const ComplexStructSerializer());
+    _i3.Serializers.instance.put(const SimpleClassSerializer());
+    _i3.Serializers.instance.put(const MyEnumSerializer());
+    _i3.Serializers.instance.put(const SimpleStructSerializer());
   }
 }
 
@@ -38,45 +38,6 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ComplexReturnNullableTarget()},
   );
-}
-
-final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
-  const MyEnumSerializer();
-
-  @override
-  _i4.MyEnum deserialize(Object? value) {
-    final serialized = assertWireType<String>(value);
-    return _i4.MyEnum.values.byName(serialized);
-  }
-
-  @override
-  String serialize(_i4.MyEnum value) => value.name;
-}
-
-final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
-  const SimpleClassSerializer();
-
-  @override
-  _i4.SimpleClass deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, dynamic>>(value);
-    return _i4.SimpleClass.fromJson(serialized);
-  }
-
-  @override
-  Map<String, dynamic> serialize(_i4.SimpleClass value) => value.toJson();
-}
-
-final class SimpleStructSerializer extends _i3.Serializer<_i4.SimpleStruct> {
-  const SimpleStructSerializer();
-
-  @override
-  _i4.SimpleStruct deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
-    return ();
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.SimpleStruct value) => {};
 }
 
 final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
@@ -470,4 +431,43 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
                 (el) => _i3.Serializers.instance.serialize<_i4.SimpleClass>(el))
             .toList(),
       };
+}
+
+final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
+  const MyEnumSerializer();
+
+  @override
+  _i4.MyEnum deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return _i4.MyEnum.values.byName(serialized);
+  }
+
+  @override
+  String serialize(_i4.MyEnum value) => value.name;
+}
+
+final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {
+  const SimpleClassSerializer();
+
+  @override
+  _i4.SimpleClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, dynamic>>(value);
+    return _i4.SimpleClass.fromJson(serialized);
+  }
+
+  @override
+  Map<String, dynamic> serialize(_i4.SimpleClass value) => value.toJson();
+}
+
+final class SimpleStructSerializer extends _i3.Serializer<_i4.SimpleStruct> {
+  const SimpleStructSerializer();
+
+  @override
+  _i4.SimpleStruct deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return ();
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.SimpleStruct value) => {};
 }

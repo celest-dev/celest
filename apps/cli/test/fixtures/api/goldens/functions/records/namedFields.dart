@@ -34,9 +34,9 @@ final class NamedFieldsTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
-    _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
     _i3.Serializers.instance.put(const Record$wkpf9qSerializer());
+    _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
+    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
   }
 }
 
@@ -46,11 +46,11 @@ Future<void> main(List<String> args) async {
   );
 }
 
+typedef Record$rmm4wt = ({String anotherField, String field});
 typedef Record$wkpf9q = ({
   _i4.NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
-typedef Record$rmm4wt = ({String anotherField, String field});
 
 final class NamedFieldsRecordSerializer
     extends _i3.Serializer<_i4.NamedFieldsRecord> {

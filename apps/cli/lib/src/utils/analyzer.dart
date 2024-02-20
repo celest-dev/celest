@@ -14,6 +14,7 @@ import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/analyzer/const_to_code_builder.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 import 'package:collection/collection.dart';
@@ -138,8 +139,30 @@ extension DartTypeHelper on DartType {
       isEnum;
 
   bool get isThrowable {
-    return typeHelper.typeSystem.isSubtypeOf(this, typeHelper.coreErrorType) ||
-        typeHelper.typeSystem.isSubtypeOf(this, typeHelper.coreExceptionType);
+    return typeHelper.typeSystem
+            .isSubtypeOf(this, typeHelper.coreTypes.coreErrorType) ||
+        typeHelper.typeSystem
+            .isSubtypeOf(this, typeHelper.coreTypes.coreExceptionType);
+  }
+
+  bool get isExtensionType => element is ExtensionTypeElement;
+  bool get implementsRepresentationType {
+    final element = this.element;
+    if (element is ExtensionTypeElement) {
+      return element.allSupertypes.contains(extensionTypeErasure);
+    }
+    return true;
+  }
+
+  codegen.Expression? get typeToken {
+    if (element case final ExtensionTypeElement extensionType) {
+      return DartTypes.celest.typeToken.constInstance(
+        [codegen.literalString(extensionType.name)],
+        {},
+        [typeHelper.toReference(this)],
+      );
+    }
+    return null;
   }
 
   Uri? get sourceUri {

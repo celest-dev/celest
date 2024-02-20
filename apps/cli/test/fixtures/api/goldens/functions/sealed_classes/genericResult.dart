@@ -39,13 +39,13 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const ShapeSerializer());
-    _i3.Serializers.instance.put(const RectangleSerializer());
-    _i3.Serializers.instance.put(const CircleSerializer());
     _i3.Serializers.instance.put(const OkResultSerializer());
     _i3.Serializers.instance.put(const OkResultSerializer<_i2.Shape>());
     _i3.Serializers.instance.put(const OkResultSerializer<_i2.Rectangle>());
     _i3.Serializers.instance.put(const OkResultSerializer<_i2.Circle>());
+    _i3.Serializers.instance.put(const ShapeSerializer());
+    _i3.Serializers.instance.put(const RectangleSerializer());
+    _i3.Serializers.instance.put(const CircleSerializer());
   }
 }
 
@@ -53,6 +53,54 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': GenericResultTarget()},
   );
+}
+
+final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
+  const CircleSerializer();
+
+  @override
+  _i2.Circle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.Circle((serialized[r'radius'] as num).toDouble());
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
+}
+
+final class OkResultSerializer<T extends _i2.Shape>
+    extends _i3.Serializer<_i2.OkResult<T>> {
+  const OkResultSerializer();
+
+  @override
+  _i2.OkResult<T> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.OkResult<T>(
+        _i3.Serializers.instance.deserialize<T>(serialized[r'data']));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
+      {r'data': _i3.Serializers.instance.serialize<T>(value.data)};
+}
+
+final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
+  const RectangleSerializer();
+
+  @override
+  _i2.Rectangle deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i2.Rectangle(
+      (serialized[r'width'] as num).toDouble(),
+      (serialized[r'height'] as num).toDouble(),
+    );
+  }
+
+  @override
+  Map<String, Object?> serialize(_i2.Rectangle value) => {
+        r'width': value.width,
+        r'height': value.height,
+      };
 }
 
 final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
@@ -96,52 +144,4 @@ final class ShapeSerializer extends _i3.Serializer<_i2.Shape> {
           ..write(value.runtimeType))
         .toString());
   }
-}
-
-final class RectangleSerializer extends _i3.Serializer<_i2.Rectangle> {
-  const RectangleSerializer();
-
-  @override
-  _i2.Rectangle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.Rectangle(
-      (serialized[r'width'] as num).toDouble(),
-      (serialized[r'height'] as num).toDouble(),
-    );
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.Rectangle value) => {
-        r'width': value.width,
-        r'height': value.height,
-      };
-}
-
-final class CircleSerializer extends _i3.Serializer<_i2.Circle> {
-  const CircleSerializer();
-
-  @override
-  _i2.Circle deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.Circle((serialized[r'radius'] as num).toDouble());
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.Circle value) => {r'radius': value.radius};
-}
-
-final class OkResultSerializer<T extends _i2.Shape>
-    extends _i3.Serializer<_i2.OkResult<T>> {
-  const OkResultSerializer();
-
-  @override
-  _i2.OkResult<T> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i2.OkResult<T>(
-        _i3.Serializers.instance.deserialize<T>(serialized[r'data']));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i2.OkResult<T> value) =>
-      {r'data': _i3.Serializers.instance.serialize<T>(value.data)};
 }

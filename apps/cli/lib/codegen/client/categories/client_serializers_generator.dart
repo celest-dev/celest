@@ -6,20 +6,26 @@ final class ClientSerializersGenerator {
     required this.anonymousRecordTypes,
   });
 
-  final Set<Class> customSerializers;
+  final Map<Class, Expression?> customSerializers;
   final Map<String, RecordType> anonymousRecordTypes;
 
   Library generate() => Library(
         (lib) => lib.body
-          ..addAll(customSerializers)
           ..addAll(
-            anonymousRecordTypes.entries.map(
-              (recordType) => TypeDef(
-                (t) => t
-                  ..name = recordType.key
-                  ..definition = recordType.value,
-              ),
-            ),
+            anonymousRecordTypes.entries
+                .map(
+                  (recordType) => TypeDef(
+                    (t) => t
+                      ..name = recordType.key
+                      ..definition = recordType.value,
+                  ),
+                )
+                .toList()
+              ..sort((a, b) => a.name.compareTo(b.name)),
+          )
+          ..addAll(
+            customSerializers.keys.toList()
+              ..sort((a, b) => a.name.compareTo(b.name)),
           ),
       );
 }

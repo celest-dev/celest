@@ -32,6 +32,19 @@ Future<void> main(List<String> args) async {
   );
 }
 
+final class ChildSerializer extends _i3.Serializer<_i4.Child> {
+  const ChildSerializer();
+
+  @override
+  _i4.Child deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i4.Child((serialized[r'name'] as String));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.Child value) => {r'name': value.name};
+}
+
 final class NodeSerializer extends _i3.Serializer<_i4.Node> {
   const NodeSerializer();
 
@@ -96,17 +109,4 @@ final class ParentSerializer extends _i3.Serializer<_i4.Parent> {
             .map((el) => _i3.Serializers.instance.serialize<_i4.Node>(el))
             .toList(),
       };
-}
-
-final class ChildSerializer extends _i3.Serializer<_i4.Child> {
-  const ChildSerializer();
-
-  @override
-  _i4.Child deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Child((serialized[r'name'] as String));
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.Child value) => {r'name': value.name};
 }

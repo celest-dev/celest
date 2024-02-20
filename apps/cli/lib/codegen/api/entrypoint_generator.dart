@@ -25,7 +25,9 @@ final class EntrypointGenerator {
 
   late final String projectRoot = projectPaths.projectRoot;
   late final String targetName = '${function.name.pascalCase}Target';
-  final _customSerializers = LinkedHashSet<Class>(
+
+  // Map of serializer classes to their type tokens, if any.
+  final _customSerializers = LinkedHashMap<Class, Expression?>(
     equals: (a, b) => a.name == b.name,
     hashCode: (a) => a.name.hashCode,
   );
@@ -172,7 +174,7 @@ final class EntrypointGenerator {
               declareConst('statusCode').assign(
                 typeHelper.typeSystem.isSubtypeOf(
                   typeHelper.fromReference(exceptionType),
-                  typeHelper.coreErrorType,
+                  typeHelper.coreTypes.coreErrorType,
                 )
                     ? literalNum(500)
                     : literalNum(400),
@@ -298,8 +300,10 @@ final class EntrypointGenerator {
     );
     for (final type in allTypes) {
       final dartType = typeHelper.fromReference(type);
-      _customSerializers.addAll(
-        typeHelper.customSerializers(dartType),
+      _customSerializers.addEntries(
+        typeHelper.customSerializers(dartType).map(
+              (el) => MapEntry(el.$1, el.$2),
+            ),
       );
       if ((dartType, type)
           case (final ast.RecordType dartType, final RecordType recordType)) {
@@ -340,13 +344,15 @@ final class EntrypointGenerator {
                 ..annotations.add(DartTypes.core.override)
                 ..name = 'init'
                 ..body = Block((b) {
-                  for (final serializer in _customSerializers) {
+                  for (final MapEntry(key: serializer, value: typeToken)
+                      in _customSerializers.entries) {
                     b.addExpression(
                       DartTypes.celest.serializers
                           .property('instance')
                           .property('put')
                           .call([
                         refer(serializer.name).constInstance([]),
+                        if (typeToken != null) typeToken,
                       ]),
                     );
                     for (final subtypes in _combinations(
@@ -394,14 +400,18 @@ final class EntrypointGenerator {
     library.body.addAll([
       target,
       entrypoint,
-      ..._anonymousRecordTypes.entries.map(
-        (recordType) => TypeDef(
-          (t) => t
-            ..name = recordType.key
-            ..definition = recordType.value,
-        ),
-      ),
-      ..._customSerializers,
+      ..._anonymousRecordTypes.entries
+          .map(
+            (recordType) => TypeDef(
+              (t) => t
+                ..name = recordType.key
+                ..definition = recordType.value,
+            ),
+          )
+          .toList()
+        ..sort((a, b) => a.name.compareTo(b.name)),
+      ..._customSerializers.keys.toList()
+        ..sort((a, b) => a.name.compareTo(b.name)),
     ]);
     return library.build();
   }

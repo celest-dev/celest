@@ -8,6 +8,7 @@ import 'package:analyzer/dart/element/type_provider.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:analyzer/src/dart/element/type.dart';
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
@@ -17,6 +18,37 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
+
+final class CoreTypes {
+  CoreTypes({
+    required this.coreExceptionType,
+    required this.coreErrorType,
+    required this.coreBigIntType,
+    required this.coreDateTimeType,
+    required this.coreDurationType,
+    required this.coreRegExpType,
+    required this.coreStackTraceType,
+    required this.coreUriType,
+    required this.coreUriDataType,
+    required this.typedDataUint8ListType,
+    required this.badRequestExceptionType,
+    required this.internalServerExceptionType,
+  });
+
+  final DartType coreExceptionType;
+  final DartType coreErrorType;
+  final DartType coreBigIntType;
+  final DartType coreDateTimeType;
+  final DartType coreDurationType;
+  final DartType coreRegExpType;
+  final DartType coreStackTraceType;
+  final DartType coreUriType;
+  final DartType coreUriDataType;
+  final DartType typedDataUint8ListType;
+
+  final DartType badRequestExceptionType;
+  final DartType internalServerExceptionType;
+}
 
 final class TypeHelper {
   factory TypeHelper() => _instance;
@@ -54,38 +86,20 @@ final class TypeHelper {
     _typeProvider = typeProvider;
   }
 
-  DartType? _coreExceptionType;
-  DartType get coreExceptionType {
-    if (_coreExceptionType == null) {
+  CoreTypes? _coreTypes;
+  CoreTypes get coreTypes {
+    if (_coreTypes == null) {
       throw StateError(
-        'TypeHelper.coreExceptionType was accessed before it was initialized. '
-        'The core exception type is only available after analysis.',
+        'TypeHelper.coreTypes was accessed before it was initialized. '
+        'The core types are only available after analysis.',
       );
     }
-    return _coreExceptionType!;
+    return _coreTypes!;
   }
 
-  set coreExceptionType(DartType coreExceptionType) {
-    _coreExceptionType = coreExceptionType;
+  set coreTypes(CoreTypes coreTypes) {
+    _coreTypes = coreTypes;
   }
-
-  DartType? _coreErrorType;
-  DartType get coreErrorType {
-    if (_coreErrorType == null) {
-      throw StateError(
-        'TypeHelper.coreErrorType was accessed before it was initialized. '
-        'The core error type is only available after analysis.',
-      );
-    }
-    return _coreErrorType!;
-  }
-
-  set coreErrorType(DartType coreErrorType) {
-    _coreErrorType = coreErrorType;
-  }
-
-  late final DartType badRequestExceptionType;
-  late final DartType internalServerExceptionType;
 
   // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
   final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
@@ -180,19 +194,26 @@ final class TypeHelper {
   /// The set of types seen by the current [isSerializable] check.
   Set<DartType> get seen => Zone.current[_seenKey] as Set<DartType>;
 
-  Iterable<codegen.Class> customSerializers(DartType type) sync* {
+  Iterable<(codegen.Class, codegen.Expression?)> customSerializers(
+    DartType type,
+  ) sync* {
     final verdict = isSerializable(type);
-    if (verdict case VerdictYes(:final serializationSpecs)) {
-      for (final serializationSpec in serializationSpecs) {
-        yield SerializerGenerator(serializationSpec).build();
+    if (verdict case VerdictYes(:final primarySpec, :final additionalSpecs)) {
+      for (final serializationSpec in [
+        if (primarySpec != null) primarySpec,
+        ...additionalSpecs,
+      ]) {
+        yield _generate(serializationSpec);
         for (final subtype in serializationSpec.subtypes) {
-          yield SerializerGenerator(
-            subtype,
-            parent: serializationSpec,
-          ).build();
+          yield _generate(subtype..parent = serializationSpec);
         }
       }
     }
+  }
+
+  (codegen.Class, codegen.Expression?) _generate(SerializationSpec spec) {
+    final generator = SerializerGenerator(spec);
+    return (generator.build(), generator.serializationSpec.type.typeToken);
   }
 
   final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
@@ -263,7 +284,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
         ..types.addAll(typeArguments)
         ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
-    return ref;
+    return builtInTypes[type] ?? ref;
   }
 
   @override

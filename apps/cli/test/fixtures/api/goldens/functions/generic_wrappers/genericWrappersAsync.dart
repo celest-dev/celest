@@ -29,24 +29,24 @@ final class GenericWrappersAsyncTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const IListStringSerializer());
-    _i3.Serializers.instance.put(const IListUriSerializer());
-    _i3.Serializers.instance.put(const SimpleClassSerializer());
-    _i3.Serializers.instance.put(const IListSimpleClassSerializer());
-    _i3.Serializers.instance.put(const IListIListStringSerializer());
-    _i3.Serializers.instance.put(const IListIListUriSerializer());
-    _i3.Serializers.instance.put(const IListIListSimpleClassSerializer());
-    _i3.Serializers.instance.put(const IMapStringStringSerializer());
-    _i3.Serializers.instance.put(const IMapStringUriSerializer());
-    _i3.Serializers.instance.put(const IMapStringSimpleClassSerializer());
-    _i3.Serializers.instance.put(const IMapStringIListStringSerializer());
-    _i3.Serializers.instance.put(const IMapStringIListUriSerializer());
-    _i3.Serializers.instance.put(const IMapStringIListSimpleClassSerializer());
-    _i3.Serializers.instance.put(const IMapStringIMapStringStringSerializer());
-    _i3.Serializers.instance.put(const IMapStringIMapStringUriSerializer());
+    _i3.Serializers.instance.put(const GenericWrappersSerializer());
     _i3.Serializers.instance
         .put(const IMapStringIMapStringSimpleClassSerializer());
-    _i3.Serializers.instance.put(const GenericWrappersSerializer());
+    _i3.Serializers.instance.put(const IMapStringIMapStringUriSerializer());
+    _i3.Serializers.instance.put(const IMapStringIMapStringStringSerializer());
+    _i3.Serializers.instance.put(const IMapStringIListSimpleClassSerializer());
+    _i3.Serializers.instance.put(const IMapStringIListUriSerializer());
+    _i3.Serializers.instance.put(const IMapStringIListStringSerializer());
+    _i3.Serializers.instance.put(const IMapStringSimpleClassSerializer());
+    _i3.Serializers.instance.put(const IMapStringUriSerializer());
+    _i3.Serializers.instance.put(const IMapStringStringSerializer());
+    _i3.Serializers.instance.put(const IListIListSimpleClassSerializer());
+    _i3.Serializers.instance.put(const IListIListUriSerializer());
+    _i3.Serializers.instance.put(const IListIListStringSerializer());
+    _i3.Serializers.instance.put(const IListSimpleClassSerializer());
+    _i3.Serializers.instance.put(const IListUriSerializer());
+    _i3.Serializers.instance.put(const IListStringSerializer());
+    _i3.Serializers.instance.put(const SimpleClassSerializer());
   }
 }
 
@@ -54,328 +54,6 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': GenericWrappersAsyncTarget()},
   );
-}
-
-final class IListStringSerializer extends _i3.Serializer<_i5.IList<String>> {
-  const IListStringSerializer();
-
-  @override
-  _i5.IList<String> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<String>.fromJson(
-      serialized,
-      (value) => (value as String),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<String> value) => value.toJson((value) => value);
-}
-
-final class IListUriSerializer extends _i3.Serializer<_i5.IList<Uri>> {
-  const IListUriSerializer();
-
-  @override
-  _i5.IList<Uri> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<Uri>.fromJson(
-      serialized,
-      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<Uri> value) =>
-      value.toJson((value) => _i3.Serializers.instance.serialize<Uri>(value));
-}
-
-final class SimpleClassSerializer extends _i3.Serializer<_i6.SimpleClass> {
-  const SimpleClassSerializer();
-
-  @override
-  _i6.SimpleClass deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, dynamic>>(value);
-    return _i6.SimpleClass.fromJson(serialized);
-  }
-
-  @override
-  Map<String, dynamic> serialize(_i6.SimpleClass value) => value.toJson();
-}
-
-final class IListSimpleClassSerializer
-    extends _i3.Serializer<_i5.IList<_i6.SimpleClass>> {
-  const IListSimpleClassSerializer();
-
-  @override
-  _i5.IList<_i6.SimpleClass> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<_i6.SimpleClass>.fromJson(
-      serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i6.SimpleClass>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<_i6.SimpleClass> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i6.SimpleClass>(value));
-}
-
-final class IListIListStringSerializer
-    extends _i3.Serializer<_i5.IList<_i5.IList<String>>> {
-  const IListIListStringSerializer();
-
-  @override
-  _i5.IList<_i5.IList<String>> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<_i5.IList<String>>.fromJson(
-      serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i5.IList<String>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<_i5.IList<String>> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i5.IList<String>>(value));
-}
-
-final class IListIListUriSerializer
-    extends _i3.Serializer<_i5.IList<_i5.IList<Uri>>> {
-  const IListIListUriSerializer();
-
-  @override
-  _i5.IList<_i5.IList<Uri>> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<_i5.IList<Uri>>.fromJson(
-      serialized,
-      (value) => _i3.Serializers.instance.deserialize<_i5.IList<Uri>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<_i5.IList<Uri>> value) => value.toJson(
-      (value) => _i3.Serializers.instance.serialize<_i5.IList<Uri>>(value));
-}
-
-final class IListIListSimpleClassSerializer
-    extends _i3.Serializer<_i5.IList<_i5.IList<_i6.SimpleClass>>> {
-  const IListIListSimpleClassSerializer();
-
-  @override
-  _i5.IList<_i5.IList<_i6.SimpleClass>> deserialize(Object? value) {
-    final serialized = assertWireType<dynamic>(value);
-    return _i5.IList<_i5.IList<_i6.SimpleClass>>.fromJson(
-      serialized,
-      (value) => _i3.Serializers.instance
-          .deserialize<_i5.IList<_i6.SimpleClass>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i5.IList<_i5.IList<_i6.SimpleClass>> value) =>
-      value.toJson((value) => _i3.Serializers.instance
-          .serialize<_i5.IList<_i6.SimpleClass>>(value));
-}
-
-final class IMapStringStringSerializer
-    extends _i3.Serializer<_i7.IMap<String, String>> {
-  const IMapStringStringSerializer();
-
-  @override
-  _i7.IMap<String, String> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, String>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => (value as String),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, String> value) => value.toJson(
-        (value) => value,
-        (value) => value,
-      );
-}
-
-final class IMapStringUriSerializer
-    extends _i3.Serializer<_i7.IMap<String, Uri>> {
-  const IMapStringUriSerializer();
-
-  @override
-  _i7.IMap<String, Uri> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, Uri>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, Uri> value) => value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance.serialize<Uri>(value),
-      );
-}
-
-final class IMapStringSimpleClassSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i6.SimpleClass>> {
-  const IMapStringSimpleClassSerializer();
-
-  @override
-  _i7.IMap<String, _i6.SimpleClass> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i6.SimpleClass>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i6.SimpleClass>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i6.SimpleClass> value) => value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i6.SimpleClass>(value),
-      );
-}
-
-final class IMapStringIListStringSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i5.IList<String>>> {
-  const IMapStringIListStringSerializer();
-
-  @override
-  _i7.IMap<String, _i5.IList<String>> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i5.IList<String>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i5.IList<String>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i5.IList<String>> value) => value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i5.IList<String>>(value),
-      );
-}
-
-final class IMapStringIListUriSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i5.IList<Uri>>> {
-  const IMapStringIListUriSerializer();
-
-  @override
-  _i7.IMap<String, _i5.IList<Uri>> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i5.IList<Uri>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance.deserialize<_i5.IList<Uri>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i5.IList<Uri>> value) => value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance.serialize<_i5.IList<Uri>>(value),
-      );
-}
-
-final class IMapStringIListSimpleClassSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i5.IList<_i6.SimpleClass>>> {
-  const IMapStringIListSimpleClassSerializer();
-
-  @override
-  _i7.IMap<String, _i5.IList<_i6.SimpleClass>> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i5.IList<_i6.SimpleClass>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance
-          .deserialize<_i5.IList<_i6.SimpleClass>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i5.IList<_i6.SimpleClass>> value) =>
-      value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance
-            .serialize<_i5.IList<_i6.SimpleClass>>(value),
-      );
-}
-
-final class IMapStringIMapStringStringSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i7.IMap<String, String>>> {
-  const IMapStringIMapStringStringSerializer();
-
-  @override
-  _i7.IMap<String, _i7.IMap<String, String>> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i7.IMap<String, String>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) =>
-          _i3.Serializers.instance.deserialize<_i7.IMap<String, String>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i7.IMap<String, String>> value) =>
-      value.toJson(
-        (value) => value,
-        (value) =>
-            _i3.Serializers.instance.serialize<_i7.IMap<String, String>>(value),
-      );
-}
-
-final class IMapStringIMapStringUriSerializer
-    extends _i3.Serializer<_i7.IMap<String, _i7.IMap<String, Uri>>> {
-  const IMapStringIMapStringUriSerializer();
-
-  @override
-  _i7.IMap<String, _i7.IMap<String, Uri>> deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i7.IMap<String, Uri>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) =>
-          _i3.Serializers.instance.deserialize<_i7.IMap<String, Uri>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i7.IMap<String, Uri>> value) =>
-      value.toJson(
-        (value) => value,
-        (value) =>
-            _i3.Serializers.instance.serialize<_i7.IMap<String, Uri>>(value),
-      );
-}
-
-final class IMapStringIMapStringSimpleClassSerializer extends _i3
-    .Serializer<_i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>>> {
-  const IMapStringIMapStringSimpleClassSerializer();
-
-  @override
-  _i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>> deserialize(
-      Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>>.fromJson(
-      serialized,
-      (value) => (value as String),
-      (value) => _i3.Serializers.instance
-          .deserialize<_i7.IMap<String, _i6.SimpleClass>>(value),
-    );
-  }
-
-  @override
-  Object serialize(_i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>> value) =>
-      value.toJson(
-        (value) => value,
-        (value) => _i3.Serializers.instance
-            .serialize<_i7.IMap<String, _i6.SimpleClass>>(value),
-      );
 }
 
 final class GenericWrappersSerializer
@@ -470,4 +148,326 @@ final class GenericWrappersSerializer
             .serialize<_i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>>>(
                 value.mapOfMapOfSimpleClass),
       };
+}
+
+final class IListIListSimpleClassSerializer
+    extends _i3.Serializer<_i5.IList<_i5.IList<_i6.SimpleClass>>> {
+  const IListIListSimpleClassSerializer();
+
+  @override
+  _i5.IList<_i5.IList<_i6.SimpleClass>> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<_i5.IList<_i6.SimpleClass>>.fromJson(
+      serialized,
+      (value) => _i3.Serializers.instance
+          .deserialize<_i5.IList<_i6.SimpleClass>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<_i5.IList<_i6.SimpleClass>> value) =>
+      value.toJson((value) => _i3.Serializers.instance
+          .serialize<_i5.IList<_i6.SimpleClass>>(value));
+}
+
+final class IListIListStringSerializer
+    extends _i3.Serializer<_i5.IList<_i5.IList<String>>> {
+  const IListIListStringSerializer();
+
+  @override
+  _i5.IList<_i5.IList<String>> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<_i5.IList<String>>.fromJson(
+      serialized,
+      (value) => _i3.Serializers.instance.deserialize<_i5.IList<String>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<_i5.IList<String>> value) => value.toJson(
+      (value) => _i3.Serializers.instance.serialize<_i5.IList<String>>(value));
+}
+
+final class IListIListUriSerializer
+    extends _i3.Serializer<_i5.IList<_i5.IList<Uri>>> {
+  const IListIListUriSerializer();
+
+  @override
+  _i5.IList<_i5.IList<Uri>> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<_i5.IList<Uri>>.fromJson(
+      serialized,
+      (value) => _i3.Serializers.instance.deserialize<_i5.IList<Uri>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<_i5.IList<Uri>> value) => value.toJson(
+      (value) => _i3.Serializers.instance.serialize<_i5.IList<Uri>>(value));
+}
+
+final class IListSimpleClassSerializer
+    extends _i3.Serializer<_i5.IList<_i6.SimpleClass>> {
+  const IListSimpleClassSerializer();
+
+  @override
+  _i5.IList<_i6.SimpleClass> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<_i6.SimpleClass>.fromJson(
+      serialized,
+      (value) => _i3.Serializers.instance.deserialize<_i6.SimpleClass>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<_i6.SimpleClass> value) => value.toJson(
+      (value) => _i3.Serializers.instance.serialize<_i6.SimpleClass>(value));
+}
+
+final class IListStringSerializer extends _i3.Serializer<_i5.IList<String>> {
+  const IListStringSerializer();
+
+  @override
+  _i5.IList<String> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<String>.fromJson(
+      serialized,
+      (value) => (value as String),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<String> value) => value.toJson((value) => value);
+}
+
+final class IListUriSerializer extends _i3.Serializer<_i5.IList<Uri>> {
+  const IListUriSerializer();
+
+  @override
+  _i5.IList<Uri> deserialize(Object? value) {
+    final serialized = assertWireType<dynamic>(value);
+    return _i5.IList<Uri>.fromJson(
+      serialized,
+      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i5.IList<Uri> value) =>
+      value.toJson((value) => _i3.Serializers.instance.serialize<Uri>(value));
+}
+
+final class IMapStringIListSimpleClassSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i5.IList<_i6.SimpleClass>>> {
+  const IMapStringIListSimpleClassSerializer();
+
+  @override
+  _i7.IMap<String, _i5.IList<_i6.SimpleClass>> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i5.IList<_i6.SimpleClass>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance
+          .deserialize<_i5.IList<_i6.SimpleClass>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i5.IList<_i6.SimpleClass>> value) =>
+      value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance
+            .serialize<_i5.IList<_i6.SimpleClass>>(value),
+      );
+}
+
+final class IMapStringIListStringSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i5.IList<String>>> {
+  const IMapStringIListStringSerializer();
+
+  @override
+  _i7.IMap<String, _i5.IList<String>> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i5.IList<String>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance.deserialize<_i5.IList<String>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i5.IList<String>> value) => value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance.serialize<_i5.IList<String>>(value),
+      );
+}
+
+final class IMapStringIListUriSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i5.IList<Uri>>> {
+  const IMapStringIListUriSerializer();
+
+  @override
+  _i7.IMap<String, _i5.IList<Uri>> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i5.IList<Uri>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance.deserialize<_i5.IList<Uri>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i5.IList<Uri>> value) => value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance.serialize<_i5.IList<Uri>>(value),
+      );
+}
+
+final class IMapStringIMapStringSimpleClassSerializer extends _i3
+    .Serializer<_i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>>> {
+  const IMapStringIMapStringSimpleClassSerializer();
+
+  @override
+  _i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>> deserialize(
+      Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance
+          .deserialize<_i7.IMap<String, _i6.SimpleClass>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i7.IMap<String, _i6.SimpleClass>> value) =>
+      value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance
+            .serialize<_i7.IMap<String, _i6.SimpleClass>>(value),
+      );
+}
+
+final class IMapStringIMapStringStringSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i7.IMap<String, String>>> {
+  const IMapStringIMapStringStringSerializer();
+
+  @override
+  _i7.IMap<String, _i7.IMap<String, String>> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i7.IMap<String, String>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) =>
+          _i3.Serializers.instance.deserialize<_i7.IMap<String, String>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i7.IMap<String, String>> value) =>
+      value.toJson(
+        (value) => value,
+        (value) =>
+            _i3.Serializers.instance.serialize<_i7.IMap<String, String>>(value),
+      );
+}
+
+final class IMapStringIMapStringUriSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i7.IMap<String, Uri>>> {
+  const IMapStringIMapStringUriSerializer();
+
+  @override
+  _i7.IMap<String, _i7.IMap<String, Uri>> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i7.IMap<String, Uri>>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) =>
+          _i3.Serializers.instance.deserialize<_i7.IMap<String, Uri>>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i7.IMap<String, Uri>> value) =>
+      value.toJson(
+        (value) => value,
+        (value) =>
+            _i3.Serializers.instance.serialize<_i7.IMap<String, Uri>>(value),
+      );
+}
+
+final class IMapStringSimpleClassSerializer
+    extends _i3.Serializer<_i7.IMap<String, _i6.SimpleClass>> {
+  const IMapStringSimpleClassSerializer();
+
+  @override
+  _i7.IMap<String, _i6.SimpleClass> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, _i6.SimpleClass>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance.deserialize<_i6.SimpleClass>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, _i6.SimpleClass> value) => value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance.serialize<_i6.SimpleClass>(value),
+      );
+}
+
+final class IMapStringStringSerializer
+    extends _i3.Serializer<_i7.IMap<String, String>> {
+  const IMapStringStringSerializer();
+
+  @override
+  _i7.IMap<String, String> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, String>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => (value as String),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, String> value) => value.toJson(
+        (value) => value,
+        (value) => value,
+      );
+}
+
+final class IMapStringUriSerializer
+    extends _i3.Serializer<_i7.IMap<String, Uri>> {
+  const IMapStringUriSerializer();
+
+  @override
+  _i7.IMap<String, Uri> deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i7.IMap<String, Uri>.fromJson(
+      serialized,
+      (value) => (value as String),
+      (value) => _i3.Serializers.instance.deserialize<Uri>(value),
+    );
+  }
+
+  @override
+  Object serialize(_i7.IMap<String, Uri> value) => value.toJson(
+        (value) => value,
+        (value) => _i3.Serializers.instance.serialize<Uri>(value),
+      );
+}
+
+final class SimpleClassSerializer extends _i3.Serializer<_i6.SimpleClass> {
+  const SimpleClassSerializer();
+
+  @override
+  _i6.SimpleClass deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, dynamic>>(value);
+    return _i6.SimpleClass.fromJson(serialized);
+  }
+
+  @override
+  Map<String, dynamic> serialize(_i6.SimpleClass value) => value.toJson();
 }

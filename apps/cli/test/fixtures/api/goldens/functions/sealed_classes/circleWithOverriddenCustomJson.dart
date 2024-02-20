@@ -57,6 +57,24 @@ final class CircleWithOverriddenCustomJsonSerializer
       value.toJson();
 }
 
+final class RectangleWithOverriddenCustomJsonSerializer
+    extends _i3.Serializer<_i4.RectangleWithOverriddenCustomJson> {
+  const RectangleWithOverriddenCustomJsonSerializer();
+
+  @override
+  _i4.RectangleWithOverriddenCustomJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (_i4.ShapeWithOverriddenCustomJson.fromJson({
+      r'$type': r'RectangleWithOverriddenCustomJson',
+      ...serialized,
+    }) as _i4.RectangleWithOverriddenCustomJson);
+  }
+
+  @override
+  Map<String, Object?> serialize(_i4.RectangleWithOverriddenCustomJson value) =>
+      value.toJson();
+}
+
 final class ShapeWithOverriddenCustomJsonSerializer
     extends _i3.Serializer<_i4.ShapeWithOverriddenCustomJson> {
   const ShapeWithOverriddenCustomJsonSerializer();
@@ -77,22 +95,4 @@ final class ShapeWithOverriddenCustomJsonSerializer
             r'RectangleWithOverriddenCustomJson',
         },
       };
-}
-
-final class RectangleWithOverriddenCustomJsonSerializer
-    extends _i3.Serializer<_i4.RectangleWithOverriddenCustomJson> {
-  const RectangleWithOverriddenCustomJsonSerializer();
-
-  @override
-  _i4.RectangleWithOverriddenCustomJson deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (_i4.ShapeWithOverriddenCustomJson.fromJson({
-      r'$type': r'RectangleWithOverriddenCustomJson',
-      ...serialized,
-    }) as _i4.RectangleWithOverriddenCustomJson);
-  }
-
-  @override
-  Map<String, Object?> serialize(_i4.RectangleWithOverriddenCustomJson value) =>
-      value.toJson();
 }
