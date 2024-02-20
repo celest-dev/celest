@@ -62,3 +62,74 @@ extension type const ValueXFromJsonStatic(Value v) {
   static ValueXFromJsonStatic fromJson(Map<String, Object?> json) =>
       ValueXFromJsonStatic(Value('${json['value']}FromJson'));
 }
+extension type const ValueXToFromJsonCombined(Value v)
+    implements ValueXToJson, ValueXFromJson {}
+extension type const ValueXImplIndirect(Value v) implements ValueXImpl {}
+
+enum Color {
+  red,
+  green,
+  blue;
+
+  factory Color.fromJson(String value) => switch (value) {
+        'r' => red,
+        'g' => green,
+        'b' => blue,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
+      };
+
+  String toJson() => switch (this) {
+        red => 'r',
+        green => 'g',
+        blue => 'b',
+      };
+}
+
+extension type const ColorX(Color c) {}
+extension type const ColorXImpl(Color c) implements Color {}
+extension type const ColorXToFromJson(Color c) {
+  ColorXToFromJson.fromJson(String value)
+      : c = switch (value) {
+          'RED' => Color.red,
+          'GREEN' => Color.green,
+          'BLUE' => Color.blue,
+          _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
+        };
+
+  String toJson() => c.name.toUpperCase();
+}
+extension type const ColorXToJson(Color c) {
+  String toJson() => c.name.toUpperCase();
+}
+extension type const ColorXToJsonImpl(Color c) implements Color {
+  String toJson() => c.name.toUpperCase();
+}
+extension type const ColorXFromJson(Color c) {
+  ColorXFromJson.fromJson(String value)
+      : c = switch (value) {
+          'RED' => Color.red,
+          'GREEN' => Color.green,
+          'BLUE' => Color.blue,
+          _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
+        };
+}
+extension type const ColorXFromJsonImpl(Color c) implements Color {
+  ColorXFromJsonImpl.fromJson(String value)
+      : c = switch (value) {
+          'RED' => Color.red,
+          'GREEN' => Color.green,
+          'BLUE' => Color.blue,
+          _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
+        };
+}
+extension type const ColorXFromJsonStatic(Color c) {
+  static ColorXFromJsonStatic fromJson(String value) => switch (value) {
+        'RED' => Color.red,
+        'GREEN' => Color.green,
+        'BLUE' => Color.blue,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
+      } as ColorXFromJsonStatic;
+}
+extension type const ColorXToFromJsonCombined(Color c)
+    implements ColorXToJson, ColorXFromJson {}
+extension type const ColorXImplIndirect(Color c) implements ColorXImpl {}

@@ -192,7 +192,7 @@ final class TypeHelper {
   static const _seenKey = #seen;
 
   /// The set of types seen by the current [isSerializable] check.
-  Set<DartType> get seen => Zone.current[_seenKey] as Set<DartType>;
+  Set<DartType?> get seen => Zone.current[_seenKey] as Set<DartType?>;
 
   Iterable<(codegen.Class, codegen.Expression?)> customSerializers(
     DartType type,

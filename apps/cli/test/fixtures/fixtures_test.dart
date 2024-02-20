@@ -801,7 +801,7 @@ final tests = <String, Test>{
           ],
           'valueXFromJsonStatic': [
             FunctionTestSuccess(
-              name: 'valueXFromJson',
+              name: 'valueXFromJsonStatic',
               input: {
                 'v': {
                   'value': 'hello',
@@ -810,6 +810,28 @@ final tests = <String, Test>{
               output: {
                 'value': 'helloFromJson',
               },
+            ),
+          ],
+          'valueXToFromJsonCombined': [
+            FunctionTestSuccess(
+              name: 'valueXToFromJsonCombined',
+              input: {
+                'v': {
+                  'value': 'hello',
+                },
+              },
+              output: {
+                'value': 'helloFromJsonToJson',
+              },
+            ),
+          ],
+          'valueXImplIndirect': [
+            FunctionTestSuccess(
+              name: 'valueXImpl',
+              input: {
+                'v': 'hello',
+              },
+              output: 'hello',
             ),
           ],
           'jsonValue': [
@@ -995,6 +1017,105 @@ final tests = <String, Test>{
                 'a': complexStruct,
                 'b': complexStruct,
               },
+            ),
+          ],
+          'color': [
+            FunctionTestSuccess(
+              name: 'color',
+              input: {
+                'color': 'r',
+              },
+              output: 'r',
+            ),
+          ],
+          'colorX': [
+            FunctionTestSuccess(
+              name: 'colorX',
+              input: {
+                'color': 'red',
+              },
+              output: 'red',
+            ),
+          ],
+          'colorXImpl': [
+            FunctionTestSuccess(
+              name: 'colorXImpl',
+              input: {
+                'color': 'r',
+              },
+              output: 'r',
+            ),
+          ],
+          'colorXToFromJson': [
+            FunctionTestSuccess(
+              name: 'colorXToFromJson',
+              input: {
+                'color': 'RED',
+              },
+              output: 'RED',
+            ),
+          ],
+          'colorXToJson': [
+            FunctionTestSuccess(
+              name: 'colorXToJson',
+              input: {
+                'color': 'red',
+              },
+              output: 'RED',
+            ),
+          ],
+          'colorXToJsonImpl': [
+            FunctionTestSuccess(
+              name: 'colorXToJson',
+              input: {
+                'color': 'r',
+              },
+              output: 'RED',
+            ),
+          ],
+          'colorXFromJson': [
+            FunctionTestSuccess(
+              name: 'colorXFromJson',
+              input: {
+                'color': 'RED',
+              },
+              output: 'red',
+            ),
+          ],
+          'colorXFromJsonImpl': [
+            FunctionTestSuccess(
+              name: 'colorXFromJsonImpl',
+              input: {
+                'color': 'RED',
+              },
+              output: 'r',
+            ),
+          ],
+          'colorXFromJsonStatic': [
+            FunctionTestSuccess(
+              name: 'colorXFromJsonStatic',
+              input: {
+                'color': 'RED',
+              },
+              output: 'red',
+            ),
+          ],
+          'colorXToFromJsonCombined': [
+            FunctionTestSuccess(
+              name: 'colorXToFromJsonCombined',
+              input: {
+                'color': 'RED',
+              },
+              output: 'RED',
+            ),
+          ],
+          'colorXImplIndirect': [
+            FunctionTestSuccess(
+              name: 'colorXImplIndirect',
+              input: {
+                'color': 'r',
+              },
+              output: 'r',
             ),
           ],
         },

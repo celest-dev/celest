@@ -270,6 +270,61 @@ abstract final class Functions {
     functionName: r'asyncString',
   );
 
+  static const extensionTypesColor = CloudFunction(
+    api: r'extension_types',
+    functionName: r'color',
+  );
+
+  static const extensionTypesColorXFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXFromJson',
+  );
+
+  static const extensionTypesColorXFromJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXFromJsonImpl',
+  );
+
+  static const extensionTypesColorXFromJsonStatic = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXFromJsonStatic',
+  );
+
+  static const extensionTypesColorXImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXImpl',
+  );
+
+  static const extensionTypesColorXImplIndirect = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXImplIndirect',
+  );
+
+  static const extensionTypesColorXToFromJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXToFromJson',
+  );
+
+  static const extensionTypesColorXToFromJsonCombined = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXToFromJsonCombined',
+  );
+
+  static const extensionTypesColorXToJson = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXToJson',
+  );
+
+  static const extensionTypesColorXToJsonImpl = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorXToJsonImpl',
+  );
+
+  static const extensionTypesColorx = CloudFunction(
+    api: r'extension_types',
+    functionName: r'colorX',
+  );
+
   static const extensionTypesJsonBool = CloudFunction(
     api: r'extension_types',
     functionName: r'jsonBool',
@@ -395,9 +450,19 @@ abstract final class Functions {
     functionName: r'valueXImpl',
   );
 
+  static const extensionTypesValueXImplIndirect = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXImplIndirect',
+  );
+
   static const extensionTypesValueXToFromJson = CloudFunction(
     api: r'extension_types',
     functionName: r'valueXToFromJson',
+  );
+
+  static const extensionTypesValueXToFromJsonCombined = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXToFromJsonCombined',
   );
 
   static const extensionTypesValueXToJson = CloudFunction(

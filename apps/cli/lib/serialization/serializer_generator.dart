@@ -34,15 +34,17 @@ final class SerializerGenerator {
   (Expression fromJson, bool usesParent)? get fromJson {
     Reference? typeReference;
     var usesParent = false;
-    if (serializationSpec.hasFromJson) {
-      typeReference = this.typeReference;
+    if (serializationSpec.fromJsonType case final fromJsonType?) {
+      typeReference = typeHelper.toReference(fromJsonType);
+      usesParent = !const DartTypeEquality(ignoreNullability: true)
+          .equals(fromJsonType, type);
     }
     var parent = (!_isExtensionType || type.implementsRepresentationType)
         ? _parent
         : null;
     while (typeReference == null && parent != null) {
-      if (parent.hasFromJson) {
-        typeReference = typeHelper.toReference(parent.type);
+      if (parent.fromJsonType case final fromJsonType?) {
+        typeReference = typeHelper.toReference(fromJsonType);
         usesParent = true;
       }
       parent = parent.parent;
@@ -88,23 +90,12 @@ final class SerializerGenerator {
                 final mayBeAbsent =
                     serializationSpec.parameters.every((p) => p.isOptional) &&
                         serializationSpec.subtypes.isEmpty;
-                final (wireType, deserialized) = switch (type) {
-                  ast.InterfaceType() when type.isEnum => (
-                      this.wireType,
-                      typeReference.nonNullable
-                          .property('values')
-                          .property('byName')
-                          .call([
-                            refer('serialized'),
-                          ])
-                          .returned
-                          .statement,
-                    ),
-                  _ => (
-                      castType.withNullability(mayBeAbsent),
-                      _deserialize('serialized', mayBeAbsent: mayBeAbsent),
-                    ),
+                final wireType = switch (type) {
+                  ast.InterfaceType() when type.isEnum => this.wireType,
+                  _ => castType.withNullability(mayBeAbsent),
                 };
+                final deserialized =
+                    _deserialize('serialized', mayBeAbsent: mayBeAbsent);
                 b.addExpression(
                   declareFinal('serialized').assign(
                     refer('assertWireType').call([
@@ -129,11 +120,7 @@ final class SerializerGenerator {
                 ),
               )
               ..annotations.add(DartTypes.core.override)
-              ..body = switch (type) {
-                ast.InterfaceType() when type.isEnum =>
-                  refer('value').property('name').code,
-                _ => _serialize('value').code,
-              },
+              ..body = _serialize('value').code,
           ),
         ]);
       });
@@ -242,6 +229,9 @@ final class SerializerGenerator {
           );
         }),
       );
+    }
+    if (type.isEnum) {
+      return ref.property('name');
     }
     if (_isExtensionType) {
       return jsonGenerator.toJson(
@@ -356,6 +346,14 @@ final class SerializerGenerator {
       });
     }
     final ref = _reference(from, isNullable: mayBeAbsent);
+    if (type.isEnum) {
+      return typeReference.nonNullable
+          .property('values')
+          .property('byName')
+          .call([ref])
+          .returned
+          .statement;
+    }
     if (_isExtensionType) {
       final deserialized = jsonGenerator.fromJson(
         typeHelper.toReference(_parent!.type),

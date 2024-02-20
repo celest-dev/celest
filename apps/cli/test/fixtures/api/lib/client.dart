@@ -171,6 +171,55 @@ class Celest {
       const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
     );
     Serializers.instance.put(
+      const ValueXToFromJsonCombinedSerializer(),
+      const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+    );
+    Serializers.instance.put(
+      const ValueXImplIndirectSerializer(),
+      const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+    );
+    Serializers.instance.put(const ColorSerializer());
+    Serializers.instance.put(
+      const ColorXSerializer(),
+      const TypeToken<ColorX>('ColorX'),
+    );
+    Serializers.instance.put(
+      const ColorXImplSerializer(),
+      const TypeToken<ColorXImpl>('ColorXImpl'),
+    );
+    Serializers.instance.put(
+      const ColorXToFromJsonSerializer(),
+      const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+    );
+    Serializers.instance.put(
+      const ColorXToJsonSerializer(),
+      const TypeToken<ColorXToJson>('ColorXToJson'),
+    );
+    Serializers.instance.put(
+      const ColorXToJsonImplSerializer(),
+      const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+    );
+    Serializers.instance.put(
+      const ColorXFromJsonSerializer(),
+      const TypeToken<ColorXFromJson>('ColorXFromJson'),
+    );
+    Serializers.instance.put(
+      const ColorXFromJsonImplSerializer(),
+      const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+    );
+    Serializers.instance.put(
+      const ColorXFromJsonStaticSerializer(),
+      const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+    );
+    Serializers.instance.put(
+      const ColorXToFromJsonCombinedSerializer(),
+      const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+    );
+    Serializers.instance.put(
+      const ColorXImplIndirectSerializer(),
+      const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+    );
+    Serializers.instance.put(
       const JsonValueSerializer(),
       const TypeToken<JsonValue>('JsonValue'),
     );

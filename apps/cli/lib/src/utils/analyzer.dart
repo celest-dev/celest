@@ -377,13 +377,13 @@ extension SourceToSpan on Source {
 // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
 // == of RecordType does not take into account alias.
 // hashCode only takes into account the length of positionalFields and namedFields.
-final class DartTypeEquality implements Equality<DartType> {
+final class DartTypeEquality implements Equality<DartType?> {
   const DartTypeEquality({this.ignoreNullability = false});
 
   final bool ignoreNullability;
 
   @override
-  bool equals(DartType e1, DartType e2) {
+  bool equals(DartType? e1, DartType? e2) {
     if (identical(e1, e2)) {
       return true;
     }
@@ -399,7 +399,7 @@ final class DartTypeEquality implements Equality<DartType> {
   }
 
   @override
-  int hash(DartType e) {
+  int hash(DartType? e) {
     if (e is RecordType) {
       return RecordTypeEquality(ignoreNullability: ignoreNullability).hash(e);
     }
@@ -410,7 +410,7 @@ final class DartTypeEquality implements Equality<DartType> {
   }
 
   @override
-  bool isValidKey(Object? o) => o is DartType;
+  bool isValidKey(Object? o) => o is DartType?;
 }
 
 // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType

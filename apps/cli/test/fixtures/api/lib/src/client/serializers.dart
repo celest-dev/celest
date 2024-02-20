@@ -110,6 +110,156 @@ final class CircleWithOverriddenCustomJsonSerializer
   Object? serialize(CircleWithOverriddenCustomJson value) => value.toJson();
 }
 
+final class ColorSerializer extends Serializer<Color> {
+  const ColorSerializer();
+
+  @override
+  Color deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return Color.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(Color value) => value.toJson();
+}
+
+final class ColorXFromJsonImplSerializer
+    extends Serializer<ColorXFromJsonImpl> {
+  const ColorXFromJsonImplSerializer();
+
+  @override
+  ColorXFromJsonImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorXFromJsonImpl.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ColorXFromJsonImpl value) => value.toJson();
+}
+
+final class ColorXFromJsonSerializer extends Serializer<ColorXFromJson> {
+  const ColorXFromJsonSerializer();
+
+  @override
+  ColorXFromJson deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorXFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ColorXFromJson value) =>
+      Serializers.instance.serialize<Color>(value.c);
+}
+
+final class ColorXFromJsonStaticSerializer
+    extends Serializer<ColorXFromJsonStatic> {
+  const ColorXFromJsonStaticSerializer();
+
+  @override
+  ColorXFromJsonStatic deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorXFromJsonStatic.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ColorXFromJsonStatic value) =>
+      Serializers.instance.serialize<Color>(value.c);
+}
+
+final class ColorXImplIndirectSerializer
+    extends Serializer<ColorXImplIndirect> {
+  const ColorXImplIndirectSerializer();
+
+  @override
+  ColorXImplIndirect deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Color.fromJson(serialized) as ColorXImplIndirect);
+  }
+
+  @override
+  Object? serialize(ColorXImplIndirect value) => value.toJson();
+}
+
+final class ColorXImplSerializer extends Serializer<ColorXImpl> {
+  const ColorXImplSerializer();
+
+  @override
+  ColorXImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Color.fromJson(serialized) as ColorXImpl);
+  }
+
+  @override
+  Object? serialize(ColorXImpl value) => value.toJson();
+}
+
+final class ColorXSerializer extends Serializer<ColorX> {
+  const ColorXSerializer();
+
+  @override
+  ColorX deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorX(Serializers.instance.deserialize<Color>(serialized));
+  }
+
+  @override
+  Object? serialize(ColorX value) =>
+      Serializers.instance.serialize<Color>(value.c);
+}
+
+final class ColorXToFromJsonCombinedSerializer
+    extends Serializer<ColorXToFromJsonCombined> {
+  const ColorXToFromJsonCombinedSerializer();
+
+  @override
+  ColorXToFromJsonCombined deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (ColorXFromJson.fromJson(serialized) as ColorXToFromJsonCombined);
+  }
+
+  @override
+  Object? serialize(ColorXToFromJsonCombined value) => value.toJson();
+}
+
+final class ColorXToFromJsonSerializer extends Serializer<ColorXToFromJson> {
+  const ColorXToFromJsonSerializer();
+
+  @override
+  ColorXToFromJson deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorXToFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ColorXToFromJson value) => value.toJson();
+}
+
+final class ColorXToJsonImplSerializer extends Serializer<ColorXToJsonImpl> {
+  const ColorXToJsonImplSerializer();
+
+  @override
+  ColorXToJsonImpl deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Color.fromJson(serialized) as ColorXToJsonImpl);
+  }
+
+  @override
+  Object? serialize(ColorXToJsonImpl value) => value.toJson();
+}
+
+final class ColorXToJsonSerializer extends Serializer<ColorXToJson> {
+  const ColorXToJsonSerializer();
+
+  @override
+  ColorXToJson deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return ColorXToJson(Serializers.instance.deserialize<Color>(serialized));
+  }
+
+  @override
+  Object? serialize(ColorXToJson value) => value.toJson();
+}
+
 final class ComplexClassSerializer extends Serializer<ComplexClass> {
   const ComplexClassSerializer();
 
@@ -2392,6 +2542,20 @@ final class ValueXFromJsonStaticSerializer
       Serializers.instance.serialize<Value>(value.v);
 }
 
+final class ValueXImplIndirectSerializer
+    extends Serializer<ValueXImplIndirect> {
+  const ValueXImplIndirectSerializer();
+
+  @override
+  ValueXImplIndirect deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return (Value.fromJson(serialized) as ValueXImplIndirect);
+  }
+
+  @override
+  Object? serialize(ValueXImplIndirect value) => value.toJson();
+}
+
 final class ValueXImplSerializer extends Serializer<ValueXImpl> {
   const ValueXImplSerializer();
 
@@ -2417,6 +2581,20 @@ final class ValueXSerializer extends Serializer<ValueX> {
   @override
   Object? serialize(ValueX value) =>
       Serializers.instance.serialize<Value>(value.v);
+}
+
+final class ValueXToFromJsonCombinedSerializer
+    extends Serializer<ValueXToFromJsonCombined> {
+  const ValueXToFromJsonCombinedSerializer();
+
+  @override
+  ValueXToFromJsonCombined deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return (ValueXFromJson.fromJson(serialized) as ValueXToFromJsonCombined);
+  }
+
+  @override
+  Object? serialize(ValueXToFromJsonCombined value) => value.toJson();
 }
 
 final class ValueXToFromJsonSerializer extends Serializer<ValueXToFromJson> {

@@ -2353,6 +2353,487 @@ class CelestFunctionsExtensionTypes {
     }
   }
 
+  /// Tests that extension types can implement other extension types to achieve
+  /// the same results as above.
+  Future<ValueXToFromJsonCombined> valueXToFromJsonCombined(
+      ValueXToFromJsonCombined v) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/value-x-to-from-json-combined'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'v': Serializers.instance.serialize<ValueXToFromJsonCombined>(
+          v,
+          const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ValueXToFromJsonCombined>(
+        $body['response'],
+        const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ValueXImplIndirect> valueXImplIndirect(ValueXImplIndirect v) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/value-x-impl-indirect'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'v': Serializers.instance.serialize<ValueXImplIndirect>(
+          v,
+          const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ValueXImplIndirect>(
+        $body['response'],
+        const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<Color> color(Color color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body:
+          jsonEncode({r'color': Serializers.instance.serialize<Color>(color)}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<Color>($body['response']);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorX> colorx(ColorX color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/colorx'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorX>(
+          color,
+          const TypeToken<ColorX>('ColorX'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorX>(
+        $body['response'],
+        const TypeToken<ColorX>('ColorX'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXImpl> colorXImpl(ColorXImpl color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-impl'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXImpl>(
+          color,
+          const TypeToken<ColorXImpl>('ColorXImpl'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXImpl>(
+        $body['response'],
+        const TypeToken<ColorXImpl>('ColorXImpl'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXToFromJson> colorXToFromJson(ColorXToFromJson color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-to-from-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXToFromJson>(
+          color,
+          const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXToFromJson>(
+        $body['response'],
+        const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXToJson> colorXToJson(ColorXToJson color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-to-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXToJson>(
+          color,
+          const TypeToken<ColorXToJson>('ColorXToJson'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXToJson>(
+        $body['response'],
+        const TypeToken<ColorXToJson>('ColorXToJson'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXToJsonImpl> colorXToJsonImpl(ColorXToJsonImpl color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-to-json-impl'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXToJsonImpl>(
+          color,
+          const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXToJsonImpl>(
+        $body['response'],
+        const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXFromJson> colorXFromJson(ColorXFromJson color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-from-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXFromJson>(
+          color,
+          const TypeToken<ColorXFromJson>('ColorXFromJson'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXFromJson>(
+        $body['response'],
+        const TypeToken<ColorXFromJson>('ColorXFromJson'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXFromJsonImpl> colorXFromJsonImpl(
+      ColorXFromJsonImpl color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-from-json-impl'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXFromJsonImpl>(
+          color,
+          const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXFromJsonImpl>(
+        $body['response'],
+        const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXFromJsonStatic> colorXFromJsonStatic(
+      ColorXFromJsonStatic color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-from-json-static'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXFromJsonStatic>(
+          color,
+          const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXFromJsonStatic>(
+        $body['response'],
+        const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXToFromJsonCombined> colorXToFromJsonCombined(
+      ColorXToFromJsonCombined color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-to-from-json-combined'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXToFromJsonCombined>(
+          color,
+          const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXToFromJsonCombined>(
+        $body['response'],
+        const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ColorXImplIndirect> colorXImplIndirect(
+      ColorXImplIndirect color) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/color-x-impl-indirect'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'color': Serializers.instance.serialize<ColorXImplIndirect>(
+          color,
+          const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ColorXImplIndirect>(
+        $body['response'],
+        const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
   Future<JsonValue> jsonValue(JsonValue value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-value'),
