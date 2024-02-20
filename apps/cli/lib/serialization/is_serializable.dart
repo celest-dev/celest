@@ -821,7 +821,12 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         // This is the only case where `Object`/`dynamic` are allowed.
         InterfaceType(isDartCoreObject: true) ||
         DynamicType() =>
-          const Verdict.yes(),
+          const VerdictNo([
+            VerdictReason(
+              'Maps with dynamic/Object values are no longer supported directly. '
+              'To pass JSON maps, use `JsonMap` from `package:celest_core`.',
+            ),
+          ]),
         _ => typeHelper.isSerializable(valueType),
       };
     }

@@ -518,7 +518,10 @@ final class CustomErrorSerializer extends Serializer<CustomError> {
   @override
   Map<String, Object?> serialize(CustomError value) => {
         r'message': value.message,
-        r'additionalInfo': value.additionalInfo,
+        r'additionalInfo': Serializers.instance.serialize<JsonMap>(
+          value.additionalInfo,
+          const TypeToken<JsonMap>('JsonMap'),
+        ),
       };
 }
 
@@ -554,7 +557,10 @@ final class CustomErrorWithStackTraceSerializer
         r'stackTrace':
             Serializers.instance.serialize<StackTrace>(value.stackTrace),
         r'message': value.message,
-        r'additionalInfo': value.additionalInfo,
+        r'additionalInfo': Serializers.instance.serialize<JsonMap>(
+          value.additionalInfo,
+          const TypeToken<JsonMap>('JsonMap'),
+        ),
       };
 }
 
@@ -570,7 +576,10 @@ final class CustomExceptionSerializer extends Serializer<CustomException> {
   @override
   Map<String, Object?> serialize(CustomException value) => {
         r'message': value.message,
-        r'additionalInfo': value.additionalInfo,
+        r'additionalInfo': Serializers.instance.serialize<JsonMap>(
+          value.additionalInfo,
+          const TypeToken<JsonMap>('JsonMap'),
+        ),
       };
 }
 
@@ -1144,7 +1153,7 @@ final class JsonListSerializer extends Serializer<JsonList> {
   }
 
   @override
-  List<Object?> serialize(JsonList value) => value.value;
+  List<Object?> serialize(JsonList value) => value;
 }
 
 final class JsonMapSerializer extends Serializer<JsonMap> {
@@ -1157,7 +1166,7 @@ final class JsonMapSerializer extends Serializer<JsonMap> {
   }
 
   @override
-  Map<String, Object?> serialize(JsonMap value) => value.value;
+  Map<String, Object?> serialize(JsonMap value) => value;
 }
 
 final class JsonNumSerializer extends Serializer<JsonNum> {

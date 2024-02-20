@@ -572,45 +572,6 @@ final tests = <String, Test>{
               },
             ),
           ],
-          'dynamicMap': [
-            FunctionTestSuccess(
-              name: 'dynamicMap',
-              input: {
-                'map': {
-                  'hello': 'world',
-                },
-              },
-              output: {
-                'hello': 'world',
-              },
-            ),
-          ],
-          'objectMap': [
-            FunctionTestSuccess(
-              name: 'objectMap',
-              input: {
-                'map': {
-                  'hello': 'world',
-                },
-              },
-              output: {
-                'hello': 'world',
-              },
-            ),
-          ],
-          'objectNullableMap': [
-            FunctionTestSuccess(
-              name: 'objectNullableMap',
-              input: {
-                'map': {
-                  'hello': 'world',
-                },
-              },
-              output: {
-                'hello': 'world',
-              },
-            ),
-          ],
           'complexMap': [
             FunctionTestSuccess(
               name: 'complexMap',

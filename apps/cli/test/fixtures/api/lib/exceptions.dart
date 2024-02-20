@@ -2,9 +2,9 @@ import 'package:celest_backend/models.dart';
 
 final class CustomException implements Exception {
   final String message = 'This is a custom exception';
-  final Map<String, Object?> additionalInfo = {
+  final JsonMap additionalInfo = JsonMap({
     'hello': 'world',
-  };
+  });
 
   @override
   String toString() => 'CustomException: $message';
@@ -27,9 +27,9 @@ final class CustomExceptionToFromJson extends CustomException {
 
 final class CustomError extends Error {
   final String message = 'This is a custom error';
-  final Map<String, Object?> additionalInfo = {
+  final JsonMap additionalInfo = JsonMap({
     'hello': 'world',
-  };
+  });
 
   @override
   String toString() => 'CustomError: $message';
@@ -59,9 +59,9 @@ final class CustomErrorWithStackTrace extends Error {
   final StackTrace stackTrace;
 
   final String message = 'This is a custom error';
-  final Map<String, Object?> additionalInfo = {
+  final JsonMap additionalInfo = JsonMap({
     'hello': 'world',
-  };
+  });
 
   @override
   String toString() => 'CustomError: $message';

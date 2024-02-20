@@ -80,6 +80,10 @@ class Celest {
     Serializers.instance.put(const SupportedExceptionTypeSerializer());
     Serializers.instance.put(const SupportedErrorTypeSerializer());
     Serializers.instance.put(const CustomExceptionSerializer());
+    Serializers.instance.put(
+      const JsonMapSerializer(),
+      const TypeToken<JsonMap>('JsonMap'),
+    );
     Serializers.instance.put(const CustomExceptionToFromJsonSerializer());
     Serializers.instance.put(const CustomErrorSerializer());
     Serializers.instance.put(const CustomErrorToFromJsonSerializer());
@@ -155,10 +159,6 @@ class Celest {
     Serializers.instance.put(
       const JsonListSerializer(),
       const TypeToken<JsonList>('JsonList'),
-    );
-    Serializers.instance.put(
-      const JsonMapSerializer(),
-      const TypeToken<JsonMap>('JsonMap'),
     );
     Serializers.instance.put(const GenericWrappersSerializer());
     Serializers.instance.put(const IMapStringIMapStringSimpleClassSerializer());

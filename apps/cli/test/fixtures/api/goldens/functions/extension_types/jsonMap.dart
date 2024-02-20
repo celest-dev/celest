@@ -54,5 +54,5 @@ final class JsonMapSerializer extends _i3.Serializer<_i4.JsonMap> {
   }
 
   @override
-  Map<String, Object?> serialize(_i4.JsonMap value) => value.value;
+  Map<String, Object?> serialize(_i4.JsonMap value) => value;
 }

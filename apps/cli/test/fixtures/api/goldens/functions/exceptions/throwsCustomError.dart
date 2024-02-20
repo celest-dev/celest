@@ -4,6 +4,7 @@
 import 'package:celest/celest.dart' as _i4;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/exceptions.dart' as _i3;
+import 'package:celest_core/src/serialization/json_value.dart' as _i5;
 
 import '../../../functions/exceptions.dart' as _i2;
 
@@ -35,6 +36,10 @@ final class ThrowsCustomErrorTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i4.Serializers.instance.put(const CustomErrorSerializer());
+    _i4.Serializers.instance.put(
+      const JsonMapSerializer(),
+      const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
+    );
   }
 }
 
@@ -56,6 +61,22 @@ final class CustomErrorSerializer extends _i4.Serializer<_i3.CustomError> {
   @override
   Map<String, Object?> serialize(_i3.CustomError value) => {
         r'message': value.message,
-        r'additionalInfo': value.additionalInfo,
+        r'additionalInfo': _i4.Serializers.instance.serialize<_i5.JsonMap>(
+          value.additionalInfo,
+          const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
+        ),
       };
+}
+
+final class JsonMapSerializer extends _i4.Serializer<_i5.JsonMap> {
+  const JsonMapSerializer();
+
+  @override
+  _i5.JsonMap deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i5.JsonMap((serialized as Map<String, Object?>));
+  }
+
+  @override
+  Map<String, Object?> serialize(_i5.JsonMap value) => value;
 }
