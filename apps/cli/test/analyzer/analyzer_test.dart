@@ -79,7 +79,12 @@ dependencies:
     d.file('project.dart', projectDart),
     if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     d.dir('auth', [
-      if (authDart != null) d.file('auth.dart', authDart),
+      if (authDart != null) d.file('auth.dart', '''
+import 'package:celest/src/auth/auth.dart';
+import 'package:celest/src/auth/auth_provider.dart';
+
+$authDart
+'''),
     ]),
     if (apis.isNotEmpty)
       d.dir('functions', [
@@ -1323,8 +1328,6 @@ void sayHello(
       testNoErrors(
         name: 'valid_inline_provider',
         authDart: '''
-import 'package:celest/celest.dart';
-
 const auth = Auth(
   providers: [
     AuthProvider.google(),
@@ -1344,8 +1347,6 @@ const auth = Auth(
       testNoErrors(
         name: 'valid_referenced_provider',
         authDart: '''
-import 'package:celest/celest.dart';
-
 const google = AuthProvider.google();
 const auth = Auth(
   providers: [google],
@@ -1364,8 +1365,6 @@ const auth = Auth(
       testErrors(
         name: 'no_providers',
         authDart: '''
-import 'package:celest/celest.dart';
-
 const auth = Auth(
   providers: [],
 );
@@ -1378,8 +1377,6 @@ const auth = Auth(
       testErrors(
         name: 'duplicate_provider',
         authDart: '''
-import 'package:celest/celest.dart';
-
 const google = AuthProvider.google();
 const auth = Auth(
   providers: [google, google],
