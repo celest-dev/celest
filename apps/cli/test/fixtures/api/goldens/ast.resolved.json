@@ -992,6 +992,28 @@
             ]
           }
         },
+        "stringFromJsonStatic": {
+          "name": "stringFromJsonStatic",
+          "route": "/extension-types/string-from-json-static",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
         "stringPrivateField": {
           "name": "stringPrivateField",
           "route": "/extension-types/string-private-field",
@@ -1237,6 +1259,28 @@
         "valueXFromJsonImpl": {
           "name": "valueXFromJsonImpl",
           "route": "/extension-types/value-x-from-json-impl",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "valueXFromJsonStatic": {
+          "name": "valueXFromJsonStatic",
+          "route": "/extension-types/value-x-from-json-static",
           "apiName": "extension_types",
           "envVars": [],
           "policy": {
@@ -3337,6 +3381,28 @@
         "asyncNonMapFromAndToJson": {
           "name": "asyncNonMapFromAndToJson",
           "route": "/classes/async-non-map-from-and-to-json",
+          "apiName": "classes",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "fromJsonStatic": {
+          "name": "fromJsonStatic",
+          "route": "/classes/from-json-static",
           "apiName": "classes",
           "envVars": [],
           "policy": {

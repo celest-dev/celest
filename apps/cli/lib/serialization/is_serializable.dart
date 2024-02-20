@@ -396,9 +396,18 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   Verdict _checkCustomDeserializer(
     InterfaceType type,
-    ConstructorElement fromJsonCtor,
+    ExecutableElement fromJsonCtor,
     DartType wireType,
   ) {
+    if (fromJsonCtor is! ConstructorElement) {
+      if (!identical(fromJsonCtor.returnType, type)) {
+        return Verdict.no(
+          'The return type of ${type.element.name}\'s fromJson constructor '
+          'must be ${type.element.name}.',
+        );
+      }
+    }
+
     // Using the `declaration` here so we get the original definition –
     // and not one with the generics already populated.
     //
@@ -1110,7 +1119,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
 typedef InterfaceMembers = ({
   List<FieldElement> fields,
   MethodElement? toJsonMethod,
-  ConstructorElement? fromJsonCtor,
+  ExecutableElement? fromJsonCtor,
   DartType wireType,
 });
 
@@ -1127,7 +1136,10 @@ extension on InterfaceType {
           fields: element.sortedFields(this),
           toJsonMethod: toJsonMethod,
           fromJsonCtor: element.constructors
-              .firstWhereOrNull((ctor) => ctor.name == 'fromJson'),
+                  .firstWhereOrNull((ctor) => ctor.name == 'fromJson') ??
+              element.methods.firstWhereOrNull(
+                (method) => method.isStatic && method.name == 'fromJson',
+              ),
           wireType: toJsonMethod?.returnType ?? jsonMapType,
         );
       case final ExtensionTypeElement element:
@@ -1156,7 +1168,10 @@ extension on InterfaceType {
           fields: [element.representation],
           toJsonMethod: toJsonMethod,
           fromJsonCtor: element.constructors
-              .firstWhereOrNull((ctor) => ctor.name == 'fromJson'),
+                  .firstWhereOrNull((ctor) => ctor.name == 'fromJson') ??
+              element.methods.firstWhereOrNull(
+                (method) => method.isStatic && method.name == 'fromJson',
+              ),
           // For the purpose of determining the wire type, we use the
           // representation's wire type if it implements it. Otherwise, we
           // fallback to the JSON map type (same as classes).

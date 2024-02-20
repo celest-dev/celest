@@ -720,6 +720,19 @@ final class FromJsonAndToJsonSerializer extends Serializer<FromJsonAndToJson> {
   Object? serialize(FromJsonAndToJson value) => value.toJson();
 }
 
+final class FromJsonStaticSerializer extends Serializer<FromJsonStatic> {
+  const FromJsonStaticSerializer();
+
+  @override
+  FromJsonStatic deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return FromJsonStatic.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(FromJsonStatic value) => value.toJson();
+}
+
 final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
   const GenericWrappersSerializer();
 
@@ -2108,6 +2121,20 @@ final class StringXFromJsonSerializer extends Serializer<StringXFromJson> {
   Object? serialize(StringXFromJson value) => value.s;
 }
 
+final class StringXFromJsonStaticSerializer
+    extends Serializer<StringXFromJsonStatic> {
+  const StringXFromJsonStaticSerializer();
+
+  @override
+  StringXFromJsonStatic deserialize(Object? value) {
+    final serialized = assertWireType<String>(value);
+    return StringXFromJsonStatic.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(StringXFromJsonStatic value) => value.s;
+}
+
 final class StringXImplSerializer extends Serializer<StringXImpl> {
   const StringXImplSerializer();
 
@@ -2347,6 +2374,21 @@ final class ValueXFromJsonSerializer extends Serializer<ValueXFromJson> {
 
   @override
   Object? serialize(ValueXFromJson value) =>
+      Serializers.instance.serialize<Value>(value.v);
+}
+
+final class ValueXFromJsonStaticSerializer
+    extends Serializer<ValueXFromJsonStatic> {
+  const ValueXFromJsonStaticSerializer();
+
+  @override
+  ValueXFromJsonStatic deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return ValueXFromJsonStatic.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(ValueXFromJsonStatic value) =>
       Serializers.instance.serialize<Value>(value.v);
 }
 

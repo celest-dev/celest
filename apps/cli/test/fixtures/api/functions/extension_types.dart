@@ -15,6 +15,7 @@ StringXToJson stringToJson(StringXToJson s) => s;
 StringXToJsonImpl stringToJsonImpl(StringXToJsonImpl s) => s;
 StringXFromJson stringFromJson(StringXFromJson s) => s;
 StringXFromJsonImpl stringFromJsonImpl(StringXFromJsonImpl s) => s;
+StringXFromJsonStatic stringFromJsonStatic(StringXFromJsonStatic s) => s;
 StringXPrivateField stringPrivateField(StringXPrivateField s) => s;
 StringXPrivateFieldImpl stringPrivateFieldImpl(StringXPrivateFieldImpl s) => s;
 StringXPrivateCtor stringPrivateCtor(StringXPrivateCtor s) => s;
@@ -28,6 +29,7 @@ ValueXToJson valueXToJson(ValueXToJson v) => v;
 ValueXToJsonImpl valueXToJsonImpl(ValueXToJsonImpl v) => v;
 ValueXFromJson valueXFromJson(ValueXFromJson v) => v;
 ValueXFromJsonImpl valueXFromJsonImpl(ValueXFromJsonImpl v) => v;
+ValueXFromJsonStatic valueXFromJsonStatic(ValueXFromJsonStatic v) => v;
 
 JsonValue jsonValue(JsonValue value) => value;
 JsonString jsonString(JsonString value) => value;

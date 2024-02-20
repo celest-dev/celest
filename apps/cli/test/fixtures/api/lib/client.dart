@@ -71,6 +71,7 @@ class Celest {
     Serializers.instance.put(const NonMapToJsonSerializer());
     Serializers.instance.put(const NonMapToJsonWithDefaultsSerializer());
     Serializers.instance.put(const NonMapFromAndToJsonSerializer());
+    Serializers.instance.put(const FromJsonStaticSerializer());
     Serializers.instance.put(const SimpleClassSerializer());
     Serializers.instance.put(const NodeSerializer());
     Serializers.instance.put(const ParentSerializer());
@@ -117,6 +118,10 @@ class Celest {
       const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
     );
     Serializers.instance.put(
+      const StringXFromJsonStaticSerializer(),
+      const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+    );
+    Serializers.instance.put(
       const StringXPrivateFieldSerializer(),
       const TypeToken<StringXPrivateField>('StringXPrivateField'),
     );
@@ -160,6 +165,10 @@ class Celest {
     Serializers.instance.put(
       const ValueXFromJsonImplSerializer(),
       const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+    );
+    Serializers.instance.put(
+      const ValueXFromJsonStaticSerializer(),
+      const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
     );
     Serializers.instance.put(
       const JsonValueSerializer(),

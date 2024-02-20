@@ -118,3 +118,13 @@ class NonMapFromAndToJson {
 
   String toJson() => field;
 }
+
+class FromJsonStatic {
+  const FromJsonStatic(this.field);
+
+  static FromJsonStatic fromJson(String field) => FromJsonStatic(field);
+
+  final String field;
+
+  String toJson() => field;
+}

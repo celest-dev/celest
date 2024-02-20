@@ -670,6 +670,15 @@ final tests = <String, Test>{
               output: 'olleh',
             ),
           ],
+          'stringFromJsonStatic': [
+            FunctionTestSuccess(
+              name: 'stringFromJsonStatic',
+              input: {
+                's': 'hello',
+              },
+              output: 'olleh',
+            ),
+          ],
           'stringPrivateField': [
             FunctionTestSuccess(
               name: 'stringPrivateField',
@@ -788,6 +797,19 @@ final tests = <String, Test>{
                 'v': 'hello',
               },
               output: 'helloFromJson',
+            ),
+          ],
+          'valueXFromJsonStatic': [
+            FunctionTestSuccess(
+              name: 'valueXFromJson',
+              input: {
+                'v': {
+                  'value': 'hello',
+                },
+              },
+              output: {
+                'value': 'helloFromJson',
+              },
             ),
           ],
           'jsonValue': [
@@ -1814,6 +1836,15 @@ final tests = <String, Test>{
           'asyncNonMapFromAndToJson': [
             FunctionTestSuccess(
               name: 'asyncNonMapFromAndToJson',
+              input: {
+                'value': 'field',
+              },
+              output: 'field',
+            ),
+          ],
+          'fromJsonStatic': [
+            FunctionTestSuccess(
+              name: 'fromJsonStatic',
               input: {
                 'value': 'field',
               },

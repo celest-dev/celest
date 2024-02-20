@@ -19,6 +19,10 @@ extension type StringXFromJsonImpl(String s) implements String {
   StringXFromJsonImpl.fromJson(String s)
       : s = String.fromCharCodes(s.codeUnits.reversed);
 }
+extension type StringXFromJsonStatic(String s) {
+  static StringXFromJsonStatic fromJson(String s) =>
+      StringXFromJsonStatic(String.fromCharCodes(s.codeUnits.reversed));
+}
 extension type StringXPrivateField(String _) {}
 extension type StringXPrivateFieldImpl(String _) implements String {}
 extension type StringXPrivateCtor._(String s) {}
@@ -53,4 +57,8 @@ extension type const ValueXFromJson(Value v) {
 }
 extension type const ValueXFromJsonImpl(Value v) implements Value {
   ValueXFromJsonImpl.fromJson(String value) : v = Value('${value}FromJson');
+}
+extension type const ValueXFromJsonStatic(Value v) {
+  static ValueXFromJsonStatic fromJson(Map<String, Object?> json) =>
+      ValueXFromJsonStatic(Value('${json['value']}FromJson'));
 }

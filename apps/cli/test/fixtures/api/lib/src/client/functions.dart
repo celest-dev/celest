@@ -964,6 +964,37 @@ class CelestFunctionsClasses {
         }
     }
   }
+
+  Future<FromJsonStatic> fromJsonStatic(FromJsonStatic value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/classes/from-json-static'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode(
+          {r'value': Serializers.instance.serialize<FromJsonStatic>(value)}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance
+          .deserialize<FromJsonStatic>($body['response']);
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
 }
 
 /// Tests that collections (e.g. Lists/Maps) can be used as parameter and
@@ -1808,6 +1839,44 @@ class CelestFunctionsExtensionTypes {
     }
   }
 
+  Future<StringXFromJsonStatic> stringFromJsonStatic(
+      StringXFromJsonStatic s) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/string-from-json-static'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r's': Serializers.instance.serialize<StringXFromJsonStatic>(
+          s,
+          const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<StringXFromJsonStatic>(
+        $body['response'],
+        const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
   Future<StringXPrivateField> stringPrivateField(StringXPrivateField s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field'),
@@ -2225,6 +2294,44 @@ class CelestFunctionsExtensionTypes {
       return Serializers.instance.deserialize<ValueXFromJsonImpl>(
         $body['response'],
         const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+      );
+    }
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($response.statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<ValueXFromJsonStatic> valueXFromJsonStatic(
+      ValueXFromJsonStatic v) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/extension-types/value-x-from-json-static'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode({
+        r'v': Serializers.instance.serialize<ValueXFromJsonStatic>(
+          v,
+          const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+        )
+      }),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode == 200) {
+      return Serializers.instance.deserialize<ValueXFromJsonStatic>(
+        $body['response'],
+        const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
       );
     }
     final $error = ($body['error'] as Map<String, Object?>);

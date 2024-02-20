@@ -760,6 +760,40 @@ class ValidCustomJson {
 ''',
       );
 
+      testNoErrors(
+        name: 'valid_static_fromJson',
+        apis: {
+          'greeting.dart': '''
+ValidFromJsonStatic sayHello(ValidFromJsonStatic param) => param;
+''',
+        },
+        models: '''
+class ValidFromJsonStatic {
+  static ValidFromJsonStatic fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+  Map<String, dynamic> toJson() => throw UnimplementedError();
+}
+''',
+      );
+
+      testErrors(
+        name: 'invalid_static_fromJson',
+        apis: {
+          'greeting.dart': '''
+void sayHello(ValidFromJsonStatic param) {}
+''',
+        },
+        models: '''
+class ValidFromJsonStatic {
+  static ValidFromJsonStatic? fromJson(Map<String, dynamic> _) => throw UnimplementedError();
+  Map<String, dynamic> toJson() => throw UnimplementedError();
+}
+''',
+        errors: [
+          'The return type of ValidFromJsonStatic\'s fromJson constructor must '
+              'be ValidFromJsonStatic',
+        ],
+      );
+
       testErrors(
         name: 'direct_cycle',
         apis: {

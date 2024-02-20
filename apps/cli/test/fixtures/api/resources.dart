@@ -130,6 +130,11 @@ abstract final class Functions {
     functionName: r'fromAndToJson',
   );
 
+  static const classesFromJsonStatic = CloudFunction(
+    api: r'classes',
+    functionName: r'fromJsonStatic',
+  );
+
   static const classesMixedFields = CloudFunction(
     api: r'classes',
     functionName: r'mixedFields',
@@ -320,6 +325,11 @@ abstract final class Functions {
     functionName: r'stringFromJsonImpl',
   );
 
+  static const extensionTypesStringFromJsonStatic = CloudFunction(
+    api: r'extension_types',
+    functionName: r'stringFromJsonStatic',
+  );
+
   static const extensionTypesStringImpl = CloudFunction(
     api: r'extension_types',
     functionName: r'stringImpl',
@@ -373,6 +383,11 @@ abstract final class Functions {
   static const extensionTypesValueXFromJsonImpl = CloudFunction(
     api: r'extension_types',
     functionName: r'valueXFromJsonImpl',
+  );
+
+  static const extensionTypesValueXFromJsonStatic = CloudFunction(
+    api: r'extension_types',
+    functionName: r'valueXFromJsonStatic',
   );
 
   static const extensionTypesValueXImpl = CloudFunction(

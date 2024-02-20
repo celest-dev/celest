@@ -66,3 +66,5 @@ Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
   NonMapFromAndToJson value,
 ) async =>
     value;
+
+FromJsonStatic fromJsonStatic(FromJsonStatic value) => value;

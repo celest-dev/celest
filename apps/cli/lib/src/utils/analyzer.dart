@@ -384,6 +384,9 @@ final class DartTypeEquality implements Equality<DartType> {
 
   @override
   bool equals(DartType e1, DartType e2) {
+    if (identical(e1, e2)) {
+      return true;
+    }
     if (e1 is RecordType && e2 is RecordType) {
       return RecordTypeEquality(ignoreNullability: ignoreNullability)
           .equals(e1, e2);
