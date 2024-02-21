@@ -255,8 +255,14 @@ extension DartTypeHelper on DartType {
     if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
       return _SubtypeResultX._allowed;
     }
-    final subtypes =
-        typeHelper.subtypes[element] ??= await element.collectSubtypes();
+    final subtypes = typeHelper.subtypes[element] ??= switch (element) {
+      // Don't collect subtypes for final classes.
+      // TODO(dnys1): How best to handle this? Needed for `OkShapeResult` but
+      // final classes can still reopen types and introduce new classes with
+      // new identities.
+      ClassElement(isFinal: true) => const [],
+      _ => await element.collectSubtypes(),
+    };
     for (final subtype in subtypes) {
       hasAllowedSubtypes &= await subtype.hasAllowedSubtypes();
     }

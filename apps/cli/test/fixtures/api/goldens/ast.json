@@ -2337,6 +2337,110 @@
             "text": "aliasedShapeResults"
           }
         },
+        "swappedResult": {
+          "name": "swappedResult",
+          "apiName": "sealed_classes",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "result",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Result",
+                "url": "package:celest_backend/src/models/sealed_classes.dart",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "Shape",
+                    "url": "package:celest_backend/src/models/sealed_classes.dart",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 2438,
+                  "uri": "sealed_classes.dart",
+                  "line": 75,
+                  "column": 65
+                },
+                "end": {
+                  "offset": 2444,
+                  "uri": "sealed_classes.dart",
+                  "line": 75,
+                  "column": 71
+                },
+                "text": "result"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "SwappedResult",
+            "url": "package:celest_backend/src/models/sealed_classes.dart",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "package:celest_backend/src/models/sealed_classes.dart",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "SwappedResult",
+            "url": "package:celest_backend/src/models/sealed_classes.dart",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "package:celest_backend/src/models/sealed_classes.dart",
+                "isNullable": false
+              },
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 2402,
+              "uri": "sealed_classes.dart",
+              "line": 75,
+              "column": 29
+            },
+            "end": {
+              "offset": 2415,
+              "uri": "sealed_classes.dart",
+              "line": 75,
+              "column": 42
+            },
+            "text": "swappedResult"
+          }
+        },
         "genericResult": {
           "name": "genericResult",
           "apiName": "sealed_classes",
@@ -2369,13 +2473,13 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2528,
+                  "offset": 2522,
                   "uri": "sealed_classes.dart",
                   "line": 78,
                   "column": 45
                 },
                 "end": {
-                  "offset": 2532,
+                  "offset": 2526,
                   "uri": "sealed_classes.dart",
                   "line": 78,
                   "column": 49
@@ -2424,13 +2528,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2495,
+              "offset": 2489,
               "uri": "sealed_classes.dart",
               "line": 78,
               "column": 12
             },
             "end": {
-              "offset": 2508,
+              "offset": 2502,
               "uri": "sealed_classes.dart",
               "line": 78,
               "column": 25
@@ -2480,13 +2584,13 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2646,
+                  "offset": 2640,
                   "uri": "sealed_classes.dart",
                   "line": 81,
                   "column": 4
                 },
                 "end": {
-                  "offset": 2650,
+                  "offset": 2644,
                   "uri": "sealed_classes.dart",
                   "line": 81,
                   "column": 8
@@ -2510,13 +2614,13 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2656,
+                  "offset": 2650,
                   "uri": "sealed_classes.dart",
                   "line": 82,
                   "column": 4
                 },
                 "end": {
-                  "offset": 2661,
+                  "offset": 2655,
                   "uri": "sealed_classes.dart",
                   "line": 82,
                   "column": 9
@@ -2601,18 +2705,80 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2576,
+              "offset": 2570,
               "uri": "sealed_classes.dart",
               "line": 80,
               "column": 4
             },
             "end": {
-              "offset": 2597,
+              "offset": 2591,
               "uri": "sealed_classes.dart",
               "line": 80,
               "column": 25
             },
             "text": "multipleGenericResult"
+          }
+        },
+        "okShapeResult": {
+          "name": "okShapeResult",
+          "apiName": "sealed_classes",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "shape",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Shape",
+                "url": "package:celest_backend/src/models/sealed_classes.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 2954,
+                  "uri": "sealed_classes.dart",
+                  "line": 89,
+                  "column": 34
+                },
+                "end": {
+                  "offset": 2959,
+                  "uri": "sealed_classes.dart",
+                  "line": 89,
+                  "column": 39
+                },
+                "text": "shape"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "OkShapeResult",
+            "url": "package:celest_backend/src/models/sealed_classes.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "OkShapeResult",
+            "url": "package:celest_backend/src/models/sealed_classes.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 2934,
+              "uri": "sealed_classes.dart",
+              "line": 89,
+              "column": 14
+            },
+            "end": {
+              "offset": 2947,
+              "uri": "sealed_classes.dart",
+              "line": 89,
+              "column": 27
+            },
+            "text": "okShapeResult"
           }
         }
       },

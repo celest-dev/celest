@@ -2839,63 +2839,63 @@ final tests = <String, Test>{
               ],
             ),
           ],
-          // 'okShapeResult': [
-          //   FunctionTestSuccess(
-          //     name: 'circle',
-          //     input: {
-          //       'shape': {
-          //         r'$type': 'Circle',
-          //         'radius': 5.0,
-          //       },
-          //     },
-          //     output: {
-          //       'data': {
-          //         r'$type': 'Circle',
-          //         'radius': 5.0,
-          //       },
-          //     },
-          //   ),
-          //   FunctionTestSuccess(
-          //     name: 'rectangle',
-          //     input: {
-          //       'shape': {
-          //         r'$type': 'Rectangle',
-          //         'width': 5.0,
-          //         'height': 5.0,
-          //       },
-          //     },
-          //     output: {
-          //       'data': {
-          //         r'$type': 'Rectangle',
-          //         'width': 5.0,
-          //         'height': 5.0,
-          //       },
-          //     },
-          //   ),
-          // ],
-          // 'swappedResult': [
-          //   FunctionTestSuccess(
-          //     name: 'swappedResult',
-          //     input: {
-          //       'result': {
-          //         r'$type': 'OkResult',
-          //         'data': {
-          //           r'$type': 'Circle',
-          //           'radius': 5.0,
-          //         },
-          //       },
-          //     },
-          //     output: {
-          //       'result': {
-          //         r'$type': 'OkResult',
-          //         'data': {
-          //           r'$type': 'Circle',
-          //           'radius': 5.0,
-          //         },
-          //       },
-          //     },
-          //   ),
-          // ],
+          'okShapeResult': [
+            FunctionTestSuccess(
+              name: 'circle',
+              input: {
+                'shape': {
+                  r'$type': 'Circle',
+                  'radius': 5.0,
+                },
+              },
+              output: {
+                'data': {
+                  r'$type': 'Circle',
+                  'radius': 5.0,
+                },
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'rectangle',
+              input: {
+                'shape': {
+                  r'$type': 'Rectangle',
+                  'width': 5.0,
+                  'height': 5.0,
+                },
+              },
+              output: {
+                'data': {
+                  r'$type': 'Rectangle',
+                  'width': 5.0,
+                  'height': 5.0,
+                },
+              },
+            ),
+          ],
+          'swappedResult': [
+            FunctionTestSuccess(
+              name: 'swappedResult',
+              input: {
+                'result': {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+              output: {
+                'result': {
+                  r'$type': 'OkResult',
+                  'data': {
+                    r'$type': 'Circle',
+                    'radius': 5.0,
+                  },
+                },
+              },
+            ),
+          ],
           'genericResult': [
             FunctionTestSuccess(
               name: 'with type',

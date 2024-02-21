@@ -5936,6 +5936,32 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  Future<_$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>>
+      swappedResult(
+          _$sealed_classes.Result<_$sealed_classes.Shape, String>
+              result) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/swapped-result'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<_$sealed_classes.Shape, String>>(
+                result)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance.deserialize<
+        _$sealed_classes
+        .SwappedResult<_$sealed_classes.Shape, String>>($body['response']);
+  }
+
   Future<_$sealed_classes.OkResult<T>>
       genericResult<T extends _$sealed_classes.Shape>(T data) async {
     const $T = {
@@ -5999,5 +6025,26 @@ class CelestFunctionsSealedClasses {
         .map((el) =>
             Serializers.instance.deserialize<_$sealed_classes.Result<T, E>>(el))
         .toList();
+  }
+
+  Future<_$sealed_classes.OkShapeResult> okShapeResult(
+      _$sealed_classes.Shape shape) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/ok-shape-result'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'shape': Serializers.instance.serialize<_$sealed_classes.Shape>(shape)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$sealed_classes.OkShapeResult>($body['response']);
   }
 }

@@ -1021,6 +1021,11 @@ abstract final class Functions {
     functionName: r'multipleGenericResult',
   );
 
+  static const sealedClassesOkShapeResult = CloudFunction(
+    api: r'sealed_classes',
+    functionName: r'okShapeResult',
+  );
+
   static const sealedClassesOkShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'okShapeResults',
@@ -1059,5 +1064,10 @@ abstract final class Functions {
   static const sealedClassesShapeResults = CloudFunction(
     api: r'sealed_classes',
     functionName: r'shapeResults',
+  );
+
+  static const sealedClassesSwappedResult = CloudFunction(
+    api: r'sealed_classes',
+    functionName: r'swappedResult',
   );
 }

@@ -1761,14 +1761,22 @@ void initSerializers() {
     serialize: ($value) => {
       ...$value.toJson(),
       r'$type': switch ($value) {
-        _$sealed_classes.RectangleWithOverriddenCustomJson() =>
-          r'RectangleWithOverriddenCustomJson',
         _$sealed_classes.CircleWithOverriddenCustomJson() =>
           r'CircleWithOverriddenCustomJson',
+        _$sealed_classes.RectangleWithOverriddenCustomJson() =>
+          r'RectangleWithOverriddenCustomJson',
       },
     },
     deserialize: ($serialized) {
       return _$sealed_classes.ShapeWithOverriddenCustomJson.fromJson(
+          $serialized);
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.CircleWithOverriddenCustomJson, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(),
+    deserialize: ($serialized) {
+      return _$sealed_classes.CircleWithOverriddenCustomJson.fromJson(
           $serialized);
     },
   ));
@@ -1780,14 +1788,6 @@ void initSerializers() {
         r'$type': r'RectangleWithOverriddenCustomJson',
         ...$serialized,
       }) as _$sealed_classes.RectangleWithOverriddenCustomJson);
-    },
-  ));
-  Serializers.instance.put(Serializer.define<
-      _$sealed_classes.CircleWithOverriddenCustomJson, Map<String, Object?>>(
-    serialize: ($value) => $value.toJson(),
-    deserialize: ($serialized) {
-      return _$sealed_classes.CircleWithOverriddenCustomJson.fromJson(
-          $serialized);
     },
   ));
   Serializers.instance.put(Serializer.define<
@@ -1814,12 +1814,14 @@ void initSerializers() {
       _$sealed_classes.Result<_$sealed_classes.Shape, String>,
       Map<String, Object?>>(
     serialize: ($value) {
-      if ($value is _$sealed_classes.ErrResult<String>) {
+      if ($value
+          is _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>) {
         return {
-          ...(Serializers.instance
-                  .serialize<_$sealed_classes.ErrResult<String>>($value)
+          ...(Serializers.instance.serialize<
+                  _$sealed_classes
+                  .SwappedResult<String, _$sealed_classes.Shape>>($value)
               as Map<String, Object?>),
-          r'$type': r'ErrResult',
+          r'$type': r'SwappedResult',
         };
       }
       if ($value is _$sealed_classes.OkResult<_$sealed_classes.Shape>) {
@@ -1830,6 +1832,14 @@ void initSerializers() {
           r'$type': r'OkResult',
         };
       }
+      if ($value is _$sealed_classes.ErrResult<String>) {
+        return {
+          ...(Serializers.instance
+                  .serialize<_$sealed_classes.ErrResult<String>>($value)
+              as Map<String, Object?>),
+          r'$type': r'ErrResult',
+        };
+      }
       throw SerializationException((StringBuffer('Unknown subtype of ')
             ..write(r'Result')
             ..write(': ')
@@ -1837,13 +1847,91 @@ void initSerializers() {
           .toString());
     },
     deserialize: ($serialized) {
-      if ($serialized[r'$type'] == r'ErrResult') {
-        return Serializers.instance
-            .deserialize<_$sealed_classes.ErrResult<String>>($serialized);
+      if ($serialized[r'$type'] == r'SwappedResult') {
+        return Serializers.instance.deserialize<
+            _$sealed_classes
+            .SwappedResult<String, _$sealed_classes.Shape>>($serialized);
       }
       if ($serialized[r'$type'] == r'OkResult') {
         return Serializers.instance
             .deserialize<_$sealed_classes.OkResult<_$sealed_classes.Shape>>(
+                $serialized);
+      }
+      if ($serialized[r'$type'] == r'ErrResult') {
+        return Serializers.instance
+            .deserialize<_$sealed_classes.ErrResult<String>>($serialized);
+      }
+      throw SerializationException((StringBuffer('Unknown subtype of ')
+            ..write(r'Result')
+            ..write(': ')
+            ..write($serialized[r'$type']))
+          .toString());
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>,
+      Map<String, Object?>>(
+    serialize: ($value) => {
+      r'result': Serializers.instance
+          .serialize<_$sealed_classes.Result<String, _$sealed_classes.Shape>>(
+              $value.result)
+    },
+    deserialize: ($serialized) {
+      return _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>(
+          Serializers.instance.deserialize<
+              _$sealed_classes
+              .Result<String, _$sealed_classes.Shape>>($serialized[r'result']));
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.Result<String, _$sealed_classes.Shape>,
+      Map<String, Object?>>(
+    serialize: ($value) {
+      if ($value
+          is _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>) {
+        return {
+          ...(Serializers.instance.serialize<
+                  _$sealed_classes
+                  .SwappedResult<_$sealed_classes.Shape, String>>($value)
+              as Map<String, Object?>),
+          r'$type': r'SwappedResult',
+        };
+      }
+      if ($value is _$sealed_classes.OkResult<String>) {
+        return {
+          ...(Serializers.instance
+                  .serialize<_$sealed_classes.OkResult<String>>($value)
+              as Map<String, Object?>),
+          r'$type': r'OkResult',
+        };
+      }
+      if ($value is _$sealed_classes.ErrResult<_$sealed_classes.Shape>) {
+        return {
+          ...(Serializers.instance
+              .serialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
+                  $value) as Map<String, Object?>),
+          r'$type': r'ErrResult',
+        };
+      }
+      throw SerializationException((StringBuffer('Unknown subtype of ')
+            ..write(r'Result')
+            ..write(': ')
+            ..write($value.runtimeType))
+          .toString());
+    },
+    deserialize: ($serialized) {
+      if ($serialized[r'$type'] == r'SwappedResult') {
+        return Serializers.instance.deserialize<
+            _$sealed_classes
+            .SwappedResult<_$sealed_classes.Shape, String>>($serialized);
+      }
+      if ($serialized[r'$type'] == r'OkResult') {
+        return Serializers.instance
+            .deserialize<_$sealed_classes.OkResult<String>>($serialized);
+      }
+      if ($serialized[r'$type'] == r'ErrResult') {
+        return Serializers.instance
+            .deserialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
                 $serialized);
       }
       throw SerializationException((StringBuffer('Unknown subtype of ')
@@ -1853,29 +1941,86 @@ void initSerializers() {
           .toString());
     },
   ));
-  Serializers.instance.put(const OkResultSerializer());
-  Serializers.instance.put(const OkResultSerializer<_$sealed_classes.Shape>());
-  Serializers.instance.put(const OkResultSerializer<_$sealed_classes.Circle>());
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>,
+      Map<String, Object?>>(
+    serialize: ($value) => {
+      r'result': Serializers.instance
+          .serialize<_$sealed_classes.Result<_$sealed_classes.Shape, String>>(
+              $value.result)
+    },
+    deserialize: ($serialized) {
+      return _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>(
+          Serializers.instance.deserialize<
+              _$sealed_classes
+              .Result<_$sealed_classes.Shape, String>>($serialized[r'result']));
+    },
+  ));
+  Serializers.instance.put(Serializer.define<_$sealed_classes.OkResult<String>,
+      Map<String, Object?>>(
+    serialize: ($value) => {r'data': $value.data},
+    deserialize: ($serialized) {
+      return _$sealed_classes.OkResult<String>(
+          ($serialized[r'data'] as String));
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.ErrResult<_$sealed_classes.Shape>, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'error':
+          Serializers.instance.serialize<_$sealed_classes.Shape>($value.error)
+    },
+    deserialize: ($serialized) {
+      return _$sealed_classes.ErrResult<_$sealed_classes.Shape>(Serializers
+          .instance
+          .deserialize<_$sealed_classes.Shape>($serialized[r'error']));
+    },
+  ));
+  Serializers.instance.put(const OkResult_T_ShapeSerializer());
   Serializers.instance
-      .put(const OkResultSerializer<_$sealed_classes.Rectangle>());
-  Serializers.instance.put(const ResultSerializer());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Shape,
-      _$exceptions.ShapeException>());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Shape,
-      _$exceptions.BadShapeException>());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Circle,
-      _$exceptions.ShapeException>());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Circle,
-      _$exceptions.BadShapeException>());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Rectangle,
-      _$exceptions.ShapeException>());
-  Serializers.instance.put(const ResultSerializer<_$sealed_classes.Rectangle,
-      _$exceptions.BadShapeException>());
-  Serializers.instance.put(const ErrResultSerializer());
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Shape>());
   Serializers.instance
-      .put(const ErrResultSerializer<_$exceptions.ShapeException>());
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Circle>());
   Serializers.instance
-      .put(const ErrResultSerializer<_$exceptions.BadShapeException>());
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Rectangle>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Shape, _$exceptions.ShapeException>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Shape, _$exceptions.BadShapeException>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Circle, _$exceptions.ShapeException>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Circle, _$exceptions.BadShapeException>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Rectangle, _$exceptions.ShapeException>());
+  Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
+      _$sealed_classes.Rectangle, _$exceptions.BadShapeException>());
+  Serializers.instance
+      .put(const SwappedResult_E_ShapeException_T_ShapeSerializer());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.ShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.ShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.ShapeException, _$sealed_classes.Rectangle>());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.BadShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.BadShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(
+      const SwappedResult_E_ShapeException_T_ShapeSerializer<
+          _$exceptions.BadShapeException, _$sealed_classes.Rectangle>());
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
+      _$exceptions.ShapeException>());
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
+      _$exceptions.BadShapeException>());
   Serializers.instance
       .put(Serializer.define<_$exceptions.ShapeException, Map<String, Object?>>(
     serialize: ($value) {
@@ -1916,6 +2061,62 @@ void initSerializers() {
           .deserialize<_$sealed_classes.Shape>($serialized[r'shape']));
     },
   ));
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Rectangle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Rectangle>());
+  Serializers.instance
+      .put(const SwappedResult_T_Shape_E_ShapeExceptionSerializer());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Shape, _$exceptions.ShapeException>());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Shape, _$exceptions.BadShapeException>());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Circle, _$exceptions.ShapeException>());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Circle, _$exceptions.BadShapeException>());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Rectangle, _$exceptions.ShapeException>());
+  Serializers.instance.put(
+      const SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+          _$sealed_classes.Rectangle, _$exceptions.BadShapeException>());
+  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer());
+  Serializers.instance.put(
+      const OkResult_E_ShapeExceptionSerializer<_$exceptions.ShapeException>());
+  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer<
+      _$exceptions.BadShapeException>());
+  Serializers.instance.put(const ErrResult_T_ShapeSerializer());
+  Serializers.instance
+      .put(const ErrResult_T_ShapeSerializer<_$sealed_classes.Shape>());
+  Serializers.instance
+      .put(const ErrResult_T_ShapeSerializer<_$sealed_classes.Circle>());
+  Serializers.instance
+      .put(const ErrResult_T_ShapeSerializer<_$sealed_classes.Rectangle>());
+  Serializers.instance.put(
+      Serializer.define<_$sealed_classes.OkShapeResult, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'data':
+          Serializers.instance.serialize<_$sealed_classes.Shape>($value.data)
+    },
+    deserialize: ($serialized) {
+      return _$sealed_classes.OkShapeResult(Serializers.instance
+          .deserialize<_$sealed_classes.Shape>($serialized[r'data']));
+    },
+  ));
 }
 
 typedef Record$k7x4l9 = ({String a, String b, String c});
@@ -1925,9 +2126,10 @@ typedef Record$wkpf9q = ({
   ({String anotherField, String field}) nonAliased
 });
 
-final class ErrResultSerializer<E extends _$exceptions.ShapeException>
+final class ErrResult_E_ShapeExceptionSerializer<
+        E extends _$exceptions.ShapeException>
     extends Serializer<_$sealed_classes.ErrResult<E>> {
-  const ErrResultSerializer();
+  const ErrResult_E_ShapeExceptionSerializer();
 
   @override
   _$sealed_classes.ErrResult<E> deserialize(Object? $value) {
@@ -1941,9 +2143,42 @@ final class ErrResultSerializer<E extends _$exceptions.ShapeException>
       {r'error': Serializers.instance.serialize<E>($value.error)};
 }
 
-final class OkResultSerializer<T extends _$sealed_classes.Shape>
+final class ErrResult_T_ShapeSerializer<T extends _$sealed_classes.Shape>
+    extends Serializer<_$sealed_classes.ErrResult<T>> {
+  const ErrResult_T_ShapeSerializer();
+
+  @override
+  _$sealed_classes.ErrResult<T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _$sealed_classes.ErrResult<T>(
+        Serializers.instance.deserialize<T>($serialized[r'error']));
+  }
+
+  @override
+  Object? serialize(_$sealed_classes.ErrResult<T> $value) =>
+      {r'error': Serializers.instance.serialize<T>($value.error)};
+}
+
+final class OkResult_E_ShapeExceptionSerializer<
+        E extends _$exceptions.ShapeException>
+    extends Serializer<_$sealed_classes.OkResult<E>> {
+  const OkResult_E_ShapeExceptionSerializer();
+
+  @override
+  _$sealed_classes.OkResult<E> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _$sealed_classes.OkResult<E>(
+        Serializers.instance.deserialize<E>($serialized[r'data']));
+  }
+
+  @override
+  Object? serialize(_$sealed_classes.OkResult<E> $value) =>
+      {r'data': Serializers.instance.serialize<E>($value.data)};
+}
+
+final class OkResult_T_ShapeSerializer<T extends _$sealed_classes.Shape>
     extends Serializer<_$sealed_classes.OkResult<T>> {
-  const OkResultSerializer();
+  const OkResult_T_ShapeSerializer();
 
   @override
   _$sealed_classes.OkResult<T> deserialize(Object? $value) {
@@ -1957,21 +2192,85 @@ final class OkResultSerializer<T extends _$sealed_classes.Shape>
       {r'data': Serializers.instance.serialize<T>($value.data)};
 }
 
-final class ResultSerializer<T extends _$sealed_classes.Shape,
-        E extends _$exceptions.ShapeException>
+final class Result_E_ShapeException_T_ShapeSerializer<
+        E extends _$exceptions.ShapeException, T extends _$sealed_classes.Shape>
+    extends Serializer<_$sealed_classes.Result<E, T>> {
+  const Result_E_ShapeException_T_ShapeSerializer();
+
+  @override
+  _$sealed_classes.Result<E, T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    if ($serialized[r'$type'] == r'SwappedResult') {
+      return Serializers.instance
+          .deserialize<_$sealed_classes.SwappedResult<T, E>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'OkResult') {
+      return Serializers.instance
+          .deserialize<_$sealed_classes.OkResult<E>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return Serializers.instance
+          .deserialize<_$sealed_classes.ErrResult<T>>($serialized);
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write($serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Object? serialize(_$sealed_classes.Result<E, T> $value) {
+    if ($value is _$sealed_classes.SwappedResult<T, E>) {
+      return {
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.SwappedResult<T, E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
+      };
+    }
+    if ($value is _$sealed_classes.OkResult<E>) {
+      return {
+        ...(Serializers.instance.serialize<_$sealed_classes.OkResult<E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
+    if ($value is _$sealed_classes.ErrResult<T>) {
+      return {
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.ErrResult<T>>($value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
+    throw SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write($value.runtimeType))
+        .toString());
+  }
+}
+
+final class Result_T_Shape_E_ShapeExceptionSerializer<
+        T extends _$sealed_classes.Shape, E extends _$exceptions.ShapeException>
     extends Serializer<_$sealed_classes.Result<T, E>> {
-  const ResultSerializer();
+  const Result_T_Shape_E_ShapeExceptionSerializer();
 
   @override
   _$sealed_classes.Result<T, E> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
-    if ($serialized[r'$type'] == r'ErrResult') {
+    if ($serialized[r'$type'] == r'SwappedResult') {
       return Serializers.instance
-          .deserialize<_$sealed_classes.ErrResult<E>>($serialized);
+          .deserialize<_$sealed_classes.SwappedResult<E, T>>($serialized);
     }
     if ($serialized[r'$type'] == r'OkResult') {
       return Serializers.instance
           .deserialize<_$sealed_classes.OkResult<T>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return Serializers.instance
+          .deserialize<_$sealed_classes.ErrResult<E>>($serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -1982,12 +2281,12 @@ final class ResultSerializer<T extends _$sealed_classes.Shape,
 
   @override
   Object? serialize(_$sealed_classes.Result<T, E> $value) {
-    if ($value is _$sealed_classes.ErrResult<E>) {
+    if ($value is _$sealed_classes.SwappedResult<E, T>) {
       return {
         ...(Serializers.instance
-                .serialize<_$sealed_classes.ErrResult<E>>($value)
+                .serialize<_$sealed_classes.SwappedResult<E, T>>($value)
             as Map<String, Object?>),
-        r'$type': r'ErrResult',
+        r'$type': r'SwappedResult',
       };
     }
     if ($value is _$sealed_classes.OkResult<T>) {
@@ -1997,10 +2296,56 @@ final class ResultSerializer<T extends _$sealed_classes.Shape,
         r'$type': r'OkResult',
       };
     }
+    if ($value is _$sealed_classes.ErrResult<E>) {
+      return {
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.ErrResult<E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
           ..write(': ')
           ..write($value.runtimeType))
         .toString());
   }
+}
+
+final class SwappedResult_E_ShapeException_T_ShapeSerializer<
+        E extends _$exceptions.ShapeException, T extends _$sealed_classes.Shape>
+    extends Serializer<_$sealed_classes.SwappedResult<E, T>> {
+  const SwappedResult_E_ShapeException_T_ShapeSerializer();
+
+  @override
+  _$sealed_classes.SwappedResult<E, T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _$sealed_classes.SwappedResult<E, T>(Serializers.instance
+        .deserialize<_$sealed_classes.Result<E, T>>($serialized[r'result']));
+  }
+
+  @override
+  Object? serialize(_$sealed_classes.SwappedResult<E, T> $value) => {
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<E, T>>($value.result)
+      };
+}
+
+final class SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+        T extends _$sealed_classes.Shape, E extends _$exceptions.ShapeException>
+    extends Serializer<_$sealed_classes.SwappedResult<T, E>> {
+  const SwappedResult_T_Shape_E_ShapeExceptionSerializer();
+
+  @override
+  _$sealed_classes.SwappedResult<T, E> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _$sealed_classes.SwappedResult<T, E>(Serializers.instance
+        .deserialize<_$sealed_classes.Result<T, E>>($serialized[r'result']));
+  }
+
+  @override
+  Object? serialize(_$sealed_classes.SwappedResult<T, E> $value) => {
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<T, E>>($value.result)
+      };
 }

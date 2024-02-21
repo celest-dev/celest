@@ -149,12 +149,12 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
     _i3.Serializers.instance.put(_i3.Serializer.define<
         _i4.Result<_i4.Shape, String>, Map<String, Object?>>(
       serialize: ($value) {
-        if ($value is _i4.ErrResult<String>) {
+        if ($value is _i4.SwappedResult<String, _i4.Shape>) {
           return {
             ...(_i3.Serializers.instance
-                    .serialize<_i4.ErrResult<String>>($value)
+                    .serialize<_i4.SwappedResult<String, _i4.Shape>>($value)
                 as Map<String, Object?>),
-            r'$type': r'ErrResult',
+            r'$type': r'SwappedResult',
           };
         }
         if ($value is _i4.OkResult<_i4.Shape>) {
@@ -165,6 +165,14 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
             r'$type': r'OkResult',
           };
         }
+        if ($value is _i4.ErrResult<String>) {
+          return {
+            ...(_i3.Serializers.instance
+                    .serialize<_i4.ErrResult<String>>($value)
+                as Map<String, Object?>),
+            r'$type': r'ErrResult',
+          };
+        }
         throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
               ..write(r'Result')
               ..write(': ')
@@ -172,13 +180,17 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
             .toString());
       },
       deserialize: ($serialized) {
-        if ($serialized[r'$type'] == r'ErrResult') {
+        if ($serialized[r'$type'] == r'SwappedResult') {
           return _i3.Serializers.instance
-              .deserialize<_i4.ErrResult<String>>($serialized);
+              .deserialize<_i4.SwappedResult<String, _i4.Shape>>($serialized);
         }
         if ($serialized[r'$type'] == r'OkResult') {
           return _i3.Serializers.instance
               .deserialize<_i4.OkResult<_i4.Shape>>($serialized);
+        }
+        if ($serialized[r'$type'] == r'ErrResult') {
+          return _i3.Serializers.instance
+              .deserialize<_i4.ErrResult<String>>($serialized);
         }
         throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
               ..write(r'Result')
@@ -187,11 +199,16 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
             .toString());
       },
     ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.ErrResult<String>, Map<String, Object?>>(
-      serialize: ($value) => {r'error': $value.error},
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.SwappedResult<String, _i4.Shape>, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'result': _i3.Serializers.instance
+            .serialize<_i4.Result<String, _i4.Shape>>($value.result)
+      },
       deserialize: ($serialized) {
-        return _i4.ErrResult<String>(($serialized[r'error'] as String));
+        return _i4.SwappedResult<String, _i4.Shape>(_i3.Serializers.instance
+            .deserialize<_i4.Result<String, _i4.Shape>>(
+                $serialized[r'result']));
       },
     ));
     _i3.Serializers.instance.put(
@@ -201,6 +218,13 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
       deserialize: ($serialized) {
         return _i4.OkResult<_i4.Shape>(_i3.Serializers.instance
             .deserialize<_i4.Shape>($serialized[r'data']));
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.ErrResult<String>, Map<String, Object?>>(
+      serialize: ($value) => {r'error': $value.error},
+      deserialize: ($serialized) {
+        return _i4.ErrResult<String>(($serialized[r'error'] as String));
       },
     ));
     _i3.Serializers.instance
@@ -259,6 +283,87 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
           ($serialized[r'width'] as num).toDouble(),
           ($serialized[r'height'] as num).toDouble(),
         );
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.Result<String, _i4.Shape>, Map<String, Object?>>(
+      serialize: ($value) {
+        if ($value is _i4.SwappedResult<_i4.Shape, String>) {
+          return {
+            ...(_i3.Serializers.instance
+                    .serialize<_i4.SwappedResult<_i4.Shape, String>>($value)
+                as Map<String, Object?>),
+            r'$type': r'SwappedResult',
+          };
+        }
+        if ($value is _i4.OkResult<String>) {
+          return {
+            ...(_i3.Serializers.instance.serialize<_i4.OkResult<String>>($value)
+                as Map<String, Object?>),
+            r'$type': r'OkResult',
+          };
+        }
+        if ($value is _i4.ErrResult<_i4.Shape>) {
+          return {
+            ...(_i3.Serializers.instance
+                    .serialize<_i4.ErrResult<_i4.Shape>>($value)
+                as Map<String, Object?>),
+            r'$type': r'ErrResult',
+          };
+        }
+        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+              ..write(r'Result')
+              ..write(': ')
+              ..write($value.runtimeType))
+            .toString());
+      },
+      deserialize: ($serialized) {
+        if ($serialized[r'$type'] == r'SwappedResult') {
+          return _i3.Serializers.instance
+              .deserialize<_i4.SwappedResult<_i4.Shape, String>>($serialized);
+        }
+        if ($serialized[r'$type'] == r'OkResult') {
+          return _i3.Serializers.instance
+              .deserialize<_i4.OkResult<String>>($serialized);
+        }
+        if ($serialized[r'$type'] == r'ErrResult') {
+          return _i3.Serializers.instance
+              .deserialize<_i4.ErrResult<_i4.Shape>>($serialized);
+        }
+        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+              ..write(r'Result')
+              ..write(': ')
+              ..write($serialized[r'$type']))
+            .toString());
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.SwappedResult<_i4.Shape, String>, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'result': _i3.Serializers.instance
+            .serialize<_i4.Result<_i4.Shape, String>>($value.result)
+      },
+      deserialize: ($serialized) {
+        return _i4.SwappedResult<_i4.Shape, String>(_i3.Serializers.instance
+            .deserialize<_i4.Result<_i4.Shape, String>>(
+                $serialized[r'result']));
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.OkResult<String>, Map<String, Object?>>(
+      serialize: ($value) => {r'data': $value.data},
+      deserialize: ($serialized) {
+        return _i4.OkResult<String>(($serialized[r'data'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i4.ErrResult<_i4.Shape>, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'error': _i3.Serializers.instance.serialize<_i4.Shape>($value.error)
+      },
+      deserialize: ($serialized) {
+        return _i4.ErrResult<_i4.Shape>(_i3.Serializers.instance
+            .deserialize<_i4.Shape>($serialized[r'error']));
       },
     ));
     _i3.Serializers.instance

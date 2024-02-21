@@ -170,28 +170,57 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance.put(const ResultSerializer());
     _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Shape, _i3.ShapeException>());
+        .put(const Result_T_Shape_E_ShapeExceptionSerializer());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Shape,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Shape,
+            _i3.BadShapeException>());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Circle,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Circle,
+            _i3.BadShapeException>());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Rectangle,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const Result_T_Shape_E_ShapeExceptionSerializer<_i2.Rectangle,
+            _i3.BadShapeException>());
     _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Shape, _i3.BadShapeException>());
+        .put(const SwappedResult_E_ShapeException_T_ShapeSerializer());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.ShapeException, _i2.Shape>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.ShapeException, _i2.Circle>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.ShapeException, _i2.Rectangle>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.BadShapeException, _i2.Shape>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.BadShapeException, _i2.Circle>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_E_ShapeException_T_ShapeSerializer<
+            _i3.BadShapeException, _i2.Rectangle>());
+    _i4.Serializers.instance.put(const OkResult_T_ShapeSerializer());
+    _i4.Serializers.instance.put(const OkResult_T_ShapeSerializer<_i2.Shape>());
     _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Circle, _i3.ShapeException>());
+        .put(const OkResult_T_ShapeSerializer<_i2.Circle>());
     _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Circle, _i3.BadShapeException>());
+        .put(const OkResult_T_ShapeSerializer<_i2.Rectangle>());
+    _i4.Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
     _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Rectangle, _i3.ShapeException>());
-    _i4.Serializers.instance
-        .put(const ResultSerializer<_i2.Rectangle, _i3.BadShapeException>());
-    _i4.Serializers.instance.put(const ErrResultSerializer());
-    _i4.Serializers.instance
-        .put(const ErrResultSerializer<_i3.ShapeException>());
-    _i4.Serializers.instance
-        .put(const ErrResultSerializer<_i3.BadShapeException>());
-    _i4.Serializers.instance.put(const OkResultSerializer());
-    _i4.Serializers.instance.put(const OkResultSerializer<_i2.Shape>());
-    _i4.Serializers.instance.put(const OkResultSerializer<_i2.Circle>());
-    _i4.Serializers.instance.put(const OkResultSerializer<_i2.Rectangle>());
+        .put(const ErrResult_E_ShapeExceptionSerializer<_i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const ErrResult_E_ShapeExceptionSerializer<_i3.BadShapeException>());
     _i4.Serializers.instance
         .put(_i4.Serializer.define<_i3.ShapeException, Map<String, Object?>>(
       serialize: ($value) {
@@ -289,6 +318,58 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
         );
       },
     ));
+    _i4.Serializers.instance
+        .put(const Result_E_ShapeException_T_ShapeSerializer());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.ShapeException,
+            _i2.Shape>());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.ShapeException,
+            _i2.Circle>());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.ShapeException,
+            _i2.Rectangle>());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.BadShapeException,
+            _i2.Shape>());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.BadShapeException,
+            _i2.Circle>());
+    _i4.Serializers.instance.put(
+        const Result_E_ShapeException_T_ShapeSerializer<_i3.BadShapeException,
+            _i2.Rectangle>());
+    _i4.Serializers.instance
+        .put(const SwappedResult_T_Shape_E_ShapeExceptionSerializer());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Shape,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Shape,
+            _i3.BadShapeException>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Circle,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Circle,
+            _i3.BadShapeException>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Rectangle,
+            _i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const SwappedResult_T_Shape_E_ShapeExceptionSerializer<_i2.Rectangle,
+            _i3.BadShapeException>());
+    _i4.Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer());
+    _i4.Serializers.instance
+        .put(const OkResult_E_ShapeExceptionSerializer<_i3.ShapeException>());
+    _i4.Serializers.instance.put(
+        const OkResult_E_ShapeExceptionSerializer<_i3.BadShapeException>());
+    _i4.Serializers.instance.put(const ErrResult_T_ShapeSerializer());
+    _i4.Serializers.instance
+        .put(const ErrResult_T_ShapeSerializer<_i2.Shape>());
+    _i4.Serializers.instance
+        .put(const ErrResult_T_ShapeSerializer<_i2.Circle>());
+    _i4.Serializers.instance
+        .put(const ErrResult_T_ShapeSerializer<_i2.Rectangle>());
     _i4.Serializers.instance
         .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>?>(
       serialize: ($value) => {
@@ -390,9 +471,9 @@ Future<void> main(List<String> args) async {
   );
 }
 
-final class ErrResultSerializer<E extends _i3.ShapeException>
+final class ErrResult_E_ShapeExceptionSerializer<E extends _i3.ShapeException>
     extends _i4.Serializer<_i2.ErrResult<E>> {
-  const ErrResultSerializer();
+  const ErrResult_E_ShapeExceptionSerializer();
 
   @override
   _i2.ErrResult<E> deserialize(Object? $value) {
@@ -406,9 +487,41 @@ final class ErrResultSerializer<E extends _i3.ShapeException>
       {r'error': _i4.Serializers.instance.serialize<E>($value.error)};
 }
 
-final class OkResultSerializer<T extends _i2.Shape>
+final class ErrResult_T_ShapeSerializer<T extends _i2.Shape>
+    extends _i4.Serializer<_i2.ErrResult<T>> {
+  const ErrResult_T_ShapeSerializer();
+
+  @override
+  _i2.ErrResult<T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i2.ErrResult<T>(
+        _i4.Serializers.instance.deserialize<T>($serialized[r'error']));
+  }
+
+  @override
+  Object? serialize(_i2.ErrResult<T> $value) =>
+      {r'error': _i4.Serializers.instance.serialize<T>($value.error)};
+}
+
+final class OkResult_E_ShapeExceptionSerializer<E extends _i3.ShapeException>
+    extends _i4.Serializer<_i2.OkResult<E>> {
+  const OkResult_E_ShapeExceptionSerializer();
+
+  @override
+  _i2.OkResult<E> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i2.OkResult<E>(
+        _i4.Serializers.instance.deserialize<E>($serialized[r'data']));
+  }
+
+  @override
+  Object? serialize(_i2.OkResult<E> $value) =>
+      {r'data': _i4.Serializers.instance.serialize<E>($value.data)};
+}
+
+final class OkResult_T_ShapeSerializer<T extends _i2.Shape>
     extends _i4.Serializer<_i2.OkResult<T>> {
-  const OkResultSerializer();
+  const OkResult_T_ShapeSerializer();
 
   @override
   _i2.OkResult<T> deserialize(Object? $value) {
@@ -422,19 +535,80 @@ final class OkResultSerializer<T extends _i2.Shape>
       {r'data': _i4.Serializers.instance.serialize<T>($value.data)};
 }
 
-final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
-    extends _i4.Serializer<_i2.Result<T, E>> {
-  const ResultSerializer();
+final class Result_E_ShapeException_T_ShapeSerializer<
+    E extends _i3.ShapeException,
+    T extends _i2.Shape> extends _i4.Serializer<_i2.Result<E, T>> {
+  const Result_E_ShapeException_T_ShapeSerializer();
+
+  @override
+  _i2.Result<E, T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    if ($serialized[r'$type'] == r'SwappedResult') {
+      return _i4.Serializers.instance
+          .deserialize<_i2.SwappedResult<T, E>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'OkResult') {
+      return _i4.Serializers.instance.deserialize<_i2.OkResult<E>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return _i4.Serializers.instance
+          .deserialize<_i2.ErrResult<T>>($serialized);
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write($serialized[r'$type']))
+        .toString());
+  }
+
+  @override
+  Object? serialize(_i2.Result<E, T> $value) {
+    if ($value is _i2.SwappedResult<T, E>) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.SwappedResult<T, E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
+      };
+    }
+    if ($value is _i2.OkResult<E>) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.OkResult<E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'OkResult',
+      };
+    }
+    if ($value is _i2.ErrResult<T>) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.ErrResult<T>>($value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
+    throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
+          ..write(r'Result')
+          ..write(': ')
+          ..write($value.runtimeType))
+        .toString());
+  }
+}
+
+final class Result_T_Shape_E_ShapeExceptionSerializer<T extends _i2.Shape,
+    E extends _i3.ShapeException> extends _i4.Serializer<_i2.Result<T, E>> {
+  const Result_T_Shape_E_ShapeExceptionSerializer();
 
   @override
   _i2.Result<T, E> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
-    if ($serialized[r'$type'] == r'ErrResult') {
+    if ($serialized[r'$type'] == r'SwappedResult') {
       return _i4.Serializers.instance
-          .deserialize<_i2.ErrResult<E>>($serialized);
+          .deserialize<_i2.SwappedResult<E, T>>($serialized);
     }
     if ($serialized[r'$type'] == r'OkResult') {
       return _i4.Serializers.instance.deserialize<_i2.OkResult<T>>($serialized);
+    }
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return _i4.Serializers.instance
+          .deserialize<_i2.ErrResult<E>>($serialized);
     }
     throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -445,11 +619,11 @@ final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
 
   @override
   Object? serialize(_i2.Result<T, E> $value) {
-    if ($value is _i2.ErrResult<E>) {
+    if ($value is _i2.SwappedResult<E, T>) {
       return {
-        ...(_i4.Serializers.instance.serialize<_i2.ErrResult<E>>($value)
+        ...(_i4.Serializers.instance.serialize<_i2.SwappedResult<E, T>>($value)
             as Map<String, Object?>),
-        r'$type': r'ErrResult',
+        r'$type': r'SwappedResult',
       };
     }
     if ($value is _i2.OkResult<T>) {
@@ -459,10 +633,55 @@ final class ResultSerializer<T extends _i2.Shape, E extends _i3.ShapeException>
         r'$type': r'OkResult',
       };
     }
+    if ($value is _i2.ErrResult<E>) {
+      return {
+        ...(_i4.Serializers.instance.serialize<_i2.ErrResult<E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'ErrResult',
+      };
+    }
     throw _i4.SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
           ..write(': ')
           ..write($value.runtimeType))
         .toString());
   }
+}
+
+final class SwappedResult_E_ShapeException_T_ShapeSerializer<
+    E extends _i3.ShapeException,
+    T extends _i2.Shape> extends _i4.Serializer<_i2.SwappedResult<E, T>> {
+  const SwappedResult_E_ShapeException_T_ShapeSerializer();
+
+  @override
+  _i2.SwappedResult<E, T> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i2.SwappedResult<E, T>(_i4.Serializers.instance
+        .deserialize<_i2.Result<E, T>>($serialized[r'result']));
+  }
+
+  @override
+  Object? serialize(_i2.SwappedResult<E, T> $value) => {
+        r'result':
+            _i4.Serializers.instance.serialize<_i2.Result<E, T>>($value.result)
+      };
+}
+
+final class SwappedResult_T_Shape_E_ShapeExceptionSerializer<
+        T extends _i2.Shape, E extends _i3.ShapeException>
+    extends _i4.Serializer<_i2.SwappedResult<T, E>> {
+  const SwappedResult_T_Shape_E_ShapeExceptionSerializer();
+
+  @override
+  _i2.SwappedResult<T, E> deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i2.SwappedResult<T, E>(_i4.Serializers.instance
+        .deserialize<_i2.Result<T, E>>($serialized[r'result']));
+  }
+
+  @override
+  Object? serialize(_i2.SwappedResult<T, E> $value) => {
+        r'result':
+            _i4.Serializers.instance.serialize<_i2.Result<T, E>>($value.result)
+      };
 }

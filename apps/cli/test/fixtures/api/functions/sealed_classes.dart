@@ -73,8 +73,8 @@ List<ShapeResult<String>> aliasedShapeResults(List<Shape> shapes) => [
       ...errShapeResults(shapes),
     ];
 
-// SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
-//     SwappedResult(result);
+SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
+    SwappedResult(result);
 
 OkResult<T> genericResult<T extends Shape>(T data) => OkResult(data);
 List<Result<T, E>>
@@ -85,8 +85,6 @@ List<Result<T, E>>
         [OkResult(data), ErrResult(error)];
 
 // TODO(dnys1): rework subtype checks with finals so that OkShapeResult is not
-// OkShapeResult okShapeResult(Shape shape) => OkShapeResult(shape);
 // a subtype of Result<String, Shape>. Currently, OkShapeResult is a subtype of
 // Result<String, Shape> because it extends OkResult.
-
-// TODO(dnys1): bounded generics (e.g. `Future<Result<T>> sayHello<T extends SealedClass>`
+OkShapeResult okShapeResult(Shape shape) => OkShapeResult(shape);

@@ -9,6 +9,7 @@ import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class SerializerDefinition {
@@ -45,7 +46,7 @@ final class SerializerDefinition {
         b.addExpression(_init(define(), typeToken));
         return;
       }
-      
+
       // Instantiate to bounds first
       b.addExpression(
         _init(refer(_genericClassName).constInstance([])),
@@ -566,16 +567,29 @@ final class _GenericsCollector extends ast.TypeVisitor<void> {
 extension on ast.DartType {
   String get classNamePrefix {
     return switch (this) {
-      ast.InterfaceType(:final typeArguments) => () {
-          final name = StringBuffer(element!.displayName);
+      ast.InterfaceType(:final typeArguments, :final element) => () {
+          final name = StringBuffer(element.name);
           if (typeArguments.isNotEmpty) {
-            name.writeAll(
-              typeArguments.map((t) => t.classNamePrefix),
-            );
+            name
+              ..write('_')
+              ..write(
+                typeArguments.map((t) => t.classNamePrefix).join('_'),
+              );
           }
           return name.toString();
         }(),
       final ast.RecordType recordType => recordType.symbol,
+      ast.TypeParameterType(:final element, :final bound) =>
+        StringBuffer().let((buf) {
+          buf.write(element.name);
+          if (bound.classNamePrefix case final boundPrefix
+              when boundPrefix.isNotEmpty) {
+            buf
+              ..write('_')
+              ..write(boundPrefix);
+          }
+          return buf.toString();
+        }),
       _ => '',
     };
   }

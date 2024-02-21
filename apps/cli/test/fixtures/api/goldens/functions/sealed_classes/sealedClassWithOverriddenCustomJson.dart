@@ -160,14 +160,21 @@ final class SealedClassWithOverriddenCustomJsonTarget
       serialize: ($value) => {
         ...$value.toJson(),
         r'$type': switch ($value) {
-          _i4.RectangleWithOverriddenCustomJson() =>
-            r'RectangleWithOverriddenCustomJson',
           _i4.CircleWithOverriddenCustomJson() =>
             r'CircleWithOverriddenCustomJson',
+          _i4.RectangleWithOverriddenCustomJson() =>
+            r'RectangleWithOverriddenCustomJson',
         },
       },
       deserialize: ($serialized) {
         return _i4.ShapeWithOverriddenCustomJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.CircleWithOverriddenCustomJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i4.CircleWithOverriddenCustomJson.fromJson($serialized);
       },
     ));
     _i3.Serializers.instance.put(_i3.Serializer.define<
@@ -178,13 +185,6 @@ final class SealedClassWithOverriddenCustomJsonTarget
           r'$type': r'RectangleWithOverriddenCustomJson',
           ...$serialized,
         }) as _i4.RectangleWithOverriddenCustomJson);
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i4.CircleWithOverriddenCustomJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i4.CircleWithOverriddenCustomJson.fromJson($serialized);
       },
     ));
     _i3.Serializers.instance
