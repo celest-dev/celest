@@ -421,10 +421,7 @@ final class AliasedOkShapeResultsTarget extends _i1.CloudFunctionTarget {
         r'stackTrace':
             _i3.Serializers.instance.serialize<StackTrace>($value.stackTrace),
         r'message': $value.message,
-        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
-          $value.additionalInfo,
-          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-        ),
+        r'additionalInfo': $value.additionalInfo,
       },
       deserialize: ($serialized) {
         return _i7.CustomErrorWithStackTrace(

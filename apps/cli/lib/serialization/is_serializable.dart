@@ -864,14 +864,13 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       }
       return switch (valueType) {
         // This is the only case where `Object`/`dynamic` are allowed.
+        //
+        // Even though we have `JsonMap` type now, `package:json_serializable`
+        // and others allow Map<String, Object?> and this allows for a cleaner
+        // migration path from using those types with Celest.
         InterfaceType(isDartCoreObject: true) ||
         DynamicType() =>
-          const VerdictNo([
-            VerdictReason(
-              'Maps with dynamic/Object values are no longer supported directly. '
-              'To pass JSON maps, use `JsonMap` from `package:celest_core`.',
-            ),
-          ]),
+          const Verdict.yes(),
         _ => typeHelper.isSerializable(valueType),
       };
     }

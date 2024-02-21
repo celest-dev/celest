@@ -59,9 +59,9 @@ final class CustomErrorWithStackTrace extends Error {
   final StackTrace stackTrace;
 
   final String message = 'This is a custom error';
-  final JsonMap additionalInfo = JsonMap({
+  final Map<String, Object?> additionalInfo = {
     'hello': 'world',
-  });
+  };
 
   @override
   String toString() => 'CustomError: $message';

@@ -195,6 +195,21 @@ abstract final class Functions {
     functionName: r'complexMap',
   );
 
+  static const collectionsDynamicMap = CloudFunction(
+    api: r'collections',
+    functionName: r'dynamicMap',
+  );
+
+  static const collectionsObjectMap = CloudFunction(
+    api: r'collections',
+    functionName: r'objectMap',
+  );
+
+  static const collectionsObjectNullableMap = CloudFunction(
+    api: r'collections',
+    functionName: r'objectNullableMap',
+  );
+
   static const collectionsSimpleList = CloudFunction(
     api: r'collections',
     functionName: r'simpleList',

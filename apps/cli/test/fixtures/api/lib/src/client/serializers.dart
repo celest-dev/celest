@@ -357,10 +357,7 @@ void initSerializers() {
       r'stackTrace':
           Serializers.instance.serialize<StackTrace>($value.stackTrace),
       r'message': $value.message,
-      r'additionalInfo': Serializers.instance.serialize<JsonMap>(
-        $value.additionalInfo,
-        const TypeToken<JsonMap>('JsonMap'),
-      ),
+      r'additionalInfo': $value.additionalInfo,
     },
     deserialize: ($serialized) {
       return _$exceptions.CustomErrorWithStackTrace(

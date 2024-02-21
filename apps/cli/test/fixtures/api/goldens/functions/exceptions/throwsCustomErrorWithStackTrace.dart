@@ -190,10 +190,7 @@ final class ThrowsCustomErrorWithStackTraceTarget
         r'stackTrace':
             _i4.Serializers.instance.serialize<StackTrace>($value.stackTrace),
         r'message': $value.message,
-        r'additionalInfo': _i4.Serializers.instance.serialize<_i7.JsonMap>(
-          $value.additionalInfo,
-          const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
-        ),
+        r'additionalInfo': $value.additionalInfo,
       },
       deserialize: ($serialized) {
         return _i6.CustomErrorWithStackTrace(

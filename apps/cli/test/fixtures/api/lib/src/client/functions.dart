@@ -839,6 +839,65 @@ class CelestFunctionsCollections {
         ));
   }
 
+  Future<Map<String, dynamic>> dynamicMap(Map<String, dynamic> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/dynamic-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'map': map}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>);
+  }
+
+  Future<Map<String, Object>> objectMap(Map<String, Object> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/object-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'map': map}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          value!,
+        ));
+  }
+
+  Future<Map<String, Object?>> objectNullableMap(
+      Map<String, Object?> map) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/collections/object-nullable-map'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'map': map}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>);
+  }
+
   Future<Map<String, _$parameter_types.SimpleClass>> complexMap(
       Map<String, _$parameter_types.SimpleClass> map) async {
     final $response = await celest.httpClient.post(

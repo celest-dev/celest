@@ -627,21 +627,15 @@ extension type StringXString(String s) implements String {}
 ''',
       );
 
-      // Map<String, dynamic>/Map<String, Object> are only allowed via JsonMap.
-      testErrors(
-        name: 'disallows_map_string_dynamic_object',
+      testNoErrors(
+        name: 'allows_map_string_dynamic_object',
         apis: {
           'greeting.dart': '''
-Map<String, dynamic> mapStringDynamic() => {};
-Map<String, Object> mapStringObject() => {};
-Map<String, Object?> mapStringObjectNullable() => {};
+Map<String, dynamic> mapStringDynamic(Map<String, dynamic> map) => map;
+Map<String, Object> mapStringObject(Map<String, Object> map) => map;
+Map<String, Object?> mapStringObjectNullable(Map<String, Object?> map) => map;
 ''',
         },
-        errors: [
-          'Maps with dynamic/Object values are no longer supported',
-          'Maps with dynamic/Object values are no longer supported',
-          'Maps with dynamic/Object values are no longer supported',
-        ],
       );
 
       testErrors(
