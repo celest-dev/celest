@@ -79,21 +79,8 @@ final class ValueXFromJsonStaticTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.Value, Map<String, Object?>>(
-      serialize: ($value) => {r'value': $value.value},
-      deserialize: ($serialized) {
-        return _i4.Value(($serialized[r'value'] as String));
-      },
-    ));
     _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i4.ValueXFromJsonStatic, Map<String, Object?>>(
-        serialize: ($value) =>
-            _i3.Serializers.instance.serialize<_i4.Value>($value.v),
-        deserialize: ($serialized) {
-          return _i4.ValueXFromJsonStatic.fromJson($serialized);
-        },
-      ),
+      ValueXFromJsonStaticSerializer(),
       const _i3.TypeToken<_i4.ValueXFromJsonStatic>('ValueXFromJsonStatic'),
     );
     _i3.Serializers.instance.put(
@@ -128,4 +115,28 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ValueXFromJsonStaticTarget()},
   );
+}
+
+final class ValueXFromJsonStaticSerializer
+    extends _i3.Serializer<_i4.ValueXFromJsonStatic> {
+  ValueXFromJsonStaticSerializer() {
+    $serializers.put(_i3.Serializer.define<_i4.Value, Map<String, Object?>>(
+      serialize: ($value) => {r'value': $value.value},
+      deserialize: ($serialized) {
+        return _i4.Value(($serialized[r'value'] as String));
+      },
+    ));
+  }
+
+  final _i3.Serializers $serializers = _i3.Serializers();
+
+  @override
+  _i4.ValueXFromJsonStatic deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i4.ValueXFromJsonStatic.fromJson($serialized);
+  }
+
+  @override
+  Object? serialize(_i4.ValueXFromJsonStatic $value) =>
+      $serializers.serialize<_i4.Value>($value.v);
 }

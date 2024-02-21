@@ -7,6 +7,13 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class JsonGenerator {
+  JsonGenerator({
+    Expression? serializers,
+  }) : _serializers =
+            serializers ?? DartTypes.celest.serializers.property('instance');
+
+  final Expression _serializers;
+
   Expression toJson(Reference type, Expression ref) {
     final dartType = typeHelper.fromReference(type);
     if (dartType.isDartAsyncFuture || dartType.isDartAsyncFutureOr) {
@@ -90,10 +97,7 @@ final class JsonGenerator {
       serializationVerdict is VerdictYes,
       'Should not have passed analyzer if no',
     );
-    return DartTypes.celest.serializers
-        .property('instance')
-        .property('serialize')
-        .call(
+    return _serializers.property('serialize').call(
       [
         ref,
         if (dartType.typeToken case final typeToken?) typeToken,
@@ -226,10 +230,7 @@ final class JsonGenerator {
       serializationVerdict is VerdictYes,
       'Should not have passed analyzer if no: $serializationVerdict',
     );
-    return DartTypes.celest.serializers
-        .property('instance')
-        .property('deserialize')
-        .call(
+    return _serializers.property('deserialize').call(
       [
         ref,
         if (dartType.typeToken case final typeToken?) typeToken,

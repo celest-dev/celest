@@ -397,7 +397,7 @@ final class EntrypointGenerator {
           )
           .toList()
         ..sort((a, b) => a.name.compareTo(b.name)),
-      ..._customSerializers.map((s) => s.genericClass).nonNulls.toList()
+      ..._customSerializers.map((s) => s.serializerClass).nonNulls.toList()
         ..sort((a, b) => a.name.compareTo(b.name)),
     ]);
     return library.build();

@@ -1120,11 +1120,6 @@ typedef InterfaceMembers = ({
 });
 
 extension on InterfaceType {
-  DartType get defaultWireType => switch (extensionTypeErasure.element) {
-        EnumElement() => typeHelper.typeProvider.stringType,
-        _ => jsonMapType,
-      };
-
   MethodElement? get toJsonMethod => getMethod('toJson');
 
   ExecutableElement? get fromJsonCtor =>

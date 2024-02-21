@@ -13,6 +13,7 @@ import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_cli/analyzer/const_to_code_builder.dart';
 import 'package:celest_cli/ast/ast.dart' as ast;
+import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -298,6 +299,13 @@ extension _SubtypeResultX on SubtypeResult {
           ...other.disallowedTypes,
         },
       );
+}
+
+extension InterfaceTypeHelpers on InterfaceType {
+  DartType get defaultWireType => switch (extensionTypeErasure.element) {
+        EnumElement() => typeHelper.typeProvider.stringType,
+        _ => jsonMapType,
+      };
 }
 
 extension on InterfaceElement {

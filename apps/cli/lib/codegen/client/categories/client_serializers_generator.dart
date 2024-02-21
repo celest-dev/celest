@@ -55,7 +55,7 @@ final class ClientSerializersGenerator {
               ..sort((a, b) => a.name.compareTo(b.name)),
           )
           ..addAll(
-            customSerializers.map((s) => s.genericClass).nonNulls.toList()
+            customSerializers.map((s) => s.serializerClass).nonNulls.toList()
               ..sort((a, b) => a.name.compareTo(b.name)),
           ),
       );

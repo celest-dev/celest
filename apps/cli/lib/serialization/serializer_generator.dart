@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:analyzer/dart/element/type_visitor.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -20,6 +21,7 @@ final class SerializerDefinition {
     required this.dartType,
     required this.generics,
     required this.wireType,
+    required this.customSerializers,
   });
 
   final Code serialize;
@@ -29,6 +31,10 @@ final class SerializerDefinition {
   Expression? get typeToken => dartType.typeToken;
   final Set<Reference> generics;
   final Reference wireType;
+  final Code? customSerializers;
+
+  bool get isConst => customSerializers == null;
+  bool get hasClass => generics.isNotEmpty || customSerializers != null;
 
   Expression _init(Expression serializer, [Expression? typeToken]) {
     return DartTypes.celest.serializers
@@ -42,20 +48,24 @@ final class SerializerDefinition {
 
   Code get initAll {
     return Block((b) {
-      if (generics.isEmpty) {
+      if (!hasClass) {
         b.addExpression(_init(define(), typeToken));
         return;
       }
 
+      final serializerClass = refer(_serializerClassName);
+      final constructor =
+          isConst ? serializerClass.constInstance : serializerClass.newInstance;
+
       // Instantiate to bounds first
       b.addExpression(
-        _init(refer(_genericClassName).constInstance([])),
+        _init(constructor([]), typeToken),
       );
 
       // Monomorphize for all combinations of bound subclasses.
       final subtypeCombos = _combinations(generics.map(_subtypes)).toList();
       for (final subtypes in subtypeCombos) {
-        final instance = refer(_genericClassName).constInstance(
+        final instance = constructor(
           [],
           {},
           subtypes.references,
@@ -65,22 +75,39 @@ final class SerializerDefinition {
     });
   }
 
-  late final _genericClassName = '${dartType.classNamePrefix}Serializer';
-  Class? get genericClass {
-    if (generics.isEmpty) {
+  late final _serializerClassName = '${dartType.classNamePrefix}Serializer';
+  Class? get serializerClass {
+    if (!hasClass) {
       return null;
     }
     return Class((b) {
       b
         ..modifier = ClassModifier.final$
-        ..name = _genericClassName
+        ..name = _serializerClassName
         ..extend = DartTypes.celest.serializer(type)
         ..types.addAll(generics);
 
-      // Create unnamed constant constructor
+      // Create unnamed constant constructor when we can.
+
       b.constructors.add(
-        Constructor((b) => b..constant = true),
+        Constructor(
+          (c) => c
+            ..constant = isConst
+            ..body = customSerializers,
+        ),
       );
+
+      if (customSerializers != null) {
+        b.fields.add(
+          Field(
+            (f) => f
+              ..name = r'$serializers'
+              ..modifier = FieldModifier.final$
+              ..type = DartTypes.celest.serializers
+              ..assignment = DartTypes.celest.serializers.newInstance([]).code,
+          ),
+        );
+      }
 
       // Create `deserialize` and `serialize` overrides
       b.methods.addAll([
@@ -157,16 +184,28 @@ final class SerializerDefinition {
 }
 
 final class SerializerGenerator {
-  SerializerGenerator(SerializationSpec serializationSpec)
-      : _isExtensionType = serializationSpec.isExtensionType,
+  SerializerGenerator(
+    SerializationSpec serializationSpec, {
+    this.additionalSerializationSpecs = const [],
+    Expression? serializers,
+  })  : _isExtensionType = serializationSpec.isExtensionType,
         serializationSpec = serializationSpec.isExtensionType
             ? serializationSpec.extensionType!
-            : serializationSpec;
+            : serializationSpec {
+    _serializers = serializers ??
+        (_customSerializers != null
+            ? refer(r'$serializers')
+            : DartTypes.celest.serializers.property('instance'));
+  }
 
   final SerializationSpec serializationSpec;
+  final Iterable<SerializationSpec> additionalSerializationSpecs;
+  late final Expression _serializers;
   final bool _isExtensionType;
   late final SerializationSpec? _parent = serializationSpec.parent;
   late final Set<Reference> _generics = _collectGenerics();
+
+  late final jsonGenerator = JsonGenerator(serializers: _serializers);
 
   Set<Reference> _collectGenerics() {
     final collector = _GenericsCollector();
@@ -206,7 +245,33 @@ final class SerializerGenerator {
   late final wireType = serializationSpec.wireType;
   late final castType = serializationSpec.castType;
 
-  SerializerDefinition build() {
+  late final Code? _customSerializers = run(() {
+    if (!_isExtensionType) {
+      return null;
+    }
+    final interfaceSpecs = additionalSerializationSpecs
+        .where((spec) => spec.type is ast.InterfaceType);
+    if (interfaceSpecs.isEmpty) {
+      return null;
+    }
+    Expression serializers = refer(r'$serializers');
+    for (final spec in interfaceSpecs) {
+      final type = spec.type as ast.InterfaceType;
+      final serializer = SerializerGenerator(
+        spec.copyWith(
+          wireType: typeHelper.toReference(type.defaultWireType),
+          castType: typeHelper.toReference(type.defaultWireType),
+          toJsonType: null,
+          fromJsonType: null,
+        ),
+        serializers: refer(r'$serializers'),
+      ).build().first;
+      serializers = serializers.cascade('put').call([serializer.define()]);
+    }
+    return serializers.statement;
+  });
+
+  Iterable<SerializerDefinition> build() sync* {
     final serialize = _serialize(r'$value').code;
 
     final parameters = serializationSpec.parameters;
@@ -219,14 +284,30 @@ final class SerializerGenerator {
     };
     final deserialize = _deserialize(r'$serialized', mayBeAbsent: mayBeAbsent);
 
-    return SerializerDefinition(
+    yield SerializerDefinition(
       serialize: serialize,
       deserialize: deserialize,
       type: typeReference,
       dartType: type,
       generics: _generics,
       wireType: wireType,
+      customSerializers: _customSerializers,
     );
+
+    if (!_isExtensionType) {
+      for (final subtype in serializationSpec.subtypes) {
+        yield* SerializerGenerator(
+          subtype,
+          serializers: _serializers,
+        ).build();
+      }
+      for (final additionalSpec in additionalSerializationSpecs) {
+        yield* SerializerGenerator(
+          additionalSpec,
+          serializers: _serializers,
+        ).build();
+      }
+    }
   }
 
   Expression _serialize(String from) {
@@ -289,9 +370,7 @@ final class SerializerGenerator {
       return serialized;
     }
     if (serializationSpec.subtypes.isNotEmpty) {
-      final serialize = DartTypes.celest.serializers
-          .property('instance')
-          .property('serialize');
+      final serialize = _serializers.property('serialize');
       return CodeExpression(
         Block((b) {
           for (final subtype in serializationSpec.subtypes) {
@@ -409,9 +488,7 @@ final class SerializerGenerator {
     if (serializationSpec.subtypes.isNotEmpty) {
       assert(!mayBeAbsent, 'Classes with subtypes must have a map');
       final ref = _reference(from, isNullable: false);
-      final deserialize = DartTypes.celest.serializers
-          .property('instance')
-          .property('deserialize');
+      final deserialize = _serializers.property('deserialize');
       return Block((b) {
         final type = ref.index(literalString(r'$type', raw: true));
         for (final subtype in serializationSpec.subtypes) {

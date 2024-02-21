@@ -77,20 +77,8 @@ final class ColorXToJsonTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.Color, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i4.Color.values.byName($serialized);
-      },
-    ));
     _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i4.ColorXToJson, String>(
-        serialize: ($value) => $value.toJson(),
-        deserialize: ($serialized) {
-          return _i4.ColorXToJson(
-              _i3.Serializers.instance.deserialize<_i4.Color>($serialized));
-        },
-      ),
+      ColorXToJsonSerializer(),
       const _i3.TypeToken<_i4.ColorXToJson>('ColorXToJson'),
     );
     _i3.Serializers.instance.put(
@@ -125,4 +113,26 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ColorXToJsonTarget()},
   );
+}
+
+final class ColorXToJsonSerializer extends _i3.Serializer<_i4.ColorXToJson> {
+  ColorXToJsonSerializer() {
+    $serializers.put(_i3.Serializer.define<_i4.Color, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.Color.values.byName($serialized);
+      },
+    ));
+  }
+
+  final _i3.Serializers $serializers = _i3.Serializers();
+
+  @override
+  _i4.ColorXToJson deserialize(Object? $value) {
+    final $serialized = assertWireType<String>($value);
+    return _i4.ColorXToJson($serializers.deserialize<_i4.Color>($serialized));
+  }
+
+  @override
+  Object? serialize(_i4.ColorXToJson $value) => $value.toJson();
 }

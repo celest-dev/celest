@@ -196,23 +196,25 @@ final class TypeHelper {
 
   Iterable<SerializerDefinition> customSerializers(
     DartType type,
-  ) sync* {
+  ) {
     final verdict = isSerializable(type);
-    if (verdict case VerdictYes(:final primarySpec, :final additionalSpecs)) {
-      for (final serializationSpec in [
-        if (primarySpec != null) primarySpec,
-        ...additionalSpecs,
-      ]) {
-        yield _generate(serializationSpec);
-        for (final subtype in serializationSpec.subtypes) {
-          yield _generate(subtype..parent = serializationSpec);
-        }
-      }
+    if (verdict case VerdictYes(:final primarySpec?, :final additionalSpecs)) {
+      return SerializerGenerator(
+        primarySpec,
+        additionalSerializationSpecs: additionalSpecs,
+      ).build();
+      // for (final serializationSpec in [
+      //   primarySpec,
+      //   ...additionalSpecs,
+      // ]) {
+      //   yield _generate(serializationSpec);
+      //   for (final subtype in serializationSpec.subtypes) {
+      //     yield _generate(subtype..parent = serializationSpec);
+      //   }
+      // }
     }
+    return const Iterable.empty();
   }
-
-  SerializerDefinition _generate(SerializationSpec spec) =>
-      SerializerGenerator(spec).build();
 
   final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
 

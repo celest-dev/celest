@@ -77,32 +77,8 @@ final class NestedResetTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.NestedChild, String>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i4.NestedChild.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.NestedParent, Map<String, Object?>>(
-      serialize: ($value) => {
-        r'child':
-            _i3.Serializers.instance.serialize<_i4.NestedChild>($value.child)
-      },
-      deserialize: ($serialized) {
-        return _i4.NestedParent(_i3.Serializers.instance
-            .deserialize<_i4.NestedChild>($serialized[r'child']));
-      },
-    ));
     _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i4.NestedReset, Map<String, Object?>>(
-        serialize: ($value) =>
-            _i3.Serializers.instance.serialize<_i4.NestedParent>($value.it),
-        deserialize: ($serialized) {
-          return _i4.NestedReset(_i3.Serializers.instance
-              .deserialize<_i4.NestedParent>($serialized));
-        },
-      ),
+      NestedResetSerializer(),
       const _i3.TypeToken<_i4.NestedReset>('NestedReset'),
     );
     _i3.Serializers.instance.put(
@@ -137,4 +113,37 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': NestedResetTarget()},
   );
+}
+
+final class NestedResetSerializer extends _i3.Serializer<_i4.NestedReset> {
+  NestedResetSerializer() {
+    $serializers
+      ..put(_i3.Serializer.define<_i4.NestedParent, Map<String, Object?>>(
+        serialize: ($value) =>
+            {r'child': $serializers.serialize<_i4.NestedChild>($value.child)},
+        deserialize: ($serialized) {
+          return _i4.NestedParent(
+              $serializers.deserialize<_i4.NestedChild>($serialized[r'child']));
+        },
+      ))
+      ..put(_i3.Serializer.define<_i4.NestedChild, Map<String, Object?>>(
+        serialize: ($value) => {r'value': $value.value},
+        deserialize: ($serialized) {
+          return _i4.NestedChild(($serialized[r'value'] as String));
+        },
+      ));
+  }
+
+  final _i3.Serializers $serializers = _i3.Serializers();
+
+  @override
+  _i4.NestedReset deserialize(Object? $value) {
+    final $serialized = assertWireType<Map<String, Object?>>($value);
+    return _i4.NestedReset(
+        $serializers.deserialize<_i4.NestedParent>($serialized));
+  }
+
+  @override
+  Object? serialize(_i4.NestedReset $value) =>
+      $serializers.serialize<_i4.NestedParent>($value.it);
 }
