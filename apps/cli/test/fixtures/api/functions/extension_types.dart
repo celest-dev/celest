@@ -3,7 +3,8 @@ library;
 
 import 'dart:async';
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/extension_types.dart';
+import 'package:celest_core/celest_core.dart';
 
 // Basic extension types
 StringX string(StringX s) => s;

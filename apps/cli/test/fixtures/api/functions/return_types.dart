@@ -4,7 +4,7 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/parameter_types.dart';
 
 Future<void> asyncVoidReturn() async {}
 

@@ -2,7 +2,7 @@
 /// parsed and transferred to the generated client.
 library;
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/metadata.dart';
 
 /// A function that has doc comments.
 ///

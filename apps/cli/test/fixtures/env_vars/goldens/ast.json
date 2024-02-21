@@ -27,13 +27,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 123,
+                  "offset": 130,
                   "uri": "injected.dart",
                   "line": 5,
                   "column": 30
                 },
                 "end": {
-                  "offset": 127,
+                  "offset": 134,
                   "uri": "injected.dart",
                   "line": 5,
                   "column": 34
@@ -57,13 +57,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 155,
+                  "offset": 162,
                   "uri": "injected.dart",
                   "line": 6,
                   "column": 26
                 },
                 "end": {
-                  "offset": 158,
+                  "offset": 165,
                   "uri": "injected.dart",
                   "line": 6,
                   "column": 29
@@ -92,13 +92,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 82,
+              "offset": 89,
               "uri": "injected.dart",
               "line": 4,
               "column": 7
             },
             "end": {
-              "offset": 90,
+              "offset": 97,
               "uri": "injected.dart",
               "line": 4,
               "column": 15
@@ -123,13 +123,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 269,
+                  "offset": 276,
                   "uri": "injected.dart",
                   "line": 12,
                   "column": 30
                 },
                 "end": {
-                  "offset": 273,
+                  "offset": 280,
                   "uri": "injected.dart",
                   "line": 12,
                   "column": 34
@@ -153,13 +153,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 301,
+                  "offset": 308,
                   "uri": "injected.dart",
                   "line": 13,
                   "column": 26
                 },
                 "end": {
-                  "offset": 304,
+                  "offset": 311,
                   "uri": "injected.dart",
                   "line": 13,
                   "column": 29
@@ -183,13 +183,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 338,
+                  "offset": 345,
                   "uri": "injected.dart",
                   "line": 14,
                   "column": 32
                 },
                 "end": {
-                  "offset": 344,
+                  "offset": 351,
                   "uri": "injected.dart",
                   "line": 14,
                   "column": 38
@@ -213,13 +213,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 375,
+                  "offset": 382,
                   "uri": "injected.dart",
                   "line": 15,
                   "column": 29
                 },
                 "end": {
-                  "offset": 381,
+                  "offset": 388,
                   "uri": "injected.dart",
                   "line": 15,
                   "column": 35
@@ -243,13 +243,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 411,
+                  "offset": 418,
                   "uri": "injected.dart",
                   "line": 16,
                   "column": 28
                 },
                 "end": {
-                  "offset": 417,
+                  "offset": 424,
                   "uri": "injected.dart",
                   "line": 16,
                   "column": 34
@@ -272,13 +272,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 449,
+                  "offset": 456,
                   "uri": "injected.dart",
                   "line": 17,
                   "column": 30
                 },
                 "end": {
-                  "offset": 456,
+                  "offset": 463,
                   "uri": "injected.dart",
                   "line": 17,
                   "column": 37
@@ -294,26 +294,26 @@
           "returnType": {
             "$": "TypeReference",
             "symbol": "Person",
-            "url": "package:celest_backend/models.dart",
+            "url": "package:celest_backend/models/person.dart",
             "isNullable": false
           },
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "Person",
-            "url": "package:celest_backend/models.dart",
+            "url": "package:celest_backend/models/person.dart",
             "isNullable": false
           },
           "metadata": [],
           "docs": [],
           "location": {
             "start": {
-              "offset": 222,
+              "offset": 229,
               "uri": "injected.dart",
               "line": 11,
               "column": 7
             },
             "end": {
-              "offset": 236,
+              "offset": 243,
               "uri": "injected.dart",
               "line": 11,
               "column": 21
@@ -323,26 +323,7 @@
         }
       },
       "docs": [],
-      "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "BadRequestException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "InternalServerException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "SerializationException",
-          "url": "package:celest_core/src/exception/serialization_exception.dart",
-          "isNullable": false
-        }
-      ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,

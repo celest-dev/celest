@@ -2,38 +2,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/celest.dart';
-import 'package:celest_backend/models.dart' as _$models;
-import 'package:celest_core/src/exception/cloud_exception.dart';
-import 'package:celest_core/src/exception/serialization_exception.dart';
+import 'package:celest_backend/models/person.dart' as _$person;
 
 void initSerializers() {
   Serializers.instance
-      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
-    deserialize: ($serialized) {
-      return BadRequestException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<InternalServerException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
-    deserialize: ($serialized) {
-      return InternalServerException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<SerializationException, Map<String, Object?>>(
-    serialize: ($value) => {
-      r'message': $value.message,
-      r'offset': $value.offset,
-      r'source': $value.source,
-    },
-    deserialize: ($serialized) {
-      return SerializationException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<_$models.Person, Map<String, Object?>>(
+      .put(Serializer.define<_$person.Person, Map<String, Object?>>(
     serialize: ($value) => {
       r'name': $value.name,
       r'age': $value.age,
@@ -43,7 +16,7 @@ void initSerializers() {
       r'website': Serializers.instance.serialize<Uri>($value.website),
     },
     deserialize: ($serialized) {
-      return _$models.Person(
+      return _$person.Person(
         name: ($serialized[r'name'] as String),
         age: ($serialized[r'age'] as num).toInt(),
         height: ($serialized[r'height'] as num).toDouble(),

@@ -1,5 +1,5 @@
-import 'package:celest_backend/exceptions.dart';
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/exceptions/exceptions.dart';
+import 'package:celest_backend/models/exceptions.dart';
 
 void throwsException({
   required SupportedExceptionType type,

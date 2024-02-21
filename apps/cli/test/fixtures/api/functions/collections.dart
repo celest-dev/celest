@@ -2,7 +2,7 @@
 /// return types.
 library;
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/parameter_types.dart';
 
 Future<List<String>> simpleList(List<String> list) async => list;
 Future<List<SimpleClass>> complexList(List<SimpleClass> list) async => list;

@@ -243,31 +243,25 @@
         {
           "$": "TypeReference",
           "symbol": "BaseException",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "CustomException",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "BaseError",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "CustomError",
-          "url": "package:celest_backend/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CommonException",
-          "url": "package:_common/_common.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         }
       ],
@@ -308,13 +302,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 55,
+              "offset": 66,
               "uri": "throwing.dart",
               "line": 2,
               "column": 5
             },
             "end": {
-              "offset": 72,
+              "offset": 83,
               "uri": "throwing.dart",
               "line": 2,
               "column": 22
@@ -339,13 +333,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 117,
+              "offset": 128,
               "uri": "throwing.dart",
               "line": 6,
               "column": 5
             },
             "end": {
-              "offset": 132,
+              "offset": 143,
               "uri": "throwing.dart",
               "line": 6,
               "column": 20
@@ -370,13 +364,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 175,
+              "offset": 186,
               "uri": "throwing.dart",
               "line": 10,
               "column": 5
             },
             "end": {
-              "offset": 196,
+              "offset": 207,
               "uri": "throwing.dart",
               "line": 10,
               "column": 26
@@ -401,13 +395,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 245,
+              "offset": 256,
               "uri": "throwing.dart",
               "line": 14,
               "column": 5
             },
             "end": {
-              "offset": 264,
+              "offset": 275,
               "uri": "throwing.dart",
               "line": 14,
               "column": 24
@@ -421,31 +415,25 @@
         {
           "$": "TypeReference",
           "symbol": "BaseException",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "CustomException",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "BaseError",
-          "url": "package:celest_backend/exceptions.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
           "symbol": "CustomError",
-          "url": "package:celest_backend/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CommonException",
-          "url": "package:_common/_common.dart",
+          "url": "package:celest_backend/exceptions/exceptions.dart",
           "isNullable": false
         }
       ],

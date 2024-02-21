@@ -4,20 +4,19 @@
 import 'dart:typed_data' as _$typed_data;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart' as _$exceptions;
-import 'package:celest_backend/src/models/classes.dart' as _$classes;
-import 'package:celest_backend/src/models/cycles.dart' as _$cycles;
-import 'package:celest_backend/src/models/exceptions.dart' as _$exceptions;
-import 'package:celest_backend/src/models/extension_types.dart'
+import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/models/classes.dart' as _$classes;
+import 'package:celest_backend/models/cycles.dart' as _$cycles;
+import 'package:celest_backend/models/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/models/extension_types.dart'
     as _$extension_types;
-import 'package:celest_backend/src/models/generic_wrappers.dart'
+import 'package:celest_backend/models/generic_wrappers.dart'
     as _$generic_wrappers;
-import 'package:celest_backend/src/models/metadata.dart' as _$metadata;
-import 'package:celest_backend/src/models/parameter_types.dart'
+import 'package:celest_backend/models/metadata.dart' as _$metadata;
+import 'package:celest_backend/models/parameter_types.dart'
     as _$parameter_types;
-import 'package:celest_backend/src/models/records.dart' as _$records;
-import 'package:celest_backend/src/models/sealed_classes.dart'
-    as _$sealed_classes;
+import 'package:celest_backend/models/records.dart' as _$records;
+import 'package:celest_backend/models/sealed_classes.dart' as _$sealed_classes;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
@@ -30,31 +29,6 @@ void initSerializers() {
     serialize: ($value) => {},
     deserialize: ($serialized) {
       return _$classes.Empty();
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
-    deserialize: ($serialized) {
-      return BadRequestException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<InternalServerException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
-    deserialize: ($serialized) {
-      return InternalServerException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<SerializationException, Map<String, Object?>>(
-    serialize: ($value) => {
-      r'message': $value.message,
-      r'offset': $value.offset,
-      r'source': $value.source,
-    },
-    deserialize: ($serialized) {
-      return SerializationException(($serialized[r'message'] as String));
     },
   ));
   Serializers.instance
@@ -185,6 +159,31 @@ void initSerializers() {
     serialize: ($value) => $value.toJson(),
     deserialize: ($serialized) {
       return _$classes.FromJsonStatic.fromJson($serialized);
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return BadRequestException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<InternalServerException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return InternalServerException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<SerializationException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'offset': $value.offset,
+      r'source': $value.source,
+    },
+    deserialize: ($serialized) {
+      return SerializationException(($serialized[r'message'] as String));
     },
   ));
   Serializers.instance.put(
@@ -1557,7 +1556,7 @@ void initSerializers() {
     },
   ));
   Serializers.instance
-      .put(Serializer.define<Record$wkpf9q, Map<String, Object?>>(
+      .put(Serializer.define<Record$k2phuz, Map<String, Object?>>(
     serialize: ($value) => {
       r'aliased': Serializers.instance
           .serialize<_$records.NamedFieldsRecord>($value.aliased),
@@ -2116,12 +2115,12 @@ void initSerializers() {
   ));
 }
 
-typedef Record$k7x4l9 = ({String a, String b, String c});
-typedef Record$rmm4wt = ({String anotherField, String field});
-typedef Record$wkpf9q = ({
+typedef Record$k2phuz = ({
   _$records.NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
+typedef Record$k7x4l9 = ({String a, String b, String c});
+typedef Record$rmm4wt = ({String anotherField, String field});
 
 final class ErrResult_E_ShapeExceptionSerializer<
         E extends _$exceptions.ShapeException>

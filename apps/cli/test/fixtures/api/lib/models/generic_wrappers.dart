@@ -1,6 +1,5 @@
-import 'package:celest_backend/models.dart';
-
-export 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:celest_backend/models/parameter_types.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class GenericWrappers {
   GenericWrappers({

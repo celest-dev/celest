@@ -3,8 +3,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
-import 'package:celest_backend/exceptions.dart' as _i7;
-import 'package:celest_backend/src/models/sealed_classes.dart' as _i2;
+import 'package:celest_backend/exceptions/exceptions.dart' as _i7;
+import 'package:celest_backend/models/sealed_classes.dart' as _i2;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import 'package:celest_core/src/serialization/json_value.dart' as _i8;

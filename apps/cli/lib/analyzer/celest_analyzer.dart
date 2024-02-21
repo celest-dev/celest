@@ -4,19 +4,14 @@ import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/analysis/uri_converter.dart';
-import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
-import 'package:analyzer/source/source.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
-import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
@@ -41,9 +36,14 @@ enum CustomType {
   model,
   exception;
 
-  String get expectedPath => switch (this) {
-        CustomType.model => ClientPaths.models,
-        CustomType.exception => ClientPaths.exceptions,
+  String get legacyPath => switch (this) {
+        model => projectPaths.modelsDart,
+        exception => projectPaths.exceptionsDart,
+      };
+
+  String get dir => switch (this) {
+        model => projectPaths.modelsDir,
+        exception => projectPaths.exceptionsDir,
       };
 }
 
@@ -73,7 +73,19 @@ final class CelestAnalyzer {
     );
   }
 
-  Future<void> init() => _initFuture ??= _init();
+  Future<void> init() async {
+    _errors.clear();
+    if (_lastAnalyzed != projectPaths.projectRoot) {
+      _lastAnalyzed = projectPaths.projectRoot;
+      _logger.finest('Analyzing new project. Clearing caches.');
+      typeHelper.reset();
+      _apiNamespace.clear();
+    }
+    await Future.wait([
+      _initFuture ??= _init(),
+      _initCustomTypes(),
+    ]);
+  }
 
   Future<void>? _initFuture;
   Future<void> _init() async {
@@ -101,41 +113,50 @@ final class CelestAnalyzer {
     );
   }
 
-  ResolvedLibraryResult? _modelsLibrary;
-  ResolvedLibraryResult? _exceptionsLibrary;
+  Set<InterfaceElement> _customModelTypes = const {};
+  Set<InterfaceElement> _customExceptionTypes = const {};
 
-  Future<void> _initTypeLibraries() async {
-    try {
-      _modelsLibrary = await _resolveLibrary(projectPaths.modelsDart);
-    } on Object catch (e, st) {
-      performance.captureError(e, stackTrace: st);
-      _modelsLibrary = null;
-    }
-    try {
-      _exceptionsLibrary = await _resolveLibrary(projectPaths.exceptionsDart);
-    } on Object catch (e, st) {
-      performance.captureError(e, stackTrace: st);
-      _exceptionsLibrary = null;
-    }
+  Future<void> _initCustomTypes() async {
+    final [customModelTypes, customExceptionTypes] = await Future.wait([
+      _collectCustomTypes(CustomType.model),
+      _collectCustomTypes(CustomType.exception),
+    ]);
+    _customModelTypes = customModelTypes;
+    _customExceptionTypes = customExceptionTypes;
   }
 
-  Uri? _lastAnalyzed;
+  Future<Set<InterfaceElement>> _collectCustomTypes(CustomType type) async {
+    final files = <File>[];
+    final dir = fileSystem.directory(type.dir);
+    if (dir.existsSync()) {
+      files.addAll(
+        await dir.list(recursive: true).whereType<File>().toList(),
+      );
+    }
+    final legacyBarrelFile = fileSystem.file(type.legacyPath);
+    if (legacyBarrelFile.existsSync()) {
+      files.add(legacyBarrelFile);
+    }
+    final customTypes = <InterfaceElement>{};
+    await Future.wait([
+      for (final file in files)
+        _resolveLibrary(file.path).then((library) {
+          final types = _namespaceForLibrary(library.element);
+          customTypes.addAll(types);
+        }),
+    ]);
+    return customTypes;
+  }
+
+  String? _lastAnalyzed;
 
   Future<CelestAnalysisResult> analyzeProject({
     bool updateResources = true,
   }) async {
-    _errors.clear();
     await init();
-    await _initTypeLibraries();
     final project = await _findProject();
     if (project == null) {
       return CelestAnalysisResult.failure(_errors);
-    }
-
-    if (_lastAnalyzed != project.location!.sourceUrl) {
-      _lastAnalyzed = project.location!.sourceUrl;
-      _logger.finest('Analyzing new project. Clearing caches.');
-      typeHelper.reset();
     }
 
     _project = project;
@@ -409,81 +430,67 @@ final class CelestAnalyzer {
   /// Ensures that a referenced type which will be surfaced in the client
   /// is defined in the `lib/` directory.
   void _ensureClientReferenceable(
-    Reference reference,
+    InterfaceElement modelType,
     SourceSpan location, {
     required CustomType type,
   }) {
-    final url = reference.url;
-    final symbol = reference.symbol;
-    if (url == null || symbol == null) {
-      return;
-    }
-    final uri = Uri.parse(url);
-    if (uri.scheme == 'dart') {
-      return;
-    }
-    final filepath = switch (uri.scheme) {
-      'package' => _context.currentSession.uriConverter.uriToPath(uri),
-      _ => projectPaths.denormalizeUri(uri).toFilePath(),
+    final isCustomType = switch (_context.currentSession.uriConverter
+        .uriToPath(modelType.library.source.uri)) {
+      final path? => p.isWithin(projectPaths.projectRoot, path),
+      _ => false,
     };
-    if (filepath == null) {
-      performance.captureError(
-        'Could not resolve URI: $uri',
-        stackTrace: StackTrace.current,
-      );
+    if (!isCustomType) {
       return;
     }
-    if (symbol.startsWith('_')) {
-      // Private types are reported elsewhere.
-      return;
-    }
-    final element = switch (type) {
-      CustomType.model => _modelsLibrary?.element.exportNamespace.get(symbol),
-      CustomType.exception =>
-        _exceptionsLibrary?.element.exportNamespace.get(symbol),
+    final isDefinedInLib = switch (type) {
+      CustomType.model => _customModelTypes.contains(modelType),
+      CustomType.exception => _customExceptionTypes.contains(modelType),
     };
-    if (element == null) {
+    if (!isDefinedInLib) {
       final expectedPath = p
           .relative(
-            type.expectedPath,
+            type.dir,
             from: projectPaths.projectRoot,
           )
           .to(p.url);
       _reportError(
-        'Types referenced in APIs must be defined in or exported from the '
-        '`celest/$expectedPath` file.',
+        'Types referenced in APIs must be defined in the '
+        '`celest/lib/$expectedPath` folder.',
         location: location,
       );
     }
   }
 
-  final _apiNamespace = Expando<Set<InterfaceElement>>();
-  Set<InterfaceElement> _importNamespaceForLibrary(LibraryElement library) {
+  final _apiNamespace =
+      <(LibraryElement, bool recursive), Set<InterfaceElement>>{};
+  Set<InterfaceElement> _namespaceForLibrary(
+    LibraryElement library, {
+    bool recursive = false,
+  }) {
     final visited = <LibraryElement>{};
     Iterable<InterfaceElement> search(LibraryElement library) sync* {
       if (!visited.add(library)) {
         return;
       }
       yield* library.exportNamespace.definedNames.values.whereType();
+      if (!recursive) {
+        return;
+      }
       for (final importedLibrary in library.importedLibraries) {
         yield* search(importedLibrary);
       }
     }
 
-    return _apiNamespace[library] ??= search(library).toSet();
+    return _apiNamespace[(library, recursive)] ??= search(library).toSet();
   }
 
   Set<DartType> _collectExceptionTypes(LibraryElement apiLibrary) {
-    final exceptionsLibrary = _exceptionsLibrary;
-    if (exceptionsLibrary == null) {
+    final customExceptions = _customExceptionTypes;
+    if (customExceptions.isEmpty) {
       return const {};
     }
-    final apiNamespace = _importNamespaceForLibrary(apiLibrary);
+    final apiNamespace = _namespaceForLibrary(apiLibrary, recursive: true);
     final exceptionTypes = <DartType>{};
-    final exceptionsDartNamespace = exceptionsLibrary
-        .element.exportNamespace.definedNames.values
-        .whereType<InterfaceElement>()
-        .toList();
     for (final interfaceElement in apiNamespace) {
       final interfaceUri = interfaceElement.library.source.uri;
       final isDartType = interfaceUri.scheme == 'dart';
@@ -504,14 +511,19 @@ final class CelestAnalyzer {
         continue;
       }
       final exportedFromExceptionsDart =
-          exceptionsDartNamespace.contains(interfaceElement);
-      final mustBeExportedFromExceptionsDart =
-          interfaceUri.scheme == 'package' &&
-              interfaceUri.pathSegments.first == 'celest_backend';
+          customExceptions.contains(interfaceElement);
+
+      // Only types defined within the celest/ project folder need to be in
+      // lib/ since all others can be imported on the client side.
+      final mustBeExportedFromExceptionsDart = switch (
+          _context.currentSession.uriConverter.uriToPath(interfaceUri)) {
+        final path? => p.isWithin(projectPaths.projectRoot, path),
+        _ => false,
+      };
       if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
         _reportError(
-          'The type `$interfaceElement` must be exported from the '
-          '`celest_backend/exceptions.dart` file.',
+          'The type `${interfaceElement.thisType}` must be defined in the '
+          '`celest/lib/exceptions/` folder.',
           location: interfaceElement.sourceLocation,
         );
         continue;
@@ -526,14 +538,19 @@ final class CelestAnalyzer {
       }
       final isSerializable = typeHelper.isSerializable(interfaceType);
       if (!isSerializable.isSerializable) {
-        for (final reason in isSerializable.reasons) {
-          // TODO(dnys1): Add a helpful link/description for this error.
-          _reportError(
-            'The exception type "${interfaceElement.name}" cannot be serialized '
-            'as JSON. Hide this type from the API or make it serializable: '
-            '$reason',
-            location: interfaceElement.sourceLocation,
-          );
+        // Serialization issues are only reported if the type is a custom type
+        // (e.g. exported from `exceptions/`). Otherwise, users are still
+        // allowed to throw it, but it will not be serialized in the response.
+        if (exportedFromExceptionsDart) {
+          for (final reason in isSerializable.reasons) {
+            // TODO(dnys1): Add a helpful link/description for this error.
+            _reportError(
+              'The exception type "${interfaceElement.name}" cannot be serialized '
+              'as JSON. Hide this type from the API or make it serializable: '
+              '$reason',
+              location: interfaceElement.sourceLocation,
+            );
+          }
         }
         continue;
       }
@@ -588,32 +605,6 @@ final class CelestAnalyzer {
           return null;
         }
 
-        // Do a quick scan to check that any types thrown directly from the
-        // API are referenceable and serializable.
-        final funcNode = apiLibraryResult.getElementDeclaration(func)!.node;
-        final exceptionCollector = ExceptionTypeCollector(
-          source: library.source,
-          uriConverter: _context.currentSession.uriConverter,
-          errorReporter: _reportError,
-        );
-        funcNode.accept(exceptionCollector);
-        final exceptionTypes = exceptionCollector.exceptionTypes;
-        // These are supported but are handled by the common runtime.
-        exceptionTypes.removeAll([
-          typeHelper.coreTypes.coreExceptionType,
-          typeHelper.coreTypes.coreErrorType,
-        ]);
-        apiExceptionTypes.addAll(exceptionTypes);
-        for (final exceptionType in exceptionTypes) {
-          final exceptionTypeLoc =
-              exceptionCollector.exceptionTypeLocations[exceptionType]!;
-          _ensureClientReferenceable(
-            typeHelper.toReference(exceptionType),
-            exceptionTypeLoc,
-            type: CustomType.exception,
-          );
-        }
-
         final function = ast.CloudFunction(
           name: func.name,
           apiName: apiName,
@@ -644,11 +635,13 @@ final class CelestAnalyzer {
           parameters: await func.parameters.asyncMap((param) async {
             final paramType = typeHelper.toReference(param.type);
             final paramLoc = param.sourceLocation;
-            _ensureClientReferenceable(
-              paramType,
-              paramLoc,
-              type: CustomType.model,
-            );
+            if (param.type.element case final InterfaceElement interface) {
+              _ensureClientReferenceable(
+                interface,
+                paramLoc,
+                type: CustomType.model,
+              );
+            }
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
               type: paramType,
@@ -714,11 +707,13 @@ final class CelestAnalyzer {
           docs: func.docLines,
         );
 
-        _ensureClientReferenceable(
-          typeHelper.toReference(func.returnType),
-          func.sourceLocation,
-          type: CustomType.model,
-        );
+        if (func.returnType.element case final InterfaceElement interface) {
+          _ensureClientReferenceable(
+            interface,
+            func.sourceLocation,
+            type: CustomType.model,
+          );
+        }
 
         var hasContext = false;
         for (final param in function.parameters) {
@@ -896,88 +891,6 @@ final class _ScopedWidgetCollector {
       }
     }
     return declarations;
-  }
-}
-
-final class ExceptionTypeCollector extends RecursiveAstVisitor<void> {
-  ExceptionTypeCollector({
-    required this.source,
-    required this.uriConverter,
-    required this.errorReporter,
-  });
-
-  final Source source;
-  final UriConverter uriConverter;
-  final Set<DartType> exceptionTypes = {};
-  final Map<DartType, FileSpan> exceptionTypeLocations = {};
-  final AnalysisErrorReporter errorReporter;
-
-  static final _logger = Logger('ExceptionTypeCollector');
-
-  @override
-  void visitMethodInvocation(MethodInvocation node) {
-    // TODO(dnys1): Support recursion into methods outside the library.
-    super.visitMethodInvocation(node);
-    // final functionElement = switch (node.function) {
-    //   final SimpleIdentifier identifier => identifier.staticElement,
-    //   _ => null,
-    // } as ExecutableElement?;
-    // if (functionElement == null) {
-    //   print('Unknown function element: ${node.function.runtimeType}');
-    //   return;
-    // }
-    // if (functionElement.librarySource.uri !=
-    //     unit.declaredElement!.librarySource.uri) {
-    //   final resolvedLibrary =
-    //       await session.getResolvedLibraryByElement(functionElement.library)
-    //           as ResolvedLibraryResult;
-    //   await resolvedLibrary
-    //       .getElementDeclaration(functionElement)!
-    //       .node
-    //       .accept(this);
-    // }
-  }
-
-  @override
-  void visitThrowExpression(ThrowExpression node) {
-    super.visitThrowExpression(node);
-    final staticType = node.expression.staticType;
-    if (staticType == null) {
-      errorReporter(
-        'Could not resolve thrown type',
-        location: node.sourceLocation(source),
-      );
-      return;
-    }
-    if (!staticType.isThrowable) {
-      errorReporter(
-        'The type of a thrown expression must be a subtype of `Error` or `Exception`',
-        location: node.sourceLocation(source),
-      );
-      return;
-    }
-    final staticTypeString =
-        staticType.getDisplayString(withNullability: false);
-    final libraryUri = staticType.element?.librarySource?.uri;
-    if (libraryUri == null) {
-      _logger.finest(
-        'Could not resolve library URI of type: $staticTypeString',
-      );
-      return;
-    }
-    final libraryPath = uriConverter.uriToPath(libraryUri);
-    if (libraryPath == null) {
-      _logger.finest(
-        'Could not resolve library path of type: $staticTypeString',
-      );
-      return;
-    }
-    if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
-      _logger.finest('Skipping non-custom error type: $staticTypeString');
-      return;
-    }
-    exceptionTypeLocations[staticType] = node.sourceLocation(source);
-    exceptionTypes.add(staticType);
   }
 }
 

@@ -2,7 +2,7 @@
 /// serializable and deserializable.
 library;
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/classes.dart';
 
 Empty empty(Empty value) => value;
 Future<Empty> asyncEmpty(Empty value) async => value;

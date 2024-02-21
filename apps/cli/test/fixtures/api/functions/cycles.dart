@@ -2,7 +2,7 @@
 /// of indirection.
 library;
 
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/cycles.dart';
 
 Node createTree() {
   return const Parent(

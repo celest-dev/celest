@@ -1,4 +1,5 @@
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/sealed_classes.dart';
+import 'package:celest_core/celest_core.dart';
 
 final class CustomException implements Exception {
   final String message = 'This is a custom exception';

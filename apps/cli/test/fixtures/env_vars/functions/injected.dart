@@ -1,4 +1,4 @@
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/person.dart';
 
 import '../resources.dart';
 

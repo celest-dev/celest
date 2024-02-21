@@ -1,4 +1,4 @@
-import 'package:celest_backend/exceptions.dart';
+import 'package:celest_backend/exceptions/exceptions.dart';
 
 void throwsCustomError() {
   throw CustomError('message');

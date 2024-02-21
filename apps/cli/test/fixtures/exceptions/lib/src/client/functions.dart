@@ -8,7 +8,7 @@ import 'dart:convert' as _$convert;
 
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
 
 import '../../client.dart';
 
@@ -105,9 +105,6 @@ class CelestFunctionsNonthrowing {
       case r'CustomError':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomError>($details);
-      case r'CommonException':
-        throw Serializers.instance
-            .deserialize<_$_common.CommonException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -204,9 +201,6 @@ class CelestFunctionsThrowing {
       case r'CustomError':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomError>($details);
-      case r'CommonException':
-        throw Serializers.instance
-            .deserialize<_$_common.CommonException>($details);
       case _:
         switch ($statusCode) {
           case 400:

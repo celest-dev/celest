@@ -1,7 +1,7 @@
-import 'package:celest_backend/exceptions.dart';
-import 'package:celest_backend/models.dart';
-
 // Should be able to use the base type.
+import 'package:celest_backend/exceptions/exceptions.dart';
+import 'package:celest_backend/models/sealed_classes.dart';
+
 double area(Shape shape) => shape.area;
 
 // Should be able to use the base type in a collection.

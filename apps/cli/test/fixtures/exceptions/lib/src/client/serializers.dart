@@ -3,7 +3,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
 
 void initSerializers() {
   Serializers.instance
