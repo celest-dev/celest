@@ -4,16 +4,20 @@
 import 'dart:typed_data' as _$typed_data;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart';
-import 'package:celest_backend/src/models/classes.dart';
-import 'package:celest_backend/src/models/cycles.dart';
-import 'package:celest_backend/src/models/exceptions.dart';
-import 'package:celest_backend/src/models/extension_types.dart';
-import 'package:celest_backend/src/models/generic_wrappers.dart';
-import 'package:celest_backend/src/models/metadata.dart';
-import 'package:celest_backend/src/models/parameter_types.dart';
-import 'package:celest_backend/src/models/records.dart';
-import 'package:celest_backend/src/models/sealed_classes.dart';
+import 'package:celest_backend/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/src/models/classes.dart' as _$classes;
+import 'package:celest_backend/src/models/cycles.dart' as _$cycles;
+import 'package:celest_backend/src/models/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/src/models/extension_types.dart'
+    as _$extension_types;
+import 'package:celest_backend/src/models/generic_wrappers.dart'
+    as _$generic_wrappers;
+import 'package:celest_backend/src/models/metadata.dart' as _$metadata;
+import 'package:celest_backend/src/models/parameter_types.dart'
+    as _$parameter_types;
+import 'package:celest_backend/src/models/records.dart' as _$records;
+import 'package:celest_backend/src/models/sealed_classes.dart'
+    as _$sealed_classes;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
@@ -23,7 +27,7 @@ import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
 typedef Record$k7x4l9 = ({String a, String b, String c});
 typedef Record$rmm4wt = ({String anotherField, String field});
 typedef Record$wkpf9q = ({
-  NamedFieldsRecord aliased,
+  _$records.NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
 
@@ -41,260 +45,282 @@ final class BadRequestExceptionSerializer
   Object? serialize(BadRequestException value) => {r'message': value.message};
 }
 
-final class BadShapeExceptionSerializer extends Serializer<BadShapeException> {
+final class BadShapeExceptionSerializer
+    extends Serializer<_$exceptions.BadShapeException> {
   const BadShapeExceptionSerializer();
 
   @override
-  BadShapeException deserialize(Object? value) {
+  _$exceptions.BadShapeException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return BadShapeException(
-        Serializers.instance.deserialize<Shape>(serialized[r'shape']));
+    return _$exceptions.BadShapeException(Serializers.instance
+        .deserialize<_$sealed_classes.Shape>(serialized[r'shape']));
   }
 
   @override
-  Object? serialize(BadShapeException value) =>
-      {r'shape': Serializers.instance.serialize<Shape>(value.shape)};
+  Object? serialize(_$exceptions.BadShapeException value) => {
+        r'shape':
+            Serializers.instance.serialize<_$sealed_classes.Shape>(value.shape)
+      };
 }
 
-final class ChildSerializer extends Serializer<Child> {
+final class ChildSerializer extends Serializer<_$cycles.Child> {
   const ChildSerializer();
 
   @override
-  Child deserialize(Object? value) {
+  _$cycles.Child deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Child((serialized[r'name'] as String));
+    return _$cycles.Child((serialized[r'name'] as String));
   }
 
   @override
-  Object? serialize(Child value) => {r'name': value.name};
+  Object? serialize(_$cycles.Child value) => {r'name': value.name};
 }
 
-final class CircleSerializer extends Serializer<Circle> {
+final class CircleSerializer extends Serializer<_$sealed_classes.Circle> {
   const CircleSerializer();
 
   @override
-  Circle deserialize(Object? value) {
+  _$sealed_classes.Circle deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Circle((serialized[r'radius'] as num).toDouble());
+    return _$sealed_classes.Circle((serialized[r'radius'] as num).toDouble());
   }
 
   @override
-  Object? serialize(Circle value) => {r'radius': value.radius};
+  Object? serialize(_$sealed_classes.Circle value) => {r'radius': value.radius};
 }
 
 final class CircleWithCustomJsonSerializer
-    extends Serializer<CircleWithCustomJson> {
+    extends Serializer<_$sealed_classes.CircleWithCustomJson> {
   const CircleWithCustomJsonSerializer();
 
   @override
-  CircleWithCustomJson deserialize(Object? value) {
+  _$sealed_classes.CircleWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CircleWithCustomJson.fromJson(serialized);
+    return _$sealed_classes.CircleWithCustomJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(CircleWithCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.CircleWithCustomJson value) =>
+      value.toJson();
 }
 
 final class CircleWithInheritedCustomJsonSerializer
-    extends Serializer<CircleWithInheritedCustomJson> {
+    extends Serializer<_$sealed_classes.CircleWithInheritedCustomJson> {
   const CircleWithInheritedCustomJsonSerializer();
 
   @override
-  CircleWithInheritedCustomJson deserialize(Object? value) {
+  _$sealed_classes.CircleWithInheritedCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return (ShapeWithInheritedCustomJson.fromJson({
+    return (_$sealed_classes.ShapeWithInheritedCustomJson.fromJson({
       r'$type': r'CircleWithInheritedCustomJson',
       ...serialized,
-    }) as CircleWithInheritedCustomJson);
+    }) as _$sealed_classes.CircleWithInheritedCustomJson);
   }
 
   @override
-  Object? serialize(CircleWithInheritedCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.CircleWithInheritedCustomJson value) =>
+      value.toJson();
 }
 
 final class CircleWithOverriddenCustomJsonSerializer
-    extends Serializer<CircleWithOverriddenCustomJson> {
+    extends Serializer<_$sealed_classes.CircleWithOverriddenCustomJson> {
   const CircleWithOverriddenCustomJsonSerializer();
 
   @override
-  CircleWithOverriddenCustomJson deserialize(Object? value) {
+  _$sealed_classes.CircleWithOverriddenCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CircleWithOverriddenCustomJson.fromJson(serialized);
+    return _$sealed_classes.CircleWithOverriddenCustomJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(CircleWithOverriddenCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.CircleWithOverriddenCustomJson value) =>
+      value.toJson();
 }
 
-final class ColorSerializer extends Serializer<Color> {
+final class ColorSerializer extends Serializer<_$extension_types.Color> {
   const ColorSerializer();
 
   @override
-  Color deserialize(Object? value) {
+  _$extension_types.Color deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return Color.fromJson(serialized);
+    return _$extension_types.Color.fromJson(serialized);
   }
 
   @override
-  Object? serialize(Color value) => value.toJson();
+  Object? serialize(_$extension_types.Color value) => value.toJson();
 }
 
 final class ColorXFromJsonImplSerializer
-    extends Serializer<ColorXFromJsonImpl> {
+    extends Serializer<_$extension_types.ColorXFromJsonImpl> {
   const ColorXFromJsonImplSerializer();
 
   @override
-  ColorXFromJsonImpl deserialize(Object? value) {
+  _$extension_types.ColorXFromJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorXFromJsonImpl.fromJson(serialized);
+    return _$extension_types.ColorXFromJsonImpl.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ColorXFromJsonImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXFromJsonImpl value) =>
+      value.toJson();
 }
 
-final class ColorXFromJsonSerializer extends Serializer<ColorXFromJson> {
+final class ColorXFromJsonSerializer
+    extends Serializer<_$extension_types.ColorXFromJson> {
   const ColorXFromJsonSerializer();
 
   @override
-  ColorXFromJson deserialize(Object? value) {
+  _$extension_types.ColorXFromJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorXFromJson.fromJson(serialized);
+    return _$extension_types.ColorXFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ColorXFromJson value) =>
-      Serializers.instance.serialize<Color>(value.c);
+  Object? serialize(_$extension_types.ColorXFromJson value) =>
+      Serializers.instance.serialize<_$extension_types.Color>(value.c);
 }
 
 final class ColorXFromJsonStaticSerializer
-    extends Serializer<ColorXFromJsonStatic> {
+    extends Serializer<_$extension_types.ColorXFromJsonStatic> {
   const ColorXFromJsonStaticSerializer();
 
   @override
-  ColorXFromJsonStatic deserialize(Object? value) {
+  _$extension_types.ColorXFromJsonStatic deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorXFromJsonStatic.fromJson(serialized);
+    return _$extension_types.ColorXFromJsonStatic.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ColorXFromJsonStatic value) =>
-      Serializers.instance.serialize<Color>(value.c);
+  Object? serialize(_$extension_types.ColorXFromJsonStatic value) =>
+      Serializers.instance.serialize<_$extension_types.Color>(value.c);
 }
 
 final class ColorXImplIndirectSerializer
-    extends Serializer<ColorXImplIndirect> {
+    extends Serializer<_$extension_types.ColorXImplIndirect> {
   const ColorXImplIndirectSerializer();
 
   @override
-  ColorXImplIndirect deserialize(Object? value) {
+  _$extension_types.ColorXImplIndirect deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Color.fromJson(serialized) as ColorXImplIndirect);
+    return (_$extension_types.Color.fromJson(serialized)
+        as _$extension_types.ColorXImplIndirect);
   }
 
   @override
-  Object? serialize(ColorXImplIndirect value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXImplIndirect value) =>
+      value.toJson();
 }
 
-final class ColorXImplSerializer extends Serializer<ColorXImpl> {
+final class ColorXImplSerializer
+    extends Serializer<_$extension_types.ColorXImpl> {
   const ColorXImplSerializer();
 
   @override
-  ColorXImpl deserialize(Object? value) {
+  _$extension_types.ColorXImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Color.fromJson(serialized) as ColorXImpl);
+    return (_$extension_types.Color.fromJson(serialized)
+        as _$extension_types.ColorXImpl);
   }
 
   @override
-  Object? serialize(ColorXImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXImpl value) => value.toJson();
 }
 
-final class ColorXSerializer extends Serializer<ColorX> {
+final class ColorXSerializer extends Serializer<_$extension_types.ColorX> {
   const ColorXSerializer();
 
   @override
-  ColorX deserialize(Object? value) {
+  _$extension_types.ColorX deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorX(Serializers.instance.deserialize<Color>(serialized));
+    return _$extension_types.ColorX(
+        Serializers.instance.deserialize<_$extension_types.Color>(serialized));
   }
 
   @override
-  Object? serialize(ColorX value) =>
-      Serializers.instance.serialize<Color>(value.c);
+  Object? serialize(_$extension_types.ColorX value) =>
+      Serializers.instance.serialize<_$extension_types.Color>(value.c);
 }
 
 final class ColorXToFromJsonCombinedSerializer
-    extends Serializer<ColorXToFromJsonCombined> {
+    extends Serializer<_$extension_types.ColorXToFromJsonCombined> {
   const ColorXToFromJsonCombinedSerializer();
 
   @override
-  ColorXToFromJsonCombined deserialize(Object? value) {
+  _$extension_types.ColorXToFromJsonCombined deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (ColorXFromJson.fromJson(serialized) as ColorXToFromJsonCombined);
+    return (_$extension_types.ColorXFromJson.fromJson(serialized)
+        as _$extension_types.ColorXToFromJsonCombined);
   }
 
   @override
-  Object? serialize(ColorXToFromJsonCombined value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXToFromJsonCombined value) =>
+      value.toJson();
 }
 
-final class ColorXToFromJsonSerializer extends Serializer<ColorXToFromJson> {
+final class ColorXToFromJsonSerializer
+    extends Serializer<_$extension_types.ColorXToFromJson> {
   const ColorXToFromJsonSerializer();
 
   @override
-  ColorXToFromJson deserialize(Object? value) {
+  _$extension_types.ColorXToFromJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorXToFromJson.fromJson(serialized);
+    return _$extension_types.ColorXToFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ColorXToFromJson value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXToFromJson value) => value.toJson();
 }
 
-final class ColorXToJsonImplSerializer extends Serializer<ColorXToJsonImpl> {
+final class ColorXToJsonImplSerializer
+    extends Serializer<_$extension_types.ColorXToJsonImpl> {
   const ColorXToJsonImplSerializer();
 
   @override
-  ColorXToJsonImpl deserialize(Object? value) {
+  _$extension_types.ColorXToJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Color.fromJson(serialized) as ColorXToJsonImpl);
+    return (_$extension_types.Color.fromJson(serialized)
+        as _$extension_types.ColorXToJsonImpl);
   }
 
   @override
-  Object? serialize(ColorXToJsonImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXToJsonImpl value) => value.toJson();
 }
 
-final class ColorXToJsonSerializer extends Serializer<ColorXToJson> {
+final class ColorXToJsonSerializer
+    extends Serializer<_$extension_types.ColorXToJson> {
   const ColorXToJsonSerializer();
 
   @override
-  ColorXToJson deserialize(Object? value) {
+  _$extension_types.ColorXToJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ColorXToJson(Serializers.instance.deserialize<Color>(serialized));
+    return _$extension_types.ColorXToJson(
+        Serializers.instance.deserialize<_$extension_types.Color>(serialized));
   }
 
   @override
-  Object? serialize(ColorXToJson value) => value.toJson();
+  Object? serialize(_$extension_types.ColorXToJson value) => value.toJson();
 }
 
-final class ComplexClassSerializer extends Serializer<ComplexClass> {
+final class ComplexClassSerializer
+    extends Serializer<_$parameter_types.ComplexClass> {
   const ComplexClassSerializer();
 
   @override
-  ComplexClass deserialize(Object? value) {
+  _$parameter_types.ComplexClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, dynamic>>(value);
-    return ComplexClass.fromJson(serialized);
+    return _$parameter_types.ComplexClass.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ComplexClass value) => value.toJson();
+  Object? serialize(_$parameter_types.ComplexClass value) => value.toJson();
 }
 
-final class ComplexStructSerializer extends Serializer<ComplexStruct> {
+final class ComplexStructSerializer
+    extends Serializer<_$parameter_types.ComplexStruct> {
   const ComplexStructSerializer();
 
   @override
-  ComplexStruct deserialize(Object? value) {
+  _$parameter_types.ComplexStruct deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       aBigInt: Serializers.instance.deserialize<BigInt>(serialized[r'aBigInt']),
@@ -320,7 +346,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
           .map((el) => Serializers.instance.deserialize<Duration>(el))
           .toList(),
       aListOfEnum: (serialized[r'aListOfEnum'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<MyEnum>(el))
+          .map((el) =>
+              Serializers.instance.deserialize<_$parameter_types.MyEnum>(el))
           .toList(),
       aListOfInt: (serialized[r'aListOfInt'] as Iterable<Object?>)
           .map((el) => (el as num).toInt())
@@ -333,11 +360,13 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
           .toList(),
       aListOfSimpleClass:
           (serialized[r'aListOfSimpleClass'] as Iterable<Object?>)
-              .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
+              .map((el) => Serializers.instance
+                  .deserialize<_$parameter_types.SimpleClass>(el))
               .toList(),
       aListOfSimpleStruct:
           (serialized[r'aListOfSimpleStruct'] as Iterable<Object?>)
-              .map((el) => Serializers.instance.deserialize<SimpleStruct>(el))
+              .map((el) => Serializers.instance
+                  .deserialize<_$parameter_types.SimpleStruct>(el))
               .toList(),
       aListOfStackTrace: (serialized[r'aListOfStackTrace'] as Iterable<Object?>)
           .map((el) => Serializers.instance.deserialize<StackTrace>(el))
@@ -403,7 +432,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       ) =>
           MapEntry(
             key,
-            Serializers.instance.deserialize<MyEnum>(value),
+            Serializers.instance.deserialize<_$parameter_types.MyEnum>(value),
           )),
       aMapOfInt: (serialized[r'aMapOfInt'] as Map<String, Object?>).map((
         key,
@@ -436,7 +465,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       ) =>
               MapEntry(
                 key,
-                Serializers.instance.deserialize<SimpleClass>(value),
+                Serializers.instance
+                    .deserialize<_$parameter_types.SimpleClass>(value),
               )),
       aMapOfSimpleStruct:
           (serialized[r'aMapOfSimpleStruct'] as Map<String, Object?>).map((
@@ -445,7 +475,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       ) =>
               MapEntry(
                 key,
-                Serializers.instance.deserialize<SimpleStruct>(value),
+                Serializers.instance
+                    .deserialize<_$parameter_types.SimpleStruct>(value),
               )),
       aMapOfStackTrace:
           (serialized[r'aMapOfStackTrace'] as Map<String, Object?>).map((
@@ -493,9 +524,11 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       aNull: (serialized[r'aNull'] as Null),
       aRegExp: Serializers.instance.deserialize<RegExp>(serialized[r'aRegExp']),
       aSimpleClass: Serializers.instance
-          .deserialize<SimpleClass>(serialized[r'aSimpleClass']),
+          .deserialize<_$parameter_types.SimpleClass>(
+              serialized[r'aSimpleClass']),
       aSimpleStruct: Serializers.instance
-          .deserialize<SimpleStruct>(serialized[r'aSimpleStruct']),
+          .deserialize<_$parameter_types.SimpleStruct>(
+              serialized[r'aSimpleStruct']),
       aStackTrace: Serializers.instance
           .deserialize<StackTrace>(serialized[r'aStackTrace']),
       aString: (serialized[r'aString'] as String),
@@ -504,17 +537,19 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       aUri: Serializers.instance.deserialize<Uri>(serialized[r'aUri']),
       aUriData:
           Serializers.instance.deserialize<UriData>(serialized[r'aUriData']),
-      anEnum: Serializers.instance.deserialize<MyEnum>(serialized[r'anEnum']),
+      anEnum: Serializers.instance
+          .deserialize<_$parameter_types.MyEnum>(serialized[r'anEnum']),
       anInt: (serialized[r'anInt'] as num).toInt(),
       anIterableOfSimpleClass:
           (serialized[r'anIterableOfSimpleClass'] as Iterable<Object?>)
-              .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
+              .map((el) => Serializers.instance
+                  .deserialize<_$parameter_types.SimpleClass>(el))
               .toList()
     );
   }
 
   @override
-  Object? serialize(ComplexStruct value) => {
+  Object? serialize(_$parameter_types.ComplexStruct value) => {
         r'aBigInt': Serializers.instance.serialize<BigInt>(value.aBigInt),
         r'aBool': value.aBool,
         r'aDateTime': Serializers.instance.serialize<DateTime>(value.aDateTime),
@@ -532,7 +567,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
             .map((el) => Serializers.instance.serialize<Duration>(el))
             .toList(),
         r'aListOfEnum': value.aListOfEnum
-            .map((el) => Serializers.instance.serialize<MyEnum>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$parameter_types.MyEnum>(el))
             .toList(),
         r'aListOfInt': value.aListOfInt,
         r'aListOfNull': value.aListOfNull,
@@ -540,10 +576,12 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
             .map((el) => Serializers.instance.serialize<RegExp>(el))
             .toList(),
         r'aListOfSimpleClass': value.aListOfSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
         r'aListOfSimpleStruct': value.aListOfSimpleStruct
-            .map((el) => Serializers.instance.serialize<SimpleStruct>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct>(el))
             .toList(),
         r'aListOfStackTrace': value.aListOfStackTrace
             .map((el) => Serializers.instance.serialize<StackTrace>(el))
@@ -591,7 +629,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<MyEnum>(value),
+              Serializers.instance.serialize<_$parameter_types.MyEnum>(value),
             )),
         r'aMapOfInt': value.aMapOfInt,
         r'aMapOfNull': value.aMapOfNull,
@@ -609,7 +647,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleClass>(value),
             )),
         r'aMapOfSimpleStruct': value.aMapOfSimpleStruct.map((
           key,
@@ -617,7 +656,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleStruct>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleStruct>(value),
             )),
         r'aMapOfStackTrace': value.aMapOfStackTrace.map((
           key,
@@ -654,10 +694,10 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
             )),
         r'aNull': value.aNull,
         r'aRegExp': Serializers.instance.serialize<RegExp>(value.aRegExp),
-        r'aSimpleClass':
-            Serializers.instance.serialize<SimpleClass>(value.aSimpleClass),
-        r'aSimpleStruct':
-            Serializers.instance.serialize<SimpleStruct>(value.aSimpleStruct),
+        r'aSimpleClass': Serializers.instance
+            .serialize<_$parameter_types.SimpleClass>(value.aSimpleClass),
+        r'aSimpleStruct': Serializers.instance
+            .serialize<_$parameter_types.SimpleStruct>(value.aSimpleStruct),
         r'aStackTrace':
             Serializers.instance.serialize<StackTrace>(value.aStackTrace),
         r'aString': value.aString,
@@ -665,25 +705,27 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
             .serialize<_$typed_data.Uint8List>(value.aUint8List),
         r'aUri': Serializers.instance.serialize<Uri>(value.aUri),
         r'aUriData': Serializers.instance.serialize<UriData>(value.aUriData),
-        r'anEnum': Serializers.instance.serialize<MyEnum>(value.anEnum),
+        r'anEnum': Serializers.instance
+            .serialize<_$parameter_types.MyEnum>(value.anEnum),
         r'anInt': value.anInt,
         r'anIterableOfSimpleClass': value.anIterableOfSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
       };
 }
 
-final class CustomErrorSerializer extends Serializer<CustomError> {
+final class CustomErrorSerializer extends Serializer<_$exceptions.CustomError> {
   const CustomErrorSerializer();
 
   @override
-  CustomError deserialize(Object? value) {
+  _$exceptions.CustomError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return CustomError();
+    return _$exceptions.CustomError();
   }
 
   @override
-  Object? serialize(CustomError value) => {
+  Object? serialize(_$exceptions.CustomError value) => {
         r'message': value.message,
         r'additionalInfo': Serializers.instance.serialize<JsonMap>(
           value.additionalInfo,
@@ -693,34 +735,34 @@ final class CustomErrorSerializer extends Serializer<CustomError> {
 }
 
 final class CustomErrorToFromJsonSerializer
-    extends Serializer<CustomErrorToFromJson> {
+    extends Serializer<_$exceptions.CustomErrorToFromJson> {
   const CustomErrorToFromJsonSerializer();
 
   @override
-  CustomErrorToFromJson deserialize(Object? value) {
+  _$exceptions.CustomErrorToFromJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CustomErrorToFromJson.fromJson(serialized);
+    return _$exceptions.CustomErrorToFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(CustomErrorToFromJson value) => value.toJson();
+  Object? serialize(_$exceptions.CustomErrorToFromJson value) => value.toJson();
 }
 
 final class CustomErrorWithStackTraceSerializer
-    extends Serializer<CustomErrorWithStackTrace> {
+    extends Serializer<_$exceptions.CustomErrorWithStackTrace> {
   const CustomErrorWithStackTraceSerializer();
 
   @override
-  CustomErrorWithStackTrace deserialize(Object? value) {
+  _$exceptions.CustomErrorWithStackTrace deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return CustomErrorWithStackTrace(
+    return _$exceptions.CustomErrorWithStackTrace(
         stackTrace: (Serializers.instance
                 .deserialize<StackTrace?>(serialized?[r'stackTrace'])) ??
             null);
   }
 
   @override
-  Object? serialize(CustomErrorWithStackTrace value) => {
+  Object? serialize(_$exceptions.CustomErrorWithStackTrace value) => {
         r'stackTrace':
             Serializers.instance.serialize<StackTrace>(value.stackTrace),
         r'message': value.message,
@@ -731,17 +773,18 @@ final class CustomErrorWithStackTraceSerializer
       };
 }
 
-final class CustomExceptionSerializer extends Serializer<CustomException> {
+final class CustomExceptionSerializer
+    extends Serializer<_$exceptions.CustomException> {
   const CustomExceptionSerializer();
 
   @override
-  CustomException deserialize(Object? value) {
+  _$exceptions.CustomException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return CustomException();
+    return _$exceptions.CustomException();
   }
 
   @override
-  Object? serialize(CustomException value) => {
+  Object? serialize(_$exceptions.CustomException value) => {
         r'message': value.message,
         r'additionalInfo': Serializers.instance.serialize<JsonMap>(
           value.additionalInfo,
@@ -751,26 +794,28 @@ final class CustomExceptionSerializer extends Serializer<CustomException> {
 }
 
 final class CustomExceptionToFromJsonSerializer
-    extends Serializer<CustomExceptionToFromJson> {
+    extends Serializer<_$exceptions.CustomExceptionToFromJson> {
   const CustomExceptionToFromJsonSerializer();
 
   @override
-  CustomExceptionToFromJson deserialize(Object? value) {
+  _$exceptions.CustomExceptionToFromJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CustomExceptionToFromJson.fromJson(serialized);
+    return _$exceptions.CustomExceptionToFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(CustomExceptionToFromJson value) => value.toJson();
+  Object? serialize(_$exceptions.CustomExceptionToFromJson value) =>
+      value.toJson();
 }
 
-final class DefaultValuesSerializer extends Serializer<DefaultValues> {
+final class DefaultValuesSerializer
+    extends Serializer<_$classes.DefaultValues> {
   const DefaultValuesSerializer();
 
   @override
-  DefaultValues deserialize(Object? value) {
+  _$classes.DefaultValues deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return DefaultValues(
+    return _$classes.DefaultValues(
       field: ((serialized?[r'field'] as String?)) ?? 'default',
       nullableField: ((serialized?[r'nullableField'] as String?)) ?? null,
       nullableFieldWithDefault:
@@ -779,7 +824,7 @@ final class DefaultValuesSerializer extends Serializer<DefaultValues> {
   }
 
   @override
-  Object? serialize(DefaultValues value) => {
+  Object? serialize(_$classes.DefaultValues value) => {
         r'field': value.field,
         r'nullableField': value.nullableField,
         r'nullableFieldWithDefault': value.nullableFieldWithDefault,
@@ -787,134 +832,145 @@ final class DefaultValuesSerializer extends Serializer<DefaultValues> {
       };
 }
 
-final class EmptySerializer extends Serializer<Empty> {
+final class EmptySerializer extends Serializer<_$classes.Empty> {
   const EmptySerializer();
 
   @override
-  Empty deserialize(Object? value) {
+  _$classes.Empty deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return Empty();
+    return _$classes.Empty();
   }
 
   @override
-  Object? serialize(Empty value) => {};
+  Object? serialize(_$classes.Empty value) => {};
 }
 
-final class ErrResultSerializer<E extends ShapeException>
-    extends Serializer<ErrResult<E>> {
+final class ErrResultSerializer<E extends _$exceptions.ShapeException>
+    extends Serializer<_$sealed_classes.ErrResult<E>> {
   const ErrResultSerializer();
 
   @override
-  ErrResult<E> deserialize(Object? value) {
+  _$sealed_classes.ErrResult<E> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ErrResult<E>(
+    return _$sealed_classes.ErrResult<E>(
         Serializers.instance.deserialize<E>(serialized[r'error']));
   }
 
   @override
-  Object? serialize(ErrResult<E> value) =>
+  Object? serialize(_$sealed_classes.ErrResult<E> value) =>
       {r'error': Serializers.instance.serialize<E>(value.error)};
 }
 
-final class ErrResultShapeSerializer extends Serializer<ErrResult<Shape>> {
+final class ErrResultShapeSerializer
+    extends Serializer<_$sealed_classes.ErrResult<_$sealed_classes.Shape>> {
   const ErrResultShapeSerializer();
 
   @override
-  ErrResult<Shape> deserialize(Object? value) {
+  _$sealed_classes.ErrResult<_$sealed_classes.Shape> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ErrResult<Shape>(
-        Serializers.instance.deserialize<Shape>(serialized[r'error']));
+    return _$sealed_classes.ErrResult<_$sealed_classes.Shape>(Serializers
+        .instance
+        .deserialize<_$sealed_classes.Shape>(serialized[r'error']));
   }
 
   @override
-  Object? serialize(ErrResult<Shape> value) =>
-      {r'error': Serializers.instance.serialize<Shape>(value.error)};
+  Object? serialize(_$sealed_classes.ErrResult<_$sealed_classes.Shape> value) =>
+      {
+        r'error':
+            Serializers.instance.serialize<_$sealed_classes.Shape>(value.error)
+      };
 }
 
-final class ErrResultStringSerializer extends Serializer<ErrResult<String>> {
+final class ErrResultStringSerializer
+    extends Serializer<_$sealed_classes.ErrResult<String>> {
   const ErrResultStringSerializer();
 
   @override
-  ErrResult<String> deserialize(Object? value) {
+  _$sealed_classes.ErrResult<String> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ErrResult<String>((serialized[r'error'] as String));
+    return _$sealed_classes.ErrResult<String>((serialized[r'error'] as String));
   }
 
   @override
-  Object? serialize(ErrResult<String> value) => {r'error': value.error};
+  Object? serialize(_$sealed_classes.ErrResult<String> value) =>
+      {r'error': value.error};
 }
 
-final class ExportableSerializer extends Serializer<Exportable> {
+final class ExportableSerializer extends Serializer<_$metadata.Exportable> {
   const ExportableSerializer();
 
   @override
-  Exportable deserialize(Object? value) {
+  _$metadata.Exportable deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return Exportable();
+    return _$metadata.Exportable();
   }
 
   @override
-  Object? serialize(Exportable value) => {};
+  Object? serialize(_$metadata.Exportable value) => {};
 }
 
-final class FieldsSerializer extends Serializer<Fields> {
+final class FieldsSerializer extends Serializer<_$classes.Fields> {
   const FieldsSerializer();
 
   @override
-  Fields deserialize(Object? value) {
+  _$classes.Fields deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Fields(
+    return _$classes.Fields(
       (serialized[r'superField'] as String),
       (serialized[r'field'] as String),
     );
   }
 
   @override
-  Object? serialize(Fields value) => {
+  Object? serialize(_$classes.Fields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
 }
 
-final class FromJsonAndToJsonSerializer extends Serializer<FromJsonAndToJson> {
+final class FromJsonAndToJsonSerializer
+    extends Serializer<_$classes.FromJsonAndToJson> {
   const FromJsonAndToJsonSerializer();
 
   @override
-  FromJsonAndToJson deserialize(Object? value) {
+  _$classes.FromJsonAndToJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return FromJsonAndToJson.fromJson(serialized);
+    return _$classes.FromJsonAndToJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(FromJsonAndToJson value) => value.toJson();
+  Object? serialize(_$classes.FromJsonAndToJson value) => value.toJson();
 }
 
-final class FromJsonStaticSerializer extends Serializer<FromJsonStatic> {
+final class FromJsonStaticSerializer
+    extends Serializer<_$classes.FromJsonStatic> {
   const FromJsonStaticSerializer();
 
   @override
-  FromJsonStatic deserialize(Object? value) {
+  _$classes.FromJsonStatic deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return FromJsonStatic.fromJson(serialized);
+    return _$classes.FromJsonStatic.fromJson(serialized);
   }
 
   @override
-  Object? serialize(FromJsonStatic value) => value.toJson();
+  Object? serialize(_$classes.FromJsonStatic value) => value.toJson();
 }
 
-final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
+final class GenericWrappersSerializer
+    extends Serializer<_$generic_wrappers.GenericWrappers> {
   const GenericWrappersSerializer();
 
   @override
-  GenericWrappers deserialize(Object? value) {
+  _$generic_wrappers.GenericWrappers deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return GenericWrappers(
+    return _$generic_wrappers.GenericWrappers(
       listOfString: Serializers.instance
           .deserialize<_$ilist.IList<String>>(serialized[r'listOfString']),
       listOfUri: Serializers.instance
           .deserialize<_$ilist.IList<Uri>>(serialized[r'listOfUri']),
       listOfSimpleClass: Serializers.instance
-          .deserialize<_$ilist.IList<SimpleClass>>(
+          .deserialize<_$ilist.IList<_$parameter_types.SimpleClass>>(
               serialized[r'listOfSimpleClass']),
       listOfListOfString: Serializers.instance
           .deserialize<_$ilist.IList<_$ilist.IList<String>>>(
@@ -922,15 +978,15 @@ final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
       listOfListOfUri: Serializers.instance
           .deserialize<_$ilist.IList<_$ilist.IList<Uri>>>(
               serialized[r'listOfListOfUri']),
-      listOfListOfSimpleClass: Serializers.instance
-          .deserialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
-              serialized[r'listOfListOfSimpleClass']),
+      listOfListOfSimpleClass: Serializers.instance.deserialize<
+              _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>>(
+          serialized[r'listOfListOfSimpleClass']),
       mapOfString: Serializers.instance
           .deserialize<_$imap.IMap<String, String>>(serialized[r'mapOfString']),
       mapOfUri: Serializers.instance
           .deserialize<_$imap.IMap<String, Uri>>(serialized[r'mapOfUri']),
       mapOfSimpleClass: Serializers.instance
-          .deserialize<_$imap.IMap<String, SimpleClass>>(
+          .deserialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
               serialized[r'mapOfSimpleClass']),
       mapOfListOfString: Serializers.instance
           .deserialize<_$imap.IMap<String, _$ilist.IList<String>>>(
@@ -938,44 +994,47 @@ final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
       mapOfListOfUri: Serializers.instance
           .deserialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(
               serialized[r'mapOfListOfUri']),
-      mapOfListOfSimpleClass: Serializers.instance
-          .deserialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
-              serialized[r'mapOfListOfSimpleClass']),
+      mapOfListOfSimpleClass: Serializers.instance.deserialize<
+              _$imap
+              .IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>>(
+          serialized[r'mapOfListOfSimpleClass']),
       mapOfMapOfString: Serializers.instance
           .deserialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
               serialized[r'mapOfMapOfString']),
       mapOfMapOfUri: Serializers.instance
           .deserialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
               serialized[r'mapOfMapOfUri']),
-      mapOfMapOfSimpleClass: Serializers.instance
-          .deserialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
-              serialized[r'mapOfMapOfSimpleClass']),
+      mapOfMapOfSimpleClass: Serializers.instance.deserialize<
+              _$imap.IMap<String,
+                  _$imap.IMap<String, _$parameter_types.SimpleClass>>>(
+          serialized[r'mapOfMapOfSimpleClass']),
     );
   }
 
   @override
-  Object? serialize(GenericWrappers value) => {
+  Object? serialize(_$generic_wrappers.GenericWrappers value) => {
         r'listOfString': Serializers.instance
             .serialize<_$ilist.IList<String>>(value.listOfString),
         r'listOfUri':
             Serializers.instance.serialize<_$ilist.IList<Uri>>(value.listOfUri),
         r'listOfSimpleClass': Serializers.instance
-            .serialize<_$ilist.IList<SimpleClass>>(value.listOfSimpleClass),
+            .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(
+                value.listOfSimpleClass),
         r'listOfListOfString': Serializers.instance
             .serialize<_$ilist.IList<_$ilist.IList<String>>>(
                 value.listOfListOfString),
         r'listOfListOfUri': Serializers.instance
             .serialize<_$ilist.IList<_$ilist.IList<Uri>>>(
                 value.listOfListOfUri),
-        r'listOfListOfSimpleClass': Serializers.instance
-            .serialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
-                value.listOfListOfSimpleClass),
+        r'listOfListOfSimpleClass': Serializers.instance.serialize<
+                _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>>(
+            value.listOfListOfSimpleClass),
         r'mapOfString': Serializers.instance
             .serialize<_$imap.IMap<String, String>>(value.mapOfString),
         r'mapOfUri': Serializers.instance
             .serialize<_$imap.IMap<String, Uri>>(value.mapOfUri),
         r'mapOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, SimpleClass>>(
+            .serialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
                 value.mapOfSimpleClass),
         r'mapOfListOfString': Serializers.instance
             .serialize<_$imap.IMap<String, _$ilist.IList<String>>>(
@@ -983,39 +1042,43 @@ final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
         r'mapOfListOfUri': Serializers.instance
             .serialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(
                 value.mapOfListOfUri),
-        r'mapOfListOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
-                value.mapOfListOfSimpleClass),
+        r'mapOfListOfSimpleClass': Serializers.instance.serialize<
+                _$imap
+                .IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>>(
+            value.mapOfListOfSimpleClass),
         r'mapOfMapOfString': Serializers.instance
             .serialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
                 value.mapOfMapOfString),
         r'mapOfMapOfUri': Serializers.instance
             .serialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
                 value.mapOfMapOfUri),
-        r'mapOfMapOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
-                value.mapOfMapOfSimpleClass),
+        r'mapOfMapOfSimpleClass': Serializers.instance.serialize<
+                _$imap.IMap<String,
+                    _$imap.IMap<String, _$parameter_types.SimpleClass>>>(
+            value.mapOfMapOfSimpleClass),
       };
 }
 
-final class IListIListSimpleClassSerializer
-    extends Serializer<_$ilist.IList<_$ilist.IList<SimpleClass>>> {
+final class IListIListSimpleClassSerializer extends Serializer<
+    _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>> {
   const IListIListSimpleClassSerializer();
 
   @override
-  _$ilist.IList<_$ilist.IList<SimpleClass>> deserialize(Object? value) {
+  _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>> deserialize(
+      Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return _$ilist.IList<_$ilist.IList<SimpleClass>>.fromJson(
+    return _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>.fromJson(
       serialized,
-      (value) =>
-          Serializers.instance.deserialize<_$ilist.IList<SimpleClass>>(value),
+      (value) => Serializers.instance
+          .deserialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value),
     );
   }
 
   @override
-  Object? serialize(_$ilist.IList<_$ilist.IList<SimpleClass>> value) =>
-      value.toJson((value) =>
-          Serializers.instance.serialize<_$ilist.IList<SimpleClass>>(value));
+  Object? serialize(
+          _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>> value) =>
+      value.toJson((value) => Serializers.instance
+          .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value));
 }
 
 final class IListIListStringSerializer
@@ -1055,21 +1118,23 @@ final class IListIListUriSerializer
 }
 
 final class IListSimpleClassSerializer
-    extends Serializer<_$ilist.IList<SimpleClass>> {
+    extends Serializer<_$ilist.IList<_$parameter_types.SimpleClass>> {
   const IListSimpleClassSerializer();
 
   @override
-  _$ilist.IList<SimpleClass> deserialize(Object? value) {
+  _$ilist.IList<_$parameter_types.SimpleClass> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return _$ilist.IList<SimpleClass>.fromJson(
+    return _$ilist.IList<_$parameter_types.SimpleClass>.fromJson(
       serialized,
-      (value) => Serializers.instance.deserialize<SimpleClass>(value),
+      (value) => Serializers.instance
+          .deserialize<_$parameter_types.SimpleClass>(value),
     );
   }
 
   @override
-  Object? serialize(_$ilist.IList<SimpleClass> value) => value
-      .toJson((value) => Serializers.instance.serialize<SimpleClass>(value));
+  Object? serialize(_$ilist.IList<_$parameter_types.SimpleClass> value) =>
+      value.toJson((value) =>
+          Serializers.instance.serialize<_$parameter_types.SimpleClass>(value));
 }
 
 final class IListStringSerializer extends Serializer<_$ilist.IList<String>> {
@@ -1106,27 +1171,31 @@ final class IListUriSerializer extends Serializer<_$ilist.IList<Uri>> {
       value.toJson((value) => Serializers.instance.serialize<Uri>(value));
 }
 
-final class IMapStringIListSimpleClassSerializer
-    extends Serializer<_$imap.IMap<String, _$ilist.IList<SimpleClass>>> {
+final class IMapStringIListSimpleClassSerializer extends Serializer<
+    _$imap.IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>> {
   const IMapStringIListSimpleClassSerializer();
 
   @override
-  _$imap.IMap<String, _$ilist.IList<SimpleClass>> deserialize(Object? value) {
+  _$imap.IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _$imap.IMap<String, _$ilist.IList<SimpleClass>>.fromJson(
+    return _$imap
+        .IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) =>
-          Serializers.instance.deserialize<_$ilist.IList<SimpleClass>>(value),
+      (value) => Serializers.instance
+          .deserialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value),
     );
   }
 
   @override
-  Object? serialize(_$imap.IMap<String, _$ilist.IList<SimpleClass>> value) =>
+  Object? serialize(
+          _$imap.IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>
+              value) =>
       value.toJson(
         (value) => value,
-        (value) =>
-            Serializers.instance.serialize<_$ilist.IList<SimpleClass>>(value),
+        (value) => Serializers.instance
+            .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value),
       );
 }
 
@@ -1174,29 +1243,34 @@ final class IMapStringIListUriSerializer
       );
 }
 
-final class IMapStringIMapStringSimpleClassSerializer
-    extends Serializer<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>> {
+final class IMapStringIMapStringSimpleClassSerializer extends Serializer<
+    _$imap.IMap<String, _$imap.IMap<String, _$parameter_types.SimpleClass>>> {
   const IMapStringIMapStringSimpleClassSerializer();
 
   @override
-  _$imap.IMap<String, _$imap.IMap<String, SimpleClass>> deserialize(
-      Object? value) {
+  _$imap.IMap<String, _$imap.IMap<String, _$parameter_types.SimpleClass>>
+      deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _$imap.IMap<String, _$imap.IMap<String, SimpleClass>>.fromJson(
+    return _$imap.IMap<String,
+        _$imap.IMap<String, _$parameter_types.SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
       (value) => Serializers.instance
-          .deserialize<_$imap.IMap<String, SimpleClass>>(value),
+          .deserialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
+              value),
     );
   }
 
   @override
   Object? serialize(
-          _$imap.IMap<String, _$imap.IMap<String, SimpleClass>> value) =>
+          _$imap
+              .IMap<String, _$imap.IMap<String, _$parameter_types.SimpleClass>>
+              value) =>
       value.toJson(
         (value) => value,
         (value) => Serializers.instance
-            .serialize<_$imap.IMap<String, SimpleClass>>(value),
+            .serialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
+                value),
       );
 }
 
@@ -1249,23 +1323,27 @@ final class IMapStringIMapStringUriSerializer
 }
 
 final class IMapStringSimpleClassSerializer
-    extends Serializer<_$imap.IMap<String, SimpleClass>> {
+    extends Serializer<_$imap.IMap<String, _$parameter_types.SimpleClass>> {
   const IMapStringSimpleClassSerializer();
 
   @override
-  _$imap.IMap<String, SimpleClass> deserialize(Object? value) {
+  _$imap.IMap<String, _$parameter_types.SimpleClass> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _$imap.IMap<String, SimpleClass>.fromJson(
+    return _$imap.IMap<String, _$parameter_types.SimpleClass>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<SimpleClass>(value),
+      (value) => Serializers.instance
+          .deserialize<_$parameter_types.SimpleClass>(value),
     );
   }
 
   @override
-  Object? serialize(_$imap.IMap<String, SimpleClass> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$parameter_types.SimpleClass> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<SimpleClass>(value),
+        (value) => Serializers.instance
+            .serialize<_$parameter_types.SimpleClass>(value),
       );
 }
 
@@ -1430,56 +1508,57 @@ final class JsonValueSerializer extends Serializer<JsonValue> {
   Object? serialize(JsonValue value) => value.value;
 }
 
-final class LiteralEnumSerializer extends Serializer<LiteralEnum> {
+final class LiteralEnumSerializer extends Serializer<_$metadata.LiteralEnum> {
   const LiteralEnumSerializer();
 
   @override
-  LiteralEnum deserialize(Object? value) {
+  _$metadata.LiteralEnum deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return LiteralEnum.values.byName(serialized);
+    return _$metadata.LiteralEnum.values.byName(serialized);
   }
 
   @override
-  Object? serialize(LiteralEnum value) => value.name;
+  Object? serialize(_$metadata.LiteralEnum value) => value.name;
 }
 
-final class MixedFieldsSerializer extends Serializer<MixedFields> {
+final class MixedFieldsSerializer extends Serializer<_$classes.MixedFields> {
   const MixedFieldsSerializer();
 
   @override
-  MixedFields deserialize(Object? value) {
+  _$classes.MixedFields deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return MixedFields(
+    return _$classes.MixedFields(
       (serialized[r'superField'] as String),
       field: (serialized[r'field'] as String),
     );
   }
 
   @override
-  Object? serialize(MixedFields value) => {
+  Object? serialize(_$classes.MixedFields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
 }
 
-final class MyEnumSerializer extends Serializer<MyEnum> {
+final class MyEnumSerializer extends Serializer<_$parameter_types.MyEnum> {
   const MyEnumSerializer();
 
   @override
-  MyEnum deserialize(Object? value) {
+  _$parameter_types.MyEnum deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return MyEnum.values.byName(serialized);
+    return _$parameter_types.MyEnum.values.byName(serialized);
   }
 
   @override
-  Object? serialize(MyEnum value) => value.name;
+  Object? serialize(_$parameter_types.MyEnum value) => value.name;
 }
 
-final class NamedFieldsRecordSerializer extends Serializer<NamedFieldsRecord> {
+final class NamedFieldsRecordSerializer
+    extends Serializer<_$records.NamedFieldsRecord> {
   const NamedFieldsRecordSerializer();
 
   @override
-  NamedFieldsRecord deserialize(Object? value) {
+  _$records.NamedFieldsRecord deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       anotherField: (serialized[r'anotherField'] as String),
@@ -1488,81 +1567,83 @@ final class NamedFieldsRecordSerializer extends Serializer<NamedFieldsRecord> {
   }
 
   @override
-  Object? serialize(NamedFieldsRecord value) => {
+  Object? serialize(_$records.NamedFieldsRecord value) => {
         r'anotherField': value.anotherField,
         r'field': value.field,
       };
 }
 
-final class NamedFieldsSerializer extends Serializer<NamedFields> {
+final class NamedFieldsSerializer extends Serializer<_$classes.NamedFields> {
   const NamedFieldsSerializer();
 
   @override
-  NamedFields deserialize(Object? value) {
+  _$classes.NamedFields deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return NamedFields(
+    return _$classes.NamedFields(
       superField: (serialized[r'superField'] as String),
       field: (serialized[r'field'] as String),
     );
   }
 
   @override
-  Object? serialize(NamedFields value) => {
+  Object? serialize(_$classes.NamedFields value) => {
         r'superField': value.superField,
         r'field': value.field,
       };
 }
 
-final class NestedClassSerializer extends Serializer<NestedClass> {
+final class NestedClassSerializer extends Serializer<_$classes.NestedClass> {
   const NestedClassSerializer();
 
   @override
-  NestedClass deserialize(Object? value) {
+  _$classes.NestedClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return NestedClass(
-      Serializers.instance.deserialize<Fields>(serialized[r'fields']),
-      Serializers.instance.deserialize<Fields?>(serialized[r'nullableFields']),
+    return _$classes.NestedClass(
+      Serializers.instance.deserialize<_$classes.Fields>(serialized[r'fields']),
+      Serializers.instance
+          .deserialize<_$classes.Fields?>(serialized[r'nullableFields']),
     );
   }
 
   @override
-  Object? serialize(NestedClass value) => {
-        r'fields': Serializers.instance.serialize<Fields>(value.fields),
-        r'nullableFields':
-            Serializers.instance.serialize<Fields?>(value.nullableFields),
+  Object? serialize(_$classes.NestedClass value) => {
+        r'fields':
+            Serializers.instance.serialize<_$classes.Fields>(value.fields),
+        r'nullableFields': Serializers.instance
+            .serialize<_$classes.Fields?>(value.nullableFields),
       };
 }
 
-final class NestedSerializer extends Serializer<Nested> {
+final class NestedSerializer extends Serializer<_$records.Nested> {
   const NestedSerializer();
 
   @override
-  Nested deserialize(Object? value) {
+  _$records.Nested deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       namedFields: Serializers.instance
-          .deserialize<NamedFieldsRecord>(serialized[r'namedFields'])
+          .deserialize<_$records.NamedFieldsRecord>(serialized[r'namedFields'])
     );
   }
 
   @override
-  Object? serialize(Nested value) => {
-        r'namedFields':
-            Serializers.instance.serialize<NamedFieldsRecord>(value.namedFields)
+  Object? serialize(_$records.Nested value) => {
+        r'namedFields': Serializers.instance
+            .serialize<_$records.NamedFieldsRecord>(value.namedFields)
       };
 }
 
-final class NodeSerializer extends Serializer<Node> {
+final class NodeSerializer extends Serializer<_$cycles.Node> {
   const NodeSerializer();
 
   @override
-  Node deserialize(Object? value) {
+  _$cycles.Node deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'Parent') {
-      return Serializers.instance.deserialize<Parent>(serialized);
+      return Serializers.instance.deserialize<_$cycles.Parent>(serialized);
     }
     if (serialized[r'$type'] == r'Child') {
-      return Serializers.instance.deserialize<Child>(serialized);
+      return Serializers.instance.deserialize<_$cycles.Child>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Node')
@@ -1572,17 +1653,17 @@ final class NodeSerializer extends Serializer<Node> {
   }
 
   @override
-  Object? serialize(Node value) {
-    if (value is Parent) {
+  Object? serialize(_$cycles.Node value) {
+    if (value is _$cycles.Parent) {
       return {
-        ...(Serializers.instance.serialize<Parent>(value)
+        ...(Serializers.instance.serialize<_$cycles.Parent>(value)
             as Map<String, Object?>),
         r'$type': r'Parent',
       };
     }
-    if (value is Child) {
+    if (value is _$cycles.Child) {
       return {
-        ...(Serializers.instance.serialize<Child>(value)
+        ...(Serializers.instance.serialize<_$cycles.Child>(value)
             as Map<String, Object?>),
         r'$type': r'Child',
       };
@@ -1596,169 +1677,178 @@ final class NodeSerializer extends Serializer<Node> {
 }
 
 final class NonMapFromAndToJsonSerializer
-    extends Serializer<NonMapFromAndToJson> {
+    extends Serializer<_$classes.NonMapFromAndToJson> {
   const NonMapFromAndToJsonSerializer();
 
   @override
-  NonMapFromAndToJson deserialize(Object? value) {
+  _$classes.NonMapFromAndToJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return NonMapFromAndToJson.fromJson(serialized);
+    return _$classes.NonMapFromAndToJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(NonMapFromAndToJson value) => value.toJson();
+  Object? serialize(_$classes.NonMapFromAndToJson value) => value.toJson();
 }
 
-final class NonMapToJsonSerializer extends Serializer<NonMapToJson> {
+final class NonMapToJsonSerializer extends Serializer<_$classes.NonMapToJson> {
   const NonMapToJsonSerializer();
 
   @override
-  NonMapToJson deserialize(Object? value) {
+  _$classes.NonMapToJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return NonMapToJson((serialized as String));
+    return _$classes.NonMapToJson((serialized as String));
   }
 
   @override
-  Object? serialize(NonMapToJson value) => value.toJson();
+  Object? serialize(_$classes.NonMapToJson value) => value.toJson();
 }
 
 final class NonMapToJsonWithDefaultsSerializer
-    extends Serializer<NonMapToJsonWithDefaults> {
+    extends Serializer<_$classes.NonMapToJsonWithDefaults> {
   const NonMapToJsonWithDefaultsSerializer();
 
   @override
-  NonMapToJsonWithDefaults deserialize(Object? value) {
+  _$classes.NonMapToJsonWithDefaults deserialize(Object? value) {
     final serialized = assertWireType<String?>(value);
-    return NonMapToJsonWithDefaults(((serialized as String?)) ?? 'default');
+    return _$classes.NonMapToJsonWithDefaults(
+        ((serialized as String?)) ?? 'default');
   }
 
   @override
-  Object? serialize(NonMapToJsonWithDefaults value) => value.toJson();
+  Object? serialize(_$classes.NonMapToJsonWithDefaults value) => value.toJson();
 }
 
-final class NullableNestedSerializer extends Serializer<NullableNested> {
+final class NullableNestedSerializer
+    extends Serializer<_$records.NullableNested> {
   const NullableNestedSerializer();
 
   @override
-  NullableNested deserialize(Object? value) {
+  _$records.NullableNested deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       namedFields: Serializers.instance
-          .deserialize<NamedFieldsRecord?>(serialized[r'namedFields'])
+          .deserialize<_$records.NamedFieldsRecord?>(serialized[r'namedFields'])
     );
   }
 
   @override
-  Object? serialize(NullableNested value) => {
+  Object? serialize(_$records.NullableNested value) => {
         r'namedFields': Serializers.instance
-            .serialize<NamedFieldsRecord?>(value.namedFields)
+            .serialize<_$records.NamedFieldsRecord?>(value.namedFields)
       };
 }
 
-final class OkResultSerializer<T extends Shape>
-    extends Serializer<OkResult<T>> {
+final class OkResultSerializer<T extends _$sealed_classes.Shape>
+    extends Serializer<_$sealed_classes.OkResult<T>> {
   const OkResultSerializer();
 
   @override
-  OkResult<T> deserialize(Object? value) {
+  _$sealed_classes.OkResult<T> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return OkResult<T>(
+    return _$sealed_classes.OkResult<T>(
         Serializers.instance.deserialize<T>(serialized[r'data']));
   }
 
   @override
-  Object? serialize(OkResult<T> value) =>
+  Object? serialize(_$sealed_classes.OkResult<T> value) =>
       {r'data': Serializers.instance.serialize<T>(value.data)};
 }
 
-final class OkResultShapeSerializer extends Serializer<OkResult<Shape>> {
+final class OkResultShapeSerializer
+    extends Serializer<_$sealed_classes.OkResult<_$sealed_classes.Shape>> {
   const OkResultShapeSerializer();
 
   @override
-  OkResult<Shape> deserialize(Object? value) {
+  _$sealed_classes.OkResult<_$sealed_classes.Shape> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return OkResult<Shape>(
-        Serializers.instance.deserialize<Shape>(serialized[r'data']));
+    return _$sealed_classes.OkResult<_$sealed_classes.Shape>(Serializers
+        .instance
+        .deserialize<_$sealed_classes.Shape>(serialized[r'data']));
   }
 
   @override
-  Object? serialize(OkResult<Shape> value) =>
-      {r'data': Serializers.instance.serialize<Shape>(value.data)};
+  Object? serialize(_$sealed_classes.OkResult<_$sealed_classes.Shape> value) =>
+      {
+        r'data':
+            Serializers.instance.serialize<_$sealed_classes.Shape>(value.data)
+      };
 }
 
-final class OkResultStringSerializer extends Serializer<OkResult<String>> {
+final class OkResultStringSerializer
+    extends Serializer<_$sealed_classes.OkResult<String>> {
   const OkResultStringSerializer();
 
   @override
-  OkResult<String> deserialize(Object? value) {
+  _$sealed_classes.OkResult<String> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return OkResult<String>((serialized[r'data'] as String));
+    return _$sealed_classes.OkResult<String>((serialized[r'data'] as String));
   }
 
   @override
-  Object? serialize(OkResult<String> value) => {r'data': value.data};
+  Object? serialize(_$sealed_classes.OkResult<String> value) =>
+      {r'data': value.data};
 }
 
-final class OnlyFromJsonSerializer extends Serializer<OnlyFromJson> {
+final class OnlyFromJsonSerializer extends Serializer<_$classes.OnlyFromJson> {
   const OnlyFromJsonSerializer();
 
   @override
-  OnlyFromJson deserialize(Object? value) {
+  _$classes.OnlyFromJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return OnlyFromJson.fromJson(serialized);
+    return _$classes.OnlyFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(OnlyFromJson value) => {r'field': value.field};
+  Object? serialize(_$classes.OnlyFromJson value) => {r'field': value.field};
 }
 
-final class OnlyToJsonSerializer extends Serializer<OnlyToJson> {
+final class OnlyToJsonSerializer extends Serializer<_$classes.OnlyToJson> {
   const OnlyToJsonSerializer();
 
   @override
-  OnlyToJson deserialize(Object? value) {
+  _$classes.OnlyToJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return OnlyToJson((serialized[r'field'] as String));
+    return _$classes.OnlyToJson((serialized[r'field'] as String));
   }
 
   @override
-  Object? serialize(OnlyToJson value) => value.toJson();
+  Object? serialize(_$classes.OnlyToJson value) => value.toJson();
 }
 
 final class OnlyToJsonWithDefaultsSerializer
-    extends Serializer<OnlyToJsonWithDefaults> {
+    extends Serializer<_$classes.OnlyToJsonWithDefaults> {
   const OnlyToJsonWithDefaultsSerializer();
 
   @override
-  OnlyToJsonWithDefaults deserialize(Object? value) {
+  _$classes.OnlyToJsonWithDefaults deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return OnlyToJsonWithDefaults(
+    return _$classes.OnlyToJsonWithDefaults(
         ((serialized?[r'field'] as String?)) ?? 'default');
   }
 
   @override
-  Object? serialize(OnlyToJsonWithDefaults value) => value.toJson();
+  Object? serialize(_$classes.OnlyToJsonWithDefaults value) => value.toJson();
 }
 
-final class ParentSerializer extends Serializer<Parent> {
+final class ParentSerializer extends Serializer<_$cycles.Parent> {
   const ParentSerializer();
 
   @override
-  Parent deserialize(Object? value) {
+  _$cycles.Parent deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Parent(
+    return _$cycles.Parent(
       (serialized[r'name'] as String),
       (serialized[r'children'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Node>(el))
+          .map((el) => Serializers.instance.deserialize<_$cycles.Node>(el))
           .toList(),
     );
   }
 
   @override
-  Object? serialize(Parent value) => {
+  Object? serialize(_$cycles.Parent value) => {
         r'name': value.name,
         r'children': value.children
-            .map((el) => Serializers.instance.serialize<Node>(el))
+            .map((el) => Serializers.instance.serialize<_$cycles.Node>(el))
             .toList(),
       };
 }
@@ -1811,7 +1901,7 @@ final class Record$wkpf9qSerializer extends Serializer<Record$wkpf9q> {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return (
       aliased: Serializers.instance
-          .deserialize<NamedFieldsRecord>(serialized[r'aliased']),
+          .deserialize<_$records.NamedFieldsRecord>(serialized[r'aliased']),
       nonAliased: Serializers.instance
           .deserialize<({String anotherField, String field})>(
               serialized[r'nonAliased'])
@@ -1820,95 +1910,103 @@ final class Record$wkpf9qSerializer extends Serializer<Record$wkpf9q> {
 
   @override
   Object? serialize(Record$wkpf9q value) => {
-        r'aliased':
-            Serializers.instance.serialize<NamedFieldsRecord>(value.aliased),
+        r'aliased': Serializers.instance
+            .serialize<_$records.NamedFieldsRecord>(value.aliased),
         r'nonAliased': Serializers.instance
             .serialize<({String anotherField, String field})>(value.nonAliased),
       };
 }
 
-final class RectangleSerializer extends Serializer<Rectangle> {
+final class RectangleSerializer extends Serializer<_$sealed_classes.Rectangle> {
   const RectangleSerializer();
 
   @override
-  Rectangle deserialize(Object? value) {
+  _$sealed_classes.Rectangle deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Rectangle(
+    return _$sealed_classes.Rectangle(
       (serialized[r'width'] as num).toDouble(),
       (serialized[r'height'] as num).toDouble(),
     );
   }
 
   @override
-  Object? serialize(Rectangle value) => {
+  Object? serialize(_$sealed_classes.Rectangle value) => {
         r'width': value.width,
         r'height': value.height,
       };
 }
 
 final class RectangleWithCustomJsonSerializer
-    extends Serializer<RectangleWithCustomJson> {
+    extends Serializer<_$sealed_classes.RectangleWithCustomJson> {
   const RectangleWithCustomJsonSerializer();
 
   @override
-  RectangleWithCustomJson deserialize(Object? value) {
+  _$sealed_classes.RectangleWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return RectangleWithCustomJson.fromJson(serialized);
+    return _$sealed_classes.RectangleWithCustomJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(RectangleWithCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.RectangleWithCustomJson value) =>
+      value.toJson();
 }
 
 final class RectangleWithInheritedCustomJsonSerializer
-    extends Serializer<RectangleWithInheritedCustomJson> {
+    extends Serializer<_$sealed_classes.RectangleWithInheritedCustomJson> {
   const RectangleWithInheritedCustomJsonSerializer();
 
   @override
-  RectangleWithInheritedCustomJson deserialize(Object? value) {
+  _$sealed_classes.RectangleWithInheritedCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return (ShapeWithInheritedCustomJson.fromJson({
+    return (_$sealed_classes.ShapeWithInheritedCustomJson.fromJson({
       r'$type': r'RectangleWithInheritedCustomJson',
       ...serialized,
-    }) as RectangleWithInheritedCustomJson);
+    }) as _$sealed_classes.RectangleWithInheritedCustomJson);
   }
 
   @override
-  Object? serialize(RectangleWithInheritedCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.RectangleWithInheritedCustomJson value) =>
+      value.toJson();
 }
 
 final class RectangleWithOverriddenCustomJsonSerializer
-    extends Serializer<RectangleWithOverriddenCustomJson> {
+    extends Serializer<_$sealed_classes.RectangleWithOverriddenCustomJson> {
   const RectangleWithOverriddenCustomJsonSerializer();
 
   @override
-  RectangleWithOverriddenCustomJson deserialize(Object? value) {
+  _$sealed_classes.RectangleWithOverriddenCustomJson deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return (ShapeWithOverriddenCustomJson.fromJson({
+    return (_$sealed_classes.ShapeWithOverriddenCustomJson.fromJson({
       r'$type': r'RectangleWithOverriddenCustomJson',
       ...serialized,
-    }) as RectangleWithOverriddenCustomJson);
+    }) as _$sealed_classes.RectangleWithOverriddenCustomJson);
   }
 
   @override
-  Object? serialize(RectangleWithOverriddenCustomJson value) => value.toJson();
+  Object? serialize(_$sealed_classes.RectangleWithOverriddenCustomJson value) =>
+      value.toJson();
 }
 
-final class ResultSerializer<T extends Shape, E extends ShapeException>
-    extends Serializer<Result<T, E>> {
+final class ResultSerializer<T extends _$sealed_classes.Shape,
+        E extends _$exceptions.ShapeException>
+    extends Serializer<_$sealed_classes.Result<T, E>> {
   const ResultSerializer();
 
   @override
-  Result<T, E> deserialize(Object? value) {
+  _$sealed_classes.Result<T, E> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'OkResult') {
-      return Serializers.instance.deserialize<OkResult<T>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.OkResult<T>>(serialized);
     }
     if (serialized[r'$type'] == r'ErrResult') {
-      return Serializers.instance.deserialize<ErrResult<E>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.ErrResult<E>>(serialized);
     }
     if (serialized[r'$type'] == r'SwappedResult') {
-      return Serializers.instance.deserialize<SwappedResult<E, T>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.SwappedResult<E, T>>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -1918,24 +2016,25 @@ final class ResultSerializer<T extends Shape, E extends ShapeException>
   }
 
   @override
-  Object? serialize(Result<T, E> value) {
-    if (value is OkResult<T>) {
+  Object? serialize(_$sealed_classes.Result<T, E> value) {
+    if (value is _$sealed_classes.OkResult<T>) {
       return {
-        ...(Serializers.instance.serialize<OkResult<T>>(value)
+        ...(Serializers.instance.serialize<_$sealed_classes.OkResult<T>>(value)
             as Map<String, Object?>),
         r'$type': r'OkResult',
       };
     }
-    if (value is ErrResult<E>) {
+    if (value is _$sealed_classes.ErrResult<E>) {
       return {
-        ...(Serializers.instance.serialize<ErrResult<E>>(value)
+        ...(Serializers.instance.serialize<_$sealed_classes.ErrResult<E>>(value)
             as Map<String, Object?>),
         r'$type': r'ErrResult',
       };
     }
-    if (value is SwappedResult<E, T>) {
+    if (value is _$sealed_classes.SwappedResult<E, T>) {
       return {
-        ...(Serializers.instance.serialize<SwappedResult<E, T>>(value)
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.SwappedResult<E, T>>(value)
             as Map<String, Object?>),
         r'$type': r'SwappedResult',
       };
@@ -1948,22 +2047,27 @@ final class ResultSerializer<T extends Shape, E extends ShapeException>
   }
 }
 
-final class ResultShapeStringSerializer
-    extends Serializer<Result<Shape, String>> {
+final class ResultShapeStringSerializer extends Serializer<
+    _$sealed_classes.Result<_$sealed_classes.Shape, String>> {
   const ResultShapeStringSerializer();
 
   @override
-  Result<Shape, String> deserialize(Object? value) {
+  _$sealed_classes.Result<_$sealed_classes.Shape, String> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'OkResult') {
-      return Serializers.instance.deserialize<OkResult<Shape>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.OkResult<_$sealed_classes.Shape>>(
+              serialized);
     }
     if (serialized[r'$type'] == r'ErrResult') {
-      return Serializers.instance.deserialize<ErrResult<String>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.ErrResult<String>>(serialized);
     }
     if (serialized[r'$type'] == r'SwappedResult') {
-      return Serializers.instance
-          .deserialize<SwappedResult<String, Shape>>(serialized);
+      return Serializers.instance.deserialize<
+          _$sealed_classes
+          .SwappedResult<String, _$sealed_classes.Shape>>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -1973,25 +2077,30 @@ final class ResultShapeStringSerializer
   }
 
   @override
-  Object? serialize(Result<Shape, String> value) {
-    if (value is OkResult<Shape>) {
+  Object? serialize(
+      _$sealed_classes.Result<_$sealed_classes.Shape, String> value) {
+    if (value is _$sealed_classes.OkResult<_$sealed_classes.Shape>) {
       return {
-        ...(Serializers.instance.serialize<OkResult<Shape>>(value)
-            as Map<String, Object?>),
+        ...(Serializers.instance
+            .serialize<_$sealed_classes.OkResult<_$sealed_classes.Shape>>(
+                value) as Map<String, Object?>),
         r'$type': r'OkResult',
       };
     }
-    if (value is ErrResult<String>) {
+    if (value is _$sealed_classes.ErrResult<String>) {
       return {
-        ...(Serializers.instance.serialize<ErrResult<String>>(value)
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.ErrResult<String>>(value)
             as Map<String, Object?>),
         r'$type': r'ErrResult',
       };
     }
-    if (value is SwappedResult<String, Shape>) {
+    if (value
+        is _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>) {
       return {
-        ...(Serializers.instance.serialize<SwappedResult<String, Shape>>(value)
-            as Map<String, Object?>),
+        ...(Serializers.instance.serialize<
+                _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>>(
+            value) as Map<String, Object?>),
         r'$type': r'SwappedResult',
       };
     }
@@ -2003,22 +2112,27 @@ final class ResultShapeStringSerializer
   }
 }
 
-final class ResultStringShapeSerializer
-    extends Serializer<Result<String, Shape>> {
+final class ResultStringShapeSerializer extends Serializer<
+    _$sealed_classes.Result<String, _$sealed_classes.Shape>> {
   const ResultStringShapeSerializer();
 
   @override
-  Result<String, Shape> deserialize(Object? value) {
+  _$sealed_classes.Result<String, _$sealed_classes.Shape> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'OkResult') {
-      return Serializers.instance.deserialize<OkResult<String>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.OkResult<String>>(serialized);
     }
     if (serialized[r'$type'] == r'ErrResult') {
-      return Serializers.instance.deserialize<ErrResult<Shape>>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
+              serialized);
     }
     if (serialized[r'$type'] == r'SwappedResult') {
-      return Serializers.instance
-          .deserialize<SwappedResult<Shape, String>>(serialized);
+      return Serializers.instance.deserialize<
+          _$sealed_classes
+          .SwappedResult<_$sealed_classes.Shape, String>>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Result')
@@ -2028,25 +2142,30 @@ final class ResultStringShapeSerializer
   }
 
   @override
-  Object? serialize(Result<String, Shape> value) {
-    if (value is OkResult<String>) {
+  Object? serialize(
+      _$sealed_classes.Result<String, _$sealed_classes.Shape> value) {
+    if (value is _$sealed_classes.OkResult<String>) {
       return {
-        ...(Serializers.instance.serialize<OkResult<String>>(value)
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.OkResult<String>>(value)
             as Map<String, Object?>),
         r'$type': r'OkResult',
       };
     }
-    if (value is ErrResult<Shape>) {
+    if (value is _$sealed_classes.ErrResult<_$sealed_classes.Shape>) {
       return {
-        ...(Serializers.instance.serialize<ErrResult<Shape>>(value)
-            as Map<String, Object?>),
+        ...(Serializers.instance
+            .serialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
+                value) as Map<String, Object?>),
         r'$type': r'ErrResult',
       };
     }
-    if (value is SwappedResult<Shape, String>) {
+    if (value
+        is _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>) {
       return {
-        ...(Serializers.instance.serialize<SwappedResult<Shape, String>>(value)
-            as Map<String, Object?>),
+        ...(Serializers.instance.serialize<
+                _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>>(
+            value) as Map<String, Object?>),
         r'$type': r'SwappedResult',
       };
     }
@@ -2058,64 +2177,71 @@ final class ResultStringShapeSerializer
   }
 }
 
-final class SelfReferencingSerializer extends Serializer<SelfReferencing> {
+final class SelfReferencingSerializer
+    extends Serializer<_$cycles.SelfReferencing> {
   const SelfReferencingSerializer();
 
   @override
-  SelfReferencing deserialize(Object? value) {
+  _$cycles.SelfReferencing deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return SelfReferencing(
+    return _$cycles.SelfReferencing(
       value: (Serializers.instance
-              .deserialize<SelfReferencing?>(serialized[r'value'])) ??
+              .deserialize<_$cycles.SelfReferencing?>(serialized[r'value'])) ??
           null,
       wrapper: (Serializers.instance
-              .deserialize<SelfReferencingWrapper?>(serialized[r'wrapper'])) ??
+              .deserialize<_$cycles.SelfReferencingWrapper?>(
+                  serialized[r'wrapper'])) ??
           null,
       list: (serialized[r'list'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<SelfReferencing>(el))
+          .map((el) =>
+              Serializers.instance.deserialize<_$cycles.SelfReferencing>(el))
           .toList(),
     );
   }
 
   @override
-  Object? serialize(SelfReferencing value) => {
-        r'value': Serializers.instance.serialize<SelfReferencing?>(value.value),
+  Object? serialize(_$cycles.SelfReferencing value) => {
+        r'value': Serializers.instance
+            .serialize<_$cycles.SelfReferencing?>(value.value),
         r'wrapper': Serializers.instance
-            .serialize<SelfReferencingWrapper?>(value.wrapper),
+            .serialize<_$cycles.SelfReferencingWrapper?>(value.wrapper),
         r'list': value.list
-            .map((el) => Serializers.instance.serialize<SelfReferencing>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$cycles.SelfReferencing>(el))
             .toList(),
       };
 }
 
 final class SelfReferencingWrapperSerializer
-    extends Serializer<SelfReferencingWrapper> {
+    extends Serializer<_$cycles.SelfReferencingWrapper> {
   const SelfReferencingWrapperSerializer();
 
   @override
-  SelfReferencingWrapper deserialize(Object? value) {
+  _$cycles.SelfReferencingWrapper deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return SelfReferencingWrapper(
+    return _$cycles.SelfReferencingWrapper(
         value: Serializers.instance
-            .deserialize<SelfReferencing>(serialized[r'value']));
+            .deserialize<_$cycles.SelfReferencing>(serialized[r'value']));
   }
 
   @override
-  Object? serialize(SelfReferencingWrapper value) =>
-      {r'value': Serializers.instance.serialize<SelfReferencing>(value.value)};
+  Object? serialize(_$cycles.SelfReferencingWrapper value) => {
+        r'value': Serializers.instance
+            .serialize<_$cycles.SelfReferencing>(value.value)
+      };
 }
 
-final class SerializableSerializer extends Serializer<Serializable> {
+final class SerializableSerializer extends Serializer<_$metadata.Serializable> {
   const SerializableSerializer();
 
   @override
-  Serializable deserialize(Object? value) {
+  _$metadata.Serializable deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
-    return Serializable(((serialized?[r'type'] as String?)) ?? null);
+    return _$metadata.Serializable(((serialized?[r'type'] as String?)) ?? null);
   }
 
   @override
-  Object? serialize(Serializable value) => {r'type': value.type};
+  Object? serialize(_$metadata.Serializable value) => {r'type': value.type};
 }
 
 final class SerializationExceptionSerializer
@@ -2136,14 +2262,16 @@ final class SerializationExceptionSerializer
       };
 }
 
-final class ShapeExceptionSerializer extends Serializer<ShapeException> {
+final class ShapeExceptionSerializer
+    extends Serializer<_$exceptions.ShapeException> {
   const ShapeExceptionSerializer();
 
   @override
-  ShapeException deserialize(Object? value) {
+  _$exceptions.ShapeException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'BadShapeException') {
-      return Serializers.instance.deserialize<BadShapeException>(serialized);
+      return Serializers.instance
+          .deserialize<_$exceptions.BadShapeException>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'ShapeException')
@@ -2153,10 +2281,11 @@ final class ShapeExceptionSerializer extends Serializer<ShapeException> {
   }
 
   @override
-  Object? serialize(ShapeException value) {
-    if (value is BadShapeException) {
+  Object? serialize(_$exceptions.ShapeException value) {
+    if (value is _$exceptions.BadShapeException) {
       return {
-        ...(Serializers.instance.serialize<BadShapeException>(value)
+        ...(Serializers.instance
+                .serialize<_$exceptions.BadShapeException>(value)
             as Map<String, Object?>),
         r'$type': r'BadShapeException',
       };
@@ -2169,17 +2298,19 @@ final class ShapeExceptionSerializer extends Serializer<ShapeException> {
   }
 }
 
-final class ShapeSerializer extends Serializer<Shape> {
+final class ShapeSerializer extends Serializer<_$sealed_classes.Shape> {
   const ShapeSerializer();
 
   @override
-  Shape deserialize(Object? value) {
+  _$sealed_classes.Shape deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'Rectangle') {
-      return Serializers.instance.deserialize<Rectangle>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.Rectangle>(serialized);
     }
     if (serialized[r'$type'] == r'Circle') {
-      return Serializers.instance.deserialize<Circle>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.Circle>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'Shape')
@@ -2189,17 +2320,17 @@ final class ShapeSerializer extends Serializer<Shape> {
   }
 
   @override
-  Object? serialize(Shape value) {
-    if (value is Rectangle) {
+  Object? serialize(_$sealed_classes.Shape value) {
+    if (value is _$sealed_classes.Rectangle) {
       return {
-        ...(Serializers.instance.serialize<Rectangle>(value)
+        ...(Serializers.instance.serialize<_$sealed_classes.Rectangle>(value)
             as Map<String, Object?>),
         r'$type': r'Rectangle',
       };
     }
-    if (value is Circle) {
+    if (value is _$sealed_classes.Circle) {
       return {
-        ...(Serializers.instance.serialize<Circle>(value)
+        ...(Serializers.instance.serialize<_$sealed_classes.Circle>(value)
             as Map<String, Object?>),
         r'$type': r'Circle',
       };
@@ -2213,18 +2344,19 @@ final class ShapeSerializer extends Serializer<Shape> {
 }
 
 final class ShapeWithCustomJsonSerializer
-    extends Serializer<ShapeWithCustomJson> {
+    extends Serializer<_$sealed_classes.ShapeWithCustomJson> {
   const ShapeWithCustomJsonSerializer();
 
   @override
-  ShapeWithCustomJson deserialize(Object? value) {
+  _$sealed_classes.ShapeWithCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
     if (serialized[r'$type'] == r'CircleWithCustomJson') {
-      return Serializers.instance.deserialize<CircleWithCustomJson>(serialized);
+      return Serializers.instance
+          .deserialize<_$sealed_classes.CircleWithCustomJson>(serialized);
     }
     if (serialized[r'$type'] == r'RectangleWithCustomJson') {
       return Serializers.instance
-          .deserialize<RectangleWithCustomJson>(serialized);
+          .deserialize<_$sealed_classes.RectangleWithCustomJson>(serialized);
     }
     throw SerializationException((StringBuffer('Unknown subtype of ')
           ..write(r'ShapeWithCustomJson')
@@ -2234,17 +2366,19 @@ final class ShapeWithCustomJsonSerializer
   }
 
   @override
-  Object? serialize(ShapeWithCustomJson value) {
-    if (value is CircleWithCustomJson) {
+  Object? serialize(_$sealed_classes.ShapeWithCustomJson value) {
+    if (value is _$sealed_classes.CircleWithCustomJson) {
       return {
-        ...(Serializers.instance.serialize<CircleWithCustomJson>(value)
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.CircleWithCustomJson>(value)
             as Map<String, Object?>),
         r'$type': r'CircleWithCustomJson',
       };
     }
-    if (value is RectangleWithCustomJson) {
+    if (value is _$sealed_classes.RectangleWithCustomJson) {
       return {
-        ...(Serializers.instance.serialize<RectangleWithCustomJson>(value)
+        ...(Serializers.instance
+                .serialize<_$sealed_classes.RectangleWithCustomJson>(value)
             as Map<String, Object?>),
         r'$type': r'RectangleWithCustomJson',
       };
@@ -2258,461 +2392,504 @@ final class ShapeWithCustomJsonSerializer
 }
 
 final class ShapeWithInheritedCustomJsonSerializer
-    extends Serializer<ShapeWithInheritedCustomJson> {
+    extends Serializer<_$sealed_classes.ShapeWithInheritedCustomJson> {
   const ShapeWithInheritedCustomJsonSerializer();
 
   @override
-  ShapeWithInheritedCustomJson deserialize(Object? value) {
+  _$sealed_classes.ShapeWithInheritedCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ShapeWithInheritedCustomJson.fromJson(serialized);
+    return _$sealed_classes.ShapeWithInheritedCustomJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ShapeWithInheritedCustomJson value) => {
+  Object? serialize(_$sealed_classes.ShapeWithInheritedCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          RectangleWithInheritedCustomJson() =>
+          _$sealed_classes.RectangleWithInheritedCustomJson() =>
             r'RectangleWithInheritedCustomJson',
-          CircleWithInheritedCustomJson() => r'CircleWithInheritedCustomJson',
+          _$sealed_classes.CircleWithInheritedCustomJson() =>
+            r'CircleWithInheritedCustomJson',
         },
       };
 }
 
 final class ShapeWithOverriddenCustomJsonSerializer
-    extends Serializer<ShapeWithOverriddenCustomJson> {
+    extends Serializer<_$sealed_classes.ShapeWithOverriddenCustomJson> {
   const ShapeWithOverriddenCustomJsonSerializer();
 
   @override
-  ShapeWithOverriddenCustomJson deserialize(Object? value) {
+  _$sealed_classes.ShapeWithOverriddenCustomJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ShapeWithOverriddenCustomJson.fromJson(serialized);
+    return _$sealed_classes.ShapeWithOverriddenCustomJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ShapeWithOverriddenCustomJson value) => {
+  Object? serialize(_$sealed_classes.ShapeWithOverriddenCustomJson value) => {
         ...value.toJson(),
         r'$type': switch (value) {
-          CircleWithOverriddenCustomJson() => r'CircleWithOverriddenCustomJson',
-          RectangleWithOverriddenCustomJson() =>
+          _$sealed_classes.CircleWithOverriddenCustomJson() =>
+            r'CircleWithOverriddenCustomJson',
+          _$sealed_classes.RectangleWithOverriddenCustomJson() =>
             r'RectangleWithOverriddenCustomJson',
         },
       };
 }
 
-final class SimpleClassSerializer extends Serializer<SimpleClass> {
+final class SimpleClassSerializer
+    extends Serializer<_$parameter_types.SimpleClass> {
   const SimpleClassSerializer();
 
   @override
-  SimpleClass deserialize(Object? value) {
+  _$parameter_types.SimpleClass deserialize(Object? value) {
     final serialized = assertWireType<Map<String, dynamic>>(value);
-    return SimpleClass.fromJson(serialized);
+    return _$parameter_types.SimpleClass.fromJson(serialized);
   }
 
   @override
-  Object? serialize(SimpleClass value) => value.toJson();
+  Object? serialize(_$parameter_types.SimpleClass value) => value.toJson();
 }
 
-final class SimpleStructSerializer extends Serializer<SimpleStruct> {
+final class SimpleStructSerializer
+    extends Serializer<_$parameter_types.SimpleStruct> {
   const SimpleStructSerializer();
 
   @override
-  SimpleStruct deserialize(Object? value) {
+  _$parameter_types.SimpleStruct deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>?>(value);
     return ();
   }
 
   @override
-  Object? serialize(SimpleStruct value) => {};
+  Object? serialize(_$parameter_types.SimpleStruct value) => {};
 }
 
 final class StringXFromJsonImplSerializer
-    extends Serializer<StringXFromJsonImpl> {
+    extends Serializer<_$extension_types.StringXFromJsonImpl> {
   const StringXFromJsonImplSerializer();
 
   @override
-  StringXFromJsonImpl deserialize(Object? value) {
+  _$extension_types.StringXFromJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXFromJsonImpl.fromJson(serialized);
+    return _$extension_types.StringXFromJsonImpl.fromJson(serialized);
   }
 
   @override
-  Object? serialize(StringXFromJsonImpl value) => value;
+  Object? serialize(_$extension_types.StringXFromJsonImpl value) => value;
 }
 
-final class StringXFromJsonSerializer extends Serializer<StringXFromJson> {
+final class StringXFromJsonSerializer
+    extends Serializer<_$extension_types.StringXFromJson> {
   const StringXFromJsonSerializer();
 
   @override
-  StringXFromJson deserialize(Object? value) {
+  _$extension_types.StringXFromJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXFromJson.fromJson(serialized);
+    return _$extension_types.StringXFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(StringXFromJson value) => value.s;
+  Object? serialize(_$extension_types.StringXFromJson value) => value.s;
 }
 
 final class StringXFromJsonStaticSerializer
-    extends Serializer<StringXFromJsonStatic> {
+    extends Serializer<_$extension_types.StringXFromJsonStatic> {
   const StringXFromJsonStaticSerializer();
 
   @override
-  StringXFromJsonStatic deserialize(Object? value) {
+  _$extension_types.StringXFromJsonStatic deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXFromJsonStatic.fromJson(serialized);
+    return _$extension_types.StringXFromJsonStatic.fromJson(serialized);
   }
 
   @override
-  Object? serialize(StringXFromJsonStatic value) => value.s;
+  Object? serialize(_$extension_types.StringXFromJsonStatic value) => value.s;
 }
 
-final class StringXImplSerializer extends Serializer<StringXImpl> {
+final class StringXImplSerializer
+    extends Serializer<_$extension_types.StringXImpl> {
   const StringXImplSerializer();
 
   @override
-  StringXImpl deserialize(Object? value) {
+  _$extension_types.StringXImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXImpl((serialized as String));
+    return _$extension_types.StringXImpl((serialized as String));
   }
 
   @override
-  Object? serialize(StringXImpl value) => value;
+  Object? serialize(_$extension_types.StringXImpl value) => value;
 }
 
 final class StringXPrivateCtorImplSerializer
-    extends Serializer<StringXPrivateCtorImpl> {
+    extends Serializer<_$extension_types.StringXPrivateCtorImpl> {
   const StringXPrivateCtorImplSerializer();
 
   @override
-  StringXPrivateCtorImpl deserialize(Object? value) {
+  _$extension_types.StringXPrivateCtorImpl deserialize(Object? value) {
     final serialized = assertWireType<String?>(value);
-    return ((serialized as String) as StringXPrivateCtorImpl);
+    return ((serialized as String) as _$extension_types.StringXPrivateCtorImpl);
   }
 
   @override
-  Object? serialize(StringXPrivateCtorImpl value) => value;
+  Object? serialize(_$extension_types.StringXPrivateCtorImpl value) => value;
 }
 
 final class StringXPrivateCtorSerializer
-    extends Serializer<StringXPrivateCtor> {
+    extends Serializer<_$extension_types.StringXPrivateCtor> {
   const StringXPrivateCtorSerializer();
 
   @override
-  StringXPrivateCtor deserialize(Object? value) {
+  _$extension_types.StringXPrivateCtor deserialize(Object? value) {
     final serialized = assertWireType<String?>(value);
-    return ((serialized as String) as StringXPrivateCtor);
+    return ((serialized as String) as _$extension_types.StringXPrivateCtor);
   }
 
   @override
-  Object? serialize(StringXPrivateCtor value) => value.s;
+  Object? serialize(_$extension_types.StringXPrivateCtor value) => value.s;
 }
 
 final class StringXPrivateFieldImplSerializer
-    extends Serializer<StringXPrivateFieldImpl> {
+    extends Serializer<_$extension_types.StringXPrivateFieldImpl> {
   const StringXPrivateFieldImplSerializer();
 
   @override
-  StringXPrivateFieldImpl deserialize(Object? value) {
+  _$extension_types.StringXPrivateFieldImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXPrivateFieldImpl((serialized as String));
+    return _$extension_types.StringXPrivateFieldImpl((serialized as String));
   }
 
   @override
-  Object? serialize(StringXPrivateFieldImpl value) => value;
+  Object? serialize(_$extension_types.StringXPrivateFieldImpl value) => value;
 }
 
 final class StringXPrivateFieldSerializer
-    extends Serializer<StringXPrivateField> {
+    extends Serializer<_$extension_types.StringXPrivateField> {
   const StringXPrivateFieldSerializer();
 
   @override
-  StringXPrivateField deserialize(Object? value) {
+  _$extension_types.StringXPrivateField deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXPrivateField((serialized as String));
+    return _$extension_types.StringXPrivateField((serialized as String));
   }
 
   @override
-  Object? serialize(StringXPrivateField value) => (value as String);
+  Object? serialize(_$extension_types.StringXPrivateField value) =>
+      (value as String);
 }
 
-final class StringXSerializer extends Serializer<StringX> {
+final class StringXSerializer extends Serializer<_$extension_types.StringX> {
   const StringXSerializer();
 
   @override
-  StringX deserialize(Object? value) {
+  _$extension_types.StringX deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringX((serialized as String));
+    return _$extension_types.StringX((serialized as String));
   }
 
   @override
-  Object? serialize(StringX value) => value.s;
+  Object? serialize(_$extension_types.StringX value) => value.s;
 }
 
-final class StringXToFromJsonSerializer extends Serializer<StringXToFromJson> {
+final class StringXToFromJsonSerializer
+    extends Serializer<_$extension_types.StringXToFromJson> {
   const StringXToFromJsonSerializer();
 
   @override
-  StringXToFromJson deserialize(Object? value) {
+  _$extension_types.StringXToFromJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXToFromJson.fromJson(serialized);
+    return _$extension_types.StringXToFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(StringXToFromJson value) => value.toJson();
+  Object? serialize(_$extension_types.StringXToFromJson value) =>
+      value.toJson();
 }
 
-final class StringXToJsonImplSerializer extends Serializer<StringXToJsonImpl> {
+final class StringXToJsonImplSerializer
+    extends Serializer<_$extension_types.StringXToJsonImpl> {
   const StringXToJsonImplSerializer();
 
   @override
-  StringXToJsonImpl deserialize(Object? value) {
+  _$extension_types.StringXToJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXToJsonImpl((serialized as String));
+    return _$extension_types.StringXToJsonImpl((serialized as String));
   }
 
   @override
-  Object? serialize(StringXToJsonImpl value) => value.toJson();
+  Object? serialize(_$extension_types.StringXToJsonImpl value) =>
+      value.toJson();
 }
 
-final class StringXToJsonSerializer extends Serializer<StringXToJson> {
+final class StringXToJsonSerializer
+    extends Serializer<_$extension_types.StringXToJson> {
   const StringXToJsonSerializer();
 
   @override
-  StringXToJson deserialize(Object? value) {
+  _$extension_types.StringXToJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return StringXToJson((serialized as String));
+    return _$extension_types.StringXToJson((serialized as String));
   }
 
   @override
-  Object? serialize(StringXToJson value) => value.toJson();
+  Object? serialize(_$extension_types.StringXToJson value) => value.toJson();
 }
 
 final class SupportedErrorTypeSerializer
-    extends Serializer<SupportedErrorType> {
+    extends Serializer<_$exceptions.SupportedErrorType> {
   const SupportedErrorTypeSerializer();
 
   @override
-  SupportedErrorType deserialize(Object? value) {
+  _$exceptions.SupportedErrorType deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return SupportedErrorType.values.byName(serialized);
+    return _$exceptions.SupportedErrorType.values.byName(serialized);
   }
 
   @override
-  Object? serialize(SupportedErrorType value) => value.name;
+  Object? serialize(_$exceptions.SupportedErrorType value) => value.name;
 }
 
 final class SupportedExceptionTypeSerializer
-    extends Serializer<SupportedExceptionType> {
+    extends Serializer<_$exceptions.SupportedExceptionType> {
   const SupportedExceptionTypeSerializer();
 
   @override
-  SupportedExceptionType deserialize(Object? value) {
+  _$exceptions.SupportedExceptionType deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return SupportedExceptionType.values.byName(serialized);
+    return _$exceptions.SupportedExceptionType.values.byName(serialized);
   }
 
   @override
-  Object? serialize(SupportedExceptionType value) => value.name;
+  Object? serialize(_$exceptions.SupportedExceptionType value) => value.name;
 }
 
-final class SwappedResultSerializer<E extends ShapeException, T extends Shape>
-    extends Serializer<SwappedResult<E, T>> {
+final class SwappedResultSerializer<E extends _$exceptions.ShapeException,
+        T extends _$sealed_classes.Shape>
+    extends Serializer<_$sealed_classes.SwappedResult<E, T>> {
   const SwappedResultSerializer();
 
   @override
-  SwappedResult<E, T> deserialize(Object? value) {
+  _$sealed_classes.SwappedResult<E, T> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return SwappedResult<E, T>(
-        Serializers.instance.deserialize<Result<E, T>>(serialized[r'result']));
+    return _$sealed_classes.SwappedResult<E, T>(Serializers.instance
+        .deserialize<_$sealed_classes.Result<E, T>>(serialized[r'result']));
   }
 
   @override
-  Object? serialize(SwappedResult<E, T> value) =>
-      {r'result': Serializers.instance.serialize<Result<E, T>>(value.result)};
+  Object? serialize(_$sealed_classes.SwappedResult<E, T> value) => {
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<E, T>>(value.result)
+      };
 }
 
-final class SwappedResultShapeStringSerializer
-    extends Serializer<SwappedResult<Shape, String>> {
+final class SwappedResultShapeStringSerializer extends Serializer<
+    _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>> {
   const SwappedResultShapeStringSerializer();
 
   @override
-  SwappedResult<Shape, String> deserialize(Object? value) {
+  _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return SwappedResult<Shape, String>(Serializers.instance
-        .deserialize<Result<Shape, String>>(serialized[r'result']));
+    return _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>(
+        Serializers.instance.deserialize<
+            _$sealed_classes
+            .Result<_$sealed_classes.Shape, String>>(serialized[r'result']));
   }
 
   @override
-  Object? serialize(SwappedResult<Shape, String> value) => {
-        r'result':
-            Serializers.instance.serialize<Result<Shape, String>>(value.result)
+  Object? serialize(
+          _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>
+              value) =>
+      {
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<_$sealed_classes.Shape, String>>(
+                value.result)
       };
 }
 
-final class SwappedResultStringShapeSerializer
-    extends Serializer<SwappedResult<String, Shape>> {
+final class SwappedResultStringShapeSerializer extends Serializer<
+    _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>> {
   const SwappedResultStringShapeSerializer();
 
   @override
-  SwappedResult<String, Shape> deserialize(Object? value) {
+  _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return SwappedResult<String, Shape>(Serializers.instance
-        .deserialize<Result<String, Shape>>(serialized[r'result']));
+    return _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>(
+        Serializers.instance.deserialize<
+            _$sealed_classes
+            .Result<String, _$sealed_classes.Shape>>(serialized[r'result']));
   }
 
   @override
-  Object? serialize(SwappedResult<String, Shape> value) => {
-        r'result':
-            Serializers.instance.serialize<Result<String, Shape>>(value.result)
+  Object? serialize(
+          _$sealed_classes.SwappedResult<String, _$sealed_classes.Shape>
+              value) =>
+      {
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<String, _$sealed_classes.Shape>>(
+                value.result)
       };
 }
 
-final class ValueSerializer extends Serializer<Value> {
+final class ValueSerializer extends Serializer<_$extension_types.Value> {
   const ValueSerializer();
 
   @override
-  Value deserialize(Object? value) {
+  _$extension_types.Value deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return Value.fromJson(serialized);
+    return _$extension_types.Value.fromJson(serialized);
   }
 
   @override
-  Object? serialize(Value value) => value.toJson();
+  Object? serialize(_$extension_types.Value value) => value.toJson();
 }
 
 final class ValueXFromJsonImplSerializer
-    extends Serializer<ValueXFromJsonImpl> {
+    extends Serializer<_$extension_types.ValueXFromJsonImpl> {
   const ValueXFromJsonImplSerializer();
 
   @override
-  ValueXFromJsonImpl deserialize(Object? value) {
+  _$extension_types.ValueXFromJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ValueXFromJsonImpl.fromJson(serialized);
+    return _$extension_types.ValueXFromJsonImpl.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ValueXFromJsonImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXFromJsonImpl value) =>
+      value.toJson();
 }
 
-final class ValueXFromJsonSerializer extends Serializer<ValueXFromJson> {
+final class ValueXFromJsonSerializer
+    extends Serializer<_$extension_types.ValueXFromJson> {
   const ValueXFromJsonSerializer();
 
   @override
-  ValueXFromJson deserialize(Object? value) {
+  _$extension_types.ValueXFromJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ValueXFromJson.fromJson(serialized);
+    return _$extension_types.ValueXFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ValueXFromJson value) =>
-      Serializers.instance.serialize<Value>(value.v);
+  Object? serialize(_$extension_types.ValueXFromJson value) =>
+      Serializers.instance.serialize<_$extension_types.Value>(value.v);
 }
 
 final class ValueXFromJsonStaticSerializer
-    extends Serializer<ValueXFromJsonStatic> {
+    extends Serializer<_$extension_types.ValueXFromJsonStatic> {
   const ValueXFromJsonStaticSerializer();
 
   @override
-  ValueXFromJsonStatic deserialize(Object? value) {
+  _$extension_types.ValueXFromJsonStatic deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ValueXFromJsonStatic.fromJson(serialized);
+    return _$extension_types.ValueXFromJsonStatic.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ValueXFromJsonStatic value) =>
-      Serializers.instance.serialize<Value>(value.v);
+  Object? serialize(_$extension_types.ValueXFromJsonStatic value) =>
+      Serializers.instance.serialize<_$extension_types.Value>(value.v);
 }
 
 final class ValueXImplIndirectSerializer
-    extends Serializer<ValueXImplIndirect> {
+    extends Serializer<_$extension_types.ValueXImplIndirect> {
   const ValueXImplIndirectSerializer();
 
   @override
-  ValueXImplIndirect deserialize(Object? value) {
+  _$extension_types.ValueXImplIndirect deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Value.fromJson(serialized) as ValueXImplIndirect);
+    return (_$extension_types.Value.fromJson(serialized)
+        as _$extension_types.ValueXImplIndirect);
   }
 
   @override
-  Object? serialize(ValueXImplIndirect value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXImplIndirect value) =>
+      value.toJson();
 }
 
-final class ValueXImplSerializer extends Serializer<ValueXImpl> {
+final class ValueXImplSerializer
+    extends Serializer<_$extension_types.ValueXImpl> {
   const ValueXImplSerializer();
 
   @override
-  ValueXImpl deserialize(Object? value) {
+  _$extension_types.ValueXImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Value.fromJson(serialized) as ValueXImpl);
+    return (_$extension_types.Value.fromJson(serialized)
+        as _$extension_types.ValueXImpl);
   }
 
   @override
-  Object? serialize(ValueXImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXImpl value) => value.toJson();
 }
 
-final class ValueXSerializer extends Serializer<ValueX> {
+final class ValueXSerializer extends Serializer<_$extension_types.ValueX> {
   const ValueXSerializer();
 
   @override
-  ValueX deserialize(Object? value) {
+  _$extension_types.ValueX deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ValueX(Serializers.instance.deserialize<Value>(serialized));
+    return _$extension_types.ValueX(
+        Serializers.instance.deserialize<_$extension_types.Value>(serialized));
   }
 
   @override
-  Object? serialize(ValueX value) =>
-      Serializers.instance.serialize<Value>(value.v);
+  Object? serialize(_$extension_types.ValueX value) =>
+      Serializers.instance.serialize<_$extension_types.Value>(value.v);
 }
 
 final class ValueXToFromJsonCombinedSerializer
-    extends Serializer<ValueXToFromJsonCombined> {
+    extends Serializer<_$extension_types.ValueXToFromJsonCombined> {
   const ValueXToFromJsonCombinedSerializer();
 
   @override
-  ValueXToFromJsonCombined deserialize(Object? value) {
+  _$extension_types.ValueXToFromJsonCombined deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return (ValueXFromJson.fromJson(serialized) as ValueXToFromJsonCombined);
+    return (_$extension_types.ValueXFromJson.fromJson(serialized)
+        as _$extension_types.ValueXToFromJsonCombined);
   }
 
   @override
-  Object? serialize(ValueXToFromJsonCombined value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXToFromJsonCombined value) =>
+      value.toJson();
 }
 
-final class ValueXToFromJsonSerializer extends Serializer<ValueXToFromJson> {
+final class ValueXToFromJsonSerializer
+    extends Serializer<_$extension_types.ValueXToFromJson> {
   const ValueXToFromJsonSerializer();
 
   @override
-  ValueXToFromJson deserialize(Object? value) {
+  _$extension_types.ValueXToFromJson deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return ValueXToFromJson.fromJson(serialized);
+    return _$extension_types.ValueXToFromJson.fromJson(serialized);
   }
 
   @override
-  Object? serialize(ValueXToFromJson value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXToFromJson value) => value.toJson();
 }
 
-final class ValueXToJsonImplSerializer extends Serializer<ValueXToJsonImpl> {
+final class ValueXToJsonImplSerializer
+    extends Serializer<_$extension_types.ValueXToJsonImpl> {
   const ValueXToJsonImplSerializer();
 
   @override
-  ValueXToJsonImpl deserialize(Object? value) {
+  _$extension_types.ValueXToJsonImpl deserialize(Object? value) {
     final serialized = assertWireType<String>(value);
-    return (Value.fromJson(serialized) as ValueXToJsonImpl);
+    return (_$extension_types.Value.fromJson(serialized)
+        as _$extension_types.ValueXToJsonImpl);
   }
 
   @override
-  Object? serialize(ValueXToJsonImpl value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXToJsonImpl value) => value.toJson();
 }
 
-final class ValueXToJsonSerializer extends Serializer<ValueXToJson> {
+final class ValueXToJsonSerializer
+    extends Serializer<_$extension_types.ValueXToJson> {
   const ValueXToJsonSerializer();
 
   @override
-  ValueXToJson deserialize(Object? value) {
+  _$extension_types.ValueXToJson deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return ValueXToJson(Serializers.instance.deserialize<Value>(serialized));
+    return _$extension_types.ValueXToJson(
+        Serializers.instance.deserialize<_$extension_types.Value>(serialized));
   }
 
   @override
-  Object? serialize(ValueXToJson value) => value.toJson();
+  Object? serialize(_$extension_types.ValueXToJson value) => value.toJson();
 }

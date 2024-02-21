@@ -7,7 +7,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _$convert;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models.dart' as _$models;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 
@@ -60,7 +60,7 @@ class CelestFunctionsInjected {
     return ($body['response'] as String);
   }
 
-  Future<Person> sayHelloPerson() async {
+  Future<_$models.Person> sayHelloPerson() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/injected/say-hello-person'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -73,6 +73,6 @@ class CelestFunctionsInjected {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Person>($body['response']);
+    return Serializers.instance.deserialize<_$models.Person>($body['response']);
   }
 }

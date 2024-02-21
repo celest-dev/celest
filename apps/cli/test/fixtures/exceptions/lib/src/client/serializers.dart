@@ -3,32 +3,34 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart';
+import 'package:celest_backend/exceptions.dart' as _$exceptions;
 
-final class BaseErrorSerializer extends Serializer<BaseError> {
+final class BaseErrorSerializer extends Serializer<_$exceptions.BaseError> {
   const BaseErrorSerializer();
 
   @override
-  BaseError deserialize(Object? value) {
+  _$exceptions.BaseError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return BaseError((serialized[r'fault'] as String));
+    return _$exceptions.BaseError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(BaseError value) => {r'fault': value.fault};
+  Object? serialize(_$exceptions.BaseError value) => {r'fault': value.fault};
 }
 
-final class BaseExceptionSerializer extends Serializer<BaseException> {
+final class BaseExceptionSerializer
+    extends Serializer<_$exceptions.BaseException> {
   const BaseExceptionSerializer();
 
   @override
-  BaseException deserialize(Object? value) {
+  _$exceptions.BaseException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return BaseException((serialized[r'fault'] as String));
+    return _$exceptions.BaseException((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(BaseException value) => {r'fault': value.fault};
+  Object? serialize(_$exceptions.BaseException value) =>
+      {r'fault': value.fault};
 }
 
 final class CommonExceptionSerializer
@@ -46,17 +48,17 @@ final class CommonExceptionSerializer
       {r'message': value.message};
 }
 
-final class CustomErrorSerializer extends Serializer<CustomError> {
+final class CustomErrorSerializer extends Serializer<_$exceptions.CustomError> {
   const CustomErrorSerializer();
 
   @override
-  CustomError deserialize(Object? value) {
+  _$exceptions.CustomError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CustomError((serialized[r'fault'] as String));
+    return _$exceptions.CustomError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(CustomError value) => {r'fault': value.fault};
+  Object? serialize(_$exceptions.CustomError value) => {r'fault': value.fault};
 }
 
 final class CustomExceptionSerializer

@@ -7,7 +7,8 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:io' as _$io;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/src/models/extension_types.dart';
+import 'package:celest_backend/src/models/extension_types.dart'
+    as _$extension_types;
 import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
@@ -94,133 +95,147 @@ class Celest {
     Serializers.instance.put(const SupportedErrorTypeSerializer());
     Serializers.instance.put(
       const StringXSerializer(),
-      const TypeToken<StringX>('StringX'),
+      const TypeToken<_$extension_types.StringX>('StringX'),
     );
     Serializers.instance.put(
       const StringXImplSerializer(),
-      const TypeToken<StringXImpl>('StringXImpl'),
+      const TypeToken<_$extension_types.StringXImpl>('StringXImpl'),
     );
     Serializers.instance.put(
       const StringXToFromJsonSerializer(),
-      const TypeToken<StringXToFromJson>('StringXToFromJson'),
+      const TypeToken<_$extension_types.StringXToFromJson>('StringXToFromJson'),
     );
     Serializers.instance.put(
       const StringXToJsonSerializer(),
-      const TypeToken<StringXToJson>('StringXToJson'),
+      const TypeToken<_$extension_types.StringXToJson>('StringXToJson'),
     );
     Serializers.instance.put(
       const StringXToJsonImplSerializer(),
-      const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+      const TypeToken<_$extension_types.StringXToJsonImpl>('StringXToJsonImpl'),
     );
     Serializers.instance.put(
       const StringXFromJsonSerializer(),
-      const TypeToken<StringXFromJson>('StringXFromJson'),
+      const TypeToken<_$extension_types.StringXFromJson>('StringXFromJson'),
     );
     Serializers.instance.put(
       const StringXFromJsonImplSerializer(),
-      const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+      const TypeToken<_$extension_types.StringXFromJsonImpl>(
+          'StringXFromJsonImpl'),
     );
     Serializers.instance.put(
       const StringXFromJsonStaticSerializer(),
-      const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+      const TypeToken<_$extension_types.StringXFromJsonStatic>(
+          'StringXFromJsonStatic'),
     );
     Serializers.instance.put(
       const StringXPrivateFieldSerializer(),
-      const TypeToken<StringXPrivateField>('StringXPrivateField'),
+      const TypeToken<_$extension_types.StringXPrivateField>(
+          'StringXPrivateField'),
     );
     Serializers.instance.put(
       const StringXPrivateFieldImplSerializer(),
-      const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+      const TypeToken<_$extension_types.StringXPrivateFieldImpl>(
+          'StringXPrivateFieldImpl'),
     );
     Serializers.instance.put(
       const StringXPrivateCtorSerializer(),
-      const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+      const TypeToken<_$extension_types.StringXPrivateCtor>(
+          'StringXPrivateCtor'),
     );
     Serializers.instance.put(
       const StringXPrivateCtorImplSerializer(),
-      const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+      const TypeToken<_$extension_types.StringXPrivateCtorImpl>(
+          'StringXPrivateCtorImpl'),
     );
     Serializers.instance.put(const ValueSerializer());
     Serializers.instance.put(
       const ValueXSerializer(),
-      const TypeToken<ValueX>('ValueX'),
+      const TypeToken<_$extension_types.ValueX>('ValueX'),
     );
     Serializers.instance.put(
       const ValueXImplSerializer(),
-      const TypeToken<ValueXImpl>('ValueXImpl'),
+      const TypeToken<_$extension_types.ValueXImpl>('ValueXImpl'),
     );
     Serializers.instance.put(
       const ValueXToFromJsonSerializer(),
-      const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+      const TypeToken<_$extension_types.ValueXToFromJson>('ValueXToFromJson'),
     );
     Serializers.instance.put(
       const ValueXToJsonSerializer(),
-      const TypeToken<ValueXToJson>('ValueXToJson'),
+      const TypeToken<_$extension_types.ValueXToJson>('ValueXToJson'),
     );
     Serializers.instance.put(
       const ValueXToJsonImplSerializer(),
-      const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+      const TypeToken<_$extension_types.ValueXToJsonImpl>('ValueXToJsonImpl'),
     );
     Serializers.instance.put(
       const ValueXFromJsonSerializer(),
-      const TypeToken<ValueXFromJson>('ValueXFromJson'),
+      const TypeToken<_$extension_types.ValueXFromJson>('ValueXFromJson'),
     );
     Serializers.instance.put(
       const ValueXFromJsonImplSerializer(),
-      const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+      const TypeToken<_$extension_types.ValueXFromJsonImpl>(
+          'ValueXFromJsonImpl'),
     );
     Serializers.instance.put(
       const ValueXFromJsonStaticSerializer(),
-      const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+      const TypeToken<_$extension_types.ValueXFromJsonStatic>(
+          'ValueXFromJsonStatic'),
     );
     Serializers.instance.put(
       const ValueXToFromJsonCombinedSerializer(),
-      const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+      const TypeToken<_$extension_types.ValueXToFromJsonCombined>(
+          'ValueXToFromJsonCombined'),
     );
     Serializers.instance.put(
       const ValueXImplIndirectSerializer(),
-      const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+      const TypeToken<_$extension_types.ValueXImplIndirect>(
+          'ValueXImplIndirect'),
     );
     Serializers.instance.put(const ColorSerializer());
     Serializers.instance.put(
       const ColorXSerializer(),
-      const TypeToken<ColorX>('ColorX'),
+      const TypeToken<_$extension_types.ColorX>('ColorX'),
     );
     Serializers.instance.put(
       const ColorXImplSerializer(),
-      const TypeToken<ColorXImpl>('ColorXImpl'),
+      const TypeToken<_$extension_types.ColorXImpl>('ColorXImpl'),
     );
     Serializers.instance.put(
       const ColorXToFromJsonSerializer(),
-      const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+      const TypeToken<_$extension_types.ColorXToFromJson>('ColorXToFromJson'),
     );
     Serializers.instance.put(
       const ColorXToJsonSerializer(),
-      const TypeToken<ColorXToJson>('ColorXToJson'),
+      const TypeToken<_$extension_types.ColorXToJson>('ColorXToJson'),
     );
     Serializers.instance.put(
       const ColorXToJsonImplSerializer(),
-      const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+      const TypeToken<_$extension_types.ColorXToJsonImpl>('ColorXToJsonImpl'),
     );
     Serializers.instance.put(
       const ColorXFromJsonSerializer(),
-      const TypeToken<ColorXFromJson>('ColorXFromJson'),
+      const TypeToken<_$extension_types.ColorXFromJson>('ColorXFromJson'),
     );
     Serializers.instance.put(
       const ColorXFromJsonImplSerializer(),
-      const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+      const TypeToken<_$extension_types.ColorXFromJsonImpl>(
+          'ColorXFromJsonImpl'),
     );
     Serializers.instance.put(
       const ColorXFromJsonStaticSerializer(),
-      const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+      const TypeToken<_$extension_types.ColorXFromJsonStatic>(
+          'ColorXFromJsonStatic'),
     );
     Serializers.instance.put(
       const ColorXToFromJsonCombinedSerializer(),
-      const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+      const TypeToken<_$extension_types.ColorXToFromJsonCombined>(
+          'ColorXToFromJsonCombined'),
     );
     Serializers.instance.put(
       const ColorXImplIndirectSerializer(),
-      const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+      const TypeToken<_$extension_types.ColorXImplIndirect>(
+          'ColorXImplIndirect'),
     );
     Serializers.instance.put(
       const JsonValueSerializer(),

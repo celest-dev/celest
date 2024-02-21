@@ -1,7 +1,8 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/celest.dart';
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models.dart' as _$models;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 
@@ -34,13 +35,13 @@ final class InternalServerExceptionSerializer
       {r'message': value.message};
 }
 
-final class PersonSerializer extends Serializer<Person> {
+final class PersonSerializer extends Serializer<_$models.Person> {
   const PersonSerializer();
 
   @override
-  Person deserialize(Object? value) {
+  _$models.Person deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return Person(
+    return _$models.Person(
       name: (serialized[r'name'] as String),
       age: (serialized[r'age'] as num).toInt(),
       height: (serialized[r'height'] as num).toDouble(),
@@ -51,7 +52,7 @@ final class PersonSerializer extends Serializer<Person> {
   }
 
   @override
-  Object? serialize(Person value) => {
+  Object? serialize(_$models.Person value) => {
         r'name': value.name,
         r'age': value.age,
         r'height': value.height,

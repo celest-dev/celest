@@ -104,7 +104,23 @@ final class CelestAllocator implements Allocator {
   }
 
   String? _prefixForUrl(String url) {
-    if (url.startsWith('package:celest') || Uri.parse(url).scheme.isEmpty) {
+    final uri = Uri.parse(url);
+    if (uri
+        case Uri(
+          scheme: 'package',
+          // The only members we should not prefix are core libraries.
+          //
+          // We could choose to not prefix their backend library but the Celest types
+          // are so ubiquitous in clientgen, that this helps reduce the prefix
+          // clutter.
+          //
+          // This is also required so that, for example, clients can define
+          // their own types with the same name as core lib types.
+          pathSegments: ['celest' || 'celest_core', ...]
+        )) {
+      return null;
+    }
+    if (uri.scheme.isEmpty) {
       return null;
     }
     final allocatedPrefixes = _imports.values.nonNulls.toSet();

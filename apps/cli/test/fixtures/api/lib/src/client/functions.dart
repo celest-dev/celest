@@ -8,16 +8,20 @@ import 'dart:convert' as _$convert;
 import 'dart:typed_data' as _$typed_data;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart';
-import 'package:celest_backend/src/models/classes.dart';
-import 'package:celest_backend/src/models/cycles.dart';
-import 'package:celest_backend/src/models/exceptions.dart';
-import 'package:celest_backend/src/models/extension_types.dart';
-import 'package:celest_backend/src/models/generic_wrappers.dart';
-import 'package:celest_backend/src/models/metadata.dart';
-import 'package:celest_backend/src/models/parameter_types.dart';
-import 'package:celest_backend/src/models/records.dart';
-import 'package:celest_backend/src/models/sealed_classes.dart';
+import 'package:celest_backend/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/src/models/classes.dart' as _$classes;
+import 'package:celest_backend/src/models/cycles.dart' as _$cycles;
+import 'package:celest_backend/src/models/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/src/models/extension_types.dart'
+    as _$extension_types;
+import 'package:celest_backend/src/models/generic_wrappers.dart'
+    as _$generic_wrappers;
+import 'package:celest_backend/src/models/metadata.dart' as _$metadata;
+import 'package:celest_backend/src/models/parameter_types.dart'
+    as _$parameter_types;
+import 'package:celest_backend/src/models/records.dart' as _$records;
+import 'package:celest_backend/src/models/sealed_classes.dart'
+    as _$sealed_classes;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
@@ -136,12 +140,12 @@ class CelestFunctionsClasses {
     }
   }
 
-  Future<Empty> empty(Empty value) async {
+  Future<_$classes.Empty> empty(_$classes.Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<_$classes.Empty>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -151,15 +155,15 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Empty>($body['response']);
+    return Serializers.instance.deserialize<_$classes.Empty>($body['response']);
   }
 
-  Future<Empty> asyncEmpty(Empty value) async {
+  Future<_$classes.Empty> asyncEmpty(_$classes.Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<_$classes.Empty>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -169,15 +173,15 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Empty>($body['response']);
+    return Serializers.instance.deserialize<_$classes.Empty>($body['response']);
   }
 
-  Future<Fields> fields(Fields value) async {
+  Future<_$classes.Fields> fields(_$classes.Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Fields>(value)}),
+          {r'value': Serializers.instance.serialize<_$classes.Fields>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -187,15 +191,16 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Fields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.Fields>($body['response']);
   }
 
-  Future<Fields> asyncFields(Fields value) async {
+  Future<_$classes.Fields> asyncFields(_$classes.Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Fields>(value)}),
+          {r'value': Serializers.instance.serialize<_$classes.Fields>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -205,15 +210,16 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Fields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.Fields>($body['response']);
   }
 
-  Future<Fields?> nullableFields(Fields? value) async {
+  Future<_$classes.Fields?> nullableFields(_$classes.Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Fields?>(value)}),
+          {r'value': Serializers.instance.serialize<_$classes.Fields?>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -223,15 +229,16 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Fields?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.Fields?>($body['response']);
   }
 
-  Future<Fields?> asyncNullableFields(Fields? value) async {
+  Future<_$classes.Fields?> asyncNullableFields(_$classes.Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Fields?>(value)}),
+          {r'value': Serializers.instance.serialize<_$classes.Fields?>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -241,15 +248,17 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Fields?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.Fields?>($body['response']);
   }
 
-  Future<NamedFields> namedFields(NamedFields value) async {
+  Future<_$classes.NamedFields> namedFields(_$classes.NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NamedFields>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NamedFields>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -259,15 +268,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NamedFields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NamedFields>($body['response']);
   }
 
-  Future<NamedFields> asyncNamedFields(NamedFields value) async {
+  Future<_$classes.NamedFields> asyncNamedFields(
+      _$classes.NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NamedFields>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NamedFields>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -277,15 +289,17 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NamedFields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NamedFields>($body['response']);
   }
 
-  Future<MixedFields> mixedFields(MixedFields value) async {
+  Future<_$classes.MixedFields> mixedFields(_$classes.MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<MixedFields>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.MixedFields>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -295,15 +309,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<MixedFields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.MixedFields>($body['response']);
   }
 
-  Future<MixedFields> asyncMixedFields(MixedFields value) async {
+  Future<_$classes.MixedFields> asyncMixedFields(
+      _$classes.MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<MixedFields>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.MixedFields>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -313,15 +330,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<MixedFields>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.MixedFields>($body['response']);
   }
 
-  Future<DefaultValues> defaultValues(DefaultValues value) async {
+  Future<_$classes.DefaultValues> defaultValues(
+      _$classes.DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.DefaultValues>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -331,15 +351,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<DefaultValues>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.DefaultValues>($body['response']);
   }
 
-  Future<DefaultValues> asyncDefaultValues(DefaultValues value) async {
+  Future<_$classes.DefaultValues> asyncDefaultValues(
+      _$classes.DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.DefaultValues>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -349,15 +372,17 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<DefaultValues>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.DefaultValues>($body['response']);
   }
 
-  Future<NestedClass> nestedClass(NestedClass value) async {
+  Future<_$classes.NestedClass> nestedClass(_$classes.NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NestedClass>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NestedClass>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -367,15 +392,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NestedClass>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NestedClass>($body['response']);
   }
 
-  Future<NestedClass> asyncNestedClass(NestedClass value) async {
+  Future<_$classes.NestedClass> asyncNestedClass(
+      _$classes.NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NestedClass>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NestedClass>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -385,15 +413,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NestedClass>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NestedClass>($body['response']);
   }
 
-  Future<OnlyFromJson> onlyFromJson(OnlyFromJson value) async {
+  Future<_$classes.OnlyFromJson> onlyFromJson(
+      _$classes.OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.OnlyFromJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -403,15 +434,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.OnlyFromJson>($body['response']);
   }
 
-  Future<OnlyFromJson> asyncOnlyFromJson(OnlyFromJson value) async {
+  Future<_$classes.OnlyFromJson> asyncOnlyFromJson(
+      _$classes.OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.OnlyFromJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -421,15 +455,17 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.OnlyFromJson>($body['response']);
   }
 
-  Future<OnlyToJson> onlyToJson(OnlyToJson value) async {
+  Future<_$classes.OnlyToJson> onlyToJson(_$classes.OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.OnlyToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -439,15 +475,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<OnlyToJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.OnlyToJson>($body['response']);
   }
 
-  Future<OnlyToJson> asyncOnlyToJson(OnlyToJson value) async {
+  Future<_$classes.OnlyToJson> asyncOnlyToJson(
+      _$classes.OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.OnlyToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -457,16 +496,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<OnlyToJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.OnlyToJson>($body['response']);
   }
 
-  Future<OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
-      OnlyToJsonWithDefaults value) async {
+  Future<_$classes.OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
+      _$classes.OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value': Serializers.instance.serialize<OnlyToJsonWithDefaults>(value)
+        r'value': Serializers.instance
+            .serialize<_$classes.OnlyToJsonWithDefaults>(value)
       }),
     );
     final $body =
@@ -478,16 +519,17 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<OnlyToJsonWithDefaults>($body['response']);
+        .deserialize<_$classes.OnlyToJsonWithDefaults>($body['response']);
   }
 
-  Future<OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
-      OnlyToJsonWithDefaults value) async {
+  Future<_$classes.OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
+      _$classes.OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value': Serializers.instance.serialize<OnlyToJsonWithDefaults>(value)
+        r'value': Serializers.instance
+            .serialize<_$classes.OnlyToJsonWithDefaults>(value)
       }),
     );
     final $body =
@@ -499,15 +541,18 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<OnlyToJsonWithDefaults>($body['response']);
+        .deserialize<_$classes.OnlyToJsonWithDefaults>($body['response']);
   }
 
-  Future<FromJsonAndToJson> fromAndToJson(FromJsonAndToJson value) async {
+  Future<_$classes.FromJsonAndToJson> fromAndToJson(
+      _$classes.FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$classes.FromJsonAndToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -518,15 +563,18 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<FromJsonAndToJson>($body['response']);
+        .deserialize<_$classes.FromJsonAndToJson>($body['response']);
   }
 
-  Future<FromJsonAndToJson> asyncFromAndToJson(FromJsonAndToJson value) async {
+  Future<_$classes.FromJsonAndToJson> asyncFromAndToJson(
+      _$classes.FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$classes.FromJsonAndToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -537,15 +585,17 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<FromJsonAndToJson>($body['response']);
+        .deserialize<_$classes.FromJsonAndToJson>($body['response']);
   }
 
-  Future<NonMapToJson> nonMapToJson(NonMapToJson value) async {
+  Future<_$classes.NonMapToJson> nonMapToJson(
+      _$classes.NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NonMapToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -555,15 +605,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NonMapToJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NonMapToJson>($body['response']);
   }
 
-  Future<NonMapToJson> asyncNonMapToJson(NonMapToJson value) async {
+  Future<_$classes.NonMapToJson> asyncNonMapToJson(
+      _$classes.NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance.serialize<_$classes.NonMapToJson>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -573,17 +626,18 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NonMapToJson>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.NonMapToJson>($body['response']);
   }
 
-  Future<NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
-      NonMapToJsonWithDefaults value) async {
+  Future<_$classes.NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
+      _$classes.NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value':
-            Serializers.instance.serialize<NonMapToJsonWithDefaults>(value)
+        r'value': Serializers.instance
+            .serialize<_$classes.NonMapToJsonWithDefaults>(value)
       }),
     );
     final $body =
@@ -595,17 +649,17 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<NonMapToJsonWithDefaults>($body['response']);
+        .deserialize<_$classes.NonMapToJsonWithDefaults>($body['response']);
   }
 
-  Future<NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
-      NonMapToJsonWithDefaults value) async {
+  Future<_$classes.NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
+      _$classes.NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value':
-            Serializers.instance.serialize<NonMapToJsonWithDefaults>(value)
+        r'value': Serializers.instance
+            .serialize<_$classes.NonMapToJsonWithDefaults>(value)
       }),
     );
     final $body =
@@ -617,16 +671,17 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<NonMapToJsonWithDefaults>($body['response']);
+        .deserialize<_$classes.NonMapToJsonWithDefaults>($body['response']);
   }
 
-  Future<NonMapFromAndToJson> nonMapFromAndToJson(
-      NonMapFromAndToJson value) async {
+  Future<_$classes.NonMapFromAndToJson> nonMapFromAndToJson(
+      _$classes.NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value': Serializers.instance.serialize<NonMapFromAndToJson>(value)
+        r'value':
+            Serializers.instance.serialize<_$classes.NonMapFromAndToJson>(value)
       }),
     );
     final $body =
@@ -638,16 +693,17 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<NonMapFromAndToJson>($body['response']);
+        .deserialize<_$classes.NonMapFromAndToJson>($body['response']);
   }
 
-  Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
-      NonMapFromAndToJson value) async {
+  Future<_$classes.NonMapFromAndToJson> asyncNonMapFromAndToJson(
+      _$classes.NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'value': Serializers.instance.serialize<NonMapFromAndToJson>(value)
+        r'value':
+            Serializers.instance.serialize<_$classes.NonMapFromAndToJson>(value)
       }),
     );
     final $body =
@@ -659,15 +715,18 @@ class CelestFunctionsClasses {
       );
     }
     return Serializers.instance
-        .deserialize<NonMapFromAndToJson>($body['response']);
+        .deserialize<_$classes.NonMapFromAndToJson>($body['response']);
   }
 
-  Future<FromJsonStatic> fromJsonStatic(FromJsonStatic value) async {
+  Future<_$classes.FromJsonStatic> fromJsonStatic(
+      _$classes.FromJsonStatic value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<FromJsonStatic>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$classes.FromJsonStatic>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -677,7 +736,8 @@ class CelestFunctionsClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<FromJsonStatic>($body['response']);
+    return Serializers.instance
+        .deserialize<_$classes.FromJsonStatic>($body['response']);
   }
 }
 
@@ -729,13 +789,15 @@ class CelestFunctionsCollections {
         .toList();
   }
 
-  Future<List<SimpleClass>> complexList(List<SimpleClass> list) async {
+  Future<List<_$parameter_types.SimpleClass>> complexList(
+      List<_$parameter_types.SimpleClass> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-list'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'list': list
-            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList()
       }),
     );
@@ -748,7 +810,8 @@ class CelestFunctionsCollections {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
+        .map((el) =>
+            Serializers.instance.deserialize<_$parameter_types.SimpleClass>(el))
         .toList();
   }
 
@@ -776,8 +839,8 @@ class CelestFunctionsCollections {
         ));
   }
 
-  Future<Map<String, SimpleClass>> complexMap(
-      Map<String, SimpleClass> map) async {
+  Future<Map<String, _$parameter_types.SimpleClass>> complexMap(
+      Map<String, _$parameter_types.SimpleClass> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-map'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -788,7 +851,8 @@ class CelestFunctionsCollections {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleClass>(value),
             ))
       }),
     );
@@ -806,7 +870,8 @@ class CelestFunctionsCollections {
     ) =>
         MapEntry(
           key,
-          Serializers.instance.deserialize<SimpleClass>(value),
+          Serializers.instance
+              .deserialize<_$parameter_types.SimpleClass>(value),
         ));
   }
 }
@@ -840,7 +905,7 @@ class CelestFunctionsCycles {
     }
   }
 
-  Future<Node> createTree() async {
+  Future<_$cycles.Node> createTree() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/create-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -853,15 +918,15 @@ class CelestFunctionsCycles {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Node>($body['response']);
+    return Serializers.instance.deserialize<_$cycles.Node>($body['response']);
   }
 
-  Future<void> printTree(Node node) async {
+  Future<void> printTree(_$cycles.Node node) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/print-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'node': Serializers.instance.serialize<Node>(node)}),
+      body: _$convert.jsonEncode(
+          {r'node': Serializers.instance.serialize<_$cycles.Node>(node)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -874,21 +939,21 @@ class CelestFunctionsCycles {
     return;
   }
 
-  Future<Node> combineTrees(
-    Node tree1, [
-    Parent? tree2 = null,
-    Node? tree3 = null,
-    List<Node?> additionalChildren = const [],
+  Future<_$cycles.Node> combineTrees(
+    _$cycles.Node tree1, [
+    _$cycles.Parent? tree2 = null,
+    _$cycles.Node? tree3 = null,
+    List<_$cycles.Node?> additionalChildren = const [],
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/combine-trees'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'tree1': Serializers.instance.serialize<Node>(tree1),
-        r'tree2': Serializers.instance.serialize<Parent?>(tree2),
-        r'tree3': Serializers.instance.serialize<Node?>(tree3),
+        r'tree1': Serializers.instance.serialize<_$cycles.Node>(tree1),
+        r'tree2': Serializers.instance.serialize<_$cycles.Parent?>(tree2),
+        r'tree3': Serializers.instance.serialize<_$cycles.Node?>(tree3),
         r'additionalChildren': additionalChildren
-            .map((el) => Serializers.instance.serialize<Node?>(el))
+            .map((el) => Serializers.instance.serialize<_$cycles.Node?>(el))
             .toList(),
       }),
     );
@@ -900,19 +965,19 @@ class CelestFunctionsCycles {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Node>($body['response']);
+    return Serializers.instance.deserialize<_$cycles.Node>($body['response']);
   }
 
   /// Tests that self-referencing is allowed when there is a level
   /// of indirection, e.g. nullability, generics, or a wrapper.
-  Future<SelfReferencing> selfReferencing(
-      SelfReferencing selfReferencing) async {
+  Future<_$cycles.SelfReferencing> selfReferencing(
+      _$cycles.SelfReferencing selfReferencing) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/self-referencing'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'selfReferencing':
-            Serializers.instance.serialize<SelfReferencing>(selfReferencing)
+        r'selfReferencing': Serializers.instance
+            .serialize<_$cycles.SelfReferencing>(selfReferencing)
       }),
     );
     final $body =
@@ -923,7 +988,8 @@ class CelestFunctionsCycles {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SelfReferencing>($body['response']);
+    return Serializers.instance
+        .deserialize<_$cycles.SelfReferencing>($body['response']);
   }
 }
 
@@ -937,17 +1003,20 @@ class CelestFunctionsExceptions {
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
       case r'CustomException':
-        throw Serializers.instance.deserialize<CustomException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomException>($details);
       case r'CustomExceptionToFromJson':
         throw Serializers.instance
-            .deserialize<CustomExceptionToFromJson>($details);
+            .deserialize<_$exceptions.CustomExceptionToFromJson>($details);
       case r'CustomError':
-        throw Serializers.instance.deserialize<CustomError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomError>($details);
       case r'CustomErrorToFromJson':
-        throw Serializers.instance.deserialize<CustomErrorToFromJson>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomErrorToFromJson>($details);
       case r'CustomErrorWithStackTrace':
         throw Serializers.instance
-            .deserialize<CustomErrorWithStackTrace>($details);
+            .deserialize<_$exceptions.CustomErrorWithStackTrace>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
@@ -966,12 +1035,14 @@ class CelestFunctionsExceptions {
     }
   }
 
-  Future<void> throwsException({required SupportedExceptionType type}) async {
+  Future<void> throwsException(
+      {required _$exceptions.SupportedExceptionType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'type': Serializers.instance.serialize<SupportedExceptionType>(type)
+        r'type': Serializers.instance
+            .serialize<_$exceptions.SupportedExceptionType>(type)
       }),
     );
     final $body =
@@ -985,12 +1056,15 @@ class CelestFunctionsExceptions {
     return;
   }
 
-  Future<void> throwsError({required SupportedErrorType type}) async {
+  Future<void> throwsError(
+      {required _$exceptions.SupportedErrorType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'type': Serializers.instance.serialize<SupportedErrorType>(type)}),
+      body: _$convert.jsonEncode({
+        r'type': Serializers.instance
+            .serialize<_$exceptions.SupportedErrorType>(type)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -1114,14 +1188,14 @@ class CelestFunctionsExtensionTypes {
     }
   }
 
-  Future<StringX> string(StringX s) async {
+  Future<_$extension_types.StringX> string(_$extension_types.StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringX>(
+        r's': Serializers.instance.serialize<_$extension_types.StringX>(
           s,
-          const TypeToken<StringX>('StringX'),
+          const TypeToken<_$extension_types.StringX>('StringX'),
         )
       }),
     );
@@ -1133,20 +1207,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringX>(
+    return Serializers.instance.deserialize<_$extension_types.StringX>(
       $body['response'],
-      const TypeToken<StringX>('StringX'),
+      const TypeToken<_$extension_types.StringX>('StringX'),
     );
   }
 
-  Future<StringX> asyncOrString(StringX s) async {
+  Future<_$extension_types.StringX> asyncOrString(
+      _$extension_types.StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-or-string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringX>(
+        r's': Serializers.instance.serialize<_$extension_types.StringX>(
           s,
-          const TypeToken<StringX>('StringX'),
+          const TypeToken<_$extension_types.StringX>('StringX'),
         )
       }),
     );
@@ -1158,20 +1233,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringX>(
+    return Serializers.instance.deserialize<_$extension_types.StringX>(
       $body['response'],
-      const TypeToken<StringX>('StringX'),
+      const TypeToken<_$extension_types.StringX>('StringX'),
     );
   }
 
-  Future<StringX> asyncString(StringX s) async {
+  Future<_$extension_types.StringX> asyncString(
+      _$extension_types.StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringX>(
+        r's': Serializers.instance.serialize<_$extension_types.StringX>(
           s,
-          const TypeToken<StringX>('StringX'),
+          const TypeToken<_$extension_types.StringX>('StringX'),
         )
       }),
     );
@@ -1183,20 +1259,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringX>(
+    return Serializers.instance.deserialize<_$extension_types.StringX>(
       $body['response'],
-      const TypeToken<StringX>('StringX'),
+      const TypeToken<_$extension_types.StringX>('StringX'),
     );
   }
 
-  Future<StringXImpl> stringImpl(StringXImpl s) async {
+  Future<_$extension_types.StringXImpl> stringImpl(
+      _$extension_types.StringXImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXImpl>(
+        r's': Serializers.instance.serialize<_$extension_types.StringXImpl>(
           s,
-          const TypeToken<StringXImpl>('StringXImpl'),
+          const TypeToken<_$extension_types.StringXImpl>('StringXImpl'),
         )
       }),
     );
@@ -1208,20 +1285,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXImpl>(
+    return Serializers.instance.deserialize<_$extension_types.StringXImpl>(
       $body['response'],
-      const TypeToken<StringXImpl>('StringXImpl'),
+      const TypeToken<_$extension_types.StringXImpl>('StringXImpl'),
     );
   }
 
-  Future<StringXToFromJson> stringToFromJson(StringXToFromJson s) async {
+  Future<_$extension_types.StringXToFromJson> stringToFromJson(
+      _$extension_types.StringXToFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXToFromJson>(
+        r's':
+            Serializers.instance.serialize<_$extension_types.StringXToFromJson>(
           s,
-          const TypeToken<StringXToFromJson>('StringXToFromJson'),
+          const TypeToken<_$extension_types.StringXToFromJson>(
+              'StringXToFromJson'),
         )
       }),
     );
@@ -1233,20 +1313,22 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXToFromJson>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXToFromJson>(
       $body['response'],
-      const TypeToken<StringXToFromJson>('StringXToFromJson'),
+      const TypeToken<_$extension_types.StringXToFromJson>('StringXToFromJson'),
     );
   }
 
-  Future<StringXToJson> stringToJson(StringXToJson s) async {
+  Future<_$extension_types.StringXToJson> stringToJson(
+      _$extension_types.StringXToJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXToJson>(
+        r's': Serializers.instance.serialize<_$extension_types.StringXToJson>(
           s,
-          const TypeToken<StringXToJson>('StringXToJson'),
+          const TypeToken<_$extension_types.StringXToJson>('StringXToJson'),
         )
       }),
     );
@@ -1258,20 +1340,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXToJson>(
+    return Serializers.instance.deserialize<_$extension_types.StringXToJson>(
       $body['response'],
-      const TypeToken<StringXToJson>('StringXToJson'),
+      const TypeToken<_$extension_types.StringXToJson>('StringXToJson'),
     );
   }
 
-  Future<StringXToJsonImpl> stringToJsonImpl(StringXToJsonImpl s) async {
+  Future<_$extension_types.StringXToJsonImpl> stringToJsonImpl(
+      _$extension_types.StringXToJsonImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXToJsonImpl>(
+        r's':
+            Serializers.instance.serialize<_$extension_types.StringXToJsonImpl>(
           s,
-          const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+          const TypeToken<_$extension_types.StringXToJsonImpl>(
+              'StringXToJsonImpl'),
         )
       }),
     );
@@ -1283,20 +1368,22 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXToJsonImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXToJsonImpl>(
       $body['response'],
-      const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+      const TypeToken<_$extension_types.StringXToJsonImpl>('StringXToJsonImpl'),
     );
   }
 
-  Future<StringXFromJson> stringFromJson(StringXFromJson s) async {
+  Future<_$extension_types.StringXFromJson> stringFromJson(
+      _$extension_types.StringXFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXFromJson>(
+        r's': Serializers.instance.serialize<_$extension_types.StringXFromJson>(
           s,
-          const TypeToken<StringXFromJson>('StringXFromJson'),
+          const TypeToken<_$extension_types.StringXFromJson>('StringXFromJson'),
         )
       }),
     );
@@ -1308,20 +1395,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXFromJson>(
+    return Serializers.instance.deserialize<_$extension_types.StringXFromJson>(
       $body['response'],
-      const TypeToken<StringXFromJson>('StringXFromJson'),
+      const TypeToken<_$extension_types.StringXFromJson>('StringXFromJson'),
     );
   }
 
-  Future<StringXFromJsonImpl> stringFromJsonImpl(StringXFromJsonImpl s) async {
+  Future<_$extension_types.StringXFromJsonImpl> stringFromJsonImpl(
+      _$extension_types.StringXFromJsonImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXFromJsonImpl>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXFromJsonImpl>(
           s,
-          const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+          const TypeToken<_$extension_types.StringXFromJsonImpl>(
+              'StringXFromJsonImpl'),
         )
       }),
     );
@@ -1333,21 +1423,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXFromJsonImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXFromJsonImpl>(
       $body['response'],
-      const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+      const TypeToken<_$extension_types.StringXFromJsonImpl>(
+          'StringXFromJsonImpl'),
     );
   }
 
-  Future<StringXFromJsonStatic> stringFromJsonStatic(
-      StringXFromJsonStatic s) async {
+  Future<_$extension_types.StringXFromJsonStatic> stringFromJsonStatic(
+      _$extension_types.StringXFromJsonStatic s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXFromJsonStatic>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXFromJsonStatic>(
           s,
-          const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+          const TypeToken<_$extension_types.StringXFromJsonStatic>(
+              'StringXFromJsonStatic'),
         )
       }),
     );
@@ -1359,20 +1453,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXFromJsonStatic>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXFromJsonStatic>(
       $body['response'],
-      const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+      const TypeToken<_$extension_types.StringXFromJsonStatic>(
+          'StringXFromJsonStatic'),
     );
   }
 
-  Future<StringXPrivateField> stringPrivateField(StringXPrivateField s) async {
+  Future<_$extension_types.StringXPrivateField> stringPrivateField(
+      _$extension_types.StringXPrivateField s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXPrivateField>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXPrivateField>(
           s,
-          const TypeToken<StringXPrivateField>('StringXPrivateField'),
+          const TypeToken<_$extension_types.StringXPrivateField>(
+              'StringXPrivateField'),
         )
       }),
     );
@@ -1384,21 +1483,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXPrivateField>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXPrivateField>(
       $body['response'],
-      const TypeToken<StringXPrivateField>('StringXPrivateField'),
+      const TypeToken<_$extension_types.StringXPrivateField>(
+          'StringXPrivateField'),
     );
   }
 
-  Future<StringXPrivateFieldImpl> stringPrivateFieldImpl(
-      StringXPrivateFieldImpl s) async {
+  Future<_$extension_types.StringXPrivateFieldImpl> stringPrivateFieldImpl(
+      _$extension_types.StringXPrivateFieldImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXPrivateFieldImpl>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXPrivateFieldImpl>(
           s,
-          const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+          const TypeToken<_$extension_types.StringXPrivateFieldImpl>(
+              'StringXPrivateFieldImpl'),
         )
       }),
     );
@@ -1410,20 +1513,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXPrivateFieldImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXPrivateFieldImpl>(
       $body['response'],
-      const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+      const TypeToken<_$extension_types.StringXPrivateFieldImpl>(
+          'StringXPrivateFieldImpl'),
     );
   }
 
-  Future<StringXPrivateCtor> stringPrivateCtor(StringXPrivateCtor s) async {
+  Future<_$extension_types.StringXPrivateCtor> stringPrivateCtor(
+      _$extension_types.StringXPrivateCtor s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXPrivateCtor>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXPrivateCtor>(
           s,
-          const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+          const TypeToken<_$extension_types.StringXPrivateCtor>(
+              'StringXPrivateCtor'),
         )
       }),
     );
@@ -1435,21 +1543,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXPrivateCtor>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXPrivateCtor>(
       $body['response'],
-      const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+      const TypeToken<_$extension_types.StringXPrivateCtor>(
+          'StringXPrivateCtor'),
     );
   }
 
-  Future<StringXPrivateCtorImpl> stringPrivateCtorImpl(
-      StringXPrivateCtorImpl s) async {
+  Future<_$extension_types.StringXPrivateCtorImpl> stringPrivateCtorImpl(
+      _$extension_types.StringXPrivateCtorImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r's': Serializers.instance.serialize<StringXPrivateCtorImpl>(
+        r's': Serializers.instance
+            .serialize<_$extension_types.StringXPrivateCtorImpl>(
           s,
-          const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+          const TypeToken<_$extension_types.StringXPrivateCtorImpl>(
+              'StringXPrivateCtorImpl'),
         )
       }),
     );
@@ -1461,18 +1573,20 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<StringXPrivateCtorImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.StringXPrivateCtorImpl>(
       $body['response'],
-      const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+      const TypeToken<_$extension_types.StringXPrivateCtorImpl>(
+          'StringXPrivateCtorImpl'),
     );
   }
 
-  Future<Value> value(Value v) async {
+  Future<_$extension_types.Value> value(_$extension_types.Value v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'v': Serializers.instance.serialize<Value>(v)}),
+      body: _$convert.jsonEncode(
+          {r'v': Serializers.instance.serialize<_$extension_types.Value>(v)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -1482,17 +1596,18 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Value>($body['response']);
+    return Serializers.instance
+        .deserialize<_$extension_types.Value>($body['response']);
   }
 
-  Future<ValueX> valuex(ValueX v) async {
+  Future<_$extension_types.ValueX> valuex(_$extension_types.ValueX v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/valuex'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueX>(
+        r'v': Serializers.instance.serialize<_$extension_types.ValueX>(
           v,
-          const TypeToken<ValueX>('ValueX'),
+          const TypeToken<_$extension_types.ValueX>('ValueX'),
         )
       }),
     );
@@ -1504,20 +1619,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueX>(
+    return Serializers.instance.deserialize<_$extension_types.ValueX>(
       $body['response'],
-      const TypeToken<ValueX>('ValueX'),
+      const TypeToken<_$extension_types.ValueX>('ValueX'),
     );
   }
 
-  Future<ValueXImpl> valueXImpl(ValueXImpl v) async {
+  Future<_$extension_types.ValueXImpl> valueXImpl(
+      _$extension_types.ValueXImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXImpl>(
+        r'v': Serializers.instance.serialize<_$extension_types.ValueXImpl>(
           v,
-          const TypeToken<ValueXImpl>('ValueXImpl'),
+          const TypeToken<_$extension_types.ValueXImpl>('ValueXImpl'),
         )
       }),
     );
@@ -1529,20 +1645,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXImpl>(
+    return Serializers.instance.deserialize<_$extension_types.ValueXImpl>(
       $body['response'],
-      const TypeToken<ValueXImpl>('ValueXImpl'),
+      const TypeToken<_$extension_types.ValueXImpl>('ValueXImpl'),
     );
   }
 
-  Future<ValueXToFromJson> valueXToFromJson(ValueXToFromJson v) async {
+  Future<_$extension_types.ValueXToFromJson> valueXToFromJson(
+      _$extension_types.ValueXToFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXToFromJson>(
+        r'v':
+            Serializers.instance.serialize<_$extension_types.ValueXToFromJson>(
           v,
-          const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+          const TypeToken<_$extension_types.ValueXToFromJson>(
+              'ValueXToFromJson'),
         )
       }),
     );
@@ -1554,20 +1673,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXToFromJson>(
+    return Serializers.instance.deserialize<_$extension_types.ValueXToFromJson>(
       $body['response'],
-      const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+      const TypeToken<_$extension_types.ValueXToFromJson>('ValueXToFromJson'),
     );
   }
 
-  Future<ValueXToJson> valueXToJson(ValueXToJson v) async {
+  Future<_$extension_types.ValueXToJson> valueXToJson(
+      _$extension_types.ValueXToJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXToJson>(
+        r'v': Serializers.instance.serialize<_$extension_types.ValueXToJson>(
           v,
-          const TypeToken<ValueXToJson>('ValueXToJson'),
+          const TypeToken<_$extension_types.ValueXToJson>('ValueXToJson'),
         )
       }),
     );
@@ -1579,20 +1699,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXToJson>(
+    return Serializers.instance.deserialize<_$extension_types.ValueXToJson>(
       $body['response'],
-      const TypeToken<ValueXToJson>('ValueXToJson'),
+      const TypeToken<_$extension_types.ValueXToJson>('ValueXToJson'),
     );
   }
 
-  Future<ValueXToJsonImpl> valueXToJsonImpl(ValueXToJsonImpl v) async {
+  Future<_$extension_types.ValueXToJsonImpl> valueXToJsonImpl(
+      _$extension_types.ValueXToJsonImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXToJsonImpl>(
+        r'v':
+            Serializers.instance.serialize<_$extension_types.ValueXToJsonImpl>(
           v,
-          const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+          const TypeToken<_$extension_types.ValueXToJsonImpl>(
+              'ValueXToJsonImpl'),
         )
       }),
     );
@@ -1604,20 +1727,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXToJsonImpl>(
+    return Serializers.instance.deserialize<_$extension_types.ValueXToJsonImpl>(
       $body['response'],
-      const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+      const TypeToken<_$extension_types.ValueXToJsonImpl>('ValueXToJsonImpl'),
     );
   }
 
-  Future<ValueXFromJson> valueXFromJson(ValueXFromJson v) async {
+  Future<_$extension_types.ValueXFromJson> valueXFromJson(
+      _$extension_types.ValueXFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXFromJson>(
+        r'v': Serializers.instance.serialize<_$extension_types.ValueXFromJson>(
           v,
-          const TypeToken<ValueXFromJson>('ValueXFromJson'),
+          const TypeToken<_$extension_types.ValueXFromJson>('ValueXFromJson'),
         )
       }),
     );
@@ -1629,20 +1753,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXFromJson>(
+    return Serializers.instance.deserialize<_$extension_types.ValueXFromJson>(
       $body['response'],
-      const TypeToken<ValueXFromJson>('ValueXFromJson'),
+      const TypeToken<_$extension_types.ValueXFromJson>('ValueXFromJson'),
     );
   }
 
-  Future<ValueXFromJsonImpl> valueXFromJsonImpl(ValueXFromJsonImpl v) async {
+  Future<_$extension_types.ValueXFromJsonImpl> valueXFromJsonImpl(
+      _$extension_types.ValueXFromJsonImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXFromJsonImpl>(
+        r'v': Serializers.instance
+            .serialize<_$extension_types.ValueXFromJsonImpl>(
           v,
-          const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+          const TypeToken<_$extension_types.ValueXFromJsonImpl>(
+              'ValueXFromJsonImpl'),
         )
       }),
     );
@@ -1654,21 +1781,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXFromJsonImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ValueXFromJsonImpl>(
       $body['response'],
-      const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+      const TypeToken<_$extension_types.ValueXFromJsonImpl>(
+          'ValueXFromJsonImpl'),
     );
   }
 
-  Future<ValueXFromJsonStatic> valueXFromJsonStatic(
-      ValueXFromJsonStatic v) async {
+  Future<_$extension_types.ValueXFromJsonStatic> valueXFromJsonStatic(
+      _$extension_types.ValueXFromJsonStatic v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXFromJsonStatic>(
+        r'v': Serializers.instance
+            .serialize<_$extension_types.ValueXFromJsonStatic>(
           v,
-          const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+          const TypeToken<_$extension_types.ValueXFromJsonStatic>(
+              'ValueXFromJsonStatic'),
         )
       }),
     );
@@ -1680,23 +1811,27 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXFromJsonStatic>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ValueXFromJsonStatic>(
       $body['response'],
-      const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+      const TypeToken<_$extension_types.ValueXFromJsonStatic>(
+          'ValueXFromJsonStatic'),
     );
   }
 
   /// Tests that extension types can implement other extension types to achieve
   /// the same results as above.
-  Future<ValueXToFromJsonCombined> valueXToFromJsonCombined(
-      ValueXToFromJsonCombined v) async {
+  Future<_$extension_types.ValueXToFromJsonCombined> valueXToFromJsonCombined(
+      _$extension_types.ValueXToFromJsonCombined v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json-combined'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXToFromJsonCombined>(
+        r'v': Serializers.instance
+            .serialize<_$extension_types.ValueXToFromJsonCombined>(
           v,
-          const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+          const TypeToken<_$extension_types.ValueXToFromJsonCombined>(
+              'ValueXToFromJsonCombined'),
         )
       }),
     );
@@ -1708,20 +1843,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXToFromJsonCombined>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ValueXToFromJsonCombined>(
       $body['response'],
-      const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+      const TypeToken<_$extension_types.ValueXToFromJsonCombined>(
+          'ValueXToFromJsonCombined'),
     );
   }
 
-  Future<ValueXImplIndirect> valueXImplIndirect(ValueXImplIndirect v) async {
+  Future<_$extension_types.ValueXImplIndirect> valueXImplIndirect(
+      _$extension_types.ValueXImplIndirect v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl-indirect'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'v': Serializers.instance.serialize<ValueXImplIndirect>(
+        r'v': Serializers.instance
+            .serialize<_$extension_types.ValueXImplIndirect>(
           v,
-          const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+          const TypeToken<_$extension_types.ValueXImplIndirect>(
+              'ValueXImplIndirect'),
         )
       }),
     );
@@ -1733,18 +1873,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ValueXImplIndirect>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ValueXImplIndirect>(
       $body['response'],
-      const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+      const TypeToken<_$extension_types.ValueXImplIndirect>(
+          'ValueXImplIndirect'),
     );
   }
 
-  Future<Color> color(Color color) async {
+  Future<_$extension_types.Color> color(_$extension_types.Color color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'color': Serializers.instance.serialize<Color>(color)}),
+      body: _$convert.jsonEncode({
+        r'color': Serializers.instance.serialize<_$extension_types.Color>(color)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -1754,17 +1897,19 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Color>($body['response']);
+    return Serializers.instance
+        .deserialize<_$extension_types.Color>($body['response']);
   }
 
-  Future<ColorX> colorx(ColorX color) async {
+  Future<_$extension_types.ColorX> colorx(
+      _$extension_types.ColorX color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/colorx'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorX>(
+        r'color': Serializers.instance.serialize<_$extension_types.ColorX>(
           color,
-          const TypeToken<ColorX>('ColorX'),
+          const TypeToken<_$extension_types.ColorX>('ColorX'),
         )
       }),
     );
@@ -1776,20 +1921,21 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorX>(
+    return Serializers.instance.deserialize<_$extension_types.ColorX>(
       $body['response'],
-      const TypeToken<ColorX>('ColorX'),
+      const TypeToken<_$extension_types.ColorX>('ColorX'),
     );
   }
 
-  Future<ColorXImpl> colorXImpl(ColorXImpl color) async {
+  Future<_$extension_types.ColorXImpl> colorXImpl(
+      _$extension_types.ColorXImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXImpl>(
+        r'color': Serializers.instance.serialize<_$extension_types.ColorXImpl>(
           color,
-          const TypeToken<ColorXImpl>('ColorXImpl'),
+          const TypeToken<_$extension_types.ColorXImpl>('ColorXImpl'),
         )
       }),
     );
@@ -1801,20 +1947,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXImpl>(
+    return Serializers.instance.deserialize<_$extension_types.ColorXImpl>(
       $body['response'],
-      const TypeToken<ColorXImpl>('ColorXImpl'),
+      const TypeToken<_$extension_types.ColorXImpl>('ColorXImpl'),
     );
   }
 
-  Future<ColorXToFromJson> colorXToFromJson(ColorXToFromJson color) async {
+  Future<_$extension_types.ColorXToFromJson> colorXToFromJson(
+      _$extension_types.ColorXToFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXToFromJson>(
+        r'color':
+            Serializers.instance.serialize<_$extension_types.ColorXToFromJson>(
           color,
-          const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+          const TypeToken<_$extension_types.ColorXToFromJson>(
+              'ColorXToFromJson'),
         )
       }),
     );
@@ -1826,20 +1975,22 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXToFromJson>(
+    return Serializers.instance.deserialize<_$extension_types.ColorXToFromJson>(
       $body['response'],
-      const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+      const TypeToken<_$extension_types.ColorXToFromJson>('ColorXToFromJson'),
     );
   }
 
-  Future<ColorXToJson> colorXToJson(ColorXToJson color) async {
+  Future<_$extension_types.ColorXToJson> colorXToJson(
+      _$extension_types.ColorXToJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXToJson>(
+        r'color':
+            Serializers.instance.serialize<_$extension_types.ColorXToJson>(
           color,
-          const TypeToken<ColorXToJson>('ColorXToJson'),
+          const TypeToken<_$extension_types.ColorXToJson>('ColorXToJson'),
         )
       }),
     );
@@ -1851,20 +2002,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXToJson>(
+    return Serializers.instance.deserialize<_$extension_types.ColorXToJson>(
       $body['response'],
-      const TypeToken<ColorXToJson>('ColorXToJson'),
+      const TypeToken<_$extension_types.ColorXToJson>('ColorXToJson'),
     );
   }
 
-  Future<ColorXToJsonImpl> colorXToJsonImpl(ColorXToJsonImpl color) async {
+  Future<_$extension_types.ColorXToJsonImpl> colorXToJsonImpl(
+      _$extension_types.ColorXToJsonImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXToJsonImpl>(
+        r'color':
+            Serializers.instance.serialize<_$extension_types.ColorXToJsonImpl>(
           color,
-          const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+          const TypeToken<_$extension_types.ColorXToJsonImpl>(
+              'ColorXToJsonImpl'),
         )
       }),
     );
@@ -1876,20 +2030,22 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXToJsonImpl>(
+    return Serializers.instance.deserialize<_$extension_types.ColorXToJsonImpl>(
       $body['response'],
-      const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+      const TypeToken<_$extension_types.ColorXToJsonImpl>('ColorXToJsonImpl'),
     );
   }
 
-  Future<ColorXFromJson> colorXFromJson(ColorXFromJson color) async {
+  Future<_$extension_types.ColorXFromJson> colorXFromJson(
+      _$extension_types.ColorXFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXFromJson>(
+        r'color':
+            Serializers.instance.serialize<_$extension_types.ColorXFromJson>(
           color,
-          const TypeToken<ColorXFromJson>('ColorXFromJson'),
+          const TypeToken<_$extension_types.ColorXFromJson>('ColorXFromJson'),
         )
       }),
     );
@@ -1901,21 +2057,23 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXFromJson>(
+    return Serializers.instance.deserialize<_$extension_types.ColorXFromJson>(
       $body['response'],
-      const TypeToken<ColorXFromJson>('ColorXFromJson'),
+      const TypeToken<_$extension_types.ColorXFromJson>('ColorXFromJson'),
     );
   }
 
-  Future<ColorXFromJsonImpl> colorXFromJsonImpl(
-      ColorXFromJsonImpl color) async {
+  Future<_$extension_types.ColorXFromJsonImpl> colorXFromJsonImpl(
+      _$extension_types.ColorXFromJsonImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXFromJsonImpl>(
+        r'color': Serializers.instance
+            .serialize<_$extension_types.ColorXFromJsonImpl>(
           color,
-          const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+          const TypeToken<_$extension_types.ColorXFromJsonImpl>(
+              'ColorXFromJsonImpl'),
         )
       }),
     );
@@ -1927,21 +2085,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXFromJsonImpl>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ColorXFromJsonImpl>(
       $body['response'],
-      const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+      const TypeToken<_$extension_types.ColorXFromJsonImpl>(
+          'ColorXFromJsonImpl'),
     );
   }
 
-  Future<ColorXFromJsonStatic> colorXFromJsonStatic(
-      ColorXFromJsonStatic color) async {
+  Future<_$extension_types.ColorXFromJsonStatic> colorXFromJsonStatic(
+      _$extension_types.ColorXFromJsonStatic color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXFromJsonStatic>(
+        r'color': Serializers.instance
+            .serialize<_$extension_types.ColorXFromJsonStatic>(
           color,
-          const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+          const TypeToken<_$extension_types.ColorXFromJsonStatic>(
+              'ColorXFromJsonStatic'),
         )
       }),
     );
@@ -1953,21 +2115,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXFromJsonStatic>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ColorXFromJsonStatic>(
       $body['response'],
-      const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+      const TypeToken<_$extension_types.ColorXFromJsonStatic>(
+          'ColorXFromJsonStatic'),
     );
   }
 
-  Future<ColorXToFromJsonCombined> colorXToFromJsonCombined(
-      ColorXToFromJsonCombined color) async {
+  Future<_$extension_types.ColorXToFromJsonCombined> colorXToFromJsonCombined(
+      _$extension_types.ColorXToFromJsonCombined color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json-combined'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXToFromJsonCombined>(
+        r'color': Serializers.instance
+            .serialize<_$extension_types.ColorXToFromJsonCombined>(
           color,
-          const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+          const TypeToken<_$extension_types.ColorXToFromJsonCombined>(
+              'ColorXToFromJsonCombined'),
         )
       }),
     );
@@ -1979,21 +2145,25 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXToFromJsonCombined>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ColorXToFromJsonCombined>(
       $body['response'],
-      const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+      const TypeToken<_$extension_types.ColorXToFromJsonCombined>(
+          'ColorXToFromJsonCombined'),
     );
   }
 
-  Future<ColorXImplIndirect> colorXImplIndirect(
-      ColorXImplIndirect color) async {
+  Future<_$extension_types.ColorXImplIndirect> colorXImplIndirect(
+      _$extension_types.ColorXImplIndirect color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl-indirect'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'color': Serializers.instance.serialize<ColorXImplIndirect>(
+        r'color': Serializers.instance
+            .serialize<_$extension_types.ColorXImplIndirect>(
           color,
-          const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+          const TypeToken<_$extension_types.ColorXImplIndirect>(
+              'ColorXImplIndirect'),
         )
       }),
     );
@@ -2005,9 +2175,11 @@ class CelestFunctionsExtensionTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ColorXImplIndirect>(
+    return Serializers.instance
+        .deserialize<_$extension_types.ColorXImplIndirect>(
       $body['response'],
-      const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+      const TypeToken<_$extension_types.ColorXImplIndirect>(
+          'ColorXImplIndirect'),
     );
   }
 
@@ -2243,12 +2415,15 @@ class CelestFunctionsGenericWrappers {
     }
   }
 
-  Future<GenericWrappers> genericWrappers(GenericWrappers value) async {
+  Future<_$generic_wrappers.GenericWrappers> genericWrappers(
+      _$generic_wrappers.GenericWrappers value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance
+            .serialize<_$generic_wrappers.GenericWrappers>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -2258,15 +2433,19 @@ class CelestFunctionsGenericWrappers {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
+    return Serializers.instance
+        .deserialize<_$generic_wrappers.GenericWrappers>($body['response']);
   }
 
-  Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async {
+  Future<_$generic_wrappers.GenericWrappers> genericWrappersAsync(
+      _$generic_wrappers.GenericWrappers value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers-async'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
+      body: _$convert.jsonEncode({
+        r'value': Serializers.instance
+            .serialize<_$generic_wrappers.GenericWrappers>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -2276,26 +2455,30 @@ class CelestFunctionsGenericWrappers {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
+    return Serializers.instance
+        .deserialize<_$generic_wrappers.GenericWrappers>($body['response']);
   }
 
-  Future<GenericWrappers> genericWrapperParameters({
+  Future<_$generic_wrappers.GenericWrappers> genericWrapperParameters({
     required _$ilist.IList<String> listOfString,
     required _$ilist.IList<Uri> listOfUri,
-    required _$ilist.IList<SimpleClass> listOfSimpleClass,
+    required _$ilist.IList<_$parameter_types.SimpleClass> listOfSimpleClass,
     required _$ilist.IList<_$ilist.IList<String>> listOfListOfString,
     required _$ilist.IList<_$ilist.IList<Uri>> listOfListOfUri,
-    required _$ilist.IList<_$ilist.IList<SimpleClass>> listOfListOfSimpleClass,
+    required _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>
+        listOfListOfSimpleClass,
     required _$imap.IMap<String, String> mapOfString,
     required _$imap.IMap<String, Uri> mapOfUri,
-    required _$imap.IMap<String, SimpleClass> mapOfSimpleClass,
+    required _$imap.IMap<String, _$parameter_types.SimpleClass>
+        mapOfSimpleClass,
     required _$imap.IMap<String, _$ilist.IList<String>> mapOfListOfString,
     required _$imap.IMap<String, _$ilist.IList<Uri>> mapOfListOfUri,
-    required _$imap.IMap<String, _$ilist.IList<SimpleClass>>
+    required _$imap.IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>
         mapOfListOfSimpleClass,
     required _$imap.IMap<String, _$imap.IMap<String, String>> mapOfMapOfString,
     required _$imap.IMap<String, _$imap.IMap<String, Uri>> mapOfMapOfUri,
-    required _$imap.IMap<String, _$imap.IMap<String, SimpleClass>>
+    required _$imap
+        .IMap<String, _$imap.IMap<String, _$parameter_types.SimpleClass>>
         mapOfMapOfSimpleClass,
   }) async {
     final $response = await celest.httpClient.post(
@@ -2307,38 +2490,42 @@ class CelestFunctionsGenericWrappers {
         r'listOfUri':
             Serializers.instance.serialize<_$ilist.IList<Uri>>(listOfUri),
         r'listOfSimpleClass': Serializers.instance
-            .serialize<_$ilist.IList<SimpleClass>>(listOfSimpleClass),
+            .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(
+                listOfSimpleClass),
         r'listOfListOfString': Serializers.instance
             .serialize<_$ilist.IList<_$ilist.IList<String>>>(
                 listOfListOfString),
         r'listOfListOfUri': Serializers.instance
             .serialize<_$ilist.IList<_$ilist.IList<Uri>>>(listOfListOfUri),
-        r'listOfListOfSimpleClass': Serializers.instance
-            .serialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
-                listOfListOfSimpleClass),
+        r'listOfListOfSimpleClass': Serializers.instance.serialize<
+                _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>>(
+            listOfListOfSimpleClass),
         r'mapOfString': Serializers.instance
             .serialize<_$imap.IMap<String, String>>(mapOfString),
         r'mapOfUri':
             Serializers.instance.serialize<_$imap.IMap<String, Uri>>(mapOfUri),
         r'mapOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, SimpleClass>>(mapOfSimpleClass),
+            .serialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
+                mapOfSimpleClass),
         r'mapOfListOfString': Serializers.instance
             .serialize<_$imap.IMap<String, _$ilist.IList<String>>>(
                 mapOfListOfString),
         r'mapOfListOfUri': Serializers.instance
             .serialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(mapOfListOfUri),
-        r'mapOfListOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
-                mapOfListOfSimpleClass),
+        r'mapOfListOfSimpleClass': Serializers.instance.serialize<
+                _$imap
+                .IMap<String, _$ilist.IList<_$parameter_types.SimpleClass>>>(
+            mapOfListOfSimpleClass),
         r'mapOfMapOfString': Serializers.instance
             .serialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
                 mapOfMapOfString),
         r'mapOfMapOfUri': Serializers.instance
             .serialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
                 mapOfMapOfUri),
-        r'mapOfMapOfSimpleClass': Serializers.instance
-            .serialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
-                mapOfMapOfSimpleClass),
+        r'mapOfMapOfSimpleClass': Serializers.instance.serialize<
+                _$imap.IMap<String,
+                    _$imap.IMap<String, _$parameter_types.SimpleClass>>>(
+            mapOfMapOfSimpleClass),
       }),
     );
     final $body =
@@ -2349,7 +2536,8 @@ class CelestFunctionsGenericWrappers {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
+    return Serializers.instance
+        .deserialize<_$generic_wrappers.GenericWrappers>($body['response']);
   }
 }
 
@@ -2561,9 +2749,10 @@ class CelestFunctionsMetadata {
     bool boolValue = true,
     List<String> list = const ['list'],
     Map<String, String> map = const {'map': 'map'},
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
@@ -2580,10 +2769,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
       }),
@@ -2606,9 +2797,10 @@ class CelestFunctionsMetadata {
     bool? boolValue = true,
     List<String>? list = const ['list'],
     Map<String, String>? map = const {'map': 'map'},
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
@@ -2625,10 +2817,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
@@ -2651,9 +2845,10 @@ class CelestFunctionsMetadata {
     bool boolValue = true,
     List<String> list = const ['list'],
     Map<String, String> map = const {'map': 'map'},
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
@@ -2670,10 +2865,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
       }),
@@ -2696,9 +2893,10 @@ class CelestFunctionsMetadata {
     bool? boolValue = true,
     List<String>? list = const ['list'],
     Map<String, String>? map = const {'map': 'map'},
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
@@ -2715,10 +2913,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
@@ -2741,14 +2941,15 @@ class CelestFunctionsMetadata {
     String stringValue = 'default',
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-value-vars'),
@@ -2760,12 +2961,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
       }),
     );
     final $body =
@@ -2786,14 +2989,15 @@ class CelestFunctionsMetadata {
     String? stringValue = 'default',
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -2806,12 +3010,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
       }),
     );
     final $body =
@@ -2832,14 +3038,15 @@ class CelestFunctionsMetadata {
     String stringValue = 'default',
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-value-vars'),
@@ -2851,12 +3058,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
       }),
     );
     final $body =
@@ -2877,14 +3086,15 @@ class CelestFunctionsMetadata {
     String? stringValue = 'default',
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-named-default-value-vars'),
@@ -2896,12 +3106,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
       }),
     );
     final $body =
@@ -2922,14 +3134,15 @@ class CelestFunctionsMetadata {
     String stringValue = 'default',
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-value-vars-private'),
@@ -2941,12 +3154,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
       }),
     );
     final $body =
@@ -2967,14 +3182,15 @@ class CelestFunctionsMetadata {
     String? stringValue = 'default',
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -2987,12 +3203,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
       }),
     );
     final $body =
@@ -3013,14 +3231,15 @@ class CelestFunctionsMetadata {
     String stringValue = 'default',
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
-    LiteralEnum enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
-    Serializable serializable = const Serializable.forType('String'),
+    _$metadata.Exportable exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable serializable =
+        const _$metadata.Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-value-vars-private'),
@@ -3032,12 +3251,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable>(serializable),
       }),
     );
     final $body =
@@ -3058,14 +3279,15 @@ class CelestFunctionsMetadata {
     String? stringValue = 'default',
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
-    LiteralEnum? enumValue = LiteralEnum.a,
+    _$metadata.LiteralEnum? enumValue = _$metadata.LiteralEnum.a,
     ({
       String a,
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
-    Serializable? serializable = const Serializable.forType('String'),
+    _$metadata.Exportable? exportable = const _$metadata.Exportable(),
+    _$metadata.Serializable? serializable =
+        const _$metadata.Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -3078,12 +3300,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': Serializers.instance.serialize<LiteralEnum?>(enumValue),
+        r'enumValue':
+            Serializers.instance.serialize<_$metadata.LiteralEnum?>(enumValue),
         r'recordValue': Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': Serializers.instance.serialize<Exportable?>(exportable),
-        r'serializable':
-            Serializers.instance.serialize<Serializable?>(serializable),
+        r'exportable':
+            Serializers.instance.serialize<_$metadata.Exportable?>(exportable),
+        r'serializable': Serializers.instance
+            .serialize<_$metadata.Serializable?>(serializable),
       }),
     );
     final $body =
@@ -3130,7 +3354,7 @@ class CelestFunctionsParameterTypes {
     int anInt,
     double aDouble,
     bool aBool,
-    MyEnum anEnum,
+    _$parameter_types.MyEnum anEnum,
     Null aNull,
     BigInt aBigInt,
     DateTime aDateTime,
@@ -3146,7 +3370,7 @@ class CelestFunctionsParameterTypes {
     List<int> aListOfInt,
     List<double> aListOfDouble,
     List<bool> aListOfBool,
-    List<MyEnum> aListOfEnum,
+    List<_$parameter_types.MyEnum> aListOfEnum,
     List<Null> aListOfNull,
     List<BigInt> aListOfBigInt,
     List<DateTime> aListOfDateTime,
@@ -3160,7 +3384,7 @@ class CelestFunctionsParameterTypes {
     Map<String, int> aMapOfInt,
     Map<String, double> aMapOfDouble,
     Map<String, bool> aMapOfBool,
-    Map<String, MyEnum> aMapOfEnum,
+    Map<String, _$parameter_types.MyEnum> aMapOfEnum,
     Map<String, Null> aMapOfNull,
     Map<String, BigInt> aMapOfBigInt,
     Map<String, DateTime> aMapOfDateTime,
@@ -3179,7 +3403,8 @@ class CelestFunctionsParameterTypes {
         r'anInt': anInt,
         r'aDouble': aDouble,
         r'aBool': aBool,
-        r'anEnum': Serializers.instance.serialize<MyEnum>(anEnum),
+        r'anEnum':
+            Serializers.instance.serialize<_$parameter_types.MyEnum>(anEnum),
         r'aNull': aNull,
         r'aBigInt': Serializers.instance.serialize<BigInt>(aBigInt),
         r'aDateTime': Serializers.instance.serialize<DateTime>(aDateTime),
@@ -3200,7 +3425,8 @@ class CelestFunctionsParameterTypes {
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
         r'aListOfEnum': aListOfEnum
-            .map((el) => Serializers.instance.serialize<MyEnum>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$parameter_types.MyEnum>(el))
             .toList(),
         r'aListOfNull': aListOfNull,
         r'aListOfBigInt': aListOfBigInt
@@ -3238,7 +3464,7 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<MyEnum>(value),
+              Serializers.instance.serialize<_$parameter_types.MyEnum>(value),
             )),
         r'aMapOfNull': aMapOfNull,
         r'aMapOfBigInt': aMapOfBigInt.map((
@@ -3323,7 +3549,7 @@ class CelestFunctionsParameterTypes {
     int? anInt,
     double? aDouble,
     bool? aBool,
-    MyEnum? anEnum,
+    _$parameter_types.MyEnum? anEnum,
     Null aNull,
     BigInt? aBigInt,
     DateTime? aDateTime,
@@ -3339,7 +3565,7 @@ class CelestFunctionsParameterTypes {
     List<int>? aListOfInt,
     List<double>? aListOfDouble,
     List<bool>? aListOfBool,
-    List<MyEnum>? aListOfEnum,
+    List<_$parameter_types.MyEnum>? aListOfEnum,
     List<Null>? aListOfNull,
     List<BigInt>? aListOfBigInt,
     List<DateTime>? aListOfDateTime,
@@ -3353,7 +3579,7 @@ class CelestFunctionsParameterTypes {
     Map<String, int>? aMapOfInt,
     Map<String, double>? aMapOfDouble,
     Map<String, bool>? aMapOfBool,
-    Map<String, MyEnum>? aMapOfEnum,
+    Map<String, _$parameter_types.MyEnum>? aMapOfEnum,
     Map<String, Null>? aMapOfNull,
     Map<String, BigInt>? aMapOfBigInt,
     Map<String, DateTime>? aMapOfDateTime,
@@ -3372,7 +3598,8 @@ class CelestFunctionsParameterTypes {
         r'anInt': anInt,
         r'aDouble': aDouble,
         r'aBool': aBool,
-        r'anEnum': Serializers.instance.serialize<MyEnum?>(anEnum),
+        r'anEnum':
+            Serializers.instance.serialize<_$parameter_types.MyEnum?>(anEnum),
         r'aNull': aNull,
         r'aBigInt': Serializers.instance.serialize<BigInt?>(aBigInt),
         r'aDateTime': Serializers.instance.serialize<DateTime?>(aDateTime),
@@ -3394,7 +3621,8 @@ class CelestFunctionsParameterTypes {
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
         r'aListOfEnum': aListOfEnum
-            ?.map((el) => Serializers.instance.serialize<MyEnum>(el))
+            ?.map((el) =>
+                Serializers.instance.serialize<_$parameter_types.MyEnum>(el))
             .toList(),
         r'aListOfNull': aListOfNull,
         r'aListOfBigInt': aListOfBigInt
@@ -3432,7 +3660,7 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<MyEnum>(value),
+              Serializers.instance.serialize<_$parameter_types.MyEnum>(value),
             )),
         r'aMapOfNull': aMapOfNull,
         r'aMapOfBigInt': aMapOfBigInt?.map((
@@ -3513,146 +3741,176 @@ class CelestFunctionsParameterTypes {
   }
 
   Future<void> complex(
-    SimpleStruct aSimpleStruct,
-    ComplexStruct aComplexStruct,
-    SimpleClass aSimpleClass,
-    ComplexClass aComplexClass,
-    SimpleStruct? aNullableSimpleStruct,
-    ComplexStruct? aNullableComplexStruct,
-    SimpleClass? aNullableSimpleClass,
-    ComplexClass? aNullableComplexClass,
-    Iterable<SimpleStruct> anIterableOfSimpleStruct,
-    Iterable<ComplexStruct> anIterableOfComplexStruct,
-    Iterable<SimpleClass> anIterableOfSimpleClass,
-    Iterable<ComplexClass> anIterableOfComplexClass,
-    Iterable<SimpleStruct>? aNullableIterableOfSimpleStruct,
-    Iterable<ComplexStruct>? aNullableIterableOfComplexStruct,
-    Iterable<SimpleClass>? aNullableIterableOfSimpleClass,
-    Iterable<ComplexClass>? aNullableIterableOfComplexClass,
-    Iterable<SimpleStruct?> anIterableOfNullableSimpleStruct,
-    Iterable<ComplexStruct?> anIterableOfNullableComplexStruct,
-    Iterable<SimpleClass?> anIterableOfNullableSimpleClass,
-    Iterable<ComplexClass?> anIterableOfNullableComplexClass,
-    List<SimpleStruct> aListOfSimpleStruct,
-    List<ComplexStruct> aListOfComplexStruct,
-    List<SimpleClass> aListOfSimpleClass,
-    List<ComplexClass> aListOfComplexClass,
-    List<SimpleStruct>? aNullableListOfSimpleStruct,
-    List<ComplexStruct>? aNullableListOfComplexStruct,
-    List<SimpleClass>? aNullableListOfSimpleClass,
-    List<ComplexClass>? aNullableListOfComplexClass,
-    List<SimpleStruct?> aListOfNullableSimpleStruct,
-    List<ComplexStruct?> aListOfNullableComplexStruct,
-    List<SimpleClass?> aListOfNullableSimpleClass,
-    List<ComplexClass?> aListOfNullableComplexClass,
-    Map<String, SimpleStruct> aMapOfSimpleStruct,
-    Map<String, ComplexStruct> aMapOfComplexStruct,
-    Map<String, SimpleClass> aMapOfSimpleClass,
-    Map<String, ComplexClass> aMapOfComplexClass,
-    Map<String, SimpleStruct>? aNullableMapOfSimpleStruct,
-    Map<String, ComplexStruct>? aNullableMapOfComplexStruct,
-    Map<String, SimpleClass>? aNullableMapOfSimpleClass,
-    Map<String, ComplexClass>? aNullableMapOfComplexClass,
-    Map<String, SimpleStruct?> aMapOfNullableSimpleStruct,
-    Map<String, ComplexStruct?> aMapOfNullableComplexStruct,
-    Map<String, SimpleClass?> aMapOfNullableSimpleClass,
-    Map<String, ComplexClass?> aMapOfNullableComplexClass,
-    Map<String, SimpleStruct?>? aNullableMapOfNullableSimpleStruct,
-    Map<String, ComplexStruct?>? aNullableMapOfNullableComplexStruct,
-    Map<String, SimpleClass?>? aNullableMapOfNullableSimpleClass,
-    Map<String, ComplexClass?>? aNullableMapOfNullableComplexClass,
+    _$parameter_types.SimpleStruct aSimpleStruct,
+    _$parameter_types.ComplexStruct aComplexStruct,
+    _$parameter_types.SimpleClass aSimpleClass,
+    _$parameter_types.ComplexClass aComplexClass,
+    _$parameter_types.SimpleStruct? aNullableSimpleStruct,
+    _$parameter_types.ComplexStruct? aNullableComplexStruct,
+    _$parameter_types.SimpleClass? aNullableSimpleClass,
+    _$parameter_types.ComplexClass? aNullableComplexClass,
+    Iterable<_$parameter_types.SimpleStruct> anIterableOfSimpleStruct,
+    Iterable<_$parameter_types.ComplexStruct> anIterableOfComplexStruct,
+    Iterable<_$parameter_types.SimpleClass> anIterableOfSimpleClass,
+    Iterable<_$parameter_types.ComplexClass> anIterableOfComplexClass,
+    Iterable<_$parameter_types.SimpleStruct>? aNullableIterableOfSimpleStruct,
+    Iterable<_$parameter_types.ComplexStruct>? aNullableIterableOfComplexStruct,
+    Iterable<_$parameter_types.SimpleClass>? aNullableIterableOfSimpleClass,
+    Iterable<_$parameter_types.ComplexClass>? aNullableIterableOfComplexClass,
+    Iterable<_$parameter_types.SimpleStruct?> anIterableOfNullableSimpleStruct,
+    Iterable<_$parameter_types.ComplexStruct?>
+        anIterableOfNullableComplexStruct,
+    Iterable<_$parameter_types.SimpleClass?> anIterableOfNullableSimpleClass,
+    Iterable<_$parameter_types.ComplexClass?> anIterableOfNullableComplexClass,
+    List<_$parameter_types.SimpleStruct> aListOfSimpleStruct,
+    List<_$parameter_types.ComplexStruct> aListOfComplexStruct,
+    List<_$parameter_types.SimpleClass> aListOfSimpleClass,
+    List<_$parameter_types.ComplexClass> aListOfComplexClass,
+    List<_$parameter_types.SimpleStruct>? aNullableListOfSimpleStruct,
+    List<_$parameter_types.ComplexStruct>? aNullableListOfComplexStruct,
+    List<_$parameter_types.SimpleClass>? aNullableListOfSimpleClass,
+    List<_$parameter_types.ComplexClass>? aNullableListOfComplexClass,
+    List<_$parameter_types.SimpleStruct?> aListOfNullableSimpleStruct,
+    List<_$parameter_types.ComplexStruct?> aListOfNullableComplexStruct,
+    List<_$parameter_types.SimpleClass?> aListOfNullableSimpleClass,
+    List<_$parameter_types.ComplexClass?> aListOfNullableComplexClass,
+    Map<String, _$parameter_types.SimpleStruct> aMapOfSimpleStruct,
+    Map<String, _$parameter_types.ComplexStruct> aMapOfComplexStruct,
+    Map<String, _$parameter_types.SimpleClass> aMapOfSimpleClass,
+    Map<String, _$parameter_types.ComplexClass> aMapOfComplexClass,
+    Map<String, _$parameter_types.SimpleStruct>? aNullableMapOfSimpleStruct,
+    Map<String, _$parameter_types.ComplexStruct>? aNullableMapOfComplexStruct,
+    Map<String, _$parameter_types.SimpleClass>? aNullableMapOfSimpleClass,
+    Map<String, _$parameter_types.ComplexClass>? aNullableMapOfComplexClass,
+    Map<String, _$parameter_types.SimpleStruct?> aMapOfNullableSimpleStruct,
+    Map<String, _$parameter_types.ComplexStruct?> aMapOfNullableComplexStruct,
+    Map<String, _$parameter_types.SimpleClass?> aMapOfNullableSimpleClass,
+    Map<String, _$parameter_types.ComplexClass?> aMapOfNullableComplexClass,
+    Map<String, _$parameter_types.SimpleStruct?>?
+        aNullableMapOfNullableSimpleStruct,
+    Map<String, _$parameter_types.ComplexStruct?>?
+        aNullableMapOfNullableComplexStruct,
+    Map<String, _$parameter_types.SimpleClass?>?
+        aNullableMapOfNullableSimpleClass,
+    Map<String, _$parameter_types.ComplexClass?>?
+        aNullableMapOfNullableComplexClass,
   ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameter-types/complex'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'aSimpleStruct':
-            Serializers.instance.serialize<SimpleStruct>(aSimpleStruct),
-        r'aComplexStruct':
-            Serializers.instance.serialize<ComplexStruct>(aComplexStruct),
-        r'aSimpleClass':
-            Serializers.instance.serialize<SimpleClass>(aSimpleClass),
-        r'aComplexClass':
-            Serializers.instance.serialize<ComplexClass>(aComplexClass),
+        r'aSimpleStruct': Serializers.instance
+            .serialize<_$parameter_types.SimpleStruct>(aSimpleStruct),
+        r'aComplexStruct': Serializers.instance
+            .serialize<_$parameter_types.ComplexStruct>(aComplexStruct),
+        r'aSimpleClass': Serializers.instance
+            .serialize<_$parameter_types.SimpleClass>(aSimpleClass),
+        r'aComplexClass': Serializers.instance
+            .serialize<_$parameter_types.ComplexClass>(aComplexClass),
         r'aNullableSimpleStruct': Serializers.instance
-            .serialize<SimpleStruct?>(aNullableSimpleStruct),
+            .serialize<_$parameter_types.SimpleStruct?>(aNullableSimpleStruct),
         r'aNullableComplexStruct': Serializers.instance
-            .serialize<ComplexStruct?>(aNullableComplexStruct),
-        r'aNullableSimpleClass':
-            Serializers.instance.serialize<SimpleClass?>(aNullableSimpleClass),
+            .serialize<_$parameter_types.ComplexStruct?>(
+                aNullableComplexStruct),
+        r'aNullableSimpleClass': Serializers.instance
+            .serialize<_$parameter_types.SimpleClass?>(aNullableSimpleClass),
         r'aNullableComplexClass': Serializers.instance
-            .serialize<ComplexClass?>(aNullableComplexClass),
+            .serialize<_$parameter_types.ComplexClass?>(aNullableComplexClass),
         r'anIterableOfSimpleStruct': anIterableOfSimpleStruct
-            .map((el) => Serializers.instance.serialize<SimpleStruct>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct>(el))
             .toList(),
         r'anIterableOfComplexStruct': anIterableOfComplexStruct
-            .map((el) => Serializers.instance.serialize<ComplexStruct>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct>(el))
             .toList(),
         r'anIterableOfSimpleClass': anIterableOfSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
         r'anIterableOfComplexClass': anIterableOfComplexClass
-            .map((el) => Serializers.instance.serialize<ComplexClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass>(el))
             .toList(),
         r'aNullableIterableOfSimpleStruct': aNullableIterableOfSimpleStruct
-            ?.map((el) => Serializers.instance.serialize<SimpleStruct>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct>(el))
             .toList(),
         r'aNullableIterableOfComplexStruct': aNullableIterableOfComplexStruct
-            ?.map((el) => Serializers.instance.serialize<ComplexStruct>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct>(el))
             .toList(),
         r'aNullableIterableOfSimpleClass': aNullableIterableOfSimpleClass
-            ?.map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
         r'aNullableIterableOfComplexClass': aNullableIterableOfComplexClass
-            ?.map((el) => Serializers.instance.serialize<ComplexClass>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass>(el))
             .toList(),
         r'anIterableOfNullableSimpleStruct': anIterableOfNullableSimpleStruct
-            .map((el) => Serializers.instance.serialize<SimpleStruct?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct?>(el))
             .toList(),
         r'anIterableOfNullableComplexStruct': anIterableOfNullableComplexStruct
-            .map((el) => Serializers.instance.serialize<ComplexStruct?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct?>(el))
             .toList(),
         r'anIterableOfNullableSimpleClass': anIterableOfNullableSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass?>(el))
             .toList(),
         r'anIterableOfNullableComplexClass': anIterableOfNullableComplexClass
-            .map((el) => Serializers.instance.serialize<ComplexClass?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass?>(el))
             .toList(),
         r'aListOfSimpleStruct': aListOfSimpleStruct
-            .map((el) => Serializers.instance.serialize<SimpleStruct>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct>(el))
             .toList(),
         r'aListOfComplexStruct': aListOfComplexStruct
-            .map((el) => Serializers.instance.serialize<ComplexStruct>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct>(el))
             .toList(),
         r'aListOfSimpleClass': aListOfSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
         r'aListOfComplexClass': aListOfComplexClass
-            .map((el) => Serializers.instance.serialize<ComplexClass>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass>(el))
             .toList(),
         r'aNullableListOfSimpleStruct': aNullableListOfSimpleStruct
-            ?.map((el) => Serializers.instance.serialize<SimpleStruct>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct>(el))
             .toList(),
         r'aNullableListOfComplexStruct': aNullableListOfComplexStruct
-            ?.map((el) => Serializers.instance.serialize<ComplexStruct>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct>(el))
             .toList(),
         r'aNullableListOfSimpleClass': aNullableListOfSimpleClass
-            ?.map((el) => Serializers.instance.serialize<SimpleClass>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass>(el))
             .toList(),
         r'aNullableListOfComplexClass': aNullableListOfComplexClass
-            ?.map((el) => Serializers.instance.serialize<ComplexClass>(el))
+            ?.map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass>(el))
             .toList(),
         r'aListOfNullableSimpleStruct': aListOfNullableSimpleStruct
-            .map((el) => Serializers.instance.serialize<SimpleStruct?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleStruct?>(el))
             .toList(),
         r'aListOfNullableComplexStruct': aListOfNullableComplexStruct
-            .map((el) => Serializers.instance.serialize<ComplexStruct?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexStruct?>(el))
             .toList(),
         r'aListOfNullableSimpleClass': aListOfNullableSimpleClass
-            .map((el) => Serializers.instance.serialize<SimpleClass?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.SimpleClass?>(el))
             .toList(),
         r'aListOfNullableComplexClass': aListOfNullableComplexClass
-            .map((el) => Serializers.instance.serialize<ComplexClass?>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$parameter_types.ComplexClass?>(el))
             .toList(),
         r'aMapOfSimpleStruct': aMapOfSimpleStruct.map((
           key,
@@ -3660,7 +3918,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleStruct>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleStruct>(value),
             )),
         r'aMapOfComplexStruct': aMapOfComplexStruct.map((
           key,
@@ -3668,7 +3927,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexStruct>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexStruct>(value),
             )),
         r'aMapOfSimpleClass': aMapOfSimpleClass.map((
           key,
@@ -3676,7 +3936,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleClass>(value),
             )),
         r'aMapOfComplexClass': aMapOfComplexClass.map((
           key,
@@ -3684,7 +3945,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexClass>(value),
             )),
         r'aNullableMapOfSimpleStruct': aNullableMapOfSimpleStruct?.map((
           key,
@@ -3692,7 +3954,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleStruct>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleStruct>(value),
             )),
         r'aNullableMapOfComplexStruct': aNullableMapOfComplexStruct?.map((
           key,
@@ -3700,7 +3963,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexStruct>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexStruct>(value),
             )),
         r'aNullableMapOfSimpleClass': aNullableMapOfSimpleClass?.map((
           key,
@@ -3708,7 +3972,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleClass>(value),
             )),
         r'aNullableMapOfComplexClass': aNullableMapOfComplexClass?.map((
           key,
@@ -3716,7 +3981,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexClass>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexClass>(value),
             )),
         r'aMapOfNullableSimpleStruct': aMapOfNullableSimpleStruct.map((
           key,
@@ -3724,7 +3990,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleStruct?>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleStruct?>(value),
             )),
         r'aMapOfNullableComplexStruct': aMapOfNullableComplexStruct.map((
           key,
@@ -3732,7 +3999,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexStruct?>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexStruct?>(value),
             )),
         r'aMapOfNullableSimpleClass': aMapOfNullableSimpleClass.map((
           key,
@@ -3740,7 +4008,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<SimpleClass?>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.SimpleClass?>(value),
             )),
         r'aMapOfNullableComplexClass': aMapOfNullableComplexClass.map((
           key,
@@ -3748,7 +4017,8 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<ComplexClass?>(value),
+              Serializers.instance
+                  .serialize<_$parameter_types.ComplexClass?>(value),
             )),
         r'aNullableMapOfNullableSimpleStruct':
             aNullableMapOfNullableSimpleStruct?.map((
@@ -3757,7 +4027,8 @@ class CelestFunctionsParameterTypes {
         ) =>
                 MapEntry(
                   key,
-                  Serializers.instance.serialize<SimpleStruct?>(value),
+                  Serializers.instance
+                      .serialize<_$parameter_types.SimpleStruct?>(value),
                 )),
         r'aNullableMapOfNullableComplexStruct':
             aNullableMapOfNullableComplexStruct?.map((
@@ -3766,7 +4037,8 @@ class CelestFunctionsParameterTypes {
         ) =>
                 MapEntry(
                   key,
-                  Serializers.instance.serialize<ComplexStruct?>(value),
+                  Serializers.instance
+                      .serialize<_$parameter_types.ComplexStruct?>(value),
                 )),
         r'aNullableMapOfNullableSimpleClass':
             aNullableMapOfNullableSimpleClass?.map((
@@ -3775,7 +4047,8 @@ class CelestFunctionsParameterTypes {
         ) =>
                 MapEntry(
                   key,
-                  Serializers.instance.serialize<SimpleClass?>(value),
+                  Serializers.instance
+                      .serialize<_$parameter_types.SimpleClass?>(value),
                 )),
         r'aNullableMapOfNullableComplexClass':
             aNullableMapOfNullableComplexClass?.map((
@@ -3784,7 +4057,8 @@ class CelestFunctionsParameterTypes {
         ) =>
                 MapEntry(
                   key,
-                  Serializers.instance.serialize<ComplexClass?>(value),
+                  Serializers.instance
+                      .serialize<_$parameter_types.ComplexClass?>(value),
                 )),
       }),
     );
@@ -3985,13 +4259,15 @@ class CelestFunctionsRecords {
         .deserialize<({String anotherField, String field})>($body['response']);
   }
 
-  Future<NamedFieldsRecord> aliasedNamedFields(
-      {required NamedFieldsRecord value}) async {
+  Future<_$records.NamedFieldsRecord> aliasedNamedFields(
+      {required _$records.NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$records.NamedFieldsRecord>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4002,16 +4278,18 @@ class CelestFunctionsRecords {
       );
     }
     return Serializers.instance
-        .deserialize<NamedFieldsRecord>($body['response']);
+        .deserialize<_$records.NamedFieldsRecord>($body['response']);
   }
 
-  Future<NamedFieldsRecord> asyncAliasedNamedFields(
-      {required NamedFieldsRecord value}) async {
+  Future<_$records.NamedFieldsRecord> asyncAliasedNamedFields(
+      {required _$records.NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$records.NamedFieldsRecord>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4022,16 +4300,16 @@ class CelestFunctionsRecords {
       );
     }
     return Serializers.instance
-        .deserialize<NamedFieldsRecord>($body['response']);
+        .deserialize<_$records.NamedFieldsRecord>($body['response']);
   }
 
   Future<
       ({
-        NamedFieldsRecord aliased,
+        _$records.NamedFieldsRecord aliased,
         ({String anotherField, String field}) nonAliased
       })> namedFields({
     required ({String anotherField, String field}) nonAliased,
-    required NamedFieldsRecord aliased,
+    required _$records.NamedFieldsRecord aliased,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/named-fields'),
@@ -4039,7 +4317,8 @@ class CelestFunctionsRecords {
       body: _$convert.jsonEncode({
         r'nonAliased': Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
-        r'aliased': Serializers.instance.serialize<NamedFieldsRecord>(aliased),
+        r'aliased': Serializers.instance
+            .serialize<_$records.NamedFieldsRecord>(aliased),
       }),
     );
     final $body =
@@ -4052,18 +4331,18 @@ class CelestFunctionsRecords {
     }
     return Serializers.instance.deserialize<
         ({
-          NamedFieldsRecord aliased,
+          _$records.NamedFieldsRecord aliased,
           ({String anotherField, String field}) nonAliased
         })>($body['response']);
   }
 
   Future<
       ({
-        NamedFieldsRecord aliased,
+        _$records.NamedFieldsRecord aliased,
         ({String anotherField, String field}) nonAliased
       })> asyncNamedFields({
     required ({String anotherField, String field}) nonAliased,
-    required NamedFieldsRecord aliased,
+    required _$records.NamedFieldsRecord aliased,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-named-fields'),
@@ -4071,7 +4350,8 @@ class CelestFunctionsRecords {
       body: _$convert.jsonEncode({
         r'nonAliased': Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
-        r'aliased': Serializers.instance.serialize<NamedFieldsRecord>(aliased),
+        r'aliased': Serializers.instance
+            .serialize<_$records.NamedFieldsRecord>(aliased),
       }),
     );
     final $body =
@@ -4084,17 +4364,17 @@ class CelestFunctionsRecords {
     }
     return Serializers.instance.deserialize<
         ({
-          NamedFieldsRecord aliased,
+          _$records.NamedFieldsRecord aliased,
           ({String anotherField, String field}) nonAliased
         })>($body['response']);
   }
 
-  Future<Nested> nested(Nested value) async {
+  Future<_$records.Nested> nested(_$records.Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Nested>(value)}),
+          {r'value': Serializers.instance.serialize<_$records.Nested>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4104,15 +4384,16 @@ class CelestFunctionsRecords {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Nested>($body['response']);
+    return Serializers.instance
+        .deserialize<_$records.Nested>($body['response']);
   }
 
-  Future<Nested> asyncNested(Nested value) async {
+  Future<_$records.Nested> asyncNested(_$records.Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<Nested>(value)}),
+          {r'value': Serializers.instance.serialize<_$records.Nested>(value)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4122,15 +4403,19 @@ class CelestFunctionsRecords {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<Nested>($body['response']);
+    return Serializers.instance
+        .deserialize<_$records.Nested>($body['response']);
   }
 
-  Future<NullableNested?> nullableNested(NullableNested? value) async {
+  Future<_$records.NullableNested?> nullableNested(
+      _$records.NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$records.NullableNested?>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4140,15 +4425,19 @@ class CelestFunctionsRecords {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NullableNested?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$records.NullableNested?>($body['response']);
   }
 
-  Future<NullableNested?> asyncNullableNested(NullableNested? value) async {
+  Future<_$records.NullableNested?> asyncNullableNested(
+      _$records.NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
+      body: _$convert.jsonEncode({
+        r'value':
+            Serializers.instance.serialize<_$records.NullableNested?>(value)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -4158,7 +4447,8 @@ class CelestFunctionsRecords {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<NullableNested?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$records.NullableNested?>($body['response']);
   }
 }
 
@@ -4329,7 +4619,7 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
-  Future<SimpleStruct> asyncStructReturn() async {
+  Future<_$parameter_types.SimpleStruct> asyncStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4342,10 +4632,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct>($body['response']);
   }
 
-  Future<SimpleStruct?> asyncStructReturnNullable() async {
+  Future<_$parameter_types.SimpleStruct?> asyncStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4358,10 +4649,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct?>($body['response']);
   }
 
-  Future<ComplexStruct> asyncComplexStructReturn() async {
+  Future<_$parameter_types.ComplexStruct> asyncComplexStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4374,10 +4666,12 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct>($body['response']);
   }
 
-  Future<ComplexStruct?> asyncComplexStructReturnNullable() async {
+  Future<_$parameter_types.ComplexStruct?>
+      asyncComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/return-types/async-complex-struct-return-nullable'),
@@ -4391,10 +4685,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct?>($body['response']);
   }
 
-  Future<ComplexClass> asyncComplexClassReturn() async {
+  Future<_$parameter_types.ComplexClass> asyncComplexClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4407,10 +4702,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexClass>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexClass>($body['response']);
   }
 
-  Future<SimpleClass?> asyncClassReturnNullable() async {
+  Future<_$parameter_types.SimpleClass?> asyncClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4423,7 +4719,8 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleClass?>($body['response']);
   }
 
   Future<void> asyncOrVoidReturn() async {
@@ -4565,7 +4862,7 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
-  Future<SimpleStruct> asyncOrStructReturn() async {
+  Future<_$parameter_types.SimpleStruct> asyncOrStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4578,10 +4875,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct>($body['response']);
   }
 
-  Future<ComplexStruct> asyncOrComplexStructReturn() async {
+  Future<_$parameter_types.ComplexStruct> asyncOrComplexStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4594,7 +4892,8 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct>($body['response']);
   }
 
   Future<void> asyncOrVoidReturnNullable() async {
@@ -4736,7 +5035,7 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
-  Future<SimpleStruct?> asyncOrStructReturnNullable() async {
+  Future<_$parameter_types.SimpleStruct?> asyncOrStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4749,10 +5048,12 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct?>($body['response']);
   }
 
-  Future<ComplexStruct?> asyncOrComplexStructReturnNullable() async {
+  Future<_$parameter_types.ComplexStruct?>
+      asyncOrComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/return-types/async-or-complex-struct-return-nullable'),
@@ -4766,10 +5067,12 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct?>($body['response']);
   }
 
-  Future<SimpleClass?> asyncOrSimpleClassReturnNullable() async {
+  Future<_$parameter_types.SimpleClass?>
+      asyncOrSimpleClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/return-types/async-or-simple-class-return-nullable'),
@@ -4783,10 +5086,12 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleClass?>($body['response']);
   }
 
-  Future<ComplexClass?> asyncOrComplexClassReturnNullable() async {
+  Future<_$parameter_types.ComplexClass?>
+      asyncOrComplexClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/return-types/async-or-complex-class-return-nullable'),
@@ -4800,7 +5105,8 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexClass?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexClass?>($body['response']);
   }
 
   Future<void> voidReturn() async {
@@ -4942,7 +5248,7 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
-  Future<SimpleStruct> structReturn() async {
+  Future<_$parameter_types.SimpleStruct> structReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4955,10 +5261,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct>($body['response']);
   }
 
-  Future<ComplexStruct> complexReturn() async {
+  Future<_$parameter_types.ComplexStruct> complexReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4971,10 +5278,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct>($body['response']);
   }
 
-  Future<SimpleClass> simpleClassReturn() async {
+  Future<_$parameter_types.SimpleClass> simpleClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/simple-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -4987,10 +5295,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleClass>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleClass>($body['response']);
   }
 
-  Future<ComplexClass> complexClassReturn() async {
+  Future<_$parameter_types.ComplexClass> complexClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -5003,7 +5312,8 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexClass>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexClass>($body['response']);
   }
 
   Future<String?> stringReturnNullable() async {
@@ -5129,7 +5439,7 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
-  Future<SimpleStruct?> structReturnNullable() async {
+  Future<_$parameter_types.SimpleStruct?> structReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -5142,10 +5452,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleStruct?>($body['response']);
   }
 
-  Future<ComplexStruct?> complexReturnNullable() async {
+  Future<_$parameter_types.ComplexStruct?> complexReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -5158,10 +5469,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexStruct?>($body['response']);
   }
 
-  Future<SimpleClass?> simpleClassReturnNullable() async {
+  Future<_$parameter_types.SimpleClass?> simpleClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -5174,10 +5486,11 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.SimpleClass?>($body['response']);
   }
 
-  Future<ComplexClass?> complexClassReturnNullable() async {
+  Future<_$parameter_types.ComplexClass?> complexClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -5190,7 +5503,8 @@ class CelestFunctionsReturnTypes {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<ComplexClass?>($body['response']);
+    return Serializers.instance
+        .deserialize<_$parameter_types.ComplexClass?>($body['response']);
   }
 }
 
@@ -5204,17 +5518,20 @@ class CelestFunctionsSealedClasses {
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
       case r'CustomException':
-        throw Serializers.instance.deserialize<CustomException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomException>($details);
       case r'CustomExceptionToFromJson':
         throw Serializers.instance
-            .deserialize<CustomExceptionToFromJson>($details);
+            .deserialize<_$exceptions.CustomExceptionToFromJson>($details);
       case r'CustomError':
-        throw Serializers.instance.deserialize<CustomError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomError>($details);
       case r'CustomErrorToFromJson':
-        throw Serializers.instance.deserialize<CustomErrorToFromJson>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomErrorToFromJson>($details);
       case r'CustomErrorWithStackTrace':
         throw Serializers.instance
-            .deserialize<CustomErrorWithStackTrace>($details);
+            .deserialize<_$exceptions.CustomErrorWithStackTrace>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
@@ -5233,12 +5550,13 @@ class CelestFunctionsSealedClasses {
     }
   }
 
-  Future<double> area(Shape shape) async {
+  Future<double> area(_$sealed_classes.Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/area'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert
-          .jsonEncode({r'shape': Serializers.instance.serialize<Shape>(shape)}),
+      body: _$convert.jsonEncode({
+        r'shape': Serializers.instance.serialize<_$sealed_classes.Shape>(shape)
+      }),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -5251,75 +5569,15 @@ class CelestFunctionsSealedClasses {
     return ($body['response'] as num).toDouble();
   }
 
-  Future<List<Shape>> sealedClass({required List<Shape> shapes}) async {
+  Future<List<_$sealed_classes.Shape>> sealedClass(
+      {required List<_$sealed_classes.Shape> shapes}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
-            .toList()
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<Shape>(el))
-        .toList();
-  }
-
-  Future<Rectangle> rectangle(Rectangle rectangle) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/sealed-classes/rectangle'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'rectangle': Serializers.instance.serialize<Rectangle>(rectangle)}),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance.deserialize<Rectangle>($body['response']);
-  }
-
-  Future<Circle> circle(Circle circle) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/sealed-classes/circle'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'circle': Serializers.instance.serialize<Circle>(circle)}),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance.deserialize<Circle>($body['response']);
-  }
-
-  Future<List<ShapeWithInheritedCustomJson>> sealedClassWithInheritedCustomJson(
-      {required List<ShapeWithInheritedCustomJson> shapes}) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri
-          .resolve('/sealed-classes/sealed-class-with-inherited-custom-json'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'shapes': shapes
-            .map((el) => Serializers.instance
-                .serialize<ShapeWithInheritedCustomJson>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5333,19 +5591,65 @@ class CelestFunctionsSealedClasses {
     }
     return ($body['response'] as Iterable<Object?>)
         .map((el) =>
-            Serializers.instance.deserialize<ShapeWithInheritedCustomJson>(el))
+            Serializers.instance.deserialize<_$sealed_classes.Shape>(el))
         .toList();
   }
 
-  Future<List<ShapeWithCustomJson>> sealedClassWithCustomJson(
-      {required List<ShapeWithCustomJson> shapes}) async {
+  Future<_$sealed_classes.Rectangle> rectangle(
+      _$sealed_classes.Rectangle rectangle) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/sealed-classes/sealed-class-with-custom-json'),
+      celest.baseUri.resolve('/sealed-classes/rectangle'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'rectangle': Serializers.instance
+            .serialize<_$sealed_classes.Rectangle>(rectangle)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$sealed_classes.Rectangle>($body['response']);
+  }
+
+  Future<_$sealed_classes.Circle> circle(_$sealed_classes.Circle circle) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/circle'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'circle':
+            Serializers.instance.serialize<_$sealed_classes.Circle>(circle)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$sealed_classes.Circle>($body['response']);
+  }
+
+  Future<List<_$sealed_classes.ShapeWithInheritedCustomJson>>
+      sealedClassWithInheritedCustomJson(
+          {required List<_$sealed_classes.ShapeWithInheritedCustomJson>
+              shapes}) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri
+          .resolve('/sealed-classes/sealed-class-with-inherited-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map(
-                (el) => Serializers.instance.serialize<ShapeWithCustomJson>(el))
+            .map((el) => Serializers.instance
+                .serialize<_$sealed_classes.ShapeWithInheritedCustomJson>(el))
             .toList()
       }),
     );
@@ -5358,15 +5662,42 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<ShapeWithCustomJson>(el))
+        .map((el) => Serializers.instance
+            .deserialize<_$sealed_classes.ShapeWithInheritedCustomJson>(el))
         .toList();
   }
 
-  Future<List<ShapeWithOverriddenCustomJson>>
+  Future<List<_$sealed_classes.ShapeWithCustomJson>> sealedClassWithCustomJson(
+      {required List<_$sealed_classes.ShapeWithCustomJson> shapes}) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/sealed-classes/sealed-class-with-custom-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'shapes': shapes
+            .map((el) => Serializers.instance
+                .serialize<_$sealed_classes.ShapeWithCustomJson>(el))
+            .toList()
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance
+            .deserialize<_$sealed_classes.ShapeWithCustomJson>(el))
+        .toList();
+  }
+
+  Future<List<_$sealed_classes.ShapeWithOverriddenCustomJson>>
       sealedClassWithOverriddenCustomJson({
-    required CircleWithOverriddenCustomJson circle,
-    required RectangleWithOverriddenCustomJson rectangle,
-    required List<ShapeWithOverriddenCustomJson> other,
+    required _$sealed_classes.CircleWithOverriddenCustomJson circle,
+    required _$sealed_classes.RectangleWithOverriddenCustomJson rectangle,
+    required List<_$sealed_classes.ShapeWithOverriddenCustomJson> other,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -5374,12 +5705,13 @@ class CelestFunctionsSealedClasses {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'circle': Serializers.instance
-            .serialize<CircleWithOverriddenCustomJson>(circle),
+            .serialize<_$sealed_classes.CircleWithOverriddenCustomJson>(circle),
         r'rectangle': Serializers.instance
-            .serialize<RectangleWithOverriddenCustomJson>(rectangle),
+            .serialize<_$sealed_classes.RectangleWithOverriddenCustomJson>(
+                rectangle),
         r'other': other
             .map((el) => Serializers.instance
-                .serialize<ShapeWithOverriddenCustomJson>(el))
+                .serialize<_$sealed_classes.ShapeWithOverriddenCustomJson>(el))
             .toList(),
       }),
     );
@@ -5392,20 +5724,22 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) =>
-            Serializers.instance.deserialize<ShapeWithOverriddenCustomJson>(el))
+        .map((el) => Serializers.instance
+            .deserialize<_$sealed_classes.ShapeWithOverriddenCustomJson>(el))
         .toList();
   }
 
-  Future<ShapeWithOverriddenCustomJson> rectangleWithOverriddenCustomJson(
-      RectangleWithOverriddenCustomJson rectangle) async {
+  Future<_$sealed_classes.ShapeWithOverriddenCustomJson>
+      rectangleWithOverriddenCustomJson(
+          _$sealed_classes.RectangleWithOverriddenCustomJson rectangle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/sealed-classes/rectangle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'rectangle': Serializers.instance
-            .serialize<RectangleWithOverriddenCustomJson>(rectangle)
+            .serialize<_$sealed_classes.RectangleWithOverriddenCustomJson>(
+                rectangle)
       }),
     );
     final $body =
@@ -5417,18 +5751,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return Serializers.instance
-        .deserialize<ShapeWithOverriddenCustomJson>($body['response']);
+        .deserialize<_$sealed_classes.ShapeWithOverriddenCustomJson>(
+            $body['response']);
   }
 
-  Future<CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
-      ShapeWithOverriddenCustomJson circle) async {
+  Future<_$sealed_classes.CircleWithOverriddenCustomJson>
+      circleWithOverriddenCustomJson(
+          _$sealed_classes.ShapeWithOverriddenCustomJson circle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/sealed-classes/circle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'circle': Serializers.instance
-            .serialize<ShapeWithOverriddenCustomJson>(circle)
+            .serialize<_$sealed_classes.ShapeWithOverriddenCustomJson>(circle)
       }),
     );
     final $body =
@@ -5440,16 +5776,19 @@ class CelestFunctionsSealedClasses {
       );
     }
     return Serializers.instance
-        .deserialize<CircleWithOverriddenCustomJson>($body['response']);
+        .deserialize<_$sealed_classes.CircleWithOverriddenCustomJson>(
+            $body['response']);
   }
 
-  Future<List<OkResult<Shape>>> okShapeResults(List<Shape> shapes) async {
+  Future<List<_$sealed_classes.OkResult<_$sealed_classes.Shape>>>
+      okShapeResults(List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5462,17 +5801,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<OkResult<Shape>>(el))
+        .map((el) => Serializers.instance
+            .deserialize<_$sealed_classes.OkResult<_$sealed_classes.Shape>>(el))
         .toList();
   }
 
-  Future<List<ErrResult<String>>> errShapeResults(List<Shape> shapes) async {
+  Future<List<_$sealed_classes.ErrResult<String>>> errShapeResults(
+      List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/err-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5485,17 +5827,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<ErrResult<String>>(el))
+        .map((el) => Serializers.instance
+            .deserialize<_$sealed_classes.ErrResult<String>>(el))
         .toList();
   }
 
-  Future<List<Result<Shape, String>>> shapeResults(List<Shape> shapes) async {
+  Future<List<_$sealed_classes.Result<_$sealed_classes.Shape, String>>>
+      shapeResults(List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5508,19 +5853,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map(
-            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .map((el) => Serializers.instance.deserialize<
+            _$sealed_classes.Result<_$sealed_classes.Shape, String>>(el))
         .toList();
   }
 
-  Future<List<Result<Shape, String>>> aliasedOkShapeResults(
-      List<Shape> shapes) async {
+  Future<List<_$sealed_classes.Result<_$sealed_classes.Shape, String>>>
+      aliasedOkShapeResults(List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-ok-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5533,19 +5879,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map(
-            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .map((el) => Serializers.instance.deserialize<
+            _$sealed_classes.Result<_$sealed_classes.Shape, String>>(el))
         .toList();
   }
 
-  Future<List<Result<Shape, String>>> aliasedErrShapeResults(
-      List<Shape> shapes) async {
+  Future<List<_$sealed_classes.Result<_$sealed_classes.Shape, String>>>
+      aliasedErrShapeResults(List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-err-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5558,19 +5905,20 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map(
-            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .map((el) => Serializers.instance.deserialize<
+            _$sealed_classes.Result<_$sealed_classes.Shape, String>>(el))
         .toList();
   }
 
-  Future<List<Result<Shape, String>>> aliasedShapeResults(
-      List<Shape> shapes) async {
+  Future<List<_$sealed_classes.Result<_$sealed_classes.Shape, String>>>
+      aliasedShapeResults(List<_$sealed_classes.Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'shapes': shapes
-            .map((el) => Serializers.instance.serialize<Shape>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$sealed_classes.Shape>(el))
             .toList()
       }),
     );
@@ -5583,18 +5931,22 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map(
-            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .map((el) => Serializers.instance.deserialize<
+            _$sealed_classes.Result<_$sealed_classes.Shape, String>>(el))
         .toList();
   }
 
-  Future<SwappedResult<Shape, String>> swappedResult(
-      Result<Shape, String> result) async {
+  Future<_$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>>
+      swappedResult(
+          _$sealed_classes.Result<_$sealed_classes.Shape, String>
+              result) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/swapped-result'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
-        r'result': Serializers.instance.serialize<Result<Shape, String>>(result)
+        r'result': Serializers.instance
+            .serialize<_$sealed_classes.Result<_$sealed_classes.Shape, String>>(
+                result)
       }),
     );
     final $body =
@@ -5605,15 +5957,17 @@ class CelestFunctionsSealedClasses {
         $body: $body,
       );
     }
-    return Serializers.instance
-        .deserialize<SwappedResult<Shape, String>>($body['response']);
+    return Serializers.instance.deserialize<
+        _$sealed_classes
+        .SwappedResult<_$sealed_classes.Shape, String>>($body['response']);
   }
 
-  Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
+  Future<_$sealed_classes.OkResult<T>>
+      genericResult<T extends _$sealed_classes.Shape>(T data) async {
     const $T = {
-      Shape: r'Shape',
-      Rectangle: r'Rectangle',
-      Circle: r'Circle',
+      _$sealed_classes.Shape: r'Shape',
+      _$sealed_classes.Rectangle: r'Rectangle',
+      _$sealed_classes.Circle: r'Circle',
     };
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/generic-result'),
@@ -5631,22 +5985,23 @@ class CelestFunctionsSealedClasses {
         $body: $body,
       );
     }
-    return Serializers.instance.deserialize<OkResult<T>>($body['response']);
+    return Serializers.instance
+        .deserialize<_$sealed_classes.OkResult<T>>($body['response']);
   }
 
-  Future<List<Result<T, E>>>
-      multipleGenericResult<T extends Shape, E extends ShapeException>(
+  Future<List<_$sealed_classes.Result<T, E>>> multipleGenericResult<
+      T extends _$sealed_classes.Shape, E extends _$exceptions.ShapeException>(
     T data,
     E error,
   ) async {
     const $T = {
-      Shape: r'Shape',
-      Rectangle: r'Rectangle',
-      Circle: r'Circle',
+      _$sealed_classes.Shape: r'Shape',
+      _$sealed_classes.Rectangle: r'Rectangle',
+      _$sealed_classes.Circle: r'Circle',
     };
     const $E = {
-      ShapeException: r'ShapeException',
-      BadShapeException: r'BadShapeException',
+      _$exceptions.ShapeException: r'ShapeException',
+      _$exceptions.BadShapeException: r'BadShapeException',
     };
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/multiple-generic-result'),
@@ -5667,7 +6022,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body['response'] as Iterable<Object?>)
-        .map((el) => Serializers.instance.deserialize<Result<T, E>>(el))
+        .map((el) =>
+            Serializers.instance.deserialize<_$sealed_classes.Result<T, E>>(el))
         .toList();
   }
 }

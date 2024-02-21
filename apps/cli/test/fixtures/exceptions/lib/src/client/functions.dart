@@ -8,7 +8,7 @@ import 'dart:convert' as _$convert;
 
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart';
+import 'package:celest_backend/exceptions.dart' as _$exceptions;
 
 import '../../client.dart';
 
@@ -94,13 +94,17 @@ class CelestFunctionsNonthrowing {
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
       case r'BaseException':
-        throw Serializers.instance.deserialize<BaseException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.BaseException>($details);
       case r'CustomException':
-        throw Serializers.instance.deserialize<CustomException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomException>($details);
       case r'BaseError':
-        throw Serializers.instance.deserialize<BaseError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.BaseError>($details);
       case r'CustomError':
-        throw Serializers.instance.deserialize<CustomError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomError>($details);
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
@@ -189,13 +193,17 @@ class CelestFunctionsThrowing {
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
       case r'BaseException':
-        throw Serializers.instance.deserialize<BaseException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.BaseException>($details);
       case r'CustomException':
-        throw Serializers.instance.deserialize<CustomException>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomException>($details);
       case r'BaseError':
-        throw Serializers.instance.deserialize<BaseError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.BaseError>($details);
       case r'CustomError':
-        throw Serializers.instance.deserialize<CustomError>($details);
+        throw Serializers.instance
+            .deserialize<_$exceptions.CustomError>($details);
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
