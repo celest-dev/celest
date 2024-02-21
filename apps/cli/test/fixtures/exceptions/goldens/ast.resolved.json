@@ -1,0 +1,196 @@
+{
+  "name": "exceptions",
+  "apis": {
+    "nonthrowing": {
+      "name": "nonthrowing",
+      "functions": {
+        "callsThrowsCustomError": {
+          "name": "callsThrowsCustomError",
+          "route": "/nonthrowing/calls-throws-custom-error",
+          "apiName": "nonthrowing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsBaseError": {
+          "name": "callsThrowsBaseError",
+          "route": "/nonthrowing/calls-throws-base-error",
+          "apiName": "nonthrowing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsCustomException": {
+          "name": "callsThrowsCustomException",
+          "route": "/nonthrowing/calls-throws-custom-exception",
+          "apiName": "nonthrowing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsBaseException": {
+          "name": "callsThrowsBaseException",
+          "route": "/nonthrowing/calls-throws-base-exception",
+          "apiName": "nonthrowing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "throwing": {
+      "name": "throwing",
+      "functions": {
+        "throwsCustomError": {
+          "name": "throwsCustomError",
+          "route": "/throwing/throws-custom-error",
+          "apiName": "throwing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsBaseError": {
+          "name": "throwsBaseError",
+          "route": "/throwing/throws-base-error",
+          "apiName": "throwing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsCustomException": {
+          "name": "throwsCustomException",
+          "route": "/throwing/throws-custom-exception",
+          "apiName": "throwing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsBaseException": {
+          "name": "throwsBaseException",
+          "route": "/throwing/throws-base-exception",
+          "apiName": "throwing",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.3.0",
+    "enabledExperiments": []
+  }
+}

@@ -119,6 +119,8 @@ final class CelestAnalyzer {
     }
   }
 
+  Uri? _lastAnalyzed;
+
   Future<CelestAnalysisResult> analyzeProject({
     bool updateResources = true,
   }) async {
@@ -129,6 +131,13 @@ final class CelestAnalyzer {
     if (project == null) {
       return CelestAnalysisResult.failure(_errors);
     }
+
+    if (_lastAnalyzed != project.location!.sourceUrl) {
+      _lastAnalyzed = project.location!.sourceUrl;
+      _logger.finest('Analyzing new project. Clearing caches.');
+      typeHelper.reset();
+    }
+
     _project = project;
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: _reportError,
@@ -448,24 +457,34 @@ final class CelestAnalyzer {
     }
   }
 
+  final _apiNamespace = Expando<Set<Element>>();
+  Iterable<Element> _importNamespaceForLibrary(
+    LibraryElement library, [
+    Set<LibraryElement>? visited,
+  ]) sync* {
+    visited ??= {};
+    if (!visited.add(library)) {
+      return;
+    }
+    yield* library.exportNamespace.definedNames.values;
+    for (final importedLibrary in library.importedLibraries) {
+      yield* _importNamespaceForLibrary(importedLibrary, visited);
+    }
+  }
+
   Set<DartType> _collectExceptionTypes(LibraryElement apiLibrary) {
     final exceptionsLibrary = _exceptionsLibrary;
     if (exceptionsLibrary == null) {
       return const {};
     }
+    final apiNamespace = _apiNamespace[apiLibrary] ??=
+        Set.of(_importNamespaceForLibrary(apiLibrary));
     final exceptionTypes = <DartType>{};
     final exportedClasses = exceptionsLibrary
         .element.exportNamespace.definedNames.values
         .whereType<ClassElement>();
     for (final classElement in exportedClasses) {
-      var importsClass = false;
-      for (final importedLibrary in apiLibrary.libraryImports) {
-        final importNamespace = importedLibrary.namespace;
-        if (importNamespace.get(classElement.name) == classElement) {
-          importsClass = true;
-          break;
-        }
-      }
+      final importsClass = apiNamespace.contains(classElement);
       if (!importsClass) {
         continue;
       }

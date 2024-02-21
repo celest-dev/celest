@@ -1,0 +1,376 @@
+{
+  "name": "exceptions",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project:project.dart"
+  },
+  "apis": {
+    "nonthrowing": {
+      "name": "nonthrowing",
+      "metadata": [],
+      "functions": {
+        "callsThrowsCustomError": {
+          "name": "callsThrowsCustomError",
+          "apiName": "nonthrowing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 119,
+              "uri": "nonthrowing.dart",
+              "line": 5,
+              "column": 5
+            },
+            "end": {
+              "offset": 141,
+              "uri": "nonthrowing.dart",
+              "line": 5,
+              "column": 27
+            },
+            "text": "callsThrowsCustomError"
+          }
+        },
+        "callsThrowsBaseError": {
+          "name": "callsThrowsBaseError",
+          "apiName": "nonthrowing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 177,
+              "uri": "nonthrowing.dart",
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 197,
+              "uri": "nonthrowing.dart",
+              "line": 9,
+              "column": 25
+            },
+            "text": "callsThrowsBaseError"
+          }
+        },
+        "callsThrowsCustomException": {
+          "name": "callsThrowsCustomException",
+          "apiName": "nonthrowing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 231,
+              "uri": "nonthrowing.dart",
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 257,
+              "uri": "nonthrowing.dart",
+              "line": 13,
+              "column": 31
+            },
+            "text": "callsThrowsCustomException"
+          }
+        },
+        "callsThrowsBaseException": {
+          "name": "callsThrowsBaseException",
+          "apiName": "nonthrowing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 297,
+              "uri": "nonthrowing.dart",
+              "line": 17,
+              "column": 5
+            },
+            "end": {
+              "offset": 321,
+              "uri": "nonthrowing.dart",
+              "line": 17,
+              "column": 29
+            },
+            "text": "callsThrowsBaseException"
+          }
+        }
+      },
+      "docs": [
+        "/// A library with methods that do not through but call methods that do throw."
+      ],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BaseException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BaseError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "nonthrowing.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "nonthrowing.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
+    "throwing": {
+      "name": "throwing",
+      "metadata": [],
+      "functions": {
+        "throwsCustomError": {
+          "name": "throwsCustomError",
+          "apiName": "throwing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 55,
+              "uri": "throwing.dart",
+              "line": 2,
+              "column": 5
+            },
+            "end": {
+              "offset": 72,
+              "uri": "throwing.dart",
+              "line": 2,
+              "column": 22
+            },
+            "text": "throwsCustomError"
+          }
+        },
+        "throwsBaseError": {
+          "name": "throwsBaseError",
+          "apiName": "throwing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 117,
+              "uri": "throwing.dart",
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 132,
+              "uri": "throwing.dart",
+              "line": 6,
+              "column": 20
+            },
+            "text": "throwsBaseError"
+          }
+        },
+        "throwsCustomException": {
+          "name": "throwsCustomException",
+          "apiName": "throwing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 175,
+              "uri": "throwing.dart",
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 196,
+              "uri": "throwing.dart",
+              "line": 10,
+              "column": 26
+            },
+            "text": "throwsCustomException"
+          }
+        },
+        "throwsBaseException": {
+          "name": "throwsBaseException",
+          "apiName": "throwing",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 245,
+              "uri": "throwing.dart",
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 264,
+              "uri": "throwing.dart",
+              "line": 14,
+              "column": 24
+            },
+            "text": "throwsBaseException"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BaseException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BaseError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "throwing.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "throwing.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.3.0",
+    "enabledExperiments": []
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
+  }
+}

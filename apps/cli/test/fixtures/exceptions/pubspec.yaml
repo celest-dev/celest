@@ -1,0 +1,21 @@
+name: celest_backend
+publish_to: none
+
+environment:
+  sdk: ^3.3.0-0
+
+dependencies:
+  celest:
+    path: ../../../../../celest/packages/celest
+  celest_core:
+    path: ../../../../../celest/packages/celest_core
+  http: ^1.0.0
+
+dependency_overrides:
+  celest:
+    path: ../../../../../celest/packages/celest
+  celest_core:
+    path: ../../../../../celest/packages/celest_core
+
+dev_dependencies:
+  test: any

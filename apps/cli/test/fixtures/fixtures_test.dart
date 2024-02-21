@@ -3314,6 +3314,138 @@ final tests = <String, Test>{
       ),
     },
   ),
+  'exceptions': const Test(
+    apis: {
+      'throwing': ApiTest(
+        functionTests: {
+          'throwsBaseError': [
+            FunctionTestError(
+              name: 'throwsBaseError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'BaseError',
+                  'details': {
+                    'message': 'base: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomError': [
+            FunctionTestError(
+              name: 'throwsCustomError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomError',
+                  'details': {
+                    'message': 'base: custom: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsBaseException': [
+            FunctionTestError(
+              name: 'throwsBaseException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'BaseException',
+                  'details': {
+                    'message': 'base: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCustomException': [
+            FunctionTestError(
+              name: 'throwsCustomException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomException',
+                  'details': {
+                    'message': 'base: custom: message',
+                  },
+                },
+              },
+            ),
+          ],
+        },
+      ),
+      'nonthrowing': ApiTest(
+        functionTests: {
+          'callsThrowsBaseError': [
+            FunctionTestError(
+              name: 'throwsBaseError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'BaseError',
+                  'details': {
+                    'message': 'base: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'callsThrowsCustomError': [
+            FunctionTestError(
+              name: 'throwsCustomError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomError',
+                  'details': {
+                    'message': 'base: custom: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'callsThrowsBaseException': [
+            FunctionTestError(
+              name: 'throwsBaseException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'BaseException',
+                  'details': {
+                    'message': 'base: message',
+                  },
+                },
+              },
+            ),
+          ],
+          'callsThrowsCustomException': [
+            FunctionTestError(
+              name: 'throwsCustomException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomException',
+                  'details': {
+                    'message': 'base: custom: message',
+                  },
+                },
+              },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
 };
 
 const genericWrappers = {
