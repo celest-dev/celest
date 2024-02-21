@@ -112,7 +112,7 @@ final class EntrypointGenerator {
               positionalParams.add(paramExp);
             }
           }
-          if (function.exceptionTypes.isNotEmpty) {
+          if (api.exceptionTypes.isNotEmpty) {
             b.statements.add(const Code('try {'));
           }
           var response = functionReference.call(
@@ -155,7 +155,7 @@ final class EntrypointGenerator {
                 }).returned,
               );
           }
-          final exceptionTypes = List.of(function.exceptionTypes)
+          final exceptionTypes = List.of(api.exceptionTypes)
             ..sort((a, b) {
               final dtA = typeHelper.fromReference(a);
               final dtB = typeHelper.fromReference(b);
@@ -205,7 +205,7 @@ final class EntrypointGenerator {
               }).returned,
             );
           }
-          if (function.exceptionTypes.isNotEmpty) {
+          if (api.exceptionTypes.isNotEmpty) {
             b.statements.add(const Code('}'));
           }
         }),
@@ -295,7 +295,7 @@ final class EntrypointGenerator {
       [
         function.flattenedReturnType,
         ...function.parameters.map((p) => p.type),
-        ...function.exceptionTypes,
+        ...api.exceptionTypes,
       ].where((type) => !type.isFunctionContext),
     );
     for (final type in allTypes) {

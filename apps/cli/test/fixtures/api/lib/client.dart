@@ -79,7 +79,6 @@ class Celest {
     Serializers.instance.put(const SelfReferencingSerializer());
     Serializers.instance.put(const SelfReferencingWrapperSerializer());
     Serializers.instance.put(const SupportedExceptionTypeSerializer());
-    Serializers.instance.put(const SupportedErrorTypeSerializer());
     Serializers.instance.put(const CustomExceptionSerializer());
     Serializers.instance.put(
       const JsonMapSerializer(),
@@ -89,6 +88,7 @@ class Celest {
     Serializers.instance.put(const CustomErrorSerializer());
     Serializers.instance.put(const CustomErrorToFromJsonSerializer());
     Serializers.instance.put(const CustomErrorWithStackTraceSerializer());
+    Serializers.instance.put(const SupportedErrorTypeSerializer());
     Serializers.instance.put(
       const StringXSerializer(),
       const TypeToken<StringX>('StringX'),

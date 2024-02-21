@@ -50,7 +50,9 @@ final class ClientFunctionsGenerator {
 
   void _generateApi(ast.Api api) {
     final apiType = ClientTypes.api(api);
-    final apiClass = _beginClass(apiType.name)..docs.addAll(api.docs);
+    final apiClass = _beginClass(apiType.name)
+      ..docs.addAll(api.docs)
+      ..methods.add(_handleError(api));
 
     _client.fields.add(
       Field(
@@ -185,15 +187,73 @@ final class ClientFunctionsGenerator {
                     .returned
                     .statement;
 
-            b.statements.add(
-              returnedBody.wrapWithBlockIf(
-                refer(r'$response')
-                    .property('statusCode')
-                    .equalTo(literalNum(200)),
-              ),
-            );
+            final handleError = refer('_handleError').call([], {
+              r'$statusCode': refer(r'$response').property('statusCode'),
+              r'$body': refer(r'$body'),
+            });
 
-            // Else, handle the error.
+            b.statements
+              ..add(
+                handleError.wrapWithBlockIf(
+                  refer(r'$response')
+                      .property('statusCode')
+                      .notEqualTo(literalNum(200)),
+                ),
+              )
+              ..add(returnedBody);
+          }),
+      );
+      apiClass.methods.add(functionCall);
+      final allTypes = Set.of(
+        [
+          function.flattenedReturnType,
+          ...clientParameters.map((p) => p.type),
+          ...api.exceptionTypes,
+        ].where((type) => !type.isFunctionContext),
+      );
+      for (final type in allTypes) {
+        final dartType = typeHelper.fromReference(type);
+        customSerializers.addEntries(
+          typeHelper
+              .customSerializers(dartType)
+              .map((el) => MapEntry(el.$1, el.$2)),
+        );
+        if ((dartType, type)
+            case (
+              final dart_ast.RecordType dartType,
+              final RecordType recordType
+            )) {
+          anonymousRecordTypes[dartType.symbol] =
+              // Typedefs should always point to the non-nullable
+              // version since the type is only used to invoke the
+              // serializer and the serializer handles null values.
+              recordType.rebuild((r) => r.isNullable = false);
+        }
+      }
+    }
+  }
+
+  Method _handleError(ast.Api api) => Method((m) {
+        m
+          ..name = '_handleError'
+          ..returns = DartTypes.core.never
+          ..optionalParameters.addAll([
+            Parameter(
+              (p) => p
+                ..name = r'$statusCode'
+                ..named = true
+                ..required = true
+                ..type = DartTypes.core.int,
+            ),
+            Parameter(
+              (p) => p
+                ..name = r'$body'
+                ..named = true
+                ..required = true
+                ..type = typeHelper.toReference(jsonMapType),
+            ),
+          ])
+          ..body = Block((b) {
             b
               ..addExpression(
                 declareFinal(r'$error').assign(
@@ -218,7 +278,7 @@ final class ClientFunctionsGenerator {
               );
             b.statements.add(const Code(r'switch ($code) {'));
             final exceptionTypes = {
-              ...function.exceptionTypes,
+              ...api.exceptionTypes,
               typeHelper.toReference(
                 typeHelper.coreTypes.badRequestExceptionType,
               ),
@@ -237,7 +297,7 @@ final class ClientFunctionsGenerator {
               ]);
             }
             b.statements.addAll([
-              const Code(r'case _: switch ($response.statusCode) {'),
+              const Code(r'case _: switch ($statusCode) {'),
               const Code('case 400: '),
               DartTypes.celest.badRequestException
                   .newInstance([
@@ -255,37 +315,8 @@ final class ClientFunctionsGenerator {
               const Code('}'),
               const Code('}'),
             ]);
-          }),
-      );
-      apiClass.methods.add(functionCall);
-      final allTypes = Set.of(
-        [
-          function.flattenedReturnType,
-          ...clientParameters.map((p) => p.type),
-          ...function.exceptionTypes,
-        ].where((type) => !type.isFunctionContext),
-      );
-      for (final type in allTypes) {
-        final dartType = typeHelper.fromReference(type);
-        customSerializers.addEntries(
-          typeHelper
-              .customSerializers(dartType)
-              .map((el) => MapEntry(el.$1, el.$2)),
-        );
-        if ((dartType, type)
-            case (
-              final dart_ast.RecordType dartType,
-              final RecordType recordType
-            )) {
-          anonymousRecordTypes[dartType.symbol] =
-              // Typedefs should always point to the non-nullable
-              // version since the type is only used to invoke the
-              // serializer and the serializer handles null values.
-              recordType.rebuild((r) => r.isNullable = false);
-        }
-      }
-    }
-  }
+          });
+      });
 
   Library generate() {
     for (final api in apis) {

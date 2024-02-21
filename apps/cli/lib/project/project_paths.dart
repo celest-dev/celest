@@ -32,6 +32,10 @@ final class ProjectPaths {
   late final String configDir = p.join(projectRoot, 'config');
   late final String envFile = p.join(projectRoot, 'config', '.env');
 
+  late final String modelsDart = p.join(projectRoot, 'lib', 'models.dart');
+  late final String exceptionsDart =
+      p.join(projectRoot, 'lib', 'exceptions.dart');
+
   late final EnvManager envManager = EnvManager(envFile);
 
   late final String authDart = p.join(projectRoot, 'auth', 'auth.dart');

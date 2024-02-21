@@ -5,14 +5,14 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/uri_converter.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
-import 'package:analyzer/src/generated/source.dart';
+import 'package:analyzer/source/source.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
@@ -101,22 +101,18 @@ final class CelestAnalyzer {
     );
   }
 
-  LibraryElementResult? _modelsLibrary;
-  LibraryElementResult? _exceptionsLibrary;
+  ResolvedLibraryResult? _modelsLibrary;
+  ResolvedLibraryResult? _exceptionsLibrary;
 
   Future<void> _initTypeLibraries() async {
     try {
-      _modelsLibrary = await _context.currentSession.getLibraryByUri(
-        Uri.file(CustomType.model.expectedPath).toString(),
-      ) as LibraryElementResult;
+      _modelsLibrary = await _resolveLibrary(projectPaths.modelsDart);
     } on Object catch (e, st) {
       performance.captureError(e, stackTrace: st);
       _modelsLibrary = null;
     }
     try {
-      _exceptionsLibrary = await _context.currentSession.getLibraryByUri(
-        Uri.file(CustomType.exception.expectedPath).toString(),
-      ) as LibraryElementResult;
+      _exceptionsLibrary = await _resolveLibrary(projectPaths.exceptionsDart);
     } on Object catch (e, st) {
       performance.captureError(e, stackTrace: st);
       _exceptionsLibrary = null;
@@ -445,11 +441,65 @@ final class CelestAnalyzer {
           )
           .to(p.url);
       _reportError(
-        'Types referenced in APIs must be defined in the `celest/$expectedPath`'
-        ' file or exported from that file.',
+        'Types referenced in APIs must be defined in or exported from the '
+        '`celest/$expectedPath` file.',
         location: location,
       );
     }
+  }
+
+  Set<DartType> _collectExceptionTypes(LibraryElement apiLibrary) {
+    final exceptionsLibrary = _exceptionsLibrary;
+    if (exceptionsLibrary == null) {
+      return const {};
+    }
+    final exceptionTypes = <DartType>{};
+    final exportedClasses = exceptionsLibrary
+        .element.exportNamespace.definedNames.values
+        .whereType<ClassElement>();
+    for (final classElement in exportedClasses) {
+      var importsClass = false;
+      for (final importedLibrary in apiLibrary.libraryImports) {
+        final importNamespace = importedLibrary.namespace;
+        if (importNamespace.get(classElement.name) == classElement) {
+          importsClass = true;
+          break;
+        }
+      }
+      if (!importsClass) {
+        continue;
+      }
+      final isDartType = classElement.library.source.uri.scheme == 'dart';
+      if (isDartType) {
+        continue;
+      }
+      final classType = classElement.thisType;
+      final isExceptionType = typeHelper.typeSystem.isSubtypeOf(
+        classType,
+        typeHelper.coreTypes.coreExceptionType,
+      );
+      final isErrorType = typeHelper.typeSystem.isSubtypeOf(
+        classType,
+        typeHelper.coreTypes.coreErrorType,
+      );
+      final isExceptionOrErrorType = isExceptionType || isErrorType;
+      if (!isExceptionOrErrorType) {
+        continue;
+      }
+      final isSerializable = typeHelper.isSerializable(classType);
+      if (!isSerializable.isSerializable) {
+        for (final reason in isSerializable.reasons) {
+          _reportError(
+            'The type of a thrown exception must be serializable as JSON. '
+            '$classType is not serializable: $reason',
+            location: classElement.sourceLocation,
+          );
+        }
+        continue;
+      }
+      exceptionTypes.add(classType);
+    }
+    return exceptionTypes;
   }
 
   Future<ast.Api?> _collectApi({
@@ -497,6 +547,8 @@ final class CelestAnalyzer {
           return null;
         }
 
+        // Do a quick scan to check that any types thrown directly from the
+        // API are referenceable and serializable.
         final funcNode = apiLibraryResult.getElementDeclaration(func)!.node;
         final exceptionCollector = ExceptionTypeCollector(
           source: library.source,
@@ -518,16 +570,6 @@ final class CelestAnalyzer {
             exceptionTypeLoc,
             type: CustomType.exception,
           );
-          final isSerializable = typeHelper.isSerializable(exceptionType);
-          if (!isSerializable.isSerializable) {
-            for (final reason in isSerializable.reasons) {
-              _reportError(
-                'The type of a thrown exception must be serializable as JSON. '
-                '$exceptionType is not serializable: $reason',
-                location: exceptionTypeLoc,
-              );
-            }
-          }
         }
 
         final function = ast.CloudFunction(
@@ -621,7 +663,6 @@ final class CelestAnalyzer {
           returnType: typeHelper.toReference(func.returnType),
           flattenedReturnType:
               typeHelper.toReference(func.returnType.flattened),
-          exceptionTypes: exceptionTypes.map(typeHelper.toReference).toList(),
           location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
           annotations: func.metadata
@@ -692,6 +733,8 @@ final class CelestAnalyzer {
       metadata: libraryMetdata,
       functions: functions,
       docs: library.docLines,
+      exceptionTypes:
+          _collectExceptionTypes(library).map(typeHelper.toReference),
     );
   }
 

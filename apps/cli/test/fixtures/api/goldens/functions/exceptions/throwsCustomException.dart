@@ -17,6 +17,61 @@ final class ThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
     try {
       _i2.throwsCustomException();
       return (statusCode: 200, body: {'response': null});
+    } on _i3.CustomErrorWithStackTrace catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i3.CustomErrorWithStackTrace>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'CustomErrorWithStackTrace',
+            'details': error,
+          }
+        }
+      );
+    } on _i3.CustomErrorToFromJson catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i3.CustomErrorToFromJson>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'CustomErrorToFromJson',
+            'details': error,
+          }
+        }
+      );
+    } on _i3.CustomError catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error = _i4.Serializers.instance.serialize<_i3.CustomError>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'CustomError',
+            'details': error,
+          }
+        }
+      );
+    } on _i3.CustomExceptionToFromJson catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i3.CustomExceptionToFromJson>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'CustomExceptionToFromJson',
+            'details': error,
+          }
+        }
+      );
     } on _i3.CustomException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
@@ -40,6 +95,10 @@ final class ThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
       const JsonMapSerializer(),
       const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
     );
+    _i4.Serializers.instance.put(const CustomExceptionToFromJsonSerializer());
+    _i4.Serializers.instance.put(const CustomErrorSerializer());
+    _i4.Serializers.instance.put(const CustomErrorToFromJsonSerializer());
+    _i4.Serializers.instance.put(const CustomErrorWithStackTraceSerializer());
   }
 }
 
@@ -47,6 +106,64 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ThrowsCustomExceptionTarget()},
   );
+}
+
+final class CustomErrorSerializer extends _i4.Serializer<_i3.CustomError> {
+  const CustomErrorSerializer();
+
+  @override
+  _i3.CustomError deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return _i3.CustomError();
+  }
+
+  @override
+  Object? serialize(_i3.CustomError value) => {
+        r'message': value.message,
+        r'additionalInfo': _i4.Serializers.instance.serialize<_i5.JsonMap>(
+          value.additionalInfo,
+          const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
+        ),
+      };
+}
+
+final class CustomErrorToFromJsonSerializer
+    extends _i4.Serializer<_i3.CustomErrorToFromJson> {
+  const CustomErrorToFromJsonSerializer();
+
+  @override
+  _i3.CustomErrorToFromJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i3.CustomErrorToFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(_i3.CustomErrorToFromJson value) => value.toJson();
+}
+
+final class CustomErrorWithStackTraceSerializer
+    extends _i4.Serializer<_i3.CustomErrorWithStackTrace> {
+  const CustomErrorWithStackTraceSerializer();
+
+  @override
+  _i3.CustomErrorWithStackTrace deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>?>(value);
+    return _i3.CustomErrorWithStackTrace(
+        stackTrace: (_i4.Serializers.instance
+                .deserialize<StackTrace?>(serialized?[r'stackTrace'])) ??
+            null);
+  }
+
+  @override
+  Object? serialize(_i3.CustomErrorWithStackTrace value) => {
+        r'stackTrace':
+            _i4.Serializers.instance.serialize<StackTrace>(value.stackTrace),
+        r'message': value.message,
+        r'additionalInfo': _i4.Serializers.instance.serialize<_i5.JsonMap>(
+          value.additionalInfo,
+          const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
+        ),
+      };
 }
 
 final class CustomExceptionSerializer
@@ -67,6 +184,20 @@ final class CustomExceptionSerializer
           const _i4.TypeToken<_i5.JsonMap>('JsonMap'),
         ),
       };
+}
+
+final class CustomExceptionToFromJsonSerializer
+    extends _i4.Serializer<_i3.CustomExceptionToFromJson> {
+  const CustomExceptionToFromJsonSerializer();
+
+  @override
+  _i3.CustomExceptionToFromJson deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i3.CustomExceptionToFromJson.fromJson(serialized);
+  }
+
+  @override
+  Object? serialize(_i3.CustomExceptionToFromJson value) => value.toJson();
 }
 
 final class JsonMapSerializer extends _i4.Serializer<_i5.JsonMap> {

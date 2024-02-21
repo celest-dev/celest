@@ -745,6 +745,10 @@ class _Http {
 
   /// Creates a [http.Client] reference.
   DartTypeReference get client => const DartTypeReference('Client', _url);
+
+  /// Creates a [http.BaseResponse] reference.
+  DartTypeReference get baseResponse =>
+      const DartTypeReference('BaseResponse', _url);
 }
 
 /// `dart:io` types

@@ -70,16 +70,10 @@ class CelestFunctions {
 }
 
 class CelestFunctionsAsserts {
-  /// Tests that asserts are enabled when running the local API.
-  Future<bool> assertsEnabled() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/asserts/asserts-enabled'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool);
-    }
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -90,7 +84,7 @@ class CelestFunctionsAsserts {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -98,11 +92,50 @@ class CelestFunctionsAsserts {
         }
     }
   }
+
+  /// Tests that asserts are enabled when running the local API.
+  Future<bool> assertsEnabled() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/asserts/asserts-enabled'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as bool);
+  }
 }
 
 /// Tests that classes with and without explicit fromJson/toJson methods are
 /// serializable and deserializable.
 class CelestFunctionsClasses {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
   Future<Empty> empty(Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/empty'),
@@ -111,26 +144,13 @@ class CelestFunctionsClasses {
           jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Empty>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Empty>($body['response']);
   }
 
   Future<Empty> asyncEmpty(Empty value) async {
@@ -141,26 +161,13 @@ class CelestFunctionsClasses {
           jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Empty>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Empty>($body['response']);
   }
 
   Future<Fields> fields(Fields value) async {
@@ -171,26 +178,13 @@ class CelestFunctionsClasses {
           jsonEncode({r'value': Serializers.instance.serialize<Fields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Fields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Fields>($body['response']);
   }
 
   Future<Fields> asyncFields(Fields value) async {
@@ -201,26 +195,13 @@ class CelestFunctionsClasses {
           jsonEncode({r'value': Serializers.instance.serialize<Fields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Fields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Fields>($body['response']);
   }
 
   Future<Fields?> nullableFields(Fields? value) async {
@@ -231,26 +212,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<Fields?>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Fields?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Fields?>($body['response']);
   }
 
   Future<Fields?> asyncNullableFields(Fields? value) async {
@@ -261,26 +229,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<Fields?>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Fields?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Fields?>($body['response']);
   }
 
   Future<NamedFields> namedFields(NamedFields value) async {
@@ -291,26 +246,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NamedFields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NamedFields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NamedFields>($body['response']);
   }
 
   Future<NamedFields> asyncNamedFields(NamedFields value) async {
@@ -321,26 +263,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NamedFields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NamedFields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NamedFields>($body['response']);
   }
 
   Future<MixedFields> mixedFields(MixedFields value) async {
@@ -351,26 +280,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<MixedFields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<MixedFields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<MixedFields>($body['response']);
   }
 
   Future<MixedFields> asyncMixedFields(MixedFields value) async {
@@ -381,26 +297,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<MixedFields>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<MixedFields>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<MixedFields>($body['response']);
   }
 
   Future<DefaultValues> defaultValues(DefaultValues value) async {
@@ -411,26 +314,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<DefaultValues>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<DefaultValues>($body['response']);
   }
 
   Future<DefaultValues> asyncDefaultValues(DefaultValues value) async {
@@ -441,26 +331,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<DefaultValues>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<DefaultValues>($body['response']);
   }
 
   Future<NestedClass> nestedClass(NestedClass value) async {
@@ -471,26 +348,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NestedClass>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NestedClass>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NestedClass>($body['response']);
   }
 
   Future<NestedClass> asyncNestedClass(NestedClass value) async {
@@ -501,26 +365,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NestedClass>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NestedClass>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NestedClass>($body['response']);
   }
 
   Future<OnlyFromJson> onlyFromJson(OnlyFromJson value) async {
@@ -531,26 +382,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
   }
 
   Future<OnlyFromJson> asyncOnlyFromJson(OnlyFromJson value) async {
@@ -561,26 +399,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<OnlyFromJson>($body['response']);
   }
 
   Future<OnlyToJson> onlyToJson(OnlyToJson value) async {
@@ -591,26 +416,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<OnlyToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<OnlyToJson>($body['response']);
   }
 
   Future<OnlyToJson> asyncOnlyToJson(OnlyToJson value) async {
@@ -621,26 +433,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<OnlyToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<OnlyToJson>($body['response']);
   }
 
   Future<OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
@@ -653,27 +452,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<OnlyToJsonWithDefaults>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<OnlyToJsonWithDefaults>($body['response']);
   }
 
   Future<OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
@@ -686,27 +472,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<OnlyToJsonWithDefaults>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<OnlyToJsonWithDefaults>($body['response']);
   }
 
   Future<FromJsonAndToJson> fromAndToJson(FromJsonAndToJson value) async {
@@ -717,27 +490,14 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<FromJsonAndToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<FromJsonAndToJson>($body['response']);
   }
 
   Future<FromJsonAndToJson> asyncFromAndToJson(FromJsonAndToJson value) async {
@@ -748,27 +508,14 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<FromJsonAndToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<FromJsonAndToJson>($body['response']);
   }
 
   Future<NonMapToJson> nonMapToJson(NonMapToJson value) async {
@@ -779,26 +526,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NonMapToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NonMapToJson>($body['response']);
   }
 
   Future<NonMapToJson> asyncNonMapToJson(NonMapToJson value) async {
@@ -809,26 +543,13 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<NonMapToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NonMapToJson>($body['response']);
   }
 
   Future<NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
@@ -842,27 +563,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NonMapToJsonWithDefaults>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NonMapToJsonWithDefaults>($body['response']);
   }
 
   Future<NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
@@ -876,27 +584,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NonMapToJsonWithDefaults>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NonMapToJsonWithDefaults>($body['response']);
   }
 
   Future<NonMapFromAndToJson> nonMapFromAndToJson(
@@ -909,27 +604,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NonMapFromAndToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NonMapFromAndToJson>($body['response']);
   }
 
   Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
@@ -942,27 +624,14 @@ class CelestFunctionsClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NonMapFromAndToJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NonMapFromAndToJson>($body['response']);
   }
 
   Future<FromJsonStatic> fromJsonStatic(FromJsonStatic value) async {
@@ -973,10 +642,23 @@ class CelestFunctionsClasses {
           {r'value': Serializers.instance.serialize<FromJsonStatic>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<FromJsonStatic>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return Serializers.instance.deserialize<FromJsonStatic>($body['response']);
+  }
+}
+
+/// Tests that collections (e.g. Lists/Maps) can be used as parameter and
+/// return types.
+class CelestFunctionsCollections {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -987,7 +669,7 @@ class CelestFunctionsClasses {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -995,11 +677,7 @@ class CelestFunctionsClasses {
         }
     }
   }
-}
 
-/// Tests that collections (e.g. Lists/Maps) can be used as parameter and
-/// return types.
-class CelestFunctionsCollections {
   Future<List<String>> simpleList(List<String> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-list'),
@@ -1007,28 +685,15 @@ class CelestFunctionsCollections {
       body: jsonEncode({r'list': list}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<List<SimpleClass>> complexList(List<SimpleClass> list) async {
@@ -1042,28 +707,15 @@ class CelestFunctionsCollections {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<SimpleClass>(el))
+        .toList();
   }
 
   Future<Map<String, String>> simpleMap(Map<String, String> map) async {
@@ -1073,33 +725,20 @@ class CelestFunctionsCollections {
       body: jsonEncode({r'map': map}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<Map<String, SimpleClass>> complexMap(
@@ -1119,16 +758,30 @@ class CelestFunctionsCollections {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            Serializers.instance.deserialize<SimpleClass>(value),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          Serializers.instance.deserialize<SimpleClass>(value),
+        ));
+  }
+}
+
+/// Tests that some cycles are allowed, e.g. when there is at least one level
+/// of indirection.
+class CelestFunctionsCycles {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -1139,7 +792,7 @@ class CelestFunctionsCollections {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -1147,37 +800,20 @@ class CelestFunctionsCollections {
         }
     }
   }
-}
 
-/// Tests that some cycles are allowed, e.g. when there is at least one level
-/// of indirection.
-class CelestFunctionsCycles {
   Future<Node> createTree() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/create-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Node>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Node>($body['response']);
   }
 
   Future<void> printTree(Node node) async {
@@ -1187,26 +823,13 @@ class CelestFunctionsCycles {
       body: jsonEncode({r'node': Serializers.instance.serialize<Node>(node)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<Node> combineTrees(
@@ -1228,26 +851,13 @@ class CelestFunctionsCycles {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Node>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Node>($body['response']);
   }
 
   /// Tests that self-referencing is allowed when there is a level
@@ -1263,21 +873,44 @@ class CelestFunctionsCycles {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<SelfReferencing>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return Serializers.instance.deserialize<SelfReferencing>($body['response']);
+  }
+}
+
+class CelestFunctionsExceptions {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'CustomException':
+        throw Serializers.instance.deserialize<CustomException>($details);
+      case r'CustomExceptionToFromJson':
+        throw Serializers.instance
+            .deserialize<CustomExceptionToFromJson>($details);
+      case r'CustomError':
+        throw Serializers.instance.deserialize<CustomError>($details);
+      case r'CustomErrorToFromJson':
+        throw Serializers.instance.deserialize<CustomErrorToFromJson>($details);
+      case r'CustomErrorWithStackTrace':
+        throw Serializers.instance
+            .deserialize<CustomErrorWithStackTrace>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -1285,9 +918,7 @@ class CelestFunctionsCycles {
         }
     }
   }
-}
 
-class CelestFunctionsExceptions {
   Future<void> throwsException({required SupportedExceptionType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-exception'),
@@ -1297,26 +928,13 @@ class CelestFunctionsExceptions {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsError({required SupportedErrorType type}) async {
@@ -1327,26 +945,13 @@ class CelestFunctionsExceptions {
           {r'type': Serializers.instance.serialize<SupportedErrorType>(type)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsCustomException() async {
@@ -1355,28 +960,13 @@ class CelestFunctionsExceptions {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'CustomException':
-        throw Serializers.instance.deserialize<CustomException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsCustomExceptionToFromJson() async {
@@ -1386,29 +976,13 @@ class CelestFunctionsExceptions {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'CustomExceptionToFromJson':
-        throw Serializers.instance
-            .deserialize<CustomExceptionToFromJson>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsCustomError() async {
@@ -1417,28 +991,13 @@ class CelestFunctionsExceptions {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'CustomError':
-        throw Serializers.instance.deserialize<CustomError>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsCustomErrorToFromJson() async {
@@ -1447,28 +1006,13 @@ class CelestFunctionsExceptions {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'CustomErrorToFromJson':
-        throw Serializers.instance.deserialize<CustomErrorToFromJson>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> throwsCustomErrorWithStackTrace() async {
@@ -1478,23 +1022,33 @@ class CelestFunctionsExceptions {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return;
+  }
+}
+
+/// Tests that extension types are correctly handled by the analyzer.
+class CelestFunctionsExtensionTypes {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
-      case r'CustomErrorWithStackTrace':
-        throw Serializers.instance
-            .deserialize<CustomErrorWithStackTrace>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -1502,10 +1056,7 @@ class CelestFunctionsExceptions {
         }
     }
   }
-}
 
-/// Tests that extension types are correctly handled by the analyzer.
-class CelestFunctionsExtensionTypes {
   Future<StringX> string(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string'),
@@ -1518,29 +1069,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringX>(
-        $body['response'],
-        const TypeToken<StringX>('StringX'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringX>(
+      $body['response'],
+      const TypeToken<StringX>('StringX'),
+    );
   }
 
   Future<StringX> asyncOrString(StringX s) async {
@@ -1555,29 +1093,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringX>(
-        $body['response'],
-        const TypeToken<StringX>('StringX'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringX>(
+      $body['response'],
+      const TypeToken<StringX>('StringX'),
+    );
   }
 
   Future<StringX> asyncString(StringX s) async {
@@ -1592,29 +1117,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringX>(
-        $body['response'],
-        const TypeToken<StringX>('StringX'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringX>(
+      $body['response'],
+      const TypeToken<StringX>('StringX'),
+    );
   }
 
   Future<StringXImpl> stringImpl(StringXImpl s) async {
@@ -1629,29 +1141,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXImpl>(
-        $body['response'],
-        const TypeToken<StringXImpl>('StringXImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXImpl>(
+      $body['response'],
+      const TypeToken<StringXImpl>('StringXImpl'),
+    );
   }
 
   Future<StringXToFromJson> stringToFromJson(StringXToFromJson s) async {
@@ -1666,29 +1165,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXToFromJson>(
-        $body['response'],
-        const TypeToken<StringXToFromJson>('StringXToFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXToFromJson>(
+      $body['response'],
+      const TypeToken<StringXToFromJson>('StringXToFromJson'),
+    );
   }
 
   Future<StringXToJson> stringToJson(StringXToJson s) async {
@@ -1703,29 +1189,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXToJson>(
-        $body['response'],
-        const TypeToken<StringXToJson>('StringXToJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXToJson>(
+      $body['response'],
+      const TypeToken<StringXToJson>('StringXToJson'),
+    );
   }
 
   Future<StringXToJsonImpl> stringToJsonImpl(StringXToJsonImpl s) async {
@@ -1740,29 +1213,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXToJsonImpl>(
-        $body['response'],
-        const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXToJsonImpl>(
+      $body['response'],
+      const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
+    );
   }
 
   Future<StringXFromJson> stringFromJson(StringXFromJson s) async {
@@ -1777,29 +1237,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXFromJson>(
-        $body['response'],
-        const TypeToken<StringXFromJson>('StringXFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXFromJson>(
+      $body['response'],
+      const TypeToken<StringXFromJson>('StringXFromJson'),
+    );
   }
 
   Future<StringXFromJsonImpl> stringFromJsonImpl(StringXFromJsonImpl s) async {
@@ -1814,29 +1261,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXFromJsonImpl>(
-        $body['response'],
-        const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXFromJsonImpl>(
+      $body['response'],
+      const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
+    );
   }
 
   Future<StringXFromJsonStatic> stringFromJsonStatic(
@@ -1852,29 +1286,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXFromJsonStatic>(
-        $body['response'],
-        const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXFromJsonStatic>(
+      $body['response'],
+      const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
+    );
   }
 
   Future<StringXPrivateField> stringPrivateField(StringXPrivateField s) async {
@@ -1889,29 +1310,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXPrivateField>(
-        $body['response'],
-        const TypeToken<StringXPrivateField>('StringXPrivateField'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXPrivateField>(
+      $body['response'],
+      const TypeToken<StringXPrivateField>('StringXPrivateField'),
+    );
   }
 
   Future<StringXPrivateFieldImpl> stringPrivateFieldImpl(
@@ -1927,29 +1335,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXPrivateFieldImpl>(
-        $body['response'],
-        const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXPrivateFieldImpl>(
+      $body['response'],
+      const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
+    );
   }
 
   Future<StringXPrivateCtor> stringPrivateCtor(StringXPrivateCtor s) async {
@@ -1964,29 +1359,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXPrivateCtor>(
-        $body['response'],
-        const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXPrivateCtor>(
+      $body['response'],
+      const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
+    );
   }
 
   Future<StringXPrivateCtorImpl> stringPrivateCtorImpl(
@@ -2002,29 +1384,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<StringXPrivateCtorImpl>(
-        $body['response'],
-        const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<StringXPrivateCtorImpl>(
+      $body['response'],
+      const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
+    );
   }
 
   Future<Value> value(Value v) async {
@@ -2034,26 +1403,13 @@ class CelestFunctionsExtensionTypes {
       body: jsonEncode({r'v': Serializers.instance.serialize<Value>(v)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Value>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Value>($body['response']);
   }
 
   Future<ValueX> valuex(ValueX v) async {
@@ -2068,29 +1424,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueX>(
-        $body['response'],
-        const TypeToken<ValueX>('ValueX'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueX>(
+      $body['response'],
+      const TypeToken<ValueX>('ValueX'),
+    );
   }
 
   Future<ValueXImpl> valueXImpl(ValueXImpl v) async {
@@ -2105,29 +1448,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXImpl>(
-        $body['response'],
-        const TypeToken<ValueXImpl>('ValueXImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXImpl>(
+      $body['response'],
+      const TypeToken<ValueXImpl>('ValueXImpl'),
+    );
   }
 
   Future<ValueXToFromJson> valueXToFromJson(ValueXToFromJson v) async {
@@ -2142,29 +1472,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXToFromJson>(
-        $body['response'],
-        const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXToFromJson>(
+      $body['response'],
+      const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
+    );
   }
 
   Future<ValueXToJson> valueXToJson(ValueXToJson v) async {
@@ -2179,29 +1496,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXToJson>(
-        $body['response'],
-        const TypeToken<ValueXToJson>('ValueXToJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXToJson>(
+      $body['response'],
+      const TypeToken<ValueXToJson>('ValueXToJson'),
+    );
   }
 
   Future<ValueXToJsonImpl> valueXToJsonImpl(ValueXToJsonImpl v) async {
@@ -2216,29 +1520,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXToJsonImpl>(
-        $body['response'],
-        const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXToJsonImpl>(
+      $body['response'],
+      const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
+    );
   }
 
   Future<ValueXFromJson> valueXFromJson(ValueXFromJson v) async {
@@ -2253,29 +1544,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXFromJson>(
-        $body['response'],
-        const TypeToken<ValueXFromJson>('ValueXFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXFromJson>(
+      $body['response'],
+      const TypeToken<ValueXFromJson>('ValueXFromJson'),
+    );
   }
 
   Future<ValueXFromJsonImpl> valueXFromJsonImpl(ValueXFromJsonImpl v) async {
@@ -2290,29 +1568,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXFromJsonImpl>(
-        $body['response'],
-        const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXFromJsonImpl>(
+      $body['response'],
+      const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
+    );
   }
 
   Future<ValueXFromJsonStatic> valueXFromJsonStatic(
@@ -2328,29 +1593,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXFromJsonStatic>(
-        $body['response'],
-        const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXFromJsonStatic>(
+      $body['response'],
+      const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
+    );
   }
 
   /// Tests that extension types can implement other extension types to achieve
@@ -2368,29 +1620,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXToFromJsonCombined>(
-        $body['response'],
-        const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXToFromJsonCombined>(
+      $body['response'],
+      const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
+    );
   }
 
   Future<ValueXImplIndirect> valueXImplIndirect(ValueXImplIndirect v) async {
@@ -2405,29 +1644,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ValueXImplIndirect>(
-        $body['response'],
-        const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ValueXImplIndirect>(
+      $body['response'],
+      const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
+    );
   }
 
   Future<Color> color(Color color) async {
@@ -2438,26 +1664,13 @@ class CelestFunctionsExtensionTypes {
           jsonEncode({r'color': Serializers.instance.serialize<Color>(color)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Color>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Color>($body['response']);
   }
 
   Future<ColorX> colorx(ColorX color) async {
@@ -2472,29 +1685,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorX>(
-        $body['response'],
-        const TypeToken<ColorX>('ColorX'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorX>(
+      $body['response'],
+      const TypeToken<ColorX>('ColorX'),
+    );
   }
 
   Future<ColorXImpl> colorXImpl(ColorXImpl color) async {
@@ -2509,29 +1709,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXImpl>(
-        $body['response'],
-        const TypeToken<ColorXImpl>('ColorXImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXImpl>(
+      $body['response'],
+      const TypeToken<ColorXImpl>('ColorXImpl'),
+    );
   }
 
   Future<ColorXToFromJson> colorXToFromJson(ColorXToFromJson color) async {
@@ -2546,29 +1733,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXToFromJson>(
-        $body['response'],
-        const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXToFromJson>(
+      $body['response'],
+      const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
+    );
   }
 
   Future<ColorXToJson> colorXToJson(ColorXToJson color) async {
@@ -2583,29 +1757,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXToJson>(
-        $body['response'],
-        const TypeToken<ColorXToJson>('ColorXToJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXToJson>(
+      $body['response'],
+      const TypeToken<ColorXToJson>('ColorXToJson'),
+    );
   }
 
   Future<ColorXToJsonImpl> colorXToJsonImpl(ColorXToJsonImpl color) async {
@@ -2620,29 +1781,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXToJsonImpl>(
-        $body['response'],
-        const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXToJsonImpl>(
+      $body['response'],
+      const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
+    );
   }
 
   Future<ColorXFromJson> colorXFromJson(ColorXFromJson color) async {
@@ -2657,29 +1805,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXFromJson>(
-        $body['response'],
-        const TypeToken<ColorXFromJson>('ColorXFromJson'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXFromJson>(
+      $body['response'],
+      const TypeToken<ColorXFromJson>('ColorXFromJson'),
+    );
   }
 
   Future<ColorXFromJsonImpl> colorXFromJsonImpl(
@@ -2695,29 +1830,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXFromJsonImpl>(
-        $body['response'],
-        const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXFromJsonImpl>(
+      $body['response'],
+      const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
+    );
   }
 
   Future<ColorXFromJsonStatic> colorXFromJsonStatic(
@@ -2733,29 +1855,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXFromJsonStatic>(
-        $body['response'],
-        const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXFromJsonStatic>(
+      $body['response'],
+      const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
+    );
   }
 
   Future<ColorXToFromJsonCombined> colorXToFromJsonCombined(
@@ -2771,29 +1880,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXToFromJsonCombined>(
-        $body['response'],
-        const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXToFromJsonCombined>(
+      $body['response'],
+      const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
+    );
   }
 
   Future<ColorXImplIndirect> colorXImplIndirect(
@@ -2809,29 +1905,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ColorXImplIndirect>(
-        $body['response'],
-        const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ColorXImplIndirect>(
+      $body['response'],
+      const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
+    );
   }
 
   Future<JsonValue> jsonValue(JsonValue value) async {
@@ -2846,29 +1929,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonValue>(
-        $body['response'],
-        const TypeToken<JsonValue>('JsonValue'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonValue>(
+      $body['response'],
+      const TypeToken<JsonValue>('JsonValue'),
+    );
   }
 
   Future<JsonString> jsonString(JsonString value) async {
@@ -2883,29 +1953,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonString>(
-        $body['response'],
-        const TypeToken<JsonString>('JsonString'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonString>(
+      $body['response'],
+      const TypeToken<JsonString>('JsonString'),
+    );
   }
 
   Future<JsonNum> jsonNum(JsonNum value) async {
@@ -2920,29 +1977,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonNum>(
-        $body['response'],
-        const TypeToken<JsonNum>('JsonNum'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonNum>(
+      $body['response'],
+      const TypeToken<JsonNum>('JsonNum'),
+    );
   }
 
   Future<JsonInt> jsonInt(JsonInt value) async {
@@ -2957,29 +2001,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonInt>(
-        $body['response'],
-        const TypeToken<JsonInt>('JsonInt'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonInt>(
+      $body['response'],
+      const TypeToken<JsonInt>('JsonInt'),
+    );
   }
 
   Future<JsonDouble> jsonDouble(JsonDouble value) async {
@@ -2994,29 +2025,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonDouble>(
-        $body['response'],
-        const TypeToken<JsonDouble>('JsonDouble'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonDouble>(
+      $body['response'],
+      const TypeToken<JsonDouble>('JsonDouble'),
+    );
   }
 
   Future<JsonBool> jsonBool(JsonBool value) async {
@@ -3031,29 +2049,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonBool>(
-        $body['response'],
-        const TypeToken<JsonBool>('JsonBool'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonBool>(
+      $body['response'],
+      const TypeToken<JsonBool>('JsonBool'),
+    );
   }
 
   Future<JsonList> jsonList(JsonList value) async {
@@ -3068,29 +2073,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonList>(
-        $body['response'],
-        const TypeToken<JsonList>('JsonList'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonList>(
+      $body['response'],
+      const TypeToken<JsonList>('JsonList'),
+    );
   }
 
   Future<JsonMap> jsonMap(JsonMap value) async {
@@ -3105,29 +2097,16 @@ class CelestFunctionsExtensionTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<JsonMap>(
-        $body['response'],
-        const TypeToken<JsonMap>('JsonMap'),
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
       );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<JsonMap>(
+      $body['response'],
+      const TypeToken<JsonMap>('JsonMap'),
+    );
   }
 }
 
@@ -3136,18 +2115,10 @@ class CelestFunctionsExtensionTypes {
 /// having a `toJson` method with function parameters for mapping the
 /// underlying types to JSON (Object Function(T) toJsonT).
 class CelestFunctionsGenericWrappers {
-  Future<GenericWrappers> genericWrappers(GenericWrappers value) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
-          {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
-    );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<GenericWrappers>($body['response']);
-    }
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -3158,13 +2129,30 @@ class CelestFunctionsGenericWrappers {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
             throw InternalServerException($code);
         }
     }
+  }
+
+  Future<GenericWrappers> genericWrappers(GenericWrappers value) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode(
+          {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
+    );
+    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
   }
 
   Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async {
@@ -3175,27 +2163,13 @@ class CelestFunctionsGenericWrappers {
           {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<GenericWrappers>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
   }
 
   Future<GenericWrappers> genericWrapperParameters({
@@ -3253,10 +2227,23 @@ class CelestFunctionsGenericWrappers {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<GenericWrappers>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return Serializers.instance.deserialize<GenericWrappers>($body['response']);
+  }
+}
+
+/// Tests that metadata associated with functions and parameters are correctly
+/// parsed and transferred to the generated client.
+class CelestFunctionsMetadata {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -3267,7 +2254,7 @@ class CelestFunctionsGenericWrappers {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -3275,11 +2262,7 @@ class CelestFunctionsGenericWrappers {
         }
     }
   }
-}
 
-/// Tests that metadata associated with functions and parameters are correctly
-/// parsed and transferred to the generated client.
-class CelestFunctionsMetadata {
   /// A function that has doc comments.
   ///
   /// This is a doc comment.
@@ -3300,26 +2283,13 @@ class CelestFunctionsMetadata {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   @Deprecated('next release')
@@ -3329,26 +2299,13 @@ class CelestFunctionsMetadata {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   @Deprecated('Do not use this function.')
@@ -3358,26 +2315,13 @@ class CelestFunctionsMetadata {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> hasNamedConstructedAnnotation() async {
@@ -3386,26 +2330,13 @@ class CelestFunctionsMetadata {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> hasLiteralsAnnotation(
@@ -3421,26 +2352,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> hasExportableAnnotation(
@@ -3456,26 +2374,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> hasExportableConstructedAnnotation(
@@ -3491,26 +2396,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> hasNotExportableAnnotation(
@@ -3526,26 +2418,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> positionalDefaultValues([
@@ -3583,26 +2462,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullablePositionalDefaultValues([
@@ -3640,26 +2506,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> namedDefaultValues({
@@ -3697,26 +2550,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullableNamedDefaultValues({
@@ -3754,26 +2594,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> positionalDefaultValueVars([
@@ -3811,26 +2638,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullablePositionalDefaultValueVars([
@@ -3869,26 +2683,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> namedDefaultValueVars({
@@ -3926,26 +2727,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullableNamedDefaultValueVars({
@@ -3983,26 +2771,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> positionalDefaultValueVarsPrivate([
@@ -4040,26 +2815,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullablePositionalDefaultValueVarsPrivate([
@@ -4098,26 +2860,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> namedDefaultValueVarsPrivate({
@@ -4155,26 +2904,13 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> nullableNamedDefaultValueVarsPrivate({
@@ -4213,9 +2949,21 @@ class CelestFunctionsMetadata {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return;
+  }
+}
+
+class CelestFunctionsParameterTypes {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -4226,7 +2974,7 @@ class CelestFunctionsMetadata {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -4234,9 +2982,7 @@ class CelestFunctionsMetadata {
         }
     }
   }
-}
 
-class CelestFunctionsParameterTypes {
   Future<void> simple(
     String aString,
     int anInt,
@@ -4417,26 +3163,13 @@ class CelestFunctionsParameterTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> simpleOptional(
@@ -4620,26 +3353,13 @@ class CelestFunctionsParameterTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> complex(
@@ -4919,9 +3639,21 @@ class CelestFunctionsParameterTypes {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return;
+  }
+}
+
+class CelestFunctionsParameters {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -4932,7 +3664,7 @@ class CelestFunctionsParameterTypes {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -4940,9 +3672,7 @@ class CelestFunctionsParameterTypes {
         }
     }
   }
-}
 
-class CelestFunctionsParameters {
   Future<void> optionalPositional([
     String? optionalString = null,
     int? optionalInt = null,
@@ -4956,26 +3686,13 @@ class CelestFunctionsParameters {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> optionalNamed({
@@ -4991,26 +3708,13 @@ class CelestFunctionsParameters {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> requiredPositional(
@@ -5026,26 +3730,13 @@ class CelestFunctionsParameters {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> requiredNamed({
@@ -5061,9 +3752,23 @@ class CelestFunctionsParameters {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return;
+  }
+}
+
+/// Tests that records with and without aliases are serializable and
+/// deserializable.
+class CelestFunctionsRecords {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -5074,7 +3779,7 @@ class CelestFunctionsParameters {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -5082,11 +3787,7 @@ class CelestFunctionsParameters {
         }
     }
   }
-}
 
-/// Tests that records with and without aliases are serializable and
-/// deserializable.
-class CelestFunctionsRecords {
   Future<({String anotherField, String field})> nonAliasedNamedFields(
       {required ({String anotherField, String field}) value}) async {
     final $response = await celest.httpClient.post(
@@ -5098,28 +3799,14 @@ class CelestFunctionsRecords {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<({String anotherField, String field})>(
-              $body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<({String anotherField, String field})>($body['response']);
   }
 
   Future<({String anotherField, String field})> asyncNonAliasedNamedFields(
@@ -5133,28 +3820,14 @@ class CelestFunctionsRecords {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<({String anotherField, String field})>(
-              $body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<({String anotherField, String field})>($body['response']);
   }
 
   Future<NamedFieldsRecord> aliasedNamedFields(
@@ -5166,27 +3839,14 @@ class CelestFunctionsRecords {
           {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NamedFieldsRecord>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NamedFieldsRecord>($body['response']);
   }
 
   Future<NamedFieldsRecord> asyncAliasedNamedFields(
@@ -5198,27 +3858,14 @@ class CelestFunctionsRecords {
           {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NamedFieldsRecord>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<NamedFieldsRecord>($body['response']);
   }
 
   Future<
@@ -5239,30 +3886,17 @@ class CelestFunctionsRecords {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<
-          ({
-            NamedFieldsRecord aliased,
-            ({String anotherField, String field}) nonAliased
-          })>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<
+        ({
+          NamedFieldsRecord aliased,
+          ({String anotherField, String field}) nonAliased
+        })>($body['response']);
   }
 
   Future<
@@ -5283,30 +3917,17 @@ class CelestFunctionsRecords {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<
-          ({
-            NamedFieldsRecord aliased,
-            ({String anotherField, String field}) nonAliased
-          })>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<
+        ({
+          NamedFieldsRecord aliased,
+          ({String anotherField, String field}) nonAliased
+        })>($body['response']);
   }
 
   Future<Nested> nested(Nested value) async {
@@ -5317,26 +3938,13 @@ class CelestFunctionsRecords {
           jsonEncode({r'value': Serializers.instance.serialize<Nested>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Nested>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Nested>($body['response']);
   }
 
   Future<Nested> asyncNested(Nested value) async {
@@ -5347,26 +3955,13 @@ class CelestFunctionsRecords {
           jsonEncode({r'value': Serializers.instance.serialize<Nested>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Nested>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Nested>($body['response']);
   }
 
   Future<NullableNested?> nullableNested(NullableNested? value) async {
@@ -5377,27 +3972,13 @@ class CelestFunctionsRecords {
           {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NullableNested?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<NullableNested?>($body['response']);
   }
 
   Future<NullableNested?> asyncNullableNested(NullableNested? value) async {
@@ -5408,10 +3989,22 @@ class CelestFunctionsRecords {
           {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<NullableNested?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return Serializers.instance.deserialize<NullableNested?>($body['response']);
+  }
+}
+
+/// Validates all permutations of return types.
+class CelestFunctionsReturnTypes {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
@@ -5422,7 +4015,7 @@ class CelestFunctionsRecords {
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -5430,36 +4023,20 @@ class CelestFunctionsRecords {
         }
     }
   }
-}
 
-/// Validates all permutations of return types.
-class CelestFunctionsReturnTypes {
   Future<void> asyncVoidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<String> asyncStringReturn() async {
@@ -5468,26 +4045,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as String);
   }
 
   Future<int> asyncIntReturn() async {
@@ -5496,26 +4060,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toInt();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> asyncDoubleReturn() async {
@@ -5524,26 +4075,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> asyncBoolReturn() async {
@@ -5552,26 +4090,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> asyncIterableReturn() async {
@@ -5580,28 +4105,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<List<String>> asyncListReturn() async {
@@ -5610,28 +4122,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<Map<String, String>> asyncMapReturn() async {
@@ -5640,33 +4139,20 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<SimpleStruct> asyncStructReturn() async {
@@ -5675,26 +4161,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
   }
 
   Future<SimpleStruct?> asyncStructReturnNullable() async {
@@ -5703,26 +4176,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
   }
 
   Future<ComplexStruct> asyncComplexStructReturn() async {
@@ -5731,26 +4191,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
   }
 
   Future<ComplexStruct?> asyncComplexStructReturnNullable() async {
@@ -5760,27 +4207,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<ComplexStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
   }
 
   Future<ComplexClass> asyncComplexClassReturn() async {
@@ -5789,26 +4222,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexClass>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexClass>($body['response']);
   }
 
   Future<SimpleClass?> asyncClassReturnNullable() async {
@@ -5817,26 +4237,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
   }
 
   Future<void> asyncOrVoidReturn() async {
@@ -5845,26 +4252,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<String> asyncOrStringReturn() async {
@@ -5873,26 +4267,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as String);
   }
 
   Future<int> asyncOrIntReturn() async {
@@ -5901,26 +4282,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toInt();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> asyncOrDoubleReturn() async {
@@ -5929,26 +4297,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> asyncOrBoolReturn() async {
@@ -5957,26 +4312,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> asyncOrIterableReturn() async {
@@ -5985,28 +4327,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<List<String>> asyncOrListReturn() async {
@@ -6015,28 +4344,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<Map<String, String>> asyncOrMapReturn() async {
@@ -6045,33 +4361,20 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<SimpleStruct> asyncOrStructReturn() async {
@@ -6080,26 +4383,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
   }
 
   Future<ComplexStruct> asyncOrComplexStructReturn() async {
@@ -6108,26 +4398,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
   }
 
   Future<void> asyncOrVoidReturnNullable() async {
@@ -6136,26 +4413,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<String?> asyncOrStringReturnNullable() async {
@@ -6164,26 +4428,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String?);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as String?);
   }
 
   Future<int?> asyncOrIntReturnNullable() async {
@@ -6192,26 +4443,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num?)?.toInt();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num?)?.toInt();
   }
 
   Future<double?> asyncOrDoubleReturnNullable() async {
@@ -6220,26 +4458,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num?)?.toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num?)?.toDouble();
   }
 
   Future<bool?> asyncOrBoolReturnNullable() async {
@@ -6248,26 +4473,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool?);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as bool?);
   }
 
   Future<Iterable<String>?> asyncOrIterableReturnNullable() async {
@@ -6276,28 +4488,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>?)
-          ?.map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>?)
+        ?.map((el) => (el as String))
+        .toList();
   }
 
   Future<List<String>?> asyncOrListReturnNullable() async {
@@ -6306,28 +4505,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>?)
-          ?.map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>?)
+        ?.map((el) => (el as String))
+        .toList();
   }
 
   Future<Map<String, String>?> asyncOrMapReturnNullable() async {
@@ -6336,33 +4522,20 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>?)?.map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>?)?.map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<SimpleStruct?> asyncOrStructReturnNullable() async {
@@ -6371,26 +4544,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
   }
 
   Future<ComplexStruct?> asyncOrComplexStructReturnNullable() async {
@@ -6400,27 +4560,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<ComplexStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
   }
 
   Future<SimpleClass?> asyncOrSimpleClassReturnNullable() async {
@@ -6430,26 +4576,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
   }
 
   Future<ComplexClass?> asyncOrComplexClassReturnNullable() async {
@@ -6459,26 +4592,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexClass?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexClass?>($body['response']);
   }
 
   Future<void> voidReturn() async {
@@ -6487,26 +4607,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<String> stringReturn() async {
@@ -6515,26 +4622,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as String);
   }
 
   Future<int> intReturn() async {
@@ -6543,26 +4637,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toInt();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toInt();
   }
 
   Future<double> doubleReturn() async {
@@ -6571,26 +4652,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toDouble();
   }
 
   Future<bool> boolReturn() async {
@@ -6599,26 +4667,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as bool);
   }
 
   Future<Iterable<String>> iterableReturn() async {
@@ -6627,28 +4682,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<List<String>> listReturn() async {
@@ -6657,28 +4699,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => (el as String))
+        .toList();
   }
 
   Future<Map<String, String>> mapReturn() async {
@@ -6687,33 +4716,20 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<SimpleStruct> structReturn() async {
@@ -6722,26 +4738,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct>($body['response']);
   }
 
   Future<ComplexStruct> complexReturn() async {
@@ -6750,26 +4753,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexStruct>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct>($body['response']);
   }
 
   Future<SimpleClass> simpleClassReturn() async {
@@ -6778,26 +4768,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleClass>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleClass>($body['response']);
   }
 
   Future<ComplexClass> complexClassReturn() async {
@@ -6806,26 +4783,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexClass>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexClass>($body['response']);
   }
 
   Future<String?> stringReturnNullable() async {
@@ -6834,26 +4798,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as String?);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as String?);
   }
 
   Future<int?> intReturnNullable() async {
@@ -6862,26 +4813,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num?)?.toInt();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num?)?.toInt();
   }
 
   Future<double?> doubleReturnNullable() async {
@@ -6890,26 +4828,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num?)?.toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num?)?.toDouble();
   }
 
   Future<bool?> boolReturnNullable() async {
@@ -6918,26 +4843,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as bool?);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as bool?);
   }
 
   Future<Iterable<String>?> iterableReturnNullable() async {
@@ -6946,28 +4858,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>?)
-          ?.map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>?)
+        ?.map((el) => (el as String))
+        .toList();
   }
 
   Future<List<String>?> listReturnNullable() async {
@@ -6976,28 +4875,15 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>?)
-          ?.map((el) => (el as String))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>?)
+        ?.map((el) => (el as String))
+        .toList();
   }
 
   Future<Map<String, String>?> mapReturnNullable() async {
@@ -7006,33 +4892,20 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>?)?.map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            (value as String),
-          ));
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Map<String, Object?>?)?.map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   Future<SimpleStruct?> structReturnNullable() async {
@@ -7041,26 +4914,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleStruct?>($body['response']);
   }
 
   Future<ComplexStruct?> complexReturnNullable() async {
@@ -7069,27 +4929,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<ComplexStruct?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<ComplexStruct?>($body['response']);
   }
 
   Future<SimpleClass?> simpleClassReturnNullable() async {
@@ -7098,26 +4944,13 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<SimpleClass?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<SimpleClass?>($body['response']);
   }
 
   Future<ComplexClass?> complexClassReturnNullable() async {
@@ -7126,20 +4959,44 @@ class CelestFunctionsReturnTypes {
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<ComplexClass?>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
+    return Serializers.instance.deserialize<ComplexClass?>($body['response']);
+  }
+}
+
+class CelestFunctionsSealedClasses {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'CustomException':
+        throw Serializers.instance.deserialize<CustomException>($details);
+      case r'CustomExceptionToFromJson':
+        throw Serializers.instance
+            .deserialize<CustomExceptionToFromJson>($details);
+      case r'CustomError':
+        throw Serializers.instance.deserialize<CustomError>($details);
+      case r'CustomErrorToFromJson':
+        throw Serializers.instance.deserialize<CustomErrorToFromJson>($details);
+      case r'CustomErrorWithStackTrace':
+        throw Serializers.instance
+            .deserialize<CustomErrorWithStackTrace>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -7147,9 +5004,7 @@ class CelestFunctionsReturnTypes {
         }
     }
   }
-}
 
-class CelestFunctionsSealedClasses {
   Future<double> area(Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/area'),
@@ -7158,26 +5013,13 @@ class CelestFunctionsSealedClasses {
           jsonEncode({r'shape': Serializers.instance.serialize<Shape>(shape)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as num).toDouble();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as num).toDouble();
   }
 
   Future<List<Shape>> sealedClass({required List<Shape> shapes}) async {
@@ -7191,28 +5033,15 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Shape>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<Shape>(el))
+        .toList();
   }
 
   Future<Rectangle> rectangle(Rectangle rectangle) async {
@@ -7223,26 +5052,13 @@ class CelestFunctionsSealedClasses {
           {r'rectangle': Serializers.instance.serialize<Rectangle>(rectangle)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Rectangle>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Rectangle>($body['response']);
   }
 
   Future<Circle> circle(Circle circle) async {
@@ -7253,26 +5069,13 @@ class CelestFunctionsSealedClasses {
           {r'circle': Serializers.instance.serialize<Circle>(circle)}),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<Circle>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<Circle>($body['response']);
   }
 
   Future<List<ShapeWithInheritedCustomJson>> sealedClassWithInheritedCustomJson(
@@ -7289,29 +5092,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance
-              .deserialize<ShapeWithInheritedCustomJson>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) =>
+            Serializers.instance.deserialize<ShapeWithInheritedCustomJson>(el))
+        .toList();
   }
 
   Future<List<ShapeWithCustomJson>> sealedClassWithCustomJson(
@@ -7327,29 +5117,15 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map(
-              (el) => Serializers.instance.deserialize<ShapeWithCustomJson>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<ShapeWithCustomJson>(el))
+        .toList();
   }
 
   Future<List<ShapeWithOverriddenCustomJson>>
@@ -7374,29 +5150,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance
-              .deserialize<ShapeWithOverriddenCustomJson>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) =>
+            Serializers.instance.deserialize<ShapeWithOverriddenCustomJson>(el))
+        .toList();
   }
 
   Future<ShapeWithOverriddenCustomJson> rectangleWithOverriddenCustomJson(
@@ -7411,27 +5174,14 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<ShapeWithOverriddenCustomJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<ShapeWithOverriddenCustomJson>($body['response']);
   }
 
   Future<CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
@@ -7446,27 +5196,14 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<CircleWithOverriddenCustomJson>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<CircleWithOverriddenCustomJson>($body['response']);
   }
 
   Future<List<OkResult<Shape>>> okShapeResults(List<Shape> shapes) async {
@@ -7480,28 +5217,15 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<OkResult<Shape>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<OkResult<Shape>>(el))
+        .toList();
   }
 
   Future<List<ErrResult<String>>> errShapeResults(List<Shape> shapes) async {
@@ -7515,28 +5239,15 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<ErrResult<String>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<ErrResult<String>>(el))
+        .toList();
   }
 
   Future<List<Result<Shape, String>>> shapeResults(List<Shape> shapes) async {
@@ -7550,29 +5261,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) =>
-              Serializers.instance.deserialize<Result<Shape, String>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map(
+            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .toList();
   }
 
   Future<List<Result<Shape, String>>> aliasedOkShapeResults(
@@ -7587,29 +5285,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) =>
-              Serializers.instance.deserialize<Result<Shape, String>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map(
+            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .toList();
   }
 
   Future<List<Result<Shape, String>>> aliasedErrShapeResults(
@@ -7624,29 +5309,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) =>
-              Serializers.instance.deserialize<Result<Shape, String>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map(
+            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .toList();
   }
 
   Future<List<Result<Shape, String>>> aliasedShapeResults(
@@ -7661,29 +5333,16 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) =>
-              Serializers.instance.deserialize<Result<Shape, String>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map(
+            (el) => Serializers.instance.deserialize<Result<Shape, String>>(el))
+        .toList();
   }
 
   Future<SwappedResult<Shape, String>> swappedResult(
@@ -7696,27 +5355,14 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance
-          .deserialize<SwappedResult<Shape, String>>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance
+        .deserialize<SwappedResult<Shape, String>>($body['response']);
   }
 
   Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
@@ -7734,26 +5380,13 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return Serializers.instance.deserialize<OkResult<T>>($body['response']);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return Serializers.instance.deserialize<OkResult<T>>($body['response']);
   }
 
   Future<List<Result<T, E>>>
@@ -7781,27 +5414,14 @@ class CelestFunctionsSealedClasses {
       }),
     );
     final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Result<T, E>>(el))
-          .toList();
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return ($body['response'] as Iterable<Object?>)
+        .map((el) => Serializers.instance.deserialize<Result<T, E>>(el))
+        .toList();
   }
 }

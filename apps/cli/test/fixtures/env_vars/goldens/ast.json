@@ -89,7 +89,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -305,7 +304,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -325,6 +323,7 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,

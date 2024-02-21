@@ -91,7 +91,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -198,7 +197,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -261,7 +259,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -344,7 +341,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -493,7 +489,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -650,7 +645,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -713,7 +707,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -784,7 +777,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -847,7 +839,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -918,7 +909,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -941,6 +931,7 @@
         "/// Tests that records with and without aliases are serializable and",
         "/// deserializable."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -1006,7 +997,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1093,7 +1083,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1156,7 +1145,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1219,7 +1207,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1306,7 +1293,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1393,7 +1379,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1532,7 +1517,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1595,7 +1579,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1658,7 +1641,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1761,7 +1743,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1864,7 +1845,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -1979,7 +1959,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2094,7 +2073,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2209,7 +2187,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2324,7 +2301,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2429,7 +2405,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2531,7 +2506,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2709,7 +2683,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -2729,6 +2702,38 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomExceptionToFromJson",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomErrorToFromJson",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomErrorWithStackTrace",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -4215,7 +4220,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -5707,7 +5711,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7412,7 +7415,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7432,6 +7434,7 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -7470,7 +7473,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7529,7 +7531,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7678,7 +7679,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7741,7 +7741,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [
             "/// Tests that self-referencing is allowed when there is a level",
             "/// of indirection, e.g. nullability, generics, or a wrapper."
@@ -7767,6 +7766,7 @@
         "/// Tests that some cycles are allowed, e.g. when there is at least one level",
         "/// of indirection."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -7832,7 +7832,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7903,7 +7902,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -7974,7 +7972,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8037,7 +8034,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8100,7 +8096,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8163,7 +8158,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8226,7 +8220,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8289,7 +8282,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8352,7 +8344,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8415,7 +8406,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8478,7 +8468,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8541,7 +8530,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8604,7 +8592,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8667,7 +8654,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8730,7 +8716,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8793,7 +8778,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8856,7 +8840,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8919,7 +8902,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -8982,7 +8964,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9045,7 +9026,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9108,7 +9088,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9171,7 +9150,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9234,7 +9212,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9297,7 +9274,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [
             "/// Tests that extension types can implement other extension types to achieve",
             "/// the same results as above."
@@ -9363,7 +9339,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9426,7 +9401,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9489,7 +9463,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9552,7 +9525,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9615,7 +9587,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9678,7 +9649,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9741,7 +9711,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9804,7 +9773,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9867,7 +9835,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9930,7 +9897,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -9993,7 +9959,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10056,7 +10021,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10119,7 +10083,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10182,7 +10145,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10245,7 +10207,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10308,7 +10269,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10371,7 +10331,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10434,7 +10393,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10497,7 +10455,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10560,7 +10517,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10582,6 +10538,7 @@
       "docs": [
         "/// Tests that extension types are correctly handled by the analyzer."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -10624,7 +10581,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10668,7 +10624,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10712,7 +10667,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10756,7 +10710,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10800,7 +10753,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10860,7 +10812,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10920,7 +10871,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -10992,7 +10942,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11036,7 +10985,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11080,7 +11028,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11124,7 +11071,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11168,7 +11114,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11212,7 +11157,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11256,7 +11200,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11296,7 +11239,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11340,7 +11282,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11384,7 +11325,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11428,7 +11368,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11472,7 +11411,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11532,7 +11470,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11592,7 +11529,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11664,7 +11600,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11708,7 +11643,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11752,7 +11686,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11792,7 +11725,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11836,7 +11768,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11880,7 +11811,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11924,7 +11854,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -11968,7 +11897,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12028,7 +11956,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12088,7 +12015,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12160,7 +12086,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12204,7 +12129,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12248,7 +12172,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12292,7 +12215,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12336,7 +12258,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12368,7 +12289,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12404,7 +12324,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12440,7 +12359,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12476,7 +12394,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12512,7 +12429,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12564,7 +12480,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12616,7 +12531,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12680,7 +12594,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12716,7 +12629,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12752,7 +12664,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12788,7 +12699,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12824,7 +12734,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12860,7 +12769,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12896,7 +12804,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12932,7 +12839,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -12968,7 +12874,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13020,7 +12925,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13072,7 +12976,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13136,7 +13039,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13172,7 +13074,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13208,7 +13109,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13244,7 +13144,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13280,7 +13179,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13302,6 +13200,7 @@
       "docs": [
         "/// Validates all permutations of return types."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -13367,7 +13266,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13438,7 +13336,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13501,7 +13398,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13572,7 +13468,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13635,7 +13530,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13706,7 +13600,6 @@
             "isNullable": true
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13769,7 +13662,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13840,7 +13732,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13903,7 +13794,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -13974,7 +13864,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14037,7 +13926,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14108,7 +13996,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14171,7 +14058,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14242,7 +14128,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14305,7 +14190,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14376,7 +14260,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14439,7 +14322,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14510,7 +14392,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14573,7 +14454,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14644,7 +14524,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14707,7 +14586,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14778,7 +14656,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14841,7 +14718,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14912,7 +14788,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -14975,7 +14850,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15046,7 +14920,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15109,7 +14982,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15180,7 +15052,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15243,7 +15114,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15266,6 +15136,7 @@
         "/// Tests that classes with and without explicit fromJson/toJson methods are",
         "/// serializable and deserializable."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -15327,7 +15198,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15386,7 +15256,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15418,14 +15287,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [
-            {
-              "$": "TypeReference",
-              "symbol": "CustomException",
-              "url": "package:celest_backend/exceptions.dart",
-              "isNullable": false
-            }
-          ],
           "docs": [],
           "location": {
             "start": {
@@ -15457,14 +15318,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [
-            {
-              "$": "TypeReference",
-              "symbol": "CustomExceptionToFromJson",
-              "url": "package:celest_backend/exceptions.dart",
-              "isNullable": false
-            }
-          ],
           "docs": [],
           "location": {
             "start": {
@@ -15496,14 +15349,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [
-            {
-              "$": "TypeReference",
-              "symbol": "CustomError",
-              "url": "package:celest_backend/exceptions.dart",
-              "isNullable": false
-            }
-          ],
           "docs": [],
           "location": {
             "start": {
@@ -15535,14 +15380,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [
-            {
-              "$": "TypeReference",
-              "symbol": "CustomErrorToFromJson",
-              "url": "package:celest_backend/exceptions.dart",
-              "isNullable": false
-            }
-          ],
           "docs": [],
           "location": {
             "start": {
@@ -15574,14 +15411,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [
-            {
-              "$": "TypeReference",
-              "symbol": "CustomErrorWithStackTrace",
-              "url": "package:celest_backend/exceptions.dart",
-              "isNullable": false
-            }
-          ],
           "docs": [],
           "location": {
             "start": {
@@ -15601,6 +15430,38 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomExceptionToFromJson",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomError",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomErrorToFromJson",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CustomErrorWithStackTrace",
+          "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -15635,7 +15496,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [
             "/// A function that has doc comments.",
             "///",
@@ -15682,7 +15542,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15714,7 +15573,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15746,7 +15604,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15831,7 +15688,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -15916,7 +15772,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -16001,7 +15856,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -16086,7 +15940,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -16419,7 +16272,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -16752,7 +16604,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -17085,7 +16936,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -17418,7 +17268,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -17751,7 +17600,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -18084,7 +17932,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -18417,7 +18264,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -18750,7 +18596,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -19083,7 +18928,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -19416,7 +19260,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -19749,7 +19592,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20082,7 +19924,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20105,6 +19946,7 @@
         "/// Tests that metadata associated with functions and parameters are correctly",
         "/// parsed and transferred to the generated client."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -20200,7 +20042,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20293,7 +20134,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20386,7 +20226,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20479,7 +20318,6 @@
             "symbol": "void"
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20499,6 +20337,7 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -20596,7 +20435,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20691,7 +20529,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20804,7 +20641,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20917,7 +20753,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -20940,6 +20775,7 @@
         "/// Tests that collections (e.g. Lists/Maps) can be used as parameter and",
         "/// return types."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -21005,7 +20841,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -21076,7 +20911,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -21762,7 +21596,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [],
           "location": {
             "start": {
@@ -21787,6 +21620,7 @@
         "/// having a `toJson` method with function parameters for mapping the",
         "/// underlying types to JSON (Object Function(T) toJsonT)."
       ],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,
@@ -21825,7 +21659,6 @@
             "isNullable": false
           },
           "metadata": [],
-          "exceptionTypes": [],
           "docs": [
             "/// Tests that asserts are enabled when running the local API."
           ],
@@ -21847,6 +21680,7 @@
         }
       },
       "docs": [],
+      "exceptionTypes": [],
       "location": {
         "start": {
           "offset": 0,

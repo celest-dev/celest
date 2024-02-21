@@ -1067,7 +1067,7 @@ ValidJsonable sayHello() => throw UnimplementedError();
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in the '
+          'Types referenced in APIs must be defined in or exported from the '
               '`celest/lib/models.dart` file',
         ],
       );
@@ -1081,7 +1081,7 @@ void sayHello(ValidJsonable param) => print(param);
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in the '
+          'Types referenced in APIs must be defined in or exported from the '
               '`celest/lib/models.dart` file',
         ],
       );
@@ -1101,7 +1101,7 @@ class ValidJsonable {}
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in the '
+          'Types referenced in APIs must be defined in or exported from the '
               '`celest/lib/models.dart` file',
         ],
       );
@@ -1116,7 +1116,7 @@ void sayHello() => throw ValidException();
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in the '
+          'Types referenced in APIs must be defined in or exported from the '
               '`celest/lib/exceptions.dart` file',
         ],
       );
@@ -1136,7 +1136,7 @@ class ValidException implements Exception {}
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in the '
+          'Types referenced in APIs must be defined in or exported from the '
               '`celest/lib/exceptions.dart` file',
         ],
       );
