@@ -9,6 +9,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
+import 'package:analyzer/src/dart/resolver/scope.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
@@ -454,8 +455,8 @@ final class CelestAnalyzer {
           )
           .to(p.url);
       _reportError(
-        'Types referenced in APIs must be defined in the '
-        '`celest/lib/$expectedPath` folder.',
+        'Custom ${type.name} types referenced in APIs must be defined within the '
+        '`celest/$expectedPath` folder.',
         location: location,
       );
     }
@@ -468,11 +469,20 @@ final class CelestAnalyzer {
     bool recursive = false,
   }) {
     final visited = <LibraryElement>{};
+
+    Iterable<InterfaceElement> forNamespace(Namespace namespace) sync* {
+      yield* namespace.definedNames.values.whereType();
+      yield* namespace.definedNames.values
+          .whereType<TypeAliasElement>()
+          .map((el) => el.aliasedElement ?? el.aliasedType.element)
+          .whereType();
+    }
+
     Iterable<InterfaceElement> search(LibraryElement library) sync* {
       if (!visited.add(library)) {
         return;
       }
-      yield* library.exportNamespace.definedNames.values.whereType();
+      yield* forNamespace(library.exportNamespace);
       if (!recursive) {
         return;
       }
@@ -486,9 +496,6 @@ final class CelestAnalyzer {
 
   Set<DartType> _collectExceptionTypes(LibraryElement apiLibrary) {
     final customExceptions = _customExceptionTypes;
-    if (customExceptions.isEmpty) {
-      return const {};
-    }
     final apiNamespace = _namespaceForLibrary(apiLibrary, recursive: true);
     final exceptionTypes = <DartType>{};
     for (final interfaceElement in apiNamespace) {
@@ -522,8 +529,8 @@ final class CelestAnalyzer {
       };
       if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
         _reportError(
-          'The type `${interfaceElement.thisType}` must be defined in the '
-          '`celest/lib/exceptions/` folder.',
+          'Custom exception types referenced in APIs must be defined within the '
+          '`celest/lib/exceptions` folder',
           location: interfaceElement.sourceLocation,
         );
         continue;

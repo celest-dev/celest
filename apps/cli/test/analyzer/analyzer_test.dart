@@ -1061,8 +1061,8 @@ ValidJsonable sayHello() => throw UnimplementedError();
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in or exported from the '
-              '`celest/lib/models.dart` file',
+          'Custom model types referenced in APIs must be defined within the '
+              '`celest/lib/models` folder',
         ],
       );
 
@@ -1075,8 +1075,8 @@ void sayHello(ValidJsonable param) => print(param);
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in or exported from the '
-              '`celest/lib/models.dart` file',
+          'Custom model types referenced in APIs must be defined within the '
+              '`celest/lib/models` folder',
         ],
       );
 
@@ -1095,8 +1095,8 @@ class ValidJsonable {}
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in or exported from the '
-              '`celest/lib/models.dart` file',
+          'Custom model types referenced in APIs must be defined within the '
+              '`celest/lib/models` folder',
         ],
       );
 
@@ -1110,8 +1110,8 @@ void sayHello() => throw ValidException();
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in or exported from the '
-              '`celest/lib/exceptions.dart` file',
+          'Custom exception types referenced in APIs must be defined within the '
+              '`celest/lib/exceptions` folder',
         ],
       );
 
@@ -1130,8 +1130,8 @@ class ValidException implements Exception {}
 ''',
         },
         errors: [
-          'Types referenced in APIs must be defined in or exported from the '
-              '`celest/lib/exceptions.dart` file',
+          'Custom exception types referenced in APIs must be defined within the '
+              '`celest/lib/exceptions` folder',
         ],
       );
 
