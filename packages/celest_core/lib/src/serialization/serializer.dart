@@ -20,6 +20,17 @@ abstract base class Serializer<Dart extends Object?> {
   /// {@macro celest_core.serialization.serializer}
   const Serializer();
 
+  /// Defines a [Serializer] for a [Dart] type with the given [serialize] and
+  /// [deserialize] methods.
+  static Serializer<Dart> define<Dart extends Object?, Wire extends Object?>({
+    required Object? Function(Dart value) serialize,
+    required Dart Function(Wire value) deserialize,
+  }) =>
+      _Serializer<Dart, Wire>(
+        serialize: serialize,
+        deserialize: deserialize,
+      );
+
   /// Serializes [value] to the wire type.
   Object? serialize(Dart value);
 
@@ -41,6 +52,26 @@ abstract base class Serializer<Dart extends Object?> {
     }
     return value;
   }
+}
+
+final class _Serializer<Dart extends Object?, Wire extends Object?>
+    extends Serializer<Dart> {
+  const _Serializer({
+    required Object? Function(Dart value) serialize,
+    required Dart Function(Wire value) deserialize,
+  })  : _serialize = serialize,
+        _deserialize = deserialize;
+
+  final Object? Function(Dart value) _serialize;
+  final Dart Function(Wire value) _deserialize;
+
+  @override
+  Object? serialize(Dart value) => _serialize(value);
+
+  @override
+  Dart deserialize(Object? value) => _deserialize(
+        assertWireType<Wire>(value),
+      );
 }
 
 typedef _Nullable<T> = T?;
