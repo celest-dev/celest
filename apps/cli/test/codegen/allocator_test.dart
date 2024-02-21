@@ -21,7 +21,7 @@ void main() {
           prefixingStrategy: PrefixingStrategy.none,
         );
         final symbol = allocator.allocate(reference);
-        expect(symbol, 'sayHello');
+        expect(symbol, r'_$greeting.sayHello');
         expect(
           allocator.imports.single,
           isA<Directive>().having(
