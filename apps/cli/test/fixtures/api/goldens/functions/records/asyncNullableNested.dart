@@ -72,11 +72,57 @@ final class AsyncNullableNestedTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const NullableNestedSerializer());
-    _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.NullableNested, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'namedFields': _i3.Serializers.instance
+            .serialize<_i4.NamedFieldsRecord?>($value.namedFields)
+      },
+      deserialize: ($serialized) {
+        return (
+          namedFields: _i3.Serializers.instance
+              .deserialize<_i4.NamedFieldsRecord?>($serialized[r'namedFields'])
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.NamedFieldsRecord, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'anotherField': $value.anotherField,
+        r'field': $value.field,
+      },
+      deserialize: ($serialized) {
+        return (
+          anotherField: ($serialized[r'anotherField'] as String),
+          field: ($serialized[r'field'] as String)
+        );
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -84,92 +130,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': AsyncNullableNestedTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i6.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i6.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i6.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i6.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class NamedFieldsRecordSerializer
-    extends _i3.Serializer<_i4.NamedFieldsRecord> {
-  const NamedFieldsRecordSerializer();
-
-  @override
-  _i4.NamedFieldsRecord deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (
-      anotherField: (serialized[r'anotherField'] as String),
-      field: (serialized[r'field'] as String)
-    );
-  }
-
-  @override
-  Object? serialize(_i4.NamedFieldsRecord value) => {
-        r'anotherField': value.anotherField,
-        r'field': value.field,
-      };
-}
-
-final class NullableNestedSerializer
-    extends _i3.Serializer<_i4.NullableNested> {
-  const NullableNestedSerializer();
-
-  @override
-  _i4.NullableNested deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (
-      namedFields: _i3.Serializers.instance
-          .deserialize<_i4.NamedFieldsRecord?>(serialized[r'namedFields'])
-    );
-  }
-
-  @override
-  Object? serialize(_i4.NullableNested value) => {
-        r'namedFields': _i3.Serializers.instance
-            .serialize<_i4.NamedFieldsRecord?>(value.namedFields)
-      };
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i5.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i5.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

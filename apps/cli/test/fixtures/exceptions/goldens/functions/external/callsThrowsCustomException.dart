@@ -47,8 +47,20 @@ final class CallsThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance.put(const CustomExceptionSerializer());
-    _i4.Serializers.instance.put(const CommonExceptionSerializer());
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i3.CustomException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.CommonException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i3.CommonException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -56,32 +68,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': CallsThrowsCustomExceptionTarget()},
   );
-}
-
-final class CommonExceptionSerializer
-    extends _i4.Serializer<_i3.CommonException> {
-  const CommonExceptionSerializer();
-
-  @override
-  _i3.CommonException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i3.CommonException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i3.CommonException value) => {r'message': value.message};
-}
-
-final class CustomExceptionSerializer
-    extends _i4.Serializer<_i3.CustomException> {
-  const CustomExceptionSerializer();
-
-  @override
-  _i3.CustomException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i3.CustomException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i3.CustomException value) => {r'message': value.message};
 }

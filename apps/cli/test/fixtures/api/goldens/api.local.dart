@@ -213,7 +213,6 @@ import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
 import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
     as _i205;
 import 'functions/sealed_classes/shapeResults.dart' as _i206;
-import 'functions/sealed_classes/swappedResult.dart' as _i207;
 
 void main() {
   _i1.serve(targets: {
@@ -485,6 +484,5 @@ void main() {
     '/sealed-classes/sealed-class-with-overridden-custom-json':
         _i205.SealedClassWithOverriddenCustomJsonTarget(),
     '/sealed-classes/shape-results': _i206.ShapeResultsTarget(),
-    '/sealed-classes/swapped-result': _i207.SwappedResultTarget(),
   });
 }

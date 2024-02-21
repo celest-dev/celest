@@ -5936,38 +5936,12 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
-  Future<_$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>>
-      swappedResult(
-          _$sealed_classes.Result<_$sealed_classes.Shape, String>
-              result) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/sealed-classes/swapped-result'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'result': Serializers.instance
-            .serialize<_$sealed_classes.Result<_$sealed_classes.Shape, String>>(
-                result)
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance.deserialize<
-        _$sealed_classes
-        .SwappedResult<_$sealed_classes.Shape, String>>($body['response']);
-  }
-
   Future<_$sealed_classes.OkResult<T>>
       genericResult<T extends _$sealed_classes.Shape>(T data) async {
     const $T = {
       _$sealed_classes.Shape: r'Shape',
-      _$sealed_classes.Rectangle: r'Rectangle',
       _$sealed_classes.Circle: r'Circle',
+      _$sealed_classes.Rectangle: r'Rectangle',
     };
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/generic-result'),
@@ -5996,8 +5970,8 @@ class CelestFunctionsSealedClasses {
   ) async {
     const $T = {
       _$sealed_classes.Shape: r'Shape',
-      _$sealed_classes.Rectangle: r'Rectangle',
       _$sealed_classes.Circle: r'Circle',
+      _$sealed_classes.Rectangle: r'Rectangle',
     };
     const $E = {
       _$exceptions.ShapeException: r'ShapeException',

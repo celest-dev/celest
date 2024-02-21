@@ -78,12 +78,39 @@ final class ColorXImplTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance.put(
-      const ColorXImplSerializer(),
+      _i3.Serializer.define<_i4.ColorXImpl, String>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return (_i4.Color.fromJson($serialized) as _i4.ColorXImpl);
+        },
+      ),
       const _i3.TypeToken<_i4.ColorXImpl>('ColorXImpl'),
     );
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -91,65 +118,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ColorXImplTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i6.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i6.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class ColorXImplSerializer extends _i3.Serializer<_i4.ColorXImpl> {
-  const ColorXImplSerializer();
-
-  @override
-  _i4.ColorXImpl deserialize(Object? value) {
-    final serialized = assertWireType<String>(value);
-    return (_i4.Color.fromJson(serialized) as _i4.ColorXImpl);
-  }
-
-  @override
-  Object? serialize(_i4.ColorXImpl value) => value.toJson();
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i6.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i6.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i5.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i5.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

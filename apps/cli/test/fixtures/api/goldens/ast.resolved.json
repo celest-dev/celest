@@ -559,28 +559,6 @@
             ]
           }
         },
-        "swappedResult": {
-          "name": "swappedResult",
-          "route": "/sealed-classes/swapped-result",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
-        },
         "genericResult": {
           "name": "genericResult",
           "route": "/sealed-classes/generic-result",

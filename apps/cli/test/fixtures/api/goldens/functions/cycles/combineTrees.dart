@@ -82,12 +82,92 @@ final class CombineTreesTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const NodeSerializer());
-    _i3.Serializers.instance.put(const ParentSerializer());
-    _i3.Serializers.instance.put(const ChildSerializer());
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Node, Map<String, Object?>>(
+      serialize: ($value) {
+        if ($value is _i4.Parent) {
+          return {
+            ...(_i3.Serializers.instance.serialize<_i4.Parent>($value)
+                as Map<String, Object?>),
+            r'$type': r'Parent',
+          };
+        }
+        if ($value is _i4.Child) {
+          return {
+            ...(_i3.Serializers.instance.serialize<_i4.Child>($value)
+                as Map<String, Object?>),
+            r'$type': r'Child',
+          };
+        }
+        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+              ..write(r'Node')
+              ..write(': ')
+              ..write($value.runtimeType))
+            .toString());
+      },
+      deserialize: ($serialized) {
+        if ($serialized[r'$type'] == r'Parent') {
+          return _i3.Serializers.instance.deserialize<_i4.Parent>($serialized);
+        }
+        if ($serialized[r'$type'] == r'Child') {
+          return _i3.Serializers.instance.deserialize<_i4.Child>($serialized);
+        }
+        throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
+              ..write(r'Node')
+              ..write(': ')
+              ..write($serialized[r'$type']))
+            .toString());
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Parent, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'name': $value.name,
+        r'children': $value.children
+            .map((el) => _i3.Serializers.instance.serialize<_i4.Node>(el))
+            .toList(),
+      },
+      deserialize: ($serialized) {
+        return _i4.Parent(
+          ($serialized[r'name'] as String),
+          ($serialized[r'children'] as Iterable<Object?>)
+              .map((el) => _i3.Serializers.instance.deserialize<_i4.Node>(el))
+              .toList(),
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Child, Map<String, Object?>>(
+      serialize: ($value) => {r'name': $value.name},
+      deserialize: ($serialized) {
+        return _i4.Child(($serialized[r'name'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -95,131 +175,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': CombineTreesTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i6.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i6.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class ChildSerializer extends _i3.Serializer<_i4.Child> {
-  const ChildSerializer();
-
-  @override
-  _i4.Child deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Child((serialized[r'name'] as String));
-  }
-
-  @override
-  Object? serialize(_i4.Child value) => {r'name': value.name};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i6.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i6.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class NodeSerializer extends _i3.Serializer<_i4.Node> {
-  const NodeSerializer();
-
-  @override
-  _i4.Node deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    if (serialized[r'$type'] == r'Parent') {
-      return _i3.Serializers.instance.deserialize<_i4.Parent>(serialized);
-    }
-    if (serialized[r'$type'] == r'Child') {
-      return _i3.Serializers.instance.deserialize<_i4.Child>(serialized);
-    }
-    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'Node')
-          ..write(': ')
-          ..write(serialized[r'$type']))
-        .toString());
-  }
-
-  @override
-  Object? serialize(_i4.Node value) {
-    if (value is _i4.Parent) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.Parent>(value)
-            as Map<String, Object?>),
-        r'$type': r'Parent',
-      };
-    }
-    if (value is _i4.Child) {
-      return {
-        ...(_i3.Serializers.instance.serialize<_i4.Child>(value)
-            as Map<String, Object?>),
-        r'$type': r'Child',
-      };
-    }
-    throw _i3.SerializationException((StringBuffer('Unknown subtype of ')
-          ..write(r'Node')
-          ..write(': ')
-          ..write(value.runtimeType))
-        .toString());
-  }
-}
-
-final class ParentSerializer extends _i3.Serializer<_i4.Parent> {
-  const ParentSerializer();
-
-  @override
-  _i4.Parent deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.Parent(
-      (serialized[r'name'] as String),
-      (serialized[r'children'] as Iterable<Object?>)
-          .map((el) => _i3.Serializers.instance.deserialize<_i4.Node>(el))
-          .toList(),
-    );
-  }
-
-  @override
-  Object? serialize(_i4.Parent value) => {
-        r'name': value.name,
-        r'children': value.children
-            .map((el) => _i3.Serializers.instance.serialize<_i4.Node>(el))
-            .toList(),
-      };
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i5.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i5.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

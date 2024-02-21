@@ -79,10 +79,53 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance.put(const PersonSerializer());
-    _i4.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i4.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i4.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i5.Person, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'name': $value.name,
+        r'age': $value.age,
+        r'height': $value.height,
+        r'weight': $value.weight,
+        r'isCool': $value.isCool,
+        r'website': _i4.Serializers.instance.serialize<Uri>($value.website),
+      },
+      deserialize: ($serialized) {
+        return _i5.Person(
+          name: ($serialized[r'name'] as String),
+          age: ($serialized[r'age'] as num).toInt(),
+          height: ($serialized[r'height'] as num).toDouble(),
+          weight: ($serialized[r'weight'] as num),
+          isCool: ($serialized[r'isCool'] as bool),
+          website: _i4.Serializers.instance
+              .deserialize<Uri>($serialized[r'website']),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i7.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i7.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i6.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -90,80 +133,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': SayHelloPersonTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i4.Serializer<_i7.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i7.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i7.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i4.Serializer<_i7.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i7.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i7.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class PersonSerializer extends _i4.Serializer<_i5.Person> {
-  const PersonSerializer();
-
-  @override
-  _i5.Person deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.Person(
-      name: (serialized[r'name'] as String),
-      age: (serialized[r'age'] as num).toInt(),
-      height: (serialized[r'height'] as num).toDouble(),
-      weight: (serialized[r'weight'] as num),
-      isCool: (serialized[r'isCool'] as bool),
-      website:
-          _i4.Serializers.instance.deserialize<Uri>(serialized[r'website']),
-    );
-  }
-
-  @override
-  Object? serialize(_i5.Person value) => {
-        r'name': value.name,
-        r'age': value.age,
-        r'height': value.height,
-        r'weight': value.weight,
-        r'isCool': value.isCool,
-        r'website': _i4.Serializers.instance.serialize<Uri>(value.website),
-      };
-}
-
-final class SerializationExceptionSerializer
-    extends _i4.Serializer<_i6.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i6.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

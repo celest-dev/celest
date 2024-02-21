@@ -8,6 +8,7 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -28,9 +29,9 @@ final class ClientFunctionsGenerator {
 
   final List<ast.Api> apis;
 
-  final customSerializers = LinkedHashMap<Class, Expression?>(
-    equals: (a, b) => a.name == b.name,
-    hashCode: (a) => a.name.hashCode,
+  final customSerializers = LinkedHashSet<SerializerDefinition>(
+    equals: (a, b) => a.type == b.type,
+    hashCode: (a) => a.type.hashCode,
   );
   final anonymousRecordTypes = <String, RecordType>{};
 
@@ -213,11 +214,7 @@ final class ClientFunctionsGenerator {
       );
       for (final type in allTypes) {
         final dartType = typeHelper.fromReference(type);
-        customSerializers.addEntries(
-          typeHelper
-              .customSerializers(dartType)
-              .map((el) => MapEntry(el.$1, el.$2)),
-        );
+        customSerializers.addAll(typeHelper.customSerializers(dartType));
         if ((dartType, type)
             case (
               final dart_ast.RecordType dartType,

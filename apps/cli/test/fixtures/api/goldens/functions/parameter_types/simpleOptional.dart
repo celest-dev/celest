@@ -246,10 +246,37 @@ final class SimpleOptionalTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const MyEnumSerializer());
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.MyEnum, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.MyEnum.values.byName($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i7.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i6.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -257,65 +284,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': SimpleOptionalTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i7.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i7.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i7.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i7.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i7.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i7.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i7.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
-  const MyEnumSerializer();
-
-  @override
-  _i4.MyEnum deserialize(Object? value) {
-    final serialized = assertWireType<String>(value);
-    return _i4.MyEnum.values.byName(serialized);
-  }
-
-  @override
-  Object? serialize(_i4.MyEnum value) => value.name;
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i6.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i6.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

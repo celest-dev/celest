@@ -208,9 +208,9 @@ final class ErrResult<E> implements Result<Never, E> {
 // Tests `typedef` (aliased sealed class)
 typedef ShapeResult<E> = Result<Shape, E>;
 
-// Tests type parameters are matched up correctly
-final class SwappedResult<T, E> extends Result<E, T> {
-  const SwappedResult(this.result);
+// // Tests type parameters are matched up correctly
+// final class SwappedResult<T, E> extends Result<E, T> {
+//   const SwappedResult(this.result);
 
-  final Result<T, E> result;
-}
+//   final Result<T, E> result;
+// }

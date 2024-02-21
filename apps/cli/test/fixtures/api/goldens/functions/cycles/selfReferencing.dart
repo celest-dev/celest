@@ -72,11 +72,71 @@ final class SelfReferencingTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const SelfReferencingSerializer());
-    _i3.Serializers.instance.put(const SelfReferencingWrapperSerializer());
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.SelfReferencing, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'value': _i3.Serializers.instance
+            .serialize<_i4.SelfReferencing?>($value.value),
+        r'wrapper': _i3.Serializers.instance
+            .serialize<_i4.SelfReferencingWrapper?>($value.wrapper),
+        r'list': $value.list
+            .map((el) =>
+                _i3.Serializers.instance.serialize<_i4.SelfReferencing>(el))
+            .toList(),
+      },
+      deserialize: ($serialized) {
+        return _i4.SelfReferencing(
+          value: (_i3.Serializers.instance
+                  .deserialize<_i4.SelfReferencing?>($serialized[r'value'])) ??
+              null,
+          wrapper: (_i3.Serializers.instance
+                  .deserialize<_i4.SelfReferencingWrapper?>(
+                      $serialized[r'wrapper'])) ??
+              null,
+          list: ($serialized[r'list'] as Iterable<Object?>)
+              .map((el) =>
+                  _i3.Serializers.instance.deserialize<_i4.SelfReferencing>(el))
+              .toList(),
+        );
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i4.SelfReferencingWrapper, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'value': _i3.Serializers.instance
+            .serialize<_i4.SelfReferencing>($value.value)
+      },
+      deserialize: ($serialized) {
+        return _i4.SelfReferencingWrapper(
+            value: _i3.Serializers.instance
+                .deserialize<_i4.SelfReferencing>($serialized[r'value']));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -84,106 +144,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': SelfReferencingTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i6.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i6.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i6.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i6.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class SelfReferencingSerializer
-    extends _i3.Serializer<_i4.SelfReferencing> {
-  const SelfReferencingSerializer();
-
-  @override
-  _i4.SelfReferencing deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.SelfReferencing(
-      value: (_i3.Serializers.instance
-              .deserialize<_i4.SelfReferencing?>(serialized[r'value'])) ??
-          null,
-      wrapper: (_i3.Serializers.instance
-              .deserialize<_i4.SelfReferencingWrapper?>(
-                  serialized[r'wrapper'])) ??
-          null,
-      list: (serialized[r'list'] as Iterable<Object?>)
-          .map((el) =>
-              _i3.Serializers.instance.deserialize<_i4.SelfReferencing>(el))
-          .toList(),
-    );
-  }
-
-  @override
-  Object? serialize(_i4.SelfReferencing value) => {
-        r'value': _i3.Serializers.instance
-            .serialize<_i4.SelfReferencing?>(value.value),
-        r'wrapper': _i3.Serializers.instance
-            .serialize<_i4.SelfReferencingWrapper?>(value.wrapper),
-        r'list': value.list
-            .map((el) =>
-                _i3.Serializers.instance.serialize<_i4.SelfReferencing>(el))
-            .toList(),
-      };
-}
-
-final class SelfReferencingWrapperSerializer
-    extends _i3.Serializer<_i4.SelfReferencingWrapper> {
-  const SelfReferencingWrapperSerializer();
-
-  @override
-  _i4.SelfReferencingWrapper deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i4.SelfReferencingWrapper(
-        value: _i3.Serializers.instance
-            .deserialize<_i4.SelfReferencing>(serialized[r'value']));
-  }
-
-  @override
-  Object? serialize(_i4.SelfReferencingWrapper value) => {
-        r'value':
-            _i3.Serializers.instance.serialize<_i4.SelfReferencing>(value.value)
-      };
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i5.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i5.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

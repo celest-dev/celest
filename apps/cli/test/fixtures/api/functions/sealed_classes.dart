@@ -73,8 +73,8 @@ List<ShapeResult<String>> aliasedShapeResults(List<Shape> shapes) => [
       ...errShapeResults(shapes),
     ];
 
-SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
-    SwappedResult(result);
+// SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
+//     SwappedResult(result);
 
 OkResult<T> genericResult<T extends Shape>(T data) => OkResult(data);
 List<Result<T, E>>

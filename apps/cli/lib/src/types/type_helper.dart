@@ -194,7 +194,7 @@ final class TypeHelper {
   /// The set of types seen by the current [isSerializable] check.
   Set<DartType?> get seen => Zone.current[_seenKey] as Set<DartType?>;
 
-  Iterable<(codegen.Class, codegen.Expression?)> customSerializers(
+  Iterable<SerializerDefinition> customSerializers(
     DartType type,
   ) sync* {
     final verdict = isSerializable(type);
@@ -211,10 +211,8 @@ final class TypeHelper {
     }
   }
 
-  (codegen.Class, codegen.Expression?) _generate(SerializationSpec spec) {
-    final generator = SerializerGenerator(spec);
-    return (generator.build(), generator.serializationSpec.type.typeToken);
-  }
+  SerializerDefinition _generate(SerializationSpec spec) =>
+      SerializerGenerator(spec).build();
 
   final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
 

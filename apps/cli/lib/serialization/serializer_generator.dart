@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:analyzer/dart/element/type_visitor.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
@@ -9,6 +10,150 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
+
+final class SerializerDefinition {
+  SerializerDefinition({
+    required this.serialize,
+    required this.deserialize,
+    required this.type,
+    required this.dartType,
+    required this.generics,
+    required this.wireType,
+  });
+
+  final Code serialize;
+  final Code deserialize;
+  final Reference type;
+  final ast.DartType dartType;
+  Expression? get typeToken => dartType.typeToken;
+  final Set<Reference> generics;
+  final Reference wireType;
+
+  Expression _init(Expression serializer, [Expression? typeToken]) {
+    return DartTypes.celest.serializers
+        .property('instance')
+        .property('put')
+        .call([
+      serializer,
+      if (typeToken != null) typeToken,
+    ]);
+  }
+
+  Code get initAll {
+    return Block((b) {
+      if (generics.isEmpty) {
+        b.addExpression(_init(define(), typeToken));
+        return;
+      }
+      
+      // Instantiate to bounds first
+      b.addExpression(
+        _init(refer(_genericClassName).constInstance([])),
+      );
+
+      // Monomorphize for all combinations of bound subclasses.
+      final subtypeCombos = _combinations(generics.map(_subtypes)).toList();
+      for (final subtypes in subtypeCombos) {
+        final instance = refer(_genericClassName).constInstance(
+          [],
+          {},
+          subtypes.references,
+        );
+        b.addExpression(_init(instance));
+      }
+    });
+  }
+
+  late final _genericClassName = '${dartType.classNamePrefix}Serializer';
+  Class? get genericClass {
+    if (generics.isEmpty) {
+      return null;
+    }
+    return Class((b) {
+      b
+        ..modifier = ClassModifier.final$
+        ..name = _genericClassName
+        ..extend = DartTypes.celest.serializer(type)
+        ..types.addAll(generics);
+
+      // Create unnamed constant constructor
+      b.constructors.add(
+        Constructor((b) => b..constant = true),
+      );
+
+      // Create `deserialize` and `serialize` overrides
+      b.methods.addAll([
+        Method(
+          (b) => b
+            ..name = 'deserialize'
+            ..returns = type
+            ..requiredParameters.add(
+              Parameter(
+                (b) => b
+                  ..name = r'$value'
+                  ..type = DartTypes.core.object.nullable,
+              ),
+            )
+            ..annotations.add(DartTypes.core.override)
+            ..body = Block((b) {
+              b.addExpression(
+                declareFinal(r'$serialized').assign(
+                  refer('assertWireType').call([
+                    refer(r'$value'),
+                  ], {}, [
+                    wireType,
+                  ]),
+                ),
+              );
+              b.statements.add(deserialize);
+            }),
+        ),
+        Method(
+          (b) => b
+            ..name = 'serialize'
+            ..returns = DartTypes.core.object.nullable
+            ..requiredParameters.add(
+              Parameter(
+                (b) => b
+                  ..name = r'$value'
+                  ..type = type,
+              ),
+            )
+            ..annotations.add(DartTypes.core.override)
+            ..body = serialize,
+        ),
+      ]);
+    });
+  }
+
+  /// Constructs a `Serializer` instance using `Serializer.define`.
+  Expression define() {
+    return DartTypes.celest.serializer().newInstanceNamed(
+      'define',
+      [],
+      {
+        'serialize': Method(
+          (b) => b
+            ..requiredParameters.add(
+              Parameter((b) => b..name = r'$value'),
+            )
+            ..body = serialize,
+        ).closure,
+        'deserialize': Method(
+          (b) => b
+            ..requiredParameters.add(
+              Parameter((b) => b..name = r'$serialized'),
+            )
+            ..body = deserialize,
+        ).closure,
+      },
+      [
+        type,
+        wireType,
+      ],
+    );
+  }
+}
 
 final class SerializerGenerator {
   SerializerGenerator(SerializationSpec serializationSpec)
@@ -60,70 +205,27 @@ final class SerializerGenerator {
   late final wireType = serializationSpec.wireType;
   late final castType = serializationSpec.castType;
 
-  Class build() => Class((b) {
-        b
-          ..modifier = ClassModifier.final$
-          ..name = '${type.classNamePrefix}Serializer'
-          ..extend = DartTypes.celest.serializer(typeReference)
-          ..types.addAll(_generics);
+  SerializerDefinition build() {
+    final serialize = _serialize(r'$value').code;
 
-        // Create unnamed constant constructor
-        b.constructors.add(
-          Constructor((b) => b..constant = true),
-        );
+    final mayBeAbsent =
+        serializationSpec.parameters.every((p) => p.isOptional) &&
+            serializationSpec.subtypes.isEmpty;
+    final wireType = switch (type) {
+      ast.InterfaceType() when type.isEnum => this.wireType,
+      _ => castType.withNullability(mayBeAbsent),
+    };
+    final deserialize = _deserialize(r'$serialized', mayBeAbsent: mayBeAbsent);
 
-        // Create `deserialize` and `serialize` overrides
-        b.methods.addAll([
-          Method(
-            (b) => b
-              ..name = 'deserialize'
-              ..returns = typeReference
-              ..requiredParameters.add(
-                Parameter(
-                  (b) => b
-                    ..name = 'value'
-                    ..type = DartTypes.core.object.nullable,
-                ),
-              )
-              ..annotations.add(DartTypes.core.override)
-              ..body = Block((b) {
-                final mayBeAbsent =
-                    serializationSpec.parameters.every((p) => p.isOptional) &&
-                        serializationSpec.subtypes.isEmpty;
-                final wireType = switch (type) {
-                  ast.InterfaceType() when type.isEnum => this.wireType,
-                  _ => castType.withNullability(mayBeAbsent),
-                };
-                final deserialized =
-                    _deserialize('serialized', mayBeAbsent: mayBeAbsent);
-                b.addExpression(
-                  declareFinal('serialized').assign(
-                    refer('assertWireType').call([
-                      refer('value'),
-                    ], {}, [
-                      wireType,
-                    ]),
-                  ),
-                );
-                b.statements.add(deserialized);
-              }),
-          ),
-          Method(
-            (b) => b
-              ..name = 'serialize'
-              ..returns = DartTypes.core.object.nullable
-              ..requiredParameters.add(
-                Parameter(
-                  (b) => b
-                    ..name = 'value'
-                    ..type = typeReference,
-                ),
-              )
-              ..annotations.add(DartTypes.core.override)
-              ..body = _serialize('value').code,
-          ),
-        ]);
-      });
+    return SerializerDefinition(
+      serialize: serialize,
+      deserialize: deserialize,
+      type: typeReference,
+      dartType: type,
+      generics: _generics,
+      wireType: wireType,
+    );
+  }
 
   Expression _serialize(String from) {
     final Expression ref = _reference(from, isNullable: false);
@@ -416,24 +518,6 @@ final class SerializerGenerator {
   }
 }
 
-extension on ast.DartType {
-  String get classNamePrefix {
-    return switch (this) {
-      ast.InterfaceType(:final typeArguments) => () {
-          final name = StringBuffer(element!.displayName);
-          if (typeArguments.isNotEmpty) {
-            name.writeAll(
-              typeArguments.map((t) => t.classNamePrefix),
-            );
-          }
-          return name.toString();
-        }(),
-      final ast.RecordType recordType => recordType.symbol,
-      _ => '',
-    };
-  }
-}
-
 final class _GenericsCollector extends ast.TypeVisitor<void> {
   _GenericsCollector();
 
@@ -477,4 +561,91 @@ final class _GenericsCollector extends ast.TypeVisitor<void> {
 
   @override
   void visitVoidType(ast.VoidType type) {}
+}
+
+extension on ast.DartType {
+  String get classNamePrefix {
+    return switch (this) {
+      ast.InterfaceType(:final typeArguments) => () {
+          final name = StringBuffer(element!.displayName);
+          if (typeArguments.isNotEmpty) {
+            name.writeAll(
+              typeArguments.map((t) => t.classNamePrefix),
+            );
+          }
+          return name.toString();
+        }(),
+      final ast.RecordType recordType => recordType.symbol,
+      _ => '',
+    };
+  }
+}
+
+List<_Reference> _subtypes(Reference typeParameter) {
+  final typeParameterType =
+      typeHelper.fromReference(typeParameter) as ast.TypeParameterType;
+  final typeParameterBound =
+      typeParameterType.bound.element as InterfaceElement;
+  final subtypes = <_Reference>{
+    _BoundReference(typeHelper.toReference(typeParameterType.bound)),
+  };
+  for (final subtype in typeHelper.subtypes[typeParameterBound]!) {
+    subtypes.add(
+      _SubtypeReference(typeHelper.toReference(subtype)),
+    );
+  }
+  return subtypes.toList();
+}
+
+Iterable<List<_Reference>> _combinations(
+  Iterable<Iterable<_Reference>> types,
+) sync* {
+  if (types.isEmpty) {
+    return;
+  }
+  if (types.length == 1) {
+    yield* types.first.map((t) => [t]);
+    return;
+  }
+  final type = types.first;
+  final rest = types.skip(1);
+  for (final t in type) {
+    for (final r in _combinations(rest)) {
+      yield [t, ...r];
+    }
+  }
+}
+
+sealed class _Reference {
+  const _Reference(this.reference);
+
+  final Reference reference;
+}
+
+final class _SubtypeReference extends _Reference {
+  _SubtypeReference(super.reference);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is _SubtypeReference && reference == other.reference;
+
+  @override
+  int get hashCode => reference.hashCode;
+}
+
+final class _BoundReference extends _Reference {
+  _BoundReference(super.reference);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is _BoundReference && reference == other.reference;
+
+  @override
+  int get hashCode => reference.hashCode;
+}
+
+extension on Iterable<_Reference> {
+  List<Reference> get references => map((r) => r.reference).toList();
 }

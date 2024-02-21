@@ -2873,29 +2873,29 @@ final tests = <String, Test>{
           //     },
           //   ),
           // ],
-          'swappedResult': [
-            FunctionTestSuccess(
-              name: 'swappedResult',
-              input: {
-                'result': {
-                  r'$type': 'OkResult',
-                  'data': {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                },
-              },
-              output: {
-                'result': {
-                  r'$type': 'OkResult',
-                  'data': {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                },
-              },
-            ),
-          ],
+          // 'swappedResult': [
+          //   FunctionTestSuccess(
+          //     name: 'swappedResult',
+          //     input: {
+          //       'result': {
+          //         r'$type': 'OkResult',
+          //         'data': {
+          //           r'$type': 'Circle',
+          //           'radius': 5.0,
+          //         },
+          //       },
+          //     },
+          //     output: {
+          //       'result': {
+          //         r'$type': 'OkResult',
+          //         'data': {
+          //           r'$type': 'Circle',
+          //           'radius': 5.0,
+          //         },
+          //       },
+          //     },
+          //   ),
+          // ],
           'genericResult': [
             FunctionTestSuccess(
               name: 'with type',

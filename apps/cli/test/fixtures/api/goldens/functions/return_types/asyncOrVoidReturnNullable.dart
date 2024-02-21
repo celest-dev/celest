@@ -64,9 +64,31 @@ final class AsyncOrVoidReturnNullableTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i4.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i4.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i5.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i5.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i5.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i3.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i3.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -74,52 +96,4 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': AsyncOrVoidReturnNullableTarget()},
   );
-}
-
-final class BadRequestExceptionSerializer
-    extends _i4.Serializer<_i5.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i5.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i4.Serializer<_i5.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i5.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class SerializationExceptionSerializer
-    extends _i4.Serializer<_i3.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i3.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i3.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i3.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
 }

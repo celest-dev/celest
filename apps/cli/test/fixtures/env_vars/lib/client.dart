@@ -6,7 +6,6 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:io' as _$io;
 
-import 'package:celest/celest.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
 
@@ -56,10 +55,9 @@ class Celest {
   void init({CelestEnvironment environment = CelestEnvironment.local}) {
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    Serializers.instance.put(const BadRequestExceptionSerializer());
-    Serializers.instance.put(const InternalServerExceptionSerializer());
-    Serializers.instance.put(const SerializationExceptionSerializer());
-    Serializers.instance.put(const PersonSerializer());
+    if (!_initialized) {
+      initSerializers();
+    }
     _initialized = true;
   }
 }

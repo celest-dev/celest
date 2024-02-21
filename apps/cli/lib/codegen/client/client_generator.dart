@@ -2,9 +2,9 @@ import 'package:celest_cli/codegen/client/categories/client_functions_generator.
 import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:code_builder/code_builder.dart';
 
@@ -181,7 +181,7 @@ final class ClientGenerator {
       refer('_currentEnvironment').assign(refer('environment')),
     );
 
-    var customSerializers = <Class, Expression?>{};
+    var customSerializers = <SerializerDefinition>{};
     var anonymousRecordTypes = <String, RecordType>{};
 
     final apis = project.apis.values;
@@ -227,21 +227,11 @@ final class ClientGenerator {
       );
       libraries[ClientPaths.serializers] = clientSerializers.generate();
 
-      for (final MapEntry(key: serializer, value: typeToken)
-          in customSerializers.entries) {
-        clientInitBody.addExpression(
-          DartTypes.celest.serializers
-              .property('instance')
-              .property('put')
-              .call([
-            refer(
-              serializer.name,
-              p.toUri(ClientPaths.serializers).toString(),
-            ).constInstance([]),
-            if (typeToken != null) typeToken,
-          ]),
-        );
-      }
+      final initSerializers =
+          refer('initSerializers', ClientPaths.serializers).call([]).statement;
+      clientInitBody.statements.add(
+        initSerializers.wrapWithBlockIf(refer('_initialized').negate()),
+      );
     }
 
     clientInitBody.addExpression(

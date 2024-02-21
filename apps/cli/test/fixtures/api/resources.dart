@@ -1060,9 +1060,4 @@ abstract final class Functions {
     api: r'sealed_classes',
     functionName: r'shapeResults',
   );
-
-  static const sealedClassesSwappedResult = CloudFunction(
-    api: r'sealed_classes',
-    functionName: r'swappedResult',
-  );
 }

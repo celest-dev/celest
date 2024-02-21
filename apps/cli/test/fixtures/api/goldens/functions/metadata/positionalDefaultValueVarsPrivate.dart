@@ -97,13 +97,66 @@ final class PositionalDefaultValueVarsPrivateTarget
 
   @override
   void init() {
-    _i3.Serializers.instance.put(const LiteralEnumSerializer());
-    _i3.Serializers.instance.put(const Record$k7x4l9Serializer());
-    _i3.Serializers.instance.put(const ExportableSerializer());
-    _i3.Serializers.instance.put(const SerializableSerializer());
-    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
-    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
-    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.LiteralEnum, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.LiteralEnum.values.byName($serialized);
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<Record$k7x4l9, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'a': $value.a,
+        r'b': $value.b,
+        r'c': $value.c,
+      },
+      deserialize: ($serialized) {
+        return (
+          a: ($serialized[r'a'] as String),
+          b: ($serialized[r'b'] as String),
+          c: ($serialized[r'c'] as String)
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Exportable, Map<String, Object?>?>(
+      serialize: ($value) => {},
+      deserialize: ($serialized) {
+        return _i4.Exportable();
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Serializable, Map<String, Object?>?>(
+      serialize: ($value) => {r'type': $value.type},
+      deserialize: ($serialized) {
+        return _i4.Serializable((($serialized?[r'type'] as String?)) ?? null);
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
   }
 }
 
@@ -114,111 +167,3 @@ Future<void> main(List<String> args) async {
 }
 
 typedef Record$k7x4l9 = ({String a, String b, String c});
-
-final class BadRequestExceptionSerializer
-    extends _i3.Serializer<_i6.BadRequestException> {
-  const BadRequestExceptionSerializer();
-
-  @override
-  _i6.BadRequestException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.BadRequestException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.BadRequestException value) =>
-      {r'message': value.message};
-}
-
-final class ExportableSerializer extends _i3.Serializer<_i4.Exportable> {
-  const ExportableSerializer();
-
-  @override
-  _i4.Exportable deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
-    return _i4.Exportable();
-  }
-
-  @override
-  Object? serialize(_i4.Exportable value) => {};
-}
-
-final class InternalServerExceptionSerializer
-    extends _i3.Serializer<_i6.InternalServerException> {
-  const InternalServerExceptionSerializer();
-
-  @override
-  _i6.InternalServerException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i6.InternalServerException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i6.InternalServerException value) =>
-      {r'message': value.message};
-}
-
-final class LiteralEnumSerializer extends _i3.Serializer<_i4.LiteralEnum> {
-  const LiteralEnumSerializer();
-
-  @override
-  _i4.LiteralEnum deserialize(Object? value) {
-    final serialized = assertWireType<String>(value);
-    return _i4.LiteralEnum.values.byName(serialized);
-  }
-
-  @override
-  Object? serialize(_i4.LiteralEnum value) => value.name;
-}
-
-final class Record$k7x4l9Serializer extends _i3.Serializer<Record$k7x4l9> {
-  const Record$k7x4l9Serializer();
-
-  @override
-  Record$k7x4l9 deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return (
-      a: (serialized[r'a'] as String),
-      b: (serialized[r'b'] as String),
-      c: (serialized[r'c'] as String)
-    );
-  }
-
-  @override
-  Object? serialize(Record$k7x4l9 value) => {
-        r'a': value.a,
-        r'b': value.b,
-        r'c': value.c,
-      };
-}
-
-final class SerializableSerializer extends _i3.Serializer<_i4.Serializable> {
-  const SerializableSerializer();
-
-  @override
-  _i4.Serializable deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>?>(value);
-    return _i4.Serializable(((serialized?[r'type'] as String?)) ?? null);
-  }
-
-  @override
-  Object? serialize(_i4.Serializable value) => {r'type': value.type};
-}
-
-final class SerializationExceptionSerializer
-    extends _i3.Serializer<_i5.SerializationException> {
-  const SerializationExceptionSerializer();
-
-  @override
-  _i5.SerializationException deserialize(Object? value) {
-    final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.SerializationException((serialized[r'message'] as String));
-  }
-
-  @override
-  Object? serialize(_i5.SerializationException value) => {
-        r'message': value.message,
-        r'offset': value.offset,
-        r'source': value.source,
-      };
-}

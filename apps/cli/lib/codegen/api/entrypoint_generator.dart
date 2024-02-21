@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -27,9 +28,9 @@ final class EntrypointGenerator {
   late final String targetName = '${function.name.pascalCase}Target';
 
   // Map of serializer classes to their type tokens, if any.
-  final _customSerializers = LinkedHashMap<Class, Expression?>(
-    equals: (a, b) => a.name == b.name,
-    hashCode: (a) => a.name.hashCode,
+  final _customSerializers = LinkedHashSet<SerializerDefinition>(
+    equals: (a, b) => a.type == b.type,
+    hashCode: (a) => a.type.hashCode,
   );
   final _anonymousRecordTypes = <String, RecordType>{};
 
@@ -300,11 +301,7 @@ final class EntrypointGenerator {
     );
     for (final type in allTypes) {
       final dartType = typeHelper.fromReference(type);
-      _customSerializers.addEntries(
-        typeHelper.customSerializers(dartType).map(
-              (el) => MapEntry(el.$1, el.$2),
-            ),
-      );
+      _customSerializers.addAll(typeHelper.customSerializers(dartType));
       if ((dartType, type)
           case (final ast.RecordType dartType, final RecordType recordType)) {
         _anonymousRecordTypes[dartType.symbol] =
@@ -343,36 +340,9 @@ final class EntrypointGenerator {
                 ..returns = DartTypes.core.void$
                 ..annotations.add(DartTypes.core.override)
                 ..name = 'init'
-                ..body = Block((b) {
-                  for (final MapEntry(key: serializer, value: typeToken)
-                      in _customSerializers.entries) {
-                    b.addExpression(
-                      DartTypes.celest.serializers
-                          .property('instance')
-                          .property('put')
-                          .call([
-                        refer(serializer.name).constInstance([]),
-                        if (typeToken != null) typeToken,
-                      ]),
-                    );
-                    for (final subtypes in _combinations(
-                      serializer.types.map(_subtypes),
-                    )) {
-                      b.addExpression(
-                        DartTypes.celest.serializers
-                            .property('instance')
-                            .property('put')
-                            .call([
-                          refer(serializer.name).constInstance(
-                            [],
-                            {},
-                            subtypes.references,
-                          ),
-                        ]),
-                      );
-                    }
-                  }
-                }),
+                ..body = Block.of(
+                  _customSerializers.map((s) => s.initAll),
+                ),
             ),
         ]),
     );
@@ -410,7 +380,7 @@ final class EntrypointGenerator {
           )
           .toList()
         ..sort((a, b) => a.name.compareTo(b.name)),
-      ..._customSerializers.keys.toList()
+      ..._customSerializers.map((s) => s.genericClass).nonNulls.toList()
         ..sort((a, b) => a.name.compareTo(b.name)),
     ]);
     return library.build();
