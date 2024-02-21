@@ -107,11 +107,11 @@ final class BaseErrorSerializer extends _i4.Serializer<_i5.BaseError> {
   @override
   _i5.BaseError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.BaseError((serialized[r'message'] as String));
+    return _i5.BaseError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(_i5.BaseError value) => {r'message': value.message};
+  Object? serialize(_i5.BaseError value) => {r'fault': value.fault};
 }
 
 final class BaseExceptionSerializer extends _i4.Serializer<_i5.BaseException> {
@@ -120,11 +120,11 @@ final class BaseExceptionSerializer extends _i4.Serializer<_i5.BaseException> {
   @override
   _i5.BaseException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.BaseException((serialized[r'message'] as String));
+    return _i5.BaseException((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(_i5.BaseException value) => {r'message': value.message};
+  Object? serialize(_i5.BaseException value) => {r'fault': value.fault};
 }
 
 final class CommonExceptionSerializer
@@ -147,11 +147,11 @@ final class CustomErrorSerializer extends _i4.Serializer<_i5.CustomError> {
   @override
   _i5.CustomError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.CustomError((serialized[r'message'] as String));
+    return _i5.CustomError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(_i5.CustomError value) => {r'message': value.message};
+  Object? serialize(_i5.CustomError value) => {r'fault': value.fault};
 }
 
 final class CustomExceptionSerializer
@@ -161,9 +161,9 @@ final class CustomExceptionSerializer
   @override
   _i5.CustomException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return _i5.CustomException((serialized[r'message'] as String));
+    return _i5.CustomException((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(_i5.CustomException value) => {r'message': value.message};
+  Object? serialize(_i5.CustomException value) => {r'fault': value.fault};
 }

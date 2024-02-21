@@ -59,6 +59,9 @@ class Celest {
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
     Serializers.instance.put(const EmptySerializer());
+    Serializers.instance.put(const BadRequestExceptionSerializer());
+    Serializers.instance.put(const InternalServerExceptionSerializer());
+    Serializers.instance.put(const SerializationExceptionSerializer());
     Serializers.instance.put(const FieldsSerializer());
     Serializers.instance.put(const NamedFieldsSerializer());
     Serializers.instance.put(const MixedFieldsSerializer());

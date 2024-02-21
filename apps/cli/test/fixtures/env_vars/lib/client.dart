@@ -56,6 +56,9 @@ class Celest {
   void init({CelestEnvironment environment = CelestEnvironment.local}) {
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
+    Serializers.instance.put(const BadRequestExceptionSerializer());
+    Serializers.instance.put(const InternalServerExceptionSerializer());
+    Serializers.instance.put(const SerializationExceptionSerializer());
     Serializers.instance.put(const PersonSerializer());
     _initialized = true;
   }

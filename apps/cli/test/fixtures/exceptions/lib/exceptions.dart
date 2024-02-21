@@ -3,27 +3,27 @@ export 'package:_common/_common.dart';
 sealed class Fault {}
 
 final class BaseException implements Exception, Fault {
-  BaseException(String message) : message = 'base: $message';
+  BaseException(String fault) : fault = 'base: $fault';
 
-  final String message;
+  final String fault;
 
   @override
-  String toString() => 'BaseException: $message';
+  String toString() => 'BaseException: $fault';
 }
 
 final class CustomException extends BaseException {
-  CustomException(String message) : super('custom: $message');
+  CustomException(String fault) : super('custom: $fault');
 }
 
 final class BaseError extends Error implements Fault {
-  BaseError(String message) : message = 'base: $message';
+  BaseError(String fault) : fault = 'base: $fault';
 
-  final String message;
+  final String fault;
 
   @override
-  String toString() => 'BaseError: $message';
+  String toString() => 'BaseError: $fault';
 }
 
 final class CustomError extends BaseError {
-  CustomError(String message) : super('custom: $message');
+  CustomError(String fault) : super('custom: $fault');
 }

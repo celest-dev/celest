@@ -4,6 +4,8 @@
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/models/cycles.dart' as _i4;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/cycles.dart' as _i2;
 
@@ -13,9 +15,53 @@ final class PrintTreeTarget extends _i1.CloudFunctionTarget {
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
-    _i2.printTree(
-        _i3.Serializers.instance.deserialize<_i4.Node>(request[r'node']));
-    return (statusCode: 200, body: {'response': null});
+    try {
+      _i2.printTree(
+          _i3.Serializers.instance.deserialize<_i4.Node>(request[r'node']));
+      return (statusCode: 200, body: {'response': null});
+    } on _i5.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i5.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
+            'details': error,
+          }
+        }
+      );
+    }
   }
 
   @override
@@ -23,6 +69,9 @@ final class PrintTreeTarget extends _i1.CloudFunctionTarget {
     _i3.Serializers.instance.put(const NodeSerializer());
     _i3.Serializers.instance.put(const ParentSerializer());
     _i3.Serializers.instance.put(const ChildSerializer());
+    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
+    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
+    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
   }
 }
 
@@ -30,6 +79,21 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': PrintTreeTarget()},
   );
+}
+
+final class BadRequestExceptionSerializer
+    extends _i3.Serializer<_i6.BadRequestException> {
+  const BadRequestExceptionSerializer();
+
+  @override
+  _i6.BadRequestException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.BadRequestException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.BadRequestException value) =>
+      {r'message': value.message};
 }
 
 final class ChildSerializer extends _i3.Serializer<_i4.Child> {
@@ -43,6 +107,21 @@ final class ChildSerializer extends _i3.Serializer<_i4.Child> {
 
   @override
   Object? serialize(_i4.Child value) => {r'name': value.name};
+}
+
+final class InternalServerExceptionSerializer
+    extends _i3.Serializer<_i6.InternalServerException> {
+  const InternalServerExceptionSerializer();
+
+  @override
+  _i6.InternalServerException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.InternalServerException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.InternalServerException value) =>
+      {r'message': value.message};
 }
 
 final class NodeSerializer extends _i3.Serializer<_i4.Node> {
@@ -108,5 +187,23 @@ final class ParentSerializer extends _i3.Serializer<_i4.Parent> {
         r'children': value.children
             .map((el) => _i3.Serializers.instance.serialize<_i4.Node>(el))
             .toList(),
+      };
+}
+
+final class SerializationExceptionSerializer
+    extends _i3.Serializer<_i5.SerializationException> {
+  const SerializationExceptionSerializer();
+
+  @override
+  _i5.SerializationException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i5.SerializationException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i5.SerializationException value) => {
+        r'message': value.message,
+        r'offset': value.offset,
+        r'source': value.source,
       };
 }

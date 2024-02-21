@@ -3328,7 +3328,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'BaseError',
                   'details': {
-                    'message': 'base: message',
+                    'fault': 'base: message',
                   },
                 },
               },
@@ -3343,7 +3343,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'CustomError',
                   'details': {
-                    'message': 'base: custom: message',
+                    'fault': 'base: custom: message',
                   },
                 },
               },
@@ -3358,7 +3358,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'BaseException',
                   'details': {
-                    'message': 'base: message',
+                    'fault': 'base: message',
                   },
                 },
               },
@@ -3373,7 +3373,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'CustomException',
                   'details': {
-                    'message': 'base: custom: message',
+                    'fault': 'base: custom: message',
                   },
                 },
               },
@@ -3392,7 +3392,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'BaseError',
                   'details': {
-                    'message': 'base: message',
+                    'fault': 'base: message',
                   },
                 },
               },
@@ -3407,7 +3407,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'CustomError',
                   'details': {
-                    'message': 'base: custom: message',
+                    'fault': 'base: custom: message',
                   },
                 },
               },
@@ -3422,7 +3422,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'BaseException',
                   'details': {
-                    'message': 'base: message',
+                    'fault': 'base: message',
                   },
                 },
               },
@@ -3437,7 +3437,7 @@ final tests = <String, Test>{
                 'error': {
                   'code': 'CustomException',
                   'details': {
-                    'message': 'base: custom: message',
+                    'fault': 'base: custom: message',
                   },
                 },
               },
@@ -3462,36 +3462,21 @@ final tests = <String, Test>{
               },
             ),
           ],
-          // 'callsThrowsCustomException': [
-          //   FunctionTestError(
-          //     name: 'throwsCustomException',
-          //     statusCode: 400,
-          //     input: {},
-          //     output: {
-          //       'error': {
-          //         'code': 'CustomException',
-          //         'details': {
-          //           'message': 'message',
-          //         },
-          //       },
-          //     },
-          //   ),
-          // ],
-          // 'throwsCustomException': [
-          //   FunctionTestError(
-          //     name: 'throwsCustomException',
-          //     statusCode: 400,
-          //     input: {},
-          //     output: {
-          //       'error': {
-          //         'code': 'CustomException',
-          //         'details': {
-          //           'message': 'message',
-          //         },
-          //       },
-          //     },
-          //   ),
-          // ],
+          'callsThrowsCustomException': [
+            FunctionTestError(
+              name: 'throwsCustomException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CustomException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
         },
       ),
     },

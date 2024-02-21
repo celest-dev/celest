@@ -931,7 +931,26 @@
         "/// Tests that records with and without aliases are serializable and",
         "/// deserializable."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -2731,6 +2750,24 @@
           "$": "TypeReference",
           "symbol": "CustomErrorWithStackTrace",
           "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
           "isNullable": false
         }
       ],
@@ -7434,7 +7471,26 @@
         }
       },
       "docs": [],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -7766,7 +7822,26 @@
         "/// Tests that some cycles are allowed, e.g. when there is at least one level",
         "/// of indirection."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -10538,7 +10613,26 @@
       "docs": [
         "/// Tests that extension types are correctly handled by the analyzer."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -13200,7 +13294,26 @@
       "docs": [
         "/// Validates all permutations of return types."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -15136,7 +15249,26 @@
         "/// Tests that classes with and without explicit fromJson/toJson methods are",
         "/// serializable and deserializable."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -15459,6 +15591,24 @@
           "$": "TypeReference",
           "symbol": "CustomErrorWithStackTrace",
           "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
           "isNullable": false
         }
       ],
@@ -19946,7 +20096,26 @@
         "/// Tests that metadata associated with functions and parameters are correctly",
         "/// parsed and transferred to the generated client."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -20775,7 +20944,26 @@
         "/// Tests that collections (e.g. Lists/Maps) can be used as parameter and",
         "/// return types."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,
@@ -21620,7 +21808,26 @@
         "/// having a `toJson` method with function parameters for mapping the",
         "/// underlying types to JSON (Object Function(T) toJsonT)."
       ],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,

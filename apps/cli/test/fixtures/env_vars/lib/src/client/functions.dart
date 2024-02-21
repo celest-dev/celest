@@ -9,6 +9,7 @@ import 'dart:convert' as _$convert;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 import '../../client.dart';
 
@@ -17,7 +18,7 @@ class CelestFunctions {
 }
 
 class CelestFunctionsInjected {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -30,6 +31,9 @@ class CelestFunctionsInjected {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -48,7 +52,7 @@ class CelestFunctionsInjected {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -64,7 +68,7 @@ class CelestFunctionsInjected {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );

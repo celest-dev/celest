@@ -11,8 +11,3 @@ void callsThrowsCommonException() {
 void callsThrowsCustomException() {
   common.throwsCustomException();
 }
-
-// TODO(dnys1): Test if this is removed.
-// void throwsCustomException() {
-//   throw common.CustomException('message');
-// }

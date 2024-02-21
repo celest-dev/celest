@@ -19,6 +19,7 @@ import 'package:celest_backend/src/models/parameter_types.dart';
 import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
@@ -70,7 +71,7 @@ class CelestFunctions {
 }
 
 class CelestFunctionsAsserts {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -78,11 +79,6 @@ class CelestFunctionsAsserts {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -102,7 +98,7 @@ class CelestFunctionsAsserts {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -114,7 +110,7 @@ class CelestFunctionsAsserts {
 /// Tests that classes with and without explicit fromJson/toJson methods are
 /// serializable and deserializable.
 class CelestFunctionsClasses {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -127,6 +123,9 @@ class CelestFunctionsClasses {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -147,7 +146,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -165,7 +164,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -183,7 +182,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -201,7 +200,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -219,7 +218,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -237,7 +236,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -255,7 +254,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -273,7 +272,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -291,7 +290,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -309,7 +308,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -327,7 +326,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -345,7 +344,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -363,7 +362,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -381,7 +380,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -399,7 +398,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -417,7 +416,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -435,7 +434,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -453,7 +452,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -473,7 +472,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -494,7 +493,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -513,7 +512,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -532,7 +531,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -551,7 +550,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -569,7 +568,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -590,7 +589,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -612,7 +611,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -633,7 +632,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -654,7 +653,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -673,7 +672,7 @@ class CelestFunctionsClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -685,7 +684,7 @@ class CelestFunctionsClasses {
 /// Tests that collections (e.g. Lists/Maps) can be used as parameter and
 /// return types.
 class CelestFunctionsCollections {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -698,6 +697,9 @@ class CelestFunctionsCollections {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -717,7 +719,7 @@ class CelestFunctionsCollections {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -740,7 +742,7 @@ class CelestFunctionsCollections {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -759,7 +761,7 @@ class CelestFunctionsCollections {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -793,7 +795,7 @@ class CelestFunctionsCollections {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -812,7 +814,7 @@ class CelestFunctionsCollections {
 /// Tests that some cycles are allowed, e.g. when there is at least one level
 /// of indirection.
 class CelestFunctionsCycles {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -825,6 +827,9 @@ class CelestFunctionsCycles {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -843,7 +848,7 @@ class CelestFunctionsCycles {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -861,7 +866,7 @@ class CelestFunctionsCycles {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -890,7 +895,7 @@ class CelestFunctionsCycles {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -913,7 +918,7 @@ class CelestFunctionsCycles {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -923,7 +928,7 @@ class CelestFunctionsCycles {
 }
 
 class CelestFunctionsExceptions {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -948,6 +953,9 @@ class CelestFunctionsExceptions {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -969,7 +977,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -987,7 +995,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1003,7 +1011,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1020,7 +1028,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1036,7 +1044,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1052,7 +1060,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1069,7 +1077,7 @@ class CelestFunctionsExceptions {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1080,7 +1088,7 @@ class CelestFunctionsExceptions {
 
 /// Tests that extension types are correctly handled by the analyzer.
 class CelestFunctionsExtensionTypes {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -1093,6 +1101,9 @@ class CelestFunctionsExtensionTypes {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -1117,7 +1128,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1142,7 +1153,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1167,7 +1178,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1192,7 +1203,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1217,7 +1228,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1242,7 +1253,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1267,7 +1278,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1292,7 +1303,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1317,7 +1328,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1343,7 +1354,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1368,7 +1379,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1394,7 +1405,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1419,7 +1430,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1445,7 +1456,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1466,7 +1477,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1488,7 +1499,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1513,7 +1524,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1538,7 +1549,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1563,7 +1574,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1588,7 +1599,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1613,7 +1624,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1638,7 +1649,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1664,7 +1675,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1692,7 +1703,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1717,7 +1728,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1738,7 +1749,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1760,7 +1771,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1785,7 +1796,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1810,7 +1821,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1835,7 +1846,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1860,7 +1871,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1885,7 +1896,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1911,7 +1922,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1937,7 +1948,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1963,7 +1974,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -1989,7 +2000,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2014,7 +2025,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2039,7 +2050,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2064,7 +2075,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2089,7 +2100,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2114,7 +2125,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2139,7 +2150,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2164,7 +2175,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2189,7 +2200,7 @@ class CelestFunctionsExtensionTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2206,7 +2217,7 @@ class CelestFunctionsExtensionTypes {
 /// having a `toJson` method with function parameters for mapping the
 /// underlying types to JSON (Object Function(T) toJsonT).
 class CelestFunctionsGenericWrappers {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -2219,6 +2230,9 @@ class CelestFunctionsGenericWrappers {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -2239,7 +2253,7 @@ class CelestFunctionsGenericWrappers {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2257,7 +2271,7 @@ class CelestFunctionsGenericWrappers {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2330,7 +2344,7 @@ class CelestFunctionsGenericWrappers {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2342,7 +2356,7 @@ class CelestFunctionsGenericWrappers {
 /// Tests that metadata associated with functions and parameters are correctly
 /// parsed and transferred to the generated client.
 class CelestFunctionsMetadata {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -2355,6 +2369,9 @@ class CelestFunctionsMetadata {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -2387,7 +2404,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2404,7 +2421,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2421,7 +2438,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2437,7 +2454,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2460,7 +2477,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2483,7 +2500,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2506,7 +2523,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2529,7 +2546,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2574,7 +2591,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2619,7 +2636,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2664,7 +2681,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2709,7 +2726,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2754,7 +2771,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2800,7 +2817,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2845,7 +2862,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2890,7 +2907,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2935,7 +2952,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -2981,7 +2998,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3026,7 +3043,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3072,7 +3089,7 @@ class CelestFunctionsMetadata {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3082,7 +3099,7 @@ class CelestFunctionsMetadata {
 }
 
 class CelestFunctionsParameterTypes {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -3095,6 +3112,9 @@ class CelestFunctionsParameterTypes {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -3290,7 +3310,7 @@ class CelestFunctionsParameterTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3484,7 +3504,7 @@ class CelestFunctionsParameterTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3771,7 +3791,7 @@ class CelestFunctionsParameterTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3781,7 +3801,7 @@ class CelestFunctionsParameterTypes {
 }
 
 class CelestFunctionsParameters {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -3789,11 +3809,6 @@ class CelestFunctionsParameters {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -3819,7 +3834,7 @@ class CelestFunctionsParameters {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3842,7 +3857,7 @@ class CelestFunctionsParameters {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3865,7 +3880,7 @@ class CelestFunctionsParameters {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3888,7 +3903,7 @@ class CelestFunctionsParameters {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3900,7 +3915,7 @@ class CelestFunctionsParameters {
 /// Tests that records with and without aliases are serializable and
 /// deserializable.
 class CelestFunctionsRecords {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -3913,6 +3928,9 @@ class CelestFunctionsRecords {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -3936,7 +3954,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3958,7 +3976,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3978,7 +3996,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -3998,7 +4016,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4027,7 +4045,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4059,7 +4077,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4081,7 +4099,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4099,7 +4117,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4117,7 +4135,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4135,7 +4153,7 @@ class CelestFunctionsRecords {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4146,7 +4164,7 @@ class CelestFunctionsRecords {
 
 /// Validates all permutations of return types.
 class CelestFunctionsReturnTypes {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -4159,6 +4177,9 @@ class CelestFunctionsReturnTypes {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -4177,7 +4198,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4193,7 +4214,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4209,7 +4230,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4225,7 +4246,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4241,7 +4262,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4257,7 +4278,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4275,7 +4296,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4293,7 +4314,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4316,7 +4337,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4332,7 +4353,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4348,7 +4369,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4365,7 +4386,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4381,7 +4402,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4397,7 +4418,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4413,7 +4434,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4429,7 +4450,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4445,7 +4466,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4461,7 +4482,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4477,7 +4498,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4493,7 +4514,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4511,7 +4532,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4529,7 +4550,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4552,7 +4573,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4568,7 +4589,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4584,7 +4605,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4600,7 +4621,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4616,7 +4637,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4632,7 +4653,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4648,7 +4669,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4664,7 +4685,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4682,7 +4703,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4700,7 +4721,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4723,7 +4744,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4740,7 +4761,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4757,7 +4778,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4774,7 +4795,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4790,7 +4811,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4806,7 +4827,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4822,7 +4843,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4838,7 +4859,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4854,7 +4875,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4870,7 +4891,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4888,7 +4909,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4906,7 +4927,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4929,7 +4950,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4945,7 +4966,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4961,7 +4982,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4977,7 +4998,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -4993,7 +5014,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5009,7 +5030,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5025,7 +5046,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5041,7 +5062,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5057,7 +5078,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5075,7 +5096,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5093,7 +5114,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5116,7 +5137,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5132,7 +5153,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5148,7 +5169,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5164,7 +5185,7 @@ class CelestFunctionsReturnTypes {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5174,7 +5195,7 @@ class CelestFunctionsReturnTypes {
 }
 
 class CelestFunctionsSealedClasses {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -5199,6 +5220,9 @@ class CelestFunctionsSealedClasses {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -5219,7 +5243,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5240,7 +5264,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5260,7 +5284,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5278,7 +5302,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5302,7 +5326,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5328,7 +5352,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5362,7 +5386,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5387,7 +5411,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5410,7 +5434,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5432,7 +5456,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5455,7 +5479,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5478,7 +5502,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5503,7 +5527,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5528,7 +5552,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5553,7 +5577,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5576,7 +5600,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5602,7 +5626,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -5637,7 +5661,7 @@ class CelestFunctionsSealedClasses {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );

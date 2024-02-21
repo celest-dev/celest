@@ -11,11 +11,11 @@ final class BaseErrorSerializer extends Serializer<BaseError> {
   @override
   BaseError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return BaseError((serialized[r'message'] as String));
+    return BaseError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(BaseError value) => {r'message': value.message};
+  Object? serialize(BaseError value) => {r'fault': value.fault};
 }
 
 final class BaseExceptionSerializer extends Serializer<BaseException> {
@@ -24,11 +24,11 @@ final class BaseExceptionSerializer extends Serializer<BaseException> {
   @override
   BaseException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return BaseException((serialized[r'message'] as String));
+    return BaseException((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(BaseException value) => {r'message': value.message};
+  Object? serialize(BaseException value) => {r'fault': value.fault};
 }
 
 final class CommonExceptionSerializer
@@ -52,22 +52,24 @@ final class CustomErrorSerializer extends Serializer<CustomError> {
   @override
   CustomError deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CustomError((serialized[r'message'] as String));
+    return CustomError((serialized[r'fault'] as String));
   }
 
   @override
-  Object? serialize(CustomError value) => {r'message': value.message};
+  Object? serialize(CustomError value) => {r'fault': value.fault};
 }
 
-final class CustomExceptionSerializer extends Serializer<CustomException> {
+final class CustomExceptionSerializer
+    extends Serializer<_$_common.CustomException> {
   const CustomExceptionSerializer();
 
   @override
-  CustomException deserialize(Object? value) {
+  _$_common.CustomException deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return CustomException((serialized[r'message'] as String));
+    return _$_common.CustomException((serialized[r'message'] as String));
   }
 
   @override
-  Object? serialize(CustomException value) => {r'message': value.message};
+  Object? serialize(_$_common.CustomException value) =>
+      {r'message': value.message};
 }

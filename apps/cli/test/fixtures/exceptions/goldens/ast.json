@@ -80,6 +80,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:_common/_common.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CommonException",
           "url": "package:_common/_common.dart",
           "isNullable": false

@@ -1,11 +1,13 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:typed_data' as _i5;
+import 'dart:typed_data' as _i7;
 
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/models/parameter_types.dart' as _i4;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/return_types.dart' as _i2;
 
@@ -15,14 +17,58 @@ final class ComplexReturnNullableTarget extends _i1.CloudFunctionTarget {
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
-    final response = _i2.complexReturnNullable();
-    return (
-      statusCode: 200,
-      body: {
-        'response':
-            _i3.Serializers.instance.serialize<_i4.ComplexStruct?>(response)
-      }
-    );
+    try {
+      final response = _i2.complexReturnNullable();
+      return (
+        statusCode: 200,
+        body: {
+          'response':
+              _i3.Serializers.instance.serialize<_i4.ComplexStruct?>(response)
+        }
+      );
+    } on _i5.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i5.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
+            'details': error,
+          }
+        }
+      );
+    }
   }
 
   @override
@@ -31,6 +77,9 @@ final class ComplexReturnNullableTarget extends _i1.CloudFunctionTarget {
     _i3.Serializers.instance.put(const SimpleClassSerializer());
     _i3.Serializers.instance.put(const MyEnumSerializer());
     _i3.Serializers.instance.put(const SimpleStructSerializer());
+    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
+    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
+    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
   }
 }
 
@@ -38,6 +87,21 @@ Future<void> main(List<String> args) async {
   await _i1.serve(
     targets: {'/': ComplexReturnNullableTarget()},
   );
+}
+
+final class BadRequestExceptionSerializer
+    extends _i3.Serializer<_i6.BadRequestException> {
+  const BadRequestExceptionSerializer();
+
+  @override
+  _i6.BadRequestException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.BadRequestException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.BadRequestException value) =>
+      {r'message': value.message};
 }
 
 final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
@@ -99,7 +163,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
           .map((el) => (el as String))
           .toList(),
       aListOfUint8List: (serialized[r'aListOfUint8List'] as Iterable<Object?>)
-          .map((el) => _i3.Serializers.instance.deserialize<_i5.Uint8List>(el))
+          .map((el) => _i3.Serializers.instance.deserialize<_i7.Uint8List>(el))
           .toList(),
       aListOfUri: (serialized[r'aListOfUri'] as Iterable<Object?>)
           .map((el) => _i3.Serializers.instance.deserialize<Uri>(el))
@@ -223,7 +287,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
       ) =>
               MapEntry(
                 key,
-                _i3.Serializers.instance.deserialize<_i5.Uint8List>(value),
+                _i3.Serializers.instance.deserialize<_i7.Uint8List>(value),
               )),
       aMapOfUri: (serialized[r'aMapOfUri'] as Map<String, Object?>).map((
         key,
@@ -253,7 +317,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
           .deserialize<StackTrace>(serialized[r'aStackTrace']),
       aString: (serialized[r'aString'] as String),
       aUint8List: _i3.Serializers.instance
-          .deserialize<_i5.Uint8List>(serialized[r'aUint8List']),
+          .deserialize<_i7.Uint8List>(serialized[r'aUint8List']),
       aUri: _i3.Serializers.instance.deserialize<Uri>(serialized[r'aUri']),
       aUriData: _i3.Serializers.instance
           .deserialize<UriData>(serialized[r'aUriData']),
@@ -309,7 +373,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
             .toList(),
         r'aListOfString': value.aListOfString,
         r'aListOfUint8List': value.aListOfUint8List
-            .map((el) => _i3.Serializers.instance.serialize<_i5.Uint8List>(el))
+            .map((el) => _i3.Serializers.instance.serialize<_i7.Uint8List>(el))
             .toList(),
         r'aListOfUri': value.aListOfUri
             .map((el) => _i3.Serializers.instance.serialize<Uri>(el))
@@ -392,7 +456,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              _i3.Serializers.instance.serialize<_i5.Uint8List>(value),
+              _i3.Serializers.instance.serialize<_i7.Uint8List>(value),
             )),
         r'aMapOfUri': value.aMapOfUri.map((
           key,
@@ -420,7 +484,7 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
             _i3.Serializers.instance.serialize<StackTrace>(value.aStackTrace),
         r'aString': value.aString,
         r'aUint8List':
-            _i3.Serializers.instance.serialize<_i5.Uint8List>(value.aUint8List),
+            _i3.Serializers.instance.serialize<_i7.Uint8List>(value.aUint8List),
         r'aUri': _i3.Serializers.instance.serialize<Uri>(value.aUri),
         r'aUriData':
             _i3.Serializers.instance.serialize<UriData>(value.aUriData),
@@ -431,6 +495,21 @@ final class ComplexStructSerializer extends _i3.Serializer<_i4.ComplexStruct> {
                 (el) => _i3.Serializers.instance.serialize<_i4.SimpleClass>(el))
             .toList(),
       };
+}
+
+final class InternalServerExceptionSerializer
+    extends _i3.Serializer<_i6.InternalServerException> {
+  const InternalServerExceptionSerializer();
+
+  @override
+  _i6.InternalServerException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.InternalServerException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.InternalServerException value) =>
+      {r'message': value.message};
 }
 
 final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
@@ -444,6 +523,24 @@ final class MyEnumSerializer extends _i3.Serializer<_i4.MyEnum> {
 
   @override
   Object? serialize(_i4.MyEnum value) => value.name;
+}
+
+final class SerializationExceptionSerializer
+    extends _i3.Serializer<_i5.SerializationException> {
+  const SerializationExceptionSerializer();
+
+  @override
+  _i5.SerializationException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i5.SerializationException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i5.SerializationException value) => {
+        r'message': value.message,
+        r'offset': value.offset,
+        r'source': value.source,
+      };
 }
 
 final class SimpleClassSerializer extends _i3.Serializer<_i4.SimpleClass> {

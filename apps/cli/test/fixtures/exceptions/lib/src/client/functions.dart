@@ -9,7 +9,6 @@ import 'dart:convert' as _$convert;
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart';
-import 'package:celest_core/src/exception/cloud_exception.dart';
 
 import '../../client.dart';
 
@@ -27,7 +26,7 @@ class CelestFunctions {
 /// Tests that types thrown from external packages can be detected via
 /// recursive imports and serialized correctly.
 class CelestFunctionsExternal {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -35,14 +34,12 @@ class CelestFunctionsExternal {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'CustomException':
+        throw Serializers.instance
+            .deserialize<_$_common.CustomException>($details);
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -61,7 +58,7 @@ class CelestFunctionsExternal {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -77,7 +74,7 @@ class CelestFunctionsExternal {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -88,7 +85,7 @@ class CelestFunctionsExternal {
 
 /// A library with methods that do not through but call methods that do throw.
 class CelestFunctionsNonthrowing {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -107,11 +104,6 @@ class CelestFunctionsNonthrowing {
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -130,7 +122,7 @@ class CelestFunctionsNonthrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -146,7 +138,7 @@ class CelestFunctionsNonthrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -162,7 +154,7 @@ class CelestFunctionsNonthrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -178,7 +170,7 @@ class CelestFunctionsNonthrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -188,7 +180,7 @@ class CelestFunctionsNonthrowing {
 }
 
 class CelestFunctionsThrowing {
-  Never _handleError({
+  Never _throwError({
     required int $statusCode,
     required Map<String, Object?> $body,
   }) {
@@ -207,11 +199,6 @@ class CelestFunctionsThrowing {
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -230,7 +217,7 @@ class CelestFunctionsThrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -246,7 +233,7 @@ class CelestFunctionsThrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -262,7 +249,7 @@ class CelestFunctionsThrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );
@@ -278,7 +265,7 @@ class CelestFunctionsThrowing {
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
-      _handleError(
+      _throwError(
         $statusCode: $response.statusCode,
         $body: $body,
       );

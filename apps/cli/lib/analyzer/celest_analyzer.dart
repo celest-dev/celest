@@ -484,12 +484,9 @@ final class CelestAnalyzer {
         .element.exportNamespace.definedNames.values
         .whereType<InterfaceElement>()
         .toList();
-    for (final interfaceElement in exceptionsDartNamespace) {
-      final importsClass = apiNamespace.contains(interfaceElement);
-      if (!importsClass) {
-        continue;
-      }
-      final isDartType = interfaceElement.library.source.uri.scheme == 'dart';
+    for (final interfaceElement in apiNamespace) {
+      final interfaceUri = interfaceElement.library.source.uri;
+      final isDartType = interfaceUri.scheme == 'dart';
       if (isDartType) {
         continue;
       }
@@ -506,12 +503,35 @@ final class CelestAnalyzer {
       if (!isExceptionOrErrorType) {
         continue;
       }
+      final exportedFromExceptionsDart =
+          exceptionsDartNamespace.contains(interfaceElement);
+      final mustBeExportedFromExceptionsDart =
+          interfaceUri.scheme == 'package' &&
+              interfaceUri.pathSegments.first == 'celest_backend';
+      if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
+        _reportError(
+          'The type `$interfaceElement` must be exported from the '
+          '`celest_backend/exceptions.dart` file.',
+          location: interfaceElement.sourceLocation,
+        );
+        continue;
+      }
+      final isInstantiable = switch (interfaceElement) {
+        final ClassElement classElement => classElement.isConstructable,
+        ExtensionTypeElement() || EnumElement() => true,
+        _ => false,
+      };
+      if (!isInstantiable) {
+        continue;
+      }
       final isSerializable = typeHelper.isSerializable(interfaceType);
       if (!isSerializable.isSerializable) {
         for (final reason in isSerializable.reasons) {
+          // TODO(dnys1): Add a helpful link/description for this error.
           _reportError(
-            'The type of a thrown exception must be serializable as JSON. '
-            '$interfaceType is not serializable: $reason',
+            'The exception type "${interfaceElement.name}" cannot be serialized '
+            'as JSON. Hide this type from the API or make it serializable: '
+            '$reason',
             location: interfaceElement.sourceLocation,
           );
         }
@@ -559,6 +579,7 @@ final class CelestAnalyzer {
 
     final library = apiLibraryResult.element;
     final libraryMetdata = _collectApiMetadata(library);
+    final apiExceptionTypes = _collectExceptionTypes(library);
     final functions = Map.fromEntries(
       (await library.topLevelElements
               .whereType<FunctionElement>()
@@ -582,6 +603,7 @@ final class CelestAnalyzer {
           typeHelper.coreTypes.coreExceptionType,
           typeHelper.coreTypes.coreErrorType,
         ]);
+        apiExceptionTypes.addAll(exceptionTypes);
         for (final exceptionType in exceptionTypes) {
           final exceptionTypeLoc =
               exceptionCollector.exceptionTypeLocations[exceptionType]!;
@@ -753,8 +775,7 @@ final class CelestAnalyzer {
       metadata: libraryMetdata,
       functions: functions,
       docs: library.docLines,
-      exceptionTypes:
-          _collectExceptionTypes(library).map(typeHelper.toReference),
+      exceptionTypes: apiExceptionTypes.map(typeHelper.toReference),
     );
   }
 

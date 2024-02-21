@@ -52,7 +52,7 @@ final class ClientFunctionsGenerator {
     final apiType = ClientTypes.api(api);
     final apiClass = _beginClass(apiType.name)
       ..docs.addAll(api.docs)
-      ..methods.add(_handleError(api));
+      ..methods.add(_throwError(api));
 
     _client.fields.add(
       Field(
@@ -187,7 +187,7 @@ final class ClientFunctionsGenerator {
                     .returned
                     .statement;
 
-            final handleError = refer('_handleError').call([], {
+            final handleError = refer('_throwError').call([], {
               r'$statusCode': refer(r'$response').property('statusCode'),
               r'$body': refer(r'$body'),
             });
@@ -233,9 +233,9 @@ final class ClientFunctionsGenerator {
     }
   }
 
-  Method _handleError(ast.Api api) => Method((m) {
+  Method _throwError(ast.Api api) => Method((m) {
         m
-          ..name = '_handleError'
+          ..name = '_throwError'
           ..returns = DartTypes.core.never
           ..optionalParameters.addAll([
             Parameter(
@@ -277,16 +277,7 @@ final class ClientFunctionsGenerator {
                 ),
               );
             b.statements.add(const Code(r'switch ($code) {'));
-            final exceptionTypes = {
-              ...api.exceptionTypes,
-              typeHelper.toReference(
-                typeHelper.coreTypes.badRequestExceptionType,
-              ),
-              typeHelper.toReference(
-                typeHelper.coreTypes.internalServerExceptionType,
-              ),
-            };
-            for (final exceptionType in exceptionTypes) {
+            for (final exceptionType in api.exceptionTypes) {
               final deserializedException = jsonGenerator.fromJson(
                 exceptionType,
                 refer(r'$details'),

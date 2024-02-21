@@ -29,11 +29,25 @@ final class CallsThrowsCommonExceptionTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
+    } on _i3.CustomException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error = _i4.Serializers.instance.serialize<_i3.CustomException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'CustomException',
+            'details': error,
+          }
+        }
+      );
     }
   }
 
   @override
   void init() {
+    _i4.Serializers.instance.put(const CustomExceptionSerializer());
     _i4.Serializers.instance.put(const CommonExceptionSerializer());
   }
 }
@@ -56,4 +70,18 @@ final class CommonExceptionSerializer
 
   @override
   Object? serialize(_i3.CommonException value) => {r'message': value.message};
+}
+
+final class CustomExceptionSerializer
+    extends _i4.Serializer<_i3.CustomException> {
+  const CustomExceptionSerializer();
+
+  @override
+  _i3.CustomException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i3.CustomException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i3.CustomException value) => {r'message': value.message};
 }

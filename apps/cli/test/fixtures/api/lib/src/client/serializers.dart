@@ -14,6 +14,8 @@ import 'package:celest_backend/src/models/metadata.dart';
 import 'package:celest_backend/src/models/parameter_types.dart';
 import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
@@ -24,6 +26,20 @@ typedef Record$wkpf9q = ({
   NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
+
+final class BadRequestExceptionSerializer
+    extends Serializer<BadRequestException> {
+  const BadRequestExceptionSerializer();
+
+  @override
+  BadRequestException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return BadRequestException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(BadRequestException value) => {r'message': value.message};
+}
 
 final class BadShapeExceptionSerializer extends Serializer<BadShapeException> {
   const BadShapeExceptionSerializer();
@@ -1295,6 +1311,21 @@ final class IMapStringUriSerializer
       );
 }
 
+final class InternalServerExceptionSerializer
+    extends Serializer<InternalServerException> {
+  const InternalServerExceptionSerializer();
+
+  @override
+  InternalServerException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return InternalServerException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(InternalServerException value) =>
+      {r'message': value.message};
+}
+
 final class JsonBoolSerializer extends Serializer<JsonBool> {
   const JsonBoolSerializer();
 
@@ -2085,6 +2116,24 @@ final class SerializableSerializer extends Serializer<Serializable> {
 
   @override
   Object? serialize(Serializable value) => {r'type': value.type};
+}
+
+final class SerializationExceptionSerializer
+    extends Serializer<SerializationException> {
+  const SerializationExceptionSerializer();
+
+  @override
+  SerializationException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return SerializationException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(SerializationException value) => {
+        r'message': value.message,
+        r'offset': value.offset,
+        r'source': value.source,
+      };
 }
 
 final class ShapeExceptionSerializer extends Serializer<ShapeException> {

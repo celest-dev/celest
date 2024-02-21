@@ -33,7 +33,10 @@ Future<ProjectPaths> init({
 
 late CelestProject celestProject;
 ProjectPaths get projectPaths => celestProject.projectPaths;
-final InheritanceManager3 inheritanceManager = InheritanceManager3();
+
+// Need a new instance of InheritanceManager3 for each invocation since it
+// has a builtin cache.
+InheritanceManager3 get inheritanceManager => InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
 

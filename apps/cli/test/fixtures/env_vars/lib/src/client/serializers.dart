@@ -2,6 +2,37 @@
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart';
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
+
+final class BadRequestExceptionSerializer
+    extends Serializer<BadRequestException> {
+  const BadRequestExceptionSerializer();
+
+  @override
+  BadRequestException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return BadRequestException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(BadRequestException value) => {r'message': value.message};
+}
+
+final class InternalServerExceptionSerializer
+    extends Serializer<InternalServerException> {
+  const InternalServerExceptionSerializer();
+
+  @override
+  InternalServerException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return InternalServerException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(InternalServerException value) =>
+      {r'message': value.message};
+}
 
 final class PersonSerializer extends Serializer<Person> {
   const PersonSerializer();
@@ -27,5 +58,23 @@ final class PersonSerializer extends Serializer<Person> {
         r'weight': value.weight,
         r'isCool': value.isCool,
         r'website': Serializers.instance.serialize<Uri>(value.website),
+      };
+}
+
+final class SerializationExceptionSerializer
+    extends Serializer<SerializationException> {
+  const SerializationExceptionSerializer();
+
+  @override
+  SerializationException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return SerializationException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(SerializationException value) => {
+        r'message': value.message,
+        r'offset': value.offset,
+        r'source': value.source,
       };
 }

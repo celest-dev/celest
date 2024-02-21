@@ -4,6 +4,8 @@
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/models/records.dart' as _i4;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/records.dart' as _i2;
 
@@ -13,23 +15,67 @@ final class AsyncNamedFieldsTarget extends _i1.CloudFunctionTarget {
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
-    final response = await _i2.asyncNamedFields(
-      nonAliased: _i3.Serializers.instance
-          .deserialize<({String anotherField, String field})>(
-              request[r'nonAliased']),
-      aliased: _i3.Serializers.instance
-          .deserialize<_i4.NamedFieldsRecord>(request[r'aliased']),
-    );
-    return (
-      statusCode: 200,
-      body: {
-        'response': _i3.Serializers.instance.serialize<
-            ({
-              _i4.NamedFieldsRecord aliased,
-              ({String anotherField, String field}) nonAliased
-            })>(response)
-      }
-    );
+    try {
+      final response = await _i2.asyncNamedFields(
+        nonAliased: _i3.Serializers.instance
+            .deserialize<({String anotherField, String field})>(
+                request[r'nonAliased']),
+        aliased: _i3.Serializers.instance
+            .deserialize<_i4.NamedFieldsRecord>(request[r'aliased']),
+      );
+      return (
+        statusCode: 200,
+        body: {
+          'response': _i3.Serializers.instance.serialize<
+              ({
+                _i4.NamedFieldsRecord aliased,
+                ({String anotherField, String field}) nonAliased
+              })>(response)
+        }
+      );
+    } on _i5.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i5.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i3.Serializers.instance.serialize<_i6.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
+            'details': error,
+          }
+        }
+      );
+    }
   }
 
   @override
@@ -37,6 +83,9 @@ final class AsyncNamedFieldsTarget extends _i1.CloudFunctionTarget {
     _i3.Serializers.instance.put(const Record$wkpf9qSerializer());
     _i3.Serializers.instance.put(const Record$rmm4wtSerializer());
     _i3.Serializers.instance.put(const NamedFieldsRecordSerializer());
+    _i3.Serializers.instance.put(const BadRequestExceptionSerializer());
+    _i3.Serializers.instance.put(const InternalServerExceptionSerializer());
+    _i3.Serializers.instance.put(const SerializationExceptionSerializer());
   }
 }
 
@@ -51,6 +100,36 @@ typedef Record$wkpf9q = ({
   _i4.NamedFieldsRecord aliased,
   ({String anotherField, String field}) nonAliased
 });
+
+final class BadRequestExceptionSerializer
+    extends _i3.Serializer<_i6.BadRequestException> {
+  const BadRequestExceptionSerializer();
+
+  @override
+  _i6.BadRequestException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.BadRequestException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.BadRequestException value) =>
+      {r'message': value.message};
+}
+
+final class InternalServerExceptionSerializer
+    extends _i3.Serializer<_i6.InternalServerException> {
+  const InternalServerExceptionSerializer();
+
+  @override
+  _i6.InternalServerException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i6.InternalServerException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i6.InternalServerException value) =>
+      {r'message': value.message};
+}
 
 final class NamedFieldsRecordSerializer
     extends _i3.Serializer<_i4.NamedFieldsRecord> {
@@ -112,5 +191,23 @@ final class Record$wkpf9qSerializer extends _i3.Serializer<Record$wkpf9q> {
             .serialize<_i4.NamedFieldsRecord>(value.aliased),
         r'nonAliased': _i3.Serializers.instance
             .serialize<({String anotherField, String field})>(value.nonAliased),
+      };
+}
+
+final class SerializationExceptionSerializer
+    extends _i3.Serializer<_i5.SerializationException> {
+  const SerializationExceptionSerializer();
+
+  @override
+  _i5.SerializationException deserialize(Object? value) {
+    final serialized = assertWireType<Map<String, Object?>>(value);
+    return _i5.SerializationException((serialized[r'message'] as String));
+  }
+
+  @override
+  Object? serialize(_i5.SerializationException value) => {
+        r'message': value.message,
+        r'offset': value.offset,
+        r'source': value.source,
       };
 }
