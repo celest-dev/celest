@@ -1158,6 +1158,32 @@ final tests = <String, Test>{
               output: 'r',
             ),
           ],
+          'nestedParent': [
+            FunctionTestSuccess(
+              name: 'nestedParent',
+              input: {
+                'parent': 'hello',
+              },
+              output: 'hello',
+            ),
+          ],
+          'nestedReset': [
+            FunctionTestSuccess(
+              name: 'nestedReset',
+              input: {
+                'parent': {
+                  'child': {
+                    'value': 'hello',
+                  },
+                },
+              },
+              output: {
+                'child': {
+                  'value': 'hello',
+                },
+              },
+            ),
+          ],
         },
       ),
       'parameter_types': ApiTest(

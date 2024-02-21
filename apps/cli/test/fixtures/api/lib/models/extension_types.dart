@@ -133,3 +133,26 @@ extension type const ColorXFromJsonStatic(Color c) {
 extension type const ColorXToFromJsonCombined(Color c)
     implements ColorXToJson, ColorXFromJson {}
 extension type const ColorXImplIndirect(Color c) implements ColorXImpl {}
+
+final class NestedParent {
+  const NestedParent(this.child);
+
+  factory NestedParent.fromJson(String value) =>
+      NestedParent(NestedChild(value));
+
+  final NestedChild child;
+
+  String toJson() => child.value;
+}
+
+final class NestedChild {
+  const NestedChild(this.value);
+
+  factory NestedChild.fromJson(String value) => NestedChild(value);
+
+  final String value;
+
+  String toJson() => value;
+}
+
+extension type const NestedReset(NestedParent it) {}

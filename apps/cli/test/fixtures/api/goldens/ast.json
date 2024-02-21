@@ -10632,6 +10632,130 @@
             },
             "text": "jsonMap"
           }
+        },
+        "nestedParent": {
+          "name": "nestedParent",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedParent",
+                "url": "package:celest_backend/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 3302,
+                  "uri": "extension_types.dart",
+                  "line": 72,
+                  "column": 39
+                },
+                "end": {
+                  "offset": 3308,
+                  "uri": "extension_types.dart",
+                  "line": 72,
+                  "column": 45
+                },
+                "text": "parent"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:celest_backend/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:celest_backend/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 3276,
+              "uri": "extension_types.dart",
+              "line": 72,
+              "column": 13
+            },
+            "end": {
+              "offset": 3288,
+              "uri": "extension_types.dart",
+              "line": 72,
+              "column": 25
+            },
+            "text": "nestedParent"
+          }
+        },
+        "nestedReset": {
+          "name": "nestedReset",
+          "apiName": "extension_types",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedReset",
+                "url": "package:celest_backend/models/extension_types.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 3357,
+                  "uri": "extension_types.dart",
+                  "line": 73,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 3363,
+                  "uri": "extension_types.dart",
+                  "line": 73,
+                  "column": 42
+                },
+                "text": "parent"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedReset",
+            "url": "package:celest_backend/models/extension_types.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedReset",
+            "url": "package:celest_backend/models/extension_types.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 3333,
+              "uri": "extension_types.dart",
+              "line": 73,
+              "column": 12
+            },
+            "end": {
+              "offset": 3344,
+              "uri": "extension_types.dart",
+              "line": 73,
+              "column": 23
+            },
+            "text": "nestedReset"
+          }
         }
       },
       "docs": [

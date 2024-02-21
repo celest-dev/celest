@@ -1783,6 +1783,50 @@
               }
             ]
           }
+        },
+        "nestedParent": {
+          "name": "nestedParent",
+          "route": "/extension-types/nested-parent",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nestedReset": {
+          "name": "nestedReset",
+          "route": "/extension-types/nested-reset",
+          "apiName": "extension_types",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
     },

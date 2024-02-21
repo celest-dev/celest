@@ -209,11 +209,12 @@ final class SerializerGenerator {
   SerializerDefinition build() {
     final serialize = _serialize(r'$value').code;
 
+    final parameters = serializationSpec.parameters;
     final mayBeAbsent =
-        serializationSpec.parameters.every((p) => p.isOptional) &&
+        (parameters.isEmpty || parameters.every((p) => p.isOptional)) &&
             serializationSpec.subtypes.isEmpty;
     final wireType = switch (type) {
-      ast.InterfaceType() when type.isEnum => this.wireType,
+      ast.InterfaceType(isEnum: true) => this.wireType,
       _ => castType.withNullability(mayBeAbsent),
     };
     final deserialize = _deserialize(r'$serialized', mayBeAbsent: mayBeAbsent);

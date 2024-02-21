@@ -66,8 +66,9 @@ extension ReferenceHelper on Reference {
           recordType.rebuild((t) => t..isNullable = isNullable),
         final FunctionType functionType =>
           functionType.rebuild((t) => t..isNullable = isNullable),
-        final TypeReference type =>
-          type.rebuild((t) => t..isNullable = isNullable),
+        final TypeReference type => type.rebuild((t) {
+            if (symbol != 'dynamic') t.isNullable = isNullable;
+          }),
         _ => toTypeReference.rebuild((t) => t..isNullable = isNullable),
       };
 

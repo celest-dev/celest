@@ -137,8 +137,9 @@ final class SerializationSpec {
     required this.type,
     required this.wireType,
     code_builder.Reference? castType,
-    required this.fields,
-    required this.parameters,
+    this.fields = const [],
+    this.constructorParameters = const [],
+    this.fromJsonParameters = const [],
     required this.fromJsonType,
     required DartType? toJsonType,
     this.extensionType,
@@ -158,7 +159,12 @@ final class SerializationSpec {
   final code_builder.Reference castType;
 
   final List<FieldSpec> fields;
-  final List<ParameterSpec> parameters;
+
+  final List<ParameterSpec> constructorParameters;
+  final List<ParameterSpec> fromJsonParameters;
+
+  List<ParameterSpec> get parameters =>
+      fromJsonType == null ? constructorParameters : fromJsonParameters;
 
   final DartType? fromJsonType;
   final DartType? _toJsonType;
@@ -188,7 +194,8 @@ final class SerializationSpec {
     code_builder.Reference? wireType,
     code_builder.Reference? castType,
     List<FieldSpec>? fields,
-    List<ParameterSpec>? parameters,
+    List<ParameterSpec>? constructorParameters,
+    List<ParameterSpec>? fromJsonParameters,
     Object? fromJsonType = const Object(),
     Object? toJsonType = const Object(),
     SerializationSpec? extensionType,
@@ -198,7 +205,9 @@ final class SerializationSpec {
         wireType: wireType ?? this.wireType,
         castType: castType ?? this.castType,
         fields: fields ?? this.fields,
-        parameters: parameters ?? this.parameters,
+        constructorParameters:
+            constructorParameters ?? this.constructorParameters,
+        fromJsonParameters: fromJsonParameters ?? this.fromJsonParameters,
         fromJsonType: switch (fromJsonType) {
           null => null,
           final DartType type => type,
@@ -221,7 +230,9 @@ final class SerializationSpec {
         castType == other.castType &&
         const ListEquality<FieldSpec>().equals(fields, other.fields) &&
         const ListEquality<ParameterSpec>()
-            .equals(parameters, other.parameters) &&
+            .equals(constructorParameters, other.constructorParameters) &&
+        const ListEquality<ParameterSpec>()
+            .equals(fromJsonParameters, other.fromJsonParameters) &&
         const DartTypeEquality().equals(fromJsonType, other.fromJsonType) &&
         const DartTypeEquality().equals(_toJsonType, other._toJsonType) &&
         parent?.type == other.parent?.type &&
@@ -236,7 +247,8 @@ final class SerializationSpec {
         wireType,
         castType,
         const ListEquality<FieldSpec>().hash(fields),
-        const ListEquality<ParameterSpec>().hash(parameters),
+        const ListEquality<ParameterSpec>().hash(constructorParameters),
+        const ListEquality<ParameterSpec>().hash(fromJsonParameters),
         const DartTypeEquality().hash(fromJsonType),
         const DartTypeEquality().hash(_toJsonType),
         parent == null ? null : const DartTypeEquality().hash(parent!.type),
@@ -642,8 +654,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         final spec = SerializationSpec(
           type: erasureType,
           wireType: wireType,
-          fields: [],
-          parameters: [],
           fromJsonType: null,
           toJsonType: null,
         );
@@ -659,17 +669,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                     type: element.representation.type,
                   ),
               ],
-              parameters: [
-                if (constructor != null)
-                  ParameterSpec(
-                    name: constructor.parameters.single.name,
-                    type: erasureType,
-                    isPositional: true,
-                    isOptional: false,
-                    isNamed: false,
-                    defaultValue: null,
-                  ),
-              ],
+              constructorParameters: constructor.parameterSpecs,
+              fromJsonParameters: fromJsonCtor.parameterSpecs,
               fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
               toJsonType: (toJsonMethod?.enclosingElement as InterfaceElement?)
                   ?.thisType,
@@ -724,13 +725,16 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         const _IsSerializableClass(_TypePosition.parameter),
       );
     }
-    final wireConstructor = fromJsonCtor ??
+    final wireConstructor =
         type.constructors.singleWhereOrNull((ctor) => ctor.name.isEmpty);
-    if (wireConstructor == null && !type.extensionTypeErasure.isEnum) {
+    if (wireConstructor == null &&
+        fromJsonCtor == null &&
+        !type.extensionTypeErasure.isEnum) {
       return verdict &
           Verdict.no(
             'Class ${element.displayName} must have an unnamed constructor '
-            'with the same number of parameters as fields.',
+            'with the same number of parameters as fields or a `fromJson` '
+            'constructor.',
             location: element.sourceLocation,
           );
     }
@@ -743,18 +747,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         for (final field in fields)
           FieldSpec(name: field.displayName, type: field.type),
       ],
-      parameters: [
-        for (final parameter
-            in wireConstructor?.parameters ?? const <ParameterElement>[])
-          ParameterSpec(
-            name: parameter.displayName,
-            type: parameter.type,
-            isPositional: parameter.isPositional,
-            isOptional: parameter.isOptional,
-            isNamed: parameter.isNamed,
-            defaultValue: parameter.declaration.defaultTo,
-          ),
-      ],
+      constructorParameters: wireConstructor.parameterSpecs,
+      fromJsonParameters: fromJsonCtor.parameterSpecs,
       fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
       toJsonType:
           (toJsonMethod?.enclosingElement as InterfaceElement?)?.thisType,
@@ -921,7 +915,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
           for (final field in type.namedFields)
             FieldSpec(name: field.name, type: field.type),
         ],
-        parameters: [
+        constructorParameters: [
           for (final field in type.namedFields)
             ParameterSpec(
               name: field.name,
@@ -1336,4 +1330,18 @@ class _FieldSet implements Comparable<_FieldSet> {
 
     return offsetFor(a).compareTo(offsetFor(b));
   }
+}
+
+extension on ExecutableElement? {
+  List<ParameterSpec> get parameterSpecs => [
+        for (final parameter in this?.parameters ?? const <ParameterElement>[])
+          ParameterSpec(
+            name: parameter.displayName,
+            type: parameter.type,
+            isPositional: parameter.isPositional,
+            isOptional: parameter.isOptional,
+            isNamed: parameter.isNamed,
+            defaultValue: parameter.declaration.defaultTo,
+          ),
+      ];
 }
