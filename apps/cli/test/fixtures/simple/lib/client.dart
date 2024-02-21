@@ -2,9 +2,9 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:io';
+import 'dart:io' as _$io;
 
 import 'package:celest_core/src/util/globals.dart';
 
@@ -15,7 +15,7 @@ enum CelestEnvironment {
   production;
 
   Uri get baseUri => switch (this) {
-        local => kIsWeb || !Platform.isAndroid
+        local => kIsWeb || !_$io.Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
         production => Uri.parse('https://example.celest.run'),

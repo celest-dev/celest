@@ -6,6 +6,101 @@
     "url": "project:project.dart"
   },
   "apis": {
+    "external": {
+      "name": "external",
+      "metadata": [],
+      "functions": {
+        "callsThrowsCommonException": {
+          "name": "callsThrowsCommonException",
+          "apiName": "external",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 184,
+              "uri": "external.dart",
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 210,
+              "uri": "external.dart",
+              "line": 6,
+              "column": 31
+            },
+            "text": "callsThrowsCommonException"
+          }
+        },
+        "callsThrowsCustomException": {
+          "name": "callsThrowsCustomException",
+          "apiName": "external",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 257,
+              "uri": "external.dart",
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 283,
+              "uri": "external.dart",
+              "line": 10,
+              "column": 31
+            },
+            "text": "callsThrowsCustomException"
+          }
+        }
+      },
+      "docs": [
+        "/// Tests that types thrown from external packages can be detected via",
+        "/// recursive imports and serialized correctly."
+      ],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CommonException",
+          "url": "package:_common/_common.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "external.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "external.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
     "nonthrowing": {
       "name": "nonthrowing",
       "metadata": [],
@@ -161,6 +256,12 @@
           "$": "TypeReference",
           "symbol": "CustomError",
           "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CommonException",
+          "url": "package:_common/_common.dart",
           "isNullable": false
         }
       ],
@@ -333,6 +434,12 @@
           "$": "TypeReference",
           "symbol": "CustomError",
           "url": "package:celest_backend/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CommonException",
+          "url": "package:_common/_common.dart",
           "isNullable": false
         }
       ],

@@ -7,12 +7,24 @@ library;
 import 'package:celest/celest.dart';
 
 abstract final class Apis {
+  static const external = CloudApi(name: r'external');
+
   static const nonthrowing = CloudApi(name: r'nonthrowing');
 
   static const throwing = CloudApi(name: r'throwing');
 }
 
 abstract final class Functions {
+  static const externalCallsThrowsCommonException = CloudFunction(
+    api: r'external',
+    functionName: r'callsThrowsCommonException',
+  );
+
+  static const externalCallsThrowsCustomException = CloudFunction(
+    api: r'external',
+    functionName: r'callsThrowsCustomException',
+  );
+
   static const nonthrowingCallsThrowsBaseError = CloudFunction(
     api: r'nonthrowing',
     functionName: r'callsThrowsBaseError',

@@ -1,6 +1,7 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-import 'dart:typed_data';
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _$typed_data;
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart';
@@ -14,8 +15,8 @@ import 'package:celest_backend/src/models/parameter_types.dart';
 import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
-import 'package:fast_immutable_collections/src/ilist/ilist.dart';
-import 'package:fast_immutable_collections/src/imap/imap.dart';
+import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
+import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
 
 typedef Record$k7x4l9 = ({String a, String b, String c});
 typedef Record$rmm4wt = ({String anotherField, String field});
@@ -329,7 +330,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
           .map((el) => (el as String))
           .toList(),
       aListOfUint8List: (serialized[r'aListOfUint8List'] as Iterable<Object?>)
-          .map((el) => Serializers.instance.deserialize<Uint8List>(el))
+          .map((el) =>
+              Serializers.instance.deserialize<_$typed_data.Uint8List>(el))
           .toList(),
       aListOfUri: (serialized[r'aListOfUri'] as Iterable<Object?>)
           .map((el) => Serializers.instance.deserialize<Uri>(el))
@@ -453,7 +455,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
       ) =>
               MapEntry(
                 key,
-                Serializers.instance.deserialize<Uint8List>(value),
+                Serializers.instance.deserialize<_$typed_data.Uint8List>(value),
               )),
       aMapOfUri: (serialized[r'aMapOfUri'] as Map<String, Object?>).map((
         key,
@@ -482,7 +484,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
           .deserialize<StackTrace>(serialized[r'aStackTrace']),
       aString: (serialized[r'aString'] as String),
       aUint8List: Serializers.instance
-          .deserialize<Uint8List>(serialized[r'aUint8List']),
+          .deserialize<_$typed_data.Uint8List>(serialized[r'aUint8List']),
       aUri: Serializers.instance.deserialize<Uri>(serialized[r'aUri']),
       aUriData:
           Serializers.instance.deserialize<UriData>(serialized[r'aUriData']),
@@ -532,7 +534,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
             .toList(),
         r'aListOfString': value.aListOfString,
         r'aListOfUint8List': value.aListOfUint8List
-            .map((el) => Serializers.instance.serialize<Uint8List>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$typed_data.Uint8List>(el))
             .toList(),
         r'aListOfUri': value.aListOfUri
             .map((el) => Serializers.instance.serialize<Uri>(el))
@@ -615,7 +618,7 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<Uint8List>(value),
+              Serializers.instance.serialize<_$typed_data.Uint8List>(value),
             )),
         r'aMapOfUri': value.aMapOfUri.map((
           key,
@@ -642,8 +645,8 @@ final class ComplexStructSerializer extends Serializer<ComplexStruct> {
         r'aStackTrace':
             Serializers.instance.serialize<StackTrace>(value.aStackTrace),
         r'aString': value.aString,
-        r'aUint8List':
-            Serializers.instance.serialize<Uint8List>(value.aUint8List),
+        r'aUint8List': Serializers.instance
+            .serialize<_$typed_data.Uint8List>(value.aUint8List),
         r'aUri': Serializers.instance.serialize<Uri>(value.aUri),
         r'aUriData': Serializers.instance.serialize<UriData>(value.aUriData),
         r'anEnum': Serializers.instance.serialize<MyEnum>(value.anEnum),
@@ -891,324 +894,352 @@ final class GenericWrappersSerializer extends Serializer<GenericWrappers> {
     final serialized = assertWireType<Map<String, Object?>>(value);
     return GenericWrappers(
       listOfString: Serializers.instance
-          .deserialize<IList<String>>(serialized[r'listOfString']),
+          .deserialize<_$ilist.IList<String>>(serialized[r'listOfString']),
       listOfUri: Serializers.instance
-          .deserialize<IList<Uri>>(serialized[r'listOfUri']),
+          .deserialize<_$ilist.IList<Uri>>(serialized[r'listOfUri']),
       listOfSimpleClass: Serializers.instance
-          .deserialize<IList<SimpleClass>>(serialized[r'listOfSimpleClass']),
+          .deserialize<_$ilist.IList<SimpleClass>>(
+              serialized[r'listOfSimpleClass']),
       listOfListOfString: Serializers.instance
-          .deserialize<IList<IList<String>>>(serialized[r'listOfListOfString']),
+          .deserialize<_$ilist.IList<_$ilist.IList<String>>>(
+              serialized[r'listOfListOfString']),
       listOfListOfUri: Serializers.instance
-          .deserialize<IList<IList<Uri>>>(serialized[r'listOfListOfUri']),
+          .deserialize<_$ilist.IList<_$ilist.IList<Uri>>>(
+              serialized[r'listOfListOfUri']),
       listOfListOfSimpleClass: Serializers.instance
-          .deserialize<IList<IList<SimpleClass>>>(
+          .deserialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
               serialized[r'listOfListOfSimpleClass']),
       mapOfString: Serializers.instance
-          .deserialize<IMap<String, String>>(serialized[r'mapOfString']),
+          .deserialize<_$imap.IMap<String, String>>(serialized[r'mapOfString']),
       mapOfUri: Serializers.instance
-          .deserialize<IMap<String, Uri>>(serialized[r'mapOfUri']),
+          .deserialize<_$imap.IMap<String, Uri>>(serialized[r'mapOfUri']),
       mapOfSimpleClass: Serializers.instance
-          .deserialize<IMap<String, SimpleClass>>(
+          .deserialize<_$imap.IMap<String, SimpleClass>>(
               serialized[r'mapOfSimpleClass']),
       mapOfListOfString: Serializers.instance
-          .deserialize<IMap<String, IList<String>>>(
+          .deserialize<_$imap.IMap<String, _$ilist.IList<String>>>(
               serialized[r'mapOfListOfString']),
       mapOfListOfUri: Serializers.instance
-          .deserialize<IMap<String, IList<Uri>>>(serialized[r'mapOfListOfUri']),
+          .deserialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(
+              serialized[r'mapOfListOfUri']),
       mapOfListOfSimpleClass: Serializers.instance
-          .deserialize<IMap<String, IList<SimpleClass>>>(
+          .deserialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
               serialized[r'mapOfListOfSimpleClass']),
       mapOfMapOfString: Serializers.instance
-          .deserialize<IMap<String, IMap<String, String>>>(
+          .deserialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
               serialized[r'mapOfMapOfString']),
       mapOfMapOfUri: Serializers.instance
-          .deserialize<IMap<String, IMap<String, Uri>>>(
+          .deserialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
               serialized[r'mapOfMapOfUri']),
       mapOfMapOfSimpleClass: Serializers.instance
-          .deserialize<IMap<String, IMap<String, SimpleClass>>>(
+          .deserialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
               serialized[r'mapOfMapOfSimpleClass']),
     );
   }
 
   @override
   Object? serialize(GenericWrappers value) => {
-        r'listOfString':
-            Serializers.instance.serialize<IList<String>>(value.listOfString),
+        r'listOfString': Serializers.instance
+            .serialize<_$ilist.IList<String>>(value.listOfString),
         r'listOfUri':
-            Serializers.instance.serialize<IList<Uri>>(value.listOfUri),
+            Serializers.instance.serialize<_$ilist.IList<Uri>>(value.listOfUri),
         r'listOfSimpleClass': Serializers.instance
-            .serialize<IList<SimpleClass>>(value.listOfSimpleClass),
+            .serialize<_$ilist.IList<SimpleClass>>(value.listOfSimpleClass),
         r'listOfListOfString': Serializers.instance
-            .serialize<IList<IList<String>>>(value.listOfListOfString),
+            .serialize<_$ilist.IList<_$ilist.IList<String>>>(
+                value.listOfListOfString),
         r'listOfListOfUri': Serializers.instance
-            .serialize<IList<IList<Uri>>>(value.listOfListOfUri),
+            .serialize<_$ilist.IList<_$ilist.IList<Uri>>>(
+                value.listOfListOfUri),
         r'listOfListOfSimpleClass': Serializers.instance
-            .serialize<IList<IList<SimpleClass>>>(
+            .serialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
                 value.listOfListOfSimpleClass),
         r'mapOfString': Serializers.instance
-            .serialize<IMap<String, String>>(value.mapOfString),
-        r'mapOfUri':
-            Serializers.instance.serialize<IMap<String, Uri>>(value.mapOfUri),
+            .serialize<_$imap.IMap<String, String>>(value.mapOfString),
+        r'mapOfUri': Serializers.instance
+            .serialize<_$imap.IMap<String, Uri>>(value.mapOfUri),
         r'mapOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, SimpleClass>>(value.mapOfSimpleClass),
+            .serialize<_$imap.IMap<String, SimpleClass>>(
+                value.mapOfSimpleClass),
         r'mapOfListOfString': Serializers.instance
-            .serialize<IMap<String, IList<String>>>(value.mapOfListOfString),
+            .serialize<_$imap.IMap<String, _$ilist.IList<String>>>(
+                value.mapOfListOfString),
         r'mapOfListOfUri': Serializers.instance
-            .serialize<IMap<String, IList<Uri>>>(value.mapOfListOfUri),
+            .serialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(
+                value.mapOfListOfUri),
         r'mapOfListOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, IList<SimpleClass>>>(
+            .serialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
                 value.mapOfListOfSimpleClass),
         r'mapOfMapOfString': Serializers.instance
-            .serialize<IMap<String, IMap<String, String>>>(
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
                 value.mapOfMapOfString),
         r'mapOfMapOfUri': Serializers.instance
-            .serialize<IMap<String, IMap<String, Uri>>>(value.mapOfMapOfUri),
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
+                value.mapOfMapOfUri),
         r'mapOfMapOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, IMap<String, SimpleClass>>>(
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
                 value.mapOfMapOfSimpleClass),
       };
 }
 
 final class IListIListSimpleClassSerializer
-    extends Serializer<IList<IList<SimpleClass>>> {
+    extends Serializer<_$ilist.IList<_$ilist.IList<SimpleClass>>> {
   const IListIListSimpleClassSerializer();
 
   @override
-  IList<IList<SimpleClass>> deserialize(Object? value) {
+  _$ilist.IList<_$ilist.IList<SimpleClass>> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<IList<SimpleClass>>.fromJson(
+    return _$ilist.IList<_$ilist.IList<SimpleClass>>.fromJson(
       serialized,
-      (value) => Serializers.instance.deserialize<IList<SimpleClass>>(value),
+      (value) =>
+          Serializers.instance.deserialize<_$ilist.IList<SimpleClass>>(value),
     );
   }
 
   @override
-  Object? serialize(IList<IList<SimpleClass>> value) => value.toJson(
-      (value) => Serializers.instance.serialize<IList<SimpleClass>>(value));
+  Object? serialize(_$ilist.IList<_$ilist.IList<SimpleClass>> value) =>
+      value.toJson((value) =>
+          Serializers.instance.serialize<_$ilist.IList<SimpleClass>>(value));
 }
 
 final class IListIListStringSerializer
-    extends Serializer<IList<IList<String>>> {
+    extends Serializer<_$ilist.IList<_$ilist.IList<String>>> {
   const IListIListStringSerializer();
 
   @override
-  IList<IList<String>> deserialize(Object? value) {
+  _$ilist.IList<_$ilist.IList<String>> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<IList<String>>.fromJson(
+    return _$ilist.IList<_$ilist.IList<String>>.fromJson(
       serialized,
-      (value) => Serializers.instance.deserialize<IList<String>>(value),
+      (value) => Serializers.instance.deserialize<_$ilist.IList<String>>(value),
     );
   }
 
   @override
-  Object? serialize(IList<IList<String>> value) => value
-      .toJson((value) => Serializers.instance.serialize<IList<String>>(value));
+  Object? serialize(_$ilist.IList<_$ilist.IList<String>> value) => value.toJson(
+      (value) => Serializers.instance.serialize<_$ilist.IList<String>>(value));
 }
 
-final class IListIListUriSerializer extends Serializer<IList<IList<Uri>>> {
+final class IListIListUriSerializer
+    extends Serializer<_$ilist.IList<_$ilist.IList<Uri>>> {
   const IListIListUriSerializer();
 
   @override
-  IList<IList<Uri>> deserialize(Object? value) {
+  _$ilist.IList<_$ilist.IList<Uri>> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<IList<Uri>>.fromJson(
+    return _$ilist.IList<_$ilist.IList<Uri>>.fromJson(
       serialized,
-      (value) => Serializers.instance.deserialize<IList<Uri>>(value),
+      (value) => Serializers.instance.deserialize<_$ilist.IList<Uri>>(value),
     );
   }
 
   @override
-  Object? serialize(IList<IList<Uri>> value) => value
-      .toJson((value) => Serializers.instance.serialize<IList<Uri>>(value));
+  Object? serialize(_$ilist.IList<_$ilist.IList<Uri>> value) => value.toJson(
+      (value) => Serializers.instance.serialize<_$ilist.IList<Uri>>(value));
 }
 
-final class IListSimpleClassSerializer extends Serializer<IList<SimpleClass>> {
+final class IListSimpleClassSerializer
+    extends Serializer<_$ilist.IList<SimpleClass>> {
   const IListSimpleClassSerializer();
 
   @override
-  IList<SimpleClass> deserialize(Object? value) {
+  _$ilist.IList<SimpleClass> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<SimpleClass>.fromJson(
+    return _$ilist.IList<SimpleClass>.fromJson(
       serialized,
       (value) => Serializers.instance.deserialize<SimpleClass>(value),
     );
   }
 
   @override
-  Object? serialize(IList<SimpleClass> value) => value
+  Object? serialize(_$ilist.IList<SimpleClass> value) => value
       .toJson((value) => Serializers.instance.serialize<SimpleClass>(value));
 }
 
-final class IListStringSerializer extends Serializer<IList<String>> {
+final class IListStringSerializer extends Serializer<_$ilist.IList<String>> {
   const IListStringSerializer();
 
   @override
-  IList<String> deserialize(Object? value) {
+  _$ilist.IList<String> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<String>.fromJson(
+    return _$ilist.IList<String>.fromJson(
       serialized,
       (value) => (value as String),
     );
   }
 
   @override
-  Object? serialize(IList<String> value) => value.toJson((value) => value);
+  Object? serialize(_$ilist.IList<String> value) =>
+      value.toJson((value) => value);
 }
 
-final class IListUriSerializer extends Serializer<IList<Uri>> {
+final class IListUriSerializer extends Serializer<_$ilist.IList<Uri>> {
   const IListUriSerializer();
 
   @override
-  IList<Uri> deserialize(Object? value) {
+  _$ilist.IList<Uri> deserialize(Object? value) {
     final serialized = assertWireType<dynamic>(value);
-    return IList<Uri>.fromJson(
+    return _$ilist.IList<Uri>.fromJson(
       serialized,
       (value) => Serializers.instance.deserialize<Uri>(value),
     );
   }
 
   @override
-  Object? serialize(IList<Uri> value) =>
+  Object? serialize(_$ilist.IList<Uri> value) =>
       value.toJson((value) => Serializers.instance.serialize<Uri>(value));
 }
 
 final class IMapStringIListSimpleClassSerializer
-    extends Serializer<IMap<String, IList<SimpleClass>>> {
+    extends Serializer<_$imap.IMap<String, _$ilist.IList<SimpleClass>>> {
   const IMapStringIListSimpleClassSerializer();
 
   @override
-  IMap<String, IList<SimpleClass>> deserialize(Object? value) {
+  _$imap.IMap<String, _$ilist.IList<SimpleClass>> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IList<SimpleClass>>.fromJson(
+    return _$imap.IMap<String, _$ilist.IList<SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<IList<SimpleClass>>(value),
+      (value) =>
+          Serializers.instance.deserialize<_$ilist.IList<SimpleClass>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IList<SimpleClass>> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$ilist.IList<SimpleClass>> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<IList<SimpleClass>>(value),
+        (value) =>
+            Serializers.instance.serialize<_$ilist.IList<SimpleClass>>(value),
       );
 }
 
 final class IMapStringIListStringSerializer
-    extends Serializer<IMap<String, IList<String>>> {
+    extends Serializer<_$imap.IMap<String, _$ilist.IList<String>>> {
   const IMapStringIListStringSerializer();
 
   @override
-  IMap<String, IList<String>> deserialize(Object? value) {
+  _$imap.IMap<String, _$ilist.IList<String>> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IList<String>>.fromJson(
+    return _$imap.IMap<String, _$ilist.IList<String>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<IList<String>>(value),
+      (value) => Serializers.instance.deserialize<_$ilist.IList<String>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IList<String>> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$ilist.IList<String>> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<IList<String>>(value),
+        (value) => Serializers.instance.serialize<_$ilist.IList<String>>(value),
       );
 }
 
 final class IMapStringIListUriSerializer
-    extends Serializer<IMap<String, IList<Uri>>> {
+    extends Serializer<_$imap.IMap<String, _$ilist.IList<Uri>>> {
   const IMapStringIListUriSerializer();
 
   @override
-  IMap<String, IList<Uri>> deserialize(Object? value) {
+  _$imap.IMap<String, _$ilist.IList<Uri>> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IList<Uri>>.fromJson(
+    return _$imap.IMap<String, _$ilist.IList<Uri>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<IList<Uri>>(value),
+      (value) => Serializers.instance.deserialize<_$ilist.IList<Uri>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IList<Uri>> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$ilist.IList<Uri>> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<IList<Uri>>(value),
+        (value) => Serializers.instance.serialize<_$ilist.IList<Uri>>(value),
       );
 }
 
 final class IMapStringIMapStringSimpleClassSerializer
-    extends Serializer<IMap<String, IMap<String, SimpleClass>>> {
+    extends Serializer<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>> {
   const IMapStringIMapStringSimpleClassSerializer();
 
   @override
-  IMap<String, IMap<String, SimpleClass>> deserialize(Object? value) {
+  _$imap.IMap<String, _$imap.IMap<String, SimpleClass>> deserialize(
+      Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IMap<String, SimpleClass>>.fromJson(
+    return _$imap.IMap<String, _$imap.IMap<String, SimpleClass>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) =>
-          Serializers.instance.deserialize<IMap<String, SimpleClass>>(value),
+      (value) => Serializers.instance
+          .deserialize<_$imap.IMap<String, SimpleClass>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IMap<String, SimpleClass>> value) =>
+  Object? serialize(
+          _$imap.IMap<String, _$imap.IMap<String, SimpleClass>> value) =>
       value.toJson(
         (value) => value,
-        (value) =>
-            Serializers.instance.serialize<IMap<String, SimpleClass>>(value),
+        (value) => Serializers.instance
+            .serialize<_$imap.IMap<String, SimpleClass>>(value),
       );
 }
 
 final class IMapStringIMapStringStringSerializer
-    extends Serializer<IMap<String, IMap<String, String>>> {
+    extends Serializer<_$imap.IMap<String, _$imap.IMap<String, String>>> {
   const IMapStringIMapStringStringSerializer();
 
   @override
-  IMap<String, IMap<String, String>> deserialize(Object? value) {
+  _$imap.IMap<String, _$imap.IMap<String, String>> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IMap<String, String>>.fromJson(
+    return _$imap.IMap<String, _$imap.IMap<String, String>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<IMap<String, String>>(value),
+      (value) =>
+          Serializers.instance.deserialize<_$imap.IMap<String, String>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IMap<String, String>> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$imap.IMap<String, String>> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<IMap<String, String>>(value),
+        (value) =>
+            Serializers.instance.serialize<_$imap.IMap<String, String>>(value),
       );
 }
 
 final class IMapStringIMapStringUriSerializer
-    extends Serializer<IMap<String, IMap<String, Uri>>> {
+    extends Serializer<_$imap.IMap<String, _$imap.IMap<String, Uri>>> {
   const IMapStringIMapStringUriSerializer();
 
   @override
-  IMap<String, IMap<String, Uri>> deserialize(Object? value) {
+  _$imap.IMap<String, _$imap.IMap<String, Uri>> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, IMap<String, Uri>>.fromJson(
+    return _$imap.IMap<String, _$imap.IMap<String, Uri>>.fromJson(
       serialized,
       (value) => (value as String),
-      (value) => Serializers.instance.deserialize<IMap<String, Uri>>(value),
+      (value) =>
+          Serializers.instance.deserialize<_$imap.IMap<String, Uri>>(value),
     );
   }
 
   @override
-  Object? serialize(IMap<String, IMap<String, Uri>> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, _$imap.IMap<String, Uri>> value) =>
+      value.toJson(
         (value) => value,
-        (value) => Serializers.instance.serialize<IMap<String, Uri>>(value),
+        (value) =>
+            Serializers.instance.serialize<_$imap.IMap<String, Uri>>(value),
       );
 }
 
 final class IMapStringSimpleClassSerializer
-    extends Serializer<IMap<String, SimpleClass>> {
+    extends Serializer<_$imap.IMap<String, SimpleClass>> {
   const IMapStringSimpleClassSerializer();
 
   @override
-  IMap<String, SimpleClass> deserialize(Object? value) {
+  _$imap.IMap<String, SimpleClass> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, SimpleClass>.fromJson(
+    return _$imap.IMap<String, SimpleClass>.fromJson(
       serialized,
       (value) => (value as String),
       (value) => Serializers.instance.deserialize<SimpleClass>(value),
@@ -1216,20 +1247,20 @@ final class IMapStringSimpleClassSerializer
   }
 
   @override
-  Object? serialize(IMap<String, SimpleClass> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, SimpleClass> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<SimpleClass>(value),
       );
 }
 
 final class IMapStringStringSerializer
-    extends Serializer<IMap<String, String>> {
+    extends Serializer<_$imap.IMap<String, String>> {
   const IMapStringStringSerializer();
 
   @override
-  IMap<String, String> deserialize(Object? value) {
+  _$imap.IMap<String, String> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, String>.fromJson(
+    return _$imap.IMap<String, String>.fromJson(
       serialized,
       (value) => (value as String),
       (value) => (value as String),
@@ -1237,19 +1268,20 @@ final class IMapStringStringSerializer
   }
 
   @override
-  Object? serialize(IMap<String, String> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, String> value) => value.toJson(
         (value) => value,
         (value) => value,
       );
 }
 
-final class IMapStringUriSerializer extends Serializer<IMap<String, Uri>> {
+final class IMapStringUriSerializer
+    extends Serializer<_$imap.IMap<String, Uri>> {
   const IMapStringUriSerializer();
 
   @override
-  IMap<String, Uri> deserialize(Object? value) {
+  _$imap.IMap<String, Uri> deserialize(Object? value) {
     final serialized = assertWireType<Map<String, Object?>>(value);
-    return IMap<String, Uri>.fromJson(
+    return _$imap.IMap<String, Uri>.fromJson(
       serialized,
       (value) => (value as String),
       (value) => Serializers.instance.deserialize<Uri>(value),
@@ -1257,7 +1289,7 @@ final class IMapStringUriSerializer extends Serializer<IMap<String, Uri>> {
   }
 
   @override
-  Object? serialize(IMap<String, Uri> value) => value.toJson(
+  Object? serialize(_$imap.IMap<String, Uri> value) => value.toJson(
         (value) => value,
         (value) => Serializers.instance.serialize<Uri>(value),
       );

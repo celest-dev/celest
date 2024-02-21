@@ -2,10 +2,10 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:convert' as _$convert;
+import 'dart:typed_data' as _$typed_data;
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart';
@@ -20,8 +20,8 @@ import 'package:celest_backend/src/models/records.dart';
 import 'package:celest_backend/src/models/sealed_classes.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
-import 'package:fast_immutable_collections/src/ilist/ilist.dart';
-import 'package:fast_immutable_collections/src/imap/imap.dart';
+import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
+import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
 
 import '../../client.dart';
 
@@ -99,7 +99,8 @@ class CelestFunctionsAsserts {
       celest.baseUri.resolve('/asserts/asserts-enabled'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -140,10 +141,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
+      body: _$convert
+          .jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -157,10 +159,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-empty'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
+      body: _$convert
+          .jsonEncode({r'value': Serializers.instance.serialize<Empty>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -174,10 +177,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Fields>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<Fields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -191,10 +195,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Fields>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<Fields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -208,10 +213,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<Fields?>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -225,10 +231,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nullable-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<Fields?>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -242,10 +249,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NamedFields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -259,10 +267,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NamedFields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -276,10 +285,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<MixedFields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -293,10 +303,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-mixed-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<MixedFields>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -310,10 +321,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -327,10 +339,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<DefaultValues>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -344,10 +357,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NestedClass>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -361,10 +375,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nested-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NestedClass>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -378,10 +393,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -395,10 +411,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<OnlyFromJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -412,10 +429,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -429,10 +447,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<OnlyToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -447,11 +466,12 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<OnlyToJsonWithDefaults>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -467,11 +487,12 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<OnlyToJsonWithDefaults>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -486,10 +507,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -504,10 +526,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<FromJsonAndToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -522,10 +545,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -539,10 +563,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NonMapToJson>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -557,12 +582,13 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value':
             Serializers.instance.serialize<NonMapToJsonWithDefaults>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -578,12 +604,13 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json-with-defaults'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value':
             Serializers.instance.serialize<NonMapToJsonWithDefaults>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -599,11 +626,12 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<NonMapFromAndToJson>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -619,11 +647,12 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-from-and-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<NonMapFromAndToJson>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -638,10 +667,11 @@ class CelestFunctionsClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<FromJsonStatic>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -682,9 +712,10 @@ class CelestFunctionsCollections {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-list'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'list': list}),
+      body: _$convert.jsonEncode({r'list': list}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -700,13 +731,14 @@ class CelestFunctionsCollections {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-list'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'list': list
             .map((el) => Serializers.instance.serialize<SimpleClass>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -722,9 +754,10 @@ class CelestFunctionsCollections {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-map'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'map': map}),
+      body: _$convert.jsonEncode({r'map': map}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -746,7 +779,7 @@ class CelestFunctionsCollections {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-map'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'map': map.map((
           key,
           value,
@@ -757,7 +790,8 @@ class CelestFunctionsCollections {
             ))
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -806,7 +840,8 @@ class CelestFunctionsCycles {
       celest.baseUri.resolve('/cycles/create-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -820,9 +855,11 @@ class CelestFunctionsCycles {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/print-tree'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'node': Serializers.instance.serialize<Node>(node)}),
+      body: _$convert
+          .jsonEncode({r'node': Serializers.instance.serialize<Node>(node)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -841,7 +878,7 @@ class CelestFunctionsCycles {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/combine-trees'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'tree1': Serializers.instance.serialize<Node>(tree1),
         r'tree2': Serializers.instance.serialize<Parent?>(tree2),
         r'tree3': Serializers.instance.serialize<Node?>(tree3),
@@ -850,7 +887,8 @@ class CelestFunctionsCycles {
             .toList(),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -867,12 +905,13 @@ class CelestFunctionsCycles {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/self-referencing'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'selfReferencing':
             Serializers.instance.serialize<SelfReferencing>(selfReferencing)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -923,11 +962,12 @@ class CelestFunctionsExceptions {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'type': Serializers.instance.serialize<SupportedExceptionType>(type)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -941,10 +981,11 @@ class CelestFunctionsExceptions {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'type': Serializers.instance.serialize<SupportedErrorType>(type)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -959,7 +1000,8 @@ class CelestFunctionsExceptions {
       celest.baseUri.resolve('/exceptions/throws-custom-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -975,7 +1017,8 @@ class CelestFunctionsExceptions {
           .resolve('/exceptions/throws-custom-exception-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -990,7 +1033,8 @@ class CelestFunctionsExceptions {
       celest.baseUri.resolve('/exceptions/throws-custom-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1005,7 +1049,8 @@ class CelestFunctionsExceptions {
       celest.baseUri.resolve('/exceptions/throws-custom-error-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1021,7 +1066,8 @@ class CelestFunctionsExceptions {
           .resolve('/exceptions/throws-custom-error-with-stack-trace'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1061,14 +1107,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringX>(
           s,
           const TypeToken<StringX>('StringX'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1085,14 +1132,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-or-string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringX>(
           s,
           const TypeToken<StringX>('StringX'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1109,14 +1157,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringX>(
           s,
           const TypeToken<StringX>('StringX'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1133,14 +1182,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXImpl>(
           s,
           const TypeToken<StringXImpl>('StringXImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1157,14 +1207,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXToFromJson>(
           s,
           const TypeToken<StringXToFromJson>('StringXToFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1181,14 +1232,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXToJson>(
           s,
           const TypeToken<StringXToJson>('StringXToJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1205,14 +1257,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXToJsonImpl>(
           s,
           const TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1229,14 +1282,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXFromJson>(
           s,
           const TypeToken<StringXFromJson>('StringXFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1253,14 +1307,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXFromJsonImpl>(
           s,
           const TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1278,14 +1333,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXFromJsonStatic>(
           s,
           const TypeToken<StringXFromJsonStatic>('StringXFromJsonStatic'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1302,14 +1358,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXPrivateField>(
           s,
           const TypeToken<StringXPrivateField>('StringXPrivateField'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1327,14 +1384,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXPrivateFieldImpl>(
           s,
           const TypeToken<StringXPrivateFieldImpl>('StringXPrivateFieldImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1351,14 +1409,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXPrivateCtor>(
           s,
           const TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1376,14 +1435,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r's': Serializers.instance.serialize<StringXPrivateCtorImpl>(
           s,
           const TypeToken<StringXPrivateCtorImpl>('StringXPrivateCtorImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1400,9 +1460,11 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'v': Serializers.instance.serialize<Value>(v)}),
+      body: _$convert
+          .jsonEncode({r'v': Serializers.instance.serialize<Value>(v)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1416,14 +1478,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/valuex'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueX>(
           v,
           const TypeToken<ValueX>('ValueX'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1440,14 +1503,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXImpl>(
           v,
           const TypeToken<ValueXImpl>('ValueXImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1464,14 +1528,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXToFromJson>(
           v,
           const TypeToken<ValueXToFromJson>('ValueXToFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1488,14 +1553,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXToJson>(
           v,
           const TypeToken<ValueXToJson>('ValueXToJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1512,14 +1578,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXToJsonImpl>(
           v,
           const TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1536,14 +1603,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXFromJson>(
           v,
           const TypeToken<ValueXFromJson>('ValueXFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1560,14 +1628,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXFromJsonImpl>(
           v,
           const TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1585,14 +1654,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXFromJsonStatic>(
           v,
           const TypeToken<ValueXFromJsonStatic>('ValueXFromJsonStatic'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1612,14 +1682,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json-combined'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXToFromJsonCombined>(
           v,
           const TypeToken<ValueXToFromJsonCombined>('ValueXToFromJsonCombined'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1636,14 +1707,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl-indirect'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'v': Serializers.instance.serialize<ValueXImplIndirect>(
           v,
           const TypeToken<ValueXImplIndirect>('ValueXImplIndirect'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1660,10 +1732,11 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'color': Serializers.instance.serialize<Color>(color)}),
+      body: _$convert
+          .jsonEncode({r'color': Serializers.instance.serialize<Color>(color)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1677,14 +1750,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/colorx'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorX>(
           color,
           const TypeToken<ColorX>('ColorX'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1701,14 +1775,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXImpl>(
           color,
           const TypeToken<ColorXImpl>('ColorXImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1725,14 +1800,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXToFromJson>(
           color,
           const TypeToken<ColorXToFromJson>('ColorXToFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1749,14 +1825,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXToJson>(
           color,
           const TypeToken<ColorXToJson>('ColorXToJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1773,14 +1850,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXToJsonImpl>(
           color,
           const TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1797,14 +1875,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXFromJson>(
           color,
           const TypeToken<ColorXFromJson>('ColorXFromJson'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1822,14 +1901,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-impl'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXFromJsonImpl>(
           color,
           const TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1847,14 +1927,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-static'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXFromJsonStatic>(
           color,
           const TypeToken<ColorXFromJsonStatic>('ColorXFromJsonStatic'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1872,14 +1953,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json-combined'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXToFromJsonCombined>(
           color,
           const TypeToken<ColorXToFromJsonCombined>('ColorXToFromJsonCombined'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1897,14 +1979,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl-indirect'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'color': Serializers.instance.serialize<ColorXImplIndirect>(
           color,
           const TypeToken<ColorXImplIndirect>('ColorXImplIndirect'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1921,14 +2004,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-value'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonValue>(
           value,
           const TypeToken<JsonValue>('JsonValue'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1945,14 +2029,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-string'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonString>(
           value,
           const TypeToken<JsonString>('JsonString'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1969,14 +2054,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-num'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonNum>(
           value,
           const TypeToken<JsonNum>('JsonNum'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -1993,14 +2079,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-int'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonInt>(
           value,
           const TypeToken<JsonInt>('JsonInt'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2017,14 +2104,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-double'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonDouble>(
           value,
           const TypeToken<JsonDouble>('JsonDouble'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2041,14 +2129,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-bool'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonBool>(
           value,
           const TypeToken<JsonBool>('JsonBool'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2065,14 +2154,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-list'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonList>(
           value,
           const TypeToken<JsonList>('JsonList'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2089,14 +2179,15 @@ class CelestFunctionsExtensionTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-map'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance.serialize<JsonMap>(
           value,
           const TypeToken<JsonMap>('JsonMap'),
         )
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2142,10 +2233,11 @@ class CelestFunctionsGenericWrappers {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2159,10 +2251,11 @@ class CelestFunctionsGenericWrappers {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers-async'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<GenericWrappers>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2173,60 +2266,69 @@ class CelestFunctionsGenericWrappers {
   }
 
   Future<GenericWrappers> genericWrapperParameters({
-    required IList<String> listOfString,
-    required IList<Uri> listOfUri,
-    required IList<SimpleClass> listOfSimpleClass,
-    required IList<IList<String>> listOfListOfString,
-    required IList<IList<Uri>> listOfListOfUri,
-    required IList<IList<SimpleClass>> listOfListOfSimpleClass,
-    required IMap<String, String> mapOfString,
-    required IMap<String, Uri> mapOfUri,
-    required IMap<String, SimpleClass> mapOfSimpleClass,
-    required IMap<String, IList<String>> mapOfListOfString,
-    required IMap<String, IList<Uri>> mapOfListOfUri,
-    required IMap<String, IList<SimpleClass>> mapOfListOfSimpleClass,
-    required IMap<String, IMap<String, String>> mapOfMapOfString,
-    required IMap<String, IMap<String, Uri>> mapOfMapOfUri,
-    required IMap<String, IMap<String, SimpleClass>> mapOfMapOfSimpleClass,
+    required _$ilist.IList<String> listOfString,
+    required _$ilist.IList<Uri> listOfUri,
+    required _$ilist.IList<SimpleClass> listOfSimpleClass,
+    required _$ilist.IList<_$ilist.IList<String>> listOfListOfString,
+    required _$ilist.IList<_$ilist.IList<Uri>> listOfListOfUri,
+    required _$ilist.IList<_$ilist.IList<SimpleClass>> listOfListOfSimpleClass,
+    required _$imap.IMap<String, String> mapOfString,
+    required _$imap.IMap<String, Uri> mapOfUri,
+    required _$imap.IMap<String, SimpleClass> mapOfSimpleClass,
+    required _$imap.IMap<String, _$ilist.IList<String>> mapOfListOfString,
+    required _$imap.IMap<String, _$ilist.IList<Uri>> mapOfListOfUri,
+    required _$imap.IMap<String, _$ilist.IList<SimpleClass>>
+        mapOfListOfSimpleClass,
+    required _$imap.IMap<String, _$imap.IMap<String, String>> mapOfMapOfString,
+    required _$imap.IMap<String, _$imap.IMap<String, Uri>> mapOfMapOfUri,
+    required _$imap.IMap<String, _$imap.IMap<String, SimpleClass>>
+        mapOfMapOfSimpleClass,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrapper-parameters'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'listOfString':
-            Serializers.instance.serialize<IList<String>>(listOfString),
-        r'listOfUri': Serializers.instance.serialize<IList<Uri>>(listOfUri),
+            Serializers.instance.serialize<_$ilist.IList<String>>(listOfString),
+        r'listOfUri':
+            Serializers.instance.serialize<_$ilist.IList<Uri>>(listOfUri),
         r'listOfSimpleClass': Serializers.instance
-            .serialize<IList<SimpleClass>>(listOfSimpleClass),
+            .serialize<_$ilist.IList<SimpleClass>>(listOfSimpleClass),
         r'listOfListOfString': Serializers.instance
-            .serialize<IList<IList<String>>>(listOfListOfString),
-        r'listOfListOfUri':
-            Serializers.instance.serialize<IList<IList<Uri>>>(listOfListOfUri),
+            .serialize<_$ilist.IList<_$ilist.IList<String>>>(
+                listOfListOfString),
+        r'listOfListOfUri': Serializers.instance
+            .serialize<_$ilist.IList<_$ilist.IList<Uri>>>(listOfListOfUri),
         r'listOfListOfSimpleClass': Serializers.instance
-            .serialize<IList<IList<SimpleClass>>>(listOfListOfSimpleClass),
-        r'mapOfString':
-            Serializers.instance.serialize<IMap<String, String>>(mapOfString),
+            .serialize<_$ilist.IList<_$ilist.IList<SimpleClass>>>(
+                listOfListOfSimpleClass),
+        r'mapOfString': Serializers.instance
+            .serialize<_$imap.IMap<String, String>>(mapOfString),
         r'mapOfUri':
-            Serializers.instance.serialize<IMap<String, Uri>>(mapOfUri),
+            Serializers.instance.serialize<_$imap.IMap<String, Uri>>(mapOfUri),
         r'mapOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, SimpleClass>>(mapOfSimpleClass),
+            .serialize<_$imap.IMap<String, SimpleClass>>(mapOfSimpleClass),
         r'mapOfListOfString': Serializers.instance
-            .serialize<IMap<String, IList<String>>>(mapOfListOfString),
+            .serialize<_$imap.IMap<String, _$ilist.IList<String>>>(
+                mapOfListOfString),
         r'mapOfListOfUri': Serializers.instance
-            .serialize<IMap<String, IList<Uri>>>(mapOfListOfUri),
+            .serialize<_$imap.IMap<String, _$ilist.IList<Uri>>>(mapOfListOfUri),
         r'mapOfListOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, IList<SimpleClass>>>(
+            .serialize<_$imap.IMap<String, _$ilist.IList<SimpleClass>>>(
                 mapOfListOfSimpleClass),
         r'mapOfMapOfString': Serializers.instance
-            .serialize<IMap<String, IMap<String, String>>>(mapOfMapOfString),
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, String>>>(
+                mapOfMapOfString),
         r'mapOfMapOfUri': Serializers.instance
-            .serialize<IMap<String, IMap<String, Uri>>>(mapOfMapOfUri),
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, Uri>>>(
+                mapOfMapOfUri),
         r'mapOfMapOfSimpleClass': Serializers.instance
-            .serialize<IMap<String, IMap<String, SimpleClass>>>(
+            .serialize<_$imap.IMap<String, _$imap.IMap<String, SimpleClass>>>(
                 mapOfMapOfSimpleClass),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2282,7 +2384,8 @@ class CelestFunctionsMetadata {
       celest.baseUri.resolve('/metadata/has-doc-comments'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2298,7 +2401,8 @@ class CelestFunctionsMetadata {
       celest.baseUri.resolve('/metadata/has-deprecated-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2314,7 +2418,8 @@ class CelestFunctionsMetadata {
       celest.baseUri.resolve('/metadata/has-constructed-deprecated-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2329,7 +2434,8 @@ class CelestFunctionsMetadata {
       celest.baseUri.resolve('/metadata/has-named-constructed-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2346,12 +2452,13 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-literals-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'named': named,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2368,12 +2475,13 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-exportable-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'named': named,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2390,12 +2498,13 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-exportable-constructed-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'named': named,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2412,12 +2521,13 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-not-exportable-annotation'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'named': named,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2446,7 +2556,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'intValue': intValue,
         r'doubleValue': doubleValue,
@@ -2461,7 +2571,8 @@ class CelestFunctionsMetadata {
             .serialize<({String a, String b, String c})>(recordValue),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2490,7 +2601,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-positional-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'intValue': intValue,
         r'doubleValue': doubleValue,
@@ -2505,7 +2616,8 @@ class CelestFunctionsMetadata {
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2534,7 +2646,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'intValue': intValue,
         r'doubleValue': doubleValue,
@@ -2549,7 +2661,8 @@ class CelestFunctionsMetadata {
             .serialize<({String a, String b, String c})>(recordValue),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2578,7 +2691,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-named-default-values'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'intValue': intValue,
         r'doubleValue': doubleValue,
@@ -2593,7 +2706,8 @@ class CelestFunctionsMetadata {
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2622,7 +2736,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2637,7 +2751,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2667,7 +2782,7 @@ class CelestFunctionsMetadata {
       celest.baseUri
           .resolve('/metadata/nullable-positional-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2682,7 +2797,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable?>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2711,7 +2827,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2726,7 +2842,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2755,7 +2872,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-named-default-value-vars'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2770,7 +2887,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable?>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2799,7 +2917,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2814,7 +2932,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2844,7 +2963,7 @@ class CelestFunctionsMetadata {
       celest.baseUri
           .resolve('/metadata/nullable-positional-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2859,7 +2978,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable?>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2888,7 +3008,7 @@ class CelestFunctionsMetadata {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2903,7 +3023,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2933,7 +3054,7 @@ class CelestFunctionsMetadata {
       celest.baseUri
           .resolve('/metadata/nullable-named-default-value-vars-private'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': value,
         r'doubleValue': doubleValue,
         r'boolValue': boolValue,
@@ -2948,7 +3069,8 @@ class CelestFunctionsMetadata {
             Serializers.instance.serialize<Serializable?>(serializable),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -2997,9 +3119,9 @@ class CelestFunctionsParameterTypes {
     StackTrace aStackTrace,
     Uri aUri,
     UriData aUriData,
-    Uint8List aUint8List,
+    _$typed_data.Uint8List aUint8List,
     Iterable<String> anIterableOfString,
-    Iterable<Uint8List> anIterableOfUint8List,
+    Iterable<_$typed_data.Uint8List> anIterableOfUint8List,
     List<String> aListOfString,
     List<int> aListOfInt,
     List<double> aListOfDouble,
@@ -3013,7 +3135,7 @@ class CelestFunctionsParameterTypes {
     List<StackTrace> aListOfStackTrace,
     List<Uri> aListOfUri,
     List<UriData> aListOfUriData,
-    List<Uint8List> aListOfUint8List,
+    List<_$typed_data.Uint8List> aListOfUint8List,
     Map<String, String> aMapOfString,
     Map<String, int> aMapOfInt,
     Map<String, double> aMapOfDouble,
@@ -3027,12 +3149,12 @@ class CelestFunctionsParameterTypes {
     Map<String, StackTrace> aMapOfStackTrace,
     Map<String, Uri> aMapOfUri,
     Map<String, UriData> aMapOfUriData,
-    Map<String, Uint8List> aMapOfUint8List,
+    Map<String, _$typed_data.Uint8List> aMapOfUint8List,
   ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameter-types/simple'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'aString': aString,
         r'anInt': anInt,
         r'aDouble': aDouble,
@@ -3046,10 +3168,12 @@ class CelestFunctionsParameterTypes {
         r'aStackTrace': Serializers.instance.serialize<StackTrace>(aStackTrace),
         r'aUri': Serializers.instance.serialize<Uri>(aUri),
         r'aUriData': Serializers.instance.serialize<UriData>(aUriData),
-        r'aUint8List': Serializers.instance.serialize<Uint8List>(aUint8List),
+        r'aUint8List':
+            Serializers.instance.serialize<_$typed_data.Uint8List>(aUint8List),
         r'anIterableOfString': anIterableOfString,
         r'anIterableOfUint8List': anIterableOfUint8List
-            .map((el) => Serializers.instance.serialize<Uint8List>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$typed_data.Uint8List>(el))
             .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
@@ -3081,7 +3205,8 @@ class CelestFunctionsParameterTypes {
             .map((el) => Serializers.instance.serialize<UriData>(el))
             .toList(),
         r'aListOfUint8List': aListOfUint8List
-            .map((el) => Serializers.instance.serialize<Uint8List>(el))
+            .map((el) =>
+                Serializers.instance.serialize<_$typed_data.Uint8List>(el))
             .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
@@ -3158,11 +3283,12 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<Uint8List>(value),
+              Serializers.instance.serialize<_$typed_data.Uint8List>(value),
             )),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3186,9 +3312,9 @@ class CelestFunctionsParameterTypes {
     StackTrace? aStackTrace,
     Uri? aUri,
     UriData? aUriData,
-    Uint8List? aUint8List,
+    _$typed_data.Uint8List? aUint8List,
     Iterable<String>? anIterableOfString,
-    Iterable<Uint8List>? anIterableOfUint8List,
+    Iterable<_$typed_data.Uint8List>? anIterableOfUint8List,
     List<String>? aListOfString,
     List<int>? aListOfInt,
     List<double>? aListOfDouble,
@@ -3202,7 +3328,7 @@ class CelestFunctionsParameterTypes {
     List<StackTrace>? aListOfStackTrace,
     List<Uri>? aListOfUri,
     List<UriData>? aListOfUriData,
-    List<Uint8List>? aListOfUint8List,
+    List<_$typed_data.Uint8List>? aListOfUint8List,
     Map<String, String>? aMapOfString,
     Map<String, int>? aMapOfInt,
     Map<String, double>? aMapOfDouble,
@@ -3216,12 +3342,12 @@ class CelestFunctionsParameterTypes {
     Map<String, StackTrace>? aMapOfStackTrace,
     Map<String, Uri>? aMapOfUri,
     Map<String, UriData>? aMapOfUriData,
-    Map<String, Uint8List>? aMapOfUint8List,
+    Map<String, _$typed_data.Uint8List>? aMapOfUint8List,
   ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameter-types/simple-optional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'aString': aString,
         r'anInt': anInt,
         r'aDouble': aDouble,
@@ -3236,10 +3362,12 @@ class CelestFunctionsParameterTypes {
             Serializers.instance.serialize<StackTrace?>(aStackTrace),
         r'aUri': Serializers.instance.serialize<Uri?>(aUri),
         r'aUriData': Serializers.instance.serialize<UriData?>(aUriData),
-        r'aUint8List': Serializers.instance.serialize<Uint8List?>(aUint8List),
+        r'aUint8List':
+            Serializers.instance.serialize<_$typed_data.Uint8List?>(aUint8List),
         r'anIterableOfString': anIterableOfString,
         r'anIterableOfUint8List': anIterableOfUint8List
-            ?.map((el) => Serializers.instance.serialize<Uint8List>(el))
+            ?.map((el) =>
+                Serializers.instance.serialize<_$typed_data.Uint8List>(el))
             .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
@@ -3271,7 +3399,8 @@ class CelestFunctionsParameterTypes {
             ?.map((el) => Serializers.instance.serialize<UriData>(el))
             .toList(),
         r'aListOfUint8List': aListOfUint8List
-            ?.map((el) => Serializers.instance.serialize<Uint8List>(el))
+            ?.map((el) =>
+                Serializers.instance.serialize<_$typed_data.Uint8List>(el))
             .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
@@ -3348,11 +3477,12 @@ class CelestFunctionsParameterTypes {
         ) =>
             MapEntry(
               key,
-              Serializers.instance.serialize<Uint8List>(value),
+              Serializers.instance.serialize<_$typed_data.Uint8List>(value),
             )),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3415,7 +3545,7 @@ class CelestFunctionsParameterTypes {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameter-types/complex'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'aSimpleStruct':
             Serializers.instance.serialize<SimpleStruct>(aSimpleStruct),
         r'aComplexStruct':
@@ -3638,7 +3768,8 @@ class CelestFunctionsParameterTypes {
                 )),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3680,12 +3811,13 @@ class CelestFunctionsParameters {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/optional-positional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'optionalString': optionalString,
         r'optionalInt': optionalInt,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3702,12 +3834,13 @@ class CelestFunctionsParameters {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/optional-named'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'namedString': namedString,
         r'namedInt': namedInt,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3724,12 +3857,13 @@ class CelestFunctionsParameters {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/required-positional'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'requiredString': requiredString,
         r'requiredInt': requiredInt,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3746,12 +3880,13 @@ class CelestFunctionsParameters {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/required-named'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'requiredString': requiredString,
         r'requiredInt': requiredInt,
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3793,12 +3928,13 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/non-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance
             .serialize<({String anotherField, String field})>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3814,12 +3950,13 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-non-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'value': Serializers.instance
             .serialize<({String anotherField, String field})>(value)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3835,10 +3972,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3854,10 +3992,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-aliased-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NamedFieldsRecord>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3879,13 +4018,14 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'nonAliased': Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
         r'aliased': Serializers.instance.serialize<NamedFieldsRecord>(aliased),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3910,13 +4050,14 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-named-fields'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'nonAliased': Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
         r'aliased': Serializers.instance.serialize<NamedFieldsRecord>(aliased),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3934,10 +4075,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Nested>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<Nested>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3951,10 +4093,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'value': Serializers.instance.serialize<Nested>(value)}),
+      body: _$convert.jsonEncode(
+          {r'value': Serializers.instance.serialize<Nested>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3968,10 +4111,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -3985,10 +4129,11 @@ class CelestFunctionsRecords {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nullable-nested'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'value': Serializers.instance.serialize<NullableNested?>(value)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4029,7 +4174,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4044,7 +4190,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4059,7 +4206,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4074,7 +4222,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4089,7 +4238,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4104,7 +4254,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4121,7 +4272,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4138,7 +4290,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4160,7 +4313,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4175,7 +4329,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4190,7 +4345,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4206,7 +4362,8 @@ class CelestFunctionsReturnTypes {
           .resolve('/return-types/async-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4221,7 +4378,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4236,7 +4394,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4251,7 +4410,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4266,7 +4426,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4281,7 +4442,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4296,7 +4458,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4311,7 +4474,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4326,7 +4490,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4343,7 +4508,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4360,7 +4526,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4382,7 +4549,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4397,7 +4565,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-complex-struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4412,7 +4581,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-void-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4427,7 +4597,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4442,7 +4613,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4457,7 +4629,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4472,7 +4645,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4487,7 +4661,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4504,7 +4679,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4521,7 +4697,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4543,7 +4720,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/async-or-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4559,7 +4737,8 @@ class CelestFunctionsReturnTypes {
           .resolve('/return-types/async-or-complex-struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4575,7 +4754,8 @@ class CelestFunctionsReturnTypes {
           .resolve('/return-types/async-or-simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4591,7 +4771,8 @@ class CelestFunctionsReturnTypes {
           .resolve('/return-types/async-or-complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4606,7 +4787,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/void-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4621,7 +4803,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/string-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4636,7 +4819,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/int-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4651,7 +4835,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/double-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4666,7 +4851,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/bool-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4681,7 +4867,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/iterable-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4698,7 +4885,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/list-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4715,7 +4903,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/map-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4737,7 +4926,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/struct-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4752,7 +4942,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/complex-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4767,7 +4958,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/simple-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4782,7 +4974,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/complex-class-return'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4797,7 +4990,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/string-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4812,7 +5006,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/int-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4827,7 +5022,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/double-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4842,7 +5038,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/bool-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4857,7 +5054,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/iterable-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4874,7 +5072,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/list-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4891,7 +5090,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/map-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4913,7 +5113,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/struct-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4928,7 +5129,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/complex-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4943,7 +5145,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/simple-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -4958,7 +5161,8 @@ class CelestFunctionsReturnTypes {
       celest.baseUri.resolve('/return-types/complex-class-return-nullable'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5009,10 +5213,11 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/area'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body:
-          jsonEncode({r'shape': Serializers.instance.serialize<Shape>(shape)}),
+      body: _$convert
+          .jsonEncode({r'shape': Serializers.instance.serialize<Shape>(shape)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5026,13 +5231,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5048,10 +5254,11 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/rectangle'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'rectangle': Serializers.instance.serialize<Rectangle>(rectangle)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5065,10 +5272,11 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/circle'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(
+      body: _$convert.jsonEncode(
           {r'circle': Serializers.instance.serialize<Circle>(circle)}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5084,14 +5292,15 @@ class CelestFunctionsSealedClasses {
       celest.baseUri
           .resolve('/sealed-classes/sealed-class-with-inherited-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance
                 .serialize<ShapeWithInheritedCustomJson>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5109,14 +5318,15 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class-with-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map(
                 (el) => Serializers.instance.serialize<ShapeWithCustomJson>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5138,7 +5348,7 @@ class CelestFunctionsSealedClasses {
       celest.baseUri
           .resolve('/sealed-classes/sealed-class-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'circle': Serializers.instance
             .serialize<CircleWithOverriddenCustomJson>(circle),
         r'rectangle': Serializers.instance
@@ -5149,7 +5359,8 @@ class CelestFunctionsSealedClasses {
             .toList(),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5168,12 +5379,13 @@ class CelestFunctionsSealedClasses {
       celest.baseUri
           .resolve('/sealed-classes/rectangle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'rectangle': Serializers.instance
             .serialize<RectangleWithOverriddenCustomJson>(rectangle)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5190,12 +5402,13 @@ class CelestFunctionsSealedClasses {
       celest.baseUri
           .resolve('/sealed-classes/circle-with-overridden-custom-json'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'circle': Serializers.instance
             .serialize<ShapeWithOverriddenCustomJson>(circle)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5210,13 +5423,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5232,13 +5446,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/err-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5254,13 +5469,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5278,13 +5494,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-ok-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5302,13 +5519,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-err-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5326,13 +5544,14 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-shape-results'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'shapes': shapes
             .map((el) => Serializers.instance.serialize<Shape>(el))
             .toList()
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5350,11 +5569,12 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/swapped-result'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'result': Serializers.instance.serialize<Result<Shape, String>>(result)
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5374,12 +5594,13 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/generic-result'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'$T': $T[T]!,
         r'data': Serializers.instance.serialize<T>(data),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -5406,14 +5627,15 @@ class CelestFunctionsSealedClasses {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/multiple-generic-result'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'$T': $T[T]!,
         r'$E': $E[E]!,
         r'data': Serializers.instance.serialize<T>(data),
         r'error': Serializers.instance.serialize<E>(error),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,

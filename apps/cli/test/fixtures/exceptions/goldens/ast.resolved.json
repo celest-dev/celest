@@ -1,6 +1,55 @@
 {
   "name": "exceptions",
   "apis": {
+    "external": {
+      "name": "external",
+      "functions": {
+        "callsThrowsCommonException": {
+          "name": "callsThrowsCommonException",
+          "route": "/external/calls-throws-common-exception",
+          "apiName": "external",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsCustomException": {
+          "name": "callsThrowsCustomException",
+          "route": "/external/calls-throws-custom-exception",
+          "apiName": "external",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     "nonthrowing": {
       "name": "nonthrowing",
       "functions": {

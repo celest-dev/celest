@@ -2,13 +2,13 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:io';
+import 'dart:io' as _$io;
 
 import 'package:celest/celest.dart';
 import 'package:celest_core/src/util/globals.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as _$http;
 
 import 'src/client/functions.dart';
 import 'src/client/serializers.dart';
@@ -20,7 +20,7 @@ enum CelestEnvironment {
   production;
 
   Uri get baseUri => switch (this) {
-        local => kIsWeb || !Platform.isAndroid
+        local => kIsWeb || !_$io.Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
         production => Uri.parse('https://example.celest.run'),
@@ -32,7 +32,7 @@ class Celest {
 
   late CelestEnvironment _currentEnvironment;
 
-  late http.Client httpClient = http.Client();
+  late _$http.Client httpClient = _$http.Client();
 
   late Uri _baseUri;
 
@@ -56,6 +56,7 @@ class Celest {
   void init({CelestEnvironment environment = CelestEnvironment.local}) {
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
+    Serializers.instance.put(const CommonExceptionSerializer());
     Serializers.instance.put(const BaseExceptionSerializer());
     Serializers.instance.put(const CustomExceptionSerializer());
     Serializers.instance.put(const BaseErrorSerializer());

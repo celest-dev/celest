@@ -30,9 +30,6 @@ final class CelestAllocator implements Allocator {
   });
 
   static const _doNotPrefix = ['dart:core'];
-  static const _defaultImports = {
-    'package:http/http.dart': 'http',
-  };
 
   final String forFile;
   final PrefixingStrategy prefixingStrategy;
@@ -95,12 +92,42 @@ final class CelestAllocator implements Allocator {
       case PrefixingStrategy.indexed:
         return '${_imports.putIfAbsent(url, _nextKey)}.$symbol';
       case PrefixingStrategy.none:
-        final import = _imports.putIfAbsent(url, () => _defaultImports[url]);
+        final import = _imports.putIfAbsent(
+          url,
+          () => _prefixForUrl(url),
+        );
         return switch (import) {
           final import? => '$import.$symbol',
           null => symbol,
         };
     }
+  }
+
+  String? _prefixForUrl(String url) {
+    if (url.startsWith('package:celest') || Uri.parse(url).scheme.isEmpty) {
+      return null;
+    }
+    final allocatedPrefixes = _imports.values.nonNulls.toSet();
+    if (url.indexOf(':') case final index && != -1) {
+      url = url.substring(index + 1);
+    }
+    final urlSegments = url
+        .split('/')
+        .map((s) => s.replaceFirst('.dart', ''))
+        .where((s) => s.isNotEmpty && !s.contains('.'))
+        .toList();
+    if (urlSegments.isEmpty) {
+      throw StateError('Could not allocate prefix for URL: $url');
+    }
+    var prefix = urlSegments.removeLast();
+    while (allocatedPrefixes.contains(prefix)) {
+      prefix = '${urlSegments.removeLast()}_$prefix';
+    }
+    if (!allocatedPrefixes.add(prefix)) {
+      // TODO(dnys1): What to do here?
+      throw StateError('Could not allocate prefix for URL: $url');
+    }
+    return '_\$$prefix';
   }
 
   String _nextKey() => '_i${_keys++}';

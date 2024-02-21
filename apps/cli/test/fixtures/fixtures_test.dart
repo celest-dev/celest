@@ -40,7 +40,8 @@ void main() {
   final allTests = Directory(testDir)
       .listSync()
       .whereType<Directory>()
-      .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync());
+      .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync())
+      .where((dir) => !p.basename(dir.path).startsWith('_'));
   group('Fixture', () {
     setUpAll(initTests);
 
@@ -3442,6 +3443,55 @@ final tests = <String, Test>{
               },
             ),
           ],
+        },
+      ),
+      'external': ApiTest(
+        functionTests: {
+          'callsThrowsCommonException': [
+            FunctionTestError(
+              name: 'throwsCommonException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'CommonException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+          // 'callsThrowsCustomException': [
+          //   FunctionTestError(
+          //     name: 'throwsCustomException',
+          //     statusCode: 400,
+          //     input: {},
+          //     output: {
+          //       'error': {
+          //         'code': 'CustomException',
+          //         'details': {
+          //           'message': 'message',
+          //         },
+          //       },
+          //     },
+          //   ),
+          // ],
+          // 'throwsCustomException': [
+          //   FunctionTestError(
+          //     name: 'throwsCustomException',
+          //     statusCode: 400,
+          //     input: {},
+          //     output: {
+          //       'error': {
+          //         'code': 'CustomException',
+          //         'details': {
+          //           'message': 'message',
+          //         },
+          //       },
+          //     },
+          //   ),
+          // ],
         },
       ),
     },

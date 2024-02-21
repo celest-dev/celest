@@ -2,10 +2,11 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:convert';
+import 'dart:convert' as _$convert;
 
+import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
@@ -13,10 +14,76 @@ import 'package:celest_core/src/exception/cloud_exception.dart';
 import '../../client.dart';
 
 class CelestFunctions {
+  /// Tests that types thrown from external packages can be detected via
+  /// recursive imports and serialized correctly.
+  final external = CelestFunctionsExternal();
+
   /// A library with methods that do not through but call methods that do throw.
   final nonthrowing = CelestFunctionsNonthrowing();
 
   final throwing = CelestFunctionsThrowing();
+}
+
+/// Tests that types thrown from external packages can be detected via
+/// recursive imports and serialized correctly.
+class CelestFunctionsExternal {
+  Never _handleError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'CommonException':
+        throw Serializers.instance
+            .deserialize<_$_common.CommonException>($details);
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<void> callsThrowsCommonException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/external/calls-throws-common-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
+
+  Future<void> callsThrowsCustomException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/external/calls-throws-custom-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _handleError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
 }
 
 /// A library with methods that do not through but call methods that do throw.
@@ -37,6 +104,9 @@ class CelestFunctionsNonthrowing {
         throw Serializers.instance.deserialize<BaseError>($details);
       case r'CustomError':
         throw Serializers.instance.deserialize<CustomError>($details);
+      case r'CommonException':
+        throw Serializers.instance
+            .deserialize<_$_common.CommonException>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
@@ -57,7 +127,8 @@ class CelestFunctionsNonthrowing {
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -72,7 +143,8 @@ class CelestFunctionsNonthrowing {
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -87,7 +159,8 @@ class CelestFunctionsNonthrowing {
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -102,7 +175,8 @@ class CelestFunctionsNonthrowing {
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -130,6 +204,9 @@ class CelestFunctionsThrowing {
         throw Serializers.instance.deserialize<BaseError>($details);
       case r'CustomError':
         throw Serializers.instance.deserialize<CustomError>($details);
+      case r'CommonException':
+        throw Serializers.instance
+            .deserialize<_$_common.CommonException>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':
@@ -150,7 +227,8 @@ class CelestFunctionsThrowing {
       celest.baseUri.resolve('/throwing/throws-custom-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -165,7 +243,8 @@ class CelestFunctionsThrowing {
       celest.baseUri.resolve('/throwing/throws-base-error'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -180,7 +259,8 @@ class CelestFunctionsThrowing {
       celest.baseUri.resolve('/throwing/throws-custom-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -195,7 +275,8 @@ class CelestFunctionsThrowing {
       celest.baseUri.resolve('/throwing/throws-base-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,

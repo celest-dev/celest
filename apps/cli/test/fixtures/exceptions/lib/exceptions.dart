@@ -1,3 +1,5 @@
+export 'package:_common/_common.dart';
+
 sealed class Fault {}
 
 final class BaseException implements Exception, Fault {

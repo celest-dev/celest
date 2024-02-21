@@ -2,9 +2,9 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:convert';
+import 'dart:convert' as _$convert;
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart';
@@ -45,7 +45,8 @@ class CelestFunctionsInjected {
       celest.baseUri.resolve('/injected/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,
@@ -60,7 +61,8 @@ class CelestFunctionsInjected {
       celest.baseUri.resolve('/injected/say-hello-person'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
     if ($response.statusCode != 200) {
       _handleError(
         $statusCode: $response.statusCode,

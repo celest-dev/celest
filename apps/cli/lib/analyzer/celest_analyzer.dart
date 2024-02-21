@@ -457,19 +457,20 @@ final class CelestAnalyzer {
     }
   }
 
-  final _apiNamespace = Expando<Set<Element>>();
-  Iterable<Element> _importNamespaceForLibrary(
-    LibraryElement library, [
-    Set<LibraryElement>? visited,
-  ]) sync* {
-    visited ??= {};
-    if (!visited.add(library)) {
-      return;
+  final _apiNamespace = Expando<Set<InterfaceElement>>();
+  Set<InterfaceElement> _importNamespaceForLibrary(LibraryElement library) {
+    final visited = <LibraryElement>{};
+    Iterable<InterfaceElement> search(LibraryElement library) sync* {
+      if (!visited.add(library)) {
+        return;
+      }
+      yield* library.exportNamespace.definedNames.values.whereType();
+      for (final importedLibrary in library.importedLibraries) {
+        yield* search(importedLibrary);
+      }
     }
-    yield* library.exportNamespace.definedNames.values;
-    for (final importedLibrary in library.importedLibraries) {
-      yield* _importNamespaceForLibrary(importedLibrary, visited);
-    }
+
+    return _apiNamespace[library] ??= search(library).toSet();
   }
 
   Set<DartType> _collectExceptionTypes(LibraryElement apiLibrary) {
@@ -477,46 +478,46 @@ final class CelestAnalyzer {
     if (exceptionsLibrary == null) {
       return const {};
     }
-    final apiNamespace = _apiNamespace[apiLibrary] ??=
-        Set.of(_importNamespaceForLibrary(apiLibrary));
+    final apiNamespace = _importNamespaceForLibrary(apiLibrary);
     final exceptionTypes = <DartType>{};
-    final exportedClasses = exceptionsLibrary
+    final exceptionsDartNamespace = exceptionsLibrary
         .element.exportNamespace.definedNames.values
-        .whereType<ClassElement>();
-    for (final classElement in exportedClasses) {
-      final importsClass = apiNamespace.contains(classElement);
+        .whereType<InterfaceElement>()
+        .toList();
+    for (final interfaceElement in exceptionsDartNamespace) {
+      final importsClass = apiNamespace.contains(interfaceElement);
       if (!importsClass) {
         continue;
       }
-      final isDartType = classElement.library.source.uri.scheme == 'dart';
+      final isDartType = interfaceElement.library.source.uri.scheme == 'dart';
       if (isDartType) {
         continue;
       }
-      final classType = classElement.thisType;
+      final interfaceType = interfaceElement.thisType;
       final isExceptionType = typeHelper.typeSystem.isSubtypeOf(
-        classType,
+        interfaceType.extensionTypeErasure,
         typeHelper.coreTypes.coreExceptionType,
       );
       final isErrorType = typeHelper.typeSystem.isSubtypeOf(
-        classType,
+        interfaceType.extensionTypeErasure,
         typeHelper.coreTypes.coreErrorType,
       );
       final isExceptionOrErrorType = isExceptionType || isErrorType;
       if (!isExceptionOrErrorType) {
         continue;
       }
-      final isSerializable = typeHelper.isSerializable(classType);
+      final isSerializable = typeHelper.isSerializable(interfaceType);
       if (!isSerializable.isSerializable) {
         for (final reason in isSerializable.reasons) {
           _reportError(
             'The type of a thrown exception must be serializable as JSON. '
-            '$classType is not serializable: $reason',
-            location: classElement.sourceLocation,
+            '$interfaceType is not serializable: $reason',
+            location: interfaceElement.sourceLocation,
           );
         }
         continue;
       }
-      exceptionTypes.add(classType);
+      exceptionTypes.add(interfaceType);
     }
     return exceptionTypes;
   }
