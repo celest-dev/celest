@@ -12,6 +12,7 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_proto/ast.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 
 final class EntrypointGenerator {
   EntrypointGenerator({
@@ -341,7 +342,23 @@ final class EntrypointGenerator {
                 ..annotations.add(DartTypes.core.override)
                 ..name = 'init'
                 ..body = Block.of(
-                  _customSerializers.map((s) => s.initAll),
+                  _customSerializers.sorted((a, b) {
+                    final aLoc = a.type.url;
+                    final bLoc = b.type.url;
+                    if (aLoc == null) {
+                      return -1;
+                    }
+                    if (bLoc == null) {
+                      return 1;
+                    }
+                    final loc = aLoc.compareTo(bLoc);
+                    if (loc != 0) {
+                      return loc;
+                    }
+                    final aSym = a.type.symbol!;
+                    final bSym = b.type.symbol!;
+                    return aSym.compareTo(bSym);
+                  }).map((s) => s.initAll),
                 ),
             ),
         ]),

@@ -50,12 +50,6 @@ final class NamedDefaultValueVarsPrivateTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.LiteralEnum, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i4.LiteralEnum.values.byName($serialized);
-      },
-    ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<Record$k7x4l9, Map<String, Object?>>(
       serialize: ($value) => {
@@ -76,6 +70,12 @@ final class NamedDefaultValueVarsPrivateTarget extends _i1.CloudFunctionTarget {
       serialize: ($value) => {},
       deserialize: ($serialized) {
         return _i4.Exportable();
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.LiteralEnum, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.LiteralEnum.values.byName($serialized);
       },
     ));
     _i3.Serializers.instance

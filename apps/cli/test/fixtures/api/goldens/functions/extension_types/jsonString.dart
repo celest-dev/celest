@@ -78,15 +78,6 @@ final class JsonStringTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i4.JsonString, String>(
-        serialize: ($value) => $value,
-        deserialize: ($serialized) {
-          return _i4.JsonString(($serialized as String));
-        },
-      ),
-      const _i3.TypeToken<_i4.JsonString>('JsonString'),
-    );
-    _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
@@ -111,6 +102,15 @@ final class JsonStringTarget extends _i1.CloudFunctionTarget {
         return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
+    _i3.Serializers.instance.put(
+      _i3.Serializer.define<_i4.JsonString, String>(
+        serialize: ($value) => $value,
+        deserialize: ($serialized) {
+          return _i4.JsonString(($serialized as String));
+        },
+      ),
+      const _i3.TypeToken<_i4.JsonString>('JsonString'),
+    );
   }
 }
 

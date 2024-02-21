@@ -48,17 +48,17 @@ final class CallsThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>>(
-      serialize: ($value) => {r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i3.CustomException(($serialized[r'message'] as String));
-      },
-    ));
-    _i4.Serializers.instance
         .put(_i4.Serializer.define<_i3.CommonException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
         return _i3.CommonException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i3.CustomException(($serialized[r'message'] as String));
       },
     ));
   }

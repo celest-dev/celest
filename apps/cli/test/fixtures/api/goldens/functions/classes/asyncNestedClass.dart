@@ -27,6 +27,19 @@ final class AsyncNestedClassTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Fields, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'superField': $value.superField,
+        r'field': $value.field,
+      },
+      deserialize: ($serialized) {
+        return _i4.Fields(
+          ($serialized[r'superField'] as String),
+          ($serialized[r'field'] as String),
+        );
+      },
+    ));
+    _i3.Serializers.instance
         .put(_i3.Serializer.define<_i4.NestedClass, Map<String, Object?>>(
       serialize: ($value) => {
         r'fields':
@@ -40,19 +53,6 @@ final class AsyncNestedClassTarget extends _i1.CloudFunctionTarget {
               .deserialize<_i4.Fields>($serialized[r'fields']),
           _i3.Serializers.instance
               .deserialize<_i4.Fields?>($serialized[r'nullableFields']),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.Fields, Map<String, Object?>>(
-      serialize: ($value) => {
-        r'superField': $value.superField,
-        r'field': $value.field,
-      },
-      deserialize: ($serialized) {
-        return _i4.Fields(
-          ($serialized[r'superField'] as String),
-          ($serialized[r'field'] as String),
         );
       },
     ));

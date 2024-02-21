@@ -23,6 +23,13 @@ final class CreateTreeTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Child, Map<String, Object?>>(
+      serialize: ($value) => {r'name': $value.name},
+      deserialize: ($serialized) {
+        return _i4.Child(($serialized[r'name'] as String));
+      },
+    ));
+    _i3.Serializers.instance
         .put(_i3.Serializer.define<_i4.Node, Map<String, Object?>>(
       serialize: ($value) {
         if ($value is _i4.Parent) {
@@ -74,13 +81,6 @@ final class CreateTreeTarget extends _i1.CloudFunctionTarget {
               .map((el) => _i3.Serializers.instance.deserialize<_i4.Node>(el))
               .toList(),
         );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.Child, Map<String, Object?>>(
-      serialize: ($value) => {r'name': $value.name},
-      deserialize: ($serialized) {
-        return _i4.Child(($serialized[r'name'] as String));
       },
     ));
   }

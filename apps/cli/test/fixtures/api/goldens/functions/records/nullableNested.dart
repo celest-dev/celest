@@ -27,19 +27,6 @@ final class NullableNestedTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.NullableNested, Map<String, Object?>>(
-      serialize: ($value) => {
-        r'namedFields': _i3.Serializers.instance
-            .serialize<_i4.NamedFieldsRecord?>($value.namedFields)
-      },
-      deserialize: ($serialized) {
-        return (
-          namedFields: _i3.Serializers.instance
-              .deserialize<_i4.NamedFieldsRecord?>($serialized[r'namedFields'])
-        );
-      },
-    ));
-    _i3.Serializers.instance
         .put(_i3.Serializer.define<_i4.NamedFieldsRecord, Map<String, Object?>>(
       serialize: ($value) => {
         r'anotherField': $value.anotherField,
@@ -49,6 +36,19 @@ final class NullableNestedTarget extends _i1.CloudFunctionTarget {
         return (
           anotherField: ($serialized[r'anotherField'] as String),
           field: ($serialized[r'field'] as String)
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.NullableNested, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'namedFields': _i3.Serializers.instance
+            .serialize<_i4.NamedFieldsRecord?>($value.namedFields)
+      },
+      deserialize: ($serialized) {
+        return (
+          namedFields: _i3.Serializers.instance
+              .deserialize<_i4.NamedFieldsRecord?>($serialized[r'namedFields'])
         );
       },
     ));

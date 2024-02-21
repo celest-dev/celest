@@ -77,6 +77,13 @@ final class ValueXToJsonTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.Value, Map<String, Object?>>(
+      serialize: ($value) => {r'value': $value.value},
+      deserialize: ($serialized) {
+        return _i4.Value(($serialized[r'value'] as String));
+      },
+    ));
     _i3.Serializers.instance.put(
       _i3.Serializer.define<_i4.ValueXToJson, Map<String, Object?>>(
         serialize: ($value) => $value.toJson(),
@@ -87,13 +94,6 @@ final class ValueXToJsonTarget extends _i1.CloudFunctionTarget {
       ),
       const _i3.TypeToken<_i4.ValueXToJson>('ValueXToJson'),
     );
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.Value, Map<String, Object?>>(
-      serialize: ($value) => {r'value': $value.value},
-      deserialize: ($serialized) {
-        return _i4.Value(($serialized[r'value'] as String));
-      },
-    ));
     _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},

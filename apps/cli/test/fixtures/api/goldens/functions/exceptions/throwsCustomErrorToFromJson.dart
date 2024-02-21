@@ -135,35 +135,6 @@ final class ThrowsCustomErrorToFromJsonTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.CustomException, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'additionalInfo': _i4.Serializers.instance.serialize<_i7.JsonMap>(
-          $value.additionalInfo,
-          const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
-        ),
-      },
-      deserialize: ($serialized) {
-        return _i6.CustomException();
-      },
-    ));
-    _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i7.JsonMap, Map<String, Object?>>(
-        serialize: ($value) => $value,
-        deserialize: ($serialized) {
-          return _i7.JsonMap(($serialized as Map<String, Object?>));
-        },
-      ),
-      const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
-    );
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.CustomExceptionToFromJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i6.CustomExceptionToFromJson.fromJson($serialized);
-      },
-    ));
-    _i4.Serializers.instance
         .put(_i4.Serializer.define<_i6.CustomError, Map<String, Object?>?>(
       serialize: ($value) => {
         r'message': $value.message,
@@ -198,6 +169,26 @@ final class ThrowsCustomErrorToFromJsonTarget extends _i1.CloudFunctionTarget {
                 null);
       },
     ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.CustomException, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'additionalInfo': _i4.Serializers.instance.serialize<_i7.JsonMap>(
+          $value.additionalInfo,
+          const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.CustomException();
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i6.CustomExceptionToFromJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i6.CustomExceptionToFromJson.fromJson($serialized);
+      },
+    ));
     _i4.Serializers.instance.put(
         _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
@@ -223,6 +214,15 @@ final class ThrowsCustomErrorToFromJsonTarget extends _i1.CloudFunctionTarget {
         return _i3.SerializationException(($serialized[r'message'] as String));
       },
     ));
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.JsonMap, Map<String, Object?>>(
+        serialize: ($value) => $value,
+        deserialize: ($serialized) {
+          return _i7.JsonMap(($serialized as Map<String, Object?>));
+        },
+      ),
+      const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
+    );
   }
 }
 

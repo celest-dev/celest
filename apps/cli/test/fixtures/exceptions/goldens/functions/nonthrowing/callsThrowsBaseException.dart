@@ -74,20 +74,6 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i3.BaseException, Map<String, Object?>>(
-      serialize: ($value) => {r'fault': $value.fault},
-      deserialize: ($serialized) {
-        return _i3.BaseException(($serialized[r'fault'] as String));
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>>(
-      serialize: ($value) => {r'fault': $value.fault},
-      deserialize: ($serialized) {
-        return _i3.CustomException(($serialized[r'fault'] as String));
-      },
-    ));
-    _i4.Serializers.instance
         .put(_i4.Serializer.define<_i3.BaseError, Map<String, Object?>>(
       serialize: ($value) => {r'fault': $value.fault},
       deserialize: ($serialized) {
@@ -95,10 +81,24 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionTarget {
       },
     ));
     _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.BaseException, Map<String, Object?>>(
+      serialize: ($value) => {r'fault': $value.fault},
+      deserialize: ($serialized) {
+        return _i3.BaseException(($serialized[r'fault'] as String));
+      },
+    ));
+    _i4.Serializers.instance
         .put(_i4.Serializer.define<_i3.CustomError, Map<String, Object?>>(
       serialize: ($value) => {r'fault': $value.fault},
       deserialize: ($serialized) {
         return _i3.CustomError(($serialized[r'fault'] as String));
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>>(
+      serialize: ($value) => {r'fault': $value.fault},
+      deserialize: ($serialized) {
+        return _i3.CustomException(($serialized[r'fault'] as String));
       },
     ));
   }

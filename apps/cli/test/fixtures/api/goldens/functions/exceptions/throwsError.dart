@@ -138,42 +138,6 @@ final class ThrowsErrorTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i4.SupportedErrorType, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i4.SupportedErrorType.values.byName($serialized);
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
-          $value.additionalInfo,
-          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-        ),
-      },
-      deserialize: ($serialized) {
-        return _i7.CustomException();
-      },
-    ));
-    _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
-        serialize: ($value) => $value,
-        deserialize: ($serialized) {
-          return _i8.JsonMap(($serialized as Map<String, Object?>));
-        },
-      ),
-      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-    );
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i7.CustomExceptionToFromJson.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance
         .put(_i3.Serializer.define<_i7.CustomError, Map<String, Object?>?>(
       serialize: ($value) => {
         r'message': $value.message,
@@ -208,6 +172,33 @@ final class ThrowsErrorTarget extends _i1.CloudFunctionTarget {
                 null);
       },
     ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
+          $value.additionalInfo,
+          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.CustomException();
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i7.CustomExceptionToFromJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i4.SupportedErrorType, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.SupportedErrorType.values.byName($serialized);
+      },
+    ));
     _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
@@ -233,6 +224,15 @@ final class ThrowsErrorTarget extends _i1.CloudFunctionTarget {
         return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
+    _i3.Serializers.instance.put(
+      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
+        serialize: ($value) => $value,
+        deserialize: ($serialized) {
+          return _i8.JsonMap(($serialized as Map<String, Object?>));
+        },
+      ),
+      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+    );
   }
 }
 

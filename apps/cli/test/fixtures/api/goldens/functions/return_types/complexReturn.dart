@@ -472,17 +472,17 @@ final class ComplexReturnTarget extends _i1.CloudFunctionTarget {
         );
       },
     ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.MyEnum, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.MyEnum.values.byName($serialized);
+      },
+    ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<_i4.SimpleClass, Map<String, dynamic>>(
       serialize: ($value) => $value.toJson(),
       deserialize: ($serialized) {
         return _i4.SimpleClass.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.MyEnum, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i4.MyEnum.values.byName($serialized);
       },
     ));
     _i3.Serializers.instance

@@ -1,6 +1,7 @@
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 
 final class ClientSerializersGenerator {
   ClientSerializersGenerator({
@@ -16,7 +17,25 @@ final class ClientSerializersGenerator {
       (m) => m
         ..returns = DartTypes.core.void$
         ..name = 'initSerializers'
-        ..body = Block.of(customSerializers.map((s) => s.initAll)),
+        ..body = Block.of(
+          customSerializers.sorted((a, b) {
+            final aLoc = a.type.url;
+            final bLoc = b.type.url;
+            if (aLoc == null) {
+              return -1;
+            }
+            if (bLoc == null) {
+              return 1;
+            }
+            final loc = aLoc.compareTo(bLoc);
+            if (loc != 0) {
+              return loc;
+            }
+            final aSym = a.type.symbol!;
+            final bSym = b.type.symbol!;
+            return aSym.compareTo(bSym);
+          }).map((s) => s.initAll),
+        ),
     );
   }
 

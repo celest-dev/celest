@@ -155,67 +155,6 @@ final class SealedClassWithOverriddenCustomJsonTarget
 
   @override
   void init() {
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i4.ShapeWithOverriddenCustomJson, Map<String, Object?>>(
-      serialize: ($value) => {
-        ...$value.toJson(),
-        r'$type': switch ($value) {
-          _i4.CircleWithOverriddenCustomJson() =>
-            r'CircleWithOverriddenCustomJson',
-          _i4.RectangleWithOverriddenCustomJson() =>
-            r'RectangleWithOverriddenCustomJson',
-        },
-      },
-      deserialize: ($serialized) {
-        return _i4.ShapeWithOverriddenCustomJson.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i4.CircleWithOverriddenCustomJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i4.CircleWithOverriddenCustomJson.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i4.RectangleWithOverriddenCustomJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return (_i4.ShapeWithOverriddenCustomJson.fromJson({
-          r'$type': r'RectangleWithOverriddenCustomJson',
-          ...$serialized,
-        }) as _i4.RectangleWithOverriddenCustomJson);
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
-          $value.additionalInfo,
-          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-        ),
-      },
-      deserialize: ($serialized) {
-        return _i7.CustomException();
-      },
-    ));
-    _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
-        serialize: ($value) => $value,
-        deserialize: ($serialized) {
-          return _i8.JsonMap(($serialized as Map<String, Object?>));
-        },
-      ),
-      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-    );
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i7.CustomExceptionToFromJson.fromJson($serialized);
-      },
-    ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<_i7.CustomError, Map<String, Object?>?>(
       serialize: ($value) => {
@@ -251,6 +190,58 @@ final class SealedClassWithOverriddenCustomJsonTarget
                 null);
       },
     ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
+          $value.additionalInfo,
+          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.CustomException();
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i7.CustomExceptionToFromJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.CircleWithOverriddenCustomJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i4.CircleWithOverriddenCustomJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.RectangleWithOverriddenCustomJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return (_i4.ShapeWithOverriddenCustomJson.fromJson({
+          r'$type': r'RectangleWithOverriddenCustomJson',
+          ...$serialized,
+        }) as _i4.RectangleWithOverriddenCustomJson);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i4.ShapeWithOverriddenCustomJson, Map<String, Object?>>(
+      serialize: ($value) => {
+        ...$value.toJson(),
+        r'$type': switch ($value) {
+          _i4.CircleWithOverriddenCustomJson() =>
+            r'CircleWithOverriddenCustomJson',
+          _i4.RectangleWithOverriddenCustomJson() =>
+            r'RectangleWithOverriddenCustomJson',
+        },
+      },
+      deserialize: ($serialized) {
+        return _i4.ShapeWithOverriddenCustomJson.fromJson($serialized);
+      },
+    ));
     _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
@@ -276,6 +267,15 @@ final class SealedClassWithOverriddenCustomJsonTarget
         return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
+    _i3.Serializers.instance.put(
+      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
+        serialize: ($value) => $value,
+        deserialize: ($serialized) {
+          return _i8.JsonMap(($serialized as Map<String, Object?>));
+        },
+      ),
+      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+    );
   }
 }
 

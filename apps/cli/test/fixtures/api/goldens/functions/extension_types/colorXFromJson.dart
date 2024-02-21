@@ -77,6 +77,12 @@ final class ColorXFromJsonTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.Color, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i4.Color.values.byName($serialized);
+      },
+    ));
     _i3.Serializers.instance.put(
       _i3.Serializer.define<_i4.ColorXFromJson, String>(
         serialize: ($value) =>
@@ -87,12 +93,6 @@ final class ColorXFromJsonTarget extends _i1.CloudFunctionTarget {
       ),
       const _i3.TypeToken<_i4.ColorXFromJson>('ColorXFromJson'),
     );
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i4.Color, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i4.Color.values.byName($serialized);
-      },
-    ));
     _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},

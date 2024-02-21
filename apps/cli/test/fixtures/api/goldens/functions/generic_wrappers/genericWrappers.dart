@@ -163,6 +163,106 @@ final class GenericWrappersTarget extends _i1.CloudFunctionTarget {
         );
       },
     ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i8.SimpleClass, Map<String, dynamic>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i8.SimpleClass.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i6.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i5.SerializationException(($serialized[r'message'] as String));
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i7.IList<_i7.IList<_i8.SimpleClass>>, dynamic>(
+      serialize: ($value) => $value.toJson((value) => _i3.Serializers.instance
+          .serialize<_i7.IList<_i8.SimpleClass>>(value)),
+      deserialize: ($serialized) {
+        return _i7.IList<_i7.IList<_i8.SimpleClass>>.fromJson(
+          $serialized,
+          (value) => _i3.Serializers.instance
+              .deserialize<_i7.IList<_i8.SimpleClass>>(value),
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.IList<_i7.IList<Uri>>, dynamic>(
+      serialize: ($value) => $value.toJson(
+          (value) => _i3.Serializers.instance.serialize<_i7.IList<Uri>>(value)),
+      deserialize: ($serialized) {
+        return _i7.IList<_i7.IList<Uri>>.fromJson(
+          $serialized,
+          (value) =>
+              _i3.Serializers.instance.deserialize<_i7.IList<Uri>>(value),
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.IList<_i7.IList<String>>, dynamic>(
+      serialize: ($value) => $value.toJson((value) =>
+          _i3.Serializers.instance.serialize<_i7.IList<String>>(value)),
+      deserialize: ($serialized) {
+        return _i7.IList<_i7.IList<String>>.fromJson(
+          $serialized,
+          (value) =>
+              _i3.Serializers.instance.deserialize<_i7.IList<String>>(value),
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.IList<_i8.SimpleClass>, dynamic>(
+      serialize: ($value) => $value.toJson((value) =>
+          _i3.Serializers.instance.serialize<_i8.SimpleClass>(value)),
+      deserialize: ($serialized) {
+        return _i7.IList<_i8.SimpleClass>.fromJson(
+          $serialized,
+          (value) =>
+              _i3.Serializers.instance.deserialize<_i8.SimpleClass>(value),
+        );
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<_i7.IList<Uri>, dynamic>(
+      serialize: ($value) => $value
+          .toJson((value) => _i3.Serializers.instance.serialize<Uri>(value)),
+      deserialize: ($serialized) {
+        return _i7.IList<Uri>.fromJson(
+          $serialized,
+          (value) => _i3.Serializers.instance.deserialize<Uri>(value),
+        );
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.IList<String>, dynamic>(
+      serialize: ($value) => $value.toJson((value) => value),
+      deserialize: ($serialized) {
+        return _i7.IList<String>.fromJson(
+          $serialized,
+          (value) => (value as String),
+        );
+      },
+    ));
     _i3.Serializers.instance.put(_i3.Serializer.define<
         _i9.IMap<String, _i9.IMap<String, _i8.SimpleClass>>,
         Map<String, Object?>>(
@@ -299,106 +399,6 @@ final class GenericWrappersTarget extends _i1.CloudFunctionTarget {
           (value) => (value as String),
           (value) => (value as String),
         );
-      },
-    ));
-    _i3.Serializers.instance.put(
-        _i3.Serializer.define<_i7.IList<_i7.IList<_i8.SimpleClass>>, dynamic>(
-      serialize: ($value) => $value.toJson((value) => _i3.Serializers.instance
-          .serialize<_i7.IList<_i8.SimpleClass>>(value)),
-      deserialize: ($serialized) {
-        return _i7.IList<_i7.IList<_i8.SimpleClass>>.fromJson(
-          $serialized,
-          (value) => _i3.Serializers.instance
-              .deserialize<_i7.IList<_i8.SimpleClass>>(value),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.IList<_i7.IList<Uri>>, dynamic>(
-      serialize: ($value) => $value.toJson(
-          (value) => _i3.Serializers.instance.serialize<_i7.IList<Uri>>(value)),
-      deserialize: ($serialized) {
-        return _i7.IList<_i7.IList<Uri>>.fromJson(
-          $serialized,
-          (value) =>
-              _i3.Serializers.instance.deserialize<_i7.IList<Uri>>(value),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.IList<_i7.IList<String>>, dynamic>(
-      serialize: ($value) => $value.toJson((value) =>
-          _i3.Serializers.instance.serialize<_i7.IList<String>>(value)),
-      deserialize: ($serialized) {
-        return _i7.IList<_i7.IList<String>>.fromJson(
-          $serialized,
-          (value) =>
-              _i3.Serializers.instance.deserialize<_i7.IList<String>>(value),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.IList<_i8.SimpleClass>, dynamic>(
-      serialize: ($value) => $value.toJson((value) =>
-          _i3.Serializers.instance.serialize<_i8.SimpleClass>(value)),
-      deserialize: ($serialized) {
-        return _i7.IList<_i8.SimpleClass>.fromJson(
-          $serialized,
-          (value) =>
-              _i3.Serializers.instance.deserialize<_i8.SimpleClass>(value),
-        );
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<_i7.IList<Uri>, dynamic>(
-      serialize: ($value) => $value
-          .toJson((value) => _i3.Serializers.instance.serialize<Uri>(value)),
-      deserialize: ($serialized) {
-        return _i7.IList<Uri>.fromJson(
-          $serialized,
-          (value) => _i3.Serializers.instance.deserialize<Uri>(value),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.IList<String>, dynamic>(
-      serialize: ($value) => $value.toJson((value) => value),
-      deserialize: ($serialized) {
-        return _i7.IList<String>.fromJson(
-          $serialized,
-          (value) => (value as String),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i8.SimpleClass, Map<String, dynamic>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i8.SimpleClass.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance.put(
-        _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
-      serialize: ($value) => {r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i6.BadRequestException(($serialized[r'message'] as String));
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i6.InternalServerException, Map<String, Object?>>(
-      serialize: ($value) => {r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i6.InternalServerException(($serialized[r'message'] as String));
-      },
-    ));
-    _i3.Serializers.instance.put(
-        _i3.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'offset': $value.offset,
-        r'source': $value.source,
-      },
-      deserialize: ($serialized) {
-        return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
   }

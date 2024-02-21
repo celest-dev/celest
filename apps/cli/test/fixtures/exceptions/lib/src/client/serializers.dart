@@ -7,13 +7,6 @@ import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
 
 void initSerializers() {
   Serializers.instance
-      .put(Serializer.define<_$_common.CustomException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
-    deserialize: ($serialized) {
-      return _$_common.CustomException(($serialized[r'message'] as String));
-    },
-  ));
-  Serializers.instance
       .put(Serializer.define<_$_common.CommonException, Map<String, Object?>>(
     serialize: ($value) => {r'message': $value.message},
     deserialize: ($serialized) {
@@ -21,17 +14,10 @@ void initSerializers() {
     },
   ));
   Serializers.instance
-      .put(Serializer.define<_$exceptions.BaseException, Map<String, Object?>>(
-    serialize: ($value) => {r'fault': $value.fault},
+      .put(Serializer.define<_$_common.CustomException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
     deserialize: ($serialized) {
-      return _$exceptions.BaseException(($serialized[r'fault'] as String));
-    },
-  ));
-  Serializers.instance.put(
-      Serializer.define<_$exceptions.CustomException, Map<String, Object?>>(
-    serialize: ($value) => {r'fault': $value.fault},
-    deserialize: ($serialized) {
-      return _$exceptions.CustomException(($serialized[r'fault'] as String));
+      return _$_common.CustomException(($serialized[r'message'] as String));
     },
   ));
   Serializers.instance
@@ -42,10 +28,24 @@ void initSerializers() {
     },
   ));
   Serializers.instance
+      .put(Serializer.define<_$exceptions.BaseException, Map<String, Object?>>(
+    serialize: ($value) => {r'fault': $value.fault},
+    deserialize: ($serialized) {
+      return _$exceptions.BaseException(($serialized[r'fault'] as String));
+    },
+  ));
+  Serializers.instance
       .put(Serializer.define<_$exceptions.CustomError, Map<String, Object?>>(
     serialize: ($value) => {r'fault': $value.fault},
     deserialize: ($serialized) {
       return _$exceptions.CustomError(($serialized[r'fault'] as String));
+    },
+  ));
+  Serializers.instance.put(
+      Serializer.define<_$exceptions.CustomException, Map<String, Object?>>(
+    serialize: ($value) => {r'fault': $value.fault},
+    deserialize: ($serialized) {
+      return _$exceptions.CustomException(($serialized[r'fault'] as String));
     },
   ));
 }

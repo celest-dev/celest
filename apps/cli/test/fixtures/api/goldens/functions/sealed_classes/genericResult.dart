@@ -155,12 +155,87 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
 
   @override
   void init() {
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.CustomError, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
+          $value.additionalInfo,
+          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.CustomError();
+      },
+    ));
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i7.CustomErrorToFromJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i7.CustomErrorToFromJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.CustomErrorWithStackTrace, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'stackTrace':
+            _i3.Serializers.instance.serialize<StackTrace>($value.stackTrace),
+        r'message': $value.message,
+        r'additionalInfo': $value.additionalInfo,
+      },
+      deserialize: ($serialized) {
+        return _i7.CustomErrorWithStackTrace(
+            stackTrace: (_i3.Serializers.instance
+                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
+                null);
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
+          $value.additionalInfo,
+          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.CustomException();
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i7.CustomExceptionToFromJson.fromJson($serialized);
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i2.Circle, Map<String, Object?>>(
+      serialize: ($value) => {r'radius': $value.radius},
+      deserialize: ($serialized) {
+        return _i2.Circle(($serialized[r'radius'] as num).toDouble());
+      },
+    ));
     _i3.Serializers.instance.put(const OkResult_T_ShapeSerializer());
     _i3.Serializers.instance.put(const OkResult_T_ShapeSerializer<_i2.Shape>());
     _i3.Serializers.instance
         .put(const OkResult_T_ShapeSerializer<_i2.Circle>());
     _i3.Serializers.instance
         .put(const OkResult_T_ShapeSerializer<_i2.Rectangle>());
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i2.Rectangle, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'width': $value.width,
+        r'height': $value.height,
+      },
+      deserialize: ($serialized) {
+        return _i2.Rectangle(
+          ($serialized[r'width'] as num).toDouble(),
+          ($serialized[r'height'] as num).toDouble(),
+        );
+      },
+    ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<_i2.Shape, Map<String, Object?>>(
       serialize: ($value) {
@@ -199,90 +274,6 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
             .toString());
       },
     ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i2.Circle, Map<String, Object?>>(
-      serialize: ($value) => {r'radius': $value.radius},
-      deserialize: ($serialized) {
-        return _i2.Circle(($serialized[r'radius'] as num).toDouble());
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i2.Rectangle, Map<String, Object?>>(
-      serialize: ($value) => {
-        r'width': $value.width,
-        r'height': $value.height,
-      },
-      deserialize: ($serialized) {
-        return _i2.Rectangle(
-          ($serialized[r'width'] as num).toDouble(),
-          ($serialized[r'height'] as num).toDouble(),
-        );
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.CustomException, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
-          $value.additionalInfo,
-          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-        ),
-      },
-      deserialize: ($serialized) {
-        return _i7.CustomException();
-      },
-    ));
-    _i3.Serializers.instance.put(
-      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
-        serialize: ($value) => $value,
-        deserialize: ($serialized) {
-          return _i8.JsonMap(($serialized as Map<String, Object?>));
-        },
-      ),
-      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-    );
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i7.CustomExceptionToFromJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i7.CustomExceptionToFromJson.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.CustomError, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'message': $value.message,
-        r'additionalInfo': _i3.Serializers.instance.serialize<_i8.JsonMap>(
-          $value.additionalInfo,
-          const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
-        ),
-      },
-      deserialize: ($serialized) {
-        return _i7.CustomError();
-      },
-    ));
-    _i3.Serializers.instance.put(
-        _i3.Serializer.define<_i7.CustomErrorToFromJson, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i7.CustomErrorToFromJson.fromJson($serialized);
-      },
-    ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i7.CustomErrorWithStackTrace, Map<String, Object?>?>(
-      serialize: ($value) => {
-        r'stackTrace':
-            _i3.Serializers.instance.serialize<StackTrace>($value.stackTrace),
-        r'message': $value.message,
-        r'additionalInfo': $value.additionalInfo,
-      },
-      deserialize: ($serialized) {
-        return _i7.CustomErrorWithStackTrace(
-            stackTrace: (_i3.Serializers.instance
-                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-                null);
-      },
-    ));
     _i3.Serializers.instance.put(
         _i3.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
@@ -308,6 +299,15 @@ final class GenericResultTarget extends _i1.CloudFunctionTarget {
         return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
+    _i3.Serializers.instance.put(
+      _i3.Serializer.define<_i8.JsonMap, Map<String, Object?>>(
+        serialize: ($value) => $value,
+        deserialize: ($serialized) {
+          return _i8.JsonMap(($serialized as Map<String, Object?>));
+        },
+      ),
+      const _i3.TypeToken<_i8.JsonMap>('JsonMap'),
+    );
   }
 }
 
