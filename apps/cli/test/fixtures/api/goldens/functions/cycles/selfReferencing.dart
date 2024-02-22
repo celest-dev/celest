@@ -40,13 +40,11 @@ final class SelfReferencingTarget extends _i1.CloudFunctionTarget {
       },
       deserialize: ($serialized) {
         return _i4.SelfReferencing(
-          value: (_i3.Serializers.instance
-                  .deserialize<_i4.SelfReferencing?>($serialized[r'value'])) ??
-              null,
-          wrapper: (_i3.Serializers.instance
-                  .deserialize<_i4.SelfReferencingWrapper?>(
-                      $serialized[r'wrapper'])) ??
-              null,
+          value: _i3.Serializers.instance
+              .deserialize<_i4.SelfReferencing?>($serialized[r'value']),
+          wrapper: _i3.Serializers.instance
+              .deserialize<_i4.SelfReferencingWrapper?>(
+                  $serialized[r'wrapper']),
           list: ($serialized[r'list'] as Iterable<Object?>)
               .map((el) =>
                   _i3.Serializers.instance.deserialize<_i4.SelfReferencing>(el))

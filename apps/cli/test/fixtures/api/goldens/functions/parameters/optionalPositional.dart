@@ -12,8 +12,8 @@ final class OptionalPositionalTarget extends _i1.CloudFunctionTarget {
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
     await _i2.optionalPositional(
-      ((request[r'optionalString'] as String?)) ?? null,
-      ((request[r'optionalInt'] as num?)?.toInt()) ?? null,
+      (request[r'optionalString'] as String?),
+      (request[r'optionalInt'] as num?)?.toInt(),
     );
     return (statusCode: 200, body: {'response': null});
   }

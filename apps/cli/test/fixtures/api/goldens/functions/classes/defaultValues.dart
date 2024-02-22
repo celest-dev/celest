@@ -37,7 +37,7 @@ final class DefaultValuesTarget extends _i1.CloudFunctionTarget {
       deserialize: ($serialized) {
         return _i4.DefaultValues(
           field: (($serialized?[r'field'] as String?)) ?? 'default',
-          nullableField: (($serialized?[r'nullableField'] as String?)) ?? null,
+          nullableField: ($serialized?[r'nullableField'] as String?),
           nullableFieldWithDefault:
               (($serialized?[r'nullableFieldWithDefault'] as String?)) ??
                   'default',

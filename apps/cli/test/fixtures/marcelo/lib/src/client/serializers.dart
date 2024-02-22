@@ -37,12 +37,11 @@ void initSerializers() {
     },
     deserialize: ($serialized) {
       return _$overrides.UserException(
-        msg: (($serialized?[r'msg'] as String?)) ?? null,
-        cause: (Serializers.instance.deserialize<JsonValue?>(
-              $serialized?[r'cause'],
-              const TypeToken<JsonValue?>('JsonValue'),
-            )) ??
-            null,
+        msg: ($serialized?[r'msg'] as String?),
+        cause: Serializers.instance.deserialize<JsonValue?>(
+          $serialized?[r'cause'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
       );
     },
   ));

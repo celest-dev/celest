@@ -113,10 +113,10 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
     final constructorEl = invocation.constructor;
     final expressionType = constructorEl.returnType;
     final namedParameters = invocation.namedArguments.map((name, value) {
-      return MapEntry(name, value.toCodeBuilder!);
+      return MapEntry(name, value.toCodeBuilder ?? literalNull);
     });
-    final positionalParameters =
-        invocation.positionalArguments.map((el) => el.toCodeBuilder!);
+    final positionalParameters = invocation.positionalArguments
+        .map((el) => el.toCodeBuilder ?? literalNull);
     if (constructorEl.name.isNotEmpty) {
       return typeHelper.toReference(expressionType).constInstanceNamed(
             constructorEl.name,
@@ -135,19 +135,18 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
 
   @override
   Expression visitListValue(List<DartObjectImpl> value) => literalConstList(
-        value.map((el) => el.toCodeBuilder).toList(),
+        value.map((el) => el.toCodeBuilder ?? literalNull).toList(),
       );
 
   @override
   Expression visitMapValue(Map<DartObjectImpl, DartObjectImpl> mapValue) =>
       literalConstMap({
         for (final MapEntry(:key, :value) in mapValue.entries)
-          key.toCodeBuilder: value.toCodeBuilder,
+          key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
       });
 
-  // TODO(dnys1): -> `null`
   @override
-  Expression? visitNullValue() => literalNull;
+  Expression? visitNullValue() => null;
 
   @override
   Expression visitRecordValue(
@@ -155,8 +154,10 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
     Map<String, DartObjectImpl> namedFields,
   ) {
     return literalConstRecord(
-      positionalFields.map((el) => el.toCodeBuilder).toList(),
-      namedFields.map((name, value) => MapEntry(name, value.toCodeBuilder)),
+      positionalFields.map((el) => el.toCodeBuilder ?? literalNull).toList(),
+      namedFields.map(
+        (name, value) => MapEntry(name, value.toCodeBuilder ?? literalNull),
+      ),
     );
   }
 

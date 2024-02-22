@@ -165,9 +165,8 @@ final class ThrowsCustomErrorWithStackTraceTarget
       },
       deserialize: ($serialized) {
         return _i6.CustomErrorWithStackTrace(
-            stackTrace: (_i4.Serializers.instance
-                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-                null);
+            stackTrace: _i4.Serializers.instance
+                .deserialize<StackTrace?>($serialized?[r'stackTrace']));
       },
     ));
     _i4.Serializers.instance

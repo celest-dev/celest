@@ -164,9 +164,8 @@ final class ThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
       },
       deserialize: ($serialized) {
         return _i6.CustomErrorWithStackTrace(
-            stackTrace: (_i4.Serializers.instance
-                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-                null);
+            stackTrace: _i4.Serializers.instance
+                .deserialize<StackTrace?>($serialized?[r'stackTrace']));
       },
     ));
     _i4.Serializers.instance

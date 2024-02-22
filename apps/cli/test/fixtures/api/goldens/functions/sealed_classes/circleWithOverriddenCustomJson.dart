@@ -174,9 +174,8 @@ final class CircleWithOverriddenCustomJsonTarget
       },
       deserialize: ($serialized) {
         return _i7.CustomErrorWithStackTrace(
-            stackTrace: (_i3.Serializers.instance
-                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-                null);
+            stackTrace: _i3.Serializers.instance
+                .deserialize<StackTrace?>($serialized?[r'stackTrace']));
       },
     ));
     _i3.Serializers.instance

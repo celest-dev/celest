@@ -82,7 +82,7 @@ final class NullablePositionalDefaultValuesTarget
         .put(_i3.Serializer.define<_i4.Serializable, Map<String, Object?>?>(
       serialize: ($value) => {r'type': $value.type},
       deserialize: ($serialized) {
-        return _i4.Serializable((($serialized?[r'type'] as String?)) ?? null);
+        return _i4.Serializable(($serialized?[r'type'] as String?));
       },
     ));
   }

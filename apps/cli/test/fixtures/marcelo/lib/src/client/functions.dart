@@ -57,7 +57,7 @@ class CelestFunctionsExceptions {
     }
   }
 
-  Future<void> throwsUserException({JsonValue? cause = null}) async {
+  Future<void> throwsUserException({JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-user-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
@@ -81,7 +81,7 @@ class CelestFunctionsExceptions {
 
   Future<void> throwsAppError({
     String message = 'message',
-    JsonValue? error = null,
+    JsonValue? error,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-app-error'),
@@ -105,7 +105,7 @@ class CelestFunctionsExceptions {
     return;
   }
 
-  Future<void> callsThrowsUserException({JsonValue? cause = null}) async {
+  Future<void> callsThrowsUserException({JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/calls-throws-user-exception'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},

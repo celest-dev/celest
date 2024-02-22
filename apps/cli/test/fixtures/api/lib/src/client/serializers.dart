@@ -128,9 +128,8 @@ void initSerializers() {
     },
     deserialize: ($serialized) {
       return _$exceptions.CustomErrorWithStackTrace(
-          stackTrace: (Serializers.instance
-                  .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-              null);
+          stackTrace: Serializers.instance
+              .deserialize<StackTrace?>($serialized?[r'stackTrace']));
     },
   ));
   Serializers.instance.put(
@@ -201,7 +200,7 @@ void initSerializers() {
     deserialize: ($serialized) {
       return _$classes.DefaultValues(
         field: (($serialized?[r'field'] as String?)) ?? 'default',
-        nullableField: (($serialized?[r'nullableField'] as String?)) ?? null,
+        nullableField: ($serialized?[r'nullableField'] as String?),
         nullableFieldWithDefault:
             (($serialized?[r'nullableFieldWithDefault'] as String?)) ??
                 'default',
@@ -402,13 +401,11 @@ void initSerializers() {
     },
     deserialize: ($serialized) {
       return _$cycles.SelfReferencing(
-        value: (Serializers.instance.deserialize<_$cycles.SelfReferencing?>(
-                $serialized[r'value'])) ??
-            null,
-        wrapper: (Serializers.instance
-                .deserialize<_$cycles.SelfReferencingWrapper?>(
-                    $serialized[r'wrapper'])) ??
-            null,
+        value: Serializers.instance
+            .deserialize<_$cycles.SelfReferencing?>($serialized[r'value']),
+        wrapper: Serializers.instance
+            .deserialize<_$cycles.SelfReferencingWrapper?>(
+                $serialized[r'wrapper']),
         list: ($serialized[r'list'] as Iterable<Object?>)
             .map((el) =>
                 Serializers.instance.deserialize<_$cycles.SelfReferencing>(el))
@@ -759,8 +756,7 @@ void initSerializers() {
       .put(Serializer.define<_$metadata.Serializable, Map<String, Object?>?>(
     serialize: ($value) => {r'type': $value.type},
     deserialize: ($serialized) {
-      return _$metadata.Serializable(
-          (($serialized?[r'type'] as String?)) ?? null);
+      return _$metadata.Serializable(($serialized?[r'type'] as String?));
     },
   ));
   Serializers.instance

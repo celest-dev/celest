@@ -210,9 +210,8 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
       },
       deserialize: ($serialized) {
         return _i3.CustomErrorWithStackTrace(
-            stackTrace: (_i4.Serializers.instance
-                    .deserialize<StackTrace?>($serialized?[r'stackTrace'])) ??
-                null);
+            stackTrace: _i4.Serializers.instance
+                .deserialize<StackTrace?>($serialized?[r'stackTrace']));
       },
     ));
     _i4.Serializers.instance

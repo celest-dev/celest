@@ -19,11 +19,10 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionTarget {
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
     try {
       _i2.throwsUserException(
-          cause: (_i3.Serializers.instance.deserialize<_i4.JsonValue?>(
-                request[r'cause'],
-                const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-              )) ??
-              null);
+          cause: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+        request[r'cause'],
+        const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+      ));
       return (statusCode: 200, body: {'response': null});
     } on _i5.SerializationException catch (e) {
       const statusCode = 400;
@@ -137,12 +136,11 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionTarget {
       },
       deserialize: ($serialized) {
         return _i8.UserException(
-          msg: (($serialized?[r'msg'] as String?)) ?? null,
-          cause: (_i3.Serializers.instance.deserialize<_i4.JsonValue?>(
-                $serialized?[r'cause'],
-                const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-              )) ??
-              null,
+          msg: ($serialized?[r'msg'] as String?),
+          cause: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+            $serialized?[r'cause'],
+            const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+          ),
         );
       },
     ));

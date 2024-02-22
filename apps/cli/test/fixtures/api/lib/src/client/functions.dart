@@ -990,8 +990,8 @@ class CelestFunctionsCycles {
 
   Future<_$cycles.Node> combineTrees(
     _$cycles.Node tree1, [
-    _$cycles.Parent? tree2 = null,
-    _$cycles.Node? tree3 = null,
+    _$cycles.Parent? tree2,
+    _$cycles.Node? tree3,
     List<_$cycles.Node?> additionalChildren = const [],
   ]) async {
     final $response = await celest.httpClient.post(
@@ -4266,8 +4266,8 @@ class CelestFunctionsParameters {
   }
 
   Future<void> optionalPositional([
-    String? optionalString = null,
-    int? optionalInt = null,
+    String? optionalString,
+    int? optionalInt,
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/optional-positional'),
@@ -4289,8 +4289,8 @@ class CelestFunctionsParameters {
   }
 
   Future<void> optionalNamed({
-    String? namedString = null,
-    int? namedInt = null,
+    String? namedString,
+    int? namedInt,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/optional-named'),

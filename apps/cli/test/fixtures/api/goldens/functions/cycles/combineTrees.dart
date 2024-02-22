@@ -15,10 +15,8 @@ final class CombineTreesTarget extends _i1.CloudFunctionTarget {
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
     final response = _i2.combineTrees(
       _i3.Serializers.instance.deserialize<_i4.Node>(request[r'tree1']),
-      (_i3.Serializers.instance.deserialize<_i4.Parent?>(request[r'tree2'])) ??
-          null,
-      (_i3.Serializers.instance.deserialize<_i4.Node?>(request[r'tree3'])) ??
-          null,
+      _i3.Serializers.instance.deserialize<_i4.Parent?>(request[r'tree2']),
+      _i3.Serializers.instance.deserialize<_i4.Node?>(request[r'tree3']),
       ((request[r'additionalChildren'] as Iterable<Object?>?)
               ?.map((el) => _i3.Serializers.instance.deserialize<_i4.Node?>(el))
               .toList()) ??

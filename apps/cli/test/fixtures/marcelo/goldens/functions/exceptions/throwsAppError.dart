@@ -20,11 +20,10 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
     try {
       _i2.throwsAppError(
         message: ((request[r'message'] as String?)) ?? 'message',
-        error: (_i3.Serializers.instance.deserialize<_i4.JsonValue?>(
-              request[r'error'],
-              const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-            )) ??
-            null,
+        error: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+          request[r'error'],
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ),
       );
       return (statusCode: 200, body: {'response': null});
     } on _i5.SerializationException catch (e) {
@@ -139,12 +138,11 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
       },
       deserialize: ($serialized) {
         return _i8.UserException(
-          msg: (($serialized?[r'msg'] as String?)) ?? null,
-          cause: (_i3.Serializers.instance.deserialize<_i4.JsonValue?>(
-                $serialized?[r'cause'],
-                const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-              )) ??
-              null,
+          msg: ($serialized?[r'msg'] as String?),
+          cause: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+            $serialized?[r'cause'],
+            const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+          ),
         );
       },
     ));

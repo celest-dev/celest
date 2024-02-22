@@ -12,8 +12,8 @@ final class OptionalNamedTarget extends _i1.CloudFunctionTarget {
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
     await _i2.optionalNamed(
-      namedString: ((request[r'namedString'] as String?)) ?? null,
-      namedInt: ((request[r'namedInt'] as num?)?.toInt()) ?? null,
+      namedString: (request[r'namedString'] as String?),
+      namedInt: (request[r'namedInt'] as num?)?.toInt(),
     );
     return (statusCode: 200, body: {'response': null});
   }
