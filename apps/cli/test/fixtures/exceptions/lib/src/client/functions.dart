@@ -40,6 +40,9 @@ class CelestFunctionsExternal {
       case r'CommonException':
         throw Serializers.instance
             .deserialize<_$_common.CommonException>($details);
+      case r'OverriddenException':
+        throw Serializers.instance
+            .deserialize<_$_common.OverriddenException>($details);
       case _:
         switch ($statusCode) {
           case 400:

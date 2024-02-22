@@ -1,0 +1,85 @@
+{
+  "name": "marcelo",
+  "apis": {
+    "exceptions": {
+      "name": "exceptions",
+      "functions": {
+        "throwsUserException": {
+          "name": "throwsUserException",
+          "route": "/exceptions/throws-user-exception",
+          "apiName": "exceptions",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsAppError": {
+          "name": "throwsAppError",
+          "route": "/exceptions/throws-app-error",
+          "apiName": "exceptions",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsUserException": {
+          "name": "callsThrowsUserException",
+          "route": "/exceptions/calls-throws-user-exception",
+          "apiName": "exceptions",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "models": {
+      "name": "models",
+      "functions": {}
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.3.0",
+    "enabledExperiments": []
+  }
+}

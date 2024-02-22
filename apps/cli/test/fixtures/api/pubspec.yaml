@@ -5,11 +5,13 @@ environment:
   sdk: ^3.3.0-0
 
 dependencies:
+  _common:
+    path: ../_common
   celest:
     path: ../../../../../celest/packages/celest
   celest_core:
     path: ../../../../../celest/packages/celest_core
-  fast_immutable_collections: ^9.2.0
+  fast_immutable_collections: ^10.1.1
   http: ^1.0.0
   shelf: ^1.4.1
 

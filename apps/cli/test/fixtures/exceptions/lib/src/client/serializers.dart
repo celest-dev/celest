@@ -21,6 +21,13 @@ void initSerializers() {
     },
   ));
   Serializers.instance
+      .put(Serializer.define<_$_common.OverriddenException, String>(
+    serialize: ($value) => $value.toJson(),
+    deserialize: ($serialized) {
+      return _$_common.OverriddenException.fromJson($serialized);
+    },
+  ));
+  Serializers.instance
       .put(Serializer.define<_$exceptions.BaseError, Map<String, Object?>>(
     serialize: ($value) => {r'fault': $value.fault},
     deserialize: ($serialized) {

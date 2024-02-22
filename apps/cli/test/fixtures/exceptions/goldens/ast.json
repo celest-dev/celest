@@ -89,6 +89,12 @@
           "symbol": "CommonException",
           "url": "package:_common/_common.dart",
           "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OverriddenException",
+          "url": "package:_common/_common.dart",
+          "isNullable": false
         }
       ],
       "location": {

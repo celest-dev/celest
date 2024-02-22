@@ -23,6 +23,8 @@ abstract final class Apis {
 
   static const metadata = CloudApi(name: r'metadata');
 
+  static const overrides = CloudApi(name: r'overrides');
+
   static const parameterTypes = CloudApi(name: r'parameter_types');
 
   static const parameters = CloudApi(name: r'parameters');
@@ -599,6 +601,51 @@ abstract final class Functions {
   static const metadataPositionalDefaultValues = CloudFunction(
     api: r'metadata',
     functionName: r'positionalDefaultValues',
+  );
+
+  static const overridesCallsThrowsCommonOverriddenException = CloudFunction(
+    api: r'overrides',
+    functionName: r'callsThrowsCommonOverriddenException',
+  );
+
+  static const overridesCallsThrowsOverriddenException = CloudFunction(
+    api: r'overrides',
+    functionName: r'callsThrowsOverriddenException',
+  );
+
+  static const overridesCommonNestedChild = CloudFunction(
+    api: r'overrides',
+    functionName: r'commonNestedChild',
+  );
+
+  static const overridesCommonNestedParent = CloudFunction(
+    api: r'overrides',
+    functionName: r'commonNestedParent',
+  );
+
+  static const overridesNestedChild = CloudFunction(
+    api: r'overrides',
+    functionName: r'nestedChild',
+  );
+
+  static const overridesNestedGrandparent = CloudFunction(
+    api: r'overrides',
+    functionName: r'nestedGrandparent',
+  );
+
+  static const overridesNestedParent = CloudFunction(
+    api: r'overrides',
+    functionName: r'nestedParent',
+  );
+
+  static const overridesThrowsCommonOverriddenException = CloudFunction(
+    api: r'overrides',
+    functionName: r'throwsCommonOverriddenException',
+  );
+
+  static const overridesThrowsOverriddenException = CloudFunction(
+    api: r'overrides',
+    functionName: r'throwsOverriddenException',
   );
 
   static const parameterTypesComplex = CloudFunction(

@@ -188,7 +188,7 @@ final class SerializerGenerator {
     this.serializationSpec, {
     this.additionalSerializationSpecs = const [],
     Expression? serializers,
-  }) : _isExtensionType = serializationSpec.isExtensionType {
+  }) {
     _serializers = serializers ??
         (_customSerializers != null
             ? refer(r'$serializers')
@@ -198,7 +198,16 @@ final class SerializerGenerator {
   final SerializationSpec serializationSpec;
   final Iterable<SerializationSpec> additionalSerializationSpecs;
   late final Expression _serializers;
-  final bool _isExtensionType;
+
+  late final bool _isExtensionType = serializationSpec.isExtensionType;
+  late final bool _isOverridden = type.isOverridden;
+
+  // Overridden types are extension types but their serializers should apply
+  // at the global level so that all instances of the representation type
+  // are serialized the same.
+  late final bool _isExtensionTypeWithIdentity =
+      _isExtensionType && !_isOverridden;
+
   late final SerializationSpec? _parent = serializationSpec.parent;
   late final Set<Reference> _generics = _collectGenerics();
 
@@ -235,13 +244,30 @@ final class SerializerGenerator {
     return (typeReference.property('fromJson'), usesParent);
   }
 
+  bool get hasToJson {
+    if (serializationSpec.toJsonType != null) {
+      return true;
+    }
+    var parent = _parent;
+    while (parent != null) {
+      if (parent.toJsonType != null) {
+        return true;
+      }
+      parent = parent.parent;
+    }
+    return false;
+  }
+
   late final type = serializationSpec.type;
   late final typeReference = typeHelper.toReference(type).nonNullable.noBound;
   late final wireType = serializationSpec.wireType;
   late final castType = serializationSpec.castType;
 
+  late final representationType = type.extensionTypeErasure;
+  late final representationTypeRef = typeHelper.toReference(representationType);
+
   late final Code? _customSerializers = run(() {
-    if (!_isExtensionType) {
+    if (!_isExtensionTypeWithIdentity) {
       return null;
     }
     final interfaceSpecs = additionalSerializationSpecs
@@ -260,7 +286,7 @@ final class SerializerGenerator {
     return serializers.statement;
   });
 
-  Iterable<SerializerDefinition> build() sync* {
+  List<SerializerDefinition> build() {
     final serialize = _serialize(r'$value').code;
 
     final parameters = serializationSpec.parameters;
@@ -273,35 +299,45 @@ final class SerializerGenerator {
     };
     final deserialize = _deserialize(r'$serialized', mayBeAbsent: mayBeAbsent);
 
-    yield SerializerDefinition(
-      serialize: serialize,
-      deserialize: deserialize,
-      type: typeReference,
-      dartType: type,
-      generics: _generics,
-      wireType: wireType,
-      customSerializers: _customSerializers,
+    final serializerDefinitions = <SerializerDefinition>[];
+
+    serializerDefinitions.add(
+      SerializerDefinition(
+        serialize: serialize,
+        deserialize: deserialize,
+        type: typeReference,
+        dartType: type,
+        generics: _generics,
+        wireType: wireType,
+        customSerializers: _customSerializers,
+      ),
     );
 
-    if (!_isExtensionType) {
+    if (!_isExtensionTypeWithIdentity) {
       for (final subtype in serializationSpec.subtypes) {
-        yield* SerializerGenerator(
-          subtype,
-          serializers: _serializers,
-        ).build();
+        serializerDefinitions.addAll(
+          SerializerGenerator(
+            subtype,
+            serializers: _serializers,
+          ).build(),
+        );
       }
       for (final additionalSpec in additionalSerializationSpecs) {
-        yield* SerializerGenerator(
-          additionalSpec,
-          serializers: _serializers,
-        ).build();
+        serializerDefinitions.addAll(
+          SerializerGenerator(
+            additionalSpec,
+            serializers: _serializers,
+          ).build(),
+        );
       }
     }
+
+    return serializerDefinitions;
   }
 
   Expression _serialize(String from) {
     final Expression ref = _reference(from, isNullable: false);
-    if (serializationSpec.hasToJson) {
+    if (hasToJson) {
       final genericSerializers = <Expression>[];
       if (type case ast.InterfaceType(:final typeArguments)) {
         for (final typeArgument in typeArguments) {
@@ -405,10 +441,7 @@ final class SerializerGenerator {
     if (type.isEnum) {
       return ref.property('name');
     }
-    if (_isExtensionType) {
-      final representationType = serializationSpec.representationType!;
-      final representationTypeRef =
-          typeHelper.toReference(representationType.type);
+    if (_isExtensionTypeWithIdentity) {
       return jsonGenerator.toJson(
         representationTypeRef,
         type.implementsRepresentationType
@@ -421,7 +454,7 @@ final class SerializerGenerator {
       );
     }
     final serialized = <Expression, Expression>{};
-    for (final field in serializationSpec.fields) {
+    for (final field in serializationSpec.representationType.fields) {
       serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
         typeHelper.toReference(field.type),
         ref.property(field.name),
@@ -527,10 +560,9 @@ final class SerializerGenerator {
           .returned
           .statement;
     }
-    if (_isExtensionType) {
-      final representationType = serializationSpec.representationType!;
+    if (_isExtensionTypeWithIdentity) {
       final deserialized = jsonGenerator.fromJson(
-        typeHelper.toReference(representationType.type),
+        representationTypeRef,
         ref,
       );
       // No params means no constructor. Just cast into the extension type.
@@ -559,16 +591,32 @@ final class SerializerGenerator {
         deserializedNamed[parameter.name] = deserialized;
       }
     }
-    return switch (serializationSpec.type) {
-      ast.InterfaceType() => typeReference.nonNullable.newInstance(
-          deserializedPositional,
-          deserializedNamed,
-        ),
+    return switch (type) {
+      ast.InterfaceType() => () {
+          // TODO(dnys1): Find a less hacky way to do this
+          var constructor = typeReference;
+          var cast = false;
+          if (_isOverridden) {
+            if (serializationSpec.wireConstructor!.enclosingElement !=
+                type.element) {
+              constructor = representationTypeRef;
+              cast = true;
+            }
+          }
+          final instance = constructor.newInstance(
+            deserializedPositional,
+            deserializedNamed,
+          );
+          if (cast) {
+            return instance.asA(typeReference);
+          }
+          return instance;
+        }(),
       ast.RecordType() => literalRecord(
           deserializedPositional,
           deserializedNamed,
         ),
-      _ => unreachable('Unsupported type ${serializationSpec.type}'),
+      _ => unreachable('Unsupported type: $type'),
     }
         .returned
         .statement;

@@ -3045,6 +3045,209 @@
         }
       }
     },
+    "overrides": {
+      "name": "overrides",
+      "functions": {
+        "commonNestedParent": {
+          "name": "commonNestedParent",
+          "route": "/overrides/common-nested-parent",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "commonNestedChild": {
+          "name": "commonNestedChild",
+          "route": "/overrides/common-nested-child",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nestedGrandparent": {
+          "name": "nestedGrandparent",
+          "route": "/overrides/nested-grandparent",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nestedParent": {
+          "name": "nestedParent",
+          "route": "/overrides/nested-parent",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nestedChild": {
+          "name": "nestedChild",
+          "route": "/overrides/nested-child",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsCommonOverriddenException": {
+          "name": "callsThrowsCommonOverriddenException",
+          "route": "/overrides/calls-throws-common-overridden-exception",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsCommonOverriddenException": {
+          "name": "throwsCommonOverriddenException",
+          "route": "/overrides/throws-common-overridden-exception",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "throwsOverriddenException": {
+          "name": "throwsOverriddenException",
+          "route": "/overrides/throws-overridden-exception",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "callsThrowsOverriddenException": {
+          "name": "callsThrowsOverriddenException",
+          "route": "/overrides/calls-throws-overridden-exception",
+          "apiName": "overrides",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     "classes": {
       "name": "classes",
       "functions": {

@@ -119,8 +119,8 @@ class TestRunner {
     test('analyzer', timeout: const Timeout.factor(3), () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(updateResources: false);
-      expect(project, isNotNull);
       expect(errors, isEmpty);
+      expect(project, isNotNull);
 
       if (Platform.isWindows) {
         // Cannot check/update goldens on Windows due to path differences.
@@ -142,8 +142,8 @@ class TestRunner {
     test('codegen', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(updateResources: false);
-      expect(project, isNotNull);
       expect(errors, isEmpty);
+      expect(project, isNotNull);
 
       final codegen = CloudCodeGenerator(
         // Since paths will always be relative, this is okay.
@@ -169,8 +169,8 @@ class TestRunner {
     test('resolve', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(updateResources: false);
-      expect(project, isNotNull);
       expect(errors, isEmpty);
+      expect(project, isNotNull);
 
       final projectResolver = ProjectResolver();
       project!.accept(projectResolver);
@@ -196,8 +196,8 @@ class TestRunner {
     test('client', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(updateResources: false);
-      expect(project, isNotNull);
       expect(errors, isEmpty);
+      expect(project, isNotNull);
 
       final clientGen = ClientCodeGenerator(
         project: project!,
@@ -295,25 +295,30 @@ class TestRunner {
                 body: jsonEncode(test.input),
               ),
             );
-            switch (test) {
-              case FunctionTestError(:final output):
-                switch (result) {
-                  case ErrorResult(error: final e):
-                    fail('Unexpected error: $e');
-                  case ValueResult(value: final resp):
-                    expect(resp.statusCode, test.statusCode);
-                    final respJson = jsonDecode(resp.body);
-                    expect(respJson, output);
-                }
-              case FunctionTestSuccess(:final output):
-                expect(result.isValue, isTrue);
-                final resp = result.asValue!.value;
-                expect(resp.statusCode, 200, reason: resp.body);
-                final respJson = jsonDecode(resp.body);
-                expect(respJson, output);
-            }
-            if (test.logs case final expectedLogs?) {
-              expect(logs, containsAllInOrder(expectedLogs.map(contains)));
+            try {
+              switch (test) {
+                case FunctionTestError(:final output):
+                  switch (result) {
+                    case ErrorResult(error: final e):
+                      fail('Unexpected error: $e');
+                    case ValueResult(value: final resp):
+                      expect(resp.statusCode, test.statusCode);
+                      final respJson = jsonDecode(resp.body);
+                      expect(respJson, output);
+                  }
+                case FunctionTestSuccess(:final output):
+                  expect(result.isValue, isTrue);
+                  final resp = result.asValue!.value;
+                  expect(resp.statusCode, 200, reason: resp.body);
+                  final respJson = jsonDecode(resp.body);
+                  expect(respJson, output);
+              }
+              if (test.logs case final expectedLogs?) {
+                expect(logs, containsAllInOrder(expectedLogs.map(contains)));
+              }
+            } on Object {
+              print(logs.join('\n'));
+              rethrow;
             }
           }
         });
@@ -1511,6 +1516,131 @@ final tests = <String, Test>{
                 'aNullableMapOfNullableComplexClass': null,
               },
               output: null,
+            ),
+          ],
+        },
+      ),
+      'overrides': ApiTest(
+        functionTests: {
+          'commonNestedParent': [
+            FunctionTestSuccess(
+              name: 'commonNestedParent',
+              input: {
+                'parent': {
+                  'child': {'name': 'hello'},
+                },
+              },
+              output: {
+                'child': {'name': 'hello'},
+              },
+            ),
+          ],
+          'commonNestedChild': [
+            FunctionTestSuccess(
+              name: 'commonNestedChild',
+              input: {
+                'child': {'name': 'hello'},
+              },
+              output: {'name': 'hello'},
+            ),
+          ],
+          'nestedGrandparent': [
+            FunctionTestSuccess(
+              name: 'nestedGrandparent',
+              input: {
+                'grandparent': {
+                  'parent': {
+                    'child': {'name': 'hello'},
+                  },
+                },
+              },
+              output: {
+                'parent': {
+                  'child': {'name': 'hello'},
+                },
+              },
+            ),
+          ],
+          'nestedParent': [
+            FunctionTestSuccess(
+              name: 'nestedParent',
+              input: {
+                'parent': {
+                  'child': {'name': 'hello'},
+                },
+              },
+              output: {
+                'child': {'name': 'hello'},
+              },
+            ),
+          ],
+          'nestedChild': [
+            FunctionTestSuccess(
+              name: 'nestedChild',
+              input: {
+                'child': {'name': 'hello'},
+              },
+              output: {'name': 'hello'},
+            ),
+          ],
+          'callsThrowsCommonOverriddenException': [
+            const FunctionTestError(
+              name: 'callsThrowsCommonOverriddenException',
+              input: {},
+              statusCode: 400,
+              output: {
+                'error': {
+                  'code': 'OverriddenException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsCommonOverriddenException': [
+            const FunctionTestError(
+              name: 'throwsCommonOverriddenException',
+              input: {},
+              statusCode: 400,
+              output: {
+                'error': {
+                  'code': 'OverriddenException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsOverriddenException': [
+            const FunctionTestError(
+              name: 'throwsOverriddenException',
+              input: {},
+              statusCode: 400,
+              output: {
+                'error': {
+                  'code': 'OverriddenException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+          'callsThrowsOverriddenException': [
+            const FunctionTestError(
+              name: 'callsThrowsOverriddenException',
+              input: {},
+              statusCode: 400,
+              output: {
+                'error': {
+                  'code': 'OverriddenException',
+                  'details': {
+                    'message': 'message',
+                  },
+                },
+              },
             ),
           ],
         },
@@ -3501,6 +3631,157 @@ final tests = <String, Test>{
                   'code': 'CustomException',
                   'details': {
                     'message': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'marcelo': const Test(
+    apis: {
+      'exceptions': ApiTest(
+        functionTests: {
+          'throwsUserException': [
+            FunctionTestError(
+              name: 'no cause',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': null,
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with cause (string)',
+              statusCode: 400,
+              input: {
+                'cause': 'Bad thing happened',
+              },
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': 'Bad thing happened',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with cause (map)',
+              statusCode: 400,
+              input: {
+                'cause': {
+                  'reason': 'Bad thing happened',
+                },
+              },
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': {
+                      'reason': 'Bad thing happened',
+                    },
+                  },
+                },
+              },
+            ),
+          ],
+          'callsThrowsUserException': [
+            FunctionTestError(
+              name: 'no cause',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': null,
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with cause (string)',
+              statusCode: 400,
+              input: {
+                'cause': 'Bad thing happened',
+              },
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': 'Bad thing happened',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with cause (map)',
+              statusCode: 400,
+              input: {
+                'cause': {
+                  'reason': 'Bad thing happened',
+                },
+              },
+              output: {
+                'error': {
+                  'code': 'UserException',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': {
+                      'reason': 'Bad thing happened',
+                    },
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsAppError': [
+            FunctionTestError(
+              name: 'throwsAppError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'AppError',
+                  'details': {
+                    'msg': 'message',
+                    'error': null,
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with params',
+              statusCode: 500,
+              input: {
+                'message': 'test',
+                'error': 123,
+              },
+              output: {
+                'error': {
+                  'code': 'AppError',
+                  'details': {
+                    'msg': 'test',
+                    'error': 123,
                   },
                 },
               },

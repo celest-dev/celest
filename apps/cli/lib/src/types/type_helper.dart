@@ -177,17 +177,45 @@ final class TypeHelper {
   /// - Be a class which: has fields of the above types, has a constructor with
   ///   all fields present. For these classes, we generate custom serialization
   ///   code.
-  Verdict isSerializable(DartType type) =>
-      serializationVerdicts[type] ??= runZoned(
-        () => type.accept(const IsSerializable()),
-        zoneValues: {
-          _seenKey: Zone.current[_seenKey] ??
-              HashSet(
-                equals: const DartTypeEquality(ignoreNullability: true).equals,
-                hashCode: const DartTypeEquality(ignoreNullability: true).hash,
-              ),
-        },
-      );
+  Verdict isSerializable(DartType type) {
+    final verdict = serializationVerdicts[type] ??= runZoned(
+      () => type.asOverriden.accept(const IsSerializable()),
+      zoneValues: {
+        _seenKey: Zone.current[_seenKey] ??
+            HashSet(
+              equals: const DartTypeEquality(ignoreNullability: true).equals,
+              hashCode: const DartTypeEquality(ignoreNullability: true).hash,
+            ),
+      },
+    );
+    assert(
+      () {
+        bool isValidOverride(Verdict verdict) {
+          if (verdict is! VerdictYes) {
+            return true;
+          }
+          if (!(verdict.primarySpec?.type.isExtensionType ?? false)) {
+            return false;
+          }
+          for (final additionalSpec in verdict.additionalSpecs) {
+            if (const DartTypeEquality(ignoreNullability: true)
+                .equals(additionalSpec.type, type)) {
+              return false;
+            }
+          }
+          return true;
+        }
+
+        if (type.isOverridden) {
+          return isValidOverride(verdict);
+        }
+        return true;
+      }(),
+      'isSerializable($type) returned an invalid verdict',
+    );
+
+    return verdict;
+  }
 
   static const _seenKey = #seen;
 
@@ -203,20 +231,14 @@ final class TypeHelper {
         primarySpec,
         additionalSerializationSpecs: additionalSpecs,
       ).build();
-      // for (final serializationSpec in [
-      //   primarySpec,
-      //   ...additionalSpecs,
-      // ]) {
-      //   yield _generate(serializationSpec);
-      //   for (final subtype in serializationSpec.subtypes) {
-      //     yield _generate(subtype..parent = serializationSpec);
-      //   }
-      // }
     }
     return const Iterable.empty();
   }
 
   final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
+
+  /// Maps 3p types to their extension type overrides.
+  final Map<InterfaceType, InterfaceType> overrides = Map.identity();
 
   /// Reset all caches.
   void reset() {
@@ -225,6 +247,7 @@ final class TypeHelper {
     _wireTypeToDartType.clear();
     serializationVerdicts.clear();
     subtypes.clear();
+    overrides.clear();
   }
 }
 

@@ -124,6 +124,74 @@ final class CelestAnalyzer {
     ]);
     _customModelTypes = customModelTypes;
     _customExceptionTypes = customExceptionTypes;
+    typeHelper.overrides.clear();
+    for (final element in _customExceptionTypes.followedBy(_customModelTypes)) {
+      final isOverride =
+          element.metadata.any((annotation) => annotation.isOverride);
+      if (!isOverride) {
+        continue;
+      }
+      if (element is! ExtensionTypeElement) {
+        _reportError(
+          'Only extension types may be marked as overrides',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      final typeErasure = element.typeErasure;
+      if (typeErasure is! InterfaceType) {
+        _reportError(
+          'Only interface types may be overridden',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      if (typeErasure.element is ExtensionTypeElement) {
+        _reportError(
+          'Extension types may not be overridden',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      final erasureSource = typeErasure.element.library.source.uri;
+      if (erasureSource case Uri(scheme: 'dart', path: 'core')) {
+        _reportError(
+          'Overriding types from `dart:core` is not allowed',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      final overridesCustomType = switch (
+          _context.currentSession.uriConverter.uriToPath(erasureSource)) {
+        final path? => p.isWithin(projectPaths.projectRoot, path),
+        _ => false,
+      };
+      if (overridesCustomType) {
+        _reportError(
+          'Overriding custom types is not allowed',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      if (typeHelper.overrides[typeErasure] case final existing?) {
+        _reportError(
+          'The type ${typeErasure.element.name} is already overridden by '
+          '${existing.element.name} (${existing.element.library.source.uri}).',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      // TODO(dnys1): This shouldn't be required but having an `on` clause with
+      // an exttype which doesn't implement the interface causes an error.
+      if (!element.thisType.implementsRepresentationType) {
+        _reportError(
+          'Overrides must implement their represenation type',
+          location: element.sourceLocation,
+        );
+        continue;
+      }
+      typeHelper.overrides[typeErasure] = element.thisType;
+    }
   }
 
   Future<Set<InterfaceElement>> _collectCustomTypes(CustomType type) async {
@@ -155,6 +223,9 @@ final class CelestAnalyzer {
     bool updateResources = true,
   }) async {
     await init();
+    if (_errors.isNotEmpty) {
+      return CelestAnalysisResult.failure(_errors);
+    }
     final project = await _findProject();
     if (project == null) {
       return CelestAnalysisResult.failure(_errors);
@@ -498,13 +569,18 @@ final class CelestAnalyzer {
     final customExceptions = _customExceptionTypes;
     final apiNamespace = _namespaceForLibrary(apiLibrary, recursive: true);
     final exceptionTypes = <DartType>{};
-    for (final interfaceElement in apiNamespace) {
-      final interfaceUri = interfaceElement.library.source.uri;
-      final isDartType = interfaceUri.scheme == 'dart';
-      if (isDartType) {
-        continue;
+    for (var interfaceElement in apiNamespace) {
+      final overriddenBy = typeHelper.overrides[interfaceElement.thisType];
+      final isOverriden = overriddenBy != null;
+      if (isOverriden) {
+        interfaceElement = overriddenBy.element;
       }
       final interfaceType = interfaceElement.thisType;
+      final interfaceUri = interfaceElement.library.source.uri;
+      final isDartType = interfaceUri.scheme == 'dart';
+      if (isDartType && !isOverriden) {
+        continue;
+      }
       final isExceptionType = typeHelper.typeSystem.isSubtypeOf(
         interfaceType.extensionTypeErasure,
         typeHelper.coreTypes.coreExceptionType,
@@ -517,8 +593,9 @@ final class CelestAnalyzer {
       if (!isExceptionOrErrorType) {
         continue;
       }
-      final exportedFromExceptionsDart =
-          customExceptions.contains(interfaceElement);
+      final exportedFromExceptionsDart = isOverriden ||
+          customExceptions.contains(interfaceElement) ||
+          _customModelTypes.contains(interfaceElement);
 
       // Only types defined within the celest/ project folder need to be in
       // lib/ since all others can be imported on the client side.
@@ -612,6 +689,7 @@ final class CelestAnalyzer {
           return null;
         }
 
+        final returnType = func.returnType;
         final function = ast.CloudFunction(
           name: func.name,
           apiName: apiName,
@@ -640,9 +718,10 @@ final class CelestAnalyzer {
             return typeRef;
           }),
           parameters: await func.parameters.asyncMap((param) async {
-            final paramType = typeHelper.toReference(param.type);
+            final paramType = param.type;
+            final paramTypeRef = typeHelper.toReference(paramType);
             final paramLoc = param.sourceLocation;
-            if (param.type.element case final InterfaceElement interface) {
+            if (paramType.element case final InterfaceElement interface) {
               _ensureClientReferenceable(
                 interface,
                 paramLoc,
@@ -651,7 +730,7 @@ final class CelestAnalyzer {
             }
             final parameter = ast.CloudFunctionParameter(
               name: param.name,
-              type: paramType,
+              type: paramTypeRef,
               required: param.isRequired,
               named: param.isNamed,
               location: paramLoc,
@@ -687,7 +766,7 @@ final class CelestAnalyzer {
                 location: parameter.location,
               );
             }
-            final parameterTypeVerdict = typeHelper.isSerializable(param.type);
+            final parameterTypeVerdict = typeHelper.isSerializable(paramType);
             if (!parameterTypeVerdict.isSerializable) {
               for (final reason in parameterTypeVerdict.reasons) {
                 _reportError(
@@ -702,9 +781,8 @@ final class CelestAnalyzer {
             }
             return parameter;
           }),
-          returnType: typeHelper.toReference(func.returnType),
-          flattenedReturnType:
-              typeHelper.toReference(func.returnType.flattened),
+          returnType: typeHelper.toReference(returnType),
+          flattenedReturnType: typeHelper.toReference(returnType.flattened),
           location: func.sourceLocation,
           metadata: _collectApiMetadata(func),
           annotations: func.metadata
@@ -734,7 +812,6 @@ final class CelestAnalyzer {
             hasContext = true;
           }
         }
-        final returnType = func.returnType;
         // Check must happen before `isSerializable`
         final hasAllowedSubtypes =
             await returnType.flattened.hasAllowedSubtypes();

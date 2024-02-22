@@ -7,8 +7,10 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _$convert;
 import 'dart:typed_data' as _$typed_data;
 
+import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/exceptions/overrides.dart' as _$overrides;
 import 'package:celest_backend/models/classes.dart' as _$classes;
 import 'package:celest_backend/models/cycles.dart' as _$cycles;
 import 'package:celest_backend/models/exceptions.dart' as _$exceptions;
@@ -17,6 +19,7 @@ import 'package:celest_backend/models/extension_types.dart'
 import 'package:celest_backend/models/generic_wrappers.dart'
     as _$generic_wrappers;
 import 'package:celest_backend/models/metadata.dart' as _$metadata;
+import 'package:celest_backend/models/overrides.dart' as _$overrides;
 import 'package:celest_backend/models/parameter_types.dart'
     as _$parameter_types;
 import 'package:celest_backend/models/records.dart' as _$records;
@@ -58,6 +61,10 @@ class CelestFunctions {
   /// Tests that metadata associated with functions and parameters are correctly
   /// parsed and transferred to the generated client.
   final metadata = CelestFunctionsMetadata();
+
+  /// Tests that types can be recursively overriden in the serialization protocol
+  /// using extension types.
+  final overrides = CelestFunctionsOverrides();
 
   final parameterTypes = CelestFunctionsParameterTypes();
 
@@ -3270,6 +3277,210 @@ class CelestFunctionsMetadata {
         r'serializable': Serializers.instance
             .serialize<_$metadata.Serializable?>(serializable),
       }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
+}
+
+/// Tests that types can be recursively overriden in the serialization protocol
+/// using extension types.
+class CelestFunctionsOverrides {
+  Never _throwError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'CustomException':
+        throw Serializers.instance
+            .deserialize<_$_common.CustomException>($details);
+      case r'CommonException':
+        throw Serializers.instance
+            .deserialize<_$_common.CommonException>($details);
+      case r'OverriddenException':
+        throw Serializers.instance
+            .deserialize<_$overrides.OverriddenException>($details);
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<_$_common.NestedParent> commonNestedParent(
+      _$_common.NestedParent parent) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/common-nested-parent'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'parent':
+            Serializers.instance.serialize<_$_common.NestedParent>(parent)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$_common.NestedParent>($body['response']);
+  }
+
+  Future<_$_common.NestedChild> commonNestedChild(
+      _$_common.NestedChild child) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/common-nested-child'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'child': Serializers.instance.serialize<_$_common.NestedChild>(child)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$_common.NestedChild>($body['response']);
+  }
+
+  Future<_$overrides.NestedGrandparent> nestedGrandparent(
+      _$overrides.NestedGrandparent grandparent) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/nested-grandparent'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'grandparent': Serializers.instance
+            .serialize<_$overrides.NestedGrandparent>(grandparent)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$overrides.NestedGrandparent>($body['response']);
+  }
+
+  Future<_$overrides.NestedParent> nestedParent(
+      _$overrides.NestedParent parent) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/nested-parent'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'parent':
+            Serializers.instance.serialize<_$overrides.NestedParent>(parent)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$overrides.NestedParent>($body['response']);
+  }
+
+  Future<_$overrides.NestedChild> nestedChild(
+      _$overrides.NestedChild child) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/nested-child'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'child': Serializers.instance.serialize<_$overrides.NestedChild>(child)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$overrides.NestedChild>($body['response']);
+  }
+
+  Future<void> callsThrowsCommonOverriddenException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri
+          .resolve('/overrides/calls-throws-common-overridden-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
+
+  Future<void> throwsCommonOverriddenException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/throws-common-overridden-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
+
+  Future<void> throwsOverriddenException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/throws-overridden-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return;
+  }
+
+  Future<void> callsThrowsOverriddenException() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/overrides/calls-throws-overridden-exception'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);

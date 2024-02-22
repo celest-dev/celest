@@ -856,55 +856,6 @@ class NotJsonable {
       );
 
       testErrors(
-        name: 'toJson_in_extension',
-        apis: {
-          'greeting.dart': '''
-OnlyFromJson sayHello() => OnlyFromJson();
-''',
-        },
-        models: '''
-class OnlyFromJson {
-  OnlyFromJson();
-  factory OnlyFromJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
-
-  late String _field;
-}
-
-extension on OnlyFromJson {
-  Map<String, dynamic> toJson() => {'field': _field};
-}
-''',
-        errors: [
-          'Private field "_field" is not supported',
-        ],
-      );
-
-      // Tests that the analyzer can handle errors for a function which
-      // imports a class with an error.
-      //
-      // Specifically, tests the [SafeExpand] helper to ensure that spans
-      // are always correctly generated.
-      testErrors(
-        name: 'toJson_in_extension_imported',
-        apis: {
-          'greeting.dart': '''
-OnlyFromJson sayHello() => OnlyFromJson();
-''',
-        },
-        models: '''
-class OnlyFromJson {
-  late String _field;
-}
-''',
-        errors: [
-          allOf([
-            contains('Private field "_field" is not supported'),
-            isNot(contains('late String')),
-          ]),
-        ],
-      );
-
-      testErrors(
         name: 'non_map_from_json',
         apis: {
           'greeting.dart': '''

@@ -3,8 +3,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _$typed_data;
 
+import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/exceptions/overrides.dart' as _$overrides;
 import 'package:celest_backend/models/classes.dart' as _$classes;
 import 'package:celest_backend/models/cycles.dart' as _$cycles;
 import 'package:celest_backend/models/exceptions.dart' as _$exceptions;
@@ -13,6 +15,7 @@ import 'package:celest_backend/models/extension_types.dart'
 import 'package:celest_backend/models/generic_wrappers.dart'
     as _$generic_wrappers;
 import 'package:celest_backend/models/metadata.dart' as _$metadata;
+import 'package:celest_backend/models/overrides.dart' as _$overrides;
 import 'package:celest_backend/models/parameter_types.dart'
     as _$parameter_types;
 import 'package:celest_backend/models/records.dart' as _$records;
@@ -24,6 +27,21 @@ import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
 
 void initSerializers() {
+  Serializers.instance
+      .put(Serializer.define<Record$k7x4l9, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'a': $value.a,
+      r'b': $value.b,
+      r'c': $value.c,
+    },
+    deserialize: ($serialized) {
+      return (
+        a: ($serialized[r'a'] as String),
+        b: ($serialized[r'b'] as String),
+        c: ($serialized[r'c'] as String)
+      );
+    },
+  ));
   Serializers.instance
       .put(Serializer.define<Record$k2phuz, Map<String, Object?>>(
     serialize: ($value) => {
@@ -43,21 +61,6 @@ void initSerializers() {
     },
   ));
   Serializers.instance
-      .put(Serializer.define<Record$k7x4l9, Map<String, Object?>>(
-    serialize: ($value) => {
-      r'a': $value.a,
-      r'b': $value.b,
-      r'c': $value.c,
-    },
-    deserialize: ($serialized) {
-      return (
-        a: ($serialized[r'a'] as String),
-        b: ($serialized[r'b'] as String),
-        c: ($serialized[r'c'] as String)
-      );
-    },
-  ));
-  Serializers.instance
       .put(Serializer.define<Record$rmm4wt, Map<String, Object?>>(
     serialize: ($value) => {
       r'anotherField': $value.anotherField,
@@ -68,6 +71,20 @@ void initSerializers() {
         anotherField: ($serialized[r'anotherField'] as String),
         field: ($serialized[r'field'] as String)
       );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<_$_common.CommonException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return _$_common.CommonException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<_$_common.CustomException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return _$_common.CustomException(($serialized[r'message'] as String));
     },
   ));
   Serializers.instance.put(
@@ -163,6 +180,14 @@ void initSerializers() {
             ..write(': ')
             ..write($serialized[r'$type']))
           .toString());
+    },
+  ));
+  Serializers.instance.put(
+      Serializer.define<_$overrides.OverriddenException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return (_$_common.OverriddenException(($serialized[r'message'] as String))
+          as _$overrides.OverriddenException);
     },
   ));
   Serializers.instance
@@ -738,6 +763,36 @@ void initSerializers() {
           (($serialized?[r'type'] as String?)) ?? null);
     },
   ));
+  Serializers.instance
+      .put(Serializer.define<_$overrides.NestedChild, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(),
+    deserialize: ($serialized) {
+      return _$overrides.NestedChild.fromJson($serialized);
+    },
+  ));
+  Serializers.instance.put(
+      Serializer.define<_$overrides.NestedGrandparent, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'parent':
+          Serializers.instance.serialize<_$_common.NestedParent>($value.parent)
+    },
+    deserialize: ($serialized) {
+      return _$overrides.NestedGrandparent(Serializers.instance
+          .deserialize<_$_common.NestedParent>($serialized[r'parent']));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<_$overrides.NestedParent, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'child':
+          Serializers.instance.serialize<_$_common.NestedChild>($value.child)
+    },
+    deserialize: ($serialized) {
+      return (_$_common.NestedParent(Serializers.instance
+              .deserialize<_$_common.NestedChild>($serialized[r'child']))
+          as _$overrides.NestedParent);
+    },
+  ));
   Serializers.instance.put(
       Serializer.define<_$parameter_types.ComplexClass, Map<String, dynamic>>(
     serialize: ($value) => $value.toJson(),
@@ -1241,19 +1296,6 @@ void initSerializers() {
           $serialized);
     },
   ));
-  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
-  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
-      _$exceptions.ShapeException>());
-  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
-      _$exceptions.BadShapeException>());
-  Serializers.instance.put(Serializer.define<_$sealed_classes.ErrResult<String>,
-      Map<String, Object?>>(
-    serialize: ($value) => {r'error': $value.error},
-    deserialize: ($serialized) {
-      return _$sealed_classes.ErrResult<String>(
-          ($serialized[r'error'] as String));
-    },
-  ));
   Serializers.instance.put(Serializer.define<
       _$sealed_classes.ErrResult<_$sealed_classes.Shape>, Map<String, Object?>>(
     serialize: ($value) => {
@@ -1266,6 +1308,19 @@ void initSerializers() {
           .deserialize<_$sealed_classes.Shape>($serialized[r'error']));
     },
   ));
+  Serializers.instance.put(Serializer.define<_$sealed_classes.ErrResult<String>,
+      Map<String, Object?>>(
+    serialize: ($value) => {r'error': $value.error},
+    deserialize: ($serialized) {
+      return _$sealed_classes.ErrResult<String>(
+          ($serialized[r'error'] as String));
+    },
+  ));
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
+      _$exceptions.ShapeException>());
+  Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer<
+      _$exceptions.BadShapeException>());
   Serializers.instance.put(const ErrResult_T_ShapeSerializer());
   Serializers.instance
       .put(const ErrResult_T_ShapeSerializer<_$sealed_classes.Shape>());
@@ -1285,18 +1340,6 @@ void initSerializers() {
           .deserialize<_$sealed_classes.Shape>($serialized[r'data']));
     },
   ));
-  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer());
-  Serializers.instance.put(
-      const OkResult_E_ShapeExceptionSerializer<_$exceptions.ShapeException>());
-  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer<
-      _$exceptions.BadShapeException>());
-  Serializers.instance.put(const OkResult_T_ShapeSerializer());
-  Serializers.instance
-      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Shape>());
-  Serializers.instance
-      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Circle>());
-  Serializers.instance
-      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Rectangle>());
   Serializers.instance.put(Serializer.define<_$sealed_classes.OkResult<String>,
       Map<String, Object?>>(
     serialize: ($value) => {r'data': $value.data},
@@ -1305,6 +1348,18 @@ void initSerializers() {
           ($serialized[r'data'] as String));
     },
   ));
+  Serializers.instance.put(const OkResult_T_ShapeSerializer());
+  Serializers.instance
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Shape>());
+  Serializers.instance
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Circle>());
+  Serializers.instance
+      .put(const OkResult_T_ShapeSerializer<_$sealed_classes.Rectangle>());
+  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer());
+  Serializers.instance.put(
+      const OkResult_E_ShapeExceptionSerializer<_$exceptions.ShapeException>());
+  Serializers.instance.put(const OkResult_E_ShapeExceptionSerializer<
+      _$exceptions.BadShapeException>());
   Serializers.instance.put(
       Serializer.define<_$sealed_classes.OkShapeResult, Map<String, Object?>>(
     serialize: ($value) => {
@@ -1354,6 +1409,64 @@ void initSerializers() {
         r'$type': r'RectangleWithOverriddenCustomJson',
         ...$serialized,
       }) as _$sealed_classes.RectangleWithOverriddenCustomJson);
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$sealed_classes.Result<String, _$sealed_classes.Shape>,
+      Map<String, Object?>>(
+    serialize: ($value) {
+      if ($value
+          is _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>) {
+        return {
+          ...(Serializers.instance.serialize<
+                  _$sealed_classes
+                  .SwappedResult<_$sealed_classes.Shape, String>>($value)
+              as Map<String, Object?>),
+          r'$type': r'SwappedResult',
+        };
+      }
+      if ($value is _$sealed_classes.OkResult<String>) {
+        return {
+          ...(Serializers.instance
+                  .serialize<_$sealed_classes.OkResult<String>>($value)
+              as Map<String, Object?>),
+          r'$type': r'OkResult',
+        };
+      }
+      if ($value is _$sealed_classes.ErrResult<_$sealed_classes.Shape>) {
+        return {
+          ...(Serializers.instance
+              .serialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
+                  $value) as Map<String, Object?>),
+          r'$type': r'ErrResult',
+        };
+      }
+      throw SerializationException((StringBuffer('Unknown subtype of ')
+            ..write(r'Result')
+            ..write(': ')
+            ..write($value.runtimeType))
+          .toString());
+    },
+    deserialize: ($serialized) {
+      if ($serialized[r'$type'] == r'SwappedResult') {
+        return Serializers.instance.deserialize<
+            _$sealed_classes
+            .SwappedResult<_$sealed_classes.Shape, String>>($serialized);
+      }
+      if ($serialized[r'$type'] == r'OkResult') {
+        return Serializers.instance
+            .deserialize<_$sealed_classes.OkResult<String>>($serialized);
+      }
+      if ($serialized[r'$type'] == r'ErrResult') {
+        return Serializers.instance
+            .deserialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
+                $serialized);
+      }
+      throw SerializationException((StringBuffer('Unknown subtype of ')
+            ..write(r'Result')
+            ..write(': ')
+            ..write($serialized[r'$type']))
+          .toString());
     },
   ));
   Serializers.instance.put(Serializer.define<
@@ -1414,19 +1527,6 @@ void initSerializers() {
           .toString());
     },
   ));
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.ShapeException, _$sealed_classes.Shape>());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.ShapeException, _$sealed_classes.Circle>());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.ShapeException, _$sealed_classes.Rectangle>());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.BadShapeException, _$sealed_classes.Shape>());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.BadShapeException, _$sealed_classes.Circle>());
-  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
-      _$exceptions.BadShapeException, _$sealed_classes.Rectangle>());
   Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer());
   Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
       _$sealed_classes.Shape, _$exceptions.ShapeException>());
@@ -1440,64 +1540,19 @@ void initSerializers() {
       _$sealed_classes.Rectangle, _$exceptions.ShapeException>());
   Serializers.instance.put(const Result_T_Shape_E_ShapeExceptionSerializer<
       _$sealed_classes.Rectangle, _$exceptions.BadShapeException>());
-  Serializers.instance.put(Serializer.define<
-      _$sealed_classes.Result<String, _$sealed_classes.Shape>,
-      Map<String, Object?>>(
-    serialize: ($value) {
-      if ($value
-          is _$sealed_classes.SwappedResult<_$sealed_classes.Shape, String>) {
-        return {
-          ...(Serializers.instance.serialize<
-                  _$sealed_classes
-                  .SwappedResult<_$sealed_classes.Shape, String>>($value)
-              as Map<String, Object?>),
-          r'$type': r'SwappedResult',
-        };
-      }
-      if ($value is _$sealed_classes.OkResult<String>) {
-        return {
-          ...(Serializers.instance
-                  .serialize<_$sealed_classes.OkResult<String>>($value)
-              as Map<String, Object?>),
-          r'$type': r'OkResult',
-        };
-      }
-      if ($value is _$sealed_classes.ErrResult<_$sealed_classes.Shape>) {
-        return {
-          ...(Serializers.instance
-              .serialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
-                  $value) as Map<String, Object?>),
-          r'$type': r'ErrResult',
-        };
-      }
-      throw SerializationException((StringBuffer('Unknown subtype of ')
-            ..write(r'Result')
-            ..write(': ')
-            ..write($value.runtimeType))
-          .toString());
-    },
-    deserialize: ($serialized) {
-      if ($serialized[r'$type'] == r'SwappedResult') {
-        return Serializers.instance.deserialize<
-            _$sealed_classes
-            .SwappedResult<_$sealed_classes.Shape, String>>($serialized);
-      }
-      if ($serialized[r'$type'] == r'OkResult') {
-        return Serializers.instance
-            .deserialize<_$sealed_classes.OkResult<String>>($serialized);
-      }
-      if ($serialized[r'$type'] == r'ErrResult') {
-        return Serializers.instance
-            .deserialize<_$sealed_classes.ErrResult<_$sealed_classes.Shape>>(
-                $serialized);
-      }
-      throw SerializationException((StringBuffer('Unknown subtype of ')
-            ..write(r'Result')
-            ..write(': ')
-            ..write($serialized[r'$type']))
-          .toString());
-    },
-  ));
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.ShapeException, _$sealed_classes.Rectangle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Shape>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Circle>());
+  Serializers.instance.put(const Result_E_ShapeException_T_ShapeSerializer<
+      _$exceptions.BadShapeException, _$sealed_classes.Rectangle>());
   Serializers.instance
       .put(Serializer.define<_$sealed_classes.Shape, Map<String, Object?>>(
     serialize: ($value) {
@@ -1777,6 +1832,26 @@ void initSerializers() {
     ),
     const TypeToken<JsonValue>('JsonValue'),
   );
+  Serializers.instance
+      .put(Serializer.define<_$ilist.IList<_$ilist.IList<Uri>>, dynamic>(
+    serialize: ($value) => $value.toJson(
+        (value) => Serializers.instance.serialize<_$ilist.IList<Uri>>(value)),
+    deserialize: ($serialized) {
+      return _$ilist.IList<_$ilist.IList<Uri>>.fromJson(
+        $serialized,
+        (value) => Serializers.instance.deserialize<_$ilist.IList<Uri>>(value),
+      );
+    },
+  ));
+  Serializers.instance.put(Serializer.define<_$ilist.IList<String>, dynamic>(
+    serialize: ($value) => $value.toJson((value) => value),
+    deserialize: ($serialized) {
+      return _$ilist.IList<String>.fromJson(
+        $serialized,
+        (value) => (value as String),
+      );
+    },
+  ));
   Serializers.instance.put(Serializer.define<_$ilist.IList<Uri>, dynamic>(
     serialize: ($value) =>
         $value.toJson((value) => Serializers.instance.serialize<Uri>(value)),
@@ -1784,6 +1859,19 @@ void initSerializers() {
       return _$ilist.IList<Uri>.fromJson(
         $serialized,
         (value) => Serializers.instance.deserialize<Uri>(value),
+      );
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>, dynamic>(
+    serialize: ($value) => $value.toJson((value) => Serializers.instance
+        .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value)),
+    deserialize: ($serialized) {
+      return _$ilist
+          .IList<_$ilist.IList<_$parameter_types.SimpleClass>>.fromJson(
+        $serialized,
+        (value) => Serializers.instance
+            .deserialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value),
       );
     },
   ));
@@ -1806,98 +1894,6 @@ void initSerializers() {
     deserialize: ($serialized) {
       return _$ilist.IList<_$ilist.IList<String>>.fromJson(
         $serialized,
-        (value) =>
-            Serializers.instance.deserialize<_$ilist.IList<String>>(value),
-      );
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<_$ilist.IList<_$ilist.IList<Uri>>, dynamic>(
-    serialize: ($value) => $value.toJson(
-        (value) => Serializers.instance.serialize<_$ilist.IList<Uri>>(value)),
-    deserialize: ($serialized) {
-      return _$ilist.IList<_$ilist.IList<Uri>>.fromJson(
-        $serialized,
-        (value) => Serializers.instance.deserialize<_$ilist.IList<Uri>>(value),
-      );
-    },
-  ));
-  Serializers.instance.put(Serializer.define<
-      _$ilist.IList<_$ilist.IList<_$parameter_types.SimpleClass>>, dynamic>(
-    serialize: ($value) => $value.toJson((value) => Serializers.instance
-        .serialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value)),
-    deserialize: ($serialized) {
-      return _$ilist
-          .IList<_$ilist.IList<_$parameter_types.SimpleClass>>.fromJson(
-        $serialized,
-        (value) => Serializers.instance
-            .deserialize<_$ilist.IList<_$parameter_types.SimpleClass>>(value),
-      );
-    },
-  ));
-  Serializers.instance.put(Serializer.define<_$ilist.IList<String>, dynamic>(
-    serialize: ($value) => $value.toJson((value) => value),
-    deserialize: ($serialized) {
-      return _$ilist.IList<String>.fromJson(
-        $serialized,
-        (value) => (value as String),
-      );
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<_$imap.IMap<String, String>, Map<String, Object?>>(
-    serialize: ($value) => $value.toJson(
-      (value) => value,
-      (value) => value,
-    ),
-    deserialize: ($serialized) {
-      return _$imap.IMap<String, String>.fromJson(
-        $serialized,
-        (value) => (value as String),
-        (value) => (value as String),
-      );
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<_$imap.IMap<String, Uri>, Map<String, Object?>>(
-    serialize: ($value) => $value.toJson(
-      (value) => value,
-      (value) => Serializers.instance.serialize<Uri>(value),
-    ),
-    deserialize: ($serialized) {
-      return _$imap.IMap<String, Uri>.fromJson(
-        $serialized,
-        (value) => (value as String),
-        (value) => Serializers.instance.deserialize<Uri>(value),
-      );
-    },
-  ));
-  Serializers.instance.put(Serializer.define<
-      _$imap.IMap<String, _$parameter_types.SimpleClass>, Map<String, Object?>>(
-    serialize: ($value) => $value.toJson(
-      (value) => value,
-      (value) =>
-          Serializers.instance.serialize<_$parameter_types.SimpleClass>(value),
-    ),
-    deserialize: ($serialized) {
-      return _$imap.IMap<String, _$parameter_types.SimpleClass>.fromJson(
-        $serialized,
-        (value) => (value as String),
-        (value) => Serializers.instance
-            .deserialize<_$parameter_types.SimpleClass>(value),
-      );
-    },
-  ));
-  Serializers.instance.put(Serializer.define<
-      _$imap.IMap<String, _$ilist.IList<String>>, Map<String, Object?>>(
-    serialize: ($value) => $value.toJson(
-      (value) => value,
-      (value) => Serializers.instance.serialize<_$ilist.IList<String>>(value),
-    ),
-    deserialize: ($serialized) {
-      return _$imap.IMap<String, _$ilist.IList<String>>.fromJson(
-        $serialized,
-        (value) => (value as String),
         (value) =>
             Serializers.instance.deserialize<_$ilist.IList<String>>(value),
       );
@@ -1935,19 +1931,17 @@ void initSerializers() {
       );
     },
   ));
-  Serializers.instance.put(Serializer.define<
-      _$imap.IMap<String, _$imap.IMap<String, String>>, Map<String, Object?>>(
+  Serializers.instance
+      .put(Serializer.define<_$imap.IMap<String, String>, Map<String, Object?>>(
     serialize: ($value) => $value.toJson(
       (value) => value,
-      (value) =>
-          Serializers.instance.serialize<_$imap.IMap<String, String>>(value),
+      (value) => value,
     ),
     deserialize: ($serialized) {
-      return _$imap.IMap<String, _$imap.IMap<String, String>>.fromJson(
+      return _$imap.IMap<String, String>.fromJson(
         $serialized,
         (value) => (value as String),
-        (value) => Serializers.instance
-            .deserialize<_$imap.IMap<String, String>>(value),
+        (value) => (value as String),
       );
     },
   ));
@@ -1968,6 +1962,38 @@ void initSerializers() {
     },
   ));
   Serializers.instance.put(Serializer.define<
+      _$imap.IMap<String, _$imap.IMap<String, String>>, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(
+      (value) => value,
+      (value) =>
+          Serializers.instance.serialize<_$imap.IMap<String, String>>(value),
+    ),
+    deserialize: ($serialized) {
+      return _$imap.IMap<String, _$imap.IMap<String, String>>.fromJson(
+        $serialized,
+        (value) => (value as String),
+        (value) => Serializers.instance
+            .deserialize<_$imap.IMap<String, String>>(value),
+      );
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$imap.IMap<String, _$parameter_types.SimpleClass>, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(
+      (value) => value,
+      (value) =>
+          Serializers.instance.serialize<_$parameter_types.SimpleClass>(value),
+    ),
+    deserialize: ($serialized) {
+      return _$imap.IMap<String, _$parameter_types.SimpleClass>.fromJson(
+        $serialized,
+        (value) => (value as String),
+        (value) => Serializers.instance
+            .deserialize<_$parameter_types.SimpleClass>(value),
+      );
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
       _$imap.IMap<String, _$imap.IMap<String, _$parameter_types.SimpleClass>>,
       Map<String, Object?>>(
     serialize: ($value) => $value.toJson(
@@ -1983,6 +2009,35 @@ void initSerializers() {
         (value) => Serializers.instance
             .deserialize<_$imap.IMap<String, _$parameter_types.SimpleClass>>(
                 value),
+      );
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$imap.IMap<String, _$ilist.IList<String>>, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(
+      (value) => value,
+      (value) => Serializers.instance.serialize<_$ilist.IList<String>>(value),
+    ),
+    deserialize: ($serialized) {
+      return _$imap.IMap<String, _$ilist.IList<String>>.fromJson(
+        $serialized,
+        (value) => (value as String),
+        (value) =>
+            Serializers.instance.deserialize<_$ilist.IList<String>>(value),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<_$imap.IMap<String, Uri>, Map<String, Object?>>(
+    serialize: ($value) => $value.toJson(
+      (value) => value,
+      (value) => Serializers.instance.serialize<Uri>(value),
+    ),
+    deserialize: ($serialized) {
+      return _$imap.IMap<String, Uri>.fromJson(
+        $serialized,
+        (value) => (value as String),
+        (value) => Serializers.instance.deserialize<Uri>(value),
       );
     },
   ));

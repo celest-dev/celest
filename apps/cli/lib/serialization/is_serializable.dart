@@ -138,13 +138,14 @@ final class SerializationSpec {
     required this.wireType,
     code_builder.Reference? castType,
     this.fields = const [],
+    required this.wireConstructor,
     this.constructorParameters = const [],
     this.fromJsonParameters = const [],
     required this.fromJsonType,
-    required DartType? toJsonType,
-    this.representationType,
+    required this.toJsonType,
+    SerializationSpec? representationType,
   })  : castType = castType ?? wireType,
-        _toJsonType = toJsonType;
+        _representationType = representationType;
 
   final DartType type;
 
@@ -160,6 +161,7 @@ final class SerializationSpec {
 
   final List<FieldSpec> fields;
 
+  final ConstructorElement? wireConstructor;
   final List<ParameterSpec> constructorParameters;
   final List<ParameterSpec> fromJsonParameters;
 
@@ -167,37 +169,33 @@ final class SerializationSpec {
       fromJsonType == null ? constructorParameters : fromJsonParameters;
 
   final DartType? fromJsonType;
-  final DartType? _toJsonType;
-
-  bool get hasFromJson => fromJsonType != null;
-
-  bool get hasToJson {
-    var hasToJson = _toJsonType != null;
-    var parent = this.parent;
-    while (parent != null) {
-      hasToJson |= parent._toJsonType != null;
-      parent = parent.parent;
-    }
-    return hasToJson;
-  }
+  final DartType? toJsonType;
 
   SerializationSpec? parent;
   final List<SerializationSpec> subtypes = [];
-  SerializationSpec? representationType;
+  SerializationSpec? _representationType;
+  SerializationSpec get representationType => _representationType ?? this;
 
-  bool get isExtensionType => representationType != null;
+  bool get isExtensionType => _representationType != null;
 
   SerializationSpec get erased {
+    // Extension types are never erased. They either override another type or
+    // have their own unique global identity. In either case, they retain their
+    // identity for the purpose of serialization.
+    if (isExtensionType) {
+      return this;
+    }
     final erased = SerializationSpec(
       type: type,
       wireType: type.defaultWireType?.let(typeHelper.toReference) ?? wireType,
       castType: type.defaultWireType?.let(typeHelper.toReference) ?? castType,
       fields: fields,
+      wireConstructor: wireConstructor,
       constructorParameters: constructorParameters,
       fromJsonParameters: const [],
       toJsonType: null,
       fromJsonType: null,
-      representationType: representationType,
+      representationType: _representationType,
     );
     for (final subtype in subtypes) {
       erased.subtypes.add(subtype.erased);
@@ -220,6 +218,7 @@ final class SerializationSpec {
         wireType: wireType ?? this.wireType,
         castType: castType ?? this.castType,
         fields: fields ?? this.fields,
+        wireConstructor: wireConstructor,
         constructorParameters:
             constructorParameters ?? this.constructorParameters,
         fromJsonParameters: fromJsonParameters ?? this.fromJsonParameters,
@@ -231,9 +230,9 @@ final class SerializationSpec {
         toJsonType: switch (toJsonType) {
           null => null,
           final DartType type => type,
-          _ => _toJsonType,
+          _ => this.toJsonType,
         },
-        representationType: representationType,
+        representationType: _representationType,
       );
 
   @override
@@ -249,11 +248,11 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>()
             .equals(fromJsonParameters, other.fromJsonParameters) &&
         const DartTypeEquality().equals(fromJsonType, other.fromJsonType) &&
-        const DartTypeEquality().equals(_toJsonType, other._toJsonType) &&
+        const DartTypeEquality().equals(toJsonType, other.toJsonType) &&
         parent?.type == other.parent?.type &&
         const ListEquality<SerializationSpec>()
             .equals(subtypes, other.subtypes) &&
-        representationType == other.representationType;
+        _representationType == other._representationType;
   }
 
   @override
@@ -265,10 +264,10 @@ final class SerializationSpec {
         const ListEquality<ParameterSpec>().hash(constructorParameters),
         const ListEquality<ParameterSpec>().hash(fromJsonParameters),
         const DartTypeEquality().hash(fromJsonType),
-        const DartTypeEquality().hash(_toJsonType),
+        const DartTypeEquality().hash(toJsonType),
         parent == null ? null : const DartTypeEquality().hash(parent!.type),
         const ListEquality<SerializationSpec>().hash(subtypes),
-        representationType,
+        _representationType,
       );
 }
 
@@ -592,7 +591,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     ExtensionTypeElement element,
   ) {
     final erasureType = type.extensionTypeErasure;
-    var erasureVerdict = typeHelper.isSerializable(erasureType);
+    // Do not go through type helper since it will swap out `erasureType` for
+    // the extension type override (`type`) if there is one, causing stack overflow.
+    var erasureVerdict = erasureType.accept(this);
     // If it's a no but only because it is not allowed as a raw JSON type, then
     // allow it if it's a JsonX type from package:celest.
     if (erasureVerdict is VerdictNo) {
@@ -619,17 +620,18 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             VerdictYes(:final primarySpec!, :final additionalSpecs) =>
               Verdict.yes(
                 primarySpec: primarySpec
-                  ..representationType = erasurePrimaySpec,
+                  .._representationType = erasurePrimaySpec.erased,
                 additionalSpecs: {
                   // Create a representation type spec which has no fromJson/toJson
                   // methods but which carries the correct wire type.
-                  erasurePrimaySpec.copyWith(
-                    wireType: primarySpec.wireType,
-                    castType: primarySpec.castType,
-                    toJsonType: null,
-                    fromJsonType: null,
-                    fromJsonParameters: const [],
-                  ),
+                  if (!type.isOverridden)
+                    erasurePrimaySpec.copyWith(
+                      wireType: primarySpec.wireType,
+                      castType: primarySpec.castType,
+                      toJsonType: null,
+                      fromJsonType: null,
+                      fromJsonParameters: const [],
+                    ),
                   ...additionalSpecs.map((spec) => spec.erased),
                   ...erasureVerdict.additionalSpecs.map((spec) => spec.erased),
                 },
@@ -672,6 +674,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                   type: element.representation.type,
                 ),
             ],
+            wireConstructor: constructor,
             constructorParameters: constructor.parameterSpecs,
             fromJsonParameters: fromJsonCtor.parameterSpecs,
             fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
@@ -680,6 +683,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             representationType: SerializationSpec(
               type: erasureType,
               wireType: wireType,
+              wireConstructor: null,
               fromJsonType: null,
               toJsonType: null,
             ),
@@ -733,8 +737,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         const _IsSerializableClass(_TypePosition.parameter),
       );
     }
-    final wireConstructor =
-        type.constructors.singleWhereOrNull((ctor) => ctor.name.isEmpty);
+    final wireConstructor = type.wireConstructor;
     if (wireConstructor == null &&
         fromJsonCtor == null &&
         !type.extensionTypeErasure.isEnum) {
@@ -755,6 +758,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         for (final field in fields)
           FieldSpec(name: field.displayName, type: field.type),
       ],
+      wireConstructor: wireConstructor,
       constructorParameters: wireConstructor.parameterSpecs,
       fromJsonParameters: fromJsonCtor.parameterSpecs,
       fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
@@ -923,6 +927,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
           for (final field in type.namedFields)
             FieldSpec(name: field.name, type: field.type),
         ],
+        wireConstructor: null,
         constructorParameters: [
           for (final field in type.namedFields)
             ParameterSpec(
@@ -1008,15 +1013,6 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     var verdict = const Verdict.yes();
     var fieldsVerdict = const Verdict.yes();
     for (final field in fields) {
-      if (field.isPrivate) {
-        fieldsVerdict &= Verdict.no(
-          'Private field "${field.displayName}" is not supported in a class '
-          'used as a return type. Consider defining custom fromJson/toJson '
-          'methods or making the field public.',
-          location: field.sourceLocation,
-        );
-        continue;
-      }
       if (const DartTypeEquality().equals(type, field.type)) {
         fieldsVerdict &= Verdict.no(
           'Classes are not allowed to have fields of their own type.',
@@ -1037,42 +1033,10 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     if (position == _TypePosition.return$) {
       verdict &= fieldsVerdict;
     }
-    var constructorVerdict = const Verdict.yes();
-    final unnamedConstructor = type.constructors.firstWhereOrNull((ctor) {
-      if (ctor.name.isNotEmpty) {
-        return false;
-      }
-      final parameters = ctor.parameters;
-      for (final parameter in parameters) {
-        FieldElement? fieldFormal(ParameterElement param) {
-          return switch (param) {
-            FieldFormalParameterElement(:final field?) => field,
-            SuperFormalParameterElement(:final superConstructorParameter?) =>
-              fieldFormal(superConstructorParameter),
-            _ => fields.firstWhereOrNull((field) => field.name == param.name),
-          };
-        }
 
-        final parameterField = fieldFormal(parameter);
-        if (parameterField == null) {
-          constructorVerdict &= Verdict.no(
-            'Constructor parameter "${parameter.displayName}" is not '
-            'supported.',
-            location: parameter.sourceLocation,
-          );
-          return false;
-        }
-        if (fields.none((f) => f.name == parameterField.name)) {
-          constructorVerdict &= Verdict.no(
-            'Constructor parameter "${parameter.displayName}" is not '
-            'a field of the class ${element.displayName}.',
-            location: parameter.sourceLocation,
-          );
-          return false;
-        }
-      }
-      return true;
-    });
+    final unnamedConstructor = type.wireConstructor;
+    var constructorVerdict = const Verdict.yes();
+
     if (unnamedConstructor == null) {
       constructorVerdict &= Verdict.no(
         'Class ${element.displayName} must have an unnamed constructor with '
@@ -1087,7 +1051,41 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         'or fromJson factory constructor to be used.',
         location: element.sourceLocation,
       );
+    } else {
+      final parameters = unnamedConstructor.parameters;
+      for (final parameter in parameters) {
+        FieldElement? fieldFormal(ParameterElement param) {
+          return switch (param) {
+            FieldFormalParameterElement(:final field?) => field,
+            SuperFormalParameterElement(:final superConstructorParameter?) =>
+              fieldFormal(superConstructorParameter),
+            _ => fields.firstWhereOrNull((field) => field.name == param.name),
+          };
+        }
+
+        final parameterField = fieldFormal(parameter);
+        if (parameterField == null && parameter.isRequired) {
+          constructorVerdict &= Verdict.no(
+            'Required parameter "${parameter.displayName}" cannot be '
+            'populated because it has no matching fields. Available fields: '
+            '${fields.map((field) => field.name).join(', ')}',
+            location: parameter.sourceLocation,
+          );
+          continue;
+        }
+
+        final hasField = fields.any((field) => field.name == parameter.name);
+        if (!hasField) {
+          constructorVerdict &= Verdict.no(
+            'Constructor parameter "${parameter.displayName}" is not '
+            'a field of the class ${element.displayName}.',
+            location: parameter.sourceLocation,
+          );
+          continue;
+        }
+      }
     }
+
     if (position == _TypePosition.parameter) {
       verdict &= constructorVerdict;
     }
@@ -1139,6 +1137,21 @@ extension on InterfaceType {
 
   DartType get wireType => toJsonMethod?.returnType ?? defaultWireType!;
 
+  ConstructorElement? get wireConstructor {
+    if (!isOverridden) {
+      return constructors.firstWhereOrNull((ctor) => ctor.name.isEmpty);
+    }
+    ConstructorElement? unnamedConstructor;
+    final overriddenAs = asOverriden.element as ExtensionTypeElement;
+    unnamedConstructor = overriddenAs.constructors.firstWhereOrNull(
+      (ctor) => ctor.name.isEmpty && ctor != overriddenAs.primaryConstructor,
+    );
+    final representationElement = extensionTypeErasure.element as ClassElement;
+    unnamedConstructor ??= representationElement.constructors
+        .firstWhereOrNull((ctor) => ctor.name.isEmpty);
+    return unnamedConstructor;
+  }
+
   InterfaceMembers get interfaceMembers {
     switch (element) {
       case EnumElement():
@@ -1151,11 +1164,13 @@ extension on InterfaceType {
       case MixinElement():
         unreachable('Mixins are not supported');
       case final ClassElement element:
+        final serializedType =
+            isOverridden ? asOverriden as InterfaceType : this;
         return (
           fields: element.sortedFields(this),
-          toJsonMethod: toJsonMethod,
-          fromJsonCtor: fromJsonCtor,
-          wireType: wireType,
+          toJsonMethod: serializedType.toJsonMethod,
+          fromJsonCtor: serializedType.fromJsonCtor,
+          wireType: serializedType.wireType,
         );
       case final ExtensionTypeElement element:
         final representationType = extensionTypeErasure;
@@ -1163,7 +1178,12 @@ extension on InterfaceType {
           unreachable('Extension type erasure is not an interface type');
         }
         final members = (
-          fields: [element.representation],
+          fields: [
+            // if (isOverridden)
+            //   ...(representationType.element as ClassElement).sortedFields(this)
+            // else
+            element.representation,
+          ],
           toJsonMethod: toJsonMethod,
           fromJsonCtor: fromJsonCtor,
           wireType: wireType,
@@ -1202,7 +1222,7 @@ extension on ClassElement {
           .fields
           // Note: Unlike `json_serializable` we do not support synthetic fields,
           // i.e. those fields which are synthesized from getters/setters.
-          .where((e) => !e.isStatic && !e.isSynthetic)
+          .where((e) => !e.isStatic && !e.isSynthetic && !e.isPrivate)
           .map((e) {
         final member = inheritanceManager.getMember(
           type,
@@ -1231,6 +1251,10 @@ extension on ClassElement {
         continue;
       }
 
+      if (v.isPrivate) {
+        continue;
+      }
+
       if (v is PropertyAccessorElement && v.isGetter) {
         assert(v.variable is FieldElement);
         final variable = v.variable as FieldElement;
@@ -1244,12 +1268,33 @@ extension on ClassElement {
       }
     }
 
+    final overriddenFields = <String, FieldElement>{};
+
+    if (thisType.isOverridden) {
+      final extensionType = thisType.asOverriden;
+      assert(extensionType.isExtensionType);
+      final overrideElement = extensionType.element as ExtensionTypeElement;
+      for (final field in overrideElement.fields) {
+        if (field.isStatic) {
+          continue;
+        }
+        assert(!overriddenFields.containsKey(field.name));
+        overriddenFields[field.name] = field;
+      }
+    }
+
     // Get the list of all fields for `element`
     final allFields =
         elementInstanceFields.keys.toSet().union(inheritedFields.keys.toSet());
 
     final fields = allFields
-        .map((e) => _FieldSet(elementInstanceFields[e], inheritedFields[e]))
+        .map(
+          (e) => _FieldSet(
+            overriddenFields[e],
+            elementInstanceFields[e],
+            inheritedFields[e],
+          ),
+        )
         .toList()
       ..sort();
 
@@ -1258,9 +1303,13 @@ extension on ClassElement {
 }
 
 class _FieldSet implements Comparable<_FieldSet> {
-  factory _FieldSet(FieldElement? classField, FieldElement? superField) {
-    // At least one of these will != null, perhaps both.
-    final fields = [classField, superField].nonNulls.toList();
+  factory _FieldSet(
+    FieldElement? overrideField,
+    FieldElement? classField,
+    FieldElement? superField,
+  ) {
+    // At least one of these will != null, perhaps all.
+    final fields = [overrideField, classField, superField].nonNulls.toList();
 
     // Prefer the class field over the inherited field when sorting.
     final sortField = fields.first;

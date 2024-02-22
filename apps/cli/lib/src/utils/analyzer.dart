@@ -161,7 +161,17 @@ extension DartTypeHelper on DartType {
     return true;
   }
 
+  /// Whether this type is overridden by a custom `@override` extension type.
+  bool get isOverridden =>
+      typeHelper.overrides.containsKey(extensionTypeErasure);
+
+  DartType get asOverriden =>
+      typeHelper.overrides[extensionTypeErasure] ?? this;
+
   codegen.Expression? get typeToken {
+    if (isOverridden) {
+      return null;
+    }
     if (element case final ExtensionTypeElement extensionType) {
       return DartTypes.celest.typeToken.constInstance(
         [codegen.literalString(extensionType.name)],

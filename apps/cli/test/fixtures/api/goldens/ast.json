@@ -13227,6 +13227,485 @@
         "text": ""
       }
     },
+    "overrides": {
+      "name": "overrides",
+      "metadata": [],
+      "functions": {
+        "commonNestedParent": {
+          "name": "commonNestedParent",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedParent",
+                "url": "package:_common/_common.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 464,
+                  "uri": "overrides.dart",
+                  "line": 11,
+                  "column": 59
+                },
+                "end": {
+                  "offset": 470,
+                  "uri": "overrides.dart",
+                  "line": 11,
+                  "column": 65
+                },
+                "text": "parent"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:_common/_common.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:_common/_common.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 425,
+              "uri": "overrides.dart",
+              "line": 11,
+              "column": 20
+            },
+            "end": {
+              "offset": 443,
+              "uri": "overrides.dart",
+              "line": 11,
+              "column": 38
+            },
+            "text": "commonNestedParent"
+          }
+        },
+        "commonNestedChild": {
+          "name": "commonNestedChild",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "child",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedChild",
+                "url": "package:_common/_common.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 539,
+                  "uri": "overrides.dart",
+                  "line": 12,
+                  "column": 56
+                },
+                "end": {
+                  "offset": 544,
+                  "uri": "overrides.dart",
+                  "line": 12,
+                  "column": 61
+                },
+                "text": "child"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedChild",
+            "url": "package:_common/_common.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedChild",
+            "url": "package:_common/_common.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 502,
+              "uri": "overrides.dart",
+              "line": 12,
+              "column": 19
+            },
+            "end": {
+              "offset": 519,
+              "uri": "overrides.dart",
+              "line": 12,
+              "column": 36
+            },
+            "text": "commonNestedChild"
+          }
+        },
+        "nestedGrandparent": {
+          "name": "nestedGrandparent",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "grandparent",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedGrandparent",
+                "url": "package:celest_backend/models/overrides.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 610,
+                  "uri": "overrides.dart",
+                  "line": 13,
+                  "column": 54
+                },
+                "end": {
+                  "offset": 621,
+                  "uri": "overrides.dart",
+                  "line": 13,
+                  "column": 65
+                },
+                "text": "grandparent"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedGrandparent",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedGrandparent",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 574,
+              "uri": "overrides.dart",
+              "line": 13,
+              "column": 18
+            },
+            "end": {
+              "offset": 591,
+              "uri": "overrides.dart",
+              "line": 13,
+              "column": 35
+            },
+            "text": "nestedGrandparent"
+          }
+        },
+        "nestedParent": {
+          "name": "nestedParent",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedParent",
+                "url": "package:celest_backend/models/overrides.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 682,
+                  "uri": "overrides.dart",
+                  "line": 15,
+                  "column": 39
+                },
+                "end": {
+                  "offset": 688,
+                  "uri": "overrides.dart",
+                  "line": 15,
+                  "column": 45
+                },
+                "text": "parent"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedParent",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 656,
+              "uri": "overrides.dart",
+              "line": 15,
+              "column": 13
+            },
+            "end": {
+              "offset": 668,
+              "uri": "overrides.dart",
+              "line": 15,
+              "column": 25
+            },
+            "text": "nestedParent"
+          }
+        },
+        "nestedChild": {
+          "name": "nestedChild",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "child",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "NestedChild",
+                "url": "package:celest_backend/models/overrides.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 737,
+                  "uri": "overrides.dart",
+                  "line": 16,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 742,
+                  "uri": "overrides.dart",
+                  "line": 16,
+                  "column": 41
+                },
+                "text": "child"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "NestedChild",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "NestedChild",
+            "url": "package:celest_backend/models/overrides.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 713,
+              "uri": "overrides.dart",
+              "line": 16,
+              "column": 12
+            },
+            "end": {
+              "offset": 724,
+              "uri": "overrides.dart",
+              "line": 16,
+              "column": 23
+            },
+            "text": "nestedChild"
+          }
+        },
+        "callsThrowsCommonOverriddenException": {
+          "name": "callsThrowsCommonOverriddenException",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 760,
+              "uri": "overrides.dart",
+              "line": 18,
+              "column": 5
+            },
+            "end": {
+              "offset": 796,
+              "uri": "overrides.dart",
+              "line": 18,
+              "column": 41
+            },
+            "text": "callsThrowsCommonOverriddenException"
+          }
+        },
+        "throwsCommonOverriddenException": {
+          "name": "throwsCommonOverriddenException",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 847,
+              "uri": "overrides.dart",
+              "line": 22,
+              "column": 5
+            },
+            "end": {
+              "offset": 878,
+              "uri": "overrides.dart",
+              "line": 22,
+              "column": 36
+            },
+            "text": "throwsCommonOverriddenException"
+          }
+        },
+        "throwsOverriddenException": {
+          "name": "throwsOverriddenException",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 938,
+              "uri": "overrides.dart",
+              "line": 26,
+              "column": 5
+            },
+            "end": {
+              "offset": 963,
+              "uri": "overrides.dart",
+              "line": 26,
+              "column": 30
+            },
+            "text": "throwsOverriddenException"
+          }
+        },
+        "callsThrowsOverriddenException": {
+          "name": "callsThrowsOverriddenException",
+          "apiName": "overrides",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1044,
+              "uri": "overrides.dart",
+              "line": 30,
+              "column": 5
+            },
+            "end": {
+              "offset": 1074,
+              "uri": "overrides.dart",
+              "line": 30,
+              "column": 35
+            },
+            "text": "callsThrowsOverriddenException"
+          }
+        }
+      },
+      "docs": [
+        "/// Tests that types can be recursively overriden in the serialization protocol",
+        "/// using extension types."
+      ],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CustomException",
+          "url": "package:_common/_common.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CommonException",
+          "url": "package:_common/_common.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OverriddenException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "overrides.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "overrides.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
     "classes": {
       "name": "classes",
       "metadata": [],

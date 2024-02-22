@@ -16,6 +16,20 @@ final class CallsThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
     try {
       _i2.callsThrowsCustomException();
       return (statusCode: 200, body: {'response': null});
+    } on _i3.OverriddenException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i3.OverriddenException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'OverriddenException',
+            'details': error,
+          }
+        }
+      );
     } on _i3.CommonException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
@@ -59,6 +73,13 @@ final class CallsThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
         return _i3.CustomException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i3.OverriddenException, String>(
+      serialize: ($value) => $value.toJson(),
+      deserialize: ($serialized) {
+        return _i3.OverriddenException.fromJson($serialized);
       },
     ));
   }

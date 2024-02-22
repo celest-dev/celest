@@ -27,3 +27,42 @@ void throwsCustomException() {
 void throwsCommonException() {
   throw CommonException('message');
 }
+
+final class NestedParent {
+  const NestedParent(this.child);
+
+  factory NestedParent.fromJson(String value) =>
+      NestedParent(NestedChild(value));
+
+  final NestedChild child;
+
+  String toJson() => child.value;
+}
+
+final class NestedChild {
+  const NestedChild(this.value);
+
+  factory NestedChild.fromJson(String value) => NestedChild(value);
+
+  final String value;
+
+  String toJson() => value;
+}
+
+final class OverriddenException implements Exception {
+  const OverriddenException(this.message);
+
+  factory OverriddenException.fromJson(String value) =>
+      OverriddenException(value);
+
+  final String message;
+
+  String toJson() => message;
+
+  @override
+  String toString() => 'OverriddenException: $message';
+}
+
+void throwsOverriddenException() {
+  throw OverriddenException('message');
+}

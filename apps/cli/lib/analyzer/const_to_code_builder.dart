@@ -12,7 +12,7 @@ extension ConstToCodeBuilder on DartObject {
     return visitor.visit(this as DartObjectImpl);
   }
 
-  Expression get toCodeBuilder => accept(const _ConstToCodeBuilder());
+  Expression? get toCodeBuilder => accept(const _ConstToCodeBuilder());
 }
 
 abstract base class DartObjectVisitor<R> {
@@ -94,7 +94,7 @@ abstract base class DartObjectVisitor<R> {
   R visitVariableReference(VariableElement variable);
 }
 
-final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
+final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   const _ConstToCodeBuilder();
 
   @override
@@ -113,10 +113,10 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
     final constructorEl = invocation.constructor;
     final expressionType = constructorEl.returnType;
     final namedParameters = invocation.namedArguments.map((name, value) {
-      return MapEntry(name, value.toCodeBuilder);
+      return MapEntry(name, value.toCodeBuilder!);
     });
     final positionalParameters =
-        invocation.positionalArguments.map((el) => el.toCodeBuilder);
+        invocation.positionalArguments.map((el) => el.toCodeBuilder!);
     if (constructorEl.name.isNotEmpty) {
       return typeHelper.toReference(expressionType).constInstanceNamed(
             constructorEl.name,
@@ -145,8 +145,9 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression> {
           key.toCodeBuilder: value.toCodeBuilder,
       });
 
+  // TODO(dnys1): -> `null`
   @override
-  Expression visitNullValue() => literalNull;
+  Expression? visitNullValue() => literalNull;
 
   @override
   Expression visitRecordValue(
