@@ -23,8 +23,58 @@ abstract final class Functions {
     functionName: r'throwsAppError',
   );
 
+  static const exceptionsThrowsAppException = CloudFunction(
+    api: r'exceptions',
+    functionName: r'throwsAppException',
+  );
+
+  static const exceptionsThrowsNotYetImplementedError = CloudFunction(
+    api: r'exceptions',
+    functionName: r'throwsNotYetImplementedError',
+  );
+
   static const exceptionsThrowsUserException = CloudFunction(
     api: r'exceptions',
     functionName: r'throwsUserException',
+  );
+
+  static const exceptionsThrowsUserExceptionShowInConsole = CloudFunction(
+    api: r'exceptions',
+    functionName: r'throwsUserException_ShowInConsole',
+  );
+
+  static const exceptionsThrowsValidateError = CloudFunction(
+    api: r'exceptions',
+    functionName: r'throwsValidateError',
+  );
+
+  static const modelsAvailableStock = CloudFunction(
+    api: r'models',
+    functionName: r'availableStock',
+  );
+
+  static const modelsAvailableStocks = CloudFunction(
+    api: r'models',
+    functionName: r'availableStocks',
+  );
+
+  static const modelsCashBalance = CloudFunction(
+    api: r'models',
+    functionName: r'cashBalance',
+  );
+
+  static const modelsPortfolio = CloudFunction(
+    api: r'models',
+    functionName: r'portfolio',
+  );
+
+  static const modelsStock = CloudFunction(
+    api: r'models',
+    functionName: r'stock',
+  );
+
+  static const modelsUi = CloudFunction(
+    api: r'models',
+    functionName: r'ui',
   );
 }

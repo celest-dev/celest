@@ -632,8 +632,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                       fromJsonType: null,
                       fromJsonParameters: const [],
                     ),
-                  ...additionalSpecs.map((spec) => spec.erased),
-                  ...erasureVerdict.additionalSpecs.map((spec) => spec.erased),
+                  ...additionalSpecs,
+                  ...erasureVerdict.additionalSpecs,
                 },
               ),
           };

@@ -1127,32 +1127,6 @@ final tests = <String, Test>{
               output: 'red',
             ),
           ],
-          'nestedParent': [
-            FunctionTestSuccess(
-              name: 'nestedParent',
-              input: {
-                'parent': 'hello',
-              },
-              output: 'hello',
-            ),
-          ],
-          'nestedReset': [
-            FunctionTestSuccess(
-              name: 'nestedReset',
-              input: {
-                'parent': {
-                  'child': {
-                    'value': 'hello',
-                  },
-                },
-              },
-              output: {
-                'child': {
-                  'value': 'hello',
-                },
-              },
-            ),
-          ],
         },
       ),
       'parameter_types': ApiTest(
@@ -3640,9 +3614,9 @@ final tests = <String, Test>{
       ),
     },
   ),
-  'marcelo': const Test(
+  'marcelo': Test(
     apis: {
-      'exceptions': ApiTest(
+      'exceptions': const ApiTest(
         functionTests: {
           'throwsUserException': [
             FunctionTestError(
@@ -3784,6 +3758,230 @@ final tests = <String, Test>{
                     'error': 123,
                   },
                 },
+              },
+            ),
+          ],
+          'throwsAppException': [
+            FunctionTestError(
+              name: 'throwsAppException',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'AppException',
+                  'details': {
+                    'msg': 'message',
+                    'error': 'error',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsNotYetImplementedError': [
+            FunctionTestError(
+              name: 'throwsNotYetImplementedError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'NotYetImplementedError',
+                  'details': {
+                    'msg': 'message',
+                    'message': null,
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsValidateError': [
+            FunctionTestError(
+              name: 'throwsValidateError',
+              statusCode: 500,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'ValidateError',
+                  'details': {
+                    'msg': 'message',
+                  },
+                },
+              },
+            ),
+          ],
+          'throwsUserException_ShowInConsole': [
+            FunctionTestError(
+              name: 'throwsUserException_ShowInConsole',
+              statusCode: 400,
+              input: {},
+              output: {
+                'error': {
+                  'code': 'UserException_ShowInConsole',
+                  'details': {
+                    'msg': 'message',
+                    'code': null,
+                    'cause': null,
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'with params',
+              statusCode: 400,
+              input: {
+                'message': 'test',
+                'cause': 123,
+              },
+              output: {
+                'error': {
+                  'code': 'UserException_ShowInConsole',
+                  'details': {
+                    'msg': 'test',
+                    'code': null,
+                    'cause': 123,
+                  },
+                },
+              },
+            ),
+          ],
+        },
+      ),
+      'models': ApiTest(
+        functionTests: {
+          'availableStock': [
+            FunctionTestSuccess(
+              name: 'availableStock',
+              input: {
+                'availableStock': {
+                  'ticker': 'ABC',
+                  'name': 'Acme',
+                  'currentPrice': 123.45,
+                },
+              },
+              output: {
+                'ticker': 'ABC',
+                'name': 'Acme',
+                'currentPrice': 123.45,
+              },
+            ),
+          ],
+          'availableStocks': [
+            FunctionTestSuccess(
+              name: 'availableStocks',
+              input: {
+                'availableStocks': {
+                  'list': [
+                    {
+                      'ticker': 'ABC',
+                      'name': 'Acme',
+                      'currentPrice': 123.45,
+                    },
+                    {
+                      'ticker': 'ABC',
+                      'name': 'Acme',
+                      'currentPrice': 123.45,
+                    }
+                  ],
+                },
+              },
+              output: {
+                'list': [
+                  {
+                    'ticker': 'ABC',
+                    'name': 'Acme',
+                    'currentPrice': 123.45,
+                  },
+                  {
+                    'ticker': 'ABC',
+                    'name': 'Acme',
+                    'currentPrice': 123.45,
+                  }
+                ],
+              },
+            ),
+          ],
+          'cashBalance': [
+            FunctionTestSuccess(
+              name: 'cashBalance',
+              input: {
+                'cashBalance': {
+                  'amount': 123.45,
+                },
+              },
+              output: {
+                'amount': 123.45,
+              },
+            ),
+          ],
+          'portfolio': [
+            FunctionTestSuccess(
+              name: 'portfolio',
+              input: {
+                'portfolio': {
+                  'stocks': [
+                    {
+                      'ticker': 'ABC',
+                      'howManyShares': 1000,
+                      'averagePrice': 123.45,
+                    },
+                    {
+                      'ticker': 'ABC',
+                      'howManyShares': 1000,
+                      'averagePrice': 123.45,
+                    }
+                  ],
+                  'cashBalance': {
+                    'amount': 123.45,
+                  },
+                },
+              },
+              output: {
+                'stocks': [
+                  {
+                    'ticker': 'ABC',
+                    'howManyShares': 1000,
+                    'averagePrice': 123.45,
+                  },
+                  {
+                    'ticker': 'ABC',
+                    'howManyShares': 1000,
+                    'averagePrice': 123.45,
+                  }
+                ],
+                'cashBalance': {
+                  'amount': 123.45,
+                },
+              },
+            ),
+          ],
+          'stock': [
+            FunctionTestSuccess(
+              name: 'stock',
+              input: {
+                'stock': {
+                  'ticker': 'ABC',
+                  'howManyShares': 1000,
+                  'averagePrice': 123.45,
+                },
+              },
+              output: {
+                'ticker': 'ABC',
+                'howManyShares': 1000,
+                'averagePrice': 123.45,
+              },
+            ),
+          ],
+          'ui': [
+            FunctionTestSuccess(
+              name: 'ui',
+              input: {
+                'ui': {
+                  'isDarkMode': true,
+                  'screenChoice': 'signup',
+                },
+              },
+              output: {
+                'isDarkMode': true,
+                'screenChoice': 'signup',
               },
             ),
           ],

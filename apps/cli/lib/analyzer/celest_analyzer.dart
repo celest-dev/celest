@@ -185,7 +185,7 @@ final class CelestAnalyzer {
       // an exttype which doesn't implement the interface causes an error.
       if (!element.thisType.implementsRepresentationType) {
         _reportError(
-          'Overrides must implement their represenation type',
+          'Custom overrides must implement their representation type',
           location: element.sourceLocation,
         );
         continue;

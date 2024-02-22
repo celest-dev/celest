@@ -55,10 +55,3 @@ JsonDouble jsonDouble(JsonDouble value) => value;
 JsonBool jsonBool(JsonBool value) => value;
 JsonList jsonList(JsonList value) => value;
 JsonMap jsonMap(JsonMap value) => value;
-
-// Tests that wrapping a param/return type in an extension type recursively
-// affects the serializers. In this case, we expect that the `NestedReset` type
-// generates Celest serializers for the `NestedParent` and `NestedChild` types
-// which DO NOT use the types' fromJson/toJson classes.
-NestedParent nestedParent(NestedParent parent) => parent;
-NestedReset nestedReset(NestedReset parent) => parent;

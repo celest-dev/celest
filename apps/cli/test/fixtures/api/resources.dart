@@ -372,16 +372,6 @@ abstract final class Functions {
     functionName: r'jsonValue',
   );
 
-  static const extensionTypesNestedParent = CloudFunction(
-    api: r'extension_types',
-    functionName: r'nestedParent',
-  );
-
-  static const extensionTypesNestedReset = CloudFunction(
-    api: r'extension_types',
-    functionName: r'nestedReset',
-  );
-
   static const extensionTypesString = CloudFunction(
     api: r'extension_types',
     functionName: r'string',

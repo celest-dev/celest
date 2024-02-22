@@ -2309,55 +2309,6 @@ class CelestFunctionsExtensionTypes {
       const TypeToken<JsonMap>('JsonMap'),
     );
   }
-
-  Future<_$extension_types.NestedParent> nestedParent(
-      _$extension_types.NestedParent parent) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/nested-parent'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'parent': Serializers.instance
-            .serialize<_$extension_types.NestedParent>(parent)
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance
-        .deserialize<_$extension_types.NestedParent>($body['response']);
-  }
-
-  Future<_$extension_types.NestedReset> nestedReset(
-      _$extension_types.NestedReset parent) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/nested-reset'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'parent':
-            Serializers.instance.serialize<_$extension_types.NestedReset>(
-          parent,
-          const TypeToken<_$extension_types.NestedReset>('NestedReset'),
-        )
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance.deserialize<_$extension_types.NestedReset>(
-      $body['response'],
-      const TypeToken<_$extension_types.NestedReset>('NestedReset'),
-    );
-  }
 }
 
 /// Tests that classes which wrap generic types are generated correctly when
@@ -2568,7 +2519,7 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @Deprecated('next release')
+  @deprecated
   Future<void> hasDeprecatedAnnotation() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-deprecated-annotation'),

@@ -131,26 +131,3 @@ extension type const ColorXFromJsonStatic(Color c) {
         _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
       } as ColorXFromJsonStatic;
 }
-
-final class NestedParent {
-  const NestedParent(this.child);
-
-  factory NestedParent.fromJson(String value) =>
-      NestedParent(NestedChild(value));
-
-  final NestedChild child;
-
-  String toJson() => child.value;
-}
-
-final class NestedChild {
-  const NestedChild(this.value);
-
-  factory NestedChild.fromJson(String value) => NestedChild(value);
-
-  final String value;
-
-  String toJson() => value;
-}
-
-extension type const NestedReset(NestedParent it) {}

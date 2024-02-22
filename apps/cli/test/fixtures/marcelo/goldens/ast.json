@@ -27,15 +27,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 213,
+                  "offset": 284,
                   "uri": "exceptions.dart",
-                  "line": 6,
+                  "line": 7,
                   "column": 13
                 },
                 "end": {
-                  "offset": 218,
+                  "offset": 289,
                   "uri": "exceptions.dart",
-                  "line": 6,
+                  "line": 7,
                   "column": 18
                 },
                 "text": "cause"
@@ -54,102 +54,18 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 178,
+              "offset": 249,
               "uri": "exceptions.dart",
-              "line": 5,
+              "line": 6,
               "column": 5
             },
             "end": {
-              "offset": 197,
+              "offset": 268,
               "uri": "exceptions.dart",
-              "line": 5,
+              "line": 6,
               "column": 24
             },
             "text": "throwsUserException"
-          }
-        },
-        "throwsAppError": {
-          "name": "throwsAppError",
-          "apiName": "exceptions",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "message",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "String",
-                "url": "dart:core",
-                "isNullable": false
-              },
-              "required": false,
-              "named": true,
-              "location": {
-                "start": {
-                  "offset": 307,
-                  "uri": "exceptions.dart",
-                  "line": 12,
-                  "column": 9
-                },
-                "end": {
-                  "offset": 314,
-                  "uri": "exceptions.dart",
-                  "line": 12,
-                  "column": 16
-                },
-                "text": "message"
-              }
-            },
-            {
-              "name": "error",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "JsonValue",
-                "url": "package:celest_core/src/serialization/json_value.dart",
-                "isNullable": true
-              },
-              "required": false,
-              "named": true,
-              "location": {
-                "start": {
-                  "offset": 341,
-                  "uri": "exceptions.dart",
-                  "line": 13,
-                  "column": 13
-                },
-                "end": {
-                  "offset": 346,
-                  "uri": "exceptions.dart",
-                  "line": 13,
-                  "column": 18
-                },
-                "text": "error"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "Reference",
-            "symbol": "void"
-          },
-          "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void"
-          },
-          "metadata": [],
-          "docs": [],
-          "location": {
-            "start": {
-              "offset": 281,
-              "uri": "exceptions.dart",
-              "line": 11,
-              "column": 5
-            },
-            "end": {
-              "offset": 295,
-              "uri": "exceptions.dart",
-              "line": 11,
-              "column": 19
-            },
-            "text": "throwsAppError"
           }
         },
         "callsThrowsUserException": {
@@ -169,13 +85,274 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 877,
+                  "offset": 392,
+                  "uri": "exceptions.dart",
+                  "line": 13,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 397,
+                  "uri": "exceptions.dart",
+                  "line": 13,
+                  "column": 18
+                },
+                "text": "cause"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 352,
+              "uri": "exceptions.dart",
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 376,
+              "uri": "exceptions.dart",
+              "line": 12,
+              "column": 29
+            },
+            "text": "callsThrowsUserException"
+          }
+        },
+        "throwsAppError": {
+          "name": "throwsAppError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 475,
+                  "uri": "exceptions.dart",
+                  "line": 19,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 482,
+                  "uri": "exceptions.dart",
+                  "line": 19,
+                  "column": 16
+                },
+                "text": "message"
+              }
+            },
+            {
+              "name": "error",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 509,
+                  "uri": "exceptions.dart",
+                  "line": 20,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 514,
+                  "uri": "exceptions.dart",
+                  "line": 20,
+                  "column": 18
+                },
+                "text": "error"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 449,
+              "uri": "exceptions.dart",
+              "line": 18,
+              "column": 5
+            },
+            "end": {
+              "offset": 463,
+              "uri": "exceptions.dart",
+              "line": 18,
+              "column": 19
+            },
+            "text": "throwsAppError"
+          }
+        },
+        "throwsAppException": {
+          "name": "throwsAppException",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 563,
+              "uri": "exceptions.dart",
+              "line": 25,
+              "column": 5
+            },
+            "end": {
+              "offset": 581,
+              "uri": "exceptions.dart",
+              "line": 25,
+              "column": 23
+            },
+            "text": "throwsAppException"
+          }
+        },
+        "throwsNotYetImplementedError": {
+          "name": "throwsNotYetImplementedError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 659,
+              "uri": "exceptions.dart",
+              "line": 29,
+              "column": 5
+            },
+            "end": {
+              "offset": 687,
+              "uri": "exceptions.dart",
+              "line": 29,
+              "column": 33
+            },
+            "text": "throwsNotYetImplementedError"
+          }
+        },
+        "throwsValidateError": {
+          "name": "throwsValidateError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 743,
+              "uri": "exceptions.dart",
+              "line": 33,
+              "column": 5
+            },
+            "end": {
+              "offset": 762,
+              "uri": "exceptions.dart",
+              "line": 33,
+              "column": 24
+            },
+            "text": "throwsValidateError"
+          }
+        },
+        "throwsUserException_ShowInConsole": {
+          "name": "throwsUserException_ShowInConsole",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 854,
+                  "uri": "exceptions.dart",
+                  "line": 38,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 861,
+                  "uri": "exceptions.dart",
+                  "line": 38,
+                  "column": 16
+                },
+                "text": "message"
+              }
+            },
+            {
+              "name": "cause",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 888,
                   "uri": "exceptions.dart",
                   "line": 39,
                   "column": 13
                 },
                 "end": {
-                  "offset": 882,
+                  "offset": 893,
                   "uri": "exceptions.dart",
                   "line": 39,
                   "column": 18
@@ -196,18 +373,18 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 837,
+              "offset": 809,
               "uri": "exceptions.dart",
-              "line": 38,
+              "line": 37,
               "column": 5
             },
             "end": {
-              "offset": 861,
+              "offset": 842,
               "uri": "exceptions.dart",
-              "line": 38,
-              "column": 29
+              "line": 37,
+              "column": 38
             },
-            "text": "callsThrowsUserException"
+            "text": "throwsUserException_ShowInConsole"
           }
         }
       },
@@ -227,8 +404,26 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "AppException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotYetImplementedError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "ValidateError",
           "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UserException_ShowInConsole",
+          "url": "package:celest_backend/exceptions/overrides.dart",
           "isNullable": false
         },
         {
@@ -269,9 +464,419 @@
     "models": {
       "name": "models",
       "metadata": [],
-      "functions": {},
+      "functions": {
+        "availableStock": {
+          "name": "availableStock",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "availableStock",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "AvailableStock",
+                "url": "package:_common/src/models/available_stock.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 85,
+                  "uri": "models.dart",
+                  "line": 2,
+                  "column": 45
+                },
+                "end": {
+                  "offset": 99,
+                  "uri": "models.dart",
+                  "line": 2,
+                  "column": 59
+                },
+                "text": "availableStock"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStock",
+            "url": "package:_common/src/models/available_stock.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStock",
+            "url": "package:_common/src/models/available_stock.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 55,
+              "uri": "models.dart",
+              "line": 2,
+              "column": 15
+            },
+            "end": {
+              "offset": 69,
+              "uri": "models.dart",
+              "line": 2,
+              "column": 29
+            },
+            "text": "availableStock"
+          }
+        },
+        "availableStocks": {
+          "name": "availableStocks",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "availableStocks",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "AvailableStocks",
+                "url": "package:_common/src/models/available_stocks.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 168,
+                  "uri": "models.dart",
+                  "line": 3,
+                  "column": 48
+                },
+                "end": {
+                  "offset": 183,
+                  "uri": "models.dart",
+                  "line": 3,
+                  "column": 63
+                },
+                "text": "availableStocks"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStocks",
+            "url": "package:_common/src/models/available_stocks.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStocks",
+            "url": "package:_common/src/models/available_stocks.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 136,
+              "uri": "models.dart",
+              "line": 3,
+              "column": 16
+            },
+            "end": {
+              "offset": 151,
+              "uri": "models.dart",
+              "line": 3,
+              "column": 31
+            },
+            "text": "availableStocks"
+          }
+        },
+        "cashBalance": {
+          "name": "cashBalance",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "cashBalance",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "CashBalance",
+                "url": "package:_common/src/models/cash_balance.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 245,
+                  "uri": "models.dart",
+                  "line": 5,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 256,
+                  "uri": "models.dart",
+                  "line": 5,
+                  "column": 47
+                },
+                "text": "cashBalance"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "CashBalance",
+            "url": "package:_common/src/models/cash_balance.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "CashBalance",
+            "url": "package:_common/src/models/cash_balance.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 221,
+              "uri": "models.dart",
+              "line": 5,
+              "column": 12
+            },
+            "end": {
+              "offset": 232,
+              "uri": "models.dart",
+              "line": 5,
+              "column": 23
+            },
+            "text": "cashBalance"
+          }
+        },
+        "portfolio": {
+          "name": "portfolio",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "portfolio",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Portfolio",
+                "url": "package:_common/src/models/portfolio.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 304,
+                  "uri": "models.dart",
+                  "line": 6,
+                  "column": 30
+                },
+                "end": {
+                  "offset": 313,
+                  "uri": "models.dart",
+                  "line": 6,
+                  "column": 39
+                },
+                "text": "portfolio"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Portfolio",
+            "url": "package:_common/src/models/portfolio.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Portfolio",
+            "url": "package:_common/src/models/portfolio.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 284,
+              "uri": "models.dart",
+              "line": 6,
+              "column": 10
+            },
+            "end": {
+              "offset": 293,
+              "uri": "models.dart",
+              "line": 6,
+              "column": 19
+            },
+            "text": "portfolio"
+          }
+        },
+        "stock": {
+          "name": "stock",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "stock",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Stock",
+                "url": "package:_common/src/models/stock.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 347,
+                  "uri": "models.dart",
+                  "line": 7,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 352,
+                  "uri": "models.dart",
+                  "line": 7,
+                  "column": 23
+                },
+                "text": "stock"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stock",
+            "url": "package:_common/src/models/stock.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Stock",
+            "url": "package:_common/src/models/stock.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 335,
+              "uri": "models.dart",
+              "line": 7,
+              "column": 6
+            },
+            "end": {
+              "offset": 340,
+              "uri": "models.dart",
+              "line": 7,
+              "column": 11
+            },
+            "text": "stock"
+          }
+        },
+        "ui": {
+          "name": "ui",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "ui",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Ui",
+                "url": "package:_common/src/models/ui.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 373,
+                  "uri": "models.dart",
+                  "line": 8,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 375,
+                  "uri": "models.dart",
+                  "line": 8,
+                  "column": 11
+                },
+                "text": "ui"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Ui",
+            "url": "package:_common/src/models/ui.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Ui",
+            "url": "package:_common/src/models/ui.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 367,
+              "uri": "models.dart",
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 369,
+              "uri": "models.dart",
+              "line": 8,
+              "column": 5
+            },
+            "text": "ui"
+          }
+        }
+      },
       "docs": [],
-      "exceptionTypes": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "UserException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotYetImplementedError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ValidateError",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UserException_ShowInConsole",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        }
+      ],
       "location": {
         "start": {
           "offset": 0,

@@ -25,6 +25,8 @@ import 'package:source_span/source_span.dart';
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest =>
       source.uri.toString().startsWith('package:celest');
+  bool get isWithinProject =>
+      p.isWithin(projectPaths.projectRoot, source.fullName);
   bool get isWithinProjectLib =>
       p.isWithin(projectPaths.projectLib, source.fullName);
   bool get isCelestApi => isPackageCelest && name == 'api';

@@ -1,19 +1,22 @@
-// import 'package:_common/marcelo.dart' as models;
+import 'package:_common/marcelo.dart' as models;
 
-// @override
-// extension type const AvailableStock(models.AvailableStock _) {}
+@override
+extension type AvailableStock(models.AvailableStock _)
+    implements models.AvailableStock {}
 
-// @override
-// extension type const AvailableStocks(models.AvailableStocks _) {}
+@override
+extension type AvailableStocks(models.AvailableStocks _)
+    implements models.AvailableStocks {}
 
-// @override
-// extension type const CashBalance(models.CashBalance _) {}
+@override
+extension type CashBalance(models.CashBalance _)
+    implements models.CashBalance {}
 
-// @override
-// extension type const Portfolio(models.Portfolio _) {}
+@override
+extension type Portfolio(models.Portfolio _) implements models.Portfolio {}
 
-// @override
-// extension type const Stock(models.Stock _) {}
+@override
+extension type Stock(models.Stock _) implements models.Stock {}
 
-// @override
-// extension type const Ui(models.Ui _) {}
+@override
+extension type Ui(models.Ui _) implements models.Ui {}

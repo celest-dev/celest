@@ -1,10 +1,10 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:_common/src/models/errors_and_exceptions.dart' as _i7;
+import 'package:_common/src/models/errors_and_exceptions.dart' as _i8;
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
-import 'package:celest_backend/exceptions/overrides.dart' as _i8;
+import 'package:celest_backend/exceptions/overrides.dart' as _i7;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import 'package:celest_core/src/serialization/json_value.dart' as _i4;
@@ -68,10 +68,24 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
-    } on _i7.ValidateError catch (e) {
+    } on _i7.UserException_ShowInConsole catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error = _i3.Serializers.instance
+          .serialize<_i7.UserException_ShowInConsole>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UserException_ShowInConsole',
+            'details': error,
+          }
+        }
+      );
+    } on _i8.ValidateError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error = _i3.Serializers.instance.serialize<_i7.ValidateError>(e);
+      final error = _i3.Serializers.instance.serialize<_i8.ValidateError>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -81,10 +95,37 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
-    } on _i8.AppError catch (e) {
+    } on _i7.NotYetImplementedError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error = _i3.Serializers.instance.serialize<_i8.AppError>(e);
+      final error =
+          _i3.Serializers.instance.serialize<_i7.NotYetImplementedError>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'NotYetImplementedError',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.AppException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error = _i3.Serializers.instance.serialize<_i7.AppException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'AppException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.AppError catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error = _i3.Serializers.instance.serialize<_i7.AppError>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -94,10 +135,10 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
-    } on _i8.UserException catch (e) {
+    } on _i7.UserException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error = _i3.Serializers.instance.serialize<_i8.UserException>(e);
+      final error = _i3.Serializers.instance.serialize<_i7.UserException>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -113,21 +154,57 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
   @override
   void init() {
     _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i7.ValidateError, Map<String, Object?>>(
+        .put(_i3.Serializer.define<_i8.ValidateError, Map<String, Object?>>(
       serialize: ($value) => {r'msg': $value.msg},
       deserialize: ($serialized) {
-        return _i7.ValidateError(($serialized[r'msg'] as String));
+        return _i8.ValidateError(($serialized[r'msg'] as String));
       },
     ));
     _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i8.AppError, Map<String, Object?>>(
+        .put(_i3.Serializer.define<_i7.AppError, Map<String, Object?>>(
       serialize: ($value) => $value.toJson(),
       deserialize: ($serialized) {
-        return _i8.AppError.fromJson($serialized);
+        return _i7.AppError.fromJson($serialized);
       },
     ));
     _i3.Serializers.instance
-        .put(_i3.Serializer.define<_i8.UserException, Map<String, Object?>?>(
+        .put(_i3.Serializer.define<_i7.AppException, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'error': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+          $value.error,
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ),
+        r'msg': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+          $value.msg,
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return (_i8.AppException(
+          $serialized?[r'msg'],
+          $serialized?[r'error'],
+        ) as _i7.AppException);
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.NotYetImplementedError, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'msg': $value.msg,
+        r'message': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+          $value.message,
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.NotYetImplementedError(
+            _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+          $serialized?[r'message'],
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ));
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<_i7.UserException, Map<String, Object?>?>(
       serialize: ($value) => {
         r'msg': $value.msg,
         r'code': $value.code,
@@ -137,10 +214,30 @@ final class ThrowsAppErrorTarget extends _i1.CloudFunctionTarget {
         ),
       },
       deserialize: ($serialized) {
-        return _i8.UserException(
+        return _i7.UserException(
           msg: ($serialized?[r'msg'] as String?),
           cause: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
             $serialized?[r'cause'],
+            const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i3.Serializers.instance.put(_i3.Serializer.define<
+        _i7.UserException_ShowInConsole, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'msg': $value.msg,
+        r'code': $value.code,
+        r'cause': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+          $value.cause,
+          const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i7.UserException_ShowInConsole(
+          msg: ($serialized[r'msg'] as String),
+          cause: _i3.Serializers.instance.deserialize<_i4.JsonValue?>(
+            $serialized[r'cause'],
             const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
           ),
         );

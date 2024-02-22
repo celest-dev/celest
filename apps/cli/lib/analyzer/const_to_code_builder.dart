@@ -19,14 +19,15 @@ abstract base class DartObjectVisitor<R> {
   const DartObjectVisitor();
 
   R visit(DartObjectImpl node) {
-    if (node.variable case final variable?
+    if (node.variable
+        case VariableElement(:final library?, isPrivate: false) &&
+            final variable?
         // Private variable references cannot be copied to the generated code, so
         // we use the raw value instead.
         //
         // Variables defined outside `lib/` cannot be copied to the generated
         // code, so we use the raw value instead.
-        when !variable.isPrivate &&
-            (variable.library?.isWithinProjectLib ?? false)) {
+        when !library.isWithinProject || library.isWithinProjectLib) {
       return visitVariableReference(variable);
     } else if (node.toBoolValue() case final boolValue?) {
       return visitBoolValue(boolValue);
