@@ -310,19 +310,9 @@ abstract final class Functions {
     functionName: r'colorXImpl',
   );
 
-  static const extensionTypesColorXImplIndirect = CloudFunction(
-    api: r'extension_types',
-    functionName: r'colorXImplIndirect',
-  );
-
   static const extensionTypesColorXToFromJson = CloudFunction(
     api: r'extension_types',
     functionName: r'colorXToFromJson',
-  );
-
-  static const extensionTypesColorXToFromJsonCombined = CloudFunction(
-    api: r'extension_types',
-    functionName: r'colorXToFromJsonCombined',
   );
 
   static const extensionTypesColorXToJson = CloudFunction(
@@ -475,19 +465,9 @@ abstract final class Functions {
     functionName: r'valueXImpl',
   );
 
-  static const extensionTypesValueXImplIndirect = CloudFunction(
-    api: r'extension_types',
-    functionName: r'valueXImplIndirect',
-  );
-
   static const extensionTypesValueXToFromJson = CloudFunction(
     api: r'extension_types',
     functionName: r'valueXToFromJson',
-  );
-
-  static const extensionTypesValueXToFromJsonCombined = CloudFunction(
-    api: r'extension_types',
-    functionName: r'valueXToFromJsonCombined',
   );
 
   static const extensionTypesValueXToJson = CloudFunction(

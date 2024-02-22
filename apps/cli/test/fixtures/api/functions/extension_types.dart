@@ -35,12 +35,6 @@ ValueXFromJson valueXFromJson(ValueXFromJson v) => v;
 ValueXFromJsonImpl valueXFromJsonImpl(ValueXFromJsonImpl v) => v;
 ValueXFromJsonStatic valueXFromJsonStatic(ValueXFromJsonStatic v) => v;
 
-/// Tests that extension types can implement other extension types to achieve
-/// the same results as above.
-ValueXToFromJsonCombined valueXToFromJsonCombined(ValueXToFromJsonCombined v) =>
-    v;
-ValueXImplIndirect valueXImplIndirect(ValueXImplIndirect v) => v;
-
 // Enum tests
 Color color(Color color) => color;
 ColorX colorX(ColorX color) => color;
@@ -51,10 +45,6 @@ ColorXToJsonImpl colorXToJsonImpl(ColorXToJsonImpl color) => color;
 ColorXFromJson colorXFromJson(ColorXFromJson color) => color;
 ColorXFromJsonImpl colorXFromJsonImpl(ColorXFromJsonImpl color) => color;
 ColorXFromJsonStatic colorXFromJsonStatic(ColorXFromJsonStatic color) => color;
-ColorXToFromJsonCombined colorXToFromJsonCombined(
-        ColorXToFromJsonCombined color) =>
-    color;
-ColorXImplIndirect colorXImplIndirect(ColorXImplIndirect color) => color;
 
 // JsonValue tests
 JsonValue jsonValue(JsonValue value) => value;

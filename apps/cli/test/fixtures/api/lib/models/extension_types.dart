@@ -57,14 +57,13 @@ extension type const ValueXFromJson(Value v) {
 }
 extension type const ValueXFromJsonImpl(Value v) implements Value {
   ValueXFromJsonImpl.fromJson(String value) : v = Value('${value}FromJson');
+
+  String toJson() => v.toJson();
 }
 extension type const ValueXFromJsonStatic(Value v) {
   static ValueXFromJsonStatic fromJson(Map<String, Object?> json) =>
       ValueXFromJsonStatic(Value('${json['value']}FromJson'));
 }
-extension type const ValueXToFromJsonCombined(Value v)
-    implements ValueXToJson, ValueXFromJson {}
-extension type const ValueXImplIndirect(Value v) implements ValueXImpl {}
 
 enum Color {
   red,
@@ -121,6 +120,8 @@ extension type const ColorXFromJsonImpl(Color c) implements Color {
           'BLUE' => Color.blue,
           _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
         };
+
+  String toJson() => c.toJson();
 }
 extension type const ColorXFromJsonStatic(Color c) {
   static ColorXFromJsonStatic fromJson(String value) => switch (value) {
@@ -130,9 +131,6 @@ extension type const ColorXFromJsonStatic(Color c) {
         _ => throw ArgumentError.value(value, 'value', 'Invalid color'),
       } as ColorXFromJsonStatic;
 }
-extension type const ColorXToFromJsonCombined(Color c)
-    implements ColorXToJson, ColorXFromJson {}
-extension type const ColorXImplIndirect(Color c) implements ColorXImpl {}
 
 final class NestedParent {
   const NestedParent(this.child);

@@ -1861,68 +1861,6 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  /// Tests that extension types can implement other extension types to achieve
-  /// the same results as above.
-  Future<_$extension_types.ValueXToFromJsonCombined> valueXToFromJsonCombined(
-      _$extension_types.ValueXToFromJsonCombined v) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/value-x-to-from-json-combined'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'v': Serializers.instance
-            .serialize<_$extension_types.ValueXToFromJsonCombined>(
-          v,
-          const TypeToken<_$extension_types.ValueXToFromJsonCombined>(
-              'ValueXToFromJsonCombined'),
-        )
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance
-        .deserialize<_$extension_types.ValueXToFromJsonCombined>(
-      $body['response'],
-      const TypeToken<_$extension_types.ValueXToFromJsonCombined>(
-          'ValueXToFromJsonCombined'),
-    );
-  }
-
-  Future<_$extension_types.ValueXImplIndirect> valueXImplIndirect(
-      _$extension_types.ValueXImplIndirect v) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/value-x-impl-indirect'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'v': Serializers.instance
-            .serialize<_$extension_types.ValueXImplIndirect>(
-          v,
-          const TypeToken<_$extension_types.ValueXImplIndirect>(
-              'ValueXImplIndirect'),
-        )
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance
-        .deserialize<_$extension_types.ValueXImplIndirect>(
-      $body['response'],
-      const TypeToken<_$extension_types.ValueXImplIndirect>(
-          'ValueXImplIndirect'),
-    );
-  }
-
   Future<_$extension_types.Color> color(_$extension_types.Color color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color'),
@@ -2162,66 +2100,6 @@ class CelestFunctionsExtensionTypes {
       $body['response'],
       const TypeToken<_$extension_types.ColorXFromJsonStatic>(
           'ColorXFromJsonStatic'),
-    );
-  }
-
-  Future<_$extension_types.ColorXToFromJsonCombined> colorXToFromJsonCombined(
-      _$extension_types.ColorXToFromJsonCombined color) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/color-x-to-from-json-combined'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'color': Serializers.instance
-            .serialize<_$extension_types.ColorXToFromJsonCombined>(
-          color,
-          const TypeToken<_$extension_types.ColorXToFromJsonCombined>(
-              'ColorXToFromJsonCombined'),
-        )
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance
-        .deserialize<_$extension_types.ColorXToFromJsonCombined>(
-      $body['response'],
-      const TypeToken<_$extension_types.ColorXToFromJsonCombined>(
-          'ColorXToFromJsonCombined'),
-    );
-  }
-
-  Future<_$extension_types.ColorXImplIndirect> colorXImplIndirect(
-      _$extension_types.ColorXImplIndirect color) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/extension-types/color-x-impl-indirect'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({
-        r'color': Serializers.instance
-            .serialize<_$extension_types.ColorXImplIndirect>(
-          color,
-          const TypeToken<_$extension_types.ColorXImplIndirect>(
-              'ColorXImplIndirect'),
-        )
-      }),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return Serializers.instance
-        .deserialize<_$extension_types.ColorXImplIndirect>(
-      $body['response'],
-      const TypeToken<_$extension_types.ColorXImplIndirect>(
-          'ColorXImplIndirect'),
     );
   }
 

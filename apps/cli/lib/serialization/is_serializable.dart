@@ -142,7 +142,7 @@ final class SerializationSpec {
     this.fromJsonParameters = const [],
     required this.fromJsonType,
     required DartType? toJsonType,
-    this.extensionType,
+    this.representationType,
   })  : castType = castType ?? wireType,
         _toJsonType = toJsonType;
 
@@ -173,9 +173,7 @@ final class SerializationSpec {
 
   bool get hasToJson {
     var hasToJson = _toJsonType != null;
-    var parent = (!isExtensionType && type.implementsRepresentationType)
-        ? this.parent
-        : null;
+    var parent = this.parent;
     while (parent != null) {
       hasToJson |= parent._toJsonType != null;
       parent = parent.parent;
@@ -185,9 +183,27 @@ final class SerializationSpec {
 
   SerializationSpec? parent;
   final List<SerializationSpec> subtypes = [];
-  final SerializationSpec? extensionType;
+  SerializationSpec? representationType;
 
-  bool get isExtensionType => extensionType != null;
+  bool get isExtensionType => representationType != null;
+
+  SerializationSpec get erased {
+    final erased = SerializationSpec(
+      type: type,
+      wireType: type.defaultWireType?.let(typeHelper.toReference) ?? wireType,
+      castType: type.defaultWireType?.let(typeHelper.toReference) ?? castType,
+      fields: fields,
+      constructorParameters: constructorParameters,
+      fromJsonParameters: const [],
+      toJsonType: null,
+      fromJsonType: null,
+      representationType: representationType,
+    );
+    for (final subtype in subtypes) {
+      erased.subtypes.add(subtype.erased);
+    }
+    return erased;
+  }
 
   SerializationSpec copyWith({
     DartType? type,
@@ -198,7 +214,6 @@ final class SerializationSpec {
     List<ParameterSpec>? fromJsonParameters,
     Object? fromJsonType = const Object(),
     Object? toJsonType = const Object(),
-    SerializationSpec? extensionType,
   }) =>
       SerializationSpec(
         type: type ?? this.type,
@@ -218,7 +233,7 @@ final class SerializationSpec {
           final DartType type => type,
           _ => _toJsonType,
         },
-        extensionType: extensionType ?? this.extensionType,
+        representationType: representationType,
       );
 
   @override
@@ -238,7 +253,7 @@ final class SerializationSpec {
         parent?.type == other.parent?.type &&
         const ListEquality<SerializationSpec>()
             .equals(subtypes, other.subtypes) &&
-        extensionType == other.extensionType;
+        representationType == other.representationType;
   }
 
   @override
@@ -253,7 +268,7 @@ final class SerializationSpec {
         const DartTypeEquality().hash(_toJsonType),
         parent == null ? null : const DartTypeEquality().hash(parent!.type),
         const ListEquality<SerializationSpec>().hash(subtypes),
-        extensionType,
+        representationType,
       );
 }
 
@@ -603,25 +618,20 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             // ignore: unnecessary_null_checks
             VerdictYes(:final primarySpec!, :final additionalSpecs) =>
               Verdict.yes(
-                primarySpec: erasurePrimaySpec.copyWith(
-                  extensionType: primarySpec..parent = erasurePrimaySpec,
-                ),
+                primarySpec: primarySpec
+                  ..representationType = erasurePrimaySpec,
                 additionalSpecs: {
-                  // If a fromJson or toJson method is not provided and the
-                  // extension type does not implement its representation type
-                  // then we must add the serialization spec for the
-                  // representation type since it will be referenced by the
-                  // extension type serializer.
-                  if ((!primarySpec.hasToJson || !primarySpec.hasFromJson) &&
-                      !type.implementsRepresentationType)
-                    erasurePrimaySpec.copyWith(
-                      wireType: typeHelper.toReference(type.defaultWireType),
-                      castType: typeHelper.toReference(type.defaultWireType),
-                      toJsonType: null,
-                      fromJsonType: null,
-                    ),
-                  ...additionalSpecs,
-                  ...erasureVerdict.additionalSpecs,
+                  // Create a representation type spec which has no fromJson/toJson
+                  // methods but which carries the correct wire type.
+                  erasurePrimaySpec.copyWith(
+                    wireType: primarySpec.wireType,
+                    castType: primarySpec.castType,
+                    toJsonType: null,
+                    fromJsonType: null,
+                    fromJsonParameters: const [],
+                  ),
+                  ...additionalSpecs.map((spec) => spec.erased),
+                  ...erasureVerdict.additionalSpecs.map((spec) => spec.erased),
                 },
               ),
           };
@@ -651,30 +661,28 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         // this point.
         final wireType =
             builtInTypes[erasureType] ?? typeHelper.toReference(erasureType);
-        final spec = SerializationSpec(
-          type: erasureType,
-          wireType: wireType,
-          fromJsonType: null,
-          toJsonType: null,
-        );
         return erasureVerdict.withPrimarySpec(
-          spec.copyWith(
-            extensionType: SerializationSpec(
-              type: type,
+          SerializationSpec(
+            type: type,
+            wireType: wireType,
+            fields: [
+              if (element.representation.isPublic)
+                FieldSpec(
+                  name: element.representation.name,
+                  type: element.representation.type,
+                ),
+            ],
+            constructorParameters: constructor.parameterSpecs,
+            fromJsonParameters: fromJsonCtor.parameterSpecs,
+            fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
+            toJsonType:
+                (toJsonMethod?.enclosingElement as InterfaceElement?)?.thisType,
+            representationType: SerializationSpec(
+              type: erasureType,
               wireType: wireType,
-              fields: [
-                if (element.representation.isPublic)
-                  FieldSpec(
-                    name: element.representation.name,
-                    type: element.representation.type,
-                  ),
-              ],
-              constructorParameters: constructor.parameterSpecs,
-              fromJsonParameters: fromJsonCtor.parameterSpecs,
-              fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
-              toJsonType: (toJsonMethod?.enclosingElement as InterfaceElement?)
-                  ?.thisType,
-            )..parent = spec,
+              fromJsonType: null,
+              toJsonType: null,
+            ),
           ),
         );
     }
@@ -1129,7 +1137,7 @@ extension on InterfaceType {
         _ => null,
       };
 
-  DartType get wireType => toJsonMethod?.returnType ?? defaultWireType;
+  DartType get wireType => toJsonMethod?.returnType ?? defaultWireType!;
 
   InterfaceMembers get interfaceMembers {
     switch (element) {
@@ -1154,36 +1162,11 @@ extension on InterfaceType {
         if (representationType is! InterfaceType) {
           unreachable('Extension type erasure is not an interface type');
         }
-
-        // Extension types can be used to override their representation type's
-        // toJson/fromJson methods.
-        //
-        // If the extension type implements its representation types, this
-        // indicates that the representation type's fromJson/toJson methods are
-        // valid fallbacks for the extension type.
-        //
-        // An extension type which does not implement its representation type
-        // and does not provide its own toJson/fromJson methods indicates that
-        // Celest should generate its own fromJson/toJson methods.
-        final repMembers = representationType.interfaceMembers;
-        final repWireType =
-            implementsRepresentationType ? repMembers.wireType : null;
-        var toJsonMethod = this.toJsonMethod; // ignore: unnecessary_this
-        var fromJsonCtor = this.fromJsonCtor; // ignore: unnecessary_this
-        for (final interface
-            in interfaces.where((interface) => interface.isExtensionType)) {
-          final members = interface.interfaceMembers;
-          toJsonMethod ??= members.toJsonMethod;
-          fromJsonCtor ??= members.fromJsonCtor;
-        }
         final members = (
           fields: [element.representation],
           toJsonMethod: toJsonMethod,
           fromJsonCtor: fromJsonCtor,
-          // For the purpose of determining the wire type, we use the
-          // representation's wire type if it implements it. Otherwise, we
-          // fallback to the JSON map type (same as classes).
-          wireType: toJsonMethod?.returnType ?? repWireType ?? defaultWireType,
+          wireType: wireType,
         );
         analytics.capture(
           'extension_type',

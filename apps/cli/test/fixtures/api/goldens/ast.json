@@ -9328,133 +9328,6 @@
             "text": "valueXFromJsonStatic"
           }
         },
-        "valueXToFromJsonCombined": {
-          "name": "valueXToFromJsonCombined",
-          "apiName": "extension_types",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "v",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "ValueXToFromJsonCombined",
-                "url": "package:celest_backend/models/extension_types.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "start": {
-                  "offset": 1789,
-                  "uri": "extension_types.dart",
-                  "line": 39,
-                  "column": 75
-                },
-                "end": {
-                  "offset": 1790,
-                  "uri": "extension_types.dart",
-                  "line": 39,
-                  "column": 76
-                },
-                "text": "v"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ValueXToFromJsonCombined",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ValueXToFromJsonCombined",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "docs": [
-            "/// Tests that extension types can implement other extension types to achieve",
-            "/// the same results as above."
-          ],
-          "location": {
-            "start": {
-              "offset": 1739,
-              "uri": "extension_types.dart",
-              "line": 39,
-              "column": 25
-            },
-            "end": {
-              "offset": 1763,
-              "uri": "extension_types.dart",
-              "line": 39,
-              "column": 49
-            },
-            "text": "valueXToFromJsonCombined"
-          }
-        },
-        "valueXImplIndirect": {
-          "name": "valueXImplIndirect",
-          "apiName": "extension_types",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "v",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "ValueXImplIndirect",
-                "url": "package:celest_backend/models/extension_types.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "start": {
-                  "offset": 1859,
-                  "uri": "extension_types.dart",
-                  "line": 41,
-                  "column": 57
-                },
-                "end": {
-                  "offset": 1860,
-                  "uri": "extension_types.dart",
-                  "line": 41,
-                  "column": 58
-                },
-                "text": "v"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ValueXImplIndirect",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ValueXImplIndirect",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "docs": [],
-          "location": {
-            "start": {
-              "offset": 1821,
-              "uri": "extension_types.dart",
-              "line": 41,
-              "column": 19
-            },
-            "end": {
-              "offset": 1839,
-              "uri": "extension_types.dart",
-              "line": 41,
-              "column": 37
-            },
-            "text": "valueXImplIndirect"
-          }
-        },
         "color": {
           "name": "color",
           "apiName": "extension_types",
@@ -9472,15 +9345,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1901,
+                  "offset": 1637,
                   "uri": "extension_types.dart",
-                  "line": 44,
+                  "line": 38,
                   "column": 18
                 },
                 "end": {
-                  "offset": 1906,
+                  "offset": 1642,
                   "uri": "extension_types.dart",
-                  "line": 44,
+                  "line": 38,
                   "column": 23
                 },
                 "text": "color"
@@ -9503,15 +9376,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1889,
+              "offset": 1625,
               "uri": "extension_types.dart",
-              "line": 44,
+              "line": 38,
               "column": 6
             },
             "end": {
-              "offset": 1894,
+              "offset": 1630,
               "uri": "extension_types.dart",
-              "line": 44,
+              "line": 38,
               "column": 11
             },
             "text": "color"
@@ -9534,15 +9407,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1939,
+                  "offset": 1675,
                   "uri": "extension_types.dart",
-                  "line": 45,
+                  "line": 39,
                   "column": 21
                 },
                 "end": {
-                  "offset": 1944,
+                  "offset": 1680,
                   "uri": "extension_types.dart",
-                  "line": 45,
+                  "line": 39,
                   "column": 26
                 },
                 "text": "color"
@@ -9565,15 +9438,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1925,
+              "offset": 1661,
               "uri": "extension_types.dart",
-              "line": 45,
+              "line": 39,
               "column": 7
             },
             "end": {
-              "offset": 1931,
+              "offset": 1667,
               "uri": "extension_types.dart",
-              "line": 45,
+              "line": 39,
               "column": 13
             },
             "text": "colorX"
@@ -9596,15 +9469,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1989,
+                  "offset": 1725,
                   "uri": "extension_types.dart",
-                  "line": 46,
+                  "line": 40,
                   "column": 33
                 },
                 "end": {
-                  "offset": 1994,
+                  "offset": 1730,
                   "uri": "extension_types.dart",
-                  "line": 46,
+                  "line": 40,
                   "column": 38
                 },
                 "text": "color"
@@ -9627,15 +9500,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1967,
+              "offset": 1703,
               "uri": "extension_types.dart",
-              "line": 46,
+              "line": 40,
               "column": 11
             },
             "end": {
-              "offset": 1977,
+              "offset": 1713,
               "uri": "extension_types.dart",
-              "line": 46,
+              "line": 40,
               "column": 21
             },
             "text": "colorXImpl"
@@ -9658,15 +9531,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2057,
+                  "offset": 1793,
                   "uri": "extension_types.dart",
-                  "line": 47,
+                  "line": 41,
                   "column": 51
                 },
                 "end": {
-                  "offset": 2062,
+                  "offset": 1798,
                   "uri": "extension_types.dart",
-                  "line": 47,
+                  "line": 41,
                   "column": 56
                 },
                 "text": "color"
@@ -9689,15 +9562,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2023,
+              "offset": 1759,
               "uri": "extension_types.dart",
-              "line": 47,
+              "line": 41,
               "column": 17
             },
             "end": {
-              "offset": 2039,
+              "offset": 1775,
               "uri": "extension_types.dart",
-              "line": 47,
+              "line": 41,
               "column": 33
             },
             "text": "colorXToFromJson"
@@ -9720,15 +9593,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2113,
+                  "offset": 1849,
                   "uri": "extension_types.dart",
-                  "line": 48,
+                  "line": 42,
                   "column": 39
                 },
                 "end": {
-                  "offset": 2118,
+                  "offset": 1854,
                   "uri": "extension_types.dart",
-                  "line": 48,
+                  "line": 42,
                   "column": 44
                 },
                 "text": "color"
@@ -9751,15 +9624,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2087,
+              "offset": 1823,
               "uri": "extension_types.dart",
-              "line": 48,
+              "line": 42,
               "column": 13
             },
             "end": {
-              "offset": 2099,
+              "offset": 1835,
               "uri": "extension_types.dart",
-              "line": 48,
+              "line": 42,
               "column": 25
             },
             "text": "colorXToJson"
@@ -9782,15 +9655,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2181,
+                  "offset": 1917,
                   "uri": "extension_types.dart",
-                  "line": 49,
+                  "line": 43,
                   "column": 51
                 },
                 "end": {
-                  "offset": 2186,
+                  "offset": 1922,
                   "uri": "extension_types.dart",
-                  "line": 49,
+                  "line": 43,
                   "column": 56
                 },
                 "text": "color"
@@ -9813,15 +9686,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2147,
+              "offset": 1883,
               "uri": "extension_types.dart",
-              "line": 49,
+              "line": 43,
               "column": 17
             },
             "end": {
-              "offset": 2163,
+              "offset": 1899,
               "uri": "extension_types.dart",
-              "line": 49,
+              "line": 43,
               "column": 33
             },
             "text": "colorXToJsonImpl"
@@ -9844,15 +9717,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2243,
+                  "offset": 1979,
                   "uri": "extension_types.dart",
-                  "line": 50,
+                  "line": 44,
                   "column": 45
                 },
                 "end": {
-                  "offset": 2248,
+                  "offset": 1984,
                   "uri": "extension_types.dart",
-                  "line": 50,
+                  "line": 44,
                   "column": 50
                 },
                 "text": "color"
@@ -9875,15 +9748,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2213,
+              "offset": 1949,
               "uri": "extension_types.dart",
-              "line": 50,
+              "line": 44,
               "column": 15
             },
             "end": {
-              "offset": 2227,
+              "offset": 1963,
               "uri": "extension_types.dart",
-              "line": 50,
+              "line": 44,
               "column": 29
             },
             "text": "colorXFromJson"
@@ -9906,15 +9779,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2317,
+                  "offset": 2053,
                   "uri": "extension_types.dart",
-                  "line": 51,
+                  "line": 45,
                   "column": 57
                 },
                 "end": {
-                  "offset": 2322,
+                  "offset": 2058,
                   "uri": "extension_types.dart",
-                  "line": 51,
+                  "line": 45,
                   "column": 62
                 },
                 "text": "color"
@@ -9937,15 +9810,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2279,
+              "offset": 2015,
               "uri": "extension_types.dart",
-              "line": 51,
+              "line": 45,
               "column": 19
             },
             "end": {
-              "offset": 2297,
+              "offset": 2033,
               "uri": "extension_types.dart",
-              "line": 51,
+              "line": 45,
               "column": 37
             },
             "text": "colorXFromJsonImpl"
@@ -9968,15 +9841,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2397,
+                  "offset": 2133,
                   "uri": "extension_types.dart",
-                  "line": 52,
+                  "line": 46,
                   "column": 63
                 },
                 "end": {
-                  "offset": 2402,
+                  "offset": 2138,
                   "uri": "extension_types.dart",
-                  "line": 52,
+                  "line": 46,
                   "column": 68
                 },
                 "text": "color"
@@ -9999,142 +9872,18 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2355,
+              "offset": 2091,
               "uri": "extension_types.dart",
-              "line": 52,
+              "line": 46,
               "column": 21
             },
             "end": {
-              "offset": 2375,
+              "offset": 2111,
               "uri": "extension_types.dart",
-              "line": 52,
+              "line": 46,
               "column": 41
             },
             "text": "colorXFromJsonStatic"
-          }
-        },
-        "colorXToFromJsonCombined": {
-          "name": "colorXToFromJsonCombined",
-          "apiName": "extension_types",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "color",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "ColorXToFromJsonCombined",
-                "url": "package:celest_backend/models/extension_types.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "start": {
-                  "offset": 2498,
-                  "uri": "extension_types.dart",
-                  "line": 54,
-                  "column": 33
-                },
-                "end": {
-                  "offset": 2503,
-                  "uri": "extension_types.dart",
-                  "line": 54,
-                  "column": 38
-                },
-                "text": "color"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ColorXToFromJsonCombined",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ColorXToFromJsonCombined",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "docs": [],
-          "location": {
-            "start": {
-              "offset": 2439,
-              "uri": "extension_types.dart",
-              "line": 53,
-              "column": 25
-            },
-            "end": {
-              "offset": 2463,
-              "uri": "extension_types.dart",
-              "line": 53,
-              "column": 49
-            },
-            "text": "colorXToFromJsonCombined"
-          }
-        },
-        "colorXImplIndirect": {
-          "name": "colorXImplIndirect",
-          "apiName": "extension_types",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "color",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "ColorXImplIndirect",
-                "url": "package:celest_backend/models/extension_types.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "location": {
-                "start": {
-                  "offset": 2576,
-                  "uri": "extension_types.dart",
-                  "line": 56,
-                  "column": 57
-                },
-                "end": {
-                  "offset": 2581,
-                  "uri": "extension_types.dart",
-                  "line": 56,
-                  "column": 62
-                },
-                "text": "color"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "ColorXImplIndirect",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "ColorXImplIndirect",
-            "url": "package:celest_backend/models/extension_types.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "docs": [],
-          "location": {
-            "start": {
-              "offset": 2538,
-              "uri": "extension_types.dart",
-              "line": 56,
-              "column": 19
-            },
-            "end": {
-              "offset": 2556,
-              "uri": "extension_types.dart",
-              "line": 56,
-              "column": 37
-            },
-            "text": "colorXImplIndirect"
           }
         },
         "jsonValue": {
@@ -10154,15 +9903,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2643,
+                  "offset": 2200,
                   "uri": "extension_types.dart",
-                  "line": 59,
+                  "line": 49,
                   "column": 30
                 },
                 "end": {
-                  "offset": 2648,
+                  "offset": 2205,
                   "uri": "extension_types.dart",
-                  "line": 59,
+                  "line": 49,
                   "column": 35
                 },
                 "text": "value"
@@ -10185,15 +9934,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2623,
+              "offset": 2180,
               "uri": "extension_types.dart",
-              "line": 59,
+              "line": 49,
               "column": 10
             },
             "end": {
-              "offset": 2632,
+              "offset": 2189,
               "uri": "extension_types.dart",
-              "line": 59,
+              "line": 49,
               "column": 19
             },
             "text": "jsonValue"
@@ -10216,15 +9965,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2693,
+                  "offset": 2250,
                   "uri": "extension_types.dart",
-                  "line": 60,
+                  "line": 50,
                   "column": 33
                 },
                 "end": {
-                  "offset": 2698,
+                  "offset": 2255,
                   "uri": "extension_types.dart",
-                  "line": 60,
+                  "line": 50,
                   "column": 38
                 },
                 "text": "value"
@@ -10247,15 +9996,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2671,
+              "offset": 2228,
               "uri": "extension_types.dart",
-              "line": 60,
+              "line": 50,
               "column": 11
             },
             "end": {
-              "offset": 2681,
+              "offset": 2238,
               "uri": "extension_types.dart",
-              "line": 60,
+              "line": 50,
               "column": 21
             },
             "text": "jsonString"
@@ -10278,15 +10027,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2734,
+                  "offset": 2291,
                   "uri": "extension_types.dart",
-                  "line": 61,
+                  "line": 51,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2739,
+                  "offset": 2296,
                   "uri": "extension_types.dart",
-                  "line": 61,
+                  "line": 51,
                   "column": 29
                 },
                 "text": "value"
@@ -10309,15 +10058,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2718,
+              "offset": 2275,
               "uri": "extension_types.dart",
-              "line": 61,
+              "line": 51,
               "column": 8
             },
             "end": {
-              "offset": 2725,
+              "offset": 2282,
               "uri": "extension_types.dart",
-              "line": 61,
+              "line": 51,
               "column": 15
             },
             "text": "jsonNum"
@@ -10340,15 +10089,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2775,
+                  "offset": 2332,
                   "uri": "extension_types.dart",
-                  "line": 62,
+                  "line": 52,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2780,
+                  "offset": 2337,
                   "uri": "extension_types.dart",
-                  "line": 62,
+                  "line": 52,
                   "column": 29
                 },
                 "text": "value"
@@ -10371,15 +10120,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2759,
+              "offset": 2316,
               "uri": "extension_types.dart",
-              "line": 62,
+              "line": 52,
               "column": 8
             },
             "end": {
-              "offset": 2766,
+              "offset": 2323,
               "uri": "extension_types.dart",
-              "line": 62,
+              "line": 52,
               "column": 15
             },
             "text": "jsonInt"
@@ -10402,15 +10151,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2825,
+                  "offset": 2382,
                   "uri": "extension_types.dart",
-                  "line": 63,
+                  "line": 53,
                   "column": 33
                 },
                 "end": {
-                  "offset": 2830,
+                  "offset": 2387,
                   "uri": "extension_types.dart",
-                  "line": 63,
+                  "line": 53,
                   "column": 38
                 },
                 "text": "value"
@@ -10433,15 +10182,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2803,
+              "offset": 2360,
               "uri": "extension_types.dart",
-              "line": 63,
+              "line": 53,
               "column": 11
             },
             "end": {
-              "offset": 2813,
+              "offset": 2370,
               "uri": "extension_types.dart",
-              "line": 63,
+              "line": 53,
               "column": 21
             },
             "text": "jsonDouble"
@@ -10464,15 +10213,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2869,
+                  "offset": 2426,
                   "uri": "extension_types.dart",
-                  "line": 64,
+                  "line": 54,
                   "column": 27
                 },
                 "end": {
-                  "offset": 2874,
+                  "offset": 2431,
                   "uri": "extension_types.dart",
-                  "line": 64,
+                  "line": 54,
                   "column": 32
                 },
                 "text": "value"
@@ -10495,15 +10244,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2851,
+              "offset": 2408,
               "uri": "extension_types.dart",
-              "line": 64,
+              "line": 54,
               "column": 9
             },
             "end": {
-              "offset": 2859,
+              "offset": 2416,
               "uri": "extension_types.dart",
-              "line": 64,
+              "line": 54,
               "column": 17
             },
             "text": "jsonBool"
@@ -10526,15 +10275,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2913,
+                  "offset": 2470,
                   "uri": "extension_types.dart",
-                  "line": 65,
+                  "line": 55,
                   "column": 27
                 },
                 "end": {
-                  "offset": 2918,
+                  "offset": 2475,
                   "uri": "extension_types.dart",
-                  "line": 65,
+                  "line": 55,
                   "column": 32
                 },
                 "text": "value"
@@ -10557,15 +10306,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2895,
+              "offset": 2452,
               "uri": "extension_types.dart",
-              "line": 65,
+              "line": 55,
               "column": 9
             },
             "end": {
-              "offset": 2903,
+              "offset": 2460,
               "uri": "extension_types.dart",
-              "line": 65,
+              "line": 55,
               "column": 17
             },
             "text": "jsonList"
@@ -10588,15 +10337,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2954,
+                  "offset": 2511,
                   "uri": "extension_types.dart",
-                  "line": 66,
+                  "line": 56,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2959,
+                  "offset": 2516,
                   "uri": "extension_types.dart",
-                  "line": 66,
+                  "line": 56,
                   "column": 29
                 },
                 "text": "value"
@@ -10619,15 +10368,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2938,
+              "offset": 2495,
               "uri": "extension_types.dart",
-              "line": 66,
+              "line": 56,
               "column": 8
             },
             "end": {
-              "offset": 2945,
+              "offset": 2502,
               "uri": "extension_types.dart",
-              "line": 66,
+              "line": 56,
               "column": 15
             },
             "text": "jsonMap"
@@ -10650,15 +10399,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 3302,
+                  "offset": 2859,
                   "uri": "extension_types.dart",
-                  "line": 72,
+                  "line": 62,
                   "column": 39
                 },
                 "end": {
-                  "offset": 3308,
+                  "offset": 2865,
                   "uri": "extension_types.dart",
-                  "line": 72,
+                  "line": 62,
                   "column": 45
                 },
                 "text": "parent"
@@ -10681,15 +10430,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 3276,
+              "offset": 2833,
               "uri": "extension_types.dart",
-              "line": 72,
+              "line": 62,
               "column": 13
             },
             "end": {
-              "offset": 3288,
+              "offset": 2845,
               "uri": "extension_types.dart",
-              "line": 72,
+              "line": 62,
               "column": 25
             },
             "text": "nestedParent"
@@ -10712,15 +10461,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 3357,
+                  "offset": 2914,
                   "uri": "extension_types.dart",
-                  "line": 73,
+                  "line": 63,
                   "column": 36
                 },
                 "end": {
-                  "offset": 3363,
+                  "offset": 2920,
                   "uri": "extension_types.dart",
-                  "line": 73,
+                  "line": 63,
                   "column": 42
                 },
                 "text": "parent"
@@ -10743,15 +10492,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 3333,
+              "offset": 2890,
               "uri": "extension_types.dart",
-              "line": 73,
+              "line": 63,
               "column": 12
             },
             "end": {
-              "offset": 3344,
+              "offset": 2901,
               "uri": "extension_types.dart",
-              "line": 73,
+              "line": 63,
               "column": 23
             },
             "text": "nestedReset"

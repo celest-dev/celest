@@ -185,13 +185,10 @@ final class SerializerDefinition {
 
 final class SerializerGenerator {
   SerializerGenerator(
-    SerializationSpec serializationSpec, {
+    this.serializationSpec, {
     this.additionalSerializationSpecs = const [],
     Expression? serializers,
-  })  : _isExtensionType = serializationSpec.isExtensionType,
-        serializationSpec = serializationSpec.isExtensionType
-            ? serializationSpec.extensionType!
-            : serializationSpec {
+  }) : _isExtensionType = serializationSpec.isExtensionType {
     _serializers = serializers ??
         (_customSerializers != null
             ? refer(r'$serializers')
@@ -224,9 +221,7 @@ final class SerializerGenerator {
       usesParent = !const DartTypeEquality(ignoreNullability: true)
           .equals(fromJsonType, type);
     }
-    var parent = (!_isExtensionType || type.implementsRepresentationType)
-        ? _parent
-        : null;
+    var parent = _parent;
     while (typeReference == null && parent != null) {
       if (parent.fromJsonType case final fromJsonType?) {
         typeReference = typeHelper.toReference(fromJsonType);
@@ -256,14 +251,8 @@ final class SerializerGenerator {
     }
     Expression serializers = refer(r'$serializers');
     for (final spec in interfaceSpecs) {
-      final type = spec.type as ast.InterfaceType;
       final serializer = SerializerGenerator(
-        spec.copyWith(
-          wireType: typeHelper.toReference(type.defaultWireType),
-          castType: typeHelper.toReference(type.defaultWireType),
-          toJsonType: null,
-          fromJsonType: null,
-        ),
+        spec,
         serializers: refer(r'$serializers'),
       ).build().first;
       serializers = serializers.cascade('put').call([serializer.define()]);
@@ -417,14 +406,17 @@ final class SerializerGenerator {
       return ref.property('name');
     }
     if (_isExtensionType) {
+      final representationType = serializationSpec.representationType!;
+      final representationTypeRef =
+          typeHelper.toReference(representationType.type);
       return jsonGenerator.toJson(
-        typeHelper.toReference(_parent!.type),
+        representationTypeRef,
         type.implementsRepresentationType
             ? ref
             : switch (serializationSpec.fields) {
                 [final field] => ref.property(field.name),
                 // No public field to reference. Just cast into representation.
-                _ => ref.asA(typeHelper.toReference(_parent.type)),
+                _ => ref.asA(representationTypeRef),
               },
       );
     }
@@ -536,8 +528,9 @@ final class SerializerGenerator {
           .statement;
     }
     if (_isExtensionType) {
+      final representationType = serializationSpec.representationType!;
       final deserialized = jsonGenerator.fromJson(
-        typeHelper.toReference(_parent!.type),
+        typeHelper.toReference(representationType.type),
         ref,
       );
       // No params means no constructor. Just cast into the extension type.

@@ -282,6 +282,12 @@ extension DartTypeHelper on DartType {
       },
     );
   }
+
+  DartType? get defaultWireType => switch (extensionTypeErasure.element) {
+        EnumElement() => typeHelper.typeProvider.stringType,
+        InterfaceElement() => jsonMapType,
+        _ => null,
+      };
 }
 
 typedef SubtypeResult = ({
@@ -299,13 +305,6 @@ extension _SubtypeResultX on SubtypeResult {
           ...other.disallowedTypes,
         },
       );
-}
-
-extension InterfaceTypeHelpers on InterfaceType {
-  DartType get defaultWireType => switch (extensionTypeErasure.element) {
-        EnumElement() => typeHelper.typeProvider.stringType,
-        _ => jsonMapType,
-      };
 }
 
 extension on InterfaceElement {

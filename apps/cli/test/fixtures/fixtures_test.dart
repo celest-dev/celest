@@ -781,9 +781,13 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'valueXImpl',
               input: {
-                'v': 'hello',
+                'v': {
+                  'value': 'hello',
+                },
               },
-              output: 'hello',
+              output: {
+                'value': 'hello',
+              },
             ),
           ],
           'valueXToFromJson': [
@@ -850,28 +854,6 @@ final tests = <String, Test>{
               output: {
                 'value': 'helloFromJson',
               },
-            ),
-          ],
-          'valueXToFromJsonCombined': [
-            FunctionTestSuccess(
-              name: 'valueXToFromJsonCombined',
-              input: {
-                'v': {
-                  'value': 'hello',
-                },
-              },
-              output: {
-                'value': 'helloFromJsonToJson',
-              },
-            ),
-          ],
-          'valueXImplIndirect': [
-            FunctionTestSuccess(
-              name: 'valueXImpl',
-              input: {
-                'v': 'hello',
-              },
-              output: 'hello',
             ),
           ],
           'jsonValue': [
@@ -1079,11 +1061,11 @@ final tests = <String, Test>{
           ],
           'colorXImpl': [
             FunctionTestSuccess(
-              name: 'colorXImpl',
+              name: 'colorX',
               input: {
-                'color': 'r',
+                'color': 'red',
               },
-              output: 'r',
+              output: 'red',
             ),
           ],
           'colorXToFromJson': [
@@ -1108,7 +1090,7 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'colorXToJson',
               input: {
-                'color': 'r',
+                'color': 'red',
               },
               output: 'RED',
             ),
@@ -1138,24 +1120,6 @@ final tests = <String, Test>{
                 'color': 'RED',
               },
               output: 'red',
-            ),
-          ],
-          'colorXToFromJsonCombined': [
-            FunctionTestSuccess(
-              name: 'colorXToFromJsonCombined',
-              input: {
-                'color': 'RED',
-              },
-              output: 'RED',
-            ),
-          ],
-          'colorXImplIndirect': [
-            FunctionTestSuccess(
-              name: 'colorXImplIndirect',
-              input: {
-                'color': 'r',
-              },
-              output: 'r',
             ),
           ],
           'nestedParent': [
