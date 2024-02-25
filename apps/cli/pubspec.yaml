@@ -1,6 +1,6 @@
 name: celest_cli
 description: The command-line interface for Celest.
-version: 0.2.0-dev.4
+version: 0.2.0-dev.5
 publish_to: none
 
 environment:
@@ -28,7 +28,7 @@ dependencies:
   convert: ^3.1.1
   crypto: ^3.0.3
   dart_style: ^2.3.4
-  drift: ^2.14.1
+  drift: <2.16.0
   file: ^7.0.0
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1
@@ -53,6 +53,7 @@ dependencies:
   source_span: ^1.10.0
   sqlite3:
     path: ../../packages/sqlite3/sqlite3
+  stack_trace: ^1.11.1
   stream_transform: ^2.1.0
   uuid: ^4.3.1
   vm_service: ^14.0.0

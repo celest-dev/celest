@@ -99,24 +99,25 @@ final class ProjectDependencyUpdater extends ProjectItem {
     final latestCelestVersion = ProjectDependency.celest.pubDependency.version;
     if (currentCelestVersion == latestCelestVersion) {
       _logger.fine('Project dependencies are up to date.');
-      return;
+    } else {
+      _logger.fine('Updating project dependencies to $latestCelestVersion...');
+      final updatedPubspec = pubspec.copyWith(
+        dependencies: {
+          for (final entry in pubspec.dependencies.entries)
+            entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
+        },
+        devDependencies: {
+          for (final entry in pubspec.devDependencies.entries)
+            entry.key:
+                ProjectDependency.devDependencies[entry.key] ?? entry.value,
+        },
+      );
+      await pubspecFile
+          .writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
     }
-    _logger.fine('Updating project dependencies to $latestCelestVersion...');
-    final updatedPubspec = pubspec.copyWith(
-      dependencies: {
-        for (final entry in pubspec.dependencies.entries)
-          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
-      },
-      devDependencies: {
-        for (final entry in pubspec.devDependencies.entries)
-          entry.key:
-              ProjectDependency.devDependencies[entry.key] ?? entry.value,
-      },
-    );
-    await pubspecFile.writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
-    _logger.fine('Running pub get in "$projectRoot"...');
+    _logger.fine('Running pub upgrade in "$projectRoot"...');
     await runPub(
-      action: PubAction.get,
+      action: PubAction.upgrade,
       workingDirectory: projectRoot,
     );
     _logger.fine('Project dependencies updated');
