@@ -50,15 +50,15 @@ final class CelestFrontend implements Closeable {
         _stopSignal.complete(signal);
       }
     });
-    _reloadStream = StreamQueue(
-      // Windows doesn't support listening for SIGUSR1 and SIGUSR2 signals.
-      platform.isWindows
-          ? Stream.fromFuture(Completer<ProcessSignal>().future)
-          : StreamGroup.mergeBroadcast([
-              ProcessSignal.sigusr1.watch(),
-              ProcessSignal.sigusr2.watch(),
-            ]).sample(_readyForChanges.stream),
-    );
+    // Windows doesn't support listening for SIGUSR1 and SIGUSR2 signals.
+    if (!platform.isWindows) {
+      _reloadStream = StreamQueue(
+        StreamGroup.mergeBroadcast([
+          ProcessSignal.sigusr1.watch(),
+          ProcessSignal.sigusr2.watch(),
+        ]).sample(_readyForChanges.stream),
+      );
+    }
   }
 
   static CelestFrontend? instance;
@@ -72,16 +72,29 @@ final class CelestFrontend implements Closeable {
     return 1;
   }
 
-  /// Signals that Celest is ready for the next batch of [_watcher] changes.
+  /// Signals that Celest is ready for the next batch of [_watcherSub] changes.
   ///
-  /// Used to buffer [_watcher] in the time while a project is being (re-)built.
+  /// Used to buffer [_watcherSub] in the time while a project is being (re-)built.
   final _readyForChanges = StreamController<void>.broadcast();
 
   /// Watches for filesystem changes in the project root.
-  StreamQueue<List<WatchEvent>>? _watcher;
+  DirectoryWatcher? _watcher;
+
+  /// Queues changes detected by [_watcher].
+  StreamQueue<List<WatchEvent>>? _watcherSub;
 
   /// The list of paths changed since the last frontend pass.
   Set<String>? _changedPaths;
+
+  /// The pending operations of [_nextChangeSet].
+  ///
+  /// Used to cancel in-progress operations in [close].
+  final List<CancelableOperation<Object?>> _pendingOperations = [];
+
+  Future<void> _cancelPendingOperations() async {
+    await Future.wait(_pendingOperations.map((op) => op.cancel()));
+    _pendingOperations.clear();
+  }
 
   /// Notifies the watcher that we're listening for filesystem changes.
   Future<void> _nextChangeSet() async {
@@ -89,9 +102,9 @@ final class CelestFrontend implements Closeable {
 
     // Initialize [_watcher] lazily since it's only needed after the first
     // compile.
-    _watcher ??= StreamQueue(
-      DirectoryWatcher(projectPaths.projectRoot)
-          .events
+    _watcher ??= DirectoryWatcher(projectPaths.projectRoot);
+    _watcherSub ??= StreamQueue(
+      _watcher!.events
           // Ignore creation of new directories and files (they'll be empty)
           .where((event) => event.type != ChangeType.ADD)
           .where((event) => _isReloadablePath(event.path))
@@ -101,52 +114,61 @@ final class CelestFrontend implements Closeable {
 
     var reloading = false;
     final reloadComplete = Completer<void>.sync();
-    unawaited(
-      _watcher!.next.then(
-        (events) async {
-          if (reloading) return;
-          reloading = true;
-          (_changedPaths ??= {}).addAll(
-            events.map((event) => event.path),
-          );
-          logger.finest(
-            '${events.length} watcher events since last compile: ',
-            _changedPaths!.join('\n'),
-          );
-          // TODO(dnys1): Improve cache invalidation to only invalidate
-          // necessary types.
-          typeHelper.reset();
-          await celestProject.invalidate(_changedPaths!);
-          reloadComplete.complete();
-        },
-      ),
+    assert(
+      _pendingOperations.isEmpty,
+      'No operations should be in progress when called',
     );
-    unawaited(
-      _reloadStream.next.then((signal) async {
+    _pendingOperations.add(
+      _watcherSub!.cancelable((watcher) async {
+        final events = await watcher.next;
         if (reloading) return;
         reloading = true;
-        logger.fine('Got reload signal: $signal');
-        final allProjectFiles = await fileSystem
-            .directory(projectPaths.projectRoot)
-            .list(recursive: true)
-            .whereType<File>()
-            .toList();
-        // Invalidate all paths.
+        (_changedPaths ??= {}).addAll(
+          events.map((event) => event.path),
+        );
+        logger.finest(
+          '${events.length} watcher events since last compile: ',
+          _changedPaths!.join(Platform.lineTerminator),
+        );
+        // TODO(dnys1): Improve cache invalidation to only invalidate
+        // necessary types.
         typeHelper.reset();
-        final toInvalidate = allProjectFiles
-            .map((f) => f.path)
-            .where(_isReloadablePath)
-            .toList();
-        logger.finest('Invaliding paths: $toInvalidate');
-        await celestProject.invalidate(toInvalidate);
+        await celestProject.invalidate(_changedPaths!);
         reloadComplete.complete();
+        return null;
       }),
     );
+    if (_reloadStream case final reloadStream?) {
+      _pendingOperations.add(
+        reloadStream.cancelable((reloadStream) async {
+          final signal = await reloadStream.next;
+          if (reloading) return;
+          reloading = true;
+          logger.fine('Got reload signal: $signal');
+          final allProjectFiles = await fileSystem
+              .directory(projectPaths.projectRoot)
+              .list(recursive: true)
+              .whereType<File>()
+              .toList();
+          // Invalidate all paths.
+          typeHelper.reset();
+          final toInvalidate = allProjectFiles
+              .map((f) => f.path)
+              .where(_isReloadablePath)
+              .toList();
+          logger.finest('Invaliding paths: $toInvalidate');
+          await celestProject.invalidate(toInvalidate);
+          reloadComplete.complete();
+          return null;
+        }),
+      );
+    }
 
     await Future.any([
       reloadComplete.future,
       _stopSignal.future,
     ]);
+    await _cancelPendingOperations();
   }
 
   /// Whether [path] is eligible for watching and reloading.
@@ -221,7 +243,7 @@ final class CelestFrontend implements Closeable {
   ///
   /// This mimicks the `flutter run` command which responds to these signals by
   /// performing a hot reload (SIGUSR1) and a full restart (SIGUSR2).
-  late final StreamQueue<ProcessSignal> _reloadStream;
+  StreamQueue<ProcessSignal>? _reloadStream;
 
   ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
@@ -678,11 +700,20 @@ final class CelestFrontend implements Closeable {
   Future<void> close() =>
       performance.trace('CelestFrontend', 'close', () async {
         logger.finest('Stopping Celest frontend...');
-        await _stopSub.cancel();
-        await _watcher?.cancel(immediate: true);
-        await _reloadStream.cancel(immediate: true);
+        // Cancel any pending operations which depend on StreamQueues
+        // before trying to close stream queues.
+        //
+        // If these operations are not first canceled, then `queue.cancel`
+        // will hang forever.
+        await _cancelPendingOperations();
+        // Cancel subscriptions in order of dependencies
         await _readyForChanges.close();
-        await _localApiRunner?.close();
+        await Future.wait([
+          _stopSub.cancel(),
+          Future.value(_reloadStream?.cancel()),
+          Future.value(_watcherSub?.cancel()),
+          Future.value(_localApiRunner?.close()),
+        ]);
         logger.finest('Stopped Celest frontend');
       });
 }

@@ -24,12 +24,8 @@ final class LocalApiRunner implements Closeable {
     required this.verbose,
     required this.port,
     required FrontendServerClient client,
-    required VmService vmService,
-    required String vmIsolateId,
     required Process localApiProcess,
   })  : _client = client,
-        _vmService = vmService,
-        _vmIsolateId = vmIsolateId,
         _localApiProcess = localApiProcess;
 
   final bool verbose;
@@ -39,9 +35,12 @@ final class LocalApiRunner implements Closeable {
   final int port;
 
   final FrontendServerClient _client;
-  final VmService _vmService;
-  final String _vmIsolateId;
   final Process _localApiProcess;
+  VmService? _vmService;
+  late final String _vmIsolateId;
+
+  late final StreamSubscription<String> _stdoutSub;
+  late final StreamSubscription<String> _stderrSub;
 
   static Future<LocalApiRunner> start({
     required String path,
@@ -53,9 +52,6 @@ final class LocalApiRunner implements Closeable {
     @visibleForTesting StringSink? stderrPipe,
     @visibleForTesting PortFinder portFinder = const DefaultPortFinder(),
   }) async {
-    stdoutPipe ??= stdout;
-    stderrPipe ??= stderr;
-
     final env = <String, String>{};
     for (final envVar in envVars) {
       final value =
@@ -98,9 +94,9 @@ final class LocalApiRunner implements Closeable {
       }
     }
     _logger.finer('Starting local API on port $port...');
-    final localApiProcess = await Process.start(
-      Sdk.current.dart,
+    final localApiProcess = await processManager.start(
       [
+        Sdk.current.dart,
         'run',
         // Start VM service on a random port.
         '--enable-vm-service=0',
@@ -117,9 +113,49 @@ final class LocalApiRunner implements Closeable {
       },
     );
 
+    final runner = LocalApiRunner._(
+      path: path,
+      verbose: verbose,
+      port: port,
+      client: client,
+      localApiProcess: localApiProcess,
+    );
+    await runner._init(stdoutPipe: stdoutPipe, stderrPipe: stderrPipe);
+    return runner;
+  }
+
+  /// Waits for the main Isolate to be available then returns its ID.
+  static Future<String> _waitForIsolate(
+    VmService vmService,
+    Logger logger,
+  ) async {
+    var vm = await vmService.getVM();
+    var isolates = vm.isolates;
+    final stopwatch = Stopwatch()..start();
+    const timeout = Duration(seconds: 10);
+    while (isolates == null || isolates.isEmpty) {
+      if (stopwatch.elapsed > timeout) {
+        throw TimeoutException('Timed out waiting for VM to start.');
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      vm = await vmService.getVM();
+      isolates = vm.isolates;
+    }
+    stopwatch.stop();
+    logger.finest('VM started in ${stopwatch.elapsedMilliseconds}ms.');
+    return isolates.single.id!;
+  }
+
+  Future<void> _init({
+    StringSink? stdoutPipe,
+    StringSink? stderrPipe,
+  }) async {
+    stdoutPipe ??= stdout;
+    stderrPipe ??= stderr;
+
     final vmServiceCompleter = Completer<VmService>();
     final serverStartedCompleter = Completer<void>();
-    localApiProcess.stdout
+    _stdoutSub = _localApiProcess.stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen((line) {
@@ -147,58 +183,31 @@ final class LocalApiRunner implements Closeable {
         stdoutPipe!.writeln(line);
       }
     });
-    localApiProcess.stderr
+    _stderrSub = _localApiProcess.stderr
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen(stderrPipe.writeln);
 
-    _logger.finer('Waiting for local API to report VM URI...');
-    final vmService = await vmServiceCompleter.future.timeout(
-      const Duration(seconds: 15),
-      onTimeout: () {
-        throw TimeoutException(
-          'Could not connect to local API VM service.',
-          const Duration(seconds: 15),
-        );
-      },
-    );
+    try {
+      _logger.finer('Waiting for local API to report VM URI...');
+      _vmService = await vmServiceCompleter.future.timeout(
+        const Duration(seconds: 15),
+        onTimeout: () {
+          throw TimeoutException(
+            'Could not connect to local API VM service.',
+            const Duration(seconds: 15),
+          );
+        },
+      );
 
-    final isolateId = await _waitForIsolate(vmService, _logger);
+      _vmIsolateId = await _waitForIsolate(_vmService!, _logger);
 
-    await serverStartedCompleter.future;
-    _logger.fine('Connected to local API.');
-
-    return LocalApiRunner._(
-      path: path,
-      verbose: verbose,
-      port: port,
-      client: client,
-      vmService: vmService,
-      vmIsolateId: isolateId,
-      localApiProcess: localApiProcess,
-    );
-  }
-
-  /// Waits for the main Isolate to be available then returns its ID.
-  static Future<String> _waitForIsolate(
-    VmService vmService,
-    Logger logger,
-  ) async {
-    var vm = await vmService.getVM();
-    var isolates = vm.isolates;
-    final stopwatch = Stopwatch()..start();
-    const timeout = Duration(seconds: 10);
-    while (isolates == null || isolates.isEmpty) {
-      if (stopwatch.elapsed > timeout) {
-        throw TimeoutException('Timed out waiting for VM to start.');
-      }
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      vm = await vmService.getVM();
-      isolates = vm.isolates;
+      await serverStartedCompleter.future;
+      _logger.fine('Connected to local API.');
+    } on Object catch (e, st) {
+      _logger.finer('Failure starting local API runner', e, st);
+      rethrow;
     }
-    stopwatch.stop();
-    logger.finest('VM started in ${stopwatch.elapsedMilliseconds}ms.');
-    return isolates.single.id!;
   }
 
   Future<void> hotReload(List<String> pathsToInvalidate) async {
@@ -207,7 +216,7 @@ final class LocalApiRunner implements Closeable {
       for (final path in pathsToInvalidate) p.toUri(path),
     ]);
     final dillOutput = _client.expectOutput(result);
-    await _vmService.reloadSources(
+    await _vmService!.reloadSources(
       _vmIsolateId,
       rootLibUri: dillOutput,
     );
@@ -219,8 +228,16 @@ final class LocalApiRunner implements Closeable {
     if (!await Future(() => _client.closed)) {
       _client.kill();
     }
-    await _vmService.dispose();
+    _logger.finest('Killing local process');
     _localApiProcess.kill();
+    await Future.wait([
+      _stdoutSub.cancel().then((_) => _logger.finest('Stdout closed')),
+      _stderrSub.cancel().then((_) => _logger.finest('Stderr closed')),
+      _localApiProcess.exitCode
+          .then((exitCode) => _logger.finest('Exit code: $exitCode')),
+      Future.value(_vmService?.onDone)
+          .then((_) => _logger.finest('VM service done')),
+    ]);
     _logger.finer('Shut down local API.');
   }
 }
