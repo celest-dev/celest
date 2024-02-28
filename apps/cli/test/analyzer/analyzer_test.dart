@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -22,6 +23,7 @@ const project = Project(name: '$name');
 
 Future<CelestProject> newProject({
   required String name,
+  String? pubspecYaml,
   String? analysisOptions,
   String? projectDart,
   String? authDart,
@@ -31,6 +33,7 @@ Future<CelestProject> newProject({
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   Map<String, String> lib = const {},
+  String? parentDirectory,
 }) async {
   projectDart ??= _simpleProjectDart(name);
   final celestDir = p.fromUri(
@@ -67,15 +70,19 @@ Future<CelestProject> newProject({
     ]),
     if (analysisOptions != null)
       d.file('analysis_options.yaml', analysisOptions),
-    d.file('pubspec.yaml', '''
+    d.file(
+      'pubspec.yaml',
+      pubspecYaml ??
+          '''
 name: $name
 
 environment:
-  sdk: ^3.2.0
+  sdk: ${PubEnvironment.dartSdkConstraint}
 
 dependencies:
   celest: any
-'''),
+''',
+    ),
     d.file('project.dart', projectDart),
     if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     d.dir('auth', [
@@ -108,8 +115,8 @@ $contents
         d.file(fileName, contents),
     ]),
   ]);
-  await project.create();
-  final projectRoot = d.path(name);
+  await project.create(parentDirectory);
+  final projectRoot = p.join(parentDirectory ?? d.sandbox, name);
   await init(projectRoot: projectRoot);
   return celestProject;
 }

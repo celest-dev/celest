@@ -82,9 +82,7 @@ final class MacOsEntitlements extends ProjectItem {
 }
 
 final class ProjectDependencyUpdater extends ProjectItem {
-  const ProjectDependencyUpdater(this.projectRoot);
-
-  final String projectRoot;
+  const ProjectDependencyUpdater();
 
   static final _logger = Logger('ProjectDependencyUpdater');
 
@@ -94,14 +92,18 @@ final class ProjectDependencyUpdater extends ProjectItem {
     final pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
     final pubspecYaml = await pubspecFile.readAsString();
     final pubspec = Pubspec.parse(pubspecYaml);
-    final currentCelestVersion =
-        (pubspec.dependencies['celest'] as HostedDependency).version;
-    final latestCelestVersion = ProjectDependency.celest.pubDependency.version;
-    if (currentCelestVersion == latestCelestVersion) {
+    final currentSdkVersion = pubspec.environment?['sdk'];
+    final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
+    if (ProjectDependency.celest.upToDate(pubspec) &&
+        ProjectDependency.celestCore.upToDate(pubspec) &&
+        currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
     } else {
-      _logger.fine('Updating project dependencies to $latestCelestVersion...');
+      _logger.fine('Updating project dependencies to latest versions...');
       final updatedPubspec = pubspec.copyWith(
+        environment: {
+          'sdk': PubEnvironment.dartSdkConstraint,
+        },
         dependencies: {
           for (final entry in pubspec.dependencies.entries)
             entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,

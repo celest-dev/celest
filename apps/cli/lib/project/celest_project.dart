@@ -70,8 +70,8 @@ final class CelestProject {
   late final database = CelestDatabase(config);
 
   Pubspec get pubspec => Pubspec.parse(
-        fileSystem.file(projectPaths.projectYaml).readAsStringSync(),
-        sourceUrl: Uri.file(projectPaths.projectYaml),
+        fileSystem.file(projectPaths.pubspecYaml).readAsStringSync(),
+        sourceUrl: Uri.file(projectPaths.pubspecYaml),
       );
 
   Future<Set<String>> invalidate(Iterable<String> files) async {

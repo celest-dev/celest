@@ -543,7 +543,7 @@ final class CelestFrontend implements Closeable {
 
   Future<void> _saveProjectId(String projectId) async {
     logger.finer('Saving project ID to pubspec.yaml: $projectId');
-    final pubspecFile = fileSystem.file(projectPaths.projectYaml);
+    final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
     final pubspec = YamlEditor(await pubspecFile.readAsString());
     pubspec.update(
       ['celest'],

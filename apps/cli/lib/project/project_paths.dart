@@ -18,7 +18,7 @@ final class ProjectPaths {
 
   late final String packagesConfig =
       p.join(projectRoot, '.dart_tool', 'package_config.json');
-  late final String projectYaml = p.join(projectRoot, 'pubspec.yaml');
+  late final String pubspecYaml = p.join(projectRoot, 'pubspec.yaml');
   late final String analysisOptionsYaml =
       p.join(projectRoot, 'analysis_options.yaml');
   late final String projectDart = p.join(projectRoot, 'project.dart');
