@@ -48,5 +48,5 @@ Future<void> runPub({
         },
       );
     }),
-  ]).whenComplete(process.kill);
+  ]);
 }
