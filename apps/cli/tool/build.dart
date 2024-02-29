@@ -208,9 +208,19 @@ Future<void> main() async {
       _ => unreachable(),
     },
   );
+  CelestReleaseInfo? latestDev;
+  if (setLatest) {
+    if (currentReleasesInfo!.latestDev case final currentLatestDev?) {
+      if (Version.parse(version) < currentLatestDev.version) {
+        latestDev = currentLatestDev;
+      }
+    }
+  } else {
+    latestDev = latestRelease;
+  }
   final updatedReleasesInfo = CelestReleasesInfo(
     latest: setLatest ? latestRelease : currentReleasesInfo!.latest,
-    latestDev: setLatest ? currentReleasesInfo!.latestDev : latestRelease,
+    latestDev: latestDev,
     releases: {
       ...?currentReleasesInfo?.releases,
       version: latestRelease,
