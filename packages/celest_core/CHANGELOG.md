@@ -1,12 +1,9 @@
-## 0.2.0-dev.1
+## 0.2.0
 
 - Bumps minimum Dart SDK to 3.3
 - Adds `JsonValue` hierarchy for representing JSON primitives safely
 - Adds `Serializer.define` for creating serializers from functions
 - Adds `TypeToken` to enable serialization of extension types
-
-## 0.2.0-dev
-
 - Make `SerializationException` implement `BadRequestException`
 
 ## 0.1.1
