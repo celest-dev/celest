@@ -13,7 +13,6 @@ final class LocalTarget extends TestTarget {
   List<String> get executable => [
         Platform.resolvedExecutable,
         '--enable-asserts',
-        '--enable-experiment=native-assets',
         Directory.current.uri.resolve('bin/celest.dart').toFilePath(),
       ];
 }

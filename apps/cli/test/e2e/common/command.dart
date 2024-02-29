@@ -106,7 +106,7 @@ final class InteractiveCommand {
     return pendingTasks;
   }
 
-  static const _defaultTimeout = Duration(seconds: 30);
+  static const _defaultTimeout = Duration(seconds: 60);
   static final _logger = Logger('InteractiveCommand');
 
   InteractiveCommand writeLine(String line) {
