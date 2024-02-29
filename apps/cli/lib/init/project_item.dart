@@ -233,18 +233,29 @@ const project = Project(
 // Cloud functions are top-level Dart functions defined in the `functions/`
 // folder of your Celest project.
 
-/// Says hello to a person called [name].
-Future<String> sayHello({required String name}) async {
-  // Logging is handled automatically when you print to the console.
-  print('Saying hello to $name');
+import 'package:celest_backend/exceptions/bad_name_exception.dart';
+import 'package:celest_backend/models/person.dart';
 
-  return 'Hello, $name!';
+/// Says hello to a [person].
+Future<String> sayHello({required Person person}) async {
+  if (person.name.isEmpty) {
+    // Throw a custom exception defined in the `lib/exceptions/` and catch
+    // it on the frontend.
+    throw BadNameException('Name cannot be empty');
+  }
+
+  // Logging is handled automatically when you print to the console.
+  print('Saying hello to ${person.name}');
+
+  return 'Hello, ${person.name}!';
 }
 ''',
       ),
       _createFile(
         p.join(projectRoot, 'test', 'functions', 'greeting_test.dart'),
         '''
+import 'package:celest_backend/exceptions/bad_name_exception.dart';
+import 'package:celest_backend/models/person.dart';
 import 'package:test/test.dart';
 
 import '../../functions/greeting.dart';
@@ -252,24 +263,45 @@ import '../../functions/greeting.dart';
 void main() {
   group('greeting', () {
     test('sayHello', () async {
-      expect(await sayHello(name: 'Celest'), 'Hello, Celest!');
+      expect(await sayHello(person: Person(name: 'Celest')), 'Hello, Celest!');
+    });
+    test('sayHello (empty name)', () async {
+      expect(
+        sayHello(person: Person(name: '')),
+        throwsA(isA<BadNameException>()),
+      );
     });
   });
 }
 ''',
       ),
       _createFile(
-        p.join(projectRoot, 'lib', 'models.dart'),
+        p.join(projectRoot, 'lib', 'models', 'person.dart'),
         '''
 // By convention, any custom types used within an API request/response must be
-// defined in this file or exported from this file.
+// defined in the `models/` folder.
+
+class Person {
+  const Person({required this.name});
+
+  final String name;
+}
 ''',
       ),
       _createFile(
-        p.join(projectRoot, 'lib', 'exceptions.dart'),
-        '''
+        p.join(projectRoot, 'lib', 'exceptions', 'bad_name_exception.dart'),
+        r'''
 // By convention, any custom exception types thrown by an API must be defined
 // in this file or exported from this file.
+
+class BadNameException implements Exception {
+  const BadNameException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => 'BadNameException: $message';
+}
 ''',
       ),
     ]);
