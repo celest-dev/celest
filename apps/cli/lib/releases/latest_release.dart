@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:collection/collection.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 final _releasesEndpoint =
@@ -29,16 +30,13 @@ Future<CelestReleasesInfo> _retrieveCliReleases() async {
 Future<CelestReleaseInfo> retrieveLatestRelease() async {
   final releasesInfo = await _retrieveCliReleases();
   return switch (Version.parse(packageVersion)) {
-    Version(isPreRelease: true) => () {
-        if (releasesInfo.latestDev case final latestDev?) {
-          return latestDev;
-        }
-        final entries = releasesInfo.releases.entries.toList();
-        entries.sort((a, b) {
-          return Version.parse(a.key).compareTo(Version.parse(b.key));
-        });
-        return entries.last.value;
-      }(),
+    Version(isPreRelease: true) => maxBy<CelestReleaseInfo, Version>(
+        [
+          if (releasesInfo.latestDev case final latestDev?) latestDev,
+          ...releasesInfo.releases.values,
+        ],
+        (release) => release.version,
+      )!,
     _ => releasesInfo.latest,
   };
 }
