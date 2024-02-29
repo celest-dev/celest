@@ -40,7 +40,8 @@ class _OpenAiAppState extends State<OpenAiApp> {
   /// Whether [_availableModelsFuture] has completed and the available models
   /// have been loaded fromthe backend.
   var _loadedAvailableModels = false;
-  final _availableModelsFuture = celest.functions.openAi.availableModels();
+  Future<List<String>> get _availableModelsFuture =>
+      celest.functions.openAi.availableModels();
 
   /// Sends the prompt request to the backend and updates the UI with the
   /// response.

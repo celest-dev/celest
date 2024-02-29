@@ -6,11 +6,11 @@ library;
 
 import 'package:celest/celest.dart';
 
-abstract final class apis {
+abstract final class Apis {
   static const openAi = CloudApi(name: r'open_ai');
 }
 
-abstract final class functions {
+abstract final class Functions {
   static const openAiAvailableModels = CloudFunction(
     api: r'open_ai',
     functionName: r'availableModels',
@@ -22,6 +22,6 @@ abstract final class functions {
   );
 }
 
-abstract final class env {
+abstract final class Env {
   static const openAiToken = EnvironmentVariable(name: r'OPEN_AI_TOKEN');
 }

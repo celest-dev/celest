@@ -6,11 +6,11 @@ library;
 
 import 'package:celest/celest.dart';
 
-abstract final class apis {
+abstract final class Apis {
   static const tasks = CloudApi(name: r'tasks');
 }
 
-abstract final class functions {
+abstract final class Functions {
   static const tasksAddTask = CloudFunction(
     api: r'tasks',
     functionName: r'addTask',

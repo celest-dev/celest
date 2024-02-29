@@ -2,9 +2,7 @@ import 'dart:developer';
 
 // Import the generated Celest client
 import 'package:celest_backend/client.dart';
-import 'package:celest_backend/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
@@ -23,16 +21,12 @@ class _GeminiAppState extends State<GeminiApp> {
   // Controllers for the text fields.
   final _questionController = TextEditingController();
   final _answerController = TextEditingController();
-  final _maxTokensController = TextEditingController();
 
   /// The selected model to use.
   ///
   /// This is first set by [_availableModelsDropdown] when the available models
   /// are loaded from the backend.
   late String _selectedModel;
-
-  /// The value of the temperature slider.
-  var _temperatureSliderValue = 1.0;
 
   /// Whether [_availableModelsFuture] has completed and the available models
   /// have been loaded fromthe backend.
@@ -46,12 +40,6 @@ class _GeminiAppState extends State<GeminiApp> {
       final response = await celest.functions.gemini.generateContent(
         prompt: _questionController.text,
         modelName: _selectedModel,
-        parameters: ModelParameters(
-          maxTokens: _maxTokensController.text.isNotEmpty
-              ? int.parse(_maxTokensController.text)
-              : null,
-          temperature: _temperatureSliderValue,
-        ),
       );
       log(response);
       setState(() {
@@ -60,7 +48,7 @@ class _GeminiAppState extends State<GeminiApp> {
     } on Exception catch (e) {
       log('Failed to generate content', error: e);
       setState(() {
-        _answerController.text = '${e.runtimeType}: $e';
+        _answerController.text = '$e';
       });
     }
   }
@@ -127,66 +115,11 @@ class _GeminiAppState extends State<GeminiApp> {
                         _availableModelsDropdown(data),
 
                       // Handle the error case
-                      AsyncSnapshot(:final error?) =>
-                        Text('${error.runtimeType}: $error'),
+                      AsyncSnapshot(:final error?) => Text('$error'),
 
                       // If waiting, show a progress indicator
                       _ => const CircularProgressIndicator(),
                     },
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceEvenly,
-                      children: [
-                        Tooltip(
-                          message:
-                              'The maximum number of words for the AI to generate',
-                          child: SizedBox(
-                            width: 150,
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              // Allow only digits
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              decoration: const InputDecoration(
-                                hintText: 'Max tokens',
-                              ),
-                              controller: _maxTokensController,
-                            ),
-                          ),
-                        ),
-                        Tooltip(
-                          message:
-                              'The higher the temperature, the more random the text',
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Temperature',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              SizedBox(
-                                width: 150,
-                                child: Slider(
-                                  value: _temperatureSliderValue,
-                                  min: 0,
-                                  max: 2,
-                                  divisions: 10,
-                                  label: _temperatureSliderValue.toString(),
-                                  onChanged: (double value) {
-                                    setState(() {
-                                      _temperatureSliderValue = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   const SizedBox(height: 20),
                   TextField(

@@ -1,4 +1,5 @@
 import 'package:celest_backend/client.dart';
+import 'package:celest_backend/models/person.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: FutureBuilder(
-            future: celest.functions.greeting.sayHello('Celest'),
+            future: celest.functions.greeting.sayHello(
+              person: const Person(name: 'Celest'),
+            ),
             builder: (_, snapshot) => switch (snapshot) {
               AsyncSnapshot(:final data?) => Text(data),
               AsyncSnapshot(:final error?) =>

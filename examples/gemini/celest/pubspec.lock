@@ -44,19 +44,17 @@ packages:
   celest:
     dependency: "direct main"
     description:
-      name: celest
-      sha256: fa5f2cf62073d2e71a2ce4c559d703886c2a48062b08752040d3afcc4531b846
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
+      path: "../../../packages/celest"
+      relative: true
+    source: path
+    version: "0.2.0"
   celest_core:
     dependency: "direct main"
     description:
-      name: celest_core
-      sha256: c5d6408d047816f2b81c63b75c8f270377768612ee47272a5782ed48af887e55
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
+      path: "../../../packages/celest_core"
+      relative: true
+    source: path
+    version: "0.2.0"
   chunked_stream:
     dependency: transitive
     description:
@@ -125,10 +123,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_generative_ai
-      sha256: "2c8cb557c196487c5624da02a0914935e48874112a8201cb7b9379c79cd3bde7"
+      sha256: b2d3f7277a85e3e6be4c4392c59e73ea211b5b6c8bb21c24c71fd411a2d1822e
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.2"
   http:
     dependency: "direct main"
     description:
@@ -389,10 +387,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: a2662fb1f114f4296cf3f5a50786a2d888268d7776cf681aa17d660ffa23b246
+      sha256: e7d5ecd604e499358c5fe35ee828c0298a320d54455e791e9dcf73486bc8d9f0
       url: "https://pub.dev"
     source: hosted
-    version: "14.0.0"
+    version: "14.1.0"
   watcher:
     dependency: transitive
     description:
