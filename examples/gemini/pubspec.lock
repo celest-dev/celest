@@ -18,11 +18,12 @@ packages:
     source: hosted
     version: "2.1.1"
   celest:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../packages/celest"
-      relative: true
-    source: path
+      name: celest
+      sha256: aa0d6bd43ed45f52d2f1a88b5dc00bf88439ab21f1d727c68938f54ccf3ba445
+      url: "https://pub.dev"
+    source: hosted
     version: "0.2.0"
   celest_backend:
     dependency: "direct main"
@@ -32,12 +33,13 @@ packages:
     source: path
     version: "0.0.0"
   celest_core:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../packages/celest_core"
-      relative: true
-    source: path
-    version: "0.2.0"
+      name: celest_core
+      sha256: c9ae3214327494291c2bbbc5ac7b5b63be03484e9d63fd06d8fe9ad938256963
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   characters:
     dependency: transitive
     description:
