@@ -15,6 +15,9 @@ class BadRequestException implements CloudException {
 
   @override
   final String message;
+
+  @override
+  String toString() => 'BadRequestException: $message';
 }
 
 /// {@template celest_core.exception.internal_server_exception}
@@ -29,4 +32,7 @@ class InternalServerException implements CloudException {
 
   @override
   final String message;
+
+  @override
+  String toString() => 'InternalServerException: $message';
 }
