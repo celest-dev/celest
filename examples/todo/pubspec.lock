@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: celest
-      sha256: fa5f2cf62073d2e71a2ce4c559d703886c2a48062b08752040d3afcc4531b846
+      sha256: aa0d6bd43ed45f52d2f1a88b5dc00bf88439ab21f1d727c68938f54ccf3ba445
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.2.0"
   celest_backend:
     dependency: "direct main"
     description:
@@ -36,10 +36,10 @@ packages:
     dependency: transitive
     description:
       name: celest_core
-      sha256: c5d6408d047816f2b81c63b75c8f270377768612ee47272a5782ed48af887e55
+      sha256: b9da8eb41f3b0ea5f76733dd74fede23f5430a57d8c8138963b28e99319bc0d0
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.2.0"
   characters:
     dependency: transitive
     description:
@@ -118,10 +118,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
+      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   http_methods:
     dependency: transitive
     description:
@@ -315,9 +315,9 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: afe077240a270dcfd2aafe77602b4113645af95d0ad31128cc02bce5ac5d5152
+      sha256: "1d9158c616048c38f712a6646e317a3426da10e884447626167240d45209cbad"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.5.0"
 sdks:
-  dart: ">=3.2.3 <4.0.0"
+  dart: ">=3.3.0 <4.0.0"

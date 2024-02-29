@@ -26,7 +26,6 @@ Future<List<String>> availableModels() async => _availableModels;
 /// client or Flutter app.
 const _availableModels = [
   'gpt-4',
-  'gpt-4-turbo-preview',
   'gpt-3.5-turbo',
 ];
 
@@ -37,7 +36,7 @@ Future<String> openAIRequest({
   required String model,
   required String prompt,
   ModelParameters parameters = const ModelParameters(),
-  @env.openAiToken required String openAiToken,
+  @Env.openAiToken required String openAiToken,
 }) async {
   final openAI = _createOpenAI(openAiToken);
 
@@ -49,6 +48,7 @@ Future<String> openAIRequest({
     model: ChatModelFromValue(model: model),
     maxToken: parameters.maxTokens,
     temperature: parameters.temperature,
+    topP: null,
   );
 
   final requestJson = _prettyJson(request.toJson());

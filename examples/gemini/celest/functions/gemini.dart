@@ -1,8 +1,9 @@
 // Cloud functions are top-level Dart functions defined in the `functions/`
 // folder of your Celest project.
 
+import 'dart:convert';
+
 import 'package:celest/celest.dart';
-import 'package:celest_backend/models.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../resources.dart';
@@ -24,8 +25,7 @@ const _availableModels = [
 Future<String> generateContent({
   required String modelName,
   required String prompt,
-  ModelParameters parameters = const ModelParameters(),
-  @env.geminiApiKey required String apiKey,
+  @Env.geminiApiKey required String apiKey,
 }) async {
   if (!_availableModels.contains(modelName)) {
     throw BadRequestException('Invalid model: $modelName');
@@ -35,19 +35,52 @@ Future<String> generateContent({
   final request = [
     Content.text(prompt),
   ];
-  final response = await model.generateContent(
-    request,
-    generationConfig: GenerationConfig(
-      maxOutputTokens: parameters.maxTokens,
-      temperature: parameters.temperature,
-    ),
-  );
+  print('Sending prompt: $prompt');
+
+  final response = await model.generateContent(request);
+  print('Got response: ${_prettyJson(response.toJson())}');
 
   switch (response.text) {
     case final text?:
-      print('Gemini response: $text');
+      print('Selected answer: $text');
       return text;
     case _:
       throw InternalServerException('Failed to generate content');
   }
 }
+
+extension on GenerateContentResponse {
+  Map<String, Object?> toJson() => {
+        'promptFeedback': {
+          'blockReason': promptFeedback?.blockReason?.name,
+          'blockReasonMessage': promptFeedback?.blockReasonMessage,
+          'safetyRatings': [
+            for (final rating
+                in promptFeedback?.safetyRatings ?? <SafetyRating>[])
+              {
+                'category': rating.category.name,
+                'probability': rating.probability.name,
+              },
+          ],
+        },
+        'candidates': [
+          for (final candidate in candidates)
+            {
+              'content': candidate.content.toJson(),
+              'safetyRatings': [
+                for (final rating
+                    in candidate.safetyRatings ?? <SafetyRating>[])
+                  {
+                    'category': rating.category.name,
+                    'probability': rating.probability.name,
+                  },
+              ],
+              'finishReason': candidate.finishReason?.name,
+              'finishMessage': candidate.finishMessage,
+            },
+        ],
+      };
+}
+
+String _prettyJson(Object? json) =>
+    const JsonEncoder.withIndent('  ').convert(json);

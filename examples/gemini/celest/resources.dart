@@ -6,11 +6,11 @@ library;
 
 import 'package:celest/celest.dart';
 
-abstract final class apis {
+abstract final class Apis {
   static const gemini = CloudApi(name: r'gemini');
 }
 
-abstract final class functions {
+abstract final class Functions {
   static const geminiAvailableModels = CloudFunction(
     api: r'gemini',
     functionName: r'availableModels',
@@ -22,6 +22,6 @@ abstract final class functions {
   );
 }
 
-abstract final class env {
+abstract final class Env {
   static const geminiApiKey = EnvironmentVariable(name: r'GEMINI_API_KEY');
 }

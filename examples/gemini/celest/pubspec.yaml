@@ -3,11 +3,11 @@ description: The Celest backend for celest_project.
 publish_to: none
 
 environment:
-  sdk: ^3.2.0
+  sdk: ^3.3.0
 
 dependencies:
-  celest: ^0.1.0
-  celest_core: ^0.1.0
+  celest: ^0.2.0
+  celest_core: ^0.2.0
   google_generative_ai: ^0.2.0
   http: ">=0.13.0 <2.0.0"
 

@@ -2,14 +2,13 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:convert';
+import 'dart:convert' as _$convert;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions.dart';
-import 'package:celest_backend/models.dart';
-import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_backend/exceptions.dart' as _$exceptions;
+import 'package:celest_backend/models.dart' as _$models;
 
 import '../../client.dart';
 
@@ -18,33 +17,19 @@ class CelestFunctions {
 }
 
 class CelestFunctionsTasks {
-  Future<Map<String, Task>> listAllTasks() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/tasks/list-all-tasks'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return ($body['response'] as Map<String, Object?>).map((
-        key,
-        value,
-      ) =>
-          MapEntry(
-            key,
-            Serializers.instance.deserialize<Task>(value),
-          ));
-    }
+  Never _throwError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
+      case r'ServerException':
         throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+            .deserialize<_$exceptions.ServerException>($details);
       case _:
-        switch ($response.statusCode) {
+        switch ($statusCode) {
           case 400:
             throw BadRequestException($code);
           case _:
@@ -53,131 +38,101 @@ class CelestFunctionsTasks {
     }
   }
 
+  Future<Map<String, _$models.Task>> listAllTasks() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/tasks/list-all-tasks'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          Serializers.instance.deserialize<_$models.Task>(value),
+        ));
+  }
+
   Future<void> addTask({
     required String title,
-    required Importance importance,
+    required _$models.Importance importance,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/add-task'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
+      body: _$convert.jsonEncode({
         r'title': title,
-        r'importance': Serializers.instance.serialize<Importance>(importance),
+        r'importance':
+            Serializers.instance.serialize<_$models.Importance>(importance),
       }),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'ServerException':
-        throw Serializers.instance.deserialize<ServerException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> deleteTask({required String id}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/delete-task'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'id': id}),
+      body: _$convert.jsonEncode({r'id': id}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> markAsCompleted({required String id}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/mark-as-completed'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'id': id}),
+      body: _$convert.jsonEncode({r'id': id}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'ServerException':
-        throw Serializers.instance.deserialize<ServerException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 
   Future<void> markAsIncomplete({required String id}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/tasks/mark-as-incomplete'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({r'id': id}),
+      body: _$convert.jsonEncode({r'id': id}),
     );
-    final $body = (jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode == 200) {
-      return;
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
     }
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
-    switch ($code) {
-      case r'ServerException':
-        throw Serializers.instance.deserialize<ServerException>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case _:
-        switch ($response.statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerException($code);
-        }
-    }
+    return;
   }
 }
