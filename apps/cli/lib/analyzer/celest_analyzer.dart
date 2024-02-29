@@ -248,7 +248,9 @@ final class CelestAnalyzer {
     }
 
     await _collectApis();
-    await _collectAuth();
+    if (zDebugMode || platform.environment.containsKey('CELEST_ENABLE_AUTH')) {
+      await _collectAuth();
+    }
     return CelestAnalysisResult.success(
       project: _project.build(),
       errors: _errors,
