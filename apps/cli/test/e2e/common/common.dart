@@ -1,6 +1,8 @@
-import 'dart:io' show ProcessStartMode, ProcessException;
+import 'dart:io' show Platform, ProcessException, ProcessStartMode;
+import 'dart:math';
 
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:checks/checks.dart';
 import 'package:file/file.dart';
@@ -40,27 +42,41 @@ abstract base class Test with TestHelpers {
   @override
   File get logFile => tempDir.childFile('${name.snakeCase}.log')..createSync();
 
+  void log(Object? object) {
+    final terminator = Platform.lineTerminator;
+    print(object);
+    logFile.writeAsStringSync(
+      '$terminator$object$terminator',
+      mode: FileMode.append,
+    );
+  }
+
   List<String> get tags => const [];
 
   late final Directory flutterProjectDir;
   Directory get celestDir => flutterProjectDir.childDirectory('celest');
 
+  static final Random _random = Random();
+  final projectName = 'test_project_${_random.nextInt(1 << 20)}';
+
   @mustCallSuper
   Future<void> setUp() async {
-    final flutterProject = d.dir('hello_project', [
+    final flutterProject = d.dir(projectName, [
       d.file('pubspec.yaml', '''
 name: hello_project
 
 environment:
-  sdk: ^3.2.0
+  sdk: ${PubEnvironment.dartSdkConstraint}
 
 dependencies:
   flutter:
     sdk: flutter
 '''),
     ]);
-    await flutterProject.create();
-    flutterProjectDir = fileSystem.directory(flutterProject.io.path);
+    await flutterProject.create(tempDir.path);
+    flutterProjectDir = fileSystem.directory(
+      p.join(tempDir.path, projectName),
+    );
     await check(
       processManager.run(
         ['flutter', 'pub', 'get'],

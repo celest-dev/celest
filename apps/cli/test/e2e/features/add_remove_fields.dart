@@ -10,29 +10,36 @@ final class AddRemoveFieldsTest extends Test {
   String get name => 'add/remove fields in model';
 
   @override
+  List<String> get tags => ['add-remove-fields'];
+
+  @override
   Future<void> run() async {
     final celest = celestCommand('start')
         .workingDirectory(flutterProjectDir.path)
         .start()
         .expectNext('Enter a name for your project')
-        .writeLine('hello');
-    print('Waiting for initial start');
+        .writeLine(projectName);
+    log('Waiting for initial start');
     await celest
         .expectLater('Starting Celest')
         .expectNext('Celest is running')
         .flush();
-    final functionFile =
-        celestDir.childDirectory('functions').childFile('location.dart');
-    final modelsFile = flutterProjectDir
+    final functionFile = await celestDir
+        .childDirectory('functions')
+        .childFile('location.dart')
+        .create();
+    final modelsDir = flutterProjectDir
         .childDirectory('celest')
         .childDirectory('lib')
-        .childFile('models.dart');
-    expect(modelsFile.existsSync(), isTrue);
+        .childDirectory('models');
+    expect(modelsDir.existsSync(), isTrue);
+
+    final locationFile = await modelsDir.childFile('location.dart').create();
 
     // Create location function
-    print('Creating location function');
+    log('Creating location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name);
@@ -44,8 +51,8 @@ Future<Location> getLocation(String name) async {
         .expectNext('Project has errors')
         .flush();
 
-    print('Creating location model');
-    await modelsFile.writeAsString('''
+    log('Creating location model');
+    await locationFile.writeAsString('''
 class Location {
   Location({required this.name});
   final String name;
@@ -58,8 +65,8 @@ class Location {
         .flush();
 
     // Add GPS field to location
-    print('Adding GPS field to location');
-    await modelsFile.writeAsString('''
+    log('Adding GPS field to location');
+    await locationFile.writeAsString('''
 typedef GPS = ({double latitude, double longitude});
 
 class Location {
@@ -74,9 +81,9 @@ class Location {
         .expectNext('Project has errors')
         .flush();
 
-    print('Fixing location function');
+    log('Fixing location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name, gps: (latitude: 0.0, longitude: 0.0));
@@ -89,8 +96,8 @@ Future<Location> getLocation(String name) async {
         .flush();
 
     // Remove GPS field
-    print('Removing GPS field');
-    await modelsFile.writeAsString('''
+    log('Removing GPS field');
+    await locationFile.writeAsString('''
 class Location {
   Location({required this.name});
   final String name;
@@ -102,9 +109,9 @@ class Location {
         .expectNext('Project has errors')
         .flush();
 
-    print('Fixing location function');
+    log('Fixing location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models.dart';
+import 'package:celest_backend/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name);

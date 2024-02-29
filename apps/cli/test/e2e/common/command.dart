@@ -212,15 +212,16 @@ final class InteractiveCommand {
 
   InteractiveCommand hotReload() {
     // SIGUSR1 is not supported on Windows.
-    if (!platform.isWindows) {
-      _pendingTasks = _currentTasks
-          .then((_) {
-            _logger.fine('hotReload triggering SIGUSR1');
-            check(_process.kill(ProcessSignal.sigusr1)).isTrue();
-          })
-          .then((_) => _logger.fine('hotReload triggered'))
-          .onError<Object>((e, st) => _fail('hotReload', e, st));
+    if (platform.isWindows) {
+      return this;
     }
+    _pendingTasks = _currentTasks
+        .then((_) {
+          _logger.fine('hotReload triggering SIGUSR1');
+          check(_process.kill(ProcessSignal.sigusr1)).isTrue();
+        })
+        .then((_) => _logger.fine('hotReload triggered'))
+        .onError<Object>((e, st) => _fail('hotReload', e, st));
     return this;
   }
 

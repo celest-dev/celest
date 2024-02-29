@@ -106,14 +106,24 @@ final class CelestFrontend implements Closeable {
     _watcherSub ??= StreamQueue(
       _watcher!.events
           // Ignore creation of new directories and files (they'll be empty)
+          .tap(
+            (event) => logger.finest(
+              'Watcher event (${event.type}): ${event.path}',
+            ),
+          )
           .where((event) => event.type != ChangeType.ADD)
-          .where((event) => _isReloadablePath(event.path))
-          .buffer(_readyForChanges.stream),
+          .where((event) {
+        final isReloadable = _isReloadablePath(event.path);
+        if (!isReloadable) {
+          logger.finest('Ignoring non-reloadable path: ${event.path}');
+        }
+        return isReloadable;
+      }).buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
 
     var reloading = false;
-    final reloadComplete = Completer<void>.sync();
+    final reloadComplete = Completer<void>();
     assert(
       _pendingOperations.isEmpty,
       'No operations should be in progress when called',
@@ -121,20 +131,25 @@ final class CelestFrontend implements Closeable {
     _pendingOperations.add(
       _watcherSub!.cancelable((watcher) async {
         final events = await watcher.next;
-        if (reloading) return;
-        reloading = true;
-        (_changedPaths ??= {}).addAll(
-          events.map((event) => event.path),
-        );
+        final changedPaths = events.map((event) => event.path).toSet();
         logger.finest(
           '${events.length} watcher events since last compile: ',
-          _changedPaths!.join(Platform.lineTerminator),
+          changedPaths.join(Platform.lineTerminator),
         );
-        // TODO(dnys1): Improve cache invalidation to only invalidate
-        // necessary types.
-        typeHelper.reset();
-        await celestProject.invalidate(_changedPaths!);
-        reloadComplete.complete();
+        if (reloading) return;
+        reloading = true;
+
+        try {
+          logger.finest('Reloading with watcher events');
+
+          // TODO(dnys1): Improve cache invalidation to only invalidate
+          // necessary types.
+          typeHelper.reset();
+          _changedPaths = await _invalidateAllProjectFiles();
+          reloadComplete.complete();
+        } on Object catch (e, st) {
+          reloadComplete.completeError(e, st);
+        }
         return null;
       }),
     );
@@ -142,23 +157,17 @@ final class CelestFrontend implements Closeable {
       _pendingOperations.add(
         reloadStream.cancelable((reloadStream) async {
           final signal = await reloadStream.next;
+          logger.finest('Got reload signal: $signal');
           if (reloading) return;
           reloading = true;
-          logger.fine('Got reload signal: $signal');
-          final allProjectFiles = await fileSystem
-              .directory(projectPaths.projectRoot)
-              .list(recursive: true)
-              .whereType<File>()
-              .toList();
-          // Invalidate all paths.
-          typeHelper.reset();
-          final toInvalidate = allProjectFiles
-              .map((f) => f.path)
-              .where(_isReloadablePath)
-              .toList();
-          logger.finest('Invaliding paths: $toInvalidate');
-          await celestProject.invalidate(toInvalidate);
-          reloadComplete.complete();
+
+          try {
+            logger.finest('Reloading with signal');
+            _changedPaths = await _invalidateAllProjectFiles();
+            reloadComplete.complete();
+          } on Object catch (e, st) {
+            reloadComplete.completeError(e, st);
+          }
           return null;
         }),
       );
@@ -169,6 +178,27 @@ final class CelestFrontend implements Closeable {
       _stopSignal.future,
     ]);
     await _cancelPendingOperations();
+  }
+
+  // TODO(dnys1): There is a marked difference in behavior when invalidating
+  // just the changed paths, vs invalidating all project files. To be
+  // safe, we invalidate all files on every reload. This is not ideal, but
+  // it's the safest option for now.
+  Future<Set<String>> _invalidateAllProjectFiles() async {
+    final allProjectFiles = await fileSystem
+        .directory(projectPaths.projectRoot)
+        .list(recursive: true)
+        .whereType<File>()
+        .toList();
+    // Invalidate all paths.
+    typeHelper.reset();
+    final toInvalidate =
+        allProjectFiles.map((f) => f.path).where(_isReloadablePath).toList();
+    logger.finest('Invaliding paths: $toInvalidate');
+    return {
+      ...toInvalidate,
+      ...await celestProject.invalidate(toInvalidate),
+    };
   }
 
   /// Whether [path] is eligible for watching and reloading.

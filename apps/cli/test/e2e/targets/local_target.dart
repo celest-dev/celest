@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:celest_cli_common/celest_cli_common.dart';
-
 import '../common/common.dart';
 
 final class LocalTarget extends TestTarget {
@@ -13,7 +11,9 @@ final class LocalTarget extends TestTarget {
 
   @override
   List<String> get executable => [
-        Sdk.current.dart,
+        Platform.resolvedExecutable,
+        '--enable-asserts',
+        '--enable-experiment=native-assets',
         Directory.current.uri.resolve('bin/celest.dart').toFilePath(),
       ];
 }

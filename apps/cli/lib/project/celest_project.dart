@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
@@ -60,8 +63,8 @@ final class CelestProject {
   );
 
   /// The [AnalysisContext] for the current project.
-  late final AnalysisContext analysisContext =
-      _analysisContextCollection.contexts.first;
+  late final DriverBasedAnalysisContext analysisContext =
+      _analysisContextCollection.contexts.single;
 
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
@@ -76,12 +79,18 @@ final class CelestProject {
 
   Future<Set<String>> invalidate(Iterable<String> files) async {
     for (final file in files) {
-      analysisContext.changeFile(file);
       if (p.basename(file) == 'analysis_options.yaml') {
         _analysisOptions = await AnalysisOptions.load(file);
       }
+      if (p.extension(file) == '.dart') {
+        // Change the file in the analysis context.
+        analysisContext.changeFile(file);
+      }
     }
     final changedFiles = await analysisContext.applyPendingFileChanges();
+    _logger.finest(
+      'Changed files: ${changedFiles.join(Platform.lineTerminator)}',
+    );
     return changedFiles.toSet();
   }
 
