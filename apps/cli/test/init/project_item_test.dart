@@ -57,7 +57,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater();
+      const updater = ProjectDependencyUpdater(null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -75,7 +75,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater();
+      const updater = ProjectDependencyUpdater(null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -97,7 +97,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater();
+      const updater = ProjectDependencyUpdater(null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -118,7 +118,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater();
+      const updater = ProjectDependencyUpdater(null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -139,7 +139,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater();
+      const updater = ProjectDependencyUpdater(null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =

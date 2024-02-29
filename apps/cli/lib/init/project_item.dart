@@ -82,9 +82,11 @@ final class MacOsEntitlements extends ProjectItem {
 }
 
 final class ProjectDependencyUpdater extends ProjectItem {
-  const ProjectDependencyUpdater();
+  const ProjectDependencyUpdater(this.appRoot);
 
   static final _logger = Logger('ProjectDependencyUpdater');
+
+  final String? appRoot;
 
   @override
   Future<void> create(String projectRoot) async {
@@ -118,10 +120,20 @@ final class ProjectDependencyUpdater extends ProjectItem {
           .writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
     }
     _logger.fine('Running pub upgrade in "$projectRoot"...');
-    await runPub(
-      action: PubAction.upgrade,
-      workingDirectory: projectRoot,
-    );
+    // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
+    // the dependencies in the lockfile are already up to date.
+    await Future.wait(eagerError: true, [
+      runPub(
+        action: PubAction.upgrade,
+        workingDirectory: projectRoot,
+      ),
+      if (appRoot != null)
+        runPub(
+          exe: 'flutter',
+          action: PubAction.upgrade,
+          workingDirectory: appRoot!,
+        ),
+    ]);
     _logger.fine('Project dependencies updated');
   }
 }
