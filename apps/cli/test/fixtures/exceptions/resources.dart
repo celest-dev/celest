@@ -6,6 +6,9 @@ library;
 
 import 'package:celest/celest.dart';
 
+@Deprecated('Use `Apis` instead.')
+typedef apis = Apis;
+
 abstract final class Apis {
   static const external = CloudApi(name: r'external');
 
@@ -13,6 +16,9 @@ abstract final class Apis {
 
   static const throwing = CloudApi(name: r'throwing');
 }
+
+@Deprecated('Use `Functions` instead.')
+typedef functions = Functions;
 
 abstract final class Functions {
   static const externalCallsThrowsCommonException = CloudFunction(

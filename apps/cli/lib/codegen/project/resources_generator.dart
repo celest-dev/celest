@@ -45,6 +45,21 @@ final class ResourcesGenerator {
     if (cached != null) {
       return cached;
     }
+
+    // TODO(dnys1): Remove in 0.3.0
+    // Adds a typedef for the old name to avoid breaking changes.
+    final typedef = TypeDef(
+      (b) => b
+        ..annotations.add(
+          DartTypes.core.deprecated.newInstance([
+            literalString('Use `$name` instead.'),
+          ]),
+        )
+        ..name = name.toLowerCase()
+        ..definition = refer(name),
+    );
+    _library.body.add(typedef);
+
     final builder = ClassBuilder()
       ..name = name
       ..abstract = true

@@ -6,6 +6,9 @@ library;
 
 import 'package:celest/celest.dart';
 
+@Deprecated('Use `Apis` instead.')
+typedef apis = Apis;
+
 abstract final class Apis {
   static const asserts = CloudApi(name: r'asserts');
 
@@ -35,6 +38,9 @@ abstract final class Apis {
 
   static const sealedClasses = CloudApi(name: r'sealed_classes');
 }
+
+@Deprecated('Use `Functions` instead.')
+typedef functions = Functions;
 
 abstract final class Functions {
   static const assertsAssertsEnabled = CloudFunction(
