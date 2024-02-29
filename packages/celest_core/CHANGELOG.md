@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Overrides `toString` for `CloudException` types.
+
 ## 0.2.0
 
 - Bumps minimum Dart SDK to 3.3
