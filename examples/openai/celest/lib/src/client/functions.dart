@@ -9,6 +9,7 @@ import 'dart:convert' as _$convert;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart' as _$models;
 import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 import '../../client.dart';
 
@@ -30,6 +31,9 @@ class CelestFunctionsOpenAi {
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
