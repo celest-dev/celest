@@ -1,0 +1,29 @@
+name: celest_auth_example
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  celest: ^0.2.0
+  celest_auth: ^0.3.0
+  flutter:
+    sdk: flutter
+
+dependency_overrides:
+  celest:
+    path: ../../celest
+  celest_auth:
+    path: ../
+  celest_core:
+    path: ../../celest_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

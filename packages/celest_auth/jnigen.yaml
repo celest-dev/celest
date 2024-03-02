@@ -1,0 +1,68 @@
+# Regenerate bindings with `dart run jnigen --config jnigen.yaml`.
+
+summarizer:
+  backend: asm
+
+android_sdk_config:
+  add_gradle_deps: true
+  android_example: "example/"
+
+suspend_fun_to_async: true
+
+output:
+  bindings_type: dart_only
+  dart:
+    path: "lib/src/platform/android/jni_bindings.ffi.dart"
+    structure: single_file
+
+classes:
+  - android.net.Uri
+  - androidx.browser.customtabs.CustomTabsIntent
+  - androidx.browser.customtabs.CustomTabsService
+  - android.app.Activity
+  - android.content.Context
+  - android.content.Intent
+  - android.content.pm.PackageManager
+  - android.content.pm.ResolveInfo
+  - android.content.pm.ActivityInfo
+  - android.content.pm.PackageItemInfo
+  - dev.celest.celest_auth.CelestAuth
+  - androidx.credentials.CreateCredentialRequest
+  - androidx.credentials.CreateCredentialResponse
+  - androidx.credentials.CreatePublicKeyCredentialRequest
+  - androidx.credentials.CreatePublicKeyCredentialResponse
+  - androidx.credentials.Credential
+  - androidx.credentials.CredentialManager
+  - androidx.credentials.CredentialManagerCallback
+  - androidx.credentials.GetCredentialRequest
+  - androidx.credentials.GetCredentialResponse
+  - androidx.credentials.GetPublicKeyCredentialOption
+  - androidx.credentials.PublicKeyCredential
+  - androidx.credentials.exceptions.CreateCredentialCancellationException
+  - androidx.credentials.exceptions.CreateCredentialException
+  - androidx.credentials.exceptions.GetCredentialCancellationException
+  - androidx.credentials.exceptions.GetCredentialException
+  - androidx.credentials.exceptions.NoCredentialException
+  - androidx.credentials.exceptions.CreateCredentialInterruptedException
+  - androidx.credentials.exceptions.CreateCredentialProviderConfigurationException
+  - androidx.credentials.exceptions.CreateCredentialUnknownException
+  - androidx.credentials.exceptions.CreateCredentialCustomException
+  - androidx.credentials.exceptions.publickeycredential.CreatePublicKeyCredentialDomException
+  - androidx.credentials.exceptions.publickeycredential.CreatePublicKeyCredentialException
+  - androidx.credentials.exceptions.publickeycredential.GetPublicKeyCredentialDomException
+  - android.os.CancellationSignal
+  - android.os.Bundle
+  - android.os.BaseBundle
+  - java.lang.Runnable
+  - java.lang.Exception
+  - java.lang.Throwable
+  - java.util.concurrent.Executor
+  - java.util.concurrent.Executors
+  - com.google.android.gms.fido.Fido
+  - com.google.android.gms.fido.fido2.Fido2ApiClient
+  - com.google.android.gms.tasks.Task
+  - com.google.android.gms.tasks.OnSuccessListener
+  - com.google.android.gms.tasks.OnFailureListener
+
+enable_experiment:
+  - "interface_implementation"

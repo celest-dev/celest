@@ -1,0 +1,59 @@
+name: AuthenticationServices
+description: |
+  Bindings for AuthenticationServices on macOS/iOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.authentication_services.yaml`.
+language: "objc"
+output:
+  bindings: "lib/src/platform/darwin/authentication_services.ffi.dart"
+  symbol-file:
+    output: "package:celest_auth/src/platform/darwin/authentication_services.yaml"
+    import-path: "package:celest_auth/src/platform/darwin/authentication_services.ffi.dart"
+headers:
+  entry-points:
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AuthenticationServices.framework/Headers/ASWebAuthenticationSession.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSApplication.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/objc/runtime.h"
+  include-directives:
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/**/*.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AuthenticationServices.framework/Headers/ASWebAuthenticationSession.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AuthenticationServices.framework/Headers/ASFoundation.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSApplication.h"
+# import:
+#   symbol-files:
+#     - 'package:celest_auth/src/platform/darwin/foundation.yaml'
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+
+exclude-all-by-default: true
+objc-interfaces:
+  include:
+    - ASWebAuthenticationSession
+    - NSWindow
+    - NSApplication
+  exclude:
+    - NS.*
+functions:
+  include:
+    - objc_.*
+    - protocol_.*
+structs:
+  include:
+    - objc_.*
+typedefs:
+  include:
+    - ASWebAuthenticationSessionCompletionHandler
+    - ASPresentationAnchor
+    - Protocol
+enums:
+  include:
+    - AS.*

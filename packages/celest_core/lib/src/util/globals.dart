@@ -14,5 +14,8 @@ const bool kProfileMode = bool.fromEnvironment('dart.vm.profile');
 /// other compilation targets.
 const bool kIsWeb = identical(0, 0.0);
 
+/// Whether running in a Dart native environment (i.e. the VM).
+const bool kIsDartNative = !kIsWeb && !kIsFlutter;
+
 /// Whether running in Flutter (as opposed to Dart-only).
 const bool kIsFlutter = bool.fromEnvironment('dart.library.ui');

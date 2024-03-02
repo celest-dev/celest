@@ -1,0 +1,80 @@
+format_version: 1.0.0
+files:
+  package:celest_auth/src/platform/darwin/foundation.ffi.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      ObjCObject:
+        name: ObjCObject
+      ObjCSel:
+        name: ObjCSel
+      c:@E@NSComparisonResult:
+        name: NSComparisonResult
+      c:@E@NSStringCompareOptions:
+        name: NSStringCompareOptions
+      c:@E@NSStringEncodingConversionOptions:
+        name: NSStringEncodingConversionOptions
+      c:@E@NSStringEnumerationOptions:
+        name: NSStringEnumerationOptions
+      c:@E@NSURLBookmarkCreationOptions:
+        name: NSURLBookmarkCreationOptions
+      c:@E@NSURLBookmarkResolutionOptions:
+        name: NSURLBookmarkResolutionOptions
+      c:@E@NSURLHandleStatus:
+        name: NSURLHandleStatus
+      c:@S@_NSRange:
+        name: NSRange
+      c:@S@_NSZone:
+        name: NSZone
+      c:objc(cs)NSCharacterSet:
+        name: NSCharacterSet
+      c:objc(cs)NSCoder:
+        name: NSCoder
+      c:objc(cs)NSConstantString:
+        name: NSConstantString
+      c:objc(cs)NSData:
+        name: NSData
+      c:objc(cs)NSDictionary:
+        name: NSDictionary
+      c:objc(cs)NSError:
+        name: NSError
+      c:objc(cs)NSFileSecurity:
+        name: NSFileSecurity
+      c:objc(cs)NSInvocation:
+        name: NSInvocation
+      c:objc(cs)NSLocale:
+        name: NSLocale
+      c:objc(cs)NSMethodSignature:
+        name: NSMethodSignature
+      c:objc(cs)NSMutableString:
+        name: NSMutableString
+      c:objc(cs)NSNumber:
+        name: NSNumber
+      c:objc(cs)NSObject:
+        name: NSObject
+      c:objc(cs)NSSimpleCString:
+        name: NSSimpleCString
+      c:objc(cs)NSString:
+        name: NSString
+      c:objc(cs)NSURL:
+        name: NSURL
+      c:objc(cs)NSURLComponents:
+        name: NSURLComponents
+      c:objc(cs)NSURLHandle:
+        name: NSURLHandle
+      c:objc(cs)NSURLQueryItem:
+        name: NSURLQueryItem
+      c:objc(cs)NSValue:
+        name: NSValue
+      c:objc(cs)Protocol:
+        name: Protocol
+      "objcBlock: 1wxmkb 1wxmkb* 4cylau":
+        name: ObjCBlock_ffiVoid_ffiVoid_ffiUnsignedLong
+      "objcBlock: 1wxmkb 71xoam bool*":
+        name: ObjCBlock_ffiVoid_NSString_bool
+      "objcBlock: 1wxmkb 71xoam? fju8rp fju8rp bool*":
+        name: ObjCBlock_ffiVoid_NSString_NSRange_NSRange_bool
+      "objcBlock: 1wxmkb fk756t* 4cylau":
+        name: ObjCBlock_ffiVoid_ffiUnsignedShort_ffiUnsignedLong
+      "objcBlock: 3e9m14*? 37mnn9 71xoam":
+        name: ObjCBlock_ObjCObject_NSError_NSString
