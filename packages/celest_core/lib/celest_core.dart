@@ -1,6 +1,10 @@
 /// Celest code shared between the client and the cloud.
 library;
 
+/// Auth
+export 'src/auth/auth_protocol.dart';
+export 'src/auth/passkey_types.dart';
+
 /// Exceptions
 export 'src/exception/celest_exception.dart';
 export 'src/exception/cloud_exception.dart';

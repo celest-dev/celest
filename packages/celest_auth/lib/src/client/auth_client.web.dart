@@ -3,7 +3,9 @@ import 'package:path/path.dart';
 import 'package:web/web.dart';
 
 final class AuthClientWeb extends AuthClientPlatform {
-  AuthClientWeb() : super.base();
+  AuthClientWeb({
+    required super.protocol,
+  }) : super.base();
 
   String get _baseUrl {
     final baseElement = document.querySelector('base') as HTMLBaseElement?;

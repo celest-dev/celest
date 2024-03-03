@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:celest_auth/src/client/auth_client_platform.vm.dart';
 
 final class AuthClientNative extends AuthClientPlatform {
-  AuthClientNative() : super.base();
+  AuthClientNative({
+    required super.protocol,
+  }) : super.base();
 
   // /// Launches the given URL.
   // Future<void> _launchUrl(String url) async {

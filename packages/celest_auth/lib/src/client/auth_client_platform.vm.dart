@@ -2,21 +2,24 @@ import 'package:celest_auth/src/client/auth_client.android.dart';
 import 'package:celest_auth/src/client/auth_client.dart';
 import 'package:celest_auth/src/client/auth_client.darwin.dart';
 import 'package:celest_auth/src/client/auth_client.native.dart';
+import 'package:celest_core/celest_core.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/util/globals.dart';
 import 'package:meta/meta.dart';
 import 'package:os_detect/os_detect.dart' as os;
 
 abstract base class AuthClientPlatform extends AuthClient {
-  factory AuthClientPlatform() {
+  factory AuthClientPlatform({
+    required AuthProtocol protocol,
+  }) {
     if (kIsDartNative) {
-      return AuthClientNative();
+      return AuthClientNative(protocol: protocol);
     }
     if (os.isIOS || os.isMacOS) {
-      return AuthClientDarwin();
+      return AuthClientDarwin(protocol: protocol);
     }
     if (os.isAndroid) {
-      return AuthClientAndroid();
+      return AuthClientAndroid(protocol: protocol);
     }
     throw UnsupportedError(
       'The current platform is not supported: ${os.operatingSystem}',
@@ -24,5 +27,7 @@ abstract base class AuthClientPlatform extends AuthClient {
   }
 
   @protected
-  AuthClientPlatform.base() : super.base();
+  AuthClientPlatform.base({
+    required super.protocol,
+  }) : super.base();
 }

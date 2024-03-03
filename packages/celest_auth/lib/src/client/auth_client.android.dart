@@ -9,7 +9,9 @@ import 'package:jni/jni.dart';
 import 'package:logging/logging.dart';
 
 final class AuthClientAndroid extends AuthClientPlatform {
-  AuthClientAndroid() : super.base() {
+  AuthClientAndroid({
+    required super.protocol,
+  }) : super.base() {
     Jni.initDLApi();
     _celestAuth.init(_applicationContext);
   }

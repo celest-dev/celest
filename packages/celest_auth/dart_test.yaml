@@ -1,0 +1,5 @@
+override_platforms:
+  firefox:
+    settings:
+      # Workaround for: https://github.com/dart-lang/test/issues/2194
+      executable: /Applications/Firefox.app/Contents/MacOS/firefox

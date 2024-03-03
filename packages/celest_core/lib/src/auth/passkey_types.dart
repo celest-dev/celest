@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:celest_auth/src/client/base64_raw_url.dart';
+import 'package:celest_core/src/util/base64_raw_url.dart';
 
 /// A simple test to determine if a hostname is a properly-formatted domain name
 ///
@@ -13,19 +13,73 @@ bool _isValidDomain(String hostname) {
 /// From: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch08s15.html
 final _validDomain = RegExp(r'^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$');
 
+final class PasskeyRegistrationRequest {
+  const PasskeyRegistrationRequest({
+    required this.username,
+    String? displayName,
+    this.authenticatorSelection,
+  }) : displayName = displayName ?? '';
+
+  factory PasskeyRegistrationRequest.fromJson(Map<String, dynamic> json) {
+    if (json
+        case {
+          'username': final String username,
+          'displayName': final String displayName,
+        }) {
+      return PasskeyRegistrationRequest(
+        username: username,
+        displayName: displayName,
+        authenticatorSelection: json['authenticatorSelection'] != null
+            ? AuthenticatorSelectionCriteria.fromJson(
+                json['authenticatorSelection'] as Map<String, dynamic>,
+              )
+            : null,
+      );
+    }
+    throw FormatException('Invalid registration request: $json');
+  }
+
+  final String username;
+  final String displayName;
+  final AuthenticatorSelectionCriteria? authenticatorSelection;
+
+  Map<String, Object?> toJson() => {
+        'username': username,
+        'displayName': displayName,
+        if (authenticatorSelection case final authenticatorSelection?)
+          'authenticatorSelection': authenticatorSelection.toJson(),
+      };
+
+  @override
+  String toString() {
+    final buffer = StringBuffer()
+      ..writeln('PasskeyRegistrationRequest(')
+      ..writeln('  username: $username,')
+      ..writeln('  displayName: $displayName,');
+    if (authenticatorSelection case final authenticatorSelection?) {
+      buffer.writeln('  authenticatorSelection: $authenticatorSelection,');
+    }
+    buffer.write(')');
+    return buffer.toString();
+  }
+}
+
 final class PasskeyRegistrationOptions {
   PasskeyRegistrationOptions({
+    required this.challenge,
     required this.rpName,
     required this.rpId,
     required this.userId,
     required this.userName,
-    this.userDisplayName,
-    this.challenge,
+    String? userDisplayName,
     this.timeout = const Duration(minutes: 5),
-  }) : assert(
+    this.authenticatorSelection,
+    this.publicKeyCredentialParameters,
+  })  : assert(
           _isValidDomain(rpId),
           'Invalid rpId (must be a valid domain): $rpId',
-        );
+        ),
+        userDisplayName = userDisplayName ?? '';
 
   factory PasskeyRegistrationOptions.fromJson(Map<String, Object?> json) {
     if (json
@@ -34,22 +88,30 @@ final class PasskeyRegistrationOptions {
             'name': final String rpName,
             'id': final String rpId,
           },
+          'challenge': final String challenge,
           'user': {
-                'id': final String userId,
-                'name': final String userName,
-              } &&
-              final user,
+            'id': final String userId,
+            'name': final String userName,
+            'displayName': final String userDisplayName,
+          },
         }) {
       return PasskeyRegistrationOptions(
         rpName: rpName,
         rpId: rpId,
         userId: userId,
         userName: userName,
-        userDisplayName: user['displayName'] as String?,
-        challenge: json['challenge'] != null
-            ? base64RawUrl.decode(json['challenge'] as String)
-            : null,
+        userDisplayName: userDisplayName,
+        challenge: base64RawUrl.decode(challenge),
         timeout: Duration(milliseconds: (json['timeout'] as num).toInt()),
+        authenticatorSelection: json['authenticatorSelection'] != null
+            ? AuthenticatorSelectionCriteria.fromJson(
+                json['authenticatorSelection'] as Map<String, Object?>,
+              )
+            : null,
+        publicKeyCredentialParameters: (json['pubKeyCredParams'] as List?)
+            ?.cast<Map<String, Object?>>()
+            .map(PublicKeyCredentialParameter.fromJson)
+            .toList(),
       );
     }
     throw FormatException('Invalid registration options: $json');
@@ -59,9 +121,11 @@ final class PasskeyRegistrationOptions {
   final String rpId;
   final String userId;
   final String userName;
-  final String? userDisplayName;
-  final Uint8List? challenge;
+  final String userDisplayName;
+  final Uint8List challenge;
   final Duration timeout;
+  final AuthenticatorSelectionCriteria? authenticatorSelection;
+  final List<PublicKeyCredentialParameter>? publicKeyCredentialParameters;
 
   Map<String, Object?> toJson() => {
         'rp': {
@@ -71,11 +135,16 @@ final class PasskeyRegistrationOptions {
         'user': {
           'id': userId,
           'name': userName,
-          if (userDisplayName != null) 'displayName': userDisplayName,
+          'displayName': userDisplayName,
         },
-        if (challenge case final challenge?)
-          'challenge': base64RawUrl.encode(challenge),
+        'challenge': base64RawUrl.encode(challenge),
         'timeout': timeout.inMilliseconds,
+        if (authenticatorSelection case final authenticatorSelection?)
+          'authenticatorSelection': authenticatorSelection.toJson(),
+        if (publicKeyCredentialParameters
+            case final publicKeyCredentialParameters?)
+          'pubKeyCredParams':
+              publicKeyCredentialParameters.map((el) => el.toJson()).toList(),
       };
 
   @override
@@ -85,16 +154,22 @@ final class PasskeyRegistrationOptions {
       ..writeln('  rpName: $rpName,')
       ..writeln('  rpId: $rpId,')
       ..writeln('  userId: $userId,')
-      ..writeln('  userName: $userName,');
-    if (userDisplayName != null) {
-      buffer.writeln('  userDisplayName: $userDisplayName,');
+      ..writeln('  userName: $userName,')
+      ..writeln('  userDisplayName: $userDisplayName,')
+      ..writeln('  challenge: ${base64RawUrl.encode(challenge)},')
+      ..writeln('  timeout: $timeout,');
+    if (authenticatorSelection case final authenticatorSelection?) {
+      buffer.writeln('  authenticatorSelection: $authenticatorSelection,');
     }
-    if (challenge != null) {
-      buffer.writeln('  challenge: ${base64RawUrl.encode(challenge!)},');
+    if (publicKeyCredentialParameters
+        case final publicKeyCredentialParameters?) {
+      buffer.writeln('  publicKeyCredentialParameters: [');
+      for (final el in publicKeyCredentialParameters) {
+        buffer.writeln('    $el,');
+      }
+      buffer.writeln('  ],');
     }
-    buffer
-      ..writeln('  timeout: $timeout,')
-      ..write(')');
+    buffer.write(')');
     return buffer.toString();
   }
 }
@@ -152,7 +227,10 @@ final class PasskeyRegistrationResponse {
     throw FormatException('Invalid registration response: $json');
   }
 
+  /// A base64url-encoded string representing the credential ID.
   final String id;
+
+  /// The credential ID in its raw binary form.
   final Uint8List rawId;
   String get type => 'public-key';
   final PasskeyClientData clientData;
@@ -161,6 +239,9 @@ final class PasskeyRegistrationResponse {
   final COSEAlgorithmIdentifier? publicKeyAlgorithm;
   final Uint8List? publicKey;
   final Uint8List? authenticatorData;
+
+  /// This will be set to `platform` when the credential is created on a
+  /// passkey-capable device.
   final AuthenticatorAttachment? authenticatorAttachment;
 
   Map<String, Object?> toJson() => {
@@ -214,6 +295,118 @@ final class PasskeyRegistrationResponse {
       ..writeln(
           '  authenticatorData: ${base64RawUrl.encode(authenticatorData ?? Uint8List(0))},')
       ..writeln('  authenticatorAttachment: $authenticatorAttachment,')
+      ..write(')');
+    return buffer.toString();
+  }
+}
+
+final class PublicKeyCredentialParameter {
+  const PublicKeyCredentialParameter({
+    required this.algorithm,
+  });
+
+  factory PublicKeyCredentialParameter.fromJson(Map<String, Object?> json) {
+    if (json
+        case {
+          'type': 'public-key',
+          'alg': final int algorithm,
+        }) {
+      return PublicKeyCredentialParameter(
+        algorithm: COSEAlgorithmIdentifier._(algorithm),
+      );
+    }
+    throw FormatException('Invalid credential parameter: $json');
+  }
+
+  String get type => 'public-key';
+  final COSEAlgorithmIdentifier algorithm;
+
+  Map<String, Object?> toJson() => {
+        'type': type,
+        'alg': algorithm,
+      };
+
+  @override
+  String toString() {
+    final buffer = StringBuffer()
+      ..write('PasskeyCredentialParameter(')
+      ..write('type: $type, ')
+      ..write('algorithm: $algorithm')
+      ..write(')');
+    return buffer.toString();
+  }
+}
+
+final class AuthenticatorSelectionCriteria {
+  const AuthenticatorSelectionCriteria({
+    this.authenticatorAttachment,
+    this.residentKey,
+    bool? requireResidentKey,
+    UserVerificationRequirement? userVerification,
+  })  : requireResidentKey = requireResidentKey ?? false,
+        userVerification =
+            userVerification ?? UserVerificationRequirement.preferred;
+
+  const AuthenticatorSelectionCriteria.passkey()
+      :
+        // Try to use UV if possible.
+        //
+        // Why not required: https://passkeys.dev/docs/use-cases/bootstrapping/#a-note-about-user-verification
+        userVerification = UserVerificationRequirement.required,
+
+        // "platform" indicates that the RP wants a platform authenticator
+        // (an authenticator embedded to the platform device) which will
+        // not prompt to insert e.g. a USB security key. The user has a
+        // simpler option to create a passkey.
+        authenticatorAttachment = AuthenticatorAttachment.platform,
+
+        // A discoverable credential (resident key) stores user
+        // information to the passkey and lets users select the account
+        // upon authentication.
+        residentKey = ResidentKeyRequirement.required,
+
+        // This property is retained for backward compatibility from
+        // WebAuthn Level 1, an older version of the specification. Set
+        // this to true if residentKey is 'required', otherwise set it
+        // to false.
+        requireResidentKey = true;
+
+  factory AuthenticatorSelectionCriteria.fromJson(Map<String, Object?> json) {
+    return AuthenticatorSelectionCriteria(
+      authenticatorAttachment:
+          json['authenticatorAttachment'] as AuthenticatorAttachment?,
+      requireResidentKey: json['requireResidentKey'] as bool?,
+      residentKey: json['residentKey'] as ResidentKeyRequirement?,
+      userVerification:
+          json['userVerification'] as UserVerificationRequirement?,
+    );
+  }
+
+  final AuthenticatorAttachment? authenticatorAttachment;
+  final ResidentKeyRequirement? residentKey;
+  final bool requireResidentKey;
+  final UserVerificationRequirement userVerification;
+
+  Map<String, Object?> toJson() => {
+        if (authenticatorAttachment != null)
+          'authenticatorAttachment': authenticatorAttachment,
+        if (residentKey != null) 'residentKey': residentKey,
+        'requireResidentKey': requireResidentKey,
+        'userVerification': userVerification,
+      };
+
+  @override
+  String toString() {
+    final buffer = StringBuffer()..write('AuthenticatorSelectionCriteria(');
+    if (authenticatorAttachment != null) {
+      buffer.write('authenticatorAttachment: $authenticatorAttachment, ');
+    }
+    if (residentKey != null) {
+      buffer.write('residentKey: $residentKey, ');
+    }
+    buffer
+      ..write('requireResidentKey: $requireResidentKey, ')
+      ..write('userVerification: $userVerification')
       ..write(')');
     return buffer.toString();
   }
@@ -333,7 +526,7 @@ final class PasskeyClientDataTokenBinding {
 final class PasskeyDescriptor {
   const PasskeyDescriptor({
     required this.id,
-    this.transports,
+    this.transports = const [],
   });
 
   factory PasskeyDescriptor.fromJson(Map<String, Object?> json) {
@@ -343,51 +536,93 @@ final class PasskeyDescriptor {
         }) {
       return PasskeyDescriptor(
         id: base64RawUrl.decode(id),
-        transports: (json['transports'] as List<String>?)?.cast(),
+        transports: (json['transports'] as List<String>?)?.cast() ?? const [],
       );
     }
     throw FormatException('Invalid passkey descriptor: $json');
   }
 
   final Uint8List id;
-  final List<AuthenticatorTransport>? transports;
+  final List<AuthenticatorTransport> transports;
 
   Map<String, Object?> toJson() => {
         'id': base64RawUrl.encode(id),
-        if (transports != null) 'transports': transports,
+        'transports': transports,
       };
 
   @override
   String toString() => 'PasskeyDescriptor('
       'id: ${base64RawUrl.encode(id)}, '
-      'transports: ${transports?.join(', ')})';
+      'transports: ${transports.join(', ')})';
 }
 
 final class PasskeyAuthenticationRequest {
-  PasskeyAuthenticationRequest({
+  const PasskeyAuthenticationRequest({
+    required this.username,
+    UserVerificationRequirement? userVerification,
+  }) : userVerification =
+            userVerification ?? UserVerificationRequirement.preferred;
+
+  factory PasskeyAuthenticationRequest.fromJson(Map<String, Object?> json) {
+    return PasskeyAuthenticationRequest(
+      username: json['username'] as String,
+      userVerification:
+          json['userVerification'] as UserVerificationRequirement?,
+    );
+  }
+
+  final String username;
+  final UserVerificationRequirement userVerification;
+
+  Map<String, Object?> toJson() => {
+        'username': username,
+        'userVerification': userVerification,
+      };
+
+  @override
+  String toString() {
+    final buffer = StringBuffer()
+      ..writeln('PasskeyAuthenticationRequest(')
+      ..writeln('  username: $username,')
+      ..writeln('  userVerification: $userVerification,')
+      ..write(')');
+    return buffer.toString();
+  }
+}
+
+final class PasskeyAuthenticationOptions {
+  PasskeyAuthenticationOptions({
     required this.rpId,
     required this.challenge,
     this.timeout = const Duration(minutes: 5),
-    this.allowCredentials,
+    List<PasskeyDescriptor>? allowCredentials,
     UserVerificationRequirement? userVerification,
   })  : assert(
           _isValidDomain(rpId),
           'Invalid rpId (must be a valid domain): $rpId',
         ),
+        allowCredentials = allowCredentials ?? const [],
         userVerification =
             userVerification ?? UserVerificationRequirement.preferred;
 
-  factory PasskeyAuthenticationRequest.fromJson(Map<String, Object?> json) {
+  factory PasskeyAuthenticationOptions.fromJson(Map<String, Object?> json) {
     if (json
         case {
           'rpId': final String rpId,
           'challenge': final String challenge,
           'timeout': final int timeout,
+          'allowCredentials': final List<Object?> allowCredentials,
         }) {
-      return PasskeyAuthenticationRequest(
+      return PasskeyAuthenticationOptions(
         rpId: rpId,
         challenge: base64RawUrl.decode(challenge),
         timeout: Duration(milliseconds: timeout),
+        allowCredentials: allowCredentials
+            .cast<Map<String, Object?>>()
+            .map(PasskeyDescriptor.fromJson)
+            .toList(),
+        userVerification:
+            json['userVerification'] as UserVerificationRequirement?,
       );
     }
     throw FormatException('Invalid authentication request: $json');
@@ -396,16 +631,14 @@ final class PasskeyAuthenticationRequest {
   final String rpId;
   final Uint8List challenge;
   final Duration timeout;
-  final List<PasskeyDescriptor>? allowCredentials;
+  final List<PasskeyDescriptor> allowCredentials;
   final UserVerificationRequirement userVerification;
 
   Map<String, Object?> toJson() => {
         'rpId': rpId,
         'challenge': base64RawUrl.encode(challenge),
         'timeout': timeout.inMilliseconds,
-        if (allowCredentials case final allowCredentials?)
-          'allowCredentials':
-              allowCredentials.map((el) => el.toJson()).toList(),
+        'allowCredentials': allowCredentials.map((el) => el.toJson()).toList(),
         'userVerification': userVerification,
       };
 
@@ -416,7 +649,7 @@ final class PasskeyAuthenticationRequest {
       ..writeln('  rpId: $rpId,')
       ..writeln('  challenge: ${base64RawUrl.encode(challenge)},')
       ..writeln('  timeout: $timeout,')
-      ..writeln('  allowCredentials: ${allowCredentials?.join(', ')},')
+      ..writeln('  allowCredentials: ${allowCredentials.join(', ')},')
       ..writeln('  userVerification: $userVerification,')
       ..write(')');
     return buffer.toString();
@@ -607,4 +840,11 @@ extension type const UserVerificationRequirement._(String requirement)
   static const discouraged = UserVerificationRequirement._('discouraged');
   static const preferred = UserVerificationRequirement._('preferred');
   static const required = UserVerificationRequirement._('required');
+}
+
+extension type const ResidentKeyRequirement._(String requirement)
+    implements String {
+  static const discouraged = ResidentKeyRequirement._('discouraged');
+  static const preferred = ResidentKeyRequirement._('preferred');
+  static const required = ResidentKeyRequirement._('required');
 }

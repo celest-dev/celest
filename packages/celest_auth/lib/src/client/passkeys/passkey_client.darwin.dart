@@ -1,16 +1,18 @@
 import 'package:celest_auth/src/client/passkeys/passkey_client_platform.vm.dart';
-import 'package:celest_auth/src/client/passkeys/passkey_models.dart';
+import 'package:celest_core/celest_core.dart';
 
 final class PasskeyClientDarwin extends PasskeyClientPlatform {
-  PasskeyClientDarwin() : super.base();
+  PasskeyClientDarwin({
+    required super.protocol,
+  }) : super.base();
 
   @override
   Future<bool> get isSupported => throw UnimplementedError();
 
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationOptions options,
-  ) {
+    PasskeyRegistrationRequest request,
+  ) async {
     throw UnimplementedError();
   }
 

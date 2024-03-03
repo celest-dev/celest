@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:celest_auth/src/client/passkeys/passkey_client_platform.vm.dart';
-import 'package:celest_auth/src/client/passkeys/passkey_models.dart';
 import 'package:celest_auth/src/platform/android/jni_bindings.ffi.dart'
     hide Exception, Uri;
 import 'package:celest_auth/src/platform/android/jni_helpers.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:jni/jni.dart';
 
 final class PasskeyClientAndroid extends PasskeyClientPlatform {
-  PasskeyClientAndroid() : super.base();
+  PasskeyClientAndroid({
+    required super.protocol,
+  }) : super.base();
 
   late final Activity _mainActivity =
       Activity.fromRef(Jni.getCurrentActivity());
@@ -50,15 +52,16 @@ final class PasskeyClientAndroid extends PasskeyClientPlatform {
 
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationOptions options,
+    PasskeyRegistrationRequest request,
   ) async {
-    final request = CreatePublicKeyCredentialRequest.new7(
+    final options = await protocol.requestRegistration(request: request);
+    final jRequest = CreatePublicKeyCredentialRequest.new7(
       jsonEncode(options.toJson()).toJString(),
     );
     final responseCallback = Completer<CreatePublicKeyCredentialResponse>();
     _credentialManager.createCredentialAsync(
       _mainActivityContext,
-      request,
+      jRequest,
       CancellationSignal(),
       _threadPool,
       CredentialManagerCallback<CreateCredentialResponse,
@@ -130,10 +133,11 @@ final class PasskeyClientAndroid extends PasskeyClientPlatform {
   Future<PasskeyAuthenticationResponse> authenticate(
     PasskeyAuthenticationRequest request,
   ) async {
+    final options = await protocol.requestAuthentication(request: request);
     final jRequest = GetCredentialRequest_Builder()
         .addCredentialOption(
           GetPublicKeyCredentialOption.new3(
-            jsonEncode(request.toJson()).toJString(),
+            jsonEncode(options.toJson()).toJString(),
           ),
         )
         .build();

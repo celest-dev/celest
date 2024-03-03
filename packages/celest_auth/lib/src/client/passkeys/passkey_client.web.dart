@@ -5,15 +5,19 @@ import 'dart:typed_data';
 
 import 'package:celest_auth/src/client/passkeys/passkey_client_platform.web.dart';
 import 'package:celest_auth/src/client/passkeys/passkey_exception.dart';
-import 'package:celest_auth/src/client/passkeys/passkey_models.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:web/web.dart'
     hide
         COSEAlgorithmIdentifier,
         AuthenticatorTransport,
-        AuthenticatorAttachment;
+        AuthenticatorAttachment,
+        UserVerificationRequirement,
+        ResidentKeyRequirement;
 
 final class PasskeyClientWeb extends PasskeyClientPlatform {
-  PasskeyClientWeb() : super.base();
+  PasskeyClientWeb({
+    required super.protocol,
+  }) : super.base();
 
   @override
   Future<bool> get isSupported async {
@@ -21,53 +25,29 @@ final class PasskeyClientWeb extends PasskeyClientPlatform {
     if (!publicKeyCredential.typeofEquals('function')) {
       return false;
     }
+    // TODO(dnys1): Check conditional mediation for autofill support.
+    // https://web.dev/articles/passkey-registration#feature_detection
     return PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
         .toDart
         .then((value) => value.toDart);
   }
 
-  static Uint8List _getRandomValues(int size) {
-    final values = Uint8List(size);
-    window.crypto.getRandomValues(values.toJS);
-    return values;
-  }
-
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationOptions options,
+    PasskeyRegistrationRequest request,
   ) async {
     if (!await isSupported) {
       throw const PasskeyException(
         message: 'Passkeys are not supported in this environment',
       );
     }
+    final options = await protocol.requestRegistration(request: request);
     final credential = await window.navigator.credentials
         .create(
           CredentialCreationOptions(
-            publicKey: PublicKeyCredentialCreationOptions(
-              challenge:
-                  (options.challenge ?? _getRandomValues(32)).buffer.toJS,
-              rp: PublicKeyCredentialRpEntity(
-                id: options.rpId,
-              )..name = options.rpName,
-              user: PublicKeyCredentialUserEntity(
-                id: utf8.encode(options.userId).buffer.toJS,
-                displayName: options.userDisplayName ?? '',
-              )..name = options.userName,
-              // This Relying Party will accept either an ES256 or RS256
-              // credential, but prefers an ES256 credential.
-              pubKeyCredParams: [
-                for (final algId in COSEAlgorithmIdentifier.defaultSupported)
-                  PublicKeyCredentialParameters(
-                    type: 'public-key',
-                    alg: algId,
-                  ),
-              ].toJS,
-              authenticatorSelection: AuthenticatorSelectionCriteria(
-                // Try to use UV if possible. This is also the default.
-                userVerification: 'preferred',
-              ),
-              timeout: const Duration(minutes: 5).inMilliseconds,
+            publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(
+              options.toJson().jsify()
+                  as PublicKeyCredentialCreationOptionsJSON,
             ),
           ),
         )
@@ -110,29 +90,12 @@ final class PasskeyClientWeb extends PasskeyClientPlatform {
         message: 'Passkeys are not supported in this environment',
       );
     }
+    final options = await protocol.requestAuthentication(request: request);
     final credential = await window.navigator.credentials
         .get(
           CredentialRequestOptions(
-            publicKey: PublicKeyCredentialRequestOptions(
-              challenge: request.challenge.buffer.toJS,
-              rpId: request.rpId,
-              allowCredentials:
-                  (request.allowCredentials ?? const <PasskeyDescriptor>[])
-                      .map(
-                        (credential) => PublicKeyCredentialDescriptor(
-                          id: credential.id.buffer.toJS,
-                          type: 'public-key',
-                          transports: (credential.transports ??
-                                  const <AuthenticatorTransport>[])
-                              .map((transport) => transport.toJS)
-                              .toList()
-                              .toJS,
-                        ),
-                      )
-                      .toList()
-                      .toJS,
-              userVerification: request.userVerification,
-              timeout: const Duration(minutes: 5).inMilliseconds,
+            publicKey: PublicKeyCredential.parseRequestOptionsFromJSON(
+              options.toJson().jsify() as PublicKeyCredentialRequestOptionsJSON,
             ),
           ),
         )
@@ -168,21 +131,15 @@ final class PasskeyClientWeb extends PasskeyClientPlatform {
 }
 
 extension on AuthenticatorAttestationResponse {
-  @JS('getTransports')
-  external JSArray<JSString> _getTransports();
-
   List<AuthenticatorTransport>? get transports {
     // Continue to play it safe with `getTransports()` for now, even when L3
     // types say it's required
     if (!getProperty('getTransports'.toJS).typeofEquals('function')) {
       return null;
     }
-    final transports = _getTransports();
+    final transports = getTransports();
     return transports.toDart.cast<AuthenticatorTransport>();
   }
-
-  @JS('getPublicKeyAlgorithm')
-  external COSEAlgorithmIdentifier _getPublicKeyAlgorithm();
 
   COSEAlgorithmIdentifier? get publicKeyAlgorithm {
     // L3 says this is required, but browser and webview support are still
@@ -190,11 +147,8 @@ extension on AuthenticatorAttestationResponse {
     if (!getProperty('getPublicKeyAlgorithm'.toJS).typeofEquals('function')) {
       return null;
     }
-    return _getPublicKeyAlgorithm();
+    return getPublicKeyAlgorithm() as COSEAlgorithmIdentifier;
   }
-
-  @JS('getPublicKey')
-  external JSArrayBuffer _getPublicKey();
 
   Uint8List? get publicKey {
     // L3 says this is required, but browser and webview support are still
@@ -202,12 +156,9 @@ extension on AuthenticatorAttestationResponse {
     if (!getProperty('getPublicKey'.toJS).typeofEquals('function')) {
       return null;
     }
-    final publicKey = _getPublicKey();
-    return publicKey.toDart.asUint8List();
+    final publicKey = getPublicKey();
+    return publicKey?.toDart.asUint8List();
   }
-
-  @JS('getAuthenticatorData')
-  external JSArrayBuffer _getAuthenticatorData();
 
   Uint8List? get authenticatorData {
     // L3 says this is required, but browser and webview support are still
@@ -215,7 +166,7 @@ extension on AuthenticatorAttestationResponse {
     if (!getProperty('getAuthenticatorData'.toJS).typeofEquals('function')) {
       return null;
     }
-    final authenticatorData = _getAuthenticatorData();
+    final authenticatorData = getAuthenticatorData();
     return authenticatorData.toDart.asUint8List();
   }
 }
