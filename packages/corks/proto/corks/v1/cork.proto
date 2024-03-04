@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package corks.v1;
+
+import "cedar/v3/entity.proto";
+import "cedar/v3/policy.proto";
+
+message Cork {
+  bytes id = 1;
+  bytes key_id = 2;
+  optional Bearer bearer = 3;
+  repeated Caveat caveats = 4;
+  bytes signature = 5;
+}
+
+message Bearer {
+  bytes signature = 1;
+  oneof bearer {
+    cedar.v3.Entity entity = 2;
+  }
+}
+
+message Caveat {
+  bytes signature = 1;
+  oneof block {
+    cedar.v3.Policy policy = 2;
+  }
+}

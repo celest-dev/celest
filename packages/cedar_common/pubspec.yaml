@@ -1,0 +1,16 @@
+name: cedar_common
+description: Base types and utilities of the Cedar language in Dart.
+version: 0.1.0
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  built_collection: ^5.1.1
+  built_value: ^8.9.1
+
+dev_dependencies:
+  build_runner: ^2.4.8
+  built_value_generator: ^8.9.1
+  lints: ^3.0.0
+  test: ^1.24.0

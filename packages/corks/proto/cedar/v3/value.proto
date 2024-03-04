@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package cedar.v3;
+
+import "cedar/v3/entity_id.proto";
+
+message Value {
+  oneof value {
+    string string = 1;
+    int64 long = 2;
+    bool bool = 3;
+    SetValue set = 4;
+    RecordValue record = 5;
+    ExtensionValue extension = 6;
+    EntityValue entity = 7;
+  }
+}
+
+message SetValue {
+  repeated Value values = 1;
+}
+
+message RecordValue {
+  map<string, Value> values = 1;
+}
+
+message ExtensionValue {
+  string fn = 1;
+  Value arg = 2;
+}
+
+message EntityValue {
+  EntityId uid = 1;
+}

@@ -14,12 +14,16 @@ dependencies:
     sdk: flutter
 
 dependency_overrides:
+  cedar_common:
+    path: ../../cedar_common
   celest:
     path: ../../celest
   celest_auth:
     path: ../
   celest_core:
     path: ../../celest_core
+  corks:
+    path: ../../corks
 
 dev_dependencies:
   flutter_test:
