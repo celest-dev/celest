@@ -6,13 +6,5 @@
 	<array>
 		<string>webcredentials:65b7-136-24-157-119.ngrok-free.app?mode=developer</string>
 	</array>
-	<key>com.apple.security.app-sandbox</key>
-	<true/>
-	<key>com.apple.security.cs.allow-jit</key>
-	<true/>
-	<key>com.apple.security.network.client</key>
-	<true/>
-	<key>com.apple.security.network.server</key>
-	<true/>
 </dict>
 </plist>

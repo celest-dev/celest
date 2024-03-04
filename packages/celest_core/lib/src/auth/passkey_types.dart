@@ -31,7 +31,8 @@ final class PasskeyRegistrationRequest {
         displayName: displayName,
         authenticatorSelection: json['authenticatorSelection'] != null
             ? AuthenticatorSelectionCriteria.fromJson(
-                json['authenticatorSelection'] as Map<String, dynamic>,
+                (json['authenticatorSelection'] as Map<Object?, Object?>)
+                    .cast(),
               )
             : null,
       );
@@ -73,8 +74,9 @@ final class PasskeyRegistrationOptions {
     required this.userName,
     String? userDisplayName,
     this.timeout = const Duration(minutes: 5),
-    this.authenticatorSelection,
-    this.publicKeyCredentialParameters,
+    this.authenticatorSelection =
+        const AuthenticatorSelectionCriteria.passkey(),
+    this.publicKeyCredentialParameters = const [],
   })  : assert(
           _isValidDomain(rpId),
           'Invalid rpId (must be a valid domain): $rpId',
@@ -105,12 +107,14 @@ final class PasskeyRegistrationOptions {
         timeout: Duration(milliseconds: (json['timeout'] as num).toInt()),
         authenticatorSelection: json['authenticatorSelection'] != null
             ? AuthenticatorSelectionCriteria.fromJson(
-                json['authenticatorSelection'] as Map<String, Object?>,
+                (json['authenticatorSelection'] as Map<Object?, Object?>)
+                    .cast(),
               )
-            : null,
-        publicKeyCredentialParameters: (json['pubKeyCredParams'] as List?)
-            ?.cast<Map<String, Object?>>()
-            .map(PublicKeyCredentialParameter.fromJson)
+            : const AuthenticatorSelectionCriteria.passkey(),
+        publicKeyCredentialParameters: (json['pubKeyCredParams'] as List? ??
+                const [])
+            .cast<Map<Object?, Object?>>()
+            .map((json) => PublicKeyCredentialParameter.fromJson(json.cast()))
             .toList(),
       );
     }
@@ -124,8 +128,8 @@ final class PasskeyRegistrationOptions {
   final String userDisplayName;
   final Uint8List challenge;
   final Duration timeout;
-  final AuthenticatorSelectionCriteria? authenticatorSelection;
-  final List<PublicKeyCredentialParameter>? publicKeyCredentialParameters;
+  final AuthenticatorSelectionCriteria authenticatorSelection;
+  final List<PublicKeyCredentialParameter> publicKeyCredentialParameters;
 
   Map<String, Object?> toJson() => {
         'rp': {
@@ -139,12 +143,9 @@ final class PasskeyRegistrationOptions {
         },
         'challenge': base64RawUrl.encode(challenge),
         'timeout': timeout.inMilliseconds,
-        if (authenticatorSelection case final authenticatorSelection?)
-          'authenticatorSelection': authenticatorSelection.toJson(),
-        if (publicKeyCredentialParameters
-            case final publicKeyCredentialParameters?)
-          'pubKeyCredParams':
-              publicKeyCredentialParameters.map((el) => el.toJson()).toList(),
+        'authenticatorSelection': authenticatorSelection.toJson(),
+        'pubKeyCredParams':
+            publicKeyCredentialParameters.map((el) => el.toJson()).toList(),
       };
 
   @override
@@ -158,11 +159,11 @@ final class PasskeyRegistrationOptions {
       ..writeln('  userDisplayName: $userDisplayName,')
       ..writeln('  challenge: ${base64RawUrl.encode(challenge)},')
       ..writeln('  timeout: $timeout,');
-    if (authenticatorSelection case final authenticatorSelection?) {
+    if (authenticatorSelection case final authenticatorSelection) {
       buffer.writeln('  authenticatorSelection: $authenticatorSelection,');
     }
     if (publicKeyCredentialParameters
-        case final publicKeyCredentialParameters?) {
+        case final publicKeyCredentialParameters) {
       buffer.writeln('  publicKeyCredentialParameters: [');
       for (final el in publicKeyCredentialParameters) {
         buffer.writeln('    $el,');
@@ -178,7 +179,7 @@ final class PasskeyRegistrationResponse {
   const PasskeyRegistrationResponse({
     required this.id,
     required this.rawId,
-    required this.clientData,
+    required this.clientDataJson,
     required this.attestationObject,
     this.transports,
     this.publicKeyAlgorithm,
@@ -202,13 +203,9 @@ final class PasskeyRegistrationResponse {
       return PasskeyRegistrationResponse(
         id: id,
         rawId: base64RawUrl.decode(rawId),
-        clientData: PasskeyClientData.fromJson(
-          jsonDecode(
-            utf8.decode(base64RawUrl.decode(clientDataJson)),
-          ) as Map<String, Object?>,
-        ),
+        clientDataJson: base64RawUrl.decode(clientDataJson),
         attestationObject: base64RawUrl.decode(attestationObject),
-        transports: response['transports'] as List<AuthenticatorTransport>?,
+        transports: (response['transports'] as List?)?.cast(),
         publicKeyAlgorithm: response['publicKeyAlgorithm'] != null
             ? COSEAlgorithmIdentifier._(
                 response['publicKeyAlgorithm'] as int,
@@ -233,7 +230,7 @@ final class PasskeyRegistrationResponse {
   /// The credential ID in its raw binary form.
   final Uint8List rawId;
   String get type => 'public-key';
-  final PasskeyClientData clientData;
+  final Uint8List clientDataJson;
   final Uint8List attestationObject;
   final List<AuthenticatorTransport>? transports;
   final COSEAlgorithmIdentifier? publicKeyAlgorithm;
@@ -249,11 +246,7 @@ final class PasskeyRegistrationResponse {
         'rawId': base64RawUrl.encode(rawId),
         'type': type,
         'response': {
-          'clientDataJSON': base64RawUrl.encode(
-            utf8.encode(
-              jsonEncode(clientData.toJson()),
-            ),
-          ),
+          'clientDataJSON': base64RawUrl.encode(clientDataJson),
           'attestationObject': base64RawUrl.encode(attestationObject),
           if (transports != null) 'transports': transports,
           if (publicKeyAlgorithm != null)
@@ -272,20 +265,7 @@ final class PasskeyRegistrationResponse {
       ..writeln('PasskeyRegistrationResponse(')
       ..writeln('  id: $id,')
       ..writeln('  rawId: $rawId,')
-      ..writeln('  clientData: PasskeyClientData(')
-      ..writeln('    challenge: ${base64RawUrl.encode(clientData.challenge)},')
-      ..writeln('    crossOrigin: ${clientData.crossOrigin},')
-      ..writeln('    origin: ${clientData.origin},')
-      ..writeln('    type: ${clientData.type},');
-    if (clientData.tokenBinding case final tokenBinding?) {
-      buffer
-        ..writeln('    tokenBinding: PasskeyClientDataTokenBinding(')
-        ..writeln('      id: ${base64RawUrl.encode(tokenBinding.id)},')
-        ..writeln('      status: ${tokenBinding.status},')
-        ..writeln('    ),');
-    }
-    buffer
-      ..writeln('  ),')
+      ..writeln('  clientDataJson: ${utf8.decode(clientDataJson)},')
       ..writeln(
           '  attestationObject: ${base64RawUrl.encode(attestationObject)},')
       ..writeln('  transports: ${transports?.join(', ')},')
@@ -439,7 +419,7 @@ final class PasskeyClientData {
         type: type,
         tokenBinding: json['tokenBinding'] != null
             ? PasskeyClientDataTokenBinding.fromJson(
-                json['tokenBinding'] as Map<String, Object?>,
+                (json['tokenBinding'] as Map<Object?, Object?>).cast(),
               )
             : null,
       );
@@ -535,24 +515,24 @@ final class PasskeyDescriptor {
           'id': final String id,
         }) {
       return PasskeyDescriptor(
-        id: base64RawUrl.decode(id),
-        transports: (json['transports'] as List<String>?)?.cast() ?? const [],
+        id: id,
+        transports: (json['transports'] as List?)?.cast() ?? const [],
       );
     }
     throw FormatException('Invalid passkey descriptor: $json');
   }
 
-  final Uint8List id;
+  final String id;
   final List<AuthenticatorTransport> transports;
 
   Map<String, Object?> toJson() => {
-        'id': base64RawUrl.encode(id),
+        'id': id,
         'transports': transports,
       };
 
   @override
   String toString() => 'PasskeyDescriptor('
-      'id: ${base64RawUrl.encode(id)}, '
+      'id: $id, '
       'transports: ${transports.join(', ')})';
 }
 
@@ -762,16 +742,33 @@ final class PasskeyAuthenticationResponse {
 /// See:
 /// - https://w3c.github.io/webauthn/#sctn-alg-identifier
 /// - https://www.iana.org/assignments/cose/cose.xhtml#algorithms
-extension type const COSEAlgorithmIdentifier._(int algId) implements int {
-  static const List<COSEAlgorithmIdentifier> defaultSupported = [
-    // In first position to encourage authenticators to use this over ES256
-    edDsa,
-    es256,
-    rs256,
-  ];
+extension type const COSEAlgorithmIdentifier._(int _) implements int {
+  factory COSEAlgorithmIdentifier(int algId) {
+    if (!values.contains(algId)) {
+      throw ArgumentError.value(
+        algId,
+        'algId',
+        'Unsupported COSE algorithm identifier.',
+      );
+    }
+    return COSEAlgorithmIdentifier._(algId);
+  }
 
   static const List<COSEAlgorithmIdentifier> prioritized = [
     // In first position to encourage authenticators to use this over ES256
+    edDsa,
+    es256,
+    es512,
+    rsaPss256,
+    rsaPss384,
+    rsaPss512,
+    rs256,
+    rs384,
+    rs512,
+    rsSha1, // ignore: deprecated_member_use_from_same_package
+  ];
+
+  static const List<COSEAlgorithmIdentifier> values = [
     edDsa,
     es256,
     es512,

@@ -1,0 +1,34 @@
+name: CelestAuthDarwin
+description: |
+  Bindings for CelestAuth on iOS/macOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.darwin.yaml`.
+language: "objc"
+output:
+  bindings: "lib/src/platform/darwin/celest_auth.ffi.dart"
+headers:
+  entry-points:
+    - "example/build/macos/Build/Products/Release/celest_auth/celest_auth.framework/Headers/celest_auth-Swift.h"
+  include-directives:
+    - "example/build/macos/Build/Products/Release/celest_auth/celest_auth.framework/Headers/celest_auth-Swift.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h"
+import:
+  symbol-files:
+    - "package:celest_auth/src/platform/darwin/foundation.yaml"
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+
+compiler-opts-automatic:
+  macos:
+    include-c-standard-library: true
+exclude-all-by-default: true
+objc-interfaces:
+  include:
+    - CelestAuth
+  module:
+    CelestAuth: celest_auth

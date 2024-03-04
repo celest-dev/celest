@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:celest_auth/src/client/auth_client_platform.vm.dart';
+import 'package:celest_auth/src/client/auth_platform_impl.vm.dart';
 import 'package:celest_auth/src/platform/darwin/authentication_services.ffi.dart';
 
-final class AuthClientDarwin extends AuthClientPlatform {
-  AuthClientDarwin({
+final class AuthPlatformDarwin extends AuthPlatformImpl {
+  AuthPlatformDarwin({
     required super.protocol,
   }) : super.base();
 

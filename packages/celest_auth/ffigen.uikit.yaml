@@ -32,7 +32,7 @@ comments:
 
 compiler-opts-automatic:
   macos:
-    include-c-standard-library: false
+    include-c-standard-library: true
 exclude-all-by-default: true
 objc-interfaces:
   include:

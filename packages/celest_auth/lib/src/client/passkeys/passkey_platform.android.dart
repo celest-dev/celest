@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:celest_auth/src/client/passkeys/passkey_client_platform.vm.dart';
+import 'package:celest_auth/src/client/passkeys/passkey_platform_impl.vm.dart';
 import 'package:celest_auth/src/platform/android/jni_bindings.ffi.dart'
     hide Exception, Uri;
 import 'package:celest_auth/src/platform/android/jni_helpers.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:jni/jni.dart';
 
-final class PasskeyClientAndroid extends PasskeyClientPlatform {
-  PasskeyClientAndroid({
+final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
+  PasskeyPlatformAndroid({
     required super.protocol,
   }) : super.base();
 

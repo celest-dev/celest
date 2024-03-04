@@ -342,25 +342,25 @@ files:
         name: NSWindowTabGroup
       c:objc(cs)Protocol:
         name: Protocol
-      "objcBlock: 8ol47u? 8ol47u":
-        name: ObjCBlock_NSEvent_NSEvent
-      "objcBlock: divyil":
+      "objcBlock: 9pebjx":
         name: ObjCBlock_ffiVoid
-      "objcBlock: divyil 4m4hs3? 5clcv7?":
-        name: ObjCBlock_ffiVoid_NSURL_NSError
-      "objcBlock: divyil 5clcv7?":
-        name: ObjCBlock_ffiVoid_NSError
-      "objcBlock: divyil 684z1l":
+      "objcBlock: 9pebjx 1ybxrl":
         name: ObjCBlock_ffiVoid_ffiLong
-      "objcBlock: divyil 7xwwls aopvxr bool bool*":
-        name: ObjCBlock_ffiVoid_ffiDouble_NSEventPhase_bool_bool
-      "objcBlock: divyil 8ol47u":
-        name: ObjCBlock_ffiVoid_NSEvent
-      "objcBlock: divyil 8ol47u? bool*":
-        name: ObjCBlock_ffiVoid_NSEvent_bool
-      "objcBlock: divyil dce4iq bool*":
+      "objcBlock: 9pebjx 4h1qi5 bool*":
         name: ObjCBlock_ffiVoid_NSWindow_bool
-      "objcBlock: divyil gkgg5n* bool*":
+      "objcBlock: 9pebjx 4zw819? em34eq?":
+        name: ObjCBlock_ffiVoid_NSURL_NSError
+      "objcBlock: 9pebjx a2pk9j h5yc50 bool bool*":
+        name: ObjCBlock_ffiVoid_ffiDouble_NSEventPhase_bool_bool
+      "objcBlock: 9pebjx em34eq?":
+        name: ObjCBlock_ffiVoid_NSError
+      "objcBlock: 9pebjx ep7r3p":
+        name: ObjCBlock_ffiVoid_NSEvent
+      "objcBlock: 9pebjx ep7r3p? bool*":
+        name: ObjCBlock_ffiVoid_NSEvent_bool
+      "objcBlock: 9pebjx eruvzs* bool*":
         name: ObjCBlock_ffiVoid_ObjCObject_bool
-      "objcBlock: gkgg5n*? 5clcv7 7op1mv":
+      "objcBlock: ep7r3p? ep7r3p":
+        name: ObjCBlock_NSEvent_NSEvent
+      "objcBlock: eruvzs*? em34eq 1xwvun":
         name: ObjCBlock_ObjCObject_NSError_NSString

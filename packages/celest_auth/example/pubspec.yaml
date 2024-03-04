@@ -9,6 +9,7 @@ environment:
 dependencies:
   celest: ^0.2.0
   celest_auth: ^0.3.0
+  celest_core: ^0.2.0
   flutter:
     sdk: flutter
 

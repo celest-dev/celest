@@ -20,6 +20,16 @@ class BadRequestException implements CloudException {
   String toString() => 'BadRequestException: $message';
 }
 
+final class UnauthorizedException implements CloudException {
+  const UnauthorizedException([this.message = 'Unauthorized']);
+
+  @override
+  final String message;
+
+  @override
+  String toString() => 'UnauthorizedException: $message';
+}
+
 /// {@template celest_core.exception.internal_server_exception}
 /// An exception thrown by a Cloud Function when an unrecoverable internal error
 /// occurs.

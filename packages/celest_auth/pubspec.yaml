@@ -37,3 +37,9 @@ flutter:
     platforms:
       android:
         ffiPlugin: true
+      ios:
+        ffiPlugin: true
+        sharedDarwinSource: true
+      macos:
+        ffiPlugin: true
+        sharedDarwinSource: true

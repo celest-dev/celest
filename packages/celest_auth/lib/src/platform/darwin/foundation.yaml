@@ -68,13 +68,13 @@ files:
         name: NSValue
       c:objc(cs)Protocol:
         name: Protocol
-      "objcBlock: 1wxmkb 1wxmkb* 4cylau":
-        name: ObjCBlock_ffiVoid_ffiVoid_ffiUnsignedLong
-      "objcBlock: 1wxmkb 71xoam bool*":
-        name: ObjCBlock_ffiVoid_NSString_bool
-      "objcBlock: 1wxmkb 71xoam? fju8rp fju8rp bool*":
-        name: ObjCBlock_ffiVoid_NSString_NSRange_NSRange_bool
-      "objcBlock: 1wxmkb fk756t* 4cylau":
-        name: ObjCBlock_ffiVoid_ffiUnsignedShort_ffiUnsignedLong
-      "objcBlock: 3e9m14*? 37mnn9 71xoam":
+      "objcBlock: 6jqrbq*? 4okcll 7e5sfs":
         name: ObjCBlock_ObjCObject_NSError_NSString
+      "objcBlock: 837566 7e5sfs bool*":
+        name: ObjCBlock_ffiVoid_NSString_bool
+      "objcBlock: 837566 7e5sfs? 6vbbr9 6vbbr9 bool*":
+        name: ObjCBlock_ffiVoid_NSString_NSRange_NSRange_bool
+      "objcBlock: 837566 837566* 9z3bt8":
+        name: ObjCBlock_ffiVoid_ffiVoid_ffiUnsignedLong
+      "objcBlock: 837566 9ufx6z* 9z3bt8":
+        name: ObjCBlock_ffiVoid_ffiUnsignedShort_ffiUnsignedLong

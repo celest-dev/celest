@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:celest_auth/src/client/auth_client_platform.vm.dart';
+import 'package:celest_auth/src/client/auth_platform_impl.vm.dart';
 
-final class AuthClientNative extends AuthClientPlatform {
-  AuthClientNative({
+final class AuthPlatformNative extends AuthPlatformImpl {
+  AuthPlatformNative({
     required super.protocol,
   }) : super.base();
 

@@ -1,9 +1,9 @@
-import 'package:celest_auth/src/client/auth_client_platform.web.dart';
+import 'package:celest_auth/src/client/auth_platform_impl.web.dart';
 import 'package:path/path.dart';
 import 'package:web/web.dart';
 
-final class AuthClientWeb extends AuthClientPlatform {
-  AuthClientWeb({
+final class AuthPlatformWeb extends AuthPlatformImpl {
+  AuthPlatformWeb({
     required super.protocol,
   }) : super.base();
 

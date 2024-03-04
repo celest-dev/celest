@@ -1,15 +1,15 @@
-import 'package:celest_auth/src/client/passkeys/passkey_client_platform.vm.dart'
-    if (dart.library.js_interop) 'package:celest_auth/src/client/passkeys/passkey_client_platform.web.dart';
+import 'package:celest_auth/src/client/passkeys/passkey_platform_impl.vm.dart'
+    if (dart.library.js_interop) 'package:celest_auth/src/client/passkeys/passkey_platform_impl.web.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:meta/meta.dart';
 
-abstract base class PasskeyClient {
-  factory PasskeyClient({
+abstract base class PasskeyPlatform {
+  factory PasskeyPlatform({
     required PasskeyProtocol protocol,
-  }) = PasskeyClientPlatform;
+  }) = PasskeyPlatformImpl;
 
   @protected
-  PasskeyClient.base({
+  PasskeyPlatform.base({
     required this.protocol,
   });
 

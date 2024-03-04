@@ -9,6 +9,7 @@ abstract interface class PasskeyProtocol {
     required PasskeyRegistrationRequest request,
   });
 
+  /// Verifies the registration response and returns the user auth token.
   Future<void> verifyRegistration({
     required PasskeyRegistrationResponse registration,
   });
@@ -17,6 +18,7 @@ abstract interface class PasskeyProtocol {
     required PasskeyAuthenticationRequest request,
   });
 
+  /// Verifies the authentication response and returns the user auth token.
   Future<void> verifyAuthentication({
     required PasskeyAuthenticationResponse authentication,
   });

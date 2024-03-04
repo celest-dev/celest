@@ -2,7 +2,9 @@
 library;
 
 /// Auth
+export 'src/auth/auth_client.dart';
 export 'src/auth/auth_protocol.dart';
+export 'src/auth/passkey_exception.dart';
 export 'src/auth/passkey_types.dart';
 
 /// Exceptions

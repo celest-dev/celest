@@ -3,9 +3,9 @@ import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 import 'dart:typed_data';
 
-import 'package:celest_auth/src/client/passkeys/passkey_client_platform.web.dart';
-import 'package:celest_auth/src/client/passkeys/passkey_exception.dart';
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_auth/src/client/passkeys/passkey_platform_impl.web.dart';
+import 'package:celest_core/celest_core.dart'
+    hide AuthenticatorSelectionCriteria;
 import 'package:web/web.dart'
     hide
         COSEAlgorithmIdentifier,
@@ -14,8 +14,8 @@ import 'package:web/web.dart'
         UserVerificationRequirement,
         ResidentKeyRequirement;
 
-final class PasskeyClientWeb extends PasskeyClientPlatform {
-  PasskeyClientWeb({
+final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
+  PasskeyPlatformWeb({
     required super.protocol,
   }) : super.base();
 
@@ -45,9 +45,33 @@ final class PasskeyClientWeb extends PasskeyClientPlatform {
     final credential = await window.navigator.credentials
         .create(
           CredentialCreationOptions(
-            publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(
-              options.toJson().jsify()
-                  as PublicKeyCredentialCreationOptionsJSON,
+            publicKey: PublicKeyCredentialCreationOptions(
+              challenge: options.challenge.buffer.toJS,
+              pubKeyCredParams: [
+                for (final param in options.publicKeyCredentialParameters)
+                  PublicKeyCredentialParameters(
+                    alg: param.algorithm,
+                    type: 'public-key',
+                  ),
+              ].toJS,
+              rp: PublicKeyCredentialRpEntity(
+                id: options.rpId,
+              )..name = options.rpName,
+              user: PublicKeyCredentialUserEntity(
+                id: utf8.encode(options.userId).buffer.toJS,
+                displayName: options.userDisplayName,
+              )..name = options.userName,
+              attestation: 'none',
+              authenticatorSelection: AuthenticatorSelectionCriteria(
+                authenticatorAttachment:
+                    options.authenticatorSelection.authenticatorAttachment!,
+                requireResidentKey:
+                    options.authenticatorSelection.requireResidentKey,
+                residentKey: options.authenticatorSelection.residentKey!,
+                userVerification:
+                    options.authenticatorSelection.userVerification,
+              ),
+              timeout: options.timeout.inMilliseconds,
             ),
           ),
         )
@@ -66,11 +90,7 @@ final class PasskeyClientWeb extends PasskeyClientPlatform {
     return PasskeyRegistrationResponse(
       id: credential.id,
       rawId: credential.rawId.toDart.asUint8List(),
-      clientData: PasskeyClientData.fromJson(
-        jsonDecode(
-          utf8.decode(response.clientDataJSON.toDart.asUint8List()),
-        ) as Map<String, Object?>,
-      ),
+      clientDataJson: response.clientDataJSON.toDart.asUint8List(),
       attestationObject: response.attestationObject.toDart.asUint8List(),
       transports: response.transports,
       publicKeyAlgorithm: response.publicKeyAlgorithm,

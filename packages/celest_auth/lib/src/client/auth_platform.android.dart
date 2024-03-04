@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:celest_auth/src/client/auth_client_platform.vm.dart';
+import 'package:celest_auth/src/client/auth_platform_impl.vm.dart';
 import 'package:celest_auth/src/platform/android/jni_bindings.ffi.dart'
     as android show Uri;
 import 'package:celest_auth/src/platform/android/jni_bindings.ffi.dart'
@@ -8,8 +8,8 @@ import 'package:celest_auth/src/platform/android/jni_bindings.ffi.dart'
 import 'package:jni/jni.dart';
 import 'package:logging/logging.dart';
 
-final class AuthClientAndroid extends AuthClientPlatform {
-  AuthClientAndroid({
+final class AuthPlatformAndroid extends AuthPlatformImpl {
+  AuthPlatformAndroid({
     required super.protocol,
   }) : super.base() {
     Jni.initDLApi();

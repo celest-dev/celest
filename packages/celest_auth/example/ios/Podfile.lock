@@ -1,0 +1,23 @@
+PODS:
+  - celest_auth (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - celest_auth (from `.symlinks/plugins/celest_auth/darwin`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  celest_auth:
+    :path: ".symlinks/plugins/celest_auth/darwin"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  celest_auth: 94a61a3de8684f0bb7459baba4d5e8b5b9780f72
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.15.0
