@@ -48,6 +48,20 @@ final class ThrowsCustomExceptionToFromJsonTarget
           }
         }
       );
+    } on _i5.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i5.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
     } on _i5.BadRequestException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
@@ -201,6 +215,14 @@ final class ThrowsCustomExceptionToFromJsonTarget
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
         return _i5.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>?>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i5.UnauthorizedException(
+            (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
       },
     ));
     _i4.Serializers.instance.put(

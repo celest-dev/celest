@@ -50,6 +50,20 @@ final class SayHelloTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
+    } on _i6.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i5.Serializers.instance.serialize<_i6.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
     } on _i6.BadRequestException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
@@ -81,6 +95,14 @@ final class SayHelloTarget extends _i1.CloudFunctionTarget {
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
         return _i6.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i5.Serializers.instance.put(
+        _i5.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>?>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i6.UnauthorizedException(
+            (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
       },
     ));
     _i5.Serializers.instance.put(

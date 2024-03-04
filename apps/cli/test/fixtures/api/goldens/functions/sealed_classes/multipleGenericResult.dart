@@ -83,6 +83,20 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
+    } on _i7.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
     } on _i7.BadRequestException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
@@ -436,6 +450,14 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
         return _i7.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i7.UnauthorizedException, Map<String, Object?>?>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.UnauthorizedException(
+            (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
       },
     ));
     _i4.Serializers.instance.put(

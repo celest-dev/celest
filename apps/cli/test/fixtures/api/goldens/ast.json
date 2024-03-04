@@ -2803,6 +2803,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -7523,6 +7529,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -10395,6 +10407,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -13071,6 +13089,12 @@
         {
           "$": "TypeReference",
           "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -15829,6 +15853,12 @@
         {
           "$": "TypeReference",
           "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -21500,6 +21530,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -22359,6 +22395,12 @@
         {
           "$": "TypeReference",
           "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
