@@ -23,13 +23,17 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
   }
 
   @override
+  void cancel() {
+    _celestAuth.cancel();
+    // TODO(dnys1): Ignore results?
+  }
+
+  @override
   Future<PasskeyRegistrationResponse> register(
     PasskeyRegistrationRequest request,
   ) async {
     if (!await isSupported) {
-      throw const PasskeyException(
-        message: 'Passkeys are not supported in this environment',
-      );
+      throw const PasskeyUnsupportedException();
     }
     final options = await protocol.requestRegistration(request: request);
 
@@ -50,9 +54,9 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
         if (error == nullptr) {
           return completer.completeError(StateError('Bad pointer'));
         }
-        completer.completeError(
-          PasskeyException(message: error.cast<Utf8>().toDartString()),
-        );
+        final message = error.cast<Utf8>().toDartString();
+        final exception = _CelestAuthError(code).toException(message);
+        completer.completeError(exception);
         _celestAuth.freePointer_(error);
       },
     );
@@ -72,9 +76,7 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
     PasskeyAuthenticationRequest request,
   ) async {
     if (!await isSupported) {
-      throw const PasskeyException(
-        message: 'Passkeys are not supported in this environment',
-      );
+      throw const PasskeyUnsupportedException();
     }
     final options = await protocol.requestAuthentication(request: request);
     final completer = Completer<PasskeyAuthenticationResponse>();
@@ -94,9 +96,9 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
         if (error == nullptr) {
           return completer.completeError(StateError('Bad pointer'));
         }
-        completer.completeError(
-          PasskeyException(message: error.cast<Utf8>().toString()),
-        );
+        final message = error.cast<Utf8>().toString();
+        final exception = _CelestAuthError(code).toException(message);
+        completer.completeError(exception);
         _celestAuth.freePointer_(error);
       },
     );
@@ -109,5 +111,23 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
     // Await here so the blocks are not GC'd before they are called.
     final response = await completer.future;
     return response;
+  }
+}
+
+extension type _CelestAuthError(int code) {
+  Object toException(String message) {
+    return switch (code) {
+      CelestAuthErrorCode.CelestAuthErrorCodeCanceled =>
+        const PasskeyCancellationException(),
+      CelestAuthErrorCode.CelestAuthErrorCodeUnsupported =>
+        const PasskeyUnsupportedException(),
+      CelestAuthErrorCode.CelestAuthErrorCodeFailed =>
+        PasskeyFailedException(message),
+      // This shouldn't happen
+      CelestAuthErrorCode.CelestAuthErrorCodeSerde => StateError(message),
+      // This shouldn't happen
+      CelestAuthErrorCode.CelestAuthErrorCodeNotHandled => StateError(message),
+      _ => PasskeyUnknownException(message),
+    };
   }
 }

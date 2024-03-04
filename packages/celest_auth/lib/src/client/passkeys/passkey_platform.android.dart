@@ -11,66 +11,73 @@ import 'package:jni/jni.dart';
 final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
   PasskeyPlatformAndroid({
     required super.protocol,
-  }) : super.base();
+  }) : super.base() {
+    Jni.initDLApi();
+  }
 
   late final Activity _mainActivity =
       Activity.fromRef(Jni.getCurrentActivity());
-  late final Context _mainActivityContext =
-      Context.fromRef(_mainActivity.reference);
-  late final Context _applicationContext =
-      Context.fromRef(Jni.getCachedApplicationContext());
-  late final Executor _threadPool = Executor.fromRef(
-    Executors.newCachedThreadPool().reference,
-  );
-  late final CredentialManager _credentialManager =
-      CredentialManager.create(_applicationContext);
+  late final CelestAuth _celestAuth = CelestAuth(_mainActivity);
+  CancellationSignal? _cancellationSignal;
+
+  // Throws with java.lang.NoSuchMethodError: no static method
+  // "Landroidx/credentials/CredentialManager;.create(Landroid/content/Context;)Landroidx/credentials/CredentialManager;"
+  // late final CredentialManager _credentialManager =
+  //     CredentialManager.create(_mainActivityContext);
 
   @override
   Future<bool> get isSupported async {
-    final callback = Completer<bool>();
+    final callback = Completer<JBoolean>();
     final client = Fido.getFido2ApiClient(_mainActivity);
     final isAvailable = client.isUserVerifyingPlatformAuthenticatorAvailable();
+    final onSuccess = OnSuccessListener.implement(
+      $OnSuccessListenerImpl(
+        TResult: isAvailable.TResult,
+        onSuccess: callback.complete,
+      ),
+    );
+    final onError = OnFailureListener.implement(
+      // TODO(dnys1): Convert to PasskeyException
+      $OnFailureListenerImpl(onFailure: (error) {
+        callback.completeError(error);
+      }),
+    );
     isAvailable
-      ..addOnSuccessListener(
-        OnSuccessListener.implement(
-          $OnSuccessListenerImpl(
-            TResult: isAvailable.TResult,
-            onSuccess: (boolean) => callback.complete(
-              boolean.booleanValue(releaseOriginal: true),
-            ),
-          ),
-        ),
-      )
-      ..addOnFailureListener(
-        OnFailureListener.implement(
-          // TODO(dnys1): Convert to PasskeyException
-          $OnFailureListenerImpl(onFailure: callback.completeError),
-        ),
-      );
-    return callback.future;
+      ..addOnSuccessListener(onSuccess)
+      ..addOnFailureListener(onError);
+    final result = await callback.future;
+    return result.booleanValue();
+  }
+
+  @override
+  void cancel() {
+    if (_cancellationSignal case final cancellationSignal?) {
+      cancellationSignal.cancel();
+      if (!cancellationSignal.isReleased) {
+        cancellationSignal.release();
+      }
+    }
+    _cancellationSignal = null;
   }
 
   @override
   Future<PasskeyRegistrationResponse> register(
     PasskeyRegistrationRequest request,
   ) async {
+    if (!await isSupported) {
+      throw const PasskeyUnsupportedException();
+    }
     final options = await protocol.requestRegistration(request: request);
-    final jRequest = CreatePublicKeyCredentialRequest.new7(
-      jsonEncode(options.toJson()).toJString(),
-    );
-    final responseCallback = Completer<CreatePublicKeyCredentialResponse>();
-    _credentialManager.createCredentialAsync(
-      _mainActivityContext,
-      jRequest,
-      CancellationSignal(),
-      _threadPool,
+    final requestJson = jsonEncode(options.toJson()).toJString();
+    final responseCallback = Completer<CreateCredentialResponse>();
+    _cancellationSignal = _celestAuth.register(
+      requestJson,
       CredentialManagerCallback<CreateCredentialResponse,
           CreateCredentialException>.implement(
         $CredentialManagerCallbackImpl(
           R: CreateCredentialResponse.type,
           E: CreateCredentialException.type,
-          onResult: (resp) => responseCallback
-              .complete(resp.as(CreatePublicKeyCredentialResponse.type)),
+          onResult: responseCallback.complete,
           onError: responseCallback.completeError,
         ),
       ),
@@ -78,8 +85,9 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
     try {
       final response = await responseCallback.future;
       final passkeyJson = response
+          .as(CreatePublicKeyCredentialResponse.type)
           .getRegistrationResponseJson()
-          .toDartString(releaseOriginal: true);
+          .toDartString();
       return PasskeyRegistrationResponse.fromJson(
         jsonDecode(passkeyJson) as Map<String, Object?>,
       );
@@ -123,8 +131,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
             "An unknown error occurred from a 3rd party SDK. Check logs for additional details.");
       }
       throw Exception(
-        "Unexpected exception type: "
-        "${e.getType().toDartString(releaseOriginal: true)}",
+        "Unexpected exception type: ${e.getType().toDartString()}",
       );
     }
   }
@@ -133,26 +140,25 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
   Future<PasskeyAuthenticationResponse> authenticate(
     PasskeyAuthenticationRequest request,
   ) async {
+    if (!await isSupported) {
+      throw const PasskeyUnsupportedException();
+    }
     final options = await protocol.requestAuthentication(request: request);
-    final jRequest = GetCredentialRequest_Builder()
-        .addCredentialOption(
-          GetPublicKeyCredentialOption.new3(
-            jsonEncode(options.toJson()).toJString(),
-          ),
-        )
-        .build();
+    final requestJson = jsonEncode(options.toJson()).toJString();
+    // final jRequest = GetCredentialRequest_Builder()
+    //     .addCredentialOption(
+    //       GetPublicKeyCredentialOption.new3(requestJson),
+    //     )
+    //     .build();
     final responseCallback = Completer<GetCredentialResponse>();
-    _credentialManager.getCredentialAsync(
-      _mainActivityContext,
-      jRequest,
-      CancellationSignal(),
-      _threadPool,
+    _cancellationSignal = _celestAuth.authenticate(
+      requestJson,
       CredentialManagerCallback<GetCredentialResponse,
           GetCredentialException>.implement(
         $CredentialManagerCallbackImpl(
           R: GetCredentialResponse.type,
           E: GetCredentialException.type,
-          onResult: (resp) => responseCallback.complete(resp),
+          onResult: responseCallback.complete,
           onError: responseCallback.completeError,
         ),
       ),
@@ -163,7 +169,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
           .getCredential()
           .as(PublicKeyCredential.type)
           .getAuthenticationResponseJson()
-          .toDartString(releaseOriginal: true);
+          .toDartString();
       return PasskeyAuthenticationResponse.fromJson(
         jsonDecode(passkeyJson) as Map<String, Object?>,
       );
@@ -178,14 +184,13 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
         // TODO(dnys1): Handle
       }
       if (e.instanceOf(GetPublicKeyCredentialDomException.type)) {
-        final message = e.getMessage().toDartString(releaseOriginal: true);
+        final message = e.getMessage().toDartString();
         if (message == 'Failed to decrypt credential.') {
           // TODO(dnys1): Sync account not available
         }
       }
       throw Exception(
-        "Unexpected exception type: "
-        "${e.getType().toDartString(releaseOriginal: true)}",
+        'Unexpected exception type: ${e.getType().toDartString()}',
       );
     }
   }

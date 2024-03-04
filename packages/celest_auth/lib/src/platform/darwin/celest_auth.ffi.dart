@@ -932,6 +932,7 @@ class CelestAuthDarwin {
 
   late final _sel_debugDescription1 = _registerName1("debugDescription");
   late final _sel_isPasskeysSupported1 = _registerName1("isPasskeysSupported");
+  late final _sel_cancel1 = _registerName1("cancel");
   ffi.Pointer<_ObjCBlockDesc> _newBlockDesc1() {
     final d =
         pkg_ffi.calloc.allocate<_ObjCBlockDesc>(ffi.sizeOf<_ObjCBlockDesc>());
@@ -1126,6 +1127,10 @@ class CelestAuth extends NSObject {
 
   bool get isPasskeysSupported {
     return _lib._objc_msgSend_12(_id, _lib._sel_isPasskeysSupported1);
+  }
+
+  void cancel() {
+    _lib._objc_msgSend_1(_id, _lib._sel_cancel1);
   }
 
   void registerWithRequest_onSuccess_onError_(
@@ -2117,4 +2122,9 @@ abstract class CelestAuthErrorCode {
   static const int CelestAuthErrorCodeUnknown = 0;
   static const int CelestAuthErrorCodeUnsupported = 1;
   static const int CelestAuthErrorCodeSerde = 2;
+  static const int CelestAuthErrorCodeCanceled = 1001;
+  static const int CelestAuthErrorCodeInvalidResponse = 1002;
+  static const int CelestAuthErrorCodeNotHandled = 1003;
+  static const int CelestAuthErrorCodeFailed = 1004;
+  static const int CelestAuthErrorCodeNotInteractive = 1005;
 }

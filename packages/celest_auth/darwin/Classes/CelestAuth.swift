@@ -7,6 +7,7 @@ import AppKit
 #endif
 
 import AuthenticationServices
+import OSLog
 
 public typealias OnSuccess = (UnsafePointer<UInt8>) -> Void
 public typealias OnError = (CelestAuthErrorCode, UnsafePointer<UInt8>) -> Void
@@ -15,6 +16,13 @@ public typealias OnError = (CelestAuthErrorCode, UnsafePointer<UInt8>) -> Void
     case unknown = 0
     case unsupported = 1
     case serde = 2
+    
+    // From ASAuthorizationError.Code
+    case canceled = 1001
+    case invalidResponse = 1002
+    case notHandled = 1003
+    case failed = 1004
+    case notInteractive = 1005
 }
 
 @objc protocol CelestAuthProtocol: NSObjectProtocol {
@@ -36,6 +44,8 @@ public typealias OnError = (CelestAuthErrorCode, UnsafePointer<UInt8>) -> Void
         onSuccess: @escaping OnSuccess,
         onError: @escaping OnError
     )
+    
+    @objc func cancel()
 }
 
 @objc public class CelestAuth: NSObject, CelestAuthProtocol {
@@ -53,6 +63,10 @@ public typealias OnError = (CelestAuthErrorCode, UnsafePointer<UInt8>) -> Void
         impl.isPasskeysSupported
     }
     
+    @objc public func cancel() {
+        impl.cancel()
+    }
+    
     @objc public func register(request: String, onSuccess: @escaping OnSuccess, onError: @escaping OnError) {
         impl.register(request: request, onSuccess: onSuccess, onError: onError)
     }
@@ -68,11 +82,20 @@ public typealias OnError = (CelestAuthErrorCode, UnsafePointer<UInt8>) -> Void
 
 @available(iOS 15.0, macOS 12.0, *)
 class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    private let logger = Logger(subsystem: "dev.celest.celest_auth", category: "debug")
 
+    private weak var controller: ASAuthorizationController?
     private var onSuccess: OnSuccess?
     private var onError: OnError?
     
     var isPasskeysSupported: Bool { true }
+    
+    func cancel() {
+        if #available(iOS 16.0, macOS 13.0, *) {
+            controller?.cancel()
+        }
+    }
     
     func register(
         request: String,
@@ -84,8 +107,7 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
               let challenge = Data(base64URLEncoded: options.challenge),
               let userID = options.user.id.data(using: .utf8)
         else {
-            onError(.serde, "Failed to deserialize registration request")
-            return
+            return onError(.serde, "Failed to deserialize registration request".unsafePointer)
         }
         self.onSuccess = onSuccess
         self.onError = onError
@@ -98,7 +120,12 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
         let authController = ASAuthorizationController(authorizationRequests: [platformKeyRequest])
         authController.delegate = self
         authController.presentationContextProvider = self
-        authController.performRequests()
+        if #available(iOS 16.0, macOS 13.0, *) {
+            authController.performRequests(options: .preferImmediatelyAvailableCredentials)
+        } else {
+            authController.performRequests()
+        }
+        self.controller = authController
     }
     
     func authenticate(
@@ -110,8 +137,7 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
               let options = try? JSONDecoder().decode(PasskeyAuthenticationOptions.self, from: data),
               let challenge = Data(base64URLEncoded: options.challenge)
         else {
-            onError(.serde, "Failed to deserialize authentication request")
-            return
+            return onError(.serde, "Failed to deserialize authentication request".unsafePointer)
         }
         self.onSuccess = onSuccess
         self.onError = onError
@@ -120,7 +146,12 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
         let authController = ASAuthorizationController(authorizationRequests: [platformKeyRequest])
         authController.delegate = self
         authController.presentationContextProvider = self
-        authController.performRequests()
+        if #available(iOS 16.0, macOS 13.0, *) {
+            authController.performRequests(options: .preferImmediatelyAvailableCredentials)
+        } else {
+            authController.performRequests()
+        }
+        self.controller = authController
     }
     
     private func reset() {
@@ -133,12 +164,14 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
         reset()
     }
     
-    private func complete(error: CelestAuthErrorCode, _ message: String) {
+    private func complete(error: CelestAuthErrorCode, message: String) {
+        logger.error("Authorization completed with error: \(message)")
         onError?(error, message.unsafePointer)
         reset()
     }
     
     private func complete(error: Error) {
+        logger.error("Authorization completed with error: \(error)")
         onError?(.unknown, error.localizedDescription.unsafePointer)
         reset()
     }
@@ -159,32 +192,38 @@ class CelestAuthSupported: NSObject, CelestAuthProtocol, ASAuthorizationControll
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let credential = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
+        logger.debug("Authorization completed successfully with result: \(authorization)")
+        switch authorization.credential {
+        case let credential as ASAuthorizationPlatformPublicKeyCredentialRegistration:
             let response = PasskeyRegistration(credential: credential)
             guard let responseJson = try? JSONEncoder().encode(response) else {
-                complete(error: .serde, "Failed to serialize registration response")
-                return
+                return complete(error: .serde, message: "Failed to serialize registration response")
             }
-            return complete(value: responseJson)
-        } else if let credential = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
+            complete(value: responseJson)
+        case let credential as ASAuthorizationPlatformPublicKeyCredentialAssertion:
             let response = PasskeyAuthentication(credential: credential)
             guard let responseJson = try? JSONEncoder().encode(response) else {
-                complete(error: .serde, "Failed to serialize authentication response")
-                return
+                return complete(error: .serde, message: "Failed to serialize authentication response")
             }
-            return complete(value: responseJson)
-        } else {
-            complete(error: .unknown, "Unknown credential type: \(authorization.self)")
+            complete(value: responseJson)
+        default:
+            complete(error: .unknown, message: "Unknown credential type: \(authorization.self)")
         }
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        logger.error("Authorization completed with error: \(error)")
+        if let error = error as? ASAuthorizationError {
+            return complete(error: .init(rawValue: error.errorCode) ?? .unknown, message: error.localizedDescription)
+        }
         complete(error: error)
     }
 }
 
 class CelestAuthUnsupported: NSObject, CelestAuthProtocol {
     var isPasskeysSupported: Bool { false }
+    
+    func cancel() {}
     
     func register(request: String, onSuccess: @escaping OnSuccess, onError: @escaping OnError) {
         onError(.unsupported, "Unsupported platform".unsafePointer)

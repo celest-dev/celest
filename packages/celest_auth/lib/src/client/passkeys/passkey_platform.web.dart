@@ -19,6 +19,8 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
     required super.protocol,
   }) : super.base();
 
+  AbortController? _abortController;
+
   @override
   Future<bool> get isSupported async {
     final publicKeyCredential = window.getProperty('PublicKeyCredential'.toJS);
@@ -33,6 +35,12 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
   }
 
   @override
+  void cancel() {
+    _abortController?.abort();
+    _abortController = null;
+  }
+
+  @override
   Future<PasskeyRegistrationResponse> register(
     PasskeyRegistrationRequest request,
   ) async {
@@ -42,9 +50,11 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
       );
     }
     final options = await protocol.requestRegistration(request: request);
+    _abortController = AbortController();
     final credential = await window.navigator.credentials
         .create(
           CredentialCreationOptions(
+            signal: _abortController!.signal,
             publicKey: PublicKeyCredentialCreationOptions(
               challenge: options.challenge.buffer.toJS,
               pubKeyCredParams: [
@@ -111,9 +121,11 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
       );
     }
     final options = await protocol.requestAuthentication(request: request);
+    _abortController = AbortController();
     final credential = await window.navigator.credentials
         .get(
           CredentialRequestOptions(
+            signal: _abortController!.signal,
             publicKey: PublicKeyCredential.parseRequestOptionsFromJSON(
               options.toJson().jsify() as PublicKeyCredentialRequestOptionsJSON,
             ),

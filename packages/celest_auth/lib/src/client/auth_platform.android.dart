@@ -13,7 +13,6 @@ final class AuthPlatformAndroid extends AuthPlatformImpl {
     required super.protocol,
   }) : super.base() {
     Jni.initDLApi();
-    _celestAuth.init(_applicationContext);
   }
 
   static final Logger _logger = Logger('Celest.AuthClientAndroid');
@@ -21,7 +20,7 @@ final class AuthPlatformAndroid extends AuthPlatformImpl {
   /// A code to identify the result of the custom tabs request.
   static const int _customTabsRequestCode = 7777;
 
-  late final CelestAuth _celestAuth = CelestAuth();
+  late final CelestAuth _celestAuth = CelestAuth(_mainActivity);
 
   late final Activity _mainActivity =
       Activity.fromRef(Jni.getCurrentActivity());

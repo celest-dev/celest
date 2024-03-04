@@ -19306,83 +19306,75 @@ class CelestAuth extends jni.JObject {
 
   /// The type which includes information such as the signature of this class.
   static const type = $CelestAuthType();
-  static final _id_new0 =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"<init>", r"()V");
+  static final _id_new0 = jni.Jni.accessors
+      .getMethodIDOf(_class.reference, r"<init>", r"(Landroid/app/Activity;)V");
 
-  /// from: public void <init>()
+  /// from: public void <init>(android.app.Activity activity)
   /// The returned object must be released after use, by calling the [release] method.
-  factory CelestAuth() {
-    return CelestAuth.fromRef(jni.Jni.accessors
-        .newObjectWithArgs(_class.reference, _id_new0, []).object);
-  }
-
-  static final _id_init = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"init", r"(Landroid/content/Context;)V");
-
-  /// from: public final void init(android.content.Context context)
-  void init(
-    Context context,
+  factory CelestAuth(
+    Activity activity,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_init,
-        jni.JniCallType.voidType, [context.reference]).check();
+    return CelestAuth.fromRef(jni.Jni.accessors.newObjectWithArgs(
+        _class.reference, _id_new0, [activity.reference]).object);
   }
 
-  static final _id_signInWithCustomTabs = jni.Jni.accessors.getMethodIDOf(
+  static final _id_isSupported = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
-      r"signInWithCustomTabs",
-      r"(Landroid/net/Uri;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V");
+      r"isSupported",
+      r"(Lkotlin/coroutines/Continuation;)Ljava/lang/Object;");
 
-  /// from: public final void signInWithCustomTabs(android.net.Uri uri, kotlin.jvm.functions.Function0 function0, kotlin.jvm.functions.Function1 function1)
-  void signInWithCustomTabs(
-    Uri uri,
-    jni.JObject function0,
-    jni.JObject function1,
-  ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_signInWithCustomTabs,
-        jni.JniCallType.voidType,
-        [uri.reference, function0.reference, function1.reference]).check();
-  }
-
-  static final _id_signInWithGoogle = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"signInWithGoogle",
-      r"(Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;");
-
-  /// from: public final java.lang.Object signInWithGoogle(java.lang.String string, java.lang.String string1, kotlin.coroutines.Continuation continuation)
+  /// from: public final java.lang.Object isSupported(kotlin.coroutines.Continuation continuation)
   /// The returned object must be released after use, by calling the [release] method.
-  Future<jni.JObject> signInWithGoogle(
-    jni.JString string,
-    jni.JString string1,
-  ) async {
+  Future<jni.JBoolean> isSupported() async {
     final $p = ReceivePort();
     final $c =
         jni.JObject.fromRef(ProtectedJniExtensions.newPortContinuation($p));
-    jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_signInWithGoogle,
-        jni.JniCallType.objectType,
-        [string.reference, string1.reference, $c.reference]).object;
+    jni.Jni.accessors.callMethodWithArgs(reference, _id_isSupported,
+        jni.JniCallType.objectType, [$c.reference]).object;
     final $o = jni.JObjectPtr.fromAddress(await $p.first);
-    final $k = const jni.JObjectType().getClass().reference;
+    final $k = const jni.JBooleanType().getClass().reference;
     if (!jni.Jni.env.IsInstanceOf($o, $k)) {
       throw "Failed";
     }
-    return const jni.JObjectType().fromRef($o);
+    return const jni.JBooleanType().fromRef($o);
   }
 
-  static final _id_handleSignIn = jni.Jni.accessors.getMethodIDOf(
+  static final _id_register = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
-      r"handleSignIn",
-      r"(Landroidx/credentials/GetCredentialResponse;)V");
+      r"register",
+      r"(Ljava/lang/String;Landroidx/credentials/CredentialManagerCallback;)Landroid/os/CancellationSignal;");
 
-  /// from: public final void handleSignIn(androidx.credentials.GetCredentialResponse getCredentialResponse)
-  void handleSignIn(
-    GetCredentialResponse getCredentialResponse,
+  /// from: public final android.os.CancellationSignal register(java.lang.String string, androidx.credentials.CredentialManagerCallback credentialManagerCallback)
+  /// The returned object must be released after use, by calling the [release] method.
+  CancellationSignal register(
+    jni.JString string,
+    CredentialManagerCallback<CreateCredentialResponse,
+            CreateCredentialException>
+        credentialManagerCallback,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_handleSignIn,
-        jni.JniCallType.voidType, [getCredentialResponse.reference]).check();
+    return const $CancellationSignalType().fromRef(jni.Jni.accessors
+        .callMethodWithArgs(reference, _id_register, jni.JniCallType.objectType,
+            [string.reference, credentialManagerCallback.reference]).object);
+  }
+
+  static final _id_authenticate = jni.Jni.accessors.getMethodIDOf(
+      _class.reference,
+      r"authenticate",
+      r"(Ljava/lang/String;Landroidx/credentials/CredentialManagerCallback;)Landroid/os/CancellationSignal;");
+
+  /// from: public final android.os.CancellationSignal authenticate(java.lang.String string, androidx.credentials.CredentialManagerCallback credentialManagerCallback)
+  /// The returned object must be released after use, by calling the [release] method.
+  CancellationSignal authenticate(
+    jni.JString string,
+    CredentialManagerCallback<GetCredentialResponse, GetCredentialException>
+        credentialManagerCallback,
+  ) {
+    return const $CancellationSignalType().fromRef(jni.Jni.accessors
+        .callMethodWithArgs(
+            reference,
+            _id_authenticate,
+            jni.JniCallType.objectType,
+            [string.reference, credentialManagerCallback.reference]).object);
   }
 }
 
