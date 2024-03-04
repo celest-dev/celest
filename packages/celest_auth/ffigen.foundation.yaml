@@ -5,10 +5,10 @@ description: |
   Regenerate bindings with `dart run ffigen --config=ffigen.foundation.yaml`.
 language: "objc"
 output:
-  bindings: "lib/src/platform/darwin/foundation.ffi.dart"
+  bindings: "lib/src/native/darwin/foundation.ffi.dart"
   symbol-file:
-    output: "package:celest_auth/src/platform/darwin/foundation.yaml"
-    import-path: "package:celest_auth/src/platform/darwin/foundation.ffi.dart"
+    output: "package:celest_auth/src/native/darwin/foundation.yaml"
+    import-path: "package:celest_auth/src/native/darwin/foundation.ffi.dart"
 headers:
   entry-points:
     - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h"

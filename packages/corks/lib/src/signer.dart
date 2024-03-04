@@ -44,17 +44,21 @@ final class SignedBytes implements Signed {
 }
 
 abstract interface class Signer {
-  factory Signer(Uint8List key) = _Signer;
+  factory Signer(Uint8List keyId, Uint8List key) = _Signer;
   const Signer._();
 
+  Uint8List get keyId;
   Future<S> sign<S extends Signed>(Signable<S> block);
   Future<Uint8List> close();
 }
 
 final class _Signer extends Signer {
-  _Signer(Uint8List key)
+  _Signer(this.keyId, Uint8List key)
       : _hmac = Hmac(sha256, key),
         super._();
+
+  @override
+  final Uint8List keyId;
 
   Hmac _hmac;
   late Uint8List _signature;

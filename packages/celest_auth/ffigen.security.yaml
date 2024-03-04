@@ -1,0 +1,76 @@
+name: SecurityFramework
+description: |
+  Bindings for Security framework on iOS/macOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.security.yaml`.
+language: "c"
+output:
+  bindings: "lib/src/native/darwin/security.ffi.dart"
+compiler-opts:
+  - "-F/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+headers:
+  entry-points:
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecItem.h"
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+library-imports:
+  cf: "package:celest_auth/src/native/darwin/core_foundation.ffi.dart"
+
+ffi-native:
+exclude-all-by-default: true
+functions:
+  include:
+    - SecItemAdd
+    - SecItemUpdate
+    - SecItemCopyMatching
+    - SecItemDelete
+    - SecCopyErrorMessageString
+globals:
+  include:
+    - "kSec.*"
+    - "kCF.*"
+unnamed-enums:
+  include:
+    - errSecSuccess
+    - errSecItemNotFound
+    - errSecDuplicateItem
+    - errSecUserCanceled
+    - errSecAuthFailed
+    - errSecInteractionRequired
+    - errSecMissingEntitlement
+    - errSecInvalidOwnerEdit
+type-map:
+  typedefs:
+    CFString:
+      lib: cf
+      c-type: CFString
+      dart-type: CFString
+    CFType:
+      lib: cf
+      c-type: CFType
+      dart-type: CFType
+    CFData:
+      lib: cf
+      c-type: CFData
+      dart-type: CFData
+    CFDictionary:
+      lib: cf
+      c-type: CFDictionary
+      dart-type: CFDictionary
+    CFStringRef:
+      lib: cf
+      c-type: CFStringRef
+      dart-type: CFStringRef
+    CFTypeRef:
+      lib: cf
+      c-type: CFTypeRef
+      dart-type: CFTypeRef
+    CFDictionaryRef:
+      lib: cf
+      c-type: CFDictionaryRef
+      dart-type: CFDictionaryRef

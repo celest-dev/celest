@@ -43,12 +43,10 @@ final class Cork {
 
   static CorkBuilder builder({
     Uint8List? id,
-    required Uint8List keyId,
     Bearer? bearer,
   }) =>
       CorkBuilder(
         id: id,
-        keyId: keyId,
         bearer: bearer,
       );
 
@@ -70,6 +68,10 @@ final class Cork {
   Uint8List encode() => toProto().writeToBuffer();
 
   Future<bool> verify(Signer signer) async {
+    if (Digest(signer.keyId) != Digest(keyId)) {
+      return false;
+    }
+
     await signer.sign(SignableBytes(id));
 
     if (bearer case final bearer?) {
@@ -88,7 +90,6 @@ final class Cork {
 final class CorkBuilder {
   factory CorkBuilder({
     Uint8List? id,
-    required Uint8List keyId,
     Bearer? bearer,
   }) {
     if (id == null) {
@@ -98,19 +99,17 @@ final class CorkBuilder {
         id[i] = _secureRandom.nextInt(256);
       }
     }
-    return CorkBuilder._(id, keyId, bearer);
+    return CorkBuilder._(id, bearer);
   }
 
   CorkBuilder._(
     this._id,
-    this._keyId,
     this._bearer,
   );
 
   static final _secureRandom = Random.secure();
 
   final Uint8List _id;
-  final Uint8List _keyId;
   final Bearer? _bearer;
   final List<Caveat> _caveats = [];
 
@@ -130,7 +129,7 @@ final class CorkBuilder {
     }
     return Cork._(
       id: _id,
-      keyId: _keyId,
+      keyId: signer.keyId,
       bearer: signedBearer,
       caveats: signedCaveats,
       signature: await signer.close(),

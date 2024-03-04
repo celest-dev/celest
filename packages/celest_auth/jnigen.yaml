@@ -12,21 +12,22 @@ suspend_fun_to_async: true
 output:
   bindings_type: dart_only
   dart:
-    path: "lib/src/platform/android/jni_bindings.ffi.dart"
+    path: "lib/src/native/android/jni_bindings.ffi.dart"
     structure: single_file
 
 classes:
-  - android.net.Uri
-  - androidx.browser.customtabs.CustomTabsIntent
-  - androidx.browser.customtabs.CustomTabsService
+  - dev.celest.celest_auth.CelestAuth
+  - dev.celest.celest_auth.CelestSecureStorage
+
+  # Core Android/Java types
   - android.app.Activity
   - android.content.Context
-  - android.content.Intent
-  - android.content.pm.PackageManager
-  - android.content.pm.ResolveInfo
-  - android.content.pm.ActivityInfo
-  - android.content.pm.PackageItemInfo
-  - dev.celest.celest_auth.CelestAuth
+  - android.os.CancellationSignal
+  - java.lang.Runnable
+  - java.lang.Exception
+  - java.lang.Throwable
+
+  # Passkey types
   - androidx.credentials.CreateCredentialRequest
   - androidx.credentials.CreateCredentialResponse
   - androidx.credentials.CreatePublicKeyCredentialRequest
@@ -50,14 +51,6 @@ classes:
   - androidx.credentials.exceptions.publickeycredential.CreatePublicKeyCredentialDomException
   - androidx.credentials.exceptions.publickeycredential.CreatePublicKeyCredentialException
   - androidx.credentials.exceptions.publickeycredential.GetPublicKeyCredentialDomException
-  - android.os.CancellationSignal
-  - android.os.Bundle
-  - android.os.BaseBundle
-  - java.lang.Runnable
-  - java.lang.Exception
-  - java.lang.Throwable
-  - java.util.concurrent.Executor
-  - java.util.concurrent.Executors
   - com.google.android.gms.fido.Fido
   - com.google.android.gms.fido.fido2.Fido2ApiClient
   - com.google.android.gms.tasks.Task

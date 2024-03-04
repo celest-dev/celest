@@ -4,9 +4,8 @@ import 'package:corks/corks.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-final authClient = AuthClient(
-  baseUri: Uri.https('a102-136-24-157-119.ngrok-free.app'),
-);
+final baseUri = Uri.https('0a3b-136-24-157-119.ngrok-free.app');
+final authClient = AuthClient(baseUri: baseUri);
 final passkeys = PasskeyPlatform(protocol: authClient.passkeys);
 
 void main() {
@@ -46,6 +45,11 @@ class _MainAppState extends State<MainApp> {
       final response = await passkeys.register(
         PasskeyRegistrationRequest(
           username: _controller.text,
+          authenticatorSelection: const AuthenticatorSelectionCriteria(
+            authenticatorAttachment: AuthenticatorAttachment.platform,
+            residentKey: ResidentKeyRequirement.preferred,
+            userVerification: UserVerificationRequirement.discouraged,
+          ),
         ),
       );
       await authClient.passkeys.verifyRegistration(
@@ -143,9 +147,7 @@ class _MainAppState extends State<MainApp> {
                       onPressed: () {
                         setState(() {
                           _request = http.get(
-                            Uri.parse(
-                              'https://a102-136-24-157-119.ngrok-free.app/authenticated',
-                            ),
+                            baseUri.resolve('/authenticated'),
                           );
                         });
                       },

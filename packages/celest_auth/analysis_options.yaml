@@ -10,4 +10,4 @@ analyzer:
     depend_on_referenced_packages: error
     public_member_api_docs: ignore # TODO
   exclude:
-    - lib/src/platform/**/*.ffi.dart
+    - "**/*.ffi.dart"
