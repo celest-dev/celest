@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:celest_auth/src/native/android/jni_bindings.ffi.dart'
     hide Exception;
 import 'package:celest_auth/src/native/android/jni_helpers.dart';
+import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.vm.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:jni/jni.dart';

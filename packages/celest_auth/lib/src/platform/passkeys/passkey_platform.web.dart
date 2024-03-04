@@ -3,6 +3,7 @@ import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 import 'dart:typed_data';
 
+import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.web.dart';
 import 'package:celest_core/celest_core.dart'
     hide AuthenticatorSelectionCriteria;
@@ -45,7 +46,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
     PasskeyRegistrationRequest request,
   ) async {
     if (!await isSupported) {
-      throw const PasskeyException(
+      throw const PasskeyExceptionImpl(
         message: 'Passkeys are not supported in this environment',
       );
     }
@@ -61,7 +62,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
                 for (final param in options.publicKeyCredentialParameters)
                   PublicKeyCredentialParameters(
                     alg: param.algorithm,
-                    type: 'public-key',
+                    type: param.type,
                   ),
               ].toJS,
               rp: PublicKeyCredentialRpEntity(
@@ -71,7 +72,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
                 id: utf8.encode(options.userId).buffer.toJS,
                 displayName: options.userDisplayName,
               )..name = options.userName,
-              attestation: 'none',
+              attestation: options.attestation,
               authenticatorSelection: AuthenticatorSelectionCriteria(
                 authenticatorAttachment:
                     options.authenticatorSelection.authenticatorAttachment!,
@@ -93,7 +94,8 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
           ),
         ) as PublicKeyCredential?;
     if (credential == null) {
-      throw const PasskeyException(message: 'Registration was not completed');
+      throw const PasskeyExceptionImpl(
+          message: 'Registration was not completed');
     }
     assert(credential.type == 'public-key');
     final response = credential.response as AuthenticatorAttestationResponse;
@@ -116,7 +118,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
     PasskeyAuthenticationRequest request,
   ) async {
     if (!await isSupported) {
-      throw const PasskeyException(
+      throw const PasskeyExceptionImpl(
         message: 'Passkeys are not supported in this environment',
       );
     }
@@ -139,7 +141,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
           ),
         ) as PublicKeyCredential?;
     if (credential == null) {
-      throw const PasskeyException(
+      throw const PasskeyExceptionImpl(
         message: 'Authentication was not completed',
       );
     }
@@ -214,7 +216,7 @@ extension type RegistrationError._(JSError _) implements JSError {
   // TODO(dnys1): Cover all cases
   // https://github.com/MasterKale/SimpleWebAuthn/blob/634ceabdb05f4b5e56132fff7c57598caa2401a8/packages/browser/src/helpers/identifyRegistrationError.ts#L7
   PasskeyException toPasskeyException() {
-    return PasskeyException(message: '$name: $message');
+    return PasskeyExceptionImpl(message: '$name: $message');
   }
 }
 
@@ -222,6 +224,6 @@ extension type AuthenticationError._(JSError _) implements JSError {
   // TODO(dnys1): Cover all cases
   // https://github.com/MasterKale/SimpleWebAuthn/blob/634ceabdb05f4b5e56132fff7c57598caa2401a8/packages/browser/src/helpers/identifyAuthenticationError.ts#L7
   PasskeyException toPasskeyException() {
-    return PasskeyException(message: '$name: $message');
+    return PasskeyExceptionImpl(message: '$name: $message');
   }
 }
