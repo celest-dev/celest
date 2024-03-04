@@ -223,6 +223,10 @@ import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
     as _i214;
 import 'functions/sealed_classes/shapeResults.dart' as _i215;
 import 'functions/sealed_classes/swappedResult.dart' as _i216;
+import 'functions/typedefs/json.dart' as _i217;
+import 'functions/typedefs/mixedJson.dart' as _i218;
+import 'functions/typedefs/nullableJson.dart' as _i219;
+import 'functions/typedefs/portfolio.dart' as _i220;
 
 void main() {
   _i1.serve(targets: {
@@ -506,5 +510,9 @@ void main() {
         _i214.SealedClassWithOverriddenCustomJsonTarget(),
     '/sealed-classes/shape-results': _i215.ShapeResultsTarget(),
     '/sealed-classes/swapped-result': _i216.SwappedResultTarget(),
+    '/typedefs/json': _i217.JsonTarget(),
+    '/typedefs/mixed-json': _i218.MixedJsonTarget(),
+    '/typedefs/nullable-json': _i219.NullableJsonTarget(),
+    '/typedefs/portfolio': _i220.PortfolioTarget(),
   });
 }

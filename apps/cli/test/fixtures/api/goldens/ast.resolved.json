@@ -1698,6 +1698,99 @@
         }
       }
     },
+    "typedefs": {
+      "name": "typedefs",
+      "functions": {
+        "portfolio": {
+          "name": "portfolio",
+          "route": "/typedefs/portfolio",
+          "apiName": "typedefs",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "json": {
+          "name": "json",
+          "route": "/typedefs/json",
+          "apiName": "typedefs",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nullableJson": {
+          "name": "nullableJson",
+          "route": "/typedefs/nullable-json",
+          "apiName": "typedefs",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "mixedJson": {
+          "name": "mixedJson",
+          "route": "/typedefs/mixed-json",
+          "apiName": "typedefs",
+          "envVars": [],
+          "policy": {
+            "statements": [
+              {
+                "grantee": {
+                  "type": "Celest::Role",
+                  "id": "$authenticated"
+                },
+                "actions": [
+                  {
+                    "$": "CloudFunctionAction",
+                    "": "invoke"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     "return_types": {
       "name": "return_types",
       "functions": {

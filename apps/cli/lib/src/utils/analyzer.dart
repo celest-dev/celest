@@ -185,8 +185,9 @@ extension DartTypeHelper on DartType {
   }
 
   Uri? get sourceUri {
-    final sourceUri = switch (alias) {
-      final alias? => alias.element.sourceLocation.sourceUrl,
+    final sourceUri = switch (this) {
+      // Don't consider aliases for non-record types.
+      RecordType(:final alias?) => alias.element.sourceLocation.sourceUrl,
       _ => element?.sourceLocation.sourceUrl,
     };
     if (sourceUri == null) {

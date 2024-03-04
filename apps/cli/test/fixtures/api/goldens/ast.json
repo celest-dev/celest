@@ -10440,6 +10440,428 @@
         "text": ""
       }
     },
+    "typedefs": {
+      "name": "typedefs",
+      "metadata": [],
+      "functions": {
+        "portfolio": {
+          "name": "portfolio",
+          "apiName": "typedefs",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "portfolio",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Portfolio",
+                "url": "package:celest_backend/models/typedefs.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 205,
+                  "uri": "typedefs.dart",
+                  "line": 6,
+                  "column": 38
+                },
+                "end": {
+                  "offset": 214,
+                  "uri": "typedefs.dart",
+                  "line": 6,
+                  "column": 47
+                },
+                "text": "portfolio"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Portfolio",
+                "url": "package:celest_backend/models/typedefs.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Portfolio",
+            "url": "package:celest_backend/models/typedefs.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 185,
+              "uri": "typedefs.dart",
+              "line": 6,
+              "column": 18
+            },
+            "end": {
+              "offset": 194,
+              "uri": "typedefs.dart",
+              "line": 6,
+              "column": 27
+            },
+            "text": "portfolio"
+          }
+        },
+        "json": {
+          "name": "json",
+          "apiName": "typedefs",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "json",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 259,
+                  "uri": "typedefs.dart",
+                  "line": 7,
+                  "column": 23
+                },
+                "end": {
+                  "offset": 263,
+                  "uri": "typedefs.dart",
+                  "line": 7,
+                  "column": 27
+                },
+                "text": "json"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "Reference",
+                "symbol": "dynamic",
+                "url": "dart:core"
+              }
+            ],
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 249,
+              "uri": "typedefs.dart",
+              "line": 7,
+              "column": 13
+            },
+            "end": {
+              "offset": 253,
+              "uri": "typedefs.dart",
+              "line": 7,
+              "column": 17
+            },
+            "text": "json"
+          }
+        },
+        "nullableJson": {
+          "name": "nullableJson",
+          "apiName": "typedefs",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "json",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": true
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 313,
+                  "uri": "typedefs.dart",
+                  "line": 8,
+                  "column": 33
+                },
+                "end": {
+                  "offset": 317,
+                  "uri": "typedefs.dart",
+                  "line": 8,
+                  "column": 37
+                },
+                "text": "json"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": true
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "Reference",
+                "symbol": "dynamic",
+                "url": "dart:core"
+              }
+            ],
+            "isNullable": true
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 294,
+              "uri": "typedefs.dart",
+              "line": 8,
+              "column": 14
+            },
+            "end": {
+              "offset": 306,
+              "uri": "typedefs.dart",
+              "line": 8,
+              "column": 26
+            },
+            "text": "nullableJson"
+          }
+        },
+        "mixedJson": {
+          "name": "mixedJson",
+          "apiName": "typedefs",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "json",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 363,
+                  "uri": "typedefs.dart",
+                  "line": 9,
+                  "column": 29
+                },
+                "end": {
+                  "offset": 367,
+                  "uri": "typedefs.dart",
+                  "line": 9,
+                  "column": 33
+                },
+                "text": "json"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Map",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  },
+                  {
+                    "$": "Reference",
+                    "symbol": "dynamic",
+                    "url": "dart:core"
+                  }
+                ],
+                "isNullable": true
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Map",
+            "url": "dart:core",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              {
+                "$": "Reference",
+                "symbol": "dynamic",
+                "url": "dart:core"
+              }
+            ],
+            "isNullable": true
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 348,
+              "uri": "typedefs.dart",
+              "line": 9,
+              "column": 14
+            },
+            "end": {
+              "offset": 357,
+              "uri": "typedefs.dart",
+              "line": 9,
+              "column": 23
+            },
+            "text": "mixedJson"
+          }
+        }
+      },
+      "docs": [
+        "/// Checks that typedefs work as expected."
+      ],
+      "exceptionTypes": [],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "typedefs.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "typedefs.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
     "return_types": {
       "name": "return_types",
       "metadata": [],

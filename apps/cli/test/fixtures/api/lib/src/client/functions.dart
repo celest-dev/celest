@@ -24,6 +24,7 @@ import 'package:celest_backend/models/parameter_types.dart'
     as _$parameter_types;
 import 'package:celest_backend/models/records.dart' as _$records;
 import 'package:celest_backend/models/sealed_classes.dart' as _$sealed_classes;
+import 'package:celest_backend/models/typedefs.dart' as _$typedefs;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
@@ -78,6 +79,9 @@ class CelestFunctions {
   final returnTypes = CelestFunctionsReturnTypes();
 
   final sealedClasses = CelestFunctionsSealedClasses();
+
+  /// Checks that typedefs work as expected.
+  final typedefs = CelestFunctionsTypedefs();
 }
 
 class CelestFunctionsAsserts {
@@ -6175,5 +6179,98 @@ class CelestFunctionsSealedClasses {
     }
     return Serializers.instance
         .deserialize<_$sealed_classes.OkShapeResult>($body['response']);
+  }
+}
+
+/// Checks that typedefs work as expected.
+class CelestFunctionsTypedefs {
+  Never _throwError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<_$typedefs.Portfolio> portfolio(_$typedefs.Portfolio portfolio) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/typedefs/portfolio'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({
+        r'portfolio':
+            Serializers.instance.serialize<_$typedefs.Portfolio>(portfolio)
+      }),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$typedefs.Portfolio>($body['response']);
+  }
+
+  Future<Map<String, dynamic>> json(Map<String, dynamic> json) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/typedefs/json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'json': json}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>);
+  }
+
+  Future<Map<String, dynamic>?> nullableJson(Map<String, dynamic>? json) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/typedefs/nullable-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'json': json}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>?);
+  }
+
+  Future<Map<String, dynamic>?> mixedJson(Map<String, dynamic> json) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/typedefs/mixed-json'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode({r'json': json}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as Map<String, Object?>?);
   }
 }

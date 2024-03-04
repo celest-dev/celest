@@ -37,6 +37,8 @@ abstract final class Apis {
   static const returnTypes = CloudApi(name: r'return_types');
 
   static const sealedClasses = CloudApi(name: r'sealed_classes');
+
+  static const typedefs = CloudApi(name: r'typedefs');
 }
 
 @Deprecated('Use `Functions` instead.')
@@ -1117,5 +1119,25 @@ abstract final class Functions {
   static const sealedClassesSwappedResult = CloudFunction(
     api: r'sealed_classes',
     functionName: r'swappedResult',
+  );
+
+  static const typedefsJson = CloudFunction(
+    api: r'typedefs',
+    functionName: r'json',
+  );
+
+  static const typedefsMixedJson = CloudFunction(
+    api: r'typedefs',
+    functionName: r'mixedJson',
+  );
+
+  static const typedefsNullableJson = CloudFunction(
+    api: r'typedefs',
+    functionName: r'nullableJson',
+  );
+
+  static const typedefsPortfolio = CloudFunction(
+    api: r'typedefs',
+    functionName: r'portfolio',
   );
 }

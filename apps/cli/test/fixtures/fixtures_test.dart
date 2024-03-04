@@ -3413,6 +3413,53 @@ final tests = <String, Test>{
           ],
         },
       ),
+      'typedefs': ApiTest(
+        functionTests: {
+          'portfolio': [
+            FunctionTestSuccess(
+              name: 'portfolio',
+              input: {
+                'portfolio': {},
+              },
+              output: {},
+            ),
+          ],
+          'json': [
+            FunctionTestSuccess(
+              name: 'json',
+              input: {
+                'json': complexStruct,
+              },
+              output: complexStruct,
+            ),
+          ],
+          'nullableJson': [
+            FunctionTestSuccess(
+              name: 'non-null',
+              input: {
+                'json': complexStruct,
+              },
+              output: complexStruct,
+            ),
+            FunctionTestSuccess(
+              name: 'null',
+              input: {
+                'json': null,
+              },
+              output: null,
+            ),
+          ],
+          'mixedJson': [
+            FunctionTestSuccess(
+              name: 'mixedJson',
+              input: {
+                'json': complexStruct,
+              },
+              output: complexStruct,
+            ),
+          ],
+        },
+      ),
     },
   ),
   'env_vars': Test(
