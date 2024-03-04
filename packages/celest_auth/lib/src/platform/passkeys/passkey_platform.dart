@@ -4,17 +4,10 @@ import 'package:celest_core/celest_core.dart';
 import 'package:meta/meta.dart';
 
 abstract base class PasskeyPlatform {
-  factory PasskeyPlatform({
-    required PasskeyProtocol protocol,
-  }) = PasskeyPlatformImpl;
+  factory PasskeyPlatform() = PasskeyPlatformImpl;
 
   @protected
-  PasskeyPlatform.base({
-    required this.protocol,
-  });
-
-  @protected
-  final PasskeyProtocol protocol;
+  PasskeyPlatform.base();
 
   /// Returns `true` if the platform supports passkeys.
   ///
@@ -22,16 +15,16 @@ abstract base class PasskeyPlatform {
   /// methods will throw a [PasskeyException].
   Future<bool> get isSupported;
 
-  /// Cancels the in-progress operation, if any.
+  /// Cancels the in-progress passkey operation, if any.
   void cancel();
 
   /// Registers a new passkey.
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationRequest request,
+    PasskeyRegistrationOptions options,
   );
 
   /// Authenticates with an existing passkey.
   Future<PasskeyAuthenticationResponse> authenticate(
-    PasskeyAuthenticationRequest request,
+    PasskeyAuthenticationOptions options,
   );
 }

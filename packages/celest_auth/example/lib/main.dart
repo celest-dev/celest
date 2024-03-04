@@ -1,12 +1,18 @@
-import 'package:celest_auth/celest_auth.dart';
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_auth/src/auth.dart';
+import 'package:celest_auth/src/flows/passkey_flow.dart';
 import 'package:corks/corks.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 final baseUri = Uri.https('0a3b-136-24-157-119.ngrok-free.app');
-final authClient = AuthClient(baseUri: baseUri);
-final passkeys = PasskeyPlatform(protocol: authClient.passkeys);
+final auth = CelestAuth(
+  baseUri: baseUri,
+  httpClient: http.Client(),
+);
+
+final class CelestAuth extends AuthImpl with Passkeys {
+  CelestAuth({required super.baseUri, required super.httpClient});
+}
 
 void main() {
   runApp(const MainApp());
@@ -42,20 +48,7 @@ class _MainAppState extends State<MainApp> {
   Future<void> signInWithPasskey() async {
     try {
       _state.value = _State(true);
-      final response = await passkeys.register(
-        PasskeyRegistrationRequest(
-          username: _controller.text,
-          authenticatorSelection: const AuthenticatorSelectionCriteria(
-            authenticatorAttachment: AuthenticatorAttachment.platform,
-            residentKey: ResidentKeyRequirement.preferred,
-            userVerification: UserVerificationRequirement.discouraged,
-          ),
-        ),
-      );
-      await authClient.passkeys.verifyRegistration(
-        registration: response,
-      );
-      final token = authClient.passkeys.token!;
+      final token = await auth.passkeys.signUp(email: _controller.text);
       print('Got token: $token');
       final cork = Cork.parse(token);
       final bearer = (cork.bearer!.block as EntityBearer).entity;

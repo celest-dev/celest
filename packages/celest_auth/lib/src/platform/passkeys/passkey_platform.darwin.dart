@@ -11,9 +11,7 @@ import 'package:celest_core/src/util/globals.dart';
 import 'package:ffi/ffi.dart';
 
 final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
-  PasskeyPlatformDarwin({
-    required super.protocol,
-  }) : super.base();
+  PasskeyPlatformDarwin() : super.base();
 
   late final _platform = CelestAuthDarwin(DynamicLibrary.process());
   late final _celestAuth = CelestAuth.new1(_platform);
@@ -24,20 +22,12 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
   }
 
   @override
-  void cancel() {
-    _celestAuth.cancel();
-    // TODO(dnys1): Ignore results?
-  }
+  void cancel() => _celestAuth.cancel();
 
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationRequest request,
+    PasskeyRegistrationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyUnsupportedException();
-    }
-    final options = await protocol.requestRegistration(request: request);
-
     final completer = Completer<PasskeyRegistrationResponse>();
     final onSuccess = ObjCBlock_ffiVoid_Uint8.listener(_platform, (json) {
       if (json == nullptr) {
@@ -74,12 +64,8 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
 
   @override
   Future<PasskeyAuthenticationResponse> authenticate(
-    PasskeyAuthenticationRequest request,
+    PasskeyAuthenticationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyUnsupportedException();
-    }
-    final options = await protocol.requestAuthentication(request: request);
     final completer = Completer<PasskeyAuthenticationResponse>();
     final onSuccess = ObjCBlock_ffiVoid_Uint8.listener(_platform, (json) {
       if (json == nullptr) {

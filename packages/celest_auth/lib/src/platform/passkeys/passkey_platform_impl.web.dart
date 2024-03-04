@@ -1,17 +1,14 @@
 import 'package:celest_auth/src/platform/passkeys/passkey_platform.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform.web.dart';
-import 'package:celest_core/celest_core.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/util/globals.dart';
 import 'package:meta/meta.dart';
 import 'package:os_detect/os_detect.dart' as os;
 
 abstract base class PasskeyPlatformImpl extends PasskeyPlatform {
-  factory PasskeyPlatformImpl({
-    required PasskeyProtocol protocol,
-  }) {
+  factory PasskeyPlatformImpl() {
     if (kIsWeb) {
-      return PasskeyPlatformWeb(protocol: protocol);
+      return PasskeyPlatformWeb();
     }
     throw UnsupportedError(
       'The current platform is not supported: ${os.operatingSystem}',
@@ -19,7 +16,5 @@ abstract base class PasskeyPlatformImpl extends PasskeyPlatform {
   }
 
   @protected
-  PasskeyPlatformImpl.base({
-    required super.protocol,
-  }) : super.base();
+  PasskeyPlatformImpl.base() : super.base();
 }

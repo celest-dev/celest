@@ -16,9 +16,7 @@ import 'package:web/web.dart'
         ResidentKeyRequirement;
 
 final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
-  PasskeyPlatformWeb({
-    required super.protocol,
-  }) : super.base();
+  PasskeyPlatformWeb() : super.base();
 
   AbortController? _abortController;
 
@@ -37,20 +35,14 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
 
   @override
   void cancel() {
-    _abortController?.abort();
+    _abortController?.abort('User canceled'.toJS);
     _abortController = null;
   }
 
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationRequest request,
+    PasskeyRegistrationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyExceptionImpl(
-        message: 'Passkeys are not supported in this environment',
-      );
-    }
-    final options = await protocol.requestRegistration(request: request);
     _abortController = AbortController();
     final credential = await window.navigator.credentials
         .create(
@@ -115,14 +107,8 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
 
   @override
   Future<PasskeyAuthenticationResponse> authenticate(
-    PasskeyAuthenticationRequest request,
+    PasskeyAuthenticationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyExceptionImpl(
-        message: 'Passkeys are not supported in this environment',
-      );
-    }
-    final options = await protocol.requestAuthentication(request: request);
     _abortController = AbortController();
     final credential = await window.navigator.credentials
         .get(

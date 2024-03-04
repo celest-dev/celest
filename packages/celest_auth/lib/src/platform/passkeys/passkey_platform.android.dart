@@ -4,15 +4,12 @@ import 'dart:convert';
 import 'package:celest_auth/src/native/android/jni_bindings.ffi.dart'
     hide Exception;
 import 'package:celest_auth/src/native/android/jni_helpers.dart';
-import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.vm.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:jni/jni.dart';
 
 final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
-  PasskeyPlatformAndroid({
-    required super.protocol,
-  }) : super.base() {
+  PasskeyPlatformAndroid() : super.base() {
     Jni.initDLApi();
   }
 
@@ -52,23 +49,14 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
 
   @override
   void cancel() {
-    if (_cancellationSignal case final cancellationSignal?) {
-      cancellationSignal.cancel();
-      if (!cancellationSignal.isReleased) {
-        cancellationSignal.release();
-      }
-    }
+    _cancellationSignal?.cancel();
     _cancellationSignal = null;
   }
 
   @override
   Future<PasskeyRegistrationResponse> register(
-    PasskeyRegistrationRequest request,
+    PasskeyRegistrationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyUnsupportedException();
-    }
-    final options = await protocol.requestRegistration(request: request);
     final requestJson = jsonEncode(options.toJson()).toJString();
     final responseCallback = Completer<CreateCredentialResponse>();
     _cancellationSignal = _celestAuth.register(
@@ -139,12 +127,8 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
 
   @override
   Future<PasskeyAuthenticationResponse> authenticate(
-    PasskeyAuthenticationRequest request,
+    PasskeyAuthenticationOptions options,
   ) async {
-    if (!await isSupported) {
-      throw const PasskeyUnsupportedException();
-    }
-    final options = await protocol.requestAuthentication(request: request);
     final requestJson = jsonEncode(options.toJson()).toJString();
     // final jRequest = GetCredentialRequest_Builder()
     //     .addCredentialOption(
