@@ -32,11 +32,6 @@ abstract base class AuthImpl implements Auth {
     _isAuthenticated = cork != null;
   }
 
-  void register(AuthFlow flow) {
-    flow.init();
-    throw UnimplementedError();
-  }
-
   @override
   bool get isAuthenticated => _isAuthenticated;
   late bool _isAuthenticated;

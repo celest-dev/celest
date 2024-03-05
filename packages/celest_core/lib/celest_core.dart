@@ -5,8 +5,10 @@ library;
 export 'src/auth/auth_client.dart';
 export 'src/auth/auth_exception.dart';
 export 'src/auth/auth_protocol.dart';
+export 'src/auth/otp/otp_types.dart';
 export 'src/auth/passkeys/passkey_exception.dart';
 export 'src/auth/passkeys/passkey_types.dart';
+export 'src/auth/user.dart';
 
 /// Exceptions
 export 'src/exception/celest_exception.dart';

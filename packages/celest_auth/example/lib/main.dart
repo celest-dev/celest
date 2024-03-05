@@ -1,16 +1,18 @@
 import 'package:celest_auth/src/auth.dart';
+import 'package:celest_auth/src/flows/email_flow.dart';
 import 'package:celest_auth/src/flows/passkey_flow.dart';
-import 'package:corks/corks.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-final baseUri = Uri.https('0a3b-136-24-157-119.ngrok-free.app');
+final baseUri = Uri.https('64a2-136-24-157-119.ngrok-free.app');
+// final baseUri = Uri.http('localhost:8080');
 final auth = CelestAuth(
   baseUri: baseUri,
   httpClient: http.Client(),
 );
 
-final class CelestAuth extends AuthImpl with Passkeys {
+final class CelestAuth extends AuthImpl with Passkeys, Email {
   CelestAuth({required super.baseUri, required super.httpClient});
 }
 
@@ -25,45 +27,37 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
-typedef User = ({
-  String userId,
-  String email,
-});
+enum _Step { idle, signingIn, needsVerification, signedIn }
 
 final class _State {
   _State(
-    this.signingIn, {
+    this.step, {
+    this.verification,
     this.user,
   });
 
-  final bool signingIn;
+  final _Step step;
+  final EmailSignUpNeedsVerification? verification;
   final User? user;
 }
 
 class _MainAppState extends State<MainApp> {
-  final _state = ValueNotifier(_State(false));
-  final _controller = TextEditingController();
+  final _state = ValueNotifier(_State(_Step.idle));
+  final _emailController = TextEditingController();
+  final _otpController = TextEditingController();
   Future<http.Response>? _request;
 
-  Future<void> signInWithPasskey() async {
+  Future<void> signUp() async {
     try {
-      _state.value = _State(true);
-      final token = await auth.passkeys.signUp(email: _controller.text);
-      print('Got token: $token');
-      final cork = Cork.parse(token);
-      final bearer = (cork.bearer!.block as EntityBearer).entity;
-      final userId = bearer.uid.id;
-      final email = bearer.attributes['email']!.string;
-      print('User ID: $userId');
-      print('Email: $email');
-      _state.value = _State(false, user: (
-        userId: userId,
-        email: email,
-      ));
+      _state.value = _State(_Step.signingIn);
+      final verify = await auth.email.signUp(email: _emailController.text);
+      print('Needs verification');
+      _emailController.clear();
+      _state.value = _State(_Step.needsVerification, verification: verify);
     } on Exception catch (e, st) {
       print('Error: $e');
       print('Stacktrace: $st');
-      _state.value = _State(false);
+      _state.value = _State(_Step.idle);
     }
   }
 
@@ -77,7 +71,6 @@ class _MainAppState extends State<MainApp> {
             child: ValueListenableBuilder(
               valueListenable: _state,
               builder: (context, state, child) {
-                final isSignedIn = state.user != null;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -110,42 +103,72 @@ class _MainAppState extends State<MainApp> {
                       ),
                     ],
                     const SizedBox(height: 16),
-                    if (!isSignedIn) ...[
-                      TextField(
-                        controller: _controller,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                        ),
-                        autofillHints: const [
-                          AutofillHints.username,
-                          AutofillHints.email,
+                    ...switch (state.step) {
+                      _Step.needsVerification => [
+                          TextField(
+                            key: const ValueKey('otp'),
+                            controller: _otpController,
+                            decoration: const InputDecoration(
+                              labelText: 'OTP',
+                            ),
+                            autofillHints: const [
+                              AutofillHints.oneTimeCode,
+                            ],
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 16),
+                          TextButton(
+                            onPressed: () async {
+                              final user = await state.verification!.verifyOtp(
+                                _otpController.text,
+                              );
+                              _state.value = _State(_Step.signedIn, user: user);
+                            },
+                            child: const Text('Verify OTP'),
+                          ),
+                          const SizedBox(height: 16),
+                          TextButton(
+                            onPressed: state.verification!.canResend
+                                ? () async {
+                                    final verify =
+                                        await state.verification!.resend();
+                                    _state.value = _State(
+                                      _Step.needsVerification,
+                                      verification: verify,
+                                    );
+                                  }
+                                : null,
+                            child: const Text('Resend OTP'),
+                          ),
                         ],
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: 16),
-                      TextButton(
-                        onPressed: !state.signingIn ? signInWithPasskey : null,
-                        child: const Text('Sign in with Passkey'),
-                      ),
-                    ] else ...[
-                      TextButton(
-                        onPressed: () {
-                          _state.value = _State(false);
-                        },
-                        child: const Text('Sign out'),
-                      ),
-                    ],
-                    const SizedBox(height: 16),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _request = http.get(
-                            baseUri.resolve('/authenticated'),
-                          );
-                        });
-                      },
-                      child: const Text('Make HTTP request'),
-                    ),
+                      _Step.idle || _Step.signingIn => [
+                          TextField(
+                            key: const ValueKey('email'),
+                            controller: _emailController,
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
+                            ),
+                            autofillHints: const [
+                              AutofillHints.email,
+                            ],
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                          const SizedBox(height: 16),
+                          TextButton(
+                            onPressed:
+                                state.step != _Step.signingIn ? signUp : null,
+                            child: const Text('Sign Up'),
+                          ),
+                        ],
+                      _Step.signedIn => [
+                          TextButton(
+                            onPressed: () {
+                              _state.value = _State(_Step.idle);
+                            },
+                            child: const Text('Sign out'),
+                          ),
+                        ],
+                    }
                   ],
                 );
               },

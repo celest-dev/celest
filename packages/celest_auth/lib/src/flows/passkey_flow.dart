@@ -5,29 +5,17 @@ import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_core/celest_core.dart';
 
 base mixin Passkeys on AuthImpl {
-  @override
-  void init() {
-    super.init();
-    register(passkeys);
-  }
-
-  late final PasskeyFlow passkeys = PasskeyFlow(
-    protocol: protocol,
-  );
+  late final PasskeyFlow passkeys = PasskeyFlow(this);
 }
 
 final class PasskeyFlow implements AuthFlow {
-  PasskeyFlow({
-    required AuthProtocol protocol,
-  }) : _protocol = protocol.passkeys;
+  PasskeyFlow(this._hub);
 
+  final AuthImpl _hub;
   final PasskeyPlatform _platform = PasskeyPlatform();
-  final PasskeyProtocol _protocol;
+  late final PasskeyProtocol _protocol = _hub.protocol.passkeys;
 
-  @override
-  void init() {}
-
-  Future<String> signUp({
+  Future<User> signUp({
     required String email,
     String? name,
   }) async {
@@ -38,11 +26,12 @@ final class PasskeyFlow implements AuthFlow {
       request: PasskeyRegistrationRequest(username: email, displayName: name),
     );
     final registration = await _platform.register(options);
-    await _protocol.verifyRegistration(registration: registration);
-    return (_protocol as PasskeyClient).token!;
+    final user = await _protocol.verifyRegistration(registration: registration);
+    _hub.secureStorage.write('cork', user.cork);
+    return user.user;
   }
 
-  Future<void> signIn({
+  Future<User> signIn({
     required String email,
   }) async {
     if (!await _platform.isSupported) {
@@ -52,7 +41,11 @@ final class PasskeyFlow implements AuthFlow {
       request: PasskeyAuthenticationRequest(username: email),
     );
     final authentication = await _platform.authenticate(options);
-    await _protocol.verifyAuthentication(authentication: authentication);
+    final user = await _protocol.verifyAuthentication(
+      authentication: authentication,
+    );
+    _hub.secureStorage.write('cork', user.cork);
+    return user.user;
   }
 
   /// Cancels the in-progress passkey operation, if any.

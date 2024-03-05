@@ -54,10 +54,6 @@ extension MapToCFDictionary on Map<Pointer, Pointer> {
       nullptr, // kCFTypeDictionaryValueCallBacks
     );
     arena.onReleaseAll(() {
-      for (var i = 0; i < length; i++) {
-        CFRelease(cfKeys[i]);
-        CFRelease(cfValues[i]);
-      }
       CFRelease(cfDict.cast());
     });
     return cfDict;

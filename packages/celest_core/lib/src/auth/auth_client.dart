@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/base/base_protocol.dart';
 import 'package:http/http.dart' as http;
 
 final class AuthClient implements AuthProtocol {
@@ -17,68 +16,53 @@ final class AuthClient implements AuthProtocol {
     baseUri: baseUri,
     httpClient: _client,
   );
+
+  @override
+  late final EmailClient email = EmailClient(
+    baseUri: baseUri,
+    httpClient: _client,
+  );
 }
 
-final class PasskeyClient implements PasskeyProtocol {
+final class PasskeyClient with BaseProtocol implements PasskeyProtocol {
   PasskeyClient({
     required this.baseUri,
-    http.Client? httpClient,
-  }) : _client = httpClient ?? http.Client();
+    required this.httpClient,
+  });
 
-  final http.Client _client;
+  @override
+  final http.Client httpClient;
+
+  @override
   final Uri baseUri;
-
-  String? token;
-
-  Future<Map<String, Object?>> _send(
-    String path,
-    Map<String, Object?> json,
-  ) async {
-    final uri = baseUri.resolve(path);
-    final resp = await _client.post(
-      uri,
-      body: jsonEncode(json),
-      headers: {
-        'content-type': 'application/json',
-        if (token case final token?) 'authorization': 'Bearer $token',
-      },
-    );
-    if (resp.statusCode != 200) {
-      throw http.ClientException(
-        '${resp.statusCode}: ${resp.body}',
-        uri,
-      );
-    }
-    final body = jsonDecode(resp.body) as Map<String, Object?>;
-    if (body['cork'] case final String cork) {
-      token = cork;
-    }
-    return body;
-  }
 
   @override
   Future<PasskeyRegistrationOptions> requestRegistration({
     required PasskeyRegistrationRequest request,
   }) async {
-    final response = await _send('/_auth/passkeys/register', request.toJson());
+    final response = await postJson(
+      '/_auth/passkeys/register',
+      request.toJson(),
+    );
     return PasskeyRegistrationOptions.fromJson(response);
   }
 
   @override
-  Future<void> verifyRegistration({
+  Future<AuthenticatedUser> verifyRegistration({
     required PasskeyRegistrationResponse registration,
   }) async {
-    await _send(
+    final response = await postJson(
       '/_auth/passkeys/register/verify',
       registration.toJson(),
     );
+    return AuthenticatedUser.fromJson(response);
   }
 
   @override
   Future<PasskeyAuthenticationOptions> requestAuthentication({
     required PasskeyAuthenticationRequest request,
   }) async {
-    final response = await _send(
+    final response = await postJson(
       '/_auth/passkeys/authenticate',
       request.toJson(),
     );
@@ -86,12 +70,48 @@ final class PasskeyClient implements PasskeyProtocol {
   }
 
   @override
-  Future<void> verifyAuthentication({
+  Future<AuthenticatedUser> verifyAuthentication({
     required PasskeyAuthenticationResponse authentication,
   }) async {
-    await _send(
+    final response = await postJson(
       '/_auth/passkeys/authenticate/verify',
       authentication.toJson(),
     );
+    return AuthenticatedUser.fromJson(response);
+  }
+}
+
+final class EmailClient with BaseProtocol implements EmailProtocol {
+  EmailClient({
+    required this.baseUri,
+    required this.httpClient,
+  });
+
+  @override
+  final http.Client httpClient;
+
+  @override
+  final Uri baseUri;
+
+  @override
+  Future<OtpParameters> sendOtp({
+    required OtpSendRequest request,
+  }) async {
+    final response = await postJson(
+      '/_auth/email/otp/send',
+      request.toJson(),
+    );
+    return OtpParameters.fromJson(response);
+  }
+
+  @override
+  Future<AuthenticatedUser> verifyOtp({
+    required OtpVerifyRequest verification,
+  }) async {
+    final resp = await postJson(
+      '/_auth/email/otp/verify',
+      verification.toJson(),
+    );
+    return AuthenticatedUser.fromJson(resp);
   }
 }
