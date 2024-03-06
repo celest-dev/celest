@@ -29,6 +29,8 @@ functions:
     - g_hash_table_new
     - g_hash_table_insert
     - g_hash_table_destroy
+    - g_application_get_default
+    - g_application_get_application_id
 structs:
   include:
     - _GError

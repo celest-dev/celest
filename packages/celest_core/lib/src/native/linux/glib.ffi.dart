@@ -93,6 +93,32 @@ class Glib {
               gpointer)>>('g_hash_table_insert');
   late final _g_hash_table_insert = _g_hash_table_insertPtr
       .asFunction<int Function(ffi.Pointer<GHashTable>, gpointer, gpointer)>();
+
+  ffi.Pointer<ffi.Char> g_application_get_application_id(
+    ffi.Pointer<_GApplication> application,
+  ) {
+    return _g_application_get_application_id(
+      application,
+    );
+  }
+
+  late final _g_application_get_application_idPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<_GApplication>)>>('g_application_get_application_id');
+  late final _g_application_get_application_id =
+      _g_application_get_application_idPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<_GApplication>)>();
+
+  ffi.Pointer<_GApplication> g_application_get_default() {
+    return _g_application_get_default();
+  }
+
+  late final _g_application_get_defaultPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<_GApplication> Function()>>(
+          'g_application_get_default');
+  late final _g_application_get_default = _g_application_get_defaultPtr
+      .asFunction<ffi.Pointer<_GApplication> Function()>();
 }
 
 final class GError extends ffi.Struct {
@@ -167,3 +193,12 @@ final class GCancellable extends ffi.Struct {
 }
 
 final class _GCancellablePrivate extends ffi.Opaque {}
+
+final class _GApplication extends ffi.Struct {
+  /// < private >
+  external GObject parent_instance;
+
+  external ffi.Pointer<_GApplicationPrivate> priv;
+}
+
+final class _GApplicationPrivate extends ffi.Opaque {}
