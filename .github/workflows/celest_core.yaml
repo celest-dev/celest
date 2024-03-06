@@ -31,24 +31,8 @@ jobs:
       - name: Format
         working-directory: packages/celest_core
         run: dart format --set-exit-if-changed .
-  test_dart:
-    needs: analyze_and_format
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
-      - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
-        with:
           cache: true
-      - name: Get Packages
-        working-directory: packages/celest_core
-        run: dart pub get
-      - name: Test
-        working-directory: packages/celest_core
-        run: dart test
-  test_flutter_darwin:
+  test_darwin:
     needs: analyze_and_format
     runs-on: macos-13-large
     timeout-minutes: 10
@@ -70,15 +54,18 @@ jobs:
         run: flutter pub get
       - name: Setup iOS Simulator
         uses: aws-amplify/amplify-flutter/.github/composite_actions/launch_ios_simulator@main
+        with:
+          ios-version: 17
       - name: Test (iOS)
         working-directory: packages/celest_core/example
         run: flutter test -d iPhone integration_test/secure_storage_test.dart
       - name: Test (macOS)
         working-directory: packages/celest_core/example
         run: flutter test -d macos integration_test/secure_storage_test.dart
-  test_flutter_android:
+  test_android:
     needs: analyze_and_format
-    runs-on: linux
+    runs-on:
+      labels: linux
     timeout-minutes: 15
     steps:
       - name: Git Checkout
