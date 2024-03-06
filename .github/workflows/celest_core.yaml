@@ -61,7 +61,7 @@ jobs:
           echo "Booted simulator"
       - name: Test (iOS)
         working-directory: packages/celest_core/example
-        run: flutter test -d test integration_test/secure_storage_test.dart
+        run: flutter test -d ios integration_test/secure_storage_test.dart
       - name: Test (macOS)
         working-directory: packages/celest_core/example
         run: flutter test -d macos integration_test/secure_storage_test.dart
