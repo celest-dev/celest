@@ -33,8 +33,8 @@ jobs:
         run: dart format --set-exit-if-changed .
   test_darwin:
     needs: analyze_and_format
-    runs-on: macos-13-large
-    timeout-minutes: 10
+    runs-on: macos-latest-xlarge
+    timeout-minutes: 20
     steps:
       - name: Git Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
@@ -52,9 +52,13 @@ jobs:
         working-directory: packages/celest_core/example
         run: flutter pub get
       - name: Setup iOS Simulator
-        uses: aws-amplify/amplify-flutter/.github/composite_actions/launch_ios_simulator@main
-        with:
-          ios-version: 17
+        run: |
+          RUNTIME=$(xcrun simctl list runtimes | grep 17 | tail -n 1 | cut -d' ' -f 7)
+          echo "Using runtime: $RUNTIME"
+          xcrun simctl create ios 'iPhone 15 Pro Max' $RUNTIME
+          echo "Booting simulator"
+          xcrun simctl boot ios
+          echo "Booted simulator"
       - name: Test (iOS)
         working-directory: packages/celest_core/example
         run: flutter test -d test integration_test/secure_storage_test.dart
@@ -78,7 +82,7 @@ jobs:
         working-directory: packages/celest_core/example
         run: flutter pub get
       - name: Test (Android)
-        uses: aws-amplify/amplify-flutter/.github/composite_actions/launch_android_emulator@main
+        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
         with:
           # Matches `package:jni` compileSdkVersion
           # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
