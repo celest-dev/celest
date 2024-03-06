@@ -7,9 +7,9 @@ on:
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
-# concurrency:
-#   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
-#   cancel-in-progress: true
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
 
 jobs:
   analyze_and_format:
@@ -52,10 +52,9 @@ jobs:
         working-directory: packages/celest_core/example
         run: flutter pub get
       - name: Test (Example)
-        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
+        uses: aws-amplify/amplify-flutter/.github/composite_actions/launch_android_emulator@main
         with:
           api-level: 34
-          arch: x86_64
           script: |
             cd packages/celest_core/example
             for OS in "sdk iPhone macos"; do
