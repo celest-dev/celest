@@ -38,7 +38,7 @@ class CelestSecureStorage(private val mainActivity: Activity, private val scope:
         }
     }
 
-    fun read(dataKey: String): String? = sharedPreferences.getString(dataKey, null)
+    fun read(dataKey: String): String? = sharedPreferences.
 
     fun delete(dataKey: String): String? {
         val current = read(dataKey)

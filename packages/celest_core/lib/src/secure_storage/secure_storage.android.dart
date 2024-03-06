@@ -28,8 +28,13 @@ final class SecureStoragePlatformAndroid extends SecureStoragePlatform {
   }
 
   @override
-  String? read(String key) =>
-      _secureStorage.read(key.toJString()).toDartString();
+  String? read(String key) {
+    final value = _secureStorage.read(key.toJString());
+    if (value.isNull) {
+      return null;
+    }
+    return value.toDartString();
+  }
 
   @override
   String write(String key, String value) {

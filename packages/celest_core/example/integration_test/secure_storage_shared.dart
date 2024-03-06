@@ -51,14 +51,36 @@ void sharedTests() {
       });
 
       test('can delete a non-existent key', () {
-        expect(() => storage.delete(key), returnsNormally);
-        expect(() => storage.delete(key), returnsNormally);
+        expect(storage.read(key), isNull);
         expect(() => storage.delete(key), returnsNormally);
       });
     });
 
-    group('read/write/delete can handle key value pairs of varying length', () {
-      for (final (length, s) in largeKeyValuePairs) {
+    group('clear', () {
+      const key1 = 'key1';
+      const key2 = 'key2';
+      const value1 = 'value1';
+      const value2 = 'value2';
+
+      test('removes all keys from storage', () {
+        storage.write(key1, value1);
+        storage.write(key2, value2);
+        expect(storage.read(key1), value1);
+        expect(storage.read(key2), value2);
+
+        storage.clear();
+
+        expect(storage.read(key1), isNull, reason: 'Storage was cleared');
+        expect(storage.read(key2), isNull, reason: 'Storage was cleared');
+      });
+
+      test('does not throw when no items present', () {
+        expect(storage.clear, returnsNormally);
+      });
+    });
+
+    group('large values', () {
+      for (final (length, s) in _largeKeyValuePairs) {
         test('can store key/value with length $length', () {
           storage.write(s, s);
           expect(storage.read(s), s, reason: 'Value was written');
@@ -72,7 +94,7 @@ void sharedTests() {
 }
 
 final _random = Random();
-Iterable<(int, String)> get largeKeyValuePairs sync* {
+Iterable<(int, String)> get _largeKeyValuePairs sync* {
   for (final length in const [100, 1000, 10000]) {
     final string = String.fromCharCodes(
       List.generate(length, (_) => _random.nextInt(255) + 1),
