@@ -1,3 +1,7 @@
+## 0.2.2-wip
+
+- Adds `SecureStorage` interface for storage of sensitive data in the platform keychain.
+
 ## 0.2.1
 
 - Overrides `toString` for `CloudException` types.
