@@ -55,6 +55,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
         with:
           api-level: 34
+          arch: x86_64
           script: |
             cd packages/celest_core/example
             for OS in "sdk iPhone macos"; do
