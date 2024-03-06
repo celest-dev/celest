@@ -30,6 +30,7 @@ dependencies:
   path: ^1.9.0
   shelf: ^1.4.1
   shelf_router: ^1.1.4
+  state_notifier: ^1.0.0
   web: ^0.5.0
 
 dev_dependencies:

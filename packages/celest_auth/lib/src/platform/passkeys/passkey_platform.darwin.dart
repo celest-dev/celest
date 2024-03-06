@@ -25,15 +25,15 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
   void cancel() => _celestAuth.cancel();
 
   @override
-  Future<PasskeyRegistrationResponse> register(
+  Future<PasskeyCredential> register(
     PasskeyRegistrationOptions options,
   ) async {
-    final completer = Completer<PasskeyRegistrationResponse>();
+    final completer = Completer<PasskeyCredential>();
     final onSuccess = ObjCBlock_ffiVoid_Uint8.listener(_platform, (json) {
       if (json == nullptr) {
         return completer.completeError(StateError('Bad ptr'));
       }
-      final response = PasskeyRegistrationResponse.fromJson(
+      final response = PasskeyCredential.fromJson(
         jsonDecode(json.cast<Utf8>().toDartString()) as Map<String, Object?>,
       );
       completer.complete(response);
@@ -63,15 +63,15 @@ final class PasskeyPlatformDarwin extends PasskeyPlatformImpl {
   }
 
   @override
-  Future<PasskeyAuthenticationResponse> authenticate(
+  Future<PasskeyCredential> authenticate(
     PasskeyAuthenticationOptions options,
   ) async {
-    final completer = Completer<PasskeyAuthenticationResponse>();
+    final completer = Completer<PasskeyCredential>();
     final onSuccess = ObjCBlock_ffiVoid_Uint8.listener(_platform, (json) {
       if (json == nullptr) {
         return completer.completeError(StateError('Bad ptr'));
       }
-      final response = PasskeyAuthenticationResponse.fromJson(
+      final response = PasskeyCredential.fromJson(
         jsonDecode(json.cast<Utf8>().toDartString()) as Map<String, Object?>,
       );
       completer.complete(response);

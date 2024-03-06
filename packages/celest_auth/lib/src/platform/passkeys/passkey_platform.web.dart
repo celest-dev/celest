@@ -40,7 +40,7 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
   }
 
   @override
-  Future<PasskeyRegistrationResponse> register(
+  Future<PasskeyCredential> register(
     PasskeyRegistrationOptions options,
   ) async {
     _abortController = AbortController();
@@ -91,22 +91,24 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
     }
     assert(credential.type == 'public-key');
     final response = credential.response as AuthenticatorAttestationResponse;
-    return PasskeyRegistrationResponse(
+    return PasskeyCredential(
       id: credential.id,
       rawId: credential.rawId.toDart.asUint8List(),
-      clientDataJson: response.clientDataJSON.toDart.asUint8List(),
-      attestationObject: response.attestationObject.toDart.asUint8List(),
-      transports: response.transports,
-      publicKeyAlgorithm: response.publicKeyAlgorithm,
-      publicKey: response.publicKey,
-      authenticatorData: response.authenticatorData,
+      response: PasskeyRegistrationResponse(
+        clientDataJson: response.clientDataJSON.toDart.asUint8List(),
+        attestationObject: response.attestationObject.toDart.asUint8List(),
+        transports: response.transports,
+        publicKeyAlgorithm: response.publicKeyAlgorithm,
+        publicKey: response.publicKey,
+        authenticatorData: response.authenticatorData,
+      ),
       authenticatorAttachment:
           credential.authenticatorAttachment as AuthenticatorAttachment?,
     );
   }
 
   @override
-  Future<PasskeyAuthenticationResponse> authenticate(
+  Future<PasskeyCredential> authenticate(
     PasskeyAuthenticationOptions options,
   ) async {
     _abortController = AbortController();
@@ -133,17 +135,15 @@ final class PasskeyPlatformWeb extends PasskeyPlatformImpl {
     }
     assert(credential.type == 'public-key');
     final response = credential.response as AuthenticatorAssertionResponse;
-    return PasskeyAuthenticationResponse(
+    return PasskeyCredential(
       id: credential.id,
       rawId: credential.rawId.toDart.asUint8List(),
-      clientData: PasskeyClientData.fromJson(
-        jsonDecode(
-          utf8.decode(response.clientDataJSON.toDart.asUint8List()),
-        ) as Map<String, Object?>,
+      response: PasskeyAuthenticationResponse(
+        clientDataJson: response.clientDataJSON.toDart.asUint8List(),
+        authenticatorData: response.authenticatorData.toDart.asUint8List(),
+        signature: response.signature.toDart.asUint8List(),
+        userHandle: response.userHandle?.toDart.asUint8List(),
       ),
-      authenticatorData: response.authenticatorData.toDart.asUint8List(),
-      signature: response.signature.toDart.asUint8List(),
-      userHandle: response.userHandle?.toDart.asUint8List(),
       authenticatorAttachment:
           credential.authenticatorAttachment as AuthenticatorAttachment?,
     );

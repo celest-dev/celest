@@ -50,25 +50,31 @@ final class OtpVerifyRequest {
 
 final class OtpParameters {
   const OtpParameters({
-    required this.nextRetry,
+    required this.nextResend,
+    required this.nextVerify,
   });
 
   factory OtpParameters.fromJson(Map<String, Object?> json) {
     return OtpParameters(
-      nextRetry: DateTime.fromMillisecondsSinceEpoch(
+      nextResend: DateTime.fromMillisecondsSinceEpoch(
         json['nextRetry'] as int,
+      ),
+      nextVerify: DateTime.fromMillisecondsSinceEpoch(
+        json['nextVerify'] as int,
       ),
     );
   }
 
-  final DateTime nextRetry;
+  final DateTime nextResend;
+  final DateTime nextVerify;
 
   Map<String, Object?> toJson() => {
-        'nextRetry': nextRetry.millisecondsSinceEpoch,
+        'nextRetry': nextResend.millisecondsSinceEpoch,
+        'nextVerify': nextVerify.millisecondsSinceEpoch,
       };
 
   @override
   String toString() {
-    return 'OtpParameters(nextRetry: $nextRetry)';
+    return 'OtpParameters(nextRetry: $nextResend, nextVerify: $nextVerify)';
   }
 }

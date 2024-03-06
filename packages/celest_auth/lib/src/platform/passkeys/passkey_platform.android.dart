@@ -54,7 +54,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
   }
 
   @override
-  Future<PasskeyRegistrationResponse> register(
+  Future<PasskeyCredential> register(
     PasskeyRegistrationOptions options,
   ) async {
     final requestJson = jsonEncode(options.toJson()).toJString();
@@ -77,7 +77,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
           .as(CreatePublicKeyCredentialResponse.type)
           .getRegistrationResponseJson()
           .toDartString();
-      return PasskeyRegistrationResponse.fromJson(
+      return PasskeyCredential.fromJson(
         jsonDecode(passkeyJson) as Map<String, Object?>,
       );
     } on CreateCredentialException catch (e) {
@@ -126,7 +126,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
   }
 
   @override
-  Future<PasskeyAuthenticationResponse> authenticate(
+  Future<PasskeyCredential> authenticate(
     PasskeyAuthenticationOptions options,
   ) async {
     final requestJson = jsonEncode(options.toJson()).toJString();
@@ -155,7 +155,7 @@ final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {
           .as(PublicKeyCredential.type)
           .getAuthenticationResponseJson()
           .toDartString();
-      return PasskeyAuthenticationResponse.fromJson(
+      return PasskeyCredential.fromJson(
         jsonDecode(passkeyJson) as Map<String, Object?>,
       );
     } on GetCredentialException catch (e) {

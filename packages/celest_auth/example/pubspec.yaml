@@ -12,6 +12,7 @@ dependencies:
   celest_core: ^0.2.0
   flutter:
     sdk: flutter
+  flutter_state_notifier: ^1.0.0
 
 dependency_overrides:
   cedar_common:

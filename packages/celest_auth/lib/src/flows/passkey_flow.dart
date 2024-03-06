@@ -15,35 +15,25 @@ final class PasskeyFlow implements AuthFlow {
   final PasskeyPlatform _platform = PasskeyPlatform();
   late final PasskeyProtocol _protocol = _hub.protocol.passkeys;
 
-  Future<User> signUp({
+  Future<User> authenticate({
     required String email,
     String? name,
   }) async {
     if (!await _platform.isSupported) {
       throw const PasskeyUnsupportedException();
     }
-    final options = await _protocol.requestRegistration(
-      request: PasskeyRegistrationRequest(username: email, displayName: name),
+    final options = await _protocol.authenticate(
+      request: PasskeyRequest(
+        username: email,
+        displayName: name,
+      ),
     );
-    final registration = await _platform.register(options);
-    final user = await _protocol.verifyRegistration(registration: registration);
-    _hub.secureStorage.write('cork', user.cork);
-    return user.user;
-  }
-
-  Future<User> signIn({
-    required String email,
-  }) async {
-    if (!await _platform.isSupported) {
-      throw const PasskeyUnsupportedException();
-    }
-    final options = await _protocol.requestAuthentication(
-      request: PasskeyAuthenticationRequest(username: email),
-    );
-    final authentication = await _platform.authenticate(options);
-    final user = await _protocol.verifyAuthentication(
-      authentication: authentication,
-    );
+    final credential = await switch (options) {
+      final PasskeyRegistrationOptions options => _platform.register(options),
+      final PasskeyAuthenticationOptions options =>
+        _platform.authenticate(options),
+    };
+    final user = await _protocol.verify(credential: credential);
     _hub.secureStorage.write('cork', user.cork);
     return user.user;
   }

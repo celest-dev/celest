@@ -13,22 +13,23 @@ bool _isValidDomain(String hostname) {
 /// From: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch08s15.html
 final _validDomain = RegExp(r'^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$');
 
-final class PasskeyRegistrationRequest {
-  const PasskeyRegistrationRequest({
+enum PasskeyRequestType { register, authenticate }
+
+final class PasskeyRequest {
+  const PasskeyRequest({
     required this.username,
     String? displayName,
     this.authenticatorSelection,
   }) : displayName = displayName ?? '';
 
-  factory PasskeyRegistrationRequest.fromJson(Map<String, dynamic> json) {
+  factory PasskeyRequest.fromJson(Map<String, Object?> json) {
     if (json
         case {
           'username': final String username,
-          'displayName': final String displayName,
         }) {
-      return PasskeyRegistrationRequest(
+      return PasskeyRequest(
         username: username,
-        displayName: displayName,
+        displayName: json['displayName'] as String?,
         authenticatorSelection: json['authenticatorSelection'] != null
             ? AuthenticatorSelectionCriteria.fromJson(
                 (json['authenticatorSelection'] as Map<Object?, Object?>)
@@ -54,7 +55,7 @@ final class PasskeyRegistrationRequest {
   @override
   String toString() {
     final buffer = StringBuffer()
-      ..writeln('PasskeyRegistrationRequest(')
+      ..writeln('PasskeyRequest(')
       ..writeln('  username: $username,')
       ..writeln('  displayName: $displayName,');
     if (authenticatorSelection case final authenticatorSelection?) {
@@ -65,8 +66,25 @@ final class PasskeyRegistrationRequest {
   }
 }
 
+sealed class PasskeyOptions {
+  const PasskeyOptions();
+
+  factory PasskeyOptions.fromJson(Map<String, Object?> json) {
+    return switch (json) {
+      {'rp': Map()} => PasskeyRegistrationOptions.fromJson(json),
+      {'rpId': String()} => PasskeyAuthenticationOptions.fromJson(json),
+      _ => throw FormatException('Invalid passkey options: $json'),
+    };
+  }
+
+  Uint8List get challenge;
+  Duration get timeout;
+
+  Map<String, Object?> toJson();
+}
+
 // https://w3c.github.io/webauthn/#dictionary-makecredentialoptions
-final class PasskeyRegistrationOptions {
+final class PasskeyRegistrationOptions extends PasskeyOptions {
   PasskeyRegistrationOptions({
     required this.challenge,
     required this.rpName,
@@ -129,12 +147,15 @@ final class PasskeyRegistrationOptions {
   final String userId;
   final String userName;
   final String userDisplayName;
+  @override
   final Uint8List challenge;
+  @override
   final Duration timeout;
   final String attestation;
   final AuthenticatorSelectionCriteria authenticatorSelection;
   final List<PublicKeyCredentialParameter> publicKeyCredentialParameters;
 
+  @override
   Map<String, Object?> toJson() => {
         'rp': {
           'name': rpName,
@@ -181,53 +202,31 @@ final class PasskeyRegistrationOptions {
   }
 }
 
-final class PasskeyRegistrationResponse {
-  const PasskeyRegistrationResponse({
+final class PasskeyCredential {
+  const PasskeyCredential({
     required this.id,
     required this.rawId,
-    required this.clientDataJson,
-    required this.attestationObject,
-    this.transports,
-    this.publicKeyAlgorithm,
-    this.publicKey,
-    this.authenticatorData,
+    required this.response,
     this.authenticatorAttachment,
   });
 
-  factory PasskeyRegistrationResponse.fromJson(Map<String, Object?> json) {
-    if (json
-        case {
-          'id': final String id,
-          'rawId': final String rawId,
-          'type': 'public-key',
-          'response': {
-                'clientDataJSON': final String clientDataJson,
-                'attestationObject': final String attestationObject,
-              } &&
-              final response,
-        }) {
-      return PasskeyRegistrationResponse(
-        id: id,
-        rawId: base64RawUrl.decode(rawId),
-        clientDataJson: base64RawUrl.decode(clientDataJson),
-        attestationObject: base64RawUrl.decode(attestationObject),
-        transports: (response['transports'] as List?)?.cast(),
-        publicKeyAlgorithm: response['publicKeyAlgorithm'] != null
-            ? COSEAlgorithmIdentifier._(
-                response['publicKeyAlgorithm'] as int,
-              )
-            : null,
-        publicKey: response['publicKey'] != null
-            ? base64RawUrl.decode(response['publicKey'] as String)
-            : null,
-        authenticatorData: response['authenticatorData'] != null
-            ? base64RawUrl.decode(response['authenticatorData'] as String)
-            : null,
-        authenticatorAttachment:
-            json['authenticatorAttachment'] as AuthenticatorAttachment?,
-      );
-    }
-    throw FormatException('Invalid registration response: $json');
+  factory PasskeyCredential.fromJson(Map<String, Object?> json) {
+    return switch (json) {
+      {
+        'id': final String id,
+        'rawId': final String rawId,
+        'type': 'public-key',
+        'response': final Map<Object?, Object?> response,
+      } =>
+        PasskeyCredential(
+          id: id,
+          rawId: base64RawUrl.decode(rawId),
+          response: PasskeyResponse.fromJson(response.cast()),
+          authenticatorAttachment:
+              json['authenticatorAttachment'] as AuthenticatorAttachment?,
+        ),
+      _ => throw FormatException('Invalid credential: $json'),
+    };
   }
 
   /// A base64url-encoded string representing the credential ID.
@@ -236,12 +235,7 @@ final class PasskeyRegistrationResponse {
   /// The credential ID in its raw binary form.
   final Uint8List rawId;
   String get type => 'public-key';
-  final Uint8List clientDataJson;
-  final Uint8List attestationObject;
-  final List<AuthenticatorTransport>? transports;
-  final COSEAlgorithmIdentifier? publicKeyAlgorithm;
-  final Uint8List? publicKey;
-  final Uint8List? authenticatorData;
+  final PasskeyResponse response;
 
   /// This will be set to `platform` when the credential is created on a
   /// passkey-capable device.
@@ -251,16 +245,7 @@ final class PasskeyRegistrationResponse {
         'id': id,
         'rawId': base64RawUrl.encode(rawId),
         'type': type,
-        'response': {
-          'clientDataJSON': base64RawUrl.encode(clientDataJson),
-          'attestationObject': base64RawUrl.encode(attestationObject),
-          if (transports != null) 'transports': transports,
-          if (publicKeyAlgorithm != null)
-            'publicKeyAlgorithm': publicKeyAlgorithm,
-          if (publicKey != null) 'publicKey': base64RawUrl.encode(publicKey!),
-          if (authenticatorData != null)
-            'authenticatorData': base64RawUrl.encode(authenticatorData!),
-        },
+        'response': response.toJson(),
         if (authenticatorAttachment != null)
           'authenticatorAttachment': authenticatorAttachment,
       };
@@ -268,9 +253,104 @@ final class PasskeyRegistrationResponse {
   @override
   String toString() {
     final buffer = StringBuffer()
-      ..writeln('PasskeyRegistrationResponse(')
+      ..writeln('PasskeyCredential(')
       ..writeln('  id: $id,')
-      ..writeln('  rawId: $rawId,')
+      ..writeln('  rawId: ${base64RawUrl.encode(rawId)},')
+      ..writeln('  type: $type,')
+      ..writeln('  response: $response,');
+    if (authenticatorAttachment != null) {
+      buffer.writeln('  authenticatorAttachment: $authenticatorAttachment,');
+    }
+    buffer.write(')');
+    return buffer.toString();
+  }
+}
+
+sealed class PasskeyResponse {
+  const PasskeyResponse();
+
+  factory PasskeyResponse.fromJson(Map<String, Object?> json) {
+    return switch (json) {
+      {
+        'clientDataJSON': String(),
+        'attestationObject': String(),
+      } =>
+        PasskeyRegistrationResponse.fromJson(json),
+      {
+        'clientDataJSON': String(),
+        'authenticatorData': String(),
+        'signature': String(),
+      } =>
+        PasskeyAuthenticationResponse.fromJson(json),
+      _ => throw FormatException('Invalid passkey response: $json'),
+    };
+  }
+
+  Uint8List get clientDataJson;
+
+  Map<String, Object?> toJson();
+}
+
+final class PasskeyRegistrationResponse extends PasskeyResponse {
+  const PasskeyRegistrationResponse({
+    required this.clientDataJson,
+    required this.attestationObject,
+    this.transports,
+    this.publicKeyAlgorithm,
+    this.publicKey,
+    this.authenticatorData,
+  });
+
+  factory PasskeyRegistrationResponse.fromJson(Map<String, Object?> json) {
+    if (json
+        case {
+          'clientDataJSON': final String clientDataJson,
+          'attestationObject': final String attestationObject,
+        }) {
+      return PasskeyRegistrationResponse(
+        clientDataJson: base64RawUrl.decode(clientDataJson),
+        attestationObject: base64RawUrl.decode(attestationObject),
+        transports: (json['transports'] as List?)?.cast(),
+        publicKeyAlgorithm: json['publicKeyAlgorithm'] != null
+            ? COSEAlgorithmIdentifier._(
+                json['publicKeyAlgorithm'] as int,
+              )
+            : null,
+        publicKey: json['publicKey'] != null
+            ? base64RawUrl.decode(json['publicKey'] as String)
+            : null,
+        authenticatorData: json['authenticatorData'] != null
+            ? base64RawUrl.decode(json['authenticatorData'] as String)
+            : null,
+      );
+    }
+    throw FormatException('Invalid registration response: $json');
+  }
+
+  @override
+  final Uint8List clientDataJson;
+  final Uint8List attestationObject;
+  final List<AuthenticatorTransport>? transports;
+  final COSEAlgorithmIdentifier? publicKeyAlgorithm;
+  final Uint8List? publicKey;
+  final Uint8List? authenticatorData;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'clientDataJSON': base64RawUrl.encode(clientDataJson),
+        'attestationObject': base64RawUrl.encode(attestationObject),
+        if (transports != null) 'transports': transports,
+        if (publicKeyAlgorithm != null)
+          'publicKeyAlgorithm': publicKeyAlgorithm,
+        if (publicKey != null) 'publicKey': base64RawUrl.encode(publicKey!),
+        if (authenticatorData != null)
+          'authenticatorData': base64RawUrl.encode(authenticatorData!),
+      };
+
+  @override
+  String toString() {
+    final buffer = StringBuffer()
+      ..writeln('PasskeyRegistrationResponse(')
       ..writeln('  clientDataJson: ${utf8.decode(clientDataJson)},')
       ..writeln(
           '  attestationObject: ${base64RawUrl.encode(attestationObject)},')
@@ -280,7 +360,6 @@ final class PasskeyRegistrationResponse {
           '  publicKey: ${base64RawUrl.encode(publicKey ?? Uint8List(0))},')
       ..writeln(
           '  authenticatorData: ${base64RawUrl.encode(authenticatorData ?? Uint8List(0))},')
-      ..writeln('  authenticatorAttachment: $authenticatorAttachment,')
       ..write(')');
     return buffer.toString();
   }
@@ -404,6 +483,7 @@ final class PasskeyClientData {
     required this.challenge,
     bool? crossOrigin,
     required this.origin,
+    this.topOrigin,
     required this.type,
     this.tokenBinding,
   }) : crossOrigin = crossOrigin ?? false;
@@ -419,6 +499,7 @@ final class PasskeyClientData {
         challenge: base64RawUrl.decode(challenge),
         crossOrigin: json['crossOrigin'] as bool?,
         origin: origin,
+        topOrigin: json['topOrigin'] as String?,
         type: type,
         tokenBinding: json['tokenBinding'] != null
             ? PasskeyClientDataTokenBinding.fromJson(
@@ -433,6 +514,7 @@ final class PasskeyClientData {
   final Uint8List challenge;
   final bool crossOrigin;
   final String origin;
+  final String? topOrigin;
   final String type;
   final PasskeyClientDataTokenBinding? tokenBinding;
 
@@ -440,6 +522,7 @@ final class PasskeyClientData {
         'challenge': base64RawUrl.encode(challenge),
         if (crossOrigin) 'crossOrigin': crossOrigin,
         'origin': origin,
+        if (topOrigin != null) 'topOrigin': topOrigin,
         'type': type,
         if (tokenBinding != null) 'tokenBinding': tokenBinding!.toJson(),
       };
@@ -451,6 +534,7 @@ final class PasskeyClientData {
       ..writeln('  challenge: ${base64RawUrl.encode(challenge)},')
       ..writeln('  crossOrigin: $crossOrigin,')
       ..writeln('  origin: $origin,')
+      ..writeln('  topOrigin: $topOrigin,')
       ..writeln('  type: $type,');
     if (tokenBinding case final tokenBinding?) {
       buffer
@@ -539,41 +623,7 @@ final class PasskeyDescriptor {
       'transports: ${transports.join(', ')})';
 }
 
-final class PasskeyAuthenticationRequest {
-  const PasskeyAuthenticationRequest({
-    required this.username,
-    UserVerificationRequirement? userVerification,
-  }) : userVerification =
-            userVerification ?? UserVerificationRequirement.preferred;
-
-  factory PasskeyAuthenticationRequest.fromJson(Map<String, Object?> json) {
-    return PasskeyAuthenticationRequest(
-      username: json['username'] as String,
-      userVerification:
-          json['userVerification'] as UserVerificationRequirement?,
-    );
-  }
-
-  final String username;
-  final UserVerificationRequirement userVerification;
-
-  Map<String, Object?> toJson() => {
-        'username': username,
-        'userVerification': userVerification,
-      };
-
-  @override
-  String toString() {
-    final buffer = StringBuffer()
-      ..writeln('PasskeyAuthenticationRequest(')
-      ..writeln('  username: $username,')
-      ..writeln('  userVerification: $userVerification,')
-      ..write(')');
-    return buffer.toString();
-  }
-}
-
-final class PasskeyAuthenticationOptions {
+final class PasskeyAuthenticationOptions extends PasskeyOptions {
   PasskeyAuthenticationOptions({
     required this.rpId,
     required this.challenge,
@@ -612,11 +662,14 @@ final class PasskeyAuthenticationOptions {
   }
 
   final String rpId;
+  @override
   final Uint8List challenge;
+  @override
   final Duration timeout;
   final List<PasskeyDescriptor> allowCredentials;
   final UserVerificationRequirement userVerification;
 
+  @override
   Map<String, Object?> toJson() => {
         'rpId': rpId,
         'challenge': base64RawUrl.encode(challenge),
@@ -639,102 +692,56 @@ final class PasskeyAuthenticationOptions {
   }
 }
 
-final class PasskeyAuthenticationResponse {
+final class PasskeyAuthenticationResponse extends PasskeyResponse {
   const PasskeyAuthenticationResponse({
-    required this.id,
-    required this.rawId,
-    required this.clientData,
+    required this.clientDataJson,
     required this.authenticatorData,
     required this.signature,
     this.userHandle,
-    this.authenticatorAttachment,
   });
 
   factory PasskeyAuthenticationResponse.fromJson(Map<String, Object?> json) {
     if (json
         case {
-          'id': final String id,
-          'rawId': final String rawId,
-          'type': 'public-key',
-          'response': {
-                'clientDataJSON': final String clientDataJson,
-                'authenticatorData': final String authenticatorData,
-                'signature': final String signature,
-              } &&
-              final response,
+          'clientDataJSON': final String clientDataJson,
+          'authenticatorData': final String authenticatorData,
+          'signature': final String signature,
         }) {
       return PasskeyAuthenticationResponse(
-        id: id,
-        rawId: base64RawUrl.decode(rawId),
-        clientData: PasskeyClientData.fromJson(
-          jsonDecode(
-            utf8.decode(base64RawUrl.decode(clientDataJson)),
-          ) as Map<String, Object?>,
-        ),
+        clientDataJson: base64RawUrl.decode(clientDataJson),
         authenticatorData: base64RawUrl.decode(authenticatorData),
         signature: base64RawUrl.decode(signature),
-        userHandle: response['userHandle'] != null
-            ? base64RawUrl.decode(response['userHandle'] as String)
+        userHandle: json['userHandle'] != null
+            ? base64RawUrl.decode(json['userHandle'] as String)
             : null,
-        authenticatorAttachment:
-            json['authenticatorAttachment'] as AuthenticatorAttachment?,
       );
     }
     throw FormatException('Invalid authentication response: $json');
   }
 
-  final String id;
-  final Uint8List rawId;
-  String get type => 'public-key';
-  final PasskeyClientData clientData;
+  @override
+  final Uint8List clientDataJson;
   final Uint8List authenticatorData;
   final Uint8List signature;
   final Uint8List? userHandle;
-  final AuthenticatorAttachment? authenticatorAttachment;
 
+  @override
   Map<String, Object?> toJson() => {
-        'id': id,
-        'rawId': base64RawUrl.encode(rawId),
-        'type': type,
-        'response': {
-          'clientDataJSON': base64RawUrl.encode(
-            utf8.encode(
-              jsonEncode(clientData.toJson()),
-            ),
-          ),
-          'authenticatorData': base64RawUrl.encode(authenticatorData),
-          'signature': base64RawUrl.encode(signature),
-          if (userHandle != null)
-            'userHandle': base64RawUrl.encode(userHandle!),
-        },
-        if (authenticatorAttachment != null)
-          'authenticatorAttachment': authenticatorAttachment,
+        'clientDataJSON': base64RawUrl.encode(clientDataJson),
+        'authenticatorData': base64RawUrl.encode(authenticatorData),
+        'signature': base64RawUrl.encode(signature),
+        if (userHandle != null) 'userHandle': base64RawUrl.encode(userHandle!),
       };
 
   @override
   String toString() {
     final buffer = StringBuffer()
       ..writeln('PasskeyAuthenticationResponse(')
-      ..writeln('  id: $id,')
-      ..writeln('  rawId: $rawId,')
-      ..writeln('  clientData: PasskeyClientData(')
-      ..writeln('    challenge: ${base64RawUrl.encode(clientData.challenge)},')
-      ..writeln('    crossOrigin: ${clientData.crossOrigin},')
-      ..writeln('    origin: ${clientData.origin},')
-      ..writeln('    type: ${clientData.type},');
-    if (clientData.tokenBinding case final tokenBinding?) {
-      buffer
-        ..writeln('    tokenBinding: PasskeyClientDataTokenBinding(')
-        ..writeln('      id: ${base64RawUrl.encode(tokenBinding.id)},')
-        ..writeln('      status: ${tokenBinding.status},')
-        ..writeln('    ),');
-    }
-    buffer
+      ..writeln('  clientData: ${base64RawUrl.encode(clientDataJson)}')
       ..writeln('  ),')
       ..writeln(
           '  authenticatorData: ${base64RawUrl.encode(authenticatorData)},')
       ..writeln('  signature: ${base64RawUrl.encode(signature)},')
-      ..writeln('  authenticatorAttachment: $authenticatorAttachment,')
       ..write(')');
     return buffer.toString();
   }

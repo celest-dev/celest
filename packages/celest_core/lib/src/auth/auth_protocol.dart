@@ -6,27 +6,23 @@ abstract interface class AuthProtocol {
 }
 
 abstract interface class PasskeyProtocol {
-  Future<PasskeyRegistrationOptions> requestRegistration({
-    required PasskeyRegistrationRequest request,
+  /// Starts a new passkey authentication session.
+  Future<PasskeyOptions> authenticate({
+    required PasskeyRequest request,
   });
 
-  /// Verifies the registration response and returns the user auth token.
-  Future<AuthenticatedUser> verifyRegistration({
-    required PasskeyRegistrationResponse registration,
-  });
-
-  Future<PasskeyAuthenticationOptions> requestAuthentication({
-    required PasskeyAuthenticationRequest request,
-  });
-
-  /// Verifies the authentication response and returns the user auth token.
-  Future<AuthenticatedUser> verifyAuthentication({
-    required PasskeyAuthenticationResponse authentication,
+  /// Verifies the credential and returns the authenticated user.
+  Future<AuthenticatedUser> verify({
+    required PasskeyCredential credential,
   });
 }
 
 abstract interface class EmailProtocol {
   Future<OtpParameters> sendOtp({
+    required OtpSendRequest request,
+  });
+
+  Future<OtpParameters> resendOtp({
     required OtpSendRequest request,
   });
 

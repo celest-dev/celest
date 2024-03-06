@@ -37,45 +37,23 @@ final class PasskeyClient with BaseProtocol implements PasskeyProtocol {
   final Uri baseUri;
 
   @override
-  Future<PasskeyRegistrationOptions> requestRegistration({
-    required PasskeyRegistrationRequest request,
-  }) async {
-    final response = await postJson(
-      '/_auth/passkeys/register',
-      request.toJson(),
-    );
-    return PasskeyRegistrationOptions.fromJson(response);
-  }
-
-  @override
-  Future<AuthenticatedUser> verifyRegistration({
-    required PasskeyRegistrationResponse registration,
-  }) async {
-    final response = await postJson(
-      '/_auth/passkeys/register/verify',
-      registration.toJson(),
-    );
-    return AuthenticatedUser.fromJson(response);
-  }
-
-  @override
-  Future<PasskeyAuthenticationOptions> requestAuthentication({
-    required PasskeyAuthenticationRequest request,
+  Future<PasskeyOptions> authenticate({
+    required PasskeyRequest request,
   }) async {
     final response = await postJson(
       '/_auth/passkeys/authenticate',
       request.toJson(),
     );
-    return PasskeyAuthenticationOptions.fromJson(response);
+    return PasskeyOptions.fromJson(response);
   }
 
   @override
-  Future<AuthenticatedUser> verifyAuthentication({
-    required PasskeyAuthenticationResponse authentication,
+  Future<AuthenticatedUser> verify({
+    required PasskeyCredential credential,
   }) async {
     final response = await postJson(
-      '/_auth/passkeys/authenticate/verify',
-      authentication.toJson(),
+      '/_auth/passkeys/verify',
+      credential.toJson(),
     );
     return AuthenticatedUser.fromJson(response);
   }
@@ -99,6 +77,17 @@ final class EmailClient with BaseProtocol implements EmailProtocol {
   }) async {
     final response = await postJson(
       '/_auth/email/otp/send',
+      request.toJson(),
+    );
+    return OtpParameters.fromJson(response);
+  }
+
+  @override
+  Future<OtpParameters> resendOtp({
+    required OtpSendRequest request,
+  }) async {
+    final response = await postJson(
+      '/_auth/email/otp/resend',
       request.toJson(),
     );
     return OtpParameters.fromJson(response);

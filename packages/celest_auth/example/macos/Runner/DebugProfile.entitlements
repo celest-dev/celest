@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:a102-136-24-157-119.ngrok-free.app?mode=developer</string>
+		<string>webcredentials:user-hub.celest.dev</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

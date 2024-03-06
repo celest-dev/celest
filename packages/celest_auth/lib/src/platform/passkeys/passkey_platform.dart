@@ -19,12 +19,12 @@ abstract base class PasskeyPlatform {
   void cancel();
 
   /// Registers a new passkey.
-  Future<PasskeyRegistrationResponse> register(
+  Future<PasskeyCredential> register(
     PasskeyRegistrationOptions options,
   );
 
   /// Authenticates with an existing passkey.
-  Future<PasskeyAuthenticationResponse> authenticate(
+  Future<PasskeyCredential> authenticate(
     PasskeyAuthenticationOptions options,
   );
 }
