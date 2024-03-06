@@ -4,6 +4,7 @@
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart' as _$models;
 import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 void initSerializers() {
   Serializers.instance
@@ -31,6 +32,17 @@ void initSerializers() {
     serialize: ($value) => {r'message': $value.message},
     deserialize: ($serialized) {
       return InternalServerException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<SerializationException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'offset': $value.offset,
+      r'source': $value.source,
+    },
+    deserialize: ($serialized) {
+      return SerializationException(($serialized[r'message'] as String));
     },
   ));
 }

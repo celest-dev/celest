@@ -6,9 +6,15 @@ library;
 
 import 'package:celest/celest.dart';
 
+@Deprecated('Use `Apis` instead.')
+typedef apis = Apis;
+
 abstract final class Apis {
   static const greeting = CloudApi(name: r'greeting');
 }
+
+@Deprecated('Use `Functions` instead.')
+typedef functions = Functions;
 
 abstract final class Functions {
   static const greetingSayHello = CloudFunction(

@@ -1,0 +1,1 @@
+-keep class dev.celest.celest_core.** { *; }

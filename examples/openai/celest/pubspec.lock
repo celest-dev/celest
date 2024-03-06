@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: celest_core
-      sha256: b9da8eb41f3b0ea5f76733dd74fede23f5430a57d8c8138963b28e99319bc0d0
+      sha256: c9ae3214327494291c2bbbc5ac7b5b63be03484e9d63fd06d8fe9ad938256963
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1"
   chat_gpt_sdk:
     dependency: "direct main"
     description:
