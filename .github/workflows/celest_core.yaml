@@ -7,31 +7,33 @@ on:
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
-concurrency:
-  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+#   cancel-in-progress: true
 
 jobs:
-  # analyze_and_format:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 10
-  #   steps:
-  #     - name: Git Checkout
-  #       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
-  #     - name: Setup Dart
-  #       uses: dart-lang/setup-dart@fedb1266e91cf51be2fdb382869461a434b920a3 # 1.6.2
-  #     - name: Get Packages
-  #       working-directory: packages/celest_core
-  #       run: dart pub get
-  #     - name: Analyze
-  #       working-directory: packages/celest_core
-  #       run: dart analyze --fatal-infos --fatal-warnings
-  #     - name: Format
-  #       working-directory: packages/celest_core
-  #       run: dart format --set-exit-if-changed .
+  analyze_and_format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+      - name: Setup Flutter
+        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/celest_core
+        run: dart pub get
+      - name: Analyze
+        working-directory: packages/celest_core
+        run: dart analyze
+      - name: Format
+        working-directory: packages/celest_core
+        run: dart format --set-exit-if-changed .
   test:
-    # needs: analyze_and_format
-    runs-on: macos-xl
+    needs: analyze_and_format
+    runs-on: macos-13-large
     timeout-minutes: 15
     steps:
       - name: Git Checkout
@@ -40,10 +42,6 @@ jobs:
         uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
         with:
           cache: true
-      - name: Setup Android
-        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
-        with:
-          api-level: 34
       - name: Get Packages
         working-directory: packages/celest_core
         run: dart pub get
@@ -54,8 +52,11 @@ jobs:
         working-directory: packages/celest_core/example
         run: flutter pub get
       - name: Test (Example)
-        working-directory: packages/celest_core/example
-        run: |
-          for OS in "sdk iPhone macos"; do
-            flutter test -d $OS integration_test/secure_storage_test.dart
-          done
+        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
+        with:
+          api-level: 34
+          script: |
+            cd packages/celest_core/example
+            for OS in "sdk iPhone macos"; do
+              flutter test -d $OS integration_test/secure_storage_test.dart
+            done
