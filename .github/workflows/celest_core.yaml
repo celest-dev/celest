@@ -31,7 +31,6 @@ jobs:
       - name: Format
         working-directory: packages/celest_core
         run: dart format --set-exit-if-changed .
-          cache: true
   test_darwin:
     needs: analyze_and_format
     runs-on: macos-13-large
