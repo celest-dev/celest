@@ -93,4 +93,4 @@ jobs:
           # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
           api-level: 31
           arch: x86_64
-          script: cd packages/celest_core/example && flutter test -d sdk integration_test/secure_storage_test.dart
+          script: cd packages/celest_core/example && flutter test -d emulator integration_test/secure_storage_test.dart
