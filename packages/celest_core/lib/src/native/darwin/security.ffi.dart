@@ -1745,8 +1745,6 @@ final class __CFNull extends ffi.Opaque {}
 
 final class __CFAllocator extends ffi.Opaque {}
 
-final class SecKeychainItem extends ffi.Opaque {}
-
 final class __CFBoolean extends ffi.Opaque {}
 
 final class __CFNumber extends ffi.Opaque {}
@@ -1852,7 +1850,9 @@ final class CFDictionaryValueCallBacks extends ffi.Struct {
 /// !
 /// @typedef SecKeychainItemRef
 /// @abstract Contains information about a keychain item.
-typedef SecKeychainItemRef = ffi.Pointer<SecKeychainItem>;
+typedef SecKeychainItemRef = ffi.Pointer<__SecKeychainItem>;
+
+final class __SecKeychainItem extends ffi.Opaque {}
 
 /// !
 /// @typedef SecKeychainAttributeList

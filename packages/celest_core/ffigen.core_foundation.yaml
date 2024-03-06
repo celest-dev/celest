@@ -32,8 +32,6 @@ globals:
 functions:
   include:
     - CFDictionary.*
-    - CFArray.*
-    - CF(.*)GetTypeID
     - CFDataCreate
     - CFStringGetCStringPtr
     - CFStringGetCString
@@ -47,7 +45,6 @@ structs:
     "__CFString": CFString
     "__CFData": CFData
     "__CFDictionary": CFDictionary
-    "__CFArray": CFArray
 unnamed-enums:
   include:
     - kCF.*

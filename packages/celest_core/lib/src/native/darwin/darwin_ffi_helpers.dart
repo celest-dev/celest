@@ -9,7 +9,7 @@ extension StringToCFString on String {
   Pointer<CFString> toCFString(Arena arena) {
     final str = toNativeUtf8(allocator: arena);
     final cfStr = CFStringCreateWithCString(
-      nullptr, // default allocator
+      kCFAllocatorDefault,
       str.cast<Char>(),
       kCFStringEncodingUTF8,
     );
@@ -23,7 +23,7 @@ extension StringToCFString on String {
   Pointer<CFData> toCFData(Arena arena) {
     final data = toNativeUtf8(allocator: arena);
     final cfData = CFDataCreate(
-      nullptr, // default allocator
+      kCFAllocatorDefault,
       data.cast<UnsignedChar>(),
       data.length,
     );
@@ -110,24 +110,5 @@ extension CFStringRefToString on CFStringRef {
     } finally {
       calloc.free(buffer);
     }
-  }
-}
-
-extension CFArrayToList on CFArrayRef {
-  /// Converts `this` to a [List].
-  List<CFTypeRef> toList() {
-    if (this == nullptr) {
-      return const [];
-    }
-    final length = CFArrayGetCount(this);
-    if (length == 0) {
-      return const [];
-    }
-    final list = <CFTypeRef>[];
-    for (var i = 0; i < length; i++) {
-      final value = CFArrayGetValueAtIndex(this, i);
-      list.add(value);
-    }
-    return list;
   }
 }

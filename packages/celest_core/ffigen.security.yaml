@@ -31,16 +31,10 @@ typedefs:
 functions:
   include:
     - Sec.*
-    - SecKeychainItem.*
 globals:
   include:
     - kSec.*
     - kCF.*
-structs:
-  include:
-    - __SecKeychainItem
-  rename:
-    "__SecKeychainItem": SecKeychainItem
 unnamed-enums:
   include:
     - errSec.*

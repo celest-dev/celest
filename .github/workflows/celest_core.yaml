@@ -57,6 +57,7 @@ jobs:
           api-level: 34
           script: |
             cd packages/celest_core/example
-            for OS in "sdk iPhone macos"; do
+            for OS in sdk iPhone macos
+            do
               flutter test -d $OS integration_test/secure_storage_test.dart
             done
