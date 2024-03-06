@@ -20,9 +20,6 @@ abstract base class SecureStoragePlatform implements SecureStorage {
 
   static const _defaultScope = 'dev.celest.celest';
 
-  @override
-  void init() {}
-
   @protected
   const SecureStoragePlatform.base();
 }

@@ -53,7 +53,7 @@ jobs:
         run: flutter pub get
       - name: Setup iOS Simulator
         run: |
-          RUNTIME=$(xcrun simctl list runtimes | grep 17 | tail -n 1 | cut -d' ' -f 7)
+          RUNTIME=$(xcrun simctl list runtimes | grep 'iOS 17' | tail -n 1 | cut -d' ' -f 7)
           echo "Using runtime: $RUNTIME"
           xcrun simctl create ios 'iPhone 15 Pro Max' $RUNTIME
           echo "Booting simulator"
@@ -81,6 +81,11 @@ jobs:
       - name: Get Packages
         working-directory: packages/celest_core/example
         run: flutter pub get
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Test (Android)
         uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
         with:
