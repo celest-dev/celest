@@ -1,0 +1,6 @@
+[submodule "packages/celest_core/third_party/glib"]
+	path = packages/celest_core/third_party/glib
+	url = https://github.com/GNOME/glib.git
+[submodule "packages/celest_core/third_party/libsecret"]
+	path = packages/celest_core/third_party/libsecret
+	url = https://github.com/GNOME/libsecret.git
