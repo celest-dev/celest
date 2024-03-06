@@ -17,7 +17,6 @@ output:
 
 classes:
   - dev.celest.celest_auth.CelestAuth
-  - dev.celest.celest_auth.CelestSecureStorage
 
   # Core Android/Java types
   - android.app.Activity

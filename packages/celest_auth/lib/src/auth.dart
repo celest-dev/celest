@@ -1,6 +1,5 @@
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/platform/auth_platform.dart';
-import 'package:celest_auth/src/storage/secure_storage.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';

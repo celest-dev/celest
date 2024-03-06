@@ -15,9 +15,10 @@ export 'src/exception/celest_exception.dart';
 export 'src/exception/cloud_exception.dart';
 export 'src/exception/serialization_exception.dart';
 
+/// Secure Storage
+export 'src/secure_storage/secure_storage.dart';
+export 'src/secure_storage/secure_storage_exception.dart';
+
 /// Serialization
 export 'src/serialization/json_value.dart';
 export 'src/serialization/serializer.dart';
-
-/// Secure Storage
-export 'src/storage/secure_storage_exception.dart';
