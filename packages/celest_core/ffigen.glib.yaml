@@ -5,14 +5,11 @@ description: |
   Regenerate bindings with `dart run ffigen --config=ffigen.glib.yaml`.
 language: c
 output: lib/src/native/linux/glib.ffi.dart
-compiler-opts:
-  - -I./third_party/glib/
-  - -I./third_party/glib/glib/
 headers:
   entry-points:
-    - third_party/glib/glib/glib.h
-    - third_party/glib/glib/glib-object.h
-    - third_party/glib/gio/gio.h
+    - /usr/include/glib-2.0/glib.h
+    - /usr/include/glib-2.0/glib-object.h
+    - /usr/include/glib-2.0/gio/gio.h
 preamble: |
   // ignore_for_file: type=lint
   // ignore_for_file: return_of_invalid_type
@@ -22,6 +19,11 @@ comments:
   length: full
 
 exclude-all-by-default: true
+typedefs:
+  include:
+    - gboolean
+    - gint
+    - gpointer
 functions:
   include:
     - g_hash_table_new
@@ -30,9 +32,11 @@ functions:
 structs:
   include:
     - _GError
+    - _GHashTable
     - _GCancellable
     - _GObject
   rename:
     "_GError": GError
+    "_GHashTable": GHashTable
     "_GCancellable": GCancellable
     "_GObject": GObject
