@@ -66,19 +66,15 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   void clear() => using((arena) {
         final schema = _schemaFor(arena);
         final attributes = _attributes(arena: arena);
-        final err = arena<Pointer<GError>>();
-        _libSecret.secret_password_clearv_sync(
-          schema,
-          attributes,
-          nullptr,
-          nullptr,
+        _check(
+          (err) => _libSecret.secret_password_clearv_sync(
+            schema,
+            attributes,
+            nullptr,
+            err,
+          ),
+          arena: arena,
         );
-        final error = err.value;
-        if (error != nullptr) {
-          arena.onReleaseAll(() => _glib.g_error_free(error));
-          final message = error.ref.message.cast<Utf8>().toDartString();
-          throw SecureStorageUnknownException(message);
-        }
       });
 
   @override
@@ -86,19 +82,15 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
         final secret = read(key);
         final schema = _schemaFor(arena);
         final attributes = _attributes(key: key, arena: arena);
-        final err = arena<Pointer<GError>>();
-        _libSecret.secret_password_clearv_sync(
-          schema,
-          attributes,
-          nullptr,
-          nullptr,
+        _check(
+          (err) => _libSecret.secret_password_clearv_sync(
+            schema,
+            attributes,
+            nullptr,
+            err,
+          ),
+          arena: arena,
         );
-        final error = err.value;
-        if (error != nullptr) {
-          arena.onReleaseAll(() => _glib.g_error_free(error));
-          final message = error.ref.message.cast<Utf8>().toDartString();
-          throw SecureStorageUnknownException(message);
-        }
         return secret;
       });
 
@@ -106,19 +98,15 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   String? read(String key) => using((arena) {
         final attributes = _attributes(key: key, arena: arena);
         final schema = _schemaFor(arena);
-        final err = arena<Pointer<GError>>();
-        final result = _libSecret.secret_password_lookupv_sync(
-          schema,
-          attributes,
-          nullptr,
-          err,
+        final result = _check(
+          (err) => _libSecret.secret_password_lookupv_sync(
+            schema,
+            attributes,
+            nullptr,
+            err,
+          ),
+          arena: arena,
         );
-        final error = err.value;
-        if (error != nullptr) {
-          arena.onReleaseAll(() => _glib.g_error_free(error));
-          final message = error.ref.message.cast<Utf8>().toDartString();
-          throw SecureStorageUnknownException(message);
-        }
         if (result == nullptr) {
           return null;
         }
@@ -132,23 +120,34 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
       final label = _labelFor(key).toNativeUtf8(allocator: arena);
       final secret = value.toNativeUtf8(allocator: arena);
       final attributes = _attributes(key: key, arena: arena);
-      final err = arena<Pointer<GError>>();
-      _libSecret.secret_password_storev_sync(
-        _schemaFor(arena),
-        attributes,
-        nullptr,
-        label,
-        secret,
-        nullptr,
-        err,
+      _check(
+        (err) => _libSecret.secret_password_storev_sync(
+          _schemaFor(arena),
+          attributes,
+          nullptr,
+          label,
+          secret,
+          nullptr,
+          err,
+        ),
+        arena: arena,
       );
-      final error = err.value;
-      if (error != nullptr) {
-        arena.onReleaseAll(() => _glib.g_error_free(error));
-        final message = error.ref.message.cast<Utf8>().toDartString();
-        throw SecureStorageUnknownException(message);
-      }
     });
     return value;
+  }
+
+  R _check<R>(
+    R Function(Pointer<Pointer<GError>> err) action, {
+    required Arena arena,
+  }) {
+    final err = arena<Pointer<GError>>();
+    final result = action(err);
+    final error = err.value;
+    if (error != nullptr) {
+      arena.onReleaseAll(() => _glib.g_error_free(error));
+      final message = error.ref.message.cast<Utf8>().toDartString();
+      throw SecureStorageUnknownException(message);
+    }
+    return result;
   }
 }

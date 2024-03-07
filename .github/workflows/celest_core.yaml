@@ -106,7 +106,7 @@ jobs:
         with:
           cache: true
       - name: Install dependencies
-        run: apt-get update && apt-get install -y libsecret-1-dev
+        run: sudo apt-get update && sudo apt-get install -y libsecret-1-dev
       - name: Get Packages
         working-directory: packages/celest_core
         run: dart pub get
