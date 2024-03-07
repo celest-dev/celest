@@ -61,10 +61,10 @@ jobs:
           echo "Booted simulator"
       - name: Test (iOS)
         working-directory: packages/celest_core/example
-        run: flutter test -d ios integration_test/secure_storage_test.dart
+        run: flutter test -d ios integration_test/storage_test.dart
       - name: Test (macOS)
         working-directory: packages/celest_core/example
-        run: flutter test -d macos integration_test/secure_storage_test.dart
+        run: flutter test -d macos integration_test/storage_test.dart
   test_android:
     needs: analyze_and_format
     runs-on:
@@ -93,7 +93,7 @@ jobs:
           # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
           api-level: 31
           arch: x86_64
-          script: cd packages/celest_core/example && flutter test -d emulator integration_test/secure_storage_test.dart
+          script: cd packages/celest_core/example && flutter test -d emulator integration_test/storage_test.dart
   test_linux:
     needs: analyze_and_format
     runs-on: ubuntu-latest
@@ -125,7 +125,7 @@ jobs:
           # Headless tests require virtual display for the linux tests to run.
           export DISPLAY=:99
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-          flutter test -d linux integration_test/secure_storage_test.dart
+          flutter test -d linux integration_test/storage_test.dart
   # TODO: Re-enable
   #       Need to fix this: Git error. Command: `git clone --mirror https://github.com/dart-lang/native /c/Users/runneradmin/.pub-cache\git\cache\native-647c69ed8027da6d6def6bc40efa87cf1a2f76aa`
   # test_windows:
@@ -150,7 +150,7 @@ jobs:
   #       run: flutter pub get
   #     - name: Test (Windows)
   #       working-directory: packages/celest_core/example
-  #       run: flutter test -d windows integration_test/secure_storage_test.dart
+  #       run: flutter test -d windows integration_test/storage_test.dart
   test_web:
     needs: analyze_and_format
     runs-on: ubuntu-latest
