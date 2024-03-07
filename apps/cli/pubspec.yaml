@@ -14,8 +14,12 @@ dependencies:
   aws_common: ^0.6.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
+  cedar_common:
+    path: ../../celest/packages/cedar_common
   celest:
     path: ../../celest/packages/celest
+  celest_auth:
+    path: ../../celest/packages/celest_auth
   celest_cli_common:
     path: ../../packages/celest_cli_common
   celest_core:
@@ -26,6 +30,8 @@ dependencies:
   code_builder: ^4.8.0
   collection: ^1.18.0
   convert: ^3.1.1
+  corks:
+    path: ../../celest/packages/corks
   crypto: ^3.0.3
   dart_style: ^2.3.4
   drift: ^2.16.0
@@ -63,14 +69,20 @@ dependencies:
 
 dependency_overrides:
   built_value: ^8.9.0
+  cedar_common:
+    path: ../../celest/packages/cedar_common
   celest:
     path: ../../celest/packages/celest
+  celest_auth:
+    path: ../../celest/packages/celest_auth
   celest_cli_common:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
   celest_proto:
     path: ../../packages/celest_proto
+  corks:
+    path: ../../celest/packages/corks
   # Use vendored sqlite3 to make use of native-assets
   sqlite3:
     path: ../../packages/sqlite3/sqlite3

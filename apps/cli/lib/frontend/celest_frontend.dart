@@ -388,10 +388,8 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Builds the current project for deployment to the cloud.
-  Future<int> build({
-    required Progress? currentProgress,
-    required String organizationId,
-  }) async {
+  Future<int> build() async {
+    Progress? currentProgress;
     try {
       while (!stopped) {
         currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
@@ -431,7 +429,6 @@ final class CelestFrontend implements Closeable {
               iteration++;
             });
             final projectOutputs = await _deployProject(
-              organizationId: organizationId,
               resolvedProject: resolvedProject,
             );
             await _generateClientCode(
@@ -587,13 +584,11 @@ final class CelestFrontend implements Closeable {
   }
 
   Future<ast.RemoteDeployedProject> _deployProject({
-    required String organizationId,
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
         logger.fine('Creating deployment');
         final createResult = await deployService.createDeployment(
-          organizationId: organizationId,
           projectName: resolvedProject.name,
           ast: resolvedProject,
         );
@@ -609,7 +604,6 @@ final class CelestFrontend implements Closeable {
           'start_deployment',
           properties: {
             'deployment_id': deploymentId,
-            'organization_id': organizationId,
           },
         );
         if (ongoingDeployments.isNotEmpty) {
@@ -694,7 +688,6 @@ final class CelestFrontend implements Closeable {
               'cancel_deployment',
               properties: {
                 'deployment_id': deploymentId,
-                'organization_id': organizationId,
               },
             );
             rethrow;

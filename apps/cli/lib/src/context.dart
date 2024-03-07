@@ -40,10 +40,11 @@ InheritanceManager3 get inheritanceManager => InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
 
-final baseUri = Uri.https(
-  platform.environment['CELEST_API_DOMAIN'] ?? 'api-preview.celest.dev',
+final baseUri = Uri.parse(
+  platform.environment['CELEST_API_URI'] ?? 'https://api-preview.celest.dev',
 );
 DeployClient get deployService => DeployClient(
+      secureStorage: ctx.storage,
       baseUri: baseUri,
       httpClient: ctx.httpClient,
     );

@@ -9,7 +9,6 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_core/src/storage/storage.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 

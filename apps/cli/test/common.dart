@@ -31,6 +31,6 @@ Future<void> initTests({
     platform: platform,
     httpClient: httpClient,
     processManager: processManager,
-    storage: MemoryStorage(),
+    storage: Storage.memory(),
   );
 }
