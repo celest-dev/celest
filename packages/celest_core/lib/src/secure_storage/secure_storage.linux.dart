@@ -16,6 +16,9 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   final _glibDylib = DynamicLibrary.open('libglib-2.0.so.0');
   late final _glib = Glib(_glibDylib);
 
+  final _gioDylib = DynamicLibrary.open('libgio-2.0.so');
+  late final _gio = Glib(_gioDylib);
+
   final _libSecretDylib = DynamicLibrary.open('libsecret-1.so.0');
   late final _libSecret = Libsecret(_libSecretDylib);
 
@@ -24,11 +27,11 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
           'g_str_hash');
 
   late final String _appName = () {
-    final application = _glib.g_application_get_default();
+    final application = _gio.g_application_get_default();
     if (application == nullptr) {
       return File('/proc/self/exe').resolveSymbolicLinksSync();
     }
-    return _glib
+    return _gio
         .g_application_get_application_id(application)
         .cast<Utf8>()
         .toDartString();
@@ -43,15 +46,17 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
         SecretSchemaAttributeType.SECRET_SCHEMA_ATTRIBUTE_STRING;
 
   Pointer<GHashTable> _attributes({
-    required String key,
+    String? key,
     required Arena arena,
   }) {
     final hashTable = _glib.g_hash_table_new(_gStrHashPointer, nullptr);
-    _glib.g_hash_table_insert(
-      hashTable,
-      'key'.toNativeUtf8(allocator: arena).cast(),
-      key.toNativeUtf8(allocator: arena).cast(),
-    );
+    if (key != null) {
+      _glib.g_hash_table_insert(
+        hashTable,
+        'key'.toNativeUtf8(allocator: arena).cast(),
+        key.toNativeUtf8(allocator: arena).cast(),
+      );
+    }
     arena.onReleaseAll(() => _glib.g_hash_table_destroy(hashTable));
     return hashTable;
   }
@@ -59,7 +64,7 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   @override
   void clear() => using((arena) {
         final schema = _schemaFor(arena);
-        final attributes = _attributes(key: '', arena: arena);
+        final attributes = _attributes(arena: arena);
         _libSecret.secret_password_clearv_sync(
           schema,
           attributes,
