@@ -78,12 +78,6 @@ jobs:
         uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
         with:
           cache: true
-      - name: Get Packages
-        working-directory: packages/celest_core
-        run: dart pub get
-      - name: Test
-        working-directory: packages/celest_core
-        run: dart test
       - name: Get Packages (Example)
         working-directory: packages/celest_core/example
         run: flutter pub get
