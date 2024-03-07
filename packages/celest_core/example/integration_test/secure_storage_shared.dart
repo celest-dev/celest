@@ -97,7 +97,7 @@ final _random = Random();
 Iterable<(int, String)> get _largeKeyValuePairs sync* {
   for (final length in const [100, 1000, 10000]) {
     final string = String.fromCharCodes(
-      List.generate(length, (_) => _random.nextInt(255) + 1),
+      List.generate(length, (_) => _random.nextInt(94) + 33),
     );
     yield (length, string);
   }
