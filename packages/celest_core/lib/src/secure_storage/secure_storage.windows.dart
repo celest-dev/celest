@@ -61,7 +61,7 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
   @override
   String write(String key, String value) {
     final encrypted = _encrypt(value);
-    final data = _readData()..[key] = encrypted;;
+    final data = _readData()..[key] = encrypted;
     _writeData(data);
     return value;
   }
