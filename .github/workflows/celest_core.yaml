@@ -121,4 +121,4 @@ jobs:
         run: flutter pub get
       - name: Test (Linux)
         working-directory: packages/celest_core/example
-        run: flutter test -d linux integration_test/secure_storage_test.dart
+        run: flutter test --verbose -d linux integration_test/secure_storage_test.dart
