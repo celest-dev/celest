@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:celest_core/src/secure_storage/secure_storage.dart';
+import 'package:celest_core/src/storage/storage.dart';
 import 'package:test/test.dart';
 
-void sharedTests() {
+void sharedTests(String name, Storage Function({String? scope}) factory) {
   group('SecureStorage', () {
     late String key;
-    final storage = SecureStorage(scope: 'test');
+    final storage = factory(scope: 'test');
 
     setUp(() {
       storage.clear();

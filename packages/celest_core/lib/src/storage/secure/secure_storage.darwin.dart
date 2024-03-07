@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:celest_core/src/native/darwin/core_foundation.ffi.dart';
 import 'package:celest_core/src/native/darwin/darwin_ffi_helpers.dart';
 import 'package:celest_core/src/native/darwin/security.ffi.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_exception.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_platform.vm.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_exception.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_platform.vm.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:ffi/ffi.dart';
 

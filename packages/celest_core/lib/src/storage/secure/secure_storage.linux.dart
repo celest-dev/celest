@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:celest_core/src/native/linux/glib.ffi.dart';
 import 'package:celest_core/src/native/linux/libsecret.ffi.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_exception.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_platform.vm.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_exception.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_platform.vm.dart';
 import 'package:ffi/ffi.dart';
 
 final class SecureStoragePlatformLinux extends SecureStoragePlatform {
