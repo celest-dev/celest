@@ -1,6 +1,10 @@
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/platform/auth_platform.dart';
 import 'package:celest_core/celest_core.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/storage/secure/secure_storage.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/storage/storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -9,10 +13,7 @@ import 'package:meta/meta.dart';
 ///
 /// Generated Celest clients extend this class and mix in the various
 /// [AuthFlow]s supported by the backend.
-abstract interface class Auth {
-  /// Whether the user is currently authenticated.
-  bool get isAuthenticated;
-}
+abstract interface class Auth {}
 
 abstract base class AuthImpl implements Auth {
   AuthImpl({
@@ -26,18 +27,11 @@ abstract base class AuthImpl implements Auth {
   ///
   /// Must be called before any other getters or methods are accessed.
   @mustCallSuper
-  void init() {
-    final cork = secureStorage.read('cork');
-    _isAuthenticated = cork != null;
-  }
-
-  @override
-  bool get isAuthenticated => _isAuthenticated;
-  late bool _isAuthenticated;
+  void init() {}
 
   final Uri baseUri;
   final http.Client httpClient;
-  final SecureStorage secureStorage = SecureStorage();
+  final Storage secureStorage = SecureStorage();
 
   late final AuthClient protocol = AuthClient(
     baseUri: baseUri,

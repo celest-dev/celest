@@ -27,34 +27,34 @@ final class AuthenticatedUser {
 
 final class User {
   const User({
-    required this.id,
-    this.organizationId,
+    required this.userId,
+    this.displayName,
     required this.email,
     bool? emailVerified,
   }) : emailVerified = emailVerified ?? false;
 
   factory User.fromJson(Map<String, Object?> json) {
     return User(
-      id: json['id'] as String,
-      organizationId: json['organizationId'] as String?,
+      userId: json['userId'] as String,
+      displayName: json['displayName'] as String?,
       email: json['email'] as String,
       emailVerified: json['emailVerified'] as bool?,
     );
   }
 
-  final String id;
-  final String? organizationId;
+  final String userId;
+  final String? displayName;
   final String email;
   final bool emailVerified;
 
   Map<String, Object?> toJson() => {
-        'id': id,
-        if (organizationId != null) 'organizationId': organizationId,
+        'userId': userId,
+        if (displayName != null) 'displayName': displayName,
         'email': email,
         'emailVerified': emailVerified,
       };
 
   @override
-  String toString() => 'User(id: $id, orgId: $organizationId, '
+  String toString() => 'User(userId: $userId, displayName: $displayName, '
       'email: $email, emailVerified: $emailVerified)';
 }
