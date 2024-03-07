@@ -151,3 +151,23 @@ jobs:
   #     - name: Test (Windows)
   #       working-directory: packages/celest_core/example
   #       run: flutter test -d windows integration_test/secure_storage_test.dart
+  test_web:
+    needs: analyze_and_format
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+      - name: Setup Flutter
+        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/celest_core
+        run: dart pub get
+      - name: Test (Chrome, dart2js)
+        working-directory: packages/celest_core
+        run: dart test -p chrome
+      - name: Test (Chrome, dart2wasm)
+        working-directory: packages/celest_core
+        run: dart test -p chrome -c dart2wasm
