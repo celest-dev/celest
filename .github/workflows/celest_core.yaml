@@ -123,9 +123,6 @@ jobs:
         working-directory: packages/celest_core/example
         run: |
           # Headless tests require virtual display for the linux tests to run.
-          # from https://github.com/fluttercommunity/plus_plugins/blob/main/.github/workflows/scripts/integration-test.sh
           export DISPLAY=:99
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-          # Needed for WebSocket connections in API GraphQL subscriptions.
-          sudo systemctl start NetworkManager.service
           flutter test -d linux integration_test/secure_storage_test.dart
