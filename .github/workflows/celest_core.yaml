@@ -105,6 +105,8 @@ jobs:
         uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
         with:
           cache: true
+      - name: Install Build Dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
       - name: Setup Test Environment
         working-directory: packages/celest_core
         run: tool/setup-ci.sh
