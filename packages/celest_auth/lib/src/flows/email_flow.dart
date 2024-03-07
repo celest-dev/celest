@@ -2,51 +2,78 @@ import 'dart:async';
 
 import 'package:celest_auth/src/auth.dart';
 import 'package:celest_auth/src/flows/auth_flow.dart';
+import 'package:celest_auth/src/state/auth_state.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-base mixin Email on AuthImpl {
-  late final EmailFlow email = EmailFlow(this);
+base mixin EmailProvider on AuthImpl {
+  late final Email email = Email(this);
 }
 
-final class EmailFlow implements AuthFlow {
-  EmailFlow(this._hub);
+final class Email {
+  Email(this._hub);
 
   final AuthImpl _hub;
-  EmailProtocol get _protocol => _hub.protocol.email;
 
   Future<EmailSignUpNeedsVerification> signUp({
     required String email,
   }) async {
-    final parameters = await _protocol.sendOtp(
-      request: OtpSendRequest(email: email),
-    );
-    return EmailSignUpNeedsVerification(
-      flow: this,
-      email: email,
-      parameters: parameters,
-    );
-  }
-
-  Future<User> _verifyOtp({
-    required String email,
-    required String otp,
-  }) async {
-    final user = await _protocol.verifyOtp(
-      verification: OtpVerifyRequest(email: email, otp: otp),
-    );
-    _hub.secureStorage.write('cork', user.cork);
-    return user.user;
+    final flowSink = await _hub.requestFlow<EmailFlowState>();
+    final flow = EmailFlow._(_hub, _EmailFlowController(flowSink));
+    return flow._signUp(email: email);
   }
 }
 
-final class EmailSignUpNeedsVerification {
+final class EmailFlow implements AuthFlow {
+  EmailFlow._(this._hub, this._flowController);
+
+  final AuthImpl _hub;
+  final _EmailFlowController _flowController;
+
+  EmailProtocol get _protocol => _hub.protocol.email;
+
+  Future<EmailSignUpNeedsVerification> _signUp({
+    required String email,
+  }) {
+    return _flowController.capture(() async {
+      final parameters = await _protocol.sendOtp(
+        request: OtpSendRequest(email: email),
+      );
+      return EmailSignUpNeedsVerification(
+        flow: this,
+        email: email,
+        parameters: parameters,
+      );
+    });
+  }
+
+  Future<EmailAuthenticated> _verifyOtp({
+    required String email,
+    required String otp,
+  }) {
+    return _flowController.capture(() async {
+      final user = await _protocol.verifyOtp(
+        verification: OtpVerifyRequest(email: email, otp: otp),
+      );
+      _hub.secureStorage.write('cork', user.cork);
+      _hub.localStorage.write('userId', user.user.userId);
+      return EmailAuthenticated(flow: this, user: user.user);
+    });
+  }
+
+  @override
+  void cancel() {
+    // TODO(dnys1)
+    throw UnimplementedError();
+  }
+}
+
+final class EmailSignUpNeedsVerification extends EmailFlowState {
   EmailSignUpNeedsVerification({
-    required EmailFlow flow,
+    required super.flow,
     required this.email,
     required OtpParameters parameters,
-  })  : _flow = flow,
-        _parameters = parameters {
+  }) : _parameters = parameters {
     _resendCountdown =
         Stream<void>.periodic(const Duration(seconds: 1)).listen((_) {
       final resendIn = canResendIn;
@@ -54,7 +81,6 @@ final class EmailSignUpNeedsVerification {
     });
   }
 
-  final EmailFlow _flow;
   final String email;
   OtpParameters _parameters;
 
@@ -72,7 +98,7 @@ final class EmailSignUpNeedsVerification {
     _resendCountdown?.pause();
     _resendEligible.setState(false);
     try {
-      _parameters = await _flow._protocol.resendOtp(
+      _parameters = await flow._protocol.resendOtp(
         request: OtpSendRequest(email: email),
       );
     } finally {
@@ -82,9 +108,9 @@ final class EmailSignUpNeedsVerification {
   }
 
   Future<User> verifyOtp(String otp) async {
-    final user = await _flow._verifyOtp(email: email, otp: otp);
+    final authenticated = await flow._verifyOtp(email: email, otp: otp);
     _close();
-    return user;
+    return authenticated.user;
   }
 
   void _close() {
@@ -99,5 +125,20 @@ final class _ResendEligibleNotifier extends StateNotifier<(bool, Duration)> {
 
   void setState(bool state, [Duration? canResendIn]) {
     this.state = (state, canResendIn ?? this.state.$2);
+  }
+}
+
+extension type _EmailFlowController(StreamSink<EmailFlowState> _sink) {
+  Future<R> capture<R extends EmailFlowState>(
+    Future<R> Function() action,
+  ) async {
+    try {
+      final result = await action();
+      _sink.add(result);
+      return result;
+    } on Object catch (e, st) {
+      _sink.addError(e, st);
+      rethrow;
+    }
   }
 }

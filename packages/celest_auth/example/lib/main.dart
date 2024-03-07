@@ -13,7 +13,7 @@ final auth = CelestAuth(
   httpClient: http.Client(),
 );
 
-final class CelestAuth extends AuthImpl with Passkeys, Email {
+final class CelestAuth extends AuthImpl with Passkeys, EmailProvider {
   CelestAuth({required super.baseUri, required super.httpClient});
 }
 

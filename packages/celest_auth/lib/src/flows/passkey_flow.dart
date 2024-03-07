@@ -39,5 +39,6 @@ final class PasskeyFlow implements AuthFlow {
   }
 
   /// Cancels the in-progress passkey operation, if any.
+  @override
   void cancel() => _platform.cancel();
 }
