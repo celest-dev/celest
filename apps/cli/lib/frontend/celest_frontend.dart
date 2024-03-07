@@ -339,7 +339,7 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                port: (await storage.getLocalUri(project.name)).port,
+                port: storage.getLocalUri(project.name).port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -352,11 +352,11 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: await storage.setLocalUri(
+                localUri: storage.setLocalUri(
                   project.name,
                   Uri.http('localhost:${projectOutputs.port}'),
                 ),
-                productionUri: await storage.getProductionUri(project.name),
+                productionUri: storage.getProductionUri(project.name),
               ),
             );
 
@@ -437,8 +437,8 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: await storage.getLocalUri(project.name),
-                productionUri: await storage.setProductionUri(
+                localUri: storage.getLocalUri(project.name),
+                productionUri: storage.setProductionUri(
                   project.name,
                   projectOutputs.baseUri,
                 ),

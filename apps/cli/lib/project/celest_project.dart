@@ -9,6 +9,7 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_core/src/storage/storage.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
@@ -109,25 +110,25 @@ typedef CelestProjectUris = ({
 });
 
 extension CelestProjectUriStorage on Storage {
-  Future<Uri?> getUri(String key) async => switch (await get(key)) {
+  Uri? getUri(String key) => switch (read(key)) {
         final uri? => Uri.parse(uri),
         _ => null,
       };
 
-  Future<Uri?> getProductionUri(String projectName) =>
+  Uri? getProductionUri(String projectName) =>
       getUri('$projectName.productionUri');
-  Future<Uri> setProductionUri(String projectName, Uri uri) async {
-    await set('$projectName.productionUri', uri.toString());
+  Uri setProductionUri(String projectName, Uri uri) {
+    write('$projectName.productionUri', uri.toString());
     return uri;
   }
 
-  Future<Uri> getLocalUri(String projectName) async {
-    final uri = await getUri('$projectName.localUri');
+  Uri getLocalUri(String projectName) {
+    final uri = getUri('$projectName.localUri');
     return uri ?? Uri.parse('http://localhost:$defaultCelestPort');
   }
 
-  Future<Uri> setLocalUri(String projectName, Uri uri) async {
-    await set('$projectName.localUri', uri.toString());
+  Uri setLocalUri(String projectName, Uri uri) {
+    write('$projectName.localUri', uri.toString());
     return uri;
   }
 }

@@ -33,7 +33,7 @@ class CelestUninstaller {
     if (await configDir.exists()) {
       await configDir.delete(recursive: true);
     }
-    await storage.clear();
+    storage.clear();
   }
 
   Future<void> _uninstallPubGlobal() async {
