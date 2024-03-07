@@ -24,6 +24,7 @@ typedefs:
     - gboolean
     - gint
     - gpointer
+    - gchar
 functions:
   include:
     - g_hash_table_new
@@ -43,3 +44,9 @@ structs:
     "_GHashTable": GHashTable
     "_GCancellable": GCancellable
     "_GObject": GObject
+type-map:
+  typedefs:
+    gchar:
+      lib: pkg_ffi
+      c-type: Utf8
+      dart-type: Char
