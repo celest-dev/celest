@@ -15,6 +15,7 @@ dependencies:
   meta: ^1.10.0
   os_detect: ^2.0.1
   path: ^1.9.0
+  web: ^0.5.1
   win32: ^5.2.0
 
 dev_dependencies:

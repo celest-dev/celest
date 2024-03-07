@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:celest_core/src/native/linux/glib.ffi.dart';
 import 'package:celest_core/src/native/linux/libsecret.ffi.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_exception.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_platform.vm.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_exception.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_platform.vm.dart';
 import 'package:ffi/ffi.dart';
 
 final class SecureStoragePlatformLinux extends SecureStoragePlatform {
@@ -32,15 +32,11 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
     if (application == nullptr) {
       return File('/proc/self/exe').resolveSymbolicLinksSync();
     }
-    return _gio
-        .g_application_get_application_id(application)
-        .cast<Utf8>()
-        .toDartString();
+    return _gio.g_application_get_application_id(application).toDartString();
   }();
 
-  String _labelFor(String key) => '$scope/$key';
-  Pointer<SecretSchema> _schemaFor(Arena arena) => arena<SecretSchema>()
-    ..ref.name = _appName.toNativeUtf8(allocator: arena)
+  Pointer<SecretSchema> _schema(Arena arena) => arena<SecretSchema>()
+    ..ref.name = '$_appName/$scope'.toNativeUtf8(allocator: arena)
     ..ref.flags = SecretSchemaFlags.SECRET_SCHEMA_NONE
     ..ref.attributes[0].name = 'key'.toNativeUtf8(allocator: arena)
     ..ref.attributes[0].type =
@@ -64,7 +60,7 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
 
   @override
   void clear() => using((arena) {
-        final schema = _schemaFor(arena);
+        final schema = _schema(arena);
         final attributes = _attributes(arena: arena);
         _check(
           (err) => _libSecret.secret_password_clearv_sync(
@@ -80,7 +76,7 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   @override
   String? delete(String key) => using((arena) {
         final secret = read(key);
-        final schema = _schemaFor(arena);
+        final schema = _schema(arena);
         final attributes = _attributes(key: key, arena: arena);
         _check(
           (err) => _libSecret.secret_password_clearv_sync(
@@ -97,7 +93,7 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   @override
   String? read(String key) => using((arena) {
         final attributes = _attributes(key: key, arena: arena);
-        final schema = _schemaFor(arena);
+        final schema = _schema(arena);
         final result = _check(
           (err) => _libSecret.secret_password_lookupv_sync(
             schema,
@@ -117,12 +113,13 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
   @override
   String write(String key, String value) {
     using((arena) {
-      final label = _labelFor(key).toNativeUtf8(allocator: arena);
+      final schema = _schema(arena);
+      final label = key.toNativeUtf8(allocator: arena);
       final secret = value.toNativeUtf8(allocator: arena);
       final attributes = _attributes(key: key, arena: arena);
       _check(
         (err) => _libSecret.secret_password_storev_sync(
-          _schemaFor(arena),
+          schema,
           attributes,
           nullptr,
           label,
@@ -145,7 +142,7 @@ final class SecureStoragePlatformLinux extends SecureStoragePlatform {
     final error = err.value;
     if (error != nullptr) {
       arena.onReleaseAll(() => _glib.g_error_free(error));
-      final message = error.ref.message.cast<Utf8>().toDartString();
+      final message = error.ref.message.toDartString();
       throw SecureStorageUnknownException(message);
     }
     return result;
