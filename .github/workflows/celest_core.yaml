@@ -105,8 +105,9 @@ jobs:
         uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
         with:
           cache: true
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libsecret-1-dev
+      - name: Setup Test Environment
+        working-directory: packages/celest_core
+        run: tool/setup-ci.sh
       - name: Get Packages
         working-directory: packages/celest_core
         run: dart pub get
