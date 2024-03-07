@@ -4,10 +4,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:celest_core/src/native/windows/windows_paths.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_exception.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_platform.vm.dart';
-import 'package:path/path.dart' as p;
+import 'package:celest_core/src/storage/secure/secure_storage_exception.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_platform.vm.dart';
 import 'package:ffi/ffi.dart';
+import 'package:path/path.dart' as p;
 import 'package:win32/win32.dart';
 
 final class SecureStoragePlatformWindows extends SecureStoragePlatform {

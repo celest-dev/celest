@@ -1,5 +1,5 @@
 import 'package:celest_core/src/native/android/jni_bindings.ffi.dart';
-import 'package:celest_core/src/secure_storage/secure_storage_platform.vm.dart';
+import 'package:celest_core/src/storage/secure/secure_storage_platform.vm.dart';
 import 'package:jni/jni.dart';
 
 final class SecureStoragePlatformAndroid extends SecureStoragePlatform {

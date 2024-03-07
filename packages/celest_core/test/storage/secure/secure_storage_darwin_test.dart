@@ -1,7 +1,7 @@
 @TestOn('mac-os')
 
 import 'package:celest_core/src/native/darwin/security.ffi.dart';
-import 'package:celest_core/src/secure_storage/secure_storage.darwin.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.darwin.dart';
 import 'package:test/test.dart';
 
 void main() {

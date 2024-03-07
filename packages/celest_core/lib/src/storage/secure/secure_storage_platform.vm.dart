@@ -1,13 +1,15 @@
 import 'dart:io';
 
-import 'package:celest_core/src/secure_storage/secure_storage.android.dart';
-import 'package:celest_core/src/secure_storage/secure_storage.dart';
-import 'package:celest_core/src/secure_storage/secure_storage.darwin.dart';
-import 'package:celest_core/src/secure_storage/secure_storage.linux.dart';
-import 'package:celest_core/src/secure_storage/secure_storage.windows.dart';
+import 'package:celest_core/src/storage/local/local_storage.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.android.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.darwin.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.linux.dart';
+import 'package:celest_core/src/storage/secure/secure_storage.windows.dart';
 import 'package:meta/meta.dart';
 
-abstract base class SecureStoragePlatform implements SecureStorage {
+abstract base class SecureStoragePlatform
+    implements SecureStorage, LocalStorage {
   factory SecureStoragePlatform({
     String? scope,
   }) {
