@@ -31,6 +31,7 @@ functions:
     - g_hash_table_destroy
     - g_application_get_default
     - g_application_get_application_id
+    - g_error_free
 structs:
   include:
     - _GError

@@ -25,6 +25,20 @@ class Glib {
           lookup)
       : _lookup = lookup;
 
+  void g_error_free(
+    ffi.Pointer<GError> error,
+  ) {
+    return _g_error_free(
+      error,
+    );
+  }
+
+  late final _g_error_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<GError>)>>(
+          'g_error_free');
+  late final _g_error_free =
+      _g_error_freePtr.asFunction<void Function(ffi.Pointer<GError>)>();
+
   ffi.Pointer<GHashTable> g_hash_table_new(
     ffi.Pointer<
             ffi.NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<ffi.Void>)>>
