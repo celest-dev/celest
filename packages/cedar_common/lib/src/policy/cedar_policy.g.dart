@@ -6,6 +6,505 @@ part of 'cedar_policy.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const CedarPolicyEffect _$permit = const CedarPolicyEffect._('permit');
+const CedarPolicyEffect _$forbid = const CedarPolicyEffect._('forbid');
+
+CedarPolicyEffect _$CedarPolicyEffectValueOf(String name) {
+  switch (name) {
+    case 'permit':
+      return _$permit;
+    case 'forbid':
+      return _$forbid;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<CedarPolicyEffect> _$CedarPolicyEffectValues =
+    new BuiltSet<CedarPolicyEffect>(const <CedarPolicyEffect>[
+  _$permit,
+  _$forbid,
+]);
+
+const CedarPolicyOp _$all = const CedarPolicyOp._('all');
+const CedarPolicyOp _$equals = const CedarPolicyOp._('equals');
+const CedarPolicyOp _$in$ = const CedarPolicyOp._('in\$');
+const CedarPolicyOp _$is$ = const CedarPolicyOp._('is\$');
+
+CedarPolicyOp _$CedarPolicyOpValueOf(String name) {
+  switch (name) {
+    case 'all':
+      return _$all;
+    case 'equals':
+      return _$equals;
+    case 'in\$':
+      return _$in$;
+    case 'is\$':
+      return _$is$;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<CedarPolicyOp> _$CedarPolicyOpValues =
+    new BuiltSet<CedarPolicyOp>(const <CedarPolicyOp>[
+  _$all,
+  _$equals,
+  _$in$,
+  _$is$,
+]);
+
+const CedarPolicyConditionKind _$when =
+    const CedarPolicyConditionKind._('when');
+const CedarPolicyConditionKind _$unless =
+    const CedarPolicyConditionKind._('unless');
+
+CedarPolicyConditionKind _$CedarPolicyConditionKindValueOf(String name) {
+  switch (name) {
+    case 'when':
+      return _$when;
+    case 'unless':
+      return _$unless;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<CedarPolicyConditionKind> _$CedarPolicyConditionKindValues =
+    new BuiltSet<CedarPolicyConditionKind>(const <CedarPolicyConditionKind>[
+  _$when,
+  _$unless,
+]);
+
+Serializer<CedarPolicyEffect> _$cedarPolicyEffectSerializer =
+    new _$CedarPolicyEffectSerializer();
+Serializer<CedarPolicyOp> _$cedarPolicyOpSerializer =
+    new _$CedarPolicyOpSerializer();
+Serializer<CedarPolicyConditionKind> _$cedarPolicyConditionKindSerializer =
+    new _$CedarPolicyConditionKindSerializer();
+Serializer<CedarPolicy> _$cedarPolicySerializer = new _$CedarPolicySerializer();
+Serializer<CedarPolicyPrincipal> _$cedarPolicyPrincipalSerializer =
+    new _$CedarPolicyPrincipalSerializer();
+Serializer<CedarPolicyAction> _$cedarPolicyActionSerializer =
+    new _$CedarPolicyActionSerializer();
+Serializer<CedarPolicyResource> _$cedarPolicyResourceSerializer =
+    new _$CedarPolicyResourceSerializer();
+Serializer<CedarPolicyCondition> _$cedarPolicyConditionSerializer =
+    new _$CedarPolicyConditionSerializer();
+
+class _$CedarPolicyEffectSerializer
+    implements PrimitiveSerializer<CedarPolicyEffect> {
+  @override
+  final Iterable<Type> types = const <Type>[CedarPolicyEffect];
+  @override
+  final String wireName = 'CedarPolicyEffect';
+
+  @override
+  Object serialize(Serializers serializers, CedarPolicyEffect object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  CedarPolicyEffect deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      CedarPolicyEffect.valueOf(serialized as String);
+}
+
+class _$CedarPolicyOpSerializer implements PrimitiveSerializer<CedarPolicyOp> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'all': 'All',
+    'equals': '==',
+    'in\$': 'in',
+    'is\$': 'is',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'All': 'all',
+    '==': 'equals',
+    'in': 'in\$',
+    'is': 'is\$',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[CedarPolicyOp];
+  @override
+  final String wireName = 'CedarPolicyOp';
+
+  @override
+  Object serialize(Serializers serializers, CedarPolicyOp object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  CedarPolicyOp deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      CedarPolicyOp.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+}
+
+class _$CedarPolicyConditionKindSerializer
+    implements PrimitiveSerializer<CedarPolicyConditionKind> {
+  @override
+  final Iterable<Type> types = const <Type>[CedarPolicyConditionKind];
+  @override
+  final String wireName = 'CedarPolicyConditionKind';
+
+  @override
+  Object serialize(Serializers serializers, CedarPolicyConditionKind object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  CedarPolicyConditionKind deserialize(
+          Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      CedarPolicyConditionKind.valueOf(serialized as String);
+}
+
+class _$CedarPolicySerializer implements StructuredSerializer<CedarPolicy> {
+  @override
+  final Iterable<Type> types = const [CedarPolicy, _$CedarPolicy];
+  @override
+  final String wireName = 'CedarPolicy';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, CedarPolicy object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'effect',
+      serializers.serialize(object.effect,
+          specifiedType: const FullType(CedarPolicyEffect)),
+      'principal',
+      serializers.serialize(object.principal,
+          specifiedType: const FullType(CedarPolicyPrincipal)),
+      'action',
+      serializers.serialize(object.action,
+          specifiedType: const FullType(CedarPolicyAction)),
+      'resource',
+      serializers.serialize(object.resource,
+          specifiedType: const FullType(CedarPolicyResource)),
+      'conditions',
+      serializers.serialize(object.conditions,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(CedarPolicyCondition)])),
+    ];
+    Object? value;
+    value = object.annotations;
+    if (value != null) {
+      result
+        ..add('annotations')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(String), const FullType(String)])));
+    }
+    return result;
+  }
+
+  @override
+  CedarPolicy deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CedarPolicyBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'effect':
+          result.effect = serializers.deserialize(value,
+                  specifiedType: const FullType(CedarPolicyEffect))!
+              as CedarPolicyEffect;
+          break;
+        case 'principal':
+          result.principal.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CedarPolicyPrincipal))!
+              as CedarPolicyPrincipal);
+          break;
+        case 'action':
+          result.action.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CedarPolicyAction))!
+              as CedarPolicyAction);
+          break;
+        case 'resource':
+          result.resource.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CedarPolicyResource))!
+              as CedarPolicyResource);
+          break;
+        case 'conditions':
+          result.conditions.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CedarPolicyCondition)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'annotations':
+          result.annotations.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)]))!);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CedarPolicyPrincipalSerializer
+    implements StructuredSerializer<CedarPolicyPrincipal> {
+  @override
+  final Iterable<Type> types = const [
+    CedarPolicyPrincipal,
+    _$CedarPolicyPrincipal
+  ];
+  @override
+  final String wireName = 'CedarPolicyPrincipal';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, CedarPolicyPrincipal object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'op',
+      serializers.serialize(object.op,
+          specifiedType: const FullType(CedarPolicyOp)),
+    ];
+    Object? value;
+    value = object.entity;
+    if (value != null) {
+      result
+        ..add('entity')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CedarEntityId)));
+    }
+    value = object.entityType;
+    if (value != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  CedarPolicyPrincipal deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CedarPolicyPrincipalBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'op':
+          result.op = serializers.deserialize(value,
+              specifiedType: const FullType(CedarPolicyOp))! as CedarPolicyOp;
+          break;
+        case 'entity':
+          result.entity.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CedarEntityId))! as CedarEntityId);
+          break;
+        case 'entity_type':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CedarPolicyActionSerializer
+    implements StructuredSerializer<CedarPolicyAction> {
+  @override
+  final Iterable<Type> types = const [CedarPolicyAction, _$CedarPolicyAction];
+  @override
+  final String wireName = 'CedarPolicyAction';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, CedarPolicyAction object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'op',
+      serializers.serialize(object.op,
+          specifiedType: const FullType(CedarPolicyOp)),
+    ];
+    Object? value;
+    value = object.entity;
+    if (value != null) {
+      result
+        ..add('entity')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CedarEntityId)));
+    }
+    value = object.entities;
+    if (value != null) {
+      result
+        ..add('entities')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CedarEntityId)])));
+    }
+    return result;
+  }
+
+  @override
+  CedarPolicyAction deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CedarPolicyActionBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'op':
+          result.op = serializers.deserialize(value,
+              specifiedType: const FullType(CedarPolicyOp))! as CedarPolicyOp;
+          break;
+        case 'entity':
+          result.entity.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CedarEntityId))! as CedarEntityId);
+          break;
+        case 'entities':
+          result.entities.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CedarEntityId)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CedarPolicyResourceSerializer
+    implements StructuredSerializer<CedarPolicyResource> {
+  @override
+  final Iterable<Type> types = const [
+    CedarPolicyResource,
+    _$CedarPolicyResource
+  ];
+  @override
+  final String wireName = 'CedarPolicyResource';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, CedarPolicyResource object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'op',
+      serializers.serialize(object.op,
+          specifiedType: const FullType(CedarPolicyOp)),
+    ];
+    Object? value;
+    value = object.entity;
+    if (value != null) {
+      result
+        ..add('entity')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CedarEntityId)));
+    }
+    value = object.entityType;
+    if (value != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  CedarPolicyResource deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CedarPolicyResourceBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'op':
+          result.op = serializers.deserialize(value,
+              specifiedType: const FullType(CedarPolicyOp))! as CedarPolicyOp;
+          break;
+        case 'entity':
+          result.entity.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CedarEntityId))! as CedarEntityId);
+          break;
+        case 'entity_type':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CedarPolicyConditionSerializer
+    implements StructuredSerializer<CedarPolicyCondition> {
+  @override
+  final Iterable<Type> types = const [
+    CedarPolicyCondition,
+    _$CedarPolicyCondition
+  ];
+  @override
+  final String wireName = 'CedarPolicyCondition';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, CedarPolicyCondition object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'kind',
+      serializers.serialize(object.kind,
+          specifiedType: const FullType(CedarPolicyConditionKind)),
+      'body',
+      serializers.serialize(object.bodyJson,
+          specifiedType: const FullType(JsonObject)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CedarPolicyCondition deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CedarPolicyConditionBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'kind':
+          result.kind = serializers.deserialize(value,
+                  specifiedType: const FullType(CedarPolicyConditionKind))!
+              as CedarPolicyConditionKind;
+          break;
+        case 'body':
+          result.bodyJson = serializers.deserialize(value,
+              specifiedType: const FullType(JsonObject))! as JsonObject;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$CedarPolicy extends CedarPolicy {
   @override
   final String? id;
@@ -262,9 +761,10 @@ class CedarPolicyPrincipalBuilder
   CedarPolicyOp? get op => _$this._op;
   set op(CedarPolicyOp? op) => _$this._op = op;
 
-  CedarEntityId? _entity;
-  CedarEntityId? get entity => _$this._entity;
-  set entity(CedarEntityId? entity) => _$this._entity = entity;
+  CedarEntityIdBuilder? _entity;
+  CedarEntityIdBuilder get entity =>
+      _$this._entity ??= new CedarEntityIdBuilder();
+  set entity(CedarEntityIdBuilder? entity) => _$this._entity = entity;
 
   String? _entityType;
   String? get entityType => _$this._entityType;
@@ -276,7 +776,7 @@ class CedarPolicyPrincipalBuilder
     final $v = _$v;
     if ($v != null) {
       _op = $v.op;
-      _entity = $v.entity;
+      _entity = $v.entity?.toBuilder();
       _entityType = $v.entityType;
       _$v = null;
     }
@@ -299,12 +799,25 @@ class CedarPolicyPrincipalBuilder
 
   _$CedarPolicyPrincipal _build() {
     CedarPolicyPrincipal._validate(this);
-    final _$result = _$v ??
-        new _$CedarPolicyPrincipal._(
-            op: BuiltValueNullFieldError.checkNotNull(
-                op, r'CedarPolicyPrincipal', 'op'),
-            entity: entity,
-            entityType: entityType);
+    _$CedarPolicyPrincipal _$result;
+    try {
+      _$result = _$v ??
+          new _$CedarPolicyPrincipal._(
+              op: BuiltValueNullFieldError.checkNotNull(
+                  op, r'CedarPolicyPrincipal', 'op'),
+              entity: _entity?.build(),
+              entityType: entityType);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'entity';
+        _entity?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'CedarPolicyPrincipal', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
@@ -372,9 +885,10 @@ class CedarPolicyActionBuilder
   CedarPolicyOp? get op => _$this._op;
   set op(CedarPolicyOp? op) => _$this._op = op;
 
-  CedarEntityId? _entity;
-  CedarEntityId? get entity => _$this._entity;
-  set entity(CedarEntityId? entity) => _$this._entity = entity;
+  CedarEntityIdBuilder? _entity;
+  CedarEntityIdBuilder get entity =>
+      _$this._entity ??= new CedarEntityIdBuilder();
+  set entity(CedarEntityIdBuilder? entity) => _$this._entity = entity;
 
   ListBuilder<CedarEntityId>? _entities;
   ListBuilder<CedarEntityId> get entities =>
@@ -388,7 +902,7 @@ class CedarPolicyActionBuilder
     final $v = _$v;
     if ($v != null) {
       _op = $v.op;
-      _entity = $v.entity;
+      _entity = $v.entity?.toBuilder();
       _entities = $v.entities?.toBuilder();
       _$v = null;
     }
@@ -417,11 +931,13 @@ class CedarPolicyActionBuilder
           new _$CedarPolicyAction._(
               op: BuiltValueNullFieldError.checkNotNull(
                   op, r'CedarPolicyAction', 'op'),
-              entity: entity,
+              entity: _entity?.build(),
               entities: _entities?.build());
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'entity';
+        _entity?.build();
         _$failedField = 'entities';
         _entities?.build();
       } catch (e) {
@@ -498,9 +1014,10 @@ class CedarPolicyResourceBuilder
   CedarPolicyOp? get op => _$this._op;
   set op(CedarPolicyOp? op) => _$this._op = op;
 
-  CedarEntityId? _entity;
-  CedarEntityId? get entity => _$this._entity;
-  set entity(CedarEntityId? entity) => _$this._entity = entity;
+  CedarEntityIdBuilder? _entity;
+  CedarEntityIdBuilder get entity =>
+      _$this._entity ??= new CedarEntityIdBuilder();
+  set entity(CedarEntityIdBuilder? entity) => _$this._entity = entity;
 
   String? _entityType;
   String? get entityType => _$this._entityType;
@@ -512,7 +1029,7 @@ class CedarPolicyResourceBuilder
     final $v = _$v;
     if ($v != null) {
       _op = $v.op;
-      _entity = $v.entity;
+      _entity = $v.entity?.toBuilder();
       _entityType = $v.entityType;
       _$v = null;
     }
@@ -535,12 +1052,25 @@ class CedarPolicyResourceBuilder
 
   _$CedarPolicyResource _build() {
     CedarPolicyResource._validate(this);
-    final _$result = _$v ??
-        new _$CedarPolicyResource._(
-            op: BuiltValueNullFieldError.checkNotNull(
-                op, r'CedarPolicyResource', 'op'),
-            entity: entity,
-            entityType: entityType);
+    _$CedarPolicyResource _$result;
+    try {
+      _$result = _$v ??
+          new _$CedarPolicyResource._(
+              op: BuiltValueNullFieldError.checkNotNull(
+                  op, r'CedarPolicyResource', 'op'),
+              entity: _entity?.build(),
+              entityType: entityType);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'entity';
+        _entity?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'CedarPolicyResource', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
@@ -550,18 +1080,18 @@ class _$CedarPolicyCondition extends CedarPolicyCondition {
   @override
   final CedarPolicyConditionKind kind;
   @override
-  final JsonExpr body;
+  final JsonObject bodyJson;
 
   factory _$CedarPolicyCondition(
           [void Function(CedarPolicyConditionBuilder)? updates]) =>
       (new CedarPolicyConditionBuilder()..update(updates))._build();
 
-  _$CedarPolicyCondition._({required this.kind, required this.body})
+  _$CedarPolicyCondition._({required this.kind, required this.bodyJson})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         kind, r'CedarPolicyCondition', 'kind');
     BuiltValueNullFieldError.checkNotNull(
-        body, r'CedarPolicyCondition', 'body');
+        bodyJson, r'CedarPolicyCondition', 'bodyJson');
   }
 
   @override
@@ -578,14 +1108,14 @@ class _$CedarPolicyCondition extends CedarPolicyCondition {
     if (identical(other, this)) return true;
     return other is CedarPolicyCondition &&
         kind == other.kind &&
-        body == other.body;
+        bodyJson == other.bodyJson;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, kind.hashCode);
-    _$hash = $jc(_$hash, body.hashCode);
+    _$hash = $jc(_$hash, bodyJson.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -594,7 +1124,7 @@ class _$CedarPolicyCondition extends CedarPolicyCondition {
   String toString() {
     return (newBuiltValueToStringHelper(r'CedarPolicyCondition')
           ..add('kind', kind)
-          ..add('body', body))
+          ..add('bodyJson', bodyJson))
         .toString();
   }
 }
@@ -607,9 +1137,9 @@ class CedarPolicyConditionBuilder
   CedarPolicyConditionKind? get kind => _$this._kind;
   set kind(CedarPolicyConditionKind? kind) => _$this._kind = kind;
 
-  JsonExpr? _body;
-  JsonExpr? get body => _$this._body;
-  set body(JsonExpr? body) => _$this._body = body;
+  JsonObject? _bodyJson;
+  JsonObject? get bodyJson => _$this._bodyJson;
+  set bodyJson(JsonObject? bodyJson) => _$this._bodyJson = bodyJson;
 
   CedarPolicyConditionBuilder();
 
@@ -617,7 +1147,7 @@ class CedarPolicyConditionBuilder
     final $v = _$v;
     if ($v != null) {
       _kind = $v.kind;
-      _body = $v.body;
+      _bodyJson = $v.bodyJson;
       _$v = null;
     }
     return this;
@@ -642,8 +1172,8 @@ class CedarPolicyConditionBuilder
         new _$CedarPolicyCondition._(
             kind: BuiltValueNullFieldError.checkNotNull(
                 kind, r'CedarPolicyCondition', 'kind'),
-            body: BuiltValueNullFieldError.checkNotNull(
-                body, r'CedarPolicyCondition', 'body'));
+            bodyJson: BuiltValueNullFieldError.checkNotNull(
+                bodyJson, r'CedarPolicyCondition', 'bodyJson'));
     replace(_$result);
     return _$result;
   }

@@ -36,7 +36,7 @@ void main() {
 
       test('with id', () async {
         final cork = await Cork.builder(
-          id: utf8.encode(jsonEncode(const CedarEntityId('User', 'alice'))),
+          id: utf8.encode(jsonEncode(CedarEntityId('User', 'alice'))),
         ).build(Signer(aId, aKey));
         expect(await cork.verify(Signer(aId, aKey)), isTrue);
         expect(await cork.verify(Signer(bId, bKey)), isFalse);
@@ -45,7 +45,7 @@ void main() {
       test('with bearer', () async {
         final cork = await Cork.builder(
           bearer: Bearer.entityId(
-            entityId: const CedarEntityId('User', 'alice'),
+            entityId: CedarEntityId('User', 'alice'),
           ),
         ).build(Signer(aId, aKey));
         expect(await cork.verify(Signer(aId, aKey)), isTrue);
@@ -54,9 +54,9 @@ void main() {
 
       test('with id and bearer', () async {
         final cork = await Cork.builder(
-          id: utf8.encode(jsonEncode(const CedarEntityId('User', 'alice'))),
+          id: utf8.encode(jsonEncode(CedarEntityId('User', 'alice'))),
           bearer: Bearer.entityId(
-            entityId: const CedarEntityId('User', 'alice'),
+            entityId: CedarEntityId('User', 'alice'),
           ),
         ).build(Signer(aId, aKey));
         expect(await cork.verify(Signer(aId, aKey)), isTrue);

@@ -53,6 +53,7 @@ extension PolicyOpToProto on cedar.CedarPolicyOp {
         cedar.CedarPolicyOp.equals => PolicyOp.POLICY_OP_EQUALS,
         cedar.CedarPolicyOp.in$ => PolicyOp.POLICY_OP_IN,
         cedar.CedarPolicyOp.is$ => PolicyOp.POLICY_OP_IS,
+        _ => throw UnimplementedError(),
       };
 }
 
@@ -71,6 +72,7 @@ extension PolicyEffectToProto on cedar.CedarPolicyEffect {
   PolicyEffect toProto() => switch (this) {
         cedar.CedarPolicyEffect.forbid => PolicyEffect.POLICY_EFFECT_FORBID,
         cedar.CedarPolicyEffect.permit => PolicyEffect.POLICY_EFFECT_PERMIT,
+        _ => throw UnimplementedError(),
       };
 }
 
@@ -94,6 +96,7 @@ extension PolicyConditionKindToProto on cedar.CedarPolicyConditionKind {
           PolicyConditionKind.POLICY_CONDITION_KIND_WHEN,
         cedar.CedarPolicyConditionKind.unless =>
           PolicyConditionKind.POLICY_CONDITION_KIND_UNLESS,
+        _ => throw UnimplementedError(),
       };
 }
 
@@ -189,7 +192,7 @@ extension EntityToProto on cedar.CedarEntity {
   Entity toProto() => Entity(
         uid: id.toProto(),
         parents: [for (final parent in parents) parent.toProto()],
-        attributes: attributes.map((k, v) => MapEntry(k, v.toProto())),
+        attributes: attributes.asMap().map((k, v) => MapEntry(k, v.toProto())),
       );
 }
 

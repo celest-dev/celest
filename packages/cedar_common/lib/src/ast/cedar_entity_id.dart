@@ -1,7 +1,17 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:cedar_common/src/ast/cedar_node.dart';
 
-final class CedarEntityId implements CedarNode {
-  const CedarEntityId(this.type, this.id);
+part 'cedar_entity_id.g.dart';
+
+abstract class CedarEntityId
+    implements Built<CedarEntityId, CedarEntityIdBuilder>, CedarNode {
+  factory CedarEntityId(String type, String id) =>
+      _$CedarEntityId._(type: type, id: id);
+
+  factory CedarEntityId.build([
+    void Function(CedarEntityIdBuilder) updates,
+  ]) = _$CedarEntityId;
 
   factory CedarEntityId.fromJson(Map<String, Object?> json) {
     switch (json) {
@@ -13,8 +23,10 @@ final class CedarEntityId implements CedarNode {
     }
   }
 
-  final String type;
-  final String id;
+  const CedarEntityId._();
+
+  String get type;
+  String get id;
 
   /// Returns a normalized version of this entity ID.
   ///
@@ -46,14 +58,6 @@ final class CedarEntityId implements CedarNode {
       );
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CedarEntityId && type == other.type && id == other.id;
-
-  @override
-  int get hashCode => Object.hash(type, id);
-
-  @override
   String toString() => '$type::"$id"';
 
   @override
@@ -61,4 +65,6 @@ final class CedarEntityId implements CedarNode {
         'type': type,
         'id': id,
       };
+
+  static Serializer<CedarEntityId> get serializer => _$cedarEntityIdSerializer;
 }

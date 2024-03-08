@@ -11,3 +11,4 @@ export 'src/ast/cedar_schema.dart';
 export 'src/policy/cedar_policy.dart';
 export 'src/policy/cedar_policy_set.dart';
 export 'src/policy/json_expr.dart';
+export 'src/serializers.dart';

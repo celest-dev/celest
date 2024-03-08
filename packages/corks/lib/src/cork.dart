@@ -7,7 +7,6 @@ import 'dart:typed_data';
 import 'package:cedar_common/cedar_common.dart' as cedar;
 import 'package:corks/src/interop/proto_interop.dart';
 import 'package:corks/src/interop/to_proto.dart';
-import 'package:corks/src/proto/cedar/v3/entity.pb.dart' as proto;
 import 'package:corks/src/proto/cedar/v3/policy.pb.dart' as proto;
 import 'package:corks/src/proto/corks/v1/cork.pb.dart' as proto;
 import 'package:corks/src/signer.dart';
@@ -144,12 +143,12 @@ sealed class Bearer implements Signable<SignedBearer> {
   factory Bearer.entity({
     required cedar.CedarEntity entity,
   }) =>
-      EntityBearer(entity: entity.toProto());
+      EntityBearer(entity: entity);
 
   factory Bearer.entityId({
     required cedar.CedarEntityId entityId,
   }) =>
-      EntityBearer(entity: proto.Entity(uid: entityId.toProto()));
+      EntityBearer(entity: cedar.CedarEntity(id: entityId));
 }
 
 final class EntityBearer extends Bearer {
@@ -157,10 +156,10 @@ final class EntityBearer extends Bearer {
     required this.entity,
   });
 
-  final proto.Entity entity;
+  final cedar.CedarEntity entity;
 
   @override
-  Uint8List encode() => entity.writeToBuffer();
+  Uint8List encode() => entity.toProto().writeToBuffer();
 
   @override
   SignedBearer signed(Uint8List signature) => SignedBearer(
@@ -176,7 +175,7 @@ final class SignedBearer implements Signed, ToProto<proto.Bearer> {
   });
 
   factory SignedBearer.fromProto(proto.Bearer proto) => SignedBearer(
-        block: EntityBearer(entity: proto.entity),
+        block: EntityBearer(entity: proto.entity.fromProto()),
         signature: Uint8List.fromList(proto.signature),
       );
 
@@ -190,7 +189,7 @@ final class SignedBearer implements Signed, ToProto<proto.Bearer> {
   proto.Bearer toProto() {
     final message = proto.Bearer(signature: signature);
     return switch (block) {
-      EntityBearer(:final entity) => message..entity = entity,
+      EntityBearer(:final entity) => message..entity = entity.toProto(),
     };
   }
 }

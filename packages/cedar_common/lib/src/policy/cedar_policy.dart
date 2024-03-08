@@ -4,48 +4,77 @@ library;
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_value/json_object.dart';
+import 'package:built_value/serializer.dart';
 import 'package:cedar_common/cedar_common.dart';
+import 'package:cedar_common/src/serializers.dart';
 
 part 'cedar_policy.g.dart';
 
-enum CedarPolicyEffect {
-  permit,
-  forbid;
+class CedarPolicyEffect extends EnumClass {
+  const CedarPolicyEffect._(super.name);
 
-  factory CedarPolicyEffect.fromJson(String json) => values.byName(json);
+  static const CedarPolicyEffect permit = _$permit;
+  static const CedarPolicyEffect forbid = _$forbid;
+
+  static BuiltSet<CedarPolicyEffect> get values => _$CedarPolicyEffectValues;
+  static CedarPolicyEffect valueOf(String name) =>
+      _$CedarPolicyEffectValueOf(name);
+
+  static CedarPolicyEffect fromJson(String json) =>
+      _$CedarPolicyEffectValueOf(json);
 
   String toJson() => name;
+
+  static Serializer<CedarPolicyEffect> get serializer =>
+      _$cedarPolicyEffectSerializer;
 }
 
-enum CedarPolicyOp {
-  all('All'),
-  equals('=='),
-  in$('in'),
-  is$('is');
+class CedarPolicyOp extends EnumClass {
+  const CedarPolicyOp._(super.name);
 
-  const CedarPolicyOp(this.name);
+  @BuiltValueEnumConst(wireName: 'All')
+  static const CedarPolicyOp all = _$all;
 
-  factory CedarPolicyOp.fromJson(String json) => values.firstWhere(
-        (op) => op.name == json,
-        orElse: () => throw ArgumentError.value(
-          json,
-          'json',
-          'Invalid CedarPolicyOp. Expected one of: ${values.map((v) => v.name).join(', ')}',
-        ),
-      );
+  @BuiltValueEnumConst(wireName: '==')
+  static const CedarPolicyOp equals = _$equals;
 
-  final String name;
+  @BuiltValueEnumConst(wireName: 'in')
+  static const CedarPolicyOp in$ = _$in$;
 
-  String toJson() => name;
+  @BuiltValueEnumConst(wireName: 'is')
+  static const CedarPolicyOp is$ = _$is$;
+
+  static BuiltSet<CedarPolicyOp> get values => _$CedarPolicyOpValues;
+  static CedarPolicyOp valueOf(String name) => _$CedarPolicyOpValueOf(name);
+
+  static CedarPolicyOp fromJson(String json) =>
+      cedarSerializers.deserializeWith(CedarPolicyOp.serializer, json)!;
+
+  String toJson() =>
+      cedarSerializers.serializeWith(CedarPolicyOp.serializer, this) as String;
+
+  static Serializer<CedarPolicyOp> get serializer => _$cedarPolicyOpSerializer;
 }
 
-enum CedarPolicyConditionKind {
-  when,
-  unless;
+class CedarPolicyConditionKind extends EnumClass {
+  const CedarPolicyConditionKind._(super.name);
 
-  factory CedarPolicyConditionKind.fromJson(String json) => values.byName(json);
+  static const CedarPolicyConditionKind when = _$when;
+  static const CedarPolicyConditionKind unless = _$unless;
+
+  static BuiltSet<CedarPolicyConditionKind> get values =>
+      _$CedarPolicyConditionKindValues;
+  static CedarPolicyConditionKind valueOf(String name) =>
+      _$CedarPolicyConditionKindValueOf(name);
+
+  static CedarPolicyConditionKind fromJson(String json) =>
+      _$CedarPolicyConditionKindValueOf(json);
 
   String toJson() => name;
+
+  static Serializer<CedarPolicyConditionKind> get serializer =>
+      _$cedarPolicyConditionKindSerializer;
 }
 
 abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
@@ -66,6 +95,25 @@ abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
       resource: resource,
       conditions: conditions.build(),
       annotations: annotations?.build(),
+    );
+  }
+
+  factory CedarPolicy.fromJson(Map<String, dynamic> json) {
+    return CedarPolicy(
+      effect: CedarPolicyEffect.fromJson(json['effect'] as String),
+      principal: CedarPolicyPrincipal.fromJson(
+        json['principal'] as Map<String, Object?>,
+      ),
+      action: CedarPolicyAction.fromJson(
+        json['action'] as Map<String, Object?>,
+      ),
+      resource: CedarPolicyResource.fromJson(
+        json['resource'] as Map<String, Object?>,
+      ),
+      conditions: (json['conditions'] as List<Object?>)
+          .map((c) => CedarPolicyCondition.fromJson(c as Map<String, Object?>))
+          .toList(),
+      annotations: (json['annotations'] as Map<String, Object?>?)?.cast(),
     );
   }
 
@@ -95,24 +143,7 @@ abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
         if (annotations != null) 'annotations': annotations!.toMap(),
       };
 
-  factory CedarPolicy.fromJson(Map<String, dynamic> json) {
-    return CedarPolicy(
-      effect: CedarPolicyEffect.fromJson(json['effect'] as String),
-      principal: CedarPolicyPrincipal.fromJson(
-        json['principal'] as Map<String, Object?>,
-      ),
-      action: CedarPolicyAction.fromJson(
-        json['action'] as Map<String, Object?>,
-      ),
-      resource: CedarPolicyResource.fromJson(
-        json['resource'] as Map<String, Object?>,
-      ),
-      conditions: (json['conditions'] as List<Object?>)
-          .map((c) => CedarPolicyCondition.fromJson(c as Map<String, Object?>))
-          .toList(),
-      annotations: (json['annotations'] as Map<String, Object?>?)?.cast(),
-    );
-  }
+  static Serializer<CedarPolicy> get serializer => _$cedarPolicySerializer;
 }
 
 abstract class CedarPolicyPrincipal
@@ -122,11 +153,23 @@ abstract class CedarPolicyPrincipal
     CedarEntityId? entity,
     String? entityType,
   }) {
-    return CedarPolicyPrincipal.build(
-      (b) => b
+    return CedarPolicyPrincipal.build((b) {
+      b
         ..op = op
-        ..entity = entity
-        ..entityType = entityType,
+        ..entityType = entityType;
+      if (entity != null) {
+        b.entity.replace(entity);
+      }
+    });
+  }
+
+  factory CedarPolicyPrincipal.fromJson(Map<String, Object?> json) {
+    return CedarPolicyPrincipal(
+      op: CedarPolicyOp.fromJson(json['op'] as String),
+      entity: json['entity'] == null
+          ? null
+          : CedarEntityId.fromJson(json['entity'] as Map<String, Object?>),
+      entityType: json['entity_type'] as String?,
     );
   }
 
@@ -139,17 +182,17 @@ abstract class CedarPolicyPrincipal
   static void _validate(CedarPolicyPrincipalBuilder policy) {
     switch (policy.op) {
       case CedarPolicyOp.all:
-        _expectAbsent('entity', policy.entity);
+        _expectAbsent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.equals:
-        _expectPresent('entity', policy.entity);
+        _expectPresent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.in$:
-        _expectPresent('entity', policy.entity);
+        _expectPresent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.is$:
         _expectPresent('entityType', policy.entityType);
-        _expectAbsent('entity', policy.entity);
+        _expectAbsent('entity', policy._entity);
       default:
         throw ArgumentError.value(policy.op, 'op', 'Invalid op for principal');
     }
@@ -167,15 +210,8 @@ abstract class CedarPolicyPrincipal
         if (entityType != null) 'entity_type': entityType,
       };
 
-  factory CedarPolicyPrincipal.fromJson(Map<String, Object?> json) {
-    return CedarPolicyPrincipal(
-      op: CedarPolicyOp.fromJson(json['op'] as String),
-      entity: json['entity'] == null
-          ? null
-          : CedarEntityId.fromJson(json['entity'] as Map<String, Object?>),
-      entityType: json['entity_type'] as String?,
-    );
-  }
+  static Serializer<CedarPolicyPrincipal> get serializer =>
+      _$cedarPolicyPrincipalSerializer;
 }
 
 abstract class CedarPolicyAction
@@ -186,9 +222,10 @@ abstract class CedarPolicyAction
     List<CedarEntityId>? entities,
   }) {
     return CedarPolicyAction.build((b) {
-      b
-        ..op = op
-        ..entity = entity;
+      b.op = op;
+      if (entity != null) {
+        b.entity.replace(entity);
+      }
       if (entities != null) {
         b.entities.addAll(entities);
       }
@@ -214,16 +251,16 @@ abstract class CedarPolicyAction
 
     switch (policy.op) {
       case CedarPolicyOp.all:
-        _expectAbsent('entity', policy.entity);
+        _expectAbsent('entity', policy._entity);
         expectNoEntities();
       case CedarPolicyOp.equals:
-        _expectPresent('entity', policy.entity);
+        _expectPresent('entity', policy._entity);
         expectNoEntities();
       case CedarPolicyOp.in$:
-        if (policy.entity != null) {
+        if (policy._entity != null) {
           expectNoEntities();
         } else if (policy._entities != null) {
-          _expectAbsent('entity', policy.entity);
+          _expectAbsent('entity', policy._entity);
         } else {
           throw ArgumentError(
             'Either entity or entities must be specified',
@@ -257,6 +294,9 @@ abstract class CedarPolicyAction
           .toList(),
     );
   }
+
+  static Serializer<CedarPolicyAction> get serializer =>
+      _$cedarPolicyActionSerializer;
 }
 
 abstract class CedarPolicyResource
@@ -269,8 +309,10 @@ abstract class CedarPolicyResource
     return CedarPolicyResource.build((b) {
       b
         ..op = op
-        ..entity = entity
         ..entityType = entityType;
+      if (entity != null) {
+        b.entity.replace(entity);
+      }
     });
   }
 
@@ -283,17 +325,17 @@ abstract class CedarPolicyResource
   static void _validate(CedarPolicyResourceBuilder policy) {
     switch (policy.op) {
       case CedarPolicyOp.all:
-        _expectAbsent('entity', policy.entity);
+        _expectAbsent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.equals:
-        _expectPresent('entity', policy.entity);
+        _expectPresent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.in$:
-        _expectPresent('entity', policy.entity);
+        _expectPresent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.is$:
         _expectPresent('entityType', policy.entityType);
-        _expectAbsent('entity', policy.entity);
+        _expectAbsent('entity', policy._entity);
       default:
         throw ArgumentError.value(policy.op, 'op', 'Invalid op for resource');
     }
@@ -320,6 +362,9 @@ abstract class CedarPolicyResource
       entityType: json['entity_type'] as String?,
     );
   }
+
+  static Serializer<CedarPolicyResource> get serializer =>
+      _$cedarPolicyResourceSerializer;
 }
 
 abstract class CedarPolicyCondition
@@ -328,7 +373,10 @@ abstract class CedarPolicyCondition
     required CedarPolicyConditionKind kind,
     required JsonExpr body,
   }) {
-    return _$CedarPolicyCondition._(kind: kind, body: body);
+    return _$CedarPolicyCondition._(
+      kind: kind,
+      bodyJson: JsonObject(body.toJson()),
+    );
   }
 
   factory CedarPolicyCondition.build([
@@ -337,18 +385,26 @@ abstract class CedarPolicyCondition
   CedarPolicyCondition._();
 
   CedarPolicyConditionKind get kind;
-  JsonExpr get body;
+
+  @BuiltValueField(wireName: 'body')
+  JsonObject get bodyJson;
+
+  JsonExpr get body => JsonExpr.fromJson(bodyJson.asMap.cast());
 
   Map<String, Object?> toJson() => {
         'kind': kind.toJson(),
-        'body': body.toJson(),
+        'body': bodyJson.asMap,
       };
 
   factory CedarPolicyCondition.fromJson(Map<String, Object?> json) =>
-      CedarPolicyCondition(
-        kind: CedarPolicyConditionKind.fromJson(json['kind'] as String),
-        body: JsonExpr.fromJson(json['body'] as Map<String, Object?>),
+      CedarPolicyCondition.build(
+        (b) => b
+          ..kind = CedarPolicyConditionKind.fromJson(json['kind'] as String)
+          ..bodyJson = JsonObject(json['body'] as Map<String, Object?>),
       );
+
+  static Serializer<CedarPolicyCondition> get serializer =>
+      _$cedarPolicyConditionSerializer;
 }
 
 void _expectPresent(String name, Object? value) {

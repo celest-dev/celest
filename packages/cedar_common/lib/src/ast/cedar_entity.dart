@@ -1,13 +1,29 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:cedar_common/src/ast/cedar_entity_id.dart';
 import 'package:cedar_common/src/ast/cedar_node.dart';
 import 'package:cedar_common/src/policy/json_expr.dart';
 
-final class CedarEntity implements CedarNode {
-  const CedarEntity({
-    required this.id,
-    this.parents = const [],
-    this.attributes = const {},
-  });
+part 'cedar_entity.g.dart';
+
+abstract class CedarEntity
+    implements Built<CedarEntity, CedarEntityBuilder>, CedarNode {
+  factory CedarEntity({
+    required CedarEntityId id,
+    List<CedarEntityId> parents = const [],
+    Map<String, CedarValueJson> attributes = const {},
+  }) {
+    return _$CedarEntity._(
+      id: id,
+      parents: parents.build(),
+      attributes: attributes.build(),
+    );
+  }
+
+  factory CedarEntity.build([
+    void Function(CedarEntityBuilder) updates,
+  ]) = _$CedarEntity;
 
   factory CedarEntity.fromJson(Map<String, Object?> json) => CedarEntity(
         id: CedarEntityId.fromJson(json['uid'] as Map<String, Object?>),
@@ -19,14 +35,20 @@ final class CedarEntity implements CedarNode {
             .map((key, value) => MapEntry(key, CedarValueJson.fromJson(value))),
       );
 
-  final CedarEntityId id;
-  final List<CedarEntityId> parents;
-  final Map<String, CedarValueJson> attributes;
+  const CedarEntity._();
+
+  CedarEntityId get id;
+  BuiltList<CedarEntityId> get parents;
+  BuiltMap<String, CedarValueJson> get attributes;
 
   @override
   Map<String, Object?> toJson() => {
         'uid': id.toJson(),
         'parents': parents.map((e) => e.toJson()).toList(),
-        'attrs': attributes.map((key, value) => MapEntry(key, value.toJson())),
+        'attrs': attributes
+            .map((key, value) => MapEntry(key, value.toJson()))
+            .asMap(),
       };
+
+  static Serializer<CedarEntity> get serializer => _$cedarEntitySerializer;
 }
