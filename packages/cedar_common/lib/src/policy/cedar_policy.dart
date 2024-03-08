@@ -7,7 +7,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:cedar_common/cedar_common.dart';
-import 'package:cedar_common/src/serializers.dart';
 
 part 'cedar_policy.g.dart';
 
@@ -84,7 +83,7 @@ abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
     required CedarPolicyPrincipal principal,
     required CedarPolicyAction action,
     required CedarPolicyResource resource,
-    required List<CedarPolicyCondition> conditions,
+    List<CedarPolicyCondition> conditions = const [],
     Map<String, String>? annotations,
   }) {
     return _$CedarPolicy._(
