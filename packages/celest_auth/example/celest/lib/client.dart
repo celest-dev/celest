@@ -4,15 +4,18 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'dart:async' as _$async;
 import 'dart:io' as _$io;
 
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
 
 import 'src/client/auth.dart';
 import 'src/client/functions.dart';
 import 'src/client/serializers.dart';
+
+export 'package:celest_auth/celest_auth.dart';
 
 final Celest celest = Celest();
 
@@ -31,14 +34,20 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
+  late final SecureStorage _secureStorage = SecureStorage();
+
   @override
-  late _$http.Client httpClient = _$http.Client();
+  late _$http.Client httpClient =
+      CelestHttpClient(secureStorage: _secureStorage);
 
   late Uri _baseUri;
 
   final _functions = CelestFunctions();
 
-  late final CelestAuth _auth = CelestAuth(this);
+  late final CelestAuth _auth = CelestAuth(
+    this,
+    secureStorage: _secureStorage,
+  );
 
   T _checkInitialized<T>(T Function() value) {
     if (!_initialized) {
@@ -59,12 +68,12 @@ class Celest with CelestBase {
   CelestAuth get auth => _checkInitialized(() => _auth);
 
   void init({CelestEnvironment environment = CelestEnvironment.local}) {
-    if (environment != _currentEnvironment) {
+    if (_initialized && environment != _currentEnvironment) {
       _auth.signOut();
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    _auth.init();
+    _$async.scheduleMicrotask(_auth.init);
     if (!_initialized) {
       initSerializers();
     }

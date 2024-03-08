@@ -35,10 +35,10 @@ final class User {
 
   factory User.fromJson(Map<String, Object?> json) {
     return User(
-      userId: json['userId'] as String,
-      displayName: json['displayName'] as String?,
+      userId: json['sub'] as String,
+      displayName: json['name'] as String?,
       email: json['email'] as String,
-      emailVerified: json['emailVerified'] as bool?,
+      emailVerified: json['email_verified'] as bool?,
     );
   }
 
@@ -48,10 +48,10 @@ final class User {
   final bool emailVerified;
 
   Map<String, Object?> toJson() => {
-        'userId': userId,
-        if (displayName != null) 'displayName': displayName,
+        'sub': userId,
+        if (displayName != null) 'name': displayName,
         'email': email,
-        'emailVerified': emailVerified,
+        'email_verified': emailVerified,
       };
 
   @override

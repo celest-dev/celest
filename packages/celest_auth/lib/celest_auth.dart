@@ -1,4 +1,4 @@
 library;
 
-export 'src/platform/auth_platform.dart';
-export 'src/platform/passkeys/passkey_platform.dart';
+export 'src/auth.dart' show Auth;
+export 'src/state/auth_state.dart';

@@ -1,7 +1,7 @@
-import 'package:celest_auth/celest_auth.dart';
-import 'package:celest_auth/src/auth.dart';
+import 'package:celest_auth/src/auth_impl.dart';
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
+import 'package:celest_auth/src/platform/passkeys/passkey_platform.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/auth/auth_protocol.dart';
 import 'package:celest_core/src/auth/passkeys/passkey_types.dart';

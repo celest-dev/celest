@@ -1,13 +1,21 @@
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/auth/auth_protocol.dart';
 import 'package:celest_core/src/auth/otp/otp_types.dart';
 import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 import 'package:celest_core/src/base/base_protocol.dart';
 
-final class AuthClient implements AuthProtocol {
+final class AuthClient with BaseProtocol implements AuthProtocol {
   AuthClient(this.celest);
 
+  @override
   final CelestBase celest;
+
+  @override
+  Future<User> userInfo() async {
+    final response = await getJson('/_auth/userinfo');
+    return User.fromJson(response);
+  }
 
   @override
   late final PasskeyClient passkeys = PasskeyClient(celest);

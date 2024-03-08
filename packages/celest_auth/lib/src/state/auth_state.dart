@@ -1,49 +1,32 @@
-import 'package:celest_auth/src/flows/auth_flow.dart';
-import 'package:celest_auth/src/flows/email_flow.dart';
 import 'package:celest_core/celest_core.dart';
 
 sealed class AuthState {
   const AuthState();
 }
 
-final class AuthInitializing extends AuthState {
-  const AuthInitializing();
-}
-
 final class Unauthenticated extends AuthState {
   const Unauthenticated();
 }
 
-final class NeedsReauthentication extends AuthState {
-  const NeedsReauthentication({
-    required this.userId,
-  });
+sealed class AuthFlowInProgress extends AuthState {
+  const AuthFlowInProgress();
 
-  final String userId;
+  void cancel();
 }
 
-sealed class AuthFlowState<Flow extends AuthFlow> extends AuthState {
-  const AuthFlowState({
-    required this.flow,
+abstract class EmailNeedsVerification extends AuthFlowInProgress {
+  const EmailNeedsVerification({
+    required this.email,
   });
 
-  final Flow flow;
+  final String email;
 
-  void cancel() => flow.cancel();
+  Future<void> resend();
+  Future<User> verifyOtp(String otp);
 }
 
-class EmailFlowState extends AuthFlowState<EmailFlow> {
-  const EmailFlowState({required super.flow});
-}
-
-final class EmailAuthenticated extends EmailFlowState implements Authenticated {
-  const EmailAuthenticated({
-    required super.flow,
-    required this.user,
-  });
-
-  @override
-  final User user;
+final class AuthenticatedWithEmail extends Authenticated {
+  const AuthenticatedWithEmail(super.user);
 }
 
 final class Authenticated extends AuthState {

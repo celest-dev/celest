@@ -5,6 +5,8 @@ import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 abstract interface class AuthProtocol {
   PasskeyProtocol get passkeys;
   EmailProtocol get email;
+
+  Future<User> userInfo();
 }
 
 abstract interface class PasskeyProtocol {
