@@ -4,11 +4,9 @@ import 'package:celest_auth/src/auth.dart';
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/state/auth_state.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/auth/auth_protocol.dart';
+import 'package:celest_core/src/auth/otp/otp_types.dart';
 import 'package:state_notifier/state_notifier.dart';
-
-base mixin EmailProvider on AuthImpl {
-  late final Email email = Email(this);
-}
 
 final class Email {
   Email(this._hub);

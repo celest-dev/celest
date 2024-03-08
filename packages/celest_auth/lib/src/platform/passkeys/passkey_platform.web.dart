@@ -5,7 +5,8 @@ import 'dart:typed_data';
 
 import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.web.dart';
-import 'package:celest_core/celest_core.dart'
+import 'package:celest_core/src/auth/passkeys/passkey_exception.dart';
+import 'package:celest_core/src/auth/passkeys/passkey_types.dart'
     hide AuthenticatorSelectionCriteria;
 import 'package:web/web.dart'
     hide

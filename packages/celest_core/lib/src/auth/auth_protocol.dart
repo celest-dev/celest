@@ -1,4 +1,6 @@
 import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/auth/otp/otp_types.dart';
+import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 
 abstract interface class AuthProtocol {
   PasskeyProtocol get passkeys;

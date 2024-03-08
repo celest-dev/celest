@@ -3,10 +3,8 @@ import 'package:celest_auth/src/auth.dart';
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_core/celest_core.dart';
-
-base mixin Passkeys on AuthImpl {
-  late final PasskeyFlow passkeys = PasskeyFlow(this);
-}
+import 'package:celest_core/src/auth/auth_protocol.dart';
+import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 
 final class PasskeyFlow implements AuthFlow {
   PasskeyFlow(this._hub);

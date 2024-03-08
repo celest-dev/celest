@@ -1,23 +1,12 @@
-import 'package:celest_auth/src/auth.dart';
 import 'package:celest_auth/src/flows/email_flow.dart';
-import 'package:celest_auth/src/flows/passkey_flow.dart';
+import 'package:celest_backend/client.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:http/http.dart' as http;
 
-final baseUri = Uri.https('user-hub.celest.dev');
-// final baseUri = Uri.http('localhost:8080');
-final auth = CelestAuth(
-  baseUri: baseUri,
-  httpClient: http.Client(),
-);
-
-final class CelestAuth extends AuthImpl with Passkeys, EmailProvider {
-  CelestAuth({required super.baseUri, required super.httpClient});
-}
-
 void main() {
+  celest.init();
   runApp(const MainApp());
 }
 
@@ -48,25 +37,11 @@ class _MainAppState extends State<MainApp> {
   final _otpController = TextEditingController();
   Future<http.Response>? _request;
 
-  Future<void> signUpPasskeys() async {
-    try {
-      _state.value = _State(_Step.signingIn);
-      final user = await auth.passkeys.authenticate(
-        email: _emailController.text,
-      );
-      _emailController.clear();
-      _state.value = _State(_Step.signedIn, user: user);
-    } on Exception catch (e, st) {
-      print('Error: $e');
-      print('Stacktrace: $st');
-      _state.value = _State(_Step.idle);
-    }
-  }
-
   Future<void> signUp() async {
     try {
       _state.value = _State(_Step.signingIn);
-      final verify = await auth.email.signUp(email: _emailController.text);
+      final verify =
+          await celest.auth.email.signUp(email: _emailController.text);
       print('Needs verification');
       _emailController.clear();
       _state.value = _State(_Step.needsVerification, verification: verify);
@@ -186,9 +161,8 @@ class _MainAppState extends State<MainApp> {
                           ),
                           const SizedBox(height: 16),
                           TextButton(
-                            onPressed: state.step != _Step.signingIn
-                                ? signUpPasskeys
-                                : null,
+                            onPressed:
+                                state.step != _Step.signingIn ? signUp : null,
                             child: const Text('Sign Up'),
                           ),
                         ],

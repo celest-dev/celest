@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/platform/auth_platform.dart';
 import 'package:celest_auth/src/state/auth_state.dart';
-import 'package:celest_core/celest_core.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/auth/auth_client.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/storage/local/local_storage.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/storage/secure/secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 /// Coordinates and delegates to the various [AuthFlow] to orchestrate
 /// authentication activities.
@@ -17,17 +17,23 @@ import 'package:meta/meta.dart';
 /// Generated Celest clients extend this class and mix in the various
 /// [AuthFlow]s supported by the backend.
 abstract interface class Auth {
+  /// Initializes Celest Auth.
+  ///
+  /// Must be called before any other getters or methods are accessed.
+  void init();
+
   AuthState get authState;
   Stream<AuthState> get authStateChanges;
 }
 
-abstract base class AuthImpl implements Auth {
+final class AuthImpl implements Auth {
   AuthImpl({
     required this.baseUri,
     required this.httpClient,
-  }) {
-    init();
-  }
+    LocalStorage? localStorage,
+    SecureStorage? secureStorage,
+  })  : localStorage = localStorage ?? LocalStorage(),
+        secureStorage = secureStorage ?? SecureStorage();
 
   @override
   AuthState get authState => _authState;
@@ -43,10 +49,7 @@ abstract base class AuthImpl implements Auth {
   late final StreamSubscription<AuthState> _authStateSubscription;
   StreamSubscription<AuthFlowState>? _authFlowSubscription;
 
-  /// Initializes Celest Auth.
-  ///
-  /// Must be called before any other getters or methods are accessed.
-  @mustCallSuper
+  @override
   void init() {
     _authStateSubscription =
         authStateChanges.listen((state) => _authState = state);
@@ -67,7 +70,7 @@ abstract base class AuthImpl implements Auth {
           'User is already authenticated. Sign out before continuing.',
         );
       case Unauthenticated() || NeedsReauthentication():
-        assert(_authFlowSubscription == null);
+        await _authFlowSubscription?.cancel();
         final previousState = _authState;
         final controller = StreamController<FlowState>(
           onCancel: () => _authStateController.add(previousState),
@@ -87,8 +90,8 @@ abstract base class AuthImpl implements Auth {
   final Uri baseUri;
   final http.Client httpClient;
 
-  final LocalStorage localStorage = LocalStorage();
-  final SecureStorage secureStorage = SecureStorage();
+  final LocalStorage localStorage;
+  final SecureStorage secureStorage;
 
   late final AuthClient protocol = AuthClient(
     baseUri: baseUri,

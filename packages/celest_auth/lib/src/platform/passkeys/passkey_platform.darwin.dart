@@ -5,7 +5,7 @@ import 'dart:ffi';
 import 'package:celest_auth/src/native/darwin/celest_auth.ffi.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_exception_impl.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.vm.dart';
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/util/globals.dart';
 import 'package:ffi/ffi.dart';

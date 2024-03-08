@@ -1,4 +1,5 @@
-import 'package:celest_core/celest_core.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/auth/passkeys/passkey_exception.dart';
 
 // TODO(dnys1): Make sealed
 final class PasskeyExceptionImpl implements PasskeyException {

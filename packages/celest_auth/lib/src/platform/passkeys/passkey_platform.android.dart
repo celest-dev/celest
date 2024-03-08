@@ -5,7 +5,7 @@ import 'package:celest_auth/src/native/android/jni_bindings.ffi.dart'
     hide Exception;
 import 'package:celest_auth/src/native/android/jni_helpers.dart';
 import 'package:celest_auth/src/platform/passkeys/passkey_platform_impl.vm.dart';
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 import 'package:jni/jni.dart';
 
 final class PasskeyPlatformAndroid extends PasskeyPlatformImpl {

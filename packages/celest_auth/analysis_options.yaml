@@ -9,5 +9,6 @@ analyzer:
     # To prevent issues publishing.
     depend_on_referenced_packages: error
     public_member_api_docs: ignore # TODO
+    implementation_imports: ignore # TODO
   exclude:
     - "**/*.ffi.dart"
