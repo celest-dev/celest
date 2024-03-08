@@ -8,11 +8,7 @@ import 'package:celest_core/src/auth/auth_protocol.dart';
 import 'package:celest_core/src/auth/otp/otp_types.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-final class Email {
-  Email(this._hub);
-
-  final AuthImpl _hub;
-
+extension type Email(AuthImpl _hub) {
   Future<EmailSignUpNeedsVerification> signUp({
     required String email,
   }) async {

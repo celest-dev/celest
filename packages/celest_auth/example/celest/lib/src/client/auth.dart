@@ -6,28 +6,10 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest_auth/src/auth.dart' as _$auth;
 import 'package:celest_auth/src/flows/email_flow.dart' as _$email_flow;
-import 'package:celest_auth/src/state/auth_state.dart' as _$auth_state;
-import 'package:http/http.dart' as _$http;
+import 'package:celest_core/celest_core.dart';
 
-class CelestAuth implements _$auth.Auth {
-  CelestAuth({
-    required Uri baseUri,
-    required _$http.Client httpClient,
-  }) : _hub = _$auth.AuthImpl(
-          baseUri: baseUri,
-          httpClient: httpClient,
-        );
+extension type CelestAuth._(_$auth.AuthImpl _hub) implements _$auth.Auth {
+  CelestAuth(CelestBase celest) : _hub = _$auth.AuthImpl(celest);
 
-  final _$auth.AuthImpl _hub;
-
-  late final _$email_flow.Email email = _$email_flow.Email(_hub);
-
-  @override
-  void init() => _hub.init();
-
-  @override
-  _$auth_state.AuthState get authState => _hub.authState;
-
-  @override
-  Stream<_$auth_state.AuthState> get authStateChanges => _hub.authStateChanges;
+  _$email_flow.Email get email => _$email_flow.Email(_hub);
 }

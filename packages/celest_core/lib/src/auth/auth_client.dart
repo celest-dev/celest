@@ -3,41 +3,24 @@ import 'package:celest_core/src/auth/auth_protocol.dart';
 import 'package:celest_core/src/auth/otp/otp_types.dart';
 import 'package:celest_core/src/auth/passkeys/passkey_types.dart';
 import 'package:celest_core/src/base/base_protocol.dart';
-import 'package:http/http.dart' as http;
 
 final class AuthClient implements AuthProtocol {
-  AuthClient({
-    required this.baseUri,
-    http.Client? httpClient,
-  }) : _client = httpClient ?? http.Client();
+  AuthClient(this.celest);
 
-  final http.Client _client;
-  final Uri baseUri;
+  final CelestBase celest;
 
   @override
-  late final PasskeyClient passkeys = PasskeyClient(
-    baseUri: baseUri,
-    httpClient: _client,
-  );
+  late final PasskeyClient passkeys = PasskeyClient(celest);
 
   @override
-  late final EmailClient email = EmailClient(
-    baseUri: baseUri,
-    httpClient: _client,
-  );
+  late final EmailClient email = EmailClient(celest);
 }
 
 final class PasskeyClient with BaseProtocol implements PasskeyProtocol {
-  PasskeyClient({
-    required this.baseUri,
-    required this.httpClient,
-  });
+  PasskeyClient(this.celest);
 
   @override
-  final http.Client httpClient;
-
-  @override
-  final Uri baseUri;
+  final CelestBase celest;
 
   @override
   Future<PasskeyOptions> authenticate({
@@ -63,16 +46,10 @@ final class PasskeyClient with BaseProtocol implements PasskeyProtocol {
 }
 
 final class EmailClient with BaseProtocol implements EmailProtocol {
-  EmailClient({
-    required this.baseUri,
-    required this.httpClient,
-  });
+  EmailClient(this.celest);
 
   @override
-  final http.Client httpClient;
-
-  @override
-  final Uri baseUri;
+  final CelestBase celest;
 
   @override
   Future<OtpParameters> sendOtp({
