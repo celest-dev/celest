@@ -1,0 +1,164 @@
+{
+	"": {
+		"entityTypes": {
+			"Application": {},
+			"User": {
+				"memberOfTypes": [
+					"Team",
+					"Application"
+				],
+				"shape": {
+					"type": "Record",
+					"attributes": {
+						"name": {
+							"type": "String"
+						}
+					}
+				}
+			},
+			"Team": {
+				"memberOfTypes": [
+					"Team",
+					"Application"
+				]
+			},
+			"List": {
+				"memberOfTypes": [
+					"Application"
+				],
+				"shape": {
+					"type": "Record",
+					"attributes": {
+						"owner": {
+							"type": "Entity",
+							"name": "User"
+						},
+						"name": {
+							"type": "String"
+						},
+						"readers": {
+							"type": "Entity",
+							"name": "Team",
+							"required": false
+						},
+						"editors": {
+							"type": "Entity",
+							"name": "Team",
+							"required": false
+						},
+						"tasks": {
+							"type": "Set",
+							"required": false,
+							"element": {
+								"type": "Record",
+								"attributes": {
+									"name": {
+										"type": "String"
+									},
+									"id": {
+										"type": "Long"
+									},
+									"state": {
+										"type": "String"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"actions": {
+			"CreateList": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"Application"
+					]
+				}
+			},
+			"GetList": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"UpdateList": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"DeleteList": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"GetLists": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"Application"
+					]
+				}
+			},
+			"CreateTask": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"UpdateTask": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"DeleteTask": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			},
+			"EditShares": {
+				"appliesTo": {
+					"principalTypes": [
+						"User"
+					],
+					"resourceTypes": [
+						"List"
+					]
+				}
+			}
+		}
+	}
+}

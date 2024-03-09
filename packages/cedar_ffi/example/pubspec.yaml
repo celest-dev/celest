@@ -1,0 +1,21 @@
+name: example
+description: An example of the cedar_ffi library.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.2.0
+
+dependencies:
+  cedar:
+    path: ../../cedar
+  cedar_ffi:
+    path: ../
+
+dependency_overrides:
+  cedar:
+    path: ../../cedar
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.21.0
