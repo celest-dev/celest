@@ -33,6 +33,7 @@ final class CoreTypes {
     required this.typedDataUint8ListType,
     required this.badRequestExceptionType,
     required this.internalServerExceptionType,
+    required this.userType,
   });
 
   final DartType coreExceptionType;
@@ -48,6 +49,7 @@ final class CoreTypes {
 
   final DartType badRequestExceptionType;
   final DartType internalServerExceptionType;
+  final DartType userType;
 }
 
 final class TypeHelper {

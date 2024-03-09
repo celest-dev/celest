@@ -122,6 +122,12 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isUserContext => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_UserContext' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isMiddleware {
     final el = element;
     if (el is! ClassElement) {

@@ -4,11 +4,78 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';
 import 'package:collection/collection.dart';
 
+extension on AstNode {
+  CedarPolicyResource get resource => switch (this) {
+        final Api api => CedarPolicyResource(
+            op: CedarPolicyOp.in$,
+            entity: api.id,
+          ),
+        final CloudFunction function => CedarPolicyResource(
+            op: CedarPolicyOp.equals,
+            entity: function.id,
+          ),
+        _ => unreachable(),
+      };
+}
+
 extension on ApiAuth {
   String get name => switch (this) {
         ApiPublic() => 'public',
         ApiAuthenticated() => 'authenticated',
       };
+
+  List<CedarPolicy> policiesFor(AstNode node) {
+    return switch (this) {
+      ApiAuthenticated(:final role) => [
+          CedarPolicy(
+            effect: CedarPolicyEffect.permit,
+            principal: CedarPolicyPrincipal(
+              op: CedarPolicyOp.in$,
+              entity: role,
+            ),
+            action: CedarPolicyAction(
+              op: CedarPolicyOp.equals,
+              entity: CloudFunctionAction.invoke.id,
+            ),
+            resource: node.resource,
+          ),
+
+          // Add a forbid policy for `@authenticated` so that it overrides
+          // any other allow policies, e.g. if the library has `@public`.
+          CedarPolicy(
+            effect: CedarPolicyEffect.forbid,
+            principal: CedarPolicyPrincipal(op: CedarPolicyOp.all),
+            action: CedarPolicyAction(
+              op: CedarPolicyOp.equals,
+              entity: CloudFunctionAction.invoke.id,
+            ),
+            resource: node.resource,
+            conditions: [
+              CedarPolicyCondition(
+                kind: CedarPolicyConditionKind.unless,
+                body: JsonExpr.in$(
+                  const JsonExpr.variable(CedarVariable.principal),
+                  JsonExpr.value(
+                    CedarValueJson.entity(role),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ApiPublic() => [
+          CedarPolicy(
+            effect: CedarPolicyEffect.permit,
+            principal: CedarPolicyPrincipal(op: CedarPolicyOp.all),
+            action: CedarPolicyAction(
+              op: CedarPolicyOp.equals,
+              entity: CloudFunctionAction.invoke.id,
+            ),
+            resource: node.resource,
+          ),
+        ],
+    };
+  }
 }
 
 final class ProjectResolver extends AstVisitor<void> {
@@ -33,31 +100,15 @@ final class ProjectResolver extends AstVisitor<void> {
       if (apiAuth == null) {
         return;
       }
-      final apiHash =
-          api.hashCode.toRadixString(16).padRight(8, '0').substring(0, 8);
-      final policyName = '${api.id.type}::${api.name}_${apiAuth.name}_$apiHash';
-      final policy = CedarPolicy(
-        effect: CedarPolicyEffect.permit,
-        principal: switch (apiAuth) {
-          ApiPublic() => CedarPolicyPrincipal(op: CedarPolicyOp.all),
-          ApiAuthenticated(:final id) =>
-            CedarPolicyPrincipal(op: CedarPolicyOp.in$, entity: id),
-        },
-        action: CedarPolicyAction(
-          op: CedarPolicyOp.equals,
-          entity: CloudFunctionAction.invoke.id,
-        ),
-        resource: CedarPolicyResource(
-          op: CedarPolicyOp.in$,
-          entity: api.id,
-        ),
-        conditions: [],
-      );
-      resolvedApi.policySet.policies.updateValue(
-        policyName,
-        (_) => throw StateError('Duplicate policy name: $policyName'),
-        ifAbsent: () => policy,
-      );
+      final policies = apiAuth.policiesFor(api);
+      for (final (i, policy) in policies.indexed) {
+        final policyName = '${api.id.type}::${api.name}_${apiAuth.name}_$i';
+        resolvedApi.policySet.policies.updateValue(
+          policyName,
+          (_) => throw StateError('Duplicate policy name: $policyName'),
+          ifAbsent: () => policy,
+        );
+      }
     });
 
     api.functions.values.forEach(visitFunction);
@@ -85,35 +136,16 @@ final class ProjectResolver extends AstVisitor<void> {
             final functionAuth =
                 function.metadata.whereType<ApiAuth>().singleOrNull;
             if (functionAuth != null) {
-              final policy = CedarPolicy(
-                effect: CedarPolicyEffect.permit,
-                principal: switch (functionAuth) {
-                  ApiPublic() => CedarPolicyPrincipal(op: CedarPolicyOp.all),
-                  ApiAuthenticated(:final id) =>
-                    CedarPolicyPrincipal(op: CedarPolicyOp.in$, entity: id),
-                },
-                action: CedarPolicyAction(
-                  op: CedarPolicyOp.equals,
-                  entity: CloudFunctionAction.invoke.id,
-                ),
-                resource: CedarPolicyResource(
-                  op: CedarPolicyOp.equals,
-                  entity: function.id,
-                ),
-                conditions: [],
-              );
-
-              final functionHash = function.hashCode
-                  .toRadixString(16)
-                  .padRight(8, '0')
-                  .substring(0, 8);
-              final policyName =
-                  '${function.id.type}::${function.name}_${functionAuth.name}_$functionHash';
-              resolvedFunction.policySet.policies.updateValue(
-                policyName,
-                (_) => throw StateError('Duplicate policy name: $policyName'),
-                ifAbsent: () => policy,
-              );
+              final policies = functionAuth.policiesFor(function);
+              for (final (i, policy) in policies.indexed) {
+                final policyName =
+                    '${function.id.type}::${function.name}_${functionAuth.name}_$i';
+                resolvedFunction.policySet.policies.updateValue(
+                  policyName,
+                  (_) => throw StateError('Duplicate policy name: $policyName'),
+                  ifAbsent: () => policy,
+                );
+              }
             }
 
             for (final parameter in function.parameters) {

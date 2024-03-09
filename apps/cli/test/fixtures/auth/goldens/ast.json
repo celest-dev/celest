@@ -14,7 +14,38 @@
           "name": "sayHelloAuthenticated",
           "apiName": "lib",
           "typeParameters": [],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 120,
+                  "uri": "lib.dart",
+                  "line": 4,
+                  "column": 30
+                },
+                "end": {
+                  "offset": 124,
+                  "uri": "lib.dart",
+                  "line": 4,
+                  "column": 34
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -72,7 +103,38 @@
           "name": "sayHelloPublic",
           "apiName": "lib",
           "typeParameters": [],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 226,
+                  "uri": "lib.dart",
+                  "line": 11,
+                  "column": 22
+                },
+                "end": {
+                  "offset": 230,
+                  "uri": "lib.dart",
+                  "line": 11,
+                  "column": 26
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -94,15 +156,15 @@
               "$": "ApiPublic",
               "location": {
                 "start": {
-                  "offset": 127,
+                  "offset": 166,
                   "uri": "lib.dart",
-                  "line": 7,
+                  "line": 9,
                   "column": 0
                 },
                 "end": {
-                  "offset": 134,
+                  "offset": 173,
                   "uri": "lib.dart",
-                  "line": 7,
+                  "line": 9,
                   "column": 7
                 },
                 "text": "@public"
@@ -112,15 +174,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 148,
+              "offset": 187,
               "uri": "lib.dart",
-              "line": 8,
+              "line": 10,
               "column": 13
             },
             "end": {
-              "offset": 162,
+              "offset": 201,
               "uri": "lib.dart",
-              "line": 8,
+              "line": 10,
               "column": 27
             },
             "text": "sayHelloPublic"
@@ -130,7 +192,38 @@
           "name": "sayHello",
           "apiName": "lib",
           "typeParameters": [],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 318,
+                  "uri": "lib.dart",
+                  "line": 17,
+                  "column": 22
+                },
+                "end": {
+                  "offset": 322,
+                  "uri": "lib.dart",
+                  "line": 17,
+                  "column": 26
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -151,15 +244,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 215,
+              "offset": 285,
               "uri": "lib.dart",
-              "line": 12,
+              "line": 16,
               "column": 13
             },
             "end": {
-              "offset": 223,
+              "offset": 293,
               "uri": "lib.dart",
-              "line": 12,
+              "line": 16,
               "column": 21
             },
             "text": "sayHello"
@@ -236,7 +329,38 @@
           "name": "sayHello",
           "apiName": "authenticated_lib",
           "typeParameters": [],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 117,
+                  "uri": "authenticated_lib.dart",
+                  "line": 6,
+                  "column": 30
+                },
+                "end": {
+                  "offset": 121,
+                  "uri": "authenticated_lib.dart",
+                  "line": 6,
+                  "column": 34
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",
@@ -342,7 +466,38 @@
           "name": "sayHello",
           "apiName": "public_lib",
           "typeParameters": [],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 102,
+                  "uri": "public_lib.dart",
+                  "line": 6,
+                  "column": 22
+                },
+                "end": {
+                  "offset": 106,
+                  "uri": "public_lib.dart",
+                  "line": 6,
+                  "column": 26
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
           "returnType": {
             "$": "TypeReference",
             "symbol": "Future",

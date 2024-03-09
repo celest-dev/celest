@@ -11,7 +11,7 @@
           "envVars": [],
           "policySet": {
             "policies": {
-              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_a10b1400": {
+              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_0": {
                 "effect": "permit",
                 "principal": {
                   "op": "in",
@@ -35,6 +35,46 @@
                   }
                 },
                 "conditions": []
+              },
+              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_1": {
+                "effect": "forbid",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.sayHelloAuthenticated"
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "unless",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "Var": "principal"
+                        },
+                        "right": {
+                          "Value": {
+                            "__entity": {
+                              "type": "Celest::Role",
+                              "id": "$authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -46,7 +86,7 @@
           "envVars": [],
           "policySet": {
             "policies": {
-              "Celest::CloudFunction::sayHelloPublic_public_da03b700": {
+              "Celest::CloudFunction::sayHelloPublic_public_0": {
                 "effect": "permit",
                 "principal": {
                   "op": "All"
@@ -90,7 +130,7 @@
       },
       "policySet": {
         "policies": {
-          "Celest::CloudApi::authenticated_lib_authenticated_119e8e41": {
+          "Celest::CloudApi::authenticated_lib_authenticated_0": {
             "effect": "permit",
             "principal": {
               "op": "in",
@@ -114,6 +154,46 @@
               }
             },
             "conditions": []
+          },
+          "Celest::CloudApi::authenticated_lib_authenticated_1": {
+            "effect": "forbid",
+            "principal": {
+              "op": "All"
+            },
+            "action": {
+              "op": "==",
+              "entity": {
+                "type": "Celest::Action",
+                "id": "invoke"
+              }
+            },
+            "resource": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::CloudApi",
+                "id": "authenticated_lib"
+              }
+            },
+            "conditions": [
+              {
+                "kind": "unless",
+                "body": {
+                  "in": {
+                    "left": {
+                      "Var": "principal"
+                    },
+                    "right": {
+                      "Value": {
+                        "__entity": {
+                          "type": "Celest::Role",
+                          "id": "$authenticated"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -130,7 +210,7 @@
       },
       "policySet": {
         "policies": {
-          "Celest::CloudApi::public_lib_public_145ba2ec": {
+          "Celest::CloudApi::public_lib_public_0": {
             "effect": "permit",
             "principal": {
               "op": "All"

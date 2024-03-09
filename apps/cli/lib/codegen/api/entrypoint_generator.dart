@@ -92,6 +92,24 @@ final class EntrypointGenerator {
                   if (toType != null) {
                     paramExp = toType.property('parse').call([paramExp]);
                   }
+                case NodeType.userContext:
+                  final paramJson = refer('request').index(
+                    literalString(raw: true, reference.name.toLowerCase()),
+                  );
+                  paramExp = DartTypes.convert.jsonDecode.call([
+                    paramJson.asA(DartTypes.core.string),
+                  ]);
+                  if (param.type.isNullableOrFalse) {
+                    paramExp = paramJson
+                        .equalTo(literalNull)
+                        .conditional(literalNull, paramExp);
+                  }
+                  paramExp = jsonGenerator.fromJson(
+                    typeHelper
+                        .toReference(typeHelper.coreTypes.userType)
+                        .withNullability(param.type.isNullableOrFalse),
+                    paramExp,
+                  );
                 default:
                   unreachable(
                     'Invalid reference type: ${reference.type}',

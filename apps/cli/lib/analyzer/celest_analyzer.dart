@@ -17,6 +17,7 @@ import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -111,6 +112,7 @@ final class CelestAnalyzer {
       badRequestExceptionType: celestCore.getClassType('BadRequestException'),
       internalServerExceptionType:
           celestCore.getClassType('InternalServerException'),
+      userType: celestCore.getClassType('User'),
     );
   }
 
@@ -412,7 +414,35 @@ final class CelestAnalyzer {
         .toList();
   }
 
-  ast.NodeReference? _parameterReference(ParameterElement parameter) {
+  ast.ApiAuth? _applicableAuth({
+    required Iterable<ast.ApiMetadata> apiMetadata,
+    required Iterable<ast.ApiMetadata> functionMetadata,
+  }) {
+    final functionAuth = functionMetadata.whereType<ast.ApiAuth>().firstOrNull;
+    final apiAuth = apiMetadata.whereType<ast.ApiAuth>().firstOrNull;
+    if (apiAuth is ast.ApiAuthenticated && functionAuth is ast.ApiPublic) {
+      _reportError(
+        '`@public` has no effect when `@authenticated` is applied at the '
+        'API level. It is recommended to move the `@public` method to '
+        'another API.',
+        location: functionAuth.location,
+        severity: AnalysisErrorSeverity.warning,
+      );
+      return apiAuth;
+    }
+    if (functionAuth != null) {
+      return functionAuth;
+    }
+    if (apiAuth != null) {
+      return apiAuth;
+    }
+    return null;
+  }
+
+  ast.NodeReference? _parameterReference(
+    ParameterElement parameter, {
+    required ast.ApiAuth? applicableAuth,
+  }) {
     final annotations = parameter.metadata;
     if (annotations.isEmpty) {
       return null;
@@ -439,44 +469,67 @@ final class CelestAnalyzer {
       _reportError('Could not resolve annotation', location: location);
       return null;
     }
-    if (!annotationType.isEnvironmentVariable) {
-      return null;
+    switch (annotationType) {
+      case DartType(isEnvironmentVariable: true):
+        if (!validEnvTypes.isExactlyType(parameter.type)) {
+          _reportError(
+            'The type of an environment variable parameter must be one of: '
+            '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
+            location: parameter.sourceLocation,
+          );
+          return null;
+        }
+        final name = value.getField('name')?.toStringValue();
+        if (name == null) {
+          _reportError(
+            'The `name` field is required on `EnvironmentVariable` annotations',
+            location: location,
+          );
+          return null;
+        }
+        const reservedEnvVars = ['PORT'];
+        if (reservedEnvVars.contains(name)) {
+          _reportError(
+            'The environment variable name `$name` is reserved by Celest',
+            location: parameter.sourceLocation,
+          );
+          return null;
+        }
+        if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
+          _reportError(
+            'The environment variable `$name` does not exist',
+            location: location,
+          );
+          return null;
+        }
+        return ast.NodeReference(
+          type: ast.NodeType.environmentVariable,
+          name: name,
+        );
+      case DartType(isUserContext: true):
+        if (!TypeChecker.fromStatic(typeHelper.coreTypes.userType)
+            .isExactlyType(parameter.type)) {
+          _reportError(
+            'The type of a user context parameter must be `User`',
+            location: parameter.sourceLocation,
+          );
+          return null;
+        }
+        if (applicableAuth case null || ast.ApiPublic()) {
+          if (typeHelper.typeSystem.isNonNullable(parameter.type)) {
+            _reportError(
+              'A user context parameter may only be required in an '
+              '`@authenticated` function',
+              location: parameter.sourceLocation,
+            );
+          }
+        }
+        return ast.NodeReference(
+          name: r'$user',
+          type: ast.NodeType.userContext,
+        );
     }
-    if (!validEnvTypes.isExactlyType(parameter.type)) {
-      _reportError(
-        'The type of an environment variable parameter must be one of: '
-        '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
-        location: parameter.sourceLocation,
-      );
-      return null;
-    }
-    final name = value.getField('name')?.toStringValue();
-    if (name == null) {
-      _reportError(
-        'The `name` field is required on `EnvironmentVariable` annotations',
-        location: location,
-      );
-      return null;
-    }
-    const reservedEnvVars = ['PORT'];
-    if (reservedEnvVars.contains(name)) {
-      _reportError(
-        'The environment variable name `$name` is reserved by Celest',
-        location: parameter.sourceLocation,
-      );
-      return null;
-    }
-    if (_project.envVars.build().none((envVar) => envVar.envName == name)) {
-      _reportError(
-        'The environment variable `$name` does not exist',
-        location: location,
-      );
-      return null;
-    }
-    return ast.NodeReference(
-      type: ast.NodeType.environmentVariable,
-      name: name,
-    );
+    return null;
   }
 
   Future<void> _collectApis({
@@ -705,6 +758,11 @@ final class CelestAnalyzer {
           return null;
         }
 
+        final functionMetadata = _collectApiMetadata(func, hasAuth: hasAuth);
+        final applicableAuth = _applicableAuth(
+          apiMetadata: libraryMetdata,
+          functionMetadata: functionMetadata,
+        );
         final returnType = func.returnType;
         final function = ast.CloudFunction(
           name: func.name,
@@ -750,7 +808,10 @@ final class CelestAnalyzer {
               required: param.isRequired,
               named: param.isNamed,
               location: paramLoc,
-              references: _parameterReference(param),
+              references: _parameterReference(
+                param,
+                applicableAuth: applicableAuth,
+              ),
               annotations: param.metadata
                   .map((annotation) => annotation.toCodeBuilder)
                   .nonNulls
@@ -800,7 +861,7 @@ final class CelestAnalyzer {
           returnType: typeHelper.toReference(returnType),
           flattenedReturnType: typeHelper.toReference(returnType.flattened),
           location: func.sourceLocation,
-          metadata: _collectApiMetadata(func, hasAuth: hasAuth),
+          metadata: functionMetadata,
           annotations: func.metadata
               .map((annotation) => annotation.toCodeBuilder)
               .nonNulls

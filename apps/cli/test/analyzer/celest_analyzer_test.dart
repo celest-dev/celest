@@ -1338,6 +1338,161 @@ String sayHello() => 'Hello, World!';
               'projects with authentication enabled.',
         ],
       );
+
+      testErrors(
+        name: 'conflicting_auth',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          '`@public` has no effect when `@authenticated` is applied at the '
+              'API level. It is recommended to move the `@public` method to '
+              'another API.',
+        ],
+      );
+    });
+
+    group('context', () {
+      testNoErrors(
+        name: 'function_authenticated_context',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@authenticated
+String sayHello({
+  @Context.user required User user,
+}) => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        expectProject: (project) {
+          check(project.apis['greeting'])
+              .isNotNull()
+              .has((it) => it.functions['sayHello'], 'function')
+              .isNotNull()
+              .has((it) => it.parameters.firstOrNull, 'parameter')
+              .isNotNull()
+              .has((it) => it.references, 'nodeReference')
+              .isNotNull()
+              .has((it) => it.type, 'type')
+              .equals(NodeType.userContext);
+        },
+      );
+
+      testNoErrors(
+        name: 'function_public_context',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@public
+String sayHello({
+  @Context.user User? user,
+}) => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        expectProject: (project) {
+          check(project.apis['greeting'])
+              .isNotNull()
+              .has((it) => it.functions['sayHello'], 'function')
+              .isNotNull()
+              .has((it) => it.parameters.firstOrNull, 'parameter')
+              .isNotNull()
+              .has((it) => it.references, 'nodeReference')
+              .isNotNull()
+              .has((it) => it.type, 'type')
+              .equals(NodeType.userContext);
+        },
+      );
+
+      testNoErrors(
+        name: 'api_authenticated_context',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello({
+  @Context.user required User user,
+}) => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        expectProject: (project) {
+          check(project.apis['greeting'])
+              .isNotNull()
+              .has((it) => it.functions['sayHello'], 'function')
+              .isNotNull()
+              .has((it) => it.parameters.firstOrNull, 'parameter')
+              .isNotNull()
+              .has((it) => it.references, 'nodeReference')
+              .isNotNull()
+              .has((it) => it.type, 'type')
+              .equals(NodeType.userContext);
+        },
+      );
+
+      testNoErrors(
+        name: 'api_public_context',
+        apis: {
+          'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello({
+  @Context.user User? user,
+}) => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        expectProject: (project) {
+          check(project.apis['greeting'])
+              .isNotNull()
+              .has((it) => it.functions['sayHello'], 'function')
+              .isNotNull()
+              .has((it) => it.parameters.firstOrNull, 'parameter')
+              .isNotNull()
+              .has((it) => it.references, 'nodeReference')
+              .isNotNull()
+              .has((it) => it.type, 'type')
+              .equals(NodeType.userContext);
+        },
+      );
     });
 
     group('env_vars', () {
