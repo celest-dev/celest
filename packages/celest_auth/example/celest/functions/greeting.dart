@@ -2,24 +2,20 @@
 // folder of your Celest project.
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions/bad_name_exception.dart';
-import 'package:celest_backend/models/person.dart';
 
 /// Says hello to the authenticated [user].
-// @authenticated
 @authenticated
 Future<String> sayHello({
-  required Person person,
-  // @Context.user() required User user,
+  @Context.user required User user,
 }) async {
-  if (person.name.isEmpty) {
-    // Throw a custom exception defined in the `lib/exceptions/` and catch
-    // it on the frontend.
-    throw BadNameException('Name cannot be empty');
+  if (!user.emailVerified) {
+    throw UnauthorizedException('Email not verified');
   }
 
-  // Logging is handled automatically when you print to the console.
-  print('Saying hello to ${person.name}');
+  print('Saying hello to user: $user');
 
-  return 'Hello, ${person.name}!';
+  if (user.displayName case final name?) {
+    return 'Hello, $name!';
+  }
+  return 'Hello!';
 }

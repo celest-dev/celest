@@ -2,8 +2,6 @@ import 'package:celest/celest.dart';
 
 /// The context of a [CloudFunction] invocation.
 abstract final class Context {
-  const Context._();
-
   /// A context reference to the [User] invoking a [CloudFunction].
   ///
   /// ## Example
@@ -13,18 +11,26 @@ abstract final class Context {
   /// ```dart
   /// @authenticated
   /// Future<void> sayHello({
-  ///  @Context.user() required User user,
+  ///   @Context.user required User user,
   /// }) async {
   ///  print('Hello, ${user.displayName}!');
   /// }
   /// ```
-  const factory Context.user() = _ContextKey.user;
+  ///
+  /// If a user is injected to a `@public` or private function, then the
+  /// user parameter must be nullable:
+  ///
+  /// ```dart
+  /// @public
+  /// Future<void> sayHello({
+  ///   @Context.user User? user,
+  /// }) async {
+  ///   print('Hello, ${user?.displayName ?? 'stranger'}!');
+  /// }
+  /// ```
+  static const user = _UserContext();
 }
 
-final class _ContextKey extends Context {
-  const _ContextKey._(this.key) : super._();
-
-  const _ContextKey.user() : this._('user');
-
-  final String key;
+final class _UserContext implements Context {
+  const _UserContext();
 }

@@ -59,8 +59,14 @@ abstract base class CloudFunctionTarget {
 
   Future<Response> _handler(Request request) async {
     final bodyJson = await request.decodeJson();
+    const contextHeaderPrefix = 'X-Celest-Context-';
     final response = await runZoned(
-      () => handle(bodyJson),
+      () => handle({
+        for (final MapEntry(:key, :value) in request.headers.entries)
+          if (key.startsWith(contextHeaderPrefix))
+            key.substring(contextHeaderPrefix.length): value,
+        ...bodyJson,
+      }),
       zoneSpecification: ZoneSpecification(
         print: (self, parent, zone, message) {
           parent.print(zone, '[$name] $message');

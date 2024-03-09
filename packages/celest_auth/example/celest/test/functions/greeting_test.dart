@@ -1,5 +1,4 @@
-import 'package:celest_backend/exceptions/bad_name_exception.dart';
-import 'package:celest_backend/models/person.dart';
+import 'package:celest/celest.dart';
 import 'package:test/test.dart';
 
 import '../../functions/greeting.dart';
@@ -7,12 +6,29 @@ import '../../functions/greeting.dart';
 void main() {
   group('greeting', () {
     test('sayHello', () async {
-      expect(await sayHello(person: Person(name: 'Celest')), 'Hello, Celest!');
-    });
-    test('sayHello (empty name)', () async {
       expect(
-        sayHello(person: Person(name: '')),
-        throwsA(isA<BadNameException>()),
+        await sayHello(
+          user: User(
+            userId: '123',
+            email: 'test@celest.dev',
+            emailVerified: true,
+            displayName: 'Celest',
+          ),
+        ),
+        'Hello, Celest!',
+      );
+    });
+    test('sayHello (email not verified)', () async {
+      expect(
+        sayHello(
+          user: User(
+            userId: '123',
+            email: 'test@celest.dev',
+            emailVerified: false,
+            displayName: 'Celest',
+          ),
+        ),
+        throwsA(isA<UnauthorizedException>()),
       );
     });
   });

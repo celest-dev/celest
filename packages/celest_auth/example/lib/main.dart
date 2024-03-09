@@ -1,5 +1,4 @@
 import 'package:celest_backend/client.dart';
-import 'package:celest_backend/models/person.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -53,12 +52,9 @@ class _MainAppState extends State<MainApp> {
                     const SizedBox(height: 16),
                     TextButton(
                       onPressed: () {
-                        _request = celest.functions.greeting.sayHello(
-                          person: const Person(name: 'Dillon'),
-                        );
-                        if (context.mounted) {
-                          setState(() {});
-                        }
+                        setState(() {
+                          _request = celest.functions.greeting.sayHello();
+                        });
                       },
                       child: const Text('Make authenticated request'),
                     ),

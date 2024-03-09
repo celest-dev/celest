@@ -7,9 +7,6 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _$convert;
 
 import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions/bad_name_exception.dart'
-    as _$bad_name_exception;
-import 'package:celest_backend/models/person.dart' as _$person;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
 
@@ -38,9 +35,6 @@ class CelestFunctionsGreeting {
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
-      case r'BadNameException':
-        throw Serializers.instance
-            .deserialize<_$bad_name_exception.BadNameException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -52,12 +46,10 @@ class CelestFunctionsGreeting {
   }
 
   /// Says hello to the authenticated [user].
-  Future<String> sayHello({required _$person.Person person}) async {
+  Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/greeting/say-hello'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'person': Serializers.instance.serialize<_$person.Person>(person)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
