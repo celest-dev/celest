@@ -5,10 +5,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart' as cedar;
-import 'package:corks/corks_proto.dart' as proto;
-import 'package:corks/src/interop/proto_interop.dart';
-import 'package:corks/src/proto/google/protobuf/any.pb.dart' as proto;
-import 'package:corks/src/signer.dart';
+import 'package:corks_cedar/corks_proto.dart' as proto;
+import 'package:corks_cedar/src/interop/proto_interop.dart';
+import 'package:corks_cedar/src/proto/google/protobuf/any.pb.dart' as proto;
+import 'package:corks_cedar/src/signer.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 

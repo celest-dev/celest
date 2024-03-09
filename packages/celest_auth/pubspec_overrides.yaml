@@ -3,5 +3,5 @@ dependency_overrides:
     path: ../cedar
   celest_core:
     path: ../celest_core
-  corks:
-    path: ../corks
+  corks_cedar:
+    path: ../corks_cedar

@@ -22,8 +22,8 @@ dependency_overrides:
     path: ../
   celest_core:
     path: ../../celest_core
-  corks:
-    path: ../../corks
+  corks_cedar:
+    path: ../../corks_cedar
 
 dev_dependencies:
   flutter_test:
