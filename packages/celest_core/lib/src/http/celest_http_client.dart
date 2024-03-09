@@ -1,5 +1,7 @@
 import 'dart:isolate';
 
+import 'package:celest_core/src/http/http_client.vm.dart'
+    if (dart.library.js_interop) 'package:celest_core/src/http/http_client.web.dart';
 import 'package:celest_core/src/storage/secure/secure_storage.dart';
 import 'package:celest_core/src/storage/storage.dart';
 import 'package:celest_core/src/util/globals.dart';
@@ -11,7 +13,7 @@ final class CelestHttpClient extends http.BaseClient {
     http.Client? baseClient,
   })  : _secureStorage = secureStorage,
         _ownsInner = baseClient == null,
-        _inner = baseClient ?? http.Client();
+        _inner = baseClient ?? createHttpClient();
 
   final SecureStorage _secureStorage;
   final bool _ownsInner;
