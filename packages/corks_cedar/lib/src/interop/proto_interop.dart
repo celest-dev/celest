@@ -4,11 +4,11 @@ library;
 import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart' as cedar;
-import 'package:corks/src/proto/cedar/v3/entity.pb.dart';
-import 'package:corks/src/proto/cedar/v3/entity_id.pb.dart';
-import 'package:corks/src/proto/cedar/v3/expr.pb.dart';
-import 'package:corks/src/proto/cedar/v3/policy.pb.dart';
-import 'package:corks/src/proto/cedar/v3/value.pb.dart';
+import 'package:corks_cedar/src/proto/cedar/v3/entity.pb.dart';
+import 'package:corks_cedar/src/proto/cedar/v3/entity_id.pb.dart';
+import 'package:corks_cedar/src/proto/cedar/v3/expr.pb.dart';
+import 'package:corks_cedar/src/proto/cedar/v3/policy.pb.dart';
+import 'package:corks_cedar/src/proto/cedar/v3/value.pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:meta/meta.dart';
 

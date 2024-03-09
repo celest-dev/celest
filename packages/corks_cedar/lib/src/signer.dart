@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:corks/corks_proto.dart' as proto;
-import 'package:corks/src/interop/to_proto.dart';
+import 'package:corks_cedar/corks_proto.dart' as proto;
+import 'package:corks_cedar/src/interop/to_proto.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 

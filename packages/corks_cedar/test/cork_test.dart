@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart';
-import 'package:corks/corks.dart';
+import 'package:corks_cedar/corks_cedar.dart';
 import 'package:test/test.dart';
 
 final random = Random.secure();
