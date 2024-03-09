@@ -6,7 +6,7 @@ import 'package:file/file.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
 
-import '../analyzer/analyzer_test.dart';
+import '../analyzer/celest_analyzer_test.dart';
 
 const _projectName = 'test_project';
 

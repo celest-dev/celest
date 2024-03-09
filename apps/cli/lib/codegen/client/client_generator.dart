@@ -33,6 +33,8 @@ final class ClientGenerator {
   final CelestProjectUris projectUris;
   late final LibraryBuilder _library;
 
+  bool get _hasServer => project.apis.isNotEmpty || project.auth != null;
+
   final _client = Field(
     (f) => f
       ..modifier = FieldModifier.final$
@@ -86,6 +88,10 @@ final class ClientGenerator {
   );
   late final _clientClass = ClassBuilder()
     ..name = ClientTypes.clientClass.name
+    ..mixins.addAll([
+      if (_hasServer)
+        refer('CelestBase', 'package:celest_core/celest_core.dart'),
+    ])
     ..methods.addAll([
       Method(
         (m) => m
@@ -129,9 +135,10 @@ final class ClientGenerator {
             Method((m) => m..body = refer('_currentEnvironment').code).closure,
           ]).code,
       ),
-      if (project.apis.isNotEmpty) ...[
+      if (_hasServer) ...[
         Method(
           (m) => m
+            ..annotations.add(DartTypes.core.override)
             ..returns = DartTypes.core.uri
             ..type = MethodType.getter
             ..name = 'baseUri'
@@ -155,9 +162,10 @@ final class ClientGenerator {
           ..type = refer('CelestEnvironment')
           ..name = '_currentEnvironment',
       ),
-      if (project.apis.values.isNotEmpty) ...[
+      if (_hasServer) ...[
         Field(
           (f) => f
+            ..annotations.add(DartTypes.core.override)
             ..late = true
             ..type = DartTypes.http.client
             ..name = 'httpClient'
@@ -181,6 +189,11 @@ final class ClientGenerator {
     clientInitBody.addExpression(
       refer('_currentEnvironment').assign(refer('environment')),
     );
+    if (_hasServer) {
+      clientInitBody.addExpression(
+        refer('_baseUri').assign(refer('environment').property('baseUri')),
+      );
+    }
 
     var customSerializers = <SerializerDefinition>{};
     var anonymousRecordTypes = <String, RecordType>{};
@@ -215,10 +228,6 @@ final class ClientGenerator {
         );
       customSerializers = functionsGenerator.customSerializers;
       anonymousRecordTypes = functionsGenerator.anonymousRecordTypes;
-
-      clientInitBody.addExpression(
-        refer('_baseUri').assign(refer('environment').property('baseUri')),
-      );
     }
     if (project.auth case final auth?) {
       final authLibrary = ClientAuthGenerator(auth: auth).generate();
@@ -231,10 +240,8 @@ final class ClientGenerator {
               ..modifier = FieldModifier.final$
               ..type = ClientTypes.authClass.ref
               ..name = '_auth'
-              ..assignment = ClientTypes.authClass.ref.newInstance([], {
-                'baseUri': refer('_baseUri'),
-                'httpClient': refer('httpClient'),
-              }).code,
+              ..assignment =
+                  ClientTypes.authClass.ref.newInstance([refer('this')]).code,
           ),
         )
         ..methods.add(
@@ -249,9 +256,14 @@ final class ClientGenerator {
               ]).code,
           ),
         );
-      clientInitBody.addExpression(
-        refer('_auth').property('init').call([]),
-      );
+      clientInitBody
+        ..statements.insert(
+          0,
+          refer('_auth').property('signOut').call([]).wrapWithBlockIf(
+            refer('environment').notEqualTo(refer('_currentEnvironment')),
+          ),
+        )
+        ..addExpression(refer('_auth').property('init').call([]));
     }
 
     if (customSerializers.isNotEmpty) {

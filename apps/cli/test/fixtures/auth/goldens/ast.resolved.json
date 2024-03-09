@@ -1,0 +1,171 @@
+{
+  "name": "auth",
+  "apis": {
+    "lib": {
+      "name": "lib",
+      "functions": {
+        "sayHelloAuthenticated": {
+          "name": "sayHelloAuthenticated",
+          "route": "/lib/say-hello-authenticated",
+          "apiName": "lib",
+          "envVars": [],
+          "policySet": {
+            "policies": {
+              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_3c4d30e0": {
+                "effect": "permit",
+                "principal": {
+                  "op": "in",
+                  "entity": {
+                    "type": "Celest::Role",
+                    "id": "$authenticated"
+                  }
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.sayHelloAuthenticated"
+                  }
+                },
+                "conditions": []
+              }
+            }
+          }
+        },
+        "sayHelloPublic": {
+          "name": "sayHelloPublic",
+          "route": "/lib/say-hello-public",
+          "apiName": "lib",
+          "envVars": [],
+          "policySet": {
+            "policies": {
+              "Celest::CloudFunction::sayHelloPublic_public_4b1682b0": {
+                "effect": "permit",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.sayHelloPublic"
+                  }
+                },
+                "conditions": []
+              }
+            }
+          }
+        },
+        "sayHello": {
+          "name": "sayHello",
+          "route": "/lib/say-hello",
+          "apiName": "lib",
+          "envVars": []
+        }
+      }
+    },
+    "authenticated_lib": {
+      "name": "authenticated_lib",
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "route": "/authenticated-lib/say-hello",
+          "apiName": "authenticated_lib",
+          "envVars": []
+        }
+      },
+      "policySet": {
+        "policies": {
+          "Celest::CloudApi::authenticated_lib_authenticated_1405eed0": {
+            "effect": "permit",
+            "principal": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::Role",
+                "id": "$authenticated"
+              }
+            },
+            "action": {
+              "op": "==",
+              "entity": {
+                "type": "Celest::Action",
+                "id": "invoke"
+              }
+            },
+            "resource": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::CloudApi",
+                "id": "authenticated_lib"
+              }
+            },
+            "conditions": []
+          }
+        }
+      }
+    },
+    "public_lib": {
+      "name": "public_lib",
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "route": "/public-lib/say-hello",
+          "apiName": "public_lib",
+          "envVars": []
+        }
+      },
+      "policySet": {
+        "policies": {
+          "Celest::CloudApi::public_lib_public_f8d87e00": {
+            "effect": "permit",
+            "principal": {
+              "op": "All"
+            },
+            "action": {
+              "op": "==",
+              "entity": {
+                "type": "Celest::Action",
+                "id": "invoke"
+              }
+            },
+            "resource": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::CloudApi",
+                "id": "public_lib"
+              }
+            },
+            "conditions": []
+          }
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.3.0",
+    "enabledExperiments": []
+  },
+  "auth": {
+    "providers": [
+      {
+        "name": "email",
+        "type": "email"
+      }
+    ]
+  }
+}

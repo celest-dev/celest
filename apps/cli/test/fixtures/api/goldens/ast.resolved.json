@@ -8,221 +8,61 @@
           "name": "nonAliasedNamedFields",
           "route": "/records/non-aliased-named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNonAliasedNamedFields": {
           "name": "asyncNonAliasedNamedFields",
           "route": "/records/async-non-aliased-named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "aliasedNamedFields": {
           "name": "aliasedNamedFields",
           "route": "/records/aliased-named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncAliasedNamedFields": {
           "name": "asyncAliasedNamedFields",
           "route": "/records/async-aliased-named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "namedFields": {
           "name": "namedFields",
           "route": "/records/named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
           "route": "/records/async-named-fields",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nested": {
           "name": "nested",
           "route": "/records/nested",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNested": {
           "name": "asyncNested",
           "route": "/records/async-nested",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableNested": {
           "name": "nullableNested",
           "route": "/records/nullable-nested",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNullableNested": {
           "name": "asyncNullableNested",
           "route": "/records/async-nullable-nested",
           "apiName": "records",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -233,419 +73,115 @@
           "name": "area",
           "route": "/sealed-classes/area",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "sealedClass": {
           "name": "sealedClass",
           "route": "/sealed-classes/sealed-class",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "rectangle": {
           "name": "rectangle",
           "route": "/sealed-classes/rectangle",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "circle": {
           "name": "circle",
           "route": "/sealed-classes/circle",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "sealedClassWithInheritedCustomJson": {
           "name": "sealedClassWithInheritedCustomJson",
           "route": "/sealed-classes/sealed-class-with-inherited-custom-json",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "sealedClassWithCustomJson": {
           "name": "sealedClassWithCustomJson",
           "route": "/sealed-classes/sealed-class-with-custom-json",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "sealedClassWithOverriddenCustomJson": {
           "name": "sealedClassWithOverriddenCustomJson",
           "route": "/sealed-classes/sealed-class-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "rectangleWithOverriddenCustomJson": {
           "name": "rectangleWithOverriddenCustomJson",
           "route": "/sealed-classes/rectangle-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "circleWithOverriddenCustomJson": {
           "name": "circleWithOverriddenCustomJson",
           "route": "/sealed-classes/circle-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "okShapeResults": {
           "name": "okShapeResults",
           "route": "/sealed-classes/ok-shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "errShapeResults": {
           "name": "errShapeResults",
           "route": "/sealed-classes/err-shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "shapeResults": {
           "name": "shapeResults",
           "route": "/sealed-classes/shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "aliasedOkShapeResults": {
           "name": "aliasedOkShapeResults",
           "route": "/sealed-classes/aliased-ok-shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "aliasedErrShapeResults": {
           "name": "aliasedErrShapeResults",
           "route": "/sealed-classes/aliased-err-shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "aliasedShapeResults": {
           "name": "aliasedShapeResults",
           "route": "/sealed-classes/aliased-shape-results",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "swappedResult": {
           "name": "swappedResult",
           "route": "/sealed-classes/swapped-result",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "genericResult": {
           "name": "genericResult",
           "route": "/sealed-classes/generic-result",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "multipleGenericResult": {
           "name": "multipleGenericResult",
           "route": "/sealed-classes/multiple-generic-result",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "okShapeResult": {
           "name": "okShapeResult",
           "route": "/sealed-classes/ok-shape-result",
           "apiName": "sealed_classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -656,67 +192,19 @@
           "name": "simple",
           "route": "/parameter-types/simple",
           "apiName": "parameter_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "simpleOptional": {
           "name": "simpleOptional",
           "route": "/parameter-types/simple-optional",
           "apiName": "parameter_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complex": {
           "name": "complex",
           "route": "/parameter-types/complex",
           "apiName": "parameter_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -727,89 +215,25 @@
           "name": "createTree",
           "route": "/cycles/create-tree",
           "apiName": "cycles",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "printTree": {
           "name": "printTree",
           "route": "/cycles/print-tree",
           "apiName": "cycles",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "combineTrees": {
           "name": "combineTrees",
           "route": "/cycles/combine-trees",
           "apiName": "cycles",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "selfReferencing": {
           "name": "selfReferencing",
           "route": "/cycles/self-referencing",
           "apiName": "cycles",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -820,881 +244,241 @@
           "name": "string",
           "route": "/extension-types/string",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrString": {
           "name": "asyncOrString",
           "route": "/extension-types/async-or-string",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncString": {
           "name": "asyncString",
           "route": "/extension-types/async-string",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringImpl": {
           "name": "stringImpl",
           "route": "/extension-types/string-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringToFromJson": {
           "name": "stringToFromJson",
           "route": "/extension-types/string-to-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringToJson": {
           "name": "stringToJson",
           "route": "/extension-types/string-to-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringToJsonImpl": {
           "name": "stringToJsonImpl",
           "route": "/extension-types/string-to-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringFromJson": {
           "name": "stringFromJson",
           "route": "/extension-types/string-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringFromJsonImpl": {
           "name": "stringFromJsonImpl",
           "route": "/extension-types/string-from-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringFromJsonStatic": {
           "name": "stringFromJsonStatic",
           "route": "/extension-types/string-from-json-static",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringPrivateField": {
           "name": "stringPrivateField",
           "route": "/extension-types/string-private-field",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringPrivateFieldImpl": {
           "name": "stringPrivateFieldImpl",
           "route": "/extension-types/string-private-field-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringPrivateCtor": {
           "name": "stringPrivateCtor",
           "route": "/extension-types/string-private-ctor",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringPrivateCtorImpl": {
           "name": "stringPrivateCtorImpl",
           "route": "/extension-types/string-private-ctor-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "value": {
           "name": "value",
           "route": "/extension-types/value",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueX": {
           "name": "valueX",
           "route": "/extension-types/valuex",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXImpl": {
           "name": "valueXImpl",
           "route": "/extension-types/value-x-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXToFromJson": {
           "name": "valueXToFromJson",
           "route": "/extension-types/value-x-to-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXToJson": {
           "name": "valueXToJson",
           "route": "/extension-types/value-x-to-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXToJsonImpl": {
           "name": "valueXToJsonImpl",
           "route": "/extension-types/value-x-to-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXFromJson": {
           "name": "valueXFromJson",
           "route": "/extension-types/value-x-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXFromJsonImpl": {
           "name": "valueXFromJsonImpl",
           "route": "/extension-types/value-x-from-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "valueXFromJsonStatic": {
           "name": "valueXFromJsonStatic",
           "route": "/extension-types/value-x-from-json-static",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "color": {
           "name": "color",
           "route": "/extension-types/color",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorX": {
           "name": "colorX",
           "route": "/extension-types/colorx",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXImpl": {
           "name": "colorXImpl",
           "route": "/extension-types/color-x-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXToFromJson": {
           "name": "colorXToFromJson",
           "route": "/extension-types/color-x-to-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXToJson": {
           "name": "colorXToJson",
           "route": "/extension-types/color-x-to-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXToJsonImpl": {
           "name": "colorXToJsonImpl",
           "route": "/extension-types/color-x-to-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXFromJson": {
           "name": "colorXFromJson",
           "route": "/extension-types/color-x-from-json",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXFromJsonImpl": {
           "name": "colorXFromJsonImpl",
           "route": "/extension-types/color-x-from-json-impl",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "colorXFromJsonStatic": {
           "name": "colorXFromJsonStatic",
           "route": "/extension-types/color-x-from-json-static",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonValue": {
           "name": "jsonValue",
           "route": "/extension-types/json-value",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonString": {
           "name": "jsonString",
           "route": "/extension-types/json-string",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonNum": {
           "name": "jsonNum",
           "route": "/extension-types/json-num",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonInt": {
           "name": "jsonInt",
           "route": "/extension-types/json-int",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonDouble": {
           "name": "jsonDouble",
           "route": "/extension-types/json-double",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonBool": {
           "name": "jsonBool",
           "route": "/extension-types/json-bool",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonList": {
           "name": "jsonList",
           "route": "/extension-types/json-list",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "jsonMap": {
           "name": "jsonMap",
           "route": "/extension-types/json-map",
           "apiName": "extension_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -1705,89 +489,25 @@
           "name": "portfolio",
           "route": "/typedefs/portfolio",
           "apiName": "typedefs",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "json": {
           "name": "json",
           "route": "/typedefs/json",
           "apiName": "typedefs",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableJson": {
           "name": "nullableJson",
           "route": "/typedefs/nullable-json",
           "apiName": "typedefs",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "mixedJson": {
           "name": "mixedJson",
           "route": "/typedefs/mixed-json",
           "apiName": "typedefs",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -1798,1299 +518,355 @@
           "name": "asyncVoidReturn",
           "route": "/return-types/async-void-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncStringReturn": {
           "name": "asyncStringReturn",
           "route": "/return-types/async-string-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncIntReturn": {
           "name": "asyncIntReturn",
           "route": "/return-types/async-int-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncDoubleReturn": {
           "name": "asyncDoubleReturn",
           "route": "/return-types/async-double-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncBoolReturn": {
           "name": "asyncBoolReturn",
           "route": "/return-types/async-bool-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncIterableReturn": {
           "name": "asyncIterableReturn",
           "route": "/return-types/async-iterable-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncListReturn": {
           "name": "asyncListReturn",
           "route": "/return-types/async-list-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncMapReturn": {
           "name": "asyncMapReturn",
           "route": "/return-types/async-map-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncStructReturn": {
           "name": "asyncStructReturn",
           "route": "/return-types/async-struct-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncStructReturnNullable": {
           "name": "asyncStructReturnNullable",
           "route": "/return-types/async-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncComplexStructReturn": {
           "name": "asyncComplexStructReturn",
           "route": "/return-types/async-complex-struct-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncComplexStructReturnNullable": {
           "name": "asyncComplexStructReturnNullable",
           "route": "/return-types/async-complex-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncComplexClassReturn": {
           "name": "asyncComplexClassReturn",
           "route": "/return-types/async-complex-class-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncClassReturnNullable": {
           "name": "asyncClassReturnNullable",
           "route": "/return-types/async-class-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrVoidReturn": {
           "name": "asyncOrVoidReturn",
           "route": "/return-types/async-or-void-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrStringReturn": {
           "name": "asyncOrStringReturn",
           "route": "/return-types/async-or-string-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrIntReturn": {
           "name": "asyncOrIntReturn",
           "route": "/return-types/async-or-int-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrDoubleReturn": {
           "name": "asyncOrDoubleReturn",
           "route": "/return-types/async-or-double-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrBoolReturn": {
           "name": "asyncOrBoolReturn",
           "route": "/return-types/async-or-bool-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrIterableReturn": {
           "name": "asyncOrIterableReturn",
           "route": "/return-types/async-or-iterable-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrListReturn": {
           "name": "asyncOrListReturn",
           "route": "/return-types/async-or-list-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrMapReturn": {
           "name": "asyncOrMapReturn",
           "route": "/return-types/async-or-map-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrStructReturn": {
           "name": "asyncOrStructReturn",
           "route": "/return-types/async-or-struct-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrComplexStructReturn": {
           "name": "asyncOrComplexStructReturn",
           "route": "/return-types/async-or-complex-struct-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrVoidReturnNullable": {
           "name": "asyncOrVoidReturnNullable",
           "route": "/return-types/async-or-void-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrStringReturnNullable": {
           "name": "asyncOrStringReturnNullable",
           "route": "/return-types/async-or-string-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrIntReturnNullable": {
           "name": "asyncOrIntReturnNullable",
           "route": "/return-types/async-or-int-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrDoubleReturnNullable": {
           "name": "asyncOrDoubleReturnNullable",
           "route": "/return-types/async-or-double-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrBoolReturnNullable": {
           "name": "asyncOrBoolReturnNullable",
           "route": "/return-types/async-or-bool-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrIterableReturnNullable": {
           "name": "asyncOrIterableReturnNullable",
           "route": "/return-types/async-or-iterable-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrListReturnNullable": {
           "name": "asyncOrListReturnNullable",
           "route": "/return-types/async-or-list-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrMapReturnNullable": {
           "name": "asyncOrMapReturnNullable",
           "route": "/return-types/async-or-map-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrStructReturnNullable": {
           "name": "asyncOrStructReturnNullable",
           "route": "/return-types/async-or-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrComplexStructReturnNullable": {
           "name": "asyncOrComplexStructReturnNullable",
           "route": "/return-types/async-or-complex-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrSimpleClassReturnNullable": {
           "name": "asyncOrSimpleClassReturnNullable",
           "route": "/return-types/async-or-simple-class-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOrComplexClassReturnNullable": {
           "name": "asyncOrComplexClassReturnNullable",
           "route": "/return-types/async-or-complex-class-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "voidReturn": {
           "name": "voidReturn",
           "route": "/return-types/void-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringReturn": {
           "name": "stringReturn",
           "route": "/return-types/string-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "intReturn": {
           "name": "intReturn",
           "route": "/return-types/int-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "doubleReturn": {
           "name": "doubleReturn",
           "route": "/return-types/double-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "boolReturn": {
           "name": "boolReturn",
           "route": "/return-types/bool-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "iterableReturn": {
           "name": "iterableReturn",
           "route": "/return-types/iterable-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "listReturn": {
           "name": "listReturn",
           "route": "/return-types/list-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "mapReturn": {
           "name": "mapReturn",
           "route": "/return-types/map-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "structReturn": {
           "name": "structReturn",
           "route": "/return-types/struct-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexReturn": {
           "name": "complexReturn",
           "route": "/return-types/complex-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "simpleClassReturn": {
           "name": "simpleClassReturn",
           "route": "/return-types/simple-class-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexClassReturn": {
           "name": "complexClassReturn",
           "route": "/return-types/complex-class-return",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stringReturnNullable": {
           "name": "stringReturnNullable",
           "route": "/return-types/string-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "intReturnNullable": {
           "name": "intReturnNullable",
           "route": "/return-types/int-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "doubleReturnNullable": {
           "name": "doubleReturnNullable",
           "route": "/return-types/double-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "boolReturnNullable": {
           "name": "boolReturnNullable",
           "route": "/return-types/bool-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "iterableReturnNullable": {
           "name": "iterableReturnNullable",
           "route": "/return-types/iterable-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "listReturnNullable": {
           "name": "listReturnNullable",
           "route": "/return-types/list-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "mapReturnNullable": {
           "name": "mapReturnNullable",
           "route": "/return-types/map-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "structReturnNullable": {
           "name": "structReturnNullable",
           "route": "/return-types/struct-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexReturnNullable": {
           "name": "complexReturnNullable",
           "route": "/return-types/complex-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "simpleClassReturnNullable": {
           "name": "simpleClassReturnNullable",
           "route": "/return-types/simple-class-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexClassReturnNullable": {
           "name": "complexClassReturnNullable",
           "route": "/return-types/complex-class-return-nullable",
           "apiName": "return_types",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -3101,199 +877,55 @@
           "name": "commonNestedParent",
           "route": "/overrides/common-nested-parent",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "commonNestedChild": {
           "name": "commonNestedChild",
           "route": "/overrides/common-nested-child",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nestedGrandparent": {
           "name": "nestedGrandparent",
           "route": "/overrides/nested-grandparent",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nestedParent": {
           "name": "nestedParent",
           "route": "/overrides/nested-parent",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nestedChild": {
           "name": "nestedChild",
           "route": "/overrides/nested-child",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "callsThrowsCommonOverriddenException": {
           "name": "callsThrowsCommonOverriddenException",
           "route": "/overrides/calls-throws-common-overridden-exception",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCommonOverriddenException": {
           "name": "throwsCommonOverriddenException",
           "route": "/overrides/throws-common-overridden-exception",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsOverriddenException": {
           "name": "throwsOverriddenException",
           "route": "/overrides/throws-overridden-exception",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "callsThrowsOverriddenException": {
           "name": "callsThrowsOverriddenException",
           "route": "/overrides/calls-throws-overridden-exception",
           "apiName": "overrides",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -3304,639 +936,175 @@
           "name": "empty",
           "route": "/classes/empty",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncEmpty": {
           "name": "asyncEmpty",
           "route": "/classes/async-empty",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "fields": {
           "name": "fields",
           "route": "/classes/fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncFields": {
           "name": "asyncFields",
           "route": "/classes/async-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableFields": {
           "name": "nullableFields",
           "route": "/classes/nullable-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNullableFields": {
           "name": "asyncNullableFields",
           "route": "/classes/async-nullable-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "namedFields": {
           "name": "namedFields",
           "route": "/classes/named-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
           "route": "/classes/async-named-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "mixedFields": {
           "name": "mixedFields",
           "route": "/classes/mixed-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncMixedFields": {
           "name": "asyncMixedFields",
           "route": "/classes/async-mixed-fields",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "defaultValues": {
           "name": "defaultValues",
           "route": "/classes/default-values",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncDefaultValues": {
           "name": "asyncDefaultValues",
           "route": "/classes/async-default-values",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nestedClass": {
           "name": "nestedClass",
           "route": "/classes/nested-class",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNestedClass": {
           "name": "asyncNestedClass",
           "route": "/classes/async-nested-class",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "onlyFromJson": {
           "name": "onlyFromJson",
           "route": "/classes/only-from-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOnlyFromJson": {
           "name": "asyncOnlyFromJson",
           "route": "/classes/async-only-from-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "onlyToJson": {
           "name": "onlyToJson",
           "route": "/classes/only-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOnlyToJson": {
           "name": "asyncOnlyToJson",
           "route": "/classes/async-only-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "onlyToJsonWithDefaults": {
           "name": "onlyToJsonWithDefaults",
           "route": "/classes/only-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncOnlyToJsonWithDefaults": {
           "name": "asyncOnlyToJsonWithDefaults",
           "route": "/classes/async-only-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "fromAndToJson": {
           "name": "fromAndToJson",
           "route": "/classes/from-and-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncFromAndToJson": {
           "name": "asyncFromAndToJson",
           "route": "/classes/async-from-and-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nonMapToJson": {
           "name": "nonMapToJson",
           "route": "/classes/non-map-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNonMapToJson": {
           "name": "asyncNonMapToJson",
           "route": "/classes/async-non-map-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nonMapToJsonWithDefaults": {
           "name": "nonMapToJsonWithDefaults",
           "route": "/classes/non-map-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNonMapToJsonWithDefaults": {
           "name": "asyncNonMapToJsonWithDefaults",
           "route": "/classes/async-non-map-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nonMapFromAndToJson": {
           "name": "nonMapFromAndToJson",
           "route": "/classes/non-map-from-and-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "asyncNonMapFromAndToJson": {
           "name": "asyncNonMapFromAndToJson",
           "route": "/classes/async-non-map-from-and-to-json",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "fromJsonStatic": {
           "name": "fromJsonStatic",
           "route": "/classes/from-json-static",
           "apiName": "classes",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -3947,155 +1115,43 @@
           "name": "throwsException",
           "route": "/exceptions/throws-exception",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsError": {
           "name": "throwsError",
           "route": "/exceptions/throws-error",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCustomException": {
           "name": "throwsCustomException",
           "route": "/exceptions/throws-custom-exception",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCustomExceptionToFromJson": {
           "name": "throwsCustomExceptionToFromJson",
           "route": "/exceptions/throws-custom-exception-to-from-json",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCustomError": {
           "name": "throwsCustomError",
           "route": "/exceptions/throws-custom-error",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCustomErrorToFromJson": {
           "name": "throwsCustomErrorToFromJson",
           "route": "/exceptions/throws-custom-error-to-from-json",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsCustomErrorWithStackTrace": {
           "name": "throwsCustomErrorWithStackTrace",
           "route": "/exceptions/throws-custom-error-with-stack-trace",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -4106,441 +1162,121 @@
           "name": "hasDocComments",
           "route": "/metadata/has-doc-comments",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasDeprecatedAnnotation": {
           "name": "hasDeprecatedAnnotation",
           "route": "/metadata/has-deprecated-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasConstructedDeprecatedAnnotation": {
           "name": "hasConstructedDeprecatedAnnotation",
           "route": "/metadata/has-constructed-deprecated-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasNamedConstructedAnnotation": {
           "name": "hasNamedConstructedAnnotation",
           "route": "/metadata/has-named-constructed-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasLiteralsAnnotation": {
           "name": "hasLiteralsAnnotation",
           "route": "/metadata/has-literals-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasExportableAnnotation": {
           "name": "hasExportableAnnotation",
           "route": "/metadata/has-exportable-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasExportableConstructedAnnotation": {
           "name": "hasExportableConstructedAnnotation",
           "route": "/metadata/has-exportable-constructed-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "hasNotExportableAnnotation": {
           "name": "hasNotExportableAnnotation",
           "route": "/metadata/has-not-exportable-annotation",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "positionalDefaultValues": {
           "name": "positionalDefaultValues",
           "route": "/metadata/positional-default-values",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullablePositionalDefaultValues": {
           "name": "nullablePositionalDefaultValues",
           "route": "/metadata/nullable-positional-default-values",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "namedDefaultValues": {
           "name": "namedDefaultValues",
           "route": "/metadata/named-default-values",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableNamedDefaultValues": {
           "name": "nullableNamedDefaultValues",
           "route": "/metadata/nullable-named-default-values",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "positionalDefaultValueVars": {
           "name": "positionalDefaultValueVars",
           "route": "/metadata/positional-default-value-vars",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullablePositionalDefaultValueVars": {
           "name": "nullablePositionalDefaultValueVars",
           "route": "/metadata/nullable-positional-default-value-vars",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "namedDefaultValueVars": {
           "name": "namedDefaultValueVars",
           "route": "/metadata/named-default-value-vars",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableNamedDefaultValueVars": {
           "name": "nullableNamedDefaultValueVars",
           "route": "/metadata/nullable-named-default-value-vars",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "positionalDefaultValueVarsPrivate": {
           "name": "positionalDefaultValueVarsPrivate",
           "route": "/metadata/positional-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullablePositionalDefaultValueVarsPrivate": {
           "name": "nullablePositionalDefaultValueVarsPrivate",
           "route": "/metadata/nullable-positional-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "namedDefaultValueVarsPrivate": {
           "name": "namedDefaultValueVarsPrivate",
           "route": "/metadata/named-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "nullableNamedDefaultValueVarsPrivate": {
           "name": "nullableNamedDefaultValueVarsPrivate",
           "route": "/metadata/nullable-named-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -4551,89 +1287,25 @@
           "name": "optionalPositional",
           "route": "/parameters/optional-positional",
           "apiName": "parameters",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "optionalNamed": {
           "name": "optionalNamed",
           "route": "/parameters/optional-named",
           "apiName": "parameters",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "requiredPositional": {
           "name": "requiredPositional",
           "route": "/parameters/required-positional",
           "apiName": "parameters",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "requiredNamed": {
           "name": "requiredNamed",
           "route": "/parameters/required-named",
           "apiName": "parameters",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -4644,155 +1316,43 @@
           "name": "simpleList",
           "route": "/collections/simple-list",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexList": {
           "name": "complexList",
           "route": "/collections/complex-list",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "simpleMap": {
           "name": "simpleMap",
           "route": "/collections/simple-map",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "dynamicMap": {
           "name": "dynamicMap",
           "route": "/collections/dynamic-map",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "objectMap": {
           "name": "objectMap",
           "route": "/collections/object-map",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "objectNullableMap": {
           "name": "objectNullableMap",
           "route": "/collections/object-nullable-map",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "complexMap": {
           "name": "complexMap",
           "route": "/collections/complex-map",
           "apiName": "collections",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -4803,67 +1363,19 @@
           "name": "genericWrappers",
           "route": "/generic-wrappers/generic-wrappers",
           "apiName": "generic_wrappers",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "genericWrappersAsync": {
           "name": "genericWrappersAsync",
           "route": "/generic-wrappers/generic-wrappers-async",
           "apiName": "generic_wrappers",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "genericWrapperParameters": {
           "name": "genericWrapperParameters",
           "route": "/generic-wrappers/generic-wrapper-parameters",
           "apiName": "generic_wrappers",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -4874,23 +1386,7 @@
           "name": "assertsEnabled",
           "route": "/asserts/asserts-enabled",
           "apiName": "asserts",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     }

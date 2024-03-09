@@ -1,7 +1,15 @@
+import 'package:cedar_common/cedar_common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';
 import 'package:collection/collection.dart';
+
+extension on ApiAuth {
+  String get name => switch (this) {
+        ApiPublic() => 'public',
+        ApiAuthenticated() => 'authenticated',
+      };
+}
 
 final class ProjectResolver extends AstVisitor<void> {
   final _resolvedProject = ResolvedProjectBuilder();
@@ -25,14 +33,30 @@ final class ProjectResolver extends AstVisitor<void> {
       if (apiAuth == null) {
         return;
       }
-      resolvedApi.policy.statements.add(
-        PolicyStatement(
-          grantee: switch (apiAuth) {
-            ApiAuthenticated() => Role.authenticated,
-            ApiPublic() => Role.public,
-          },
-          actions: [CloudFunctionAction.invoke],
+      final apiHash =
+          api.hashCode.toRadixString(16).padRight(8, '0').substring(0, 8);
+      final policyName = '${api.id.type}::${api.name}_${apiAuth.name}_$apiHash';
+      final policy = CedarPolicy(
+        effect: CedarPolicyEffect.permit,
+        principal: switch (apiAuth) {
+          ApiPublic() => CedarPolicyPrincipal(op: CedarPolicyOp.all),
+          ApiAuthenticated(:final id) =>
+            CedarPolicyPrincipal(op: CedarPolicyOp.in$, entity: id),
+        },
+        action: CedarPolicyAction(
+          op: CedarPolicyOp.equals,
+          entity: CloudFunctionAction.invoke.id,
         ),
+        resource: CedarPolicyResource(
+          op: CedarPolicyOp.in$,
+          entity: api.id,
+        ),
+        conditions: [],
+      );
+      resolvedApi.policySet.policies.updateValue(
+        policyName,
+        (_) => throw StateError('Duplicate policy name: $policyName'),
+        ifAbsent: () => policy,
       );
     });
 
@@ -58,18 +82,46 @@ final class ProjectResolver extends AstVisitor<void> {
               ..name = function.name
               ..route = function.route
               ..apiName = function.apiName;
-            resolvedFunction.policy.statements.add(
-              PolicyStatement(
-                grantee: Role.authenticated,
-                actions: [CloudFunctionAction.invoke],
-              ),
-            );
+            final functionAuth =
+                function.metadata.whereType<ApiAuth>().singleOrNull;
+            if (functionAuth != null) {
+              final functionHash = function.hashCode
+                  .toRadixString(16)
+                  .padRight(8, '0')
+                  .substring(0, 8);
+              final policyName =
+                  '${function.id.type}::${function.name}_${functionAuth.name}_$functionHash';
+              final policy = CedarPolicy(
+                effect: CedarPolicyEffect.permit,
+                principal: switch (functionAuth) {
+                  ApiPublic() => CedarPolicyPrincipal(op: CedarPolicyOp.all),
+                  ApiAuthenticated(:final id) =>
+                    CedarPolicyPrincipal(op: CedarPolicyOp.in$, entity: id),
+                },
+                action: CedarPolicyAction(
+                  op: CedarPolicyOp.equals,
+                  entity: CloudFunctionAction.invoke.id,
+                ),
+                resource: CedarPolicyResource(
+                  op: CedarPolicyOp.equals,
+                  entity: function.id,
+                ),
+                conditions: [],
+              );
+              resolvedFunction.policySet.policies.updateValue(
+                policyName,
+                (_) => throw StateError('Duplicate policy name: $policyName'),
+                ifAbsent: () => policy,
+              );
+            }
 
             for (final parameter in function.parameters) {
               if (parameter.references
-                  case NodeReference(type: NodeType.environmentVariable) &&
-                      final nodeReference) {
-                resolvedFunction.envVars.add(nodeReference.name);
+                  case NodeReference(
+                    type: NodeType.environmentVariable,
+                    :final name
+                  )) {
+                resolvedFunction.envVars.add(name);
               }
             }
           },

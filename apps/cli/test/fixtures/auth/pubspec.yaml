@@ -1,0 +1,30 @@
+name: celest_backend
+publish_to: none
+
+environment:
+  sdk: ^3.3.0-0
+
+dependencies:
+  celest:
+    path: ../../../../../celest/packages/celest
+  celest_auth:
+    path: ../../../../../celest/packages/celest_auth
+  celest_core:
+    path: ../../../../../celest/packages/celest_core
+  http: ^1.0.0
+  shelf: ^1.4.1
+
+dependency_overrides:
+  cedar_common:
+    path: ../../../../../celest/packages/cedar_common
+  celest:
+    path: ../../../../../celest/packages/celest
+  celest_auth:
+    path: ../../../../../celest/packages/celest_auth
+  celest_core:
+    path: ../../../../../celest/packages/celest_core
+  corks:
+    path: ../../../../../celest/packages/corks
+
+dev_dependencies:
+  test: any

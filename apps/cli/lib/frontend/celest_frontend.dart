@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
@@ -25,7 +24,6 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:celest_proto/ast.dart';
 import 'package:celest_proto/celest_proto.dart';
-import 'package:http/http.dart';
 import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, env;
 import 'package:hub/user_hub/user_hub_configuration.dart';
 import 'package:hub/user_hub/user_hub_server.dart';
@@ -559,18 +557,7 @@ final class CelestFrontend implements Closeable {
           });
       }
       assert(_userHub != null);
-      final configureUri =
-          Uri.http('localhost:${_userHub!.port}', '/_configure');
-      final configureResp = await httpClient.post(
-        configureUri,
-        body: jsonEncode(resolvedProject.toJson()),
-      );
-      if (configureResp.statusCode != 200) {
-        throw ClientException(
-          'Failed to configure user hub: ${configureResp.body}',
-          configureUri,
-        );
-      }
+      _userHub!.config.resolvedProject = resolvedProject;
     }
     if (stopped) {
       throw const CancellationException('Celest was stopped');

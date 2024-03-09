@@ -112,7 +112,7 @@ extension DartTypeHelper on DartType {
 
   bool get isApiPublic => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'public' && library.isCelestApi,
+          name == '_Public' && library.isPackageCelest,
         _ => false,
       };
 

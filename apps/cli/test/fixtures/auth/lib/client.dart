@@ -10,6 +10,7 @@ import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
 
+import 'src/client/auth.dart';
 import 'src/client/functions.dart';
 import 'src/client/serializers.dart';
 
@@ -39,6 +40,8 @@ class Celest with CelestBase {
 
   final _functions = CelestFunctions();
 
+  late final CelestAuth _auth = CelestAuth(this);
+
   T _checkInitialized<T>(T Function() value) {
     if (!_initialized) {
       throw StateError(
@@ -55,9 +58,15 @@ class Celest with CelestBase {
 
   CelestFunctions get functions => _checkInitialized(() => _functions);
 
+  CelestAuth get auth => _checkInitialized(() => _auth);
+
   void init({CelestEnvironment environment = CelestEnvironment.local}) {
+    if (environment != _currentEnvironment) {
+      _auth.signOut();
+    }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
+    _auth.init();
     if (!_initialized) {
       initSerializers();
     }

@@ -8,155 +8,43 @@
           "name": "throwsUserException",
           "route": "/exceptions/throws-user-exception",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "callsThrowsUserException": {
           "name": "callsThrowsUserException",
           "route": "/exceptions/calls-throws-user-exception",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsAppError": {
           "name": "throwsAppError",
           "route": "/exceptions/throws-app-error",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsAppException": {
           "name": "throwsAppException",
           "route": "/exceptions/throws-app-exception",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsNotYetImplementedError": {
           "name": "throwsNotYetImplementedError",
           "route": "/exceptions/throws-not-yet-implemented-error",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsValidateError": {
           "name": "throwsValidateError",
           "route": "/exceptions/throws-validate-error",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "throwsUserException_ShowInConsole": {
           "name": "throwsUserException_ShowInConsole",
           "route": "/exceptions/throws-user-exception-show-in-console",
           "apiName": "exceptions",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     },
@@ -167,133 +55,37 @@
           "name": "availableStock",
           "route": "/models/available-stock",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "availableStocks": {
           "name": "availableStocks",
           "route": "/models/available-stocks",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "cashBalance": {
           "name": "cashBalance",
           "route": "/models/cash-balance",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "portfolio": {
           "name": "portfolio",
           "route": "/models/portfolio",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "stock": {
           "name": "stock",
           "route": "/models/stock",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         },
         "ui": {
           "name": "ui",
           "route": "/models/ui",
           "apiName": "models",
-          "envVars": [],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          "envVars": []
         }
       }
     }

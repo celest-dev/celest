@@ -1,0 +1,483 @@
+{
+  "name": "auth",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project:project.dart"
+  },
+  "apis": {
+    "lib": {
+      "name": "lib",
+      "metadata": [],
+      "functions": {
+        "sayHelloAuthenticated": {
+          "name": "sayHelloAuthenticated",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "Reference",
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [
+            {
+              "$": "ApiAuthenticated",
+              "location": {
+                "start": {
+                  "offset": 38,
+                  "uri": "lib.dart",
+                  "line": 2,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 52,
+                  "uri": "lib.dart",
+                  "line": 2,
+                  "column": 14
+                },
+                "text": "@authenticated"
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 66,
+              "uri": "lib.dart",
+              "line": 3,
+              "column": 13
+            },
+            "end": {
+              "offset": 87,
+              "uri": "lib.dart",
+              "line": 3,
+              "column": 34
+            },
+            "text": "sayHelloAuthenticated"
+          }
+        },
+        "sayHelloPublic": {
+          "name": "sayHelloPublic",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "Reference",
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [
+            {
+              "$": "ApiPublic",
+              "location": {
+                "start": {
+                  "offset": 127,
+                  "uri": "lib.dart",
+                  "line": 7,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 134,
+                  "uri": "lib.dart",
+                  "line": 7,
+                  "column": 7
+                },
+                "text": "@public"
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 148,
+              "uri": "lib.dart",
+              "line": 8,
+              "column": 13
+            },
+            "end": {
+              "offset": 162,
+              "uri": "lib.dart",
+              "line": 8,
+              "column": 27
+            },
+            "text": "sayHelloPublic"
+          }
+        },
+        "sayHello": {
+          "name": "sayHello",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "Reference",
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 215,
+              "uri": "lib.dart",
+              "line": 12,
+              "column": 13
+            },
+            "end": {
+              "offset": 223,
+              "uri": "lib.dart",
+              "line": 12,
+              "column": 21
+            },
+            "text": "sayHello"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
+    "authenticated_lib": {
+      "name": "authenticated_lib",
+      "metadata": [
+        {
+          "$": "ApiAuthenticated",
+          "location": {
+            "start": {
+              "offset": 0,
+              "uri": "authenticated_lib.dart",
+              "line": 0,
+              "column": 0
+            },
+            "end": {
+              "offset": 14,
+              "uri": "authenticated_lib.dart",
+              "line": 0,
+              "column": 14
+            },
+            "text": "@authenticated"
+          }
+        }
+      ],
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "apiName": "authenticated_lib",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "Reference",
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 76,
+              "uri": "authenticated_lib.dart",
+              "line": 5,
+              "column": 13
+            },
+            "end": {
+              "offset": 84,
+              "uri": "authenticated_lib.dart",
+              "line": 5,
+              "column": 21
+            },
+            "text": "sayHello"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "authenticated_lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "authenticated_lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
+    "public_lib": {
+      "name": "public_lib",
+      "metadata": [
+        {
+          "$": "ApiPublic",
+          "location": {
+            "start": {
+              "offset": 0,
+              "uri": "public_lib.dart",
+              "line": 0,
+              "column": 0
+            },
+            "end": {
+              "offset": 7,
+              "uri": "public_lib.dart",
+              "line": 0,
+              "column": 7
+            },
+            "text": "@public"
+          }
+        }
+      ],
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "apiName": "public_lib",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "Reference",
+                "symbol": "void"
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void"
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 69,
+              "uri": "public_lib.dart",
+              "line": 5,
+              "column": 13
+            },
+            "end": {
+              "offset": 77,
+              "uri": "public_lib.dart",
+              "line": 5,
+              "column": 21
+            },
+            "text": "sayHello"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "public_lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "public_lib.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.3.0",
+    "enabledExperiments": []
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
+  },
+  "auth": {
+    "providers": [
+      {
+        "name": "email",
+        "type": "email",
+        "location": {
+          "start": {
+            "offset": 44,
+            "uri": "auth.dart",
+            "line": 2,
+            "column": 6
+          },
+          "end": {
+            "offset": 48,
+            "uri": "auth.dart",
+            "line": 2,
+            "column": 10
+          },
+          "text": "auth"
+        }
+      }
+    ],
+    "location": {
+      "start": {
+        "offset": 44,
+        "uri": "auth.dart",
+        "line": 2,
+        "column": 6
+      },
+      "end": {
+        "offset": 48,
+        "uri": "auth.dart",
+        "line": 2,
+        "column": 10
+      },
+      "text": "auth"
+    }
+  }
+}

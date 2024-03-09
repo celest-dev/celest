@@ -1,6 +1,5 @@
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
-import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:code_builder/code_builder.dart';
 
@@ -17,81 +16,31 @@ final class ClientAuthGenerator {
   final ast.Auth auth;
 
   late final LibraryBuilder _library;
-  final _client = ClassBuilder()
+  final _client = ExtensionTypeBuilder()
     ..name = ClientTypes.authClass.name
+    ..primaryConstructorName = '_'
+    ..representationDeclaration = RepresentationDeclaration(
+      (r) => r
+        ..declaredRepresentationType = _hubClass
+        ..name = '_hub',
+    )
     ..implements.add(refer('Auth', 'package:celest_auth/src/auth.dart'))
     ..constructors.add(
       Constructor(
         (c) => c
-          ..optionalParameters.addAll([
+          ..requiredParameters.add(
             Parameter(
               (p) => p
-                ..name = 'baseUri'
-                ..type = DartTypes.core.uri
-                ..named = true
-                ..required = true,
+                ..name = 'celest'
+                ..type =
+                    refer('CelestBase', 'package:celest_core/celest_core.dart'),
             ),
-            Parameter(
-              (p) => p
-                ..name = 'httpClient'
-                ..type = DartTypes.http.client
-                ..named = true
-                ..required = true,
-            ),
-          ])
+          )
           ..initializers.add(
-            refer('_hub')
-                .assign(
-                  _hubClass.newInstance([], {
-                    'baseUri': refer('baseUri'),
-                    'httpClient': refer('httpClient'),
-                  }),
-                )
-                .code,
+            refer('_hub').assign(_hubClass.newInstance([refer('celest')])).code,
           ),
       ),
-    )
-    ..fields.addAll([
-      Field(
-        (f) => f
-          ..modifier = FieldModifier.final$
-          ..type = _hubClass
-          ..name = '_hub',
-      ),
-    ])
-    ..methods.addAll([
-      Method(
-        (m) => m
-          ..returns = DartTypes.core.void$
-          ..name = 'init'
-          ..annotations.add(DartTypes.core.override)
-          ..lambda = true
-          ..body = refer('_hub').property('init').call([]).code,
-      ),
-      Method(
-        (m) => m
-          ..returns = refer(
-            'AuthState',
-            'package:celest_auth/src/state/auth_state.dart',
-          )
-          ..name = 'authState'
-          ..type = MethodType.getter
-          ..annotations.add(DartTypes.core.override)
-          ..lambda = true
-          ..body = refer('_hub').property('authState').code,
-      ),
-      Method(
-        (m) => m
-          ..returns = DartTypes.core.stream(
-            refer('AuthState', 'package:celest_auth/src/state/auth_state.dart'),
-          )
-          ..name = 'authStateChanges'
-          ..type = MethodType.getter
-          ..annotations.add(DartTypes.core.override)
-          ..lambda = true
-          ..body = refer('_hub').property('authStateChanges').code,
-      ),
-    ]);
+    );
 
   static final _hubClass =
       refer('AuthImpl', 'package:celest_auth/src/auth.dart');
@@ -104,14 +53,14 @@ final class ClientAuthGenerator {
             'Email',
             'package:celest_auth/src/flows/email_flow.dart',
           );
-          _client.fields.add(
-            Field(
-              (f) => f
-                ..late = true
-                ..modifier = FieldModifier.final$
-                ..type = emailClass
+          _client.methods.add(
+            Method(
+              (m) => m
+                ..returns = emailClass
+                ..type = MethodType.getter
                 ..name = 'email'
-                ..assignment = emailClass.newInstance([refer('_hub')]).code,
+                ..lambda = true
+                ..body = emailClass.newInstance([refer('_hub')]).code,
             ),
           );
       }

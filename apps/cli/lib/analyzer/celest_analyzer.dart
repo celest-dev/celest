@@ -367,24 +367,17 @@ final class CelestAnalyzer {
             /// for suggestions on how to resolve the error/links to docs.
             _reportError(
               'Could not resolve annotation. Annotations must be '
-              'authorization grants like `@authenticated`.',
+              'authorization grants like `@authenticated` or `@public`.',
               location: location,
             );
             return null;
           }
 
-          void enforceAuthRequirements() {
+          void assertSingleAuth() {
             if (hasAuthMetadata) {
               _reportError(
-                'Only one `@authenticated` annotation '
+                'Only one `@authenticated` or `@public` annotation '
                 'may be specified on the same function or API library.',
-                location: location,
-              );
-            }
-            if (!hasAuth) {
-              _reportError(
-                'The `@authenticated` annotation may only be used in '
-                'projects with authentication enabled.',
                 location: location,
               );
             }
@@ -393,12 +386,18 @@ final class CelestAnalyzer {
 
           switch (type) {
             case _ when type.isApiAuthenticated:
-              enforceAuthRequirements();
+              if (!hasAuth) {
+                _reportError(
+                  'The `@authenticated` annotation may only be used in '
+                  'projects with authentication enabled.',
+                  location: location,
+                );
+              }
+              assertSingleAuth();
               return ast.ApiAuthenticated(location: location);
             case _ when type.isApiPublic:
-              //   assertSingleAuth();
-              //   return ast.ApiPublic(location: location);
-              unreachable();
+              assertSingleAuth();
+              return ast.ApiPublic(location: location);
             case _ when type.isMiddleware:
               // return ast.ApiMiddleware(
               //   type: typeHelper.toReference(type),

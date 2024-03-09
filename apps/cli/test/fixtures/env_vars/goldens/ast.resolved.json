@@ -11,23 +11,7 @@
           "envVars": [
             "MY_NAME",
             "MY_AGE"
-          ],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          ]
         },
         "sayHelloPerson": {
           "name": "sayHelloPerson",
@@ -40,23 +24,7 @@
             "MY_WEIGHT",
             "IM_COOL",
             "MY_WEBSITE"
-          ],
-          "policy": {
-            "statements": [
-              {
-                "grantee": {
-                  "type": "Celest::Role",
-                  "id": "$authenticated"
-                },
-                "actions": [
-                  {
-                    "$": "CloudFunctionAction",
-                    "": "invoke"
-                  }
-                ]
-              }
-            ]
-          }
+          ]
         }
       }
     }
