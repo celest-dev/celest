@@ -7,11 +7,34 @@ updates:
     schedule:
       interval: "weekly"
 
-  ### PUB ###
+  ### DART ###
+  - package-ecosystem: "pub"
+    directory: "packages/cedar"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pub"
+    directory: "packages/cedar_ffi"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: "pub"
     directory: "packages/celest"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "pub"
+    directory: "packages/celest_auth"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pub"
     directory: "packages/celest_core"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pub"
+    directory: "packages/corks"
+    schedule:
+      interval: "weekly"
+
+  ## RUST ##
+  - package-ecosystem: "cargo"
+    directory: "packages/cedar_ffi/src"
     schedule:
       interval: "weekly"
