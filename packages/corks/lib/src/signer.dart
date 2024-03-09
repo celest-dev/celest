@@ -10,13 +10,13 @@ import 'package:meta/meta.dart';
 mixin Signable implements ToProto {
   Future<SignedBlock> sign(Signer signer) async {
     final proto = toProto();
-    final typeUrl = utf8.encode(proto.info_.qualifiedMessageName);
-    await signer.sign(typeUrl);
+    final typeUrl = 'dev.celest/${proto.info_.qualifiedMessageName}';
+    await signer.sign(utf8.encode(typeUrl));
     final bytes = proto.writeToBuffer();
     final signature = await signer.sign(bytes);
     return SignedBlock(
       block: bytes,
-      typeUrl: proto.info_.qualifiedMessageName,
+      typeUrl: typeUrl,
       signature: signature,
     );
   }
