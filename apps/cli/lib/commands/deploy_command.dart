@@ -32,7 +32,7 @@ final class DeployCommand extends CelestCommand with Configure {
     );
     analytics.capture('sign_up_started');
     try {
-      final flow = await auth.email.signUp(email: email);
+      final flow = await auth.email.signIn(email: email);
       cliLogger.info(
         'We have sent you an email with a verification code. '
         'Please enter it below to accept the invite.',

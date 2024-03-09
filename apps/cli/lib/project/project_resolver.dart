@@ -85,12 +85,6 @@ final class ProjectResolver extends AstVisitor<void> {
             final functionAuth =
                 function.metadata.whereType<ApiAuth>().singleOrNull;
             if (functionAuth != null) {
-              final functionHash = function.hashCode
-                  .toRadixString(16)
-                  .padRight(8, '0')
-                  .substring(0, 8);
-              final policyName =
-                  '${function.id.type}::${function.name}_${functionAuth.name}_$functionHash';
               final policy = CedarPolicy(
                 effect: CedarPolicyEffect.permit,
                 principal: switch (functionAuth) {
@@ -108,6 +102,13 @@ final class ProjectResolver extends AstVisitor<void> {
                 ),
                 conditions: [],
               );
+
+              final functionHash = function.hashCode
+                  .toRadixString(16)
+                  .padRight(8, '0')
+                  .substring(0, 8);
+              final policyName =
+                  '${function.id.type}::${function.name}_${functionAuth.name}_$functionHash';
               resolvedFunction.policySet.policies.updateValue(
                 policyName,
                 (_) => throw StateError('Duplicate policy name: $policyName'),

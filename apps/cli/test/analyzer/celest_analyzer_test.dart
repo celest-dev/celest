@@ -1134,6 +1134,49 @@ const auth = Auth(
 ''',
       );
 
+      testNoErrors(
+        name: 'api_public',
+        apis: {
+          'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testErrors(
+        name: 'multiple_api_auth',
+        apis: {
+          'greeting.dart': '''
+@public
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
       testErrors(
         name: 'multiple_api_auth_same_type',
         apis: {
@@ -1153,7 +1196,7 @@ const auth = Auth(
 );
 ''',
         errors: [
-          'Only one `@authenticated` annotation may be '
+          'Only one `@authenticated` or `@public` annotation may be '
               'specified on the same function or API library',
         ],
       );
@@ -1175,8 +1218,37 @@ const auth = Auth(
 ''',
       );
 
+      testNoErrors(
+        name: 'function_public',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testNoErrors(
+        name: 'function_public_no_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
       testErrors(
-        name: 'auth_not_configured_for_function',
+        name: 'function_authenticated_no_auth',
         apis: {
           'greeting.dart': '''
 import 'package:celest/celest.dart';
@@ -1192,12 +1264,72 @@ String sayHello() => 'Hello, World!';
       );
 
       testErrors(
-        name: 'auth_not_configured_for_library',
+        name: 'multiple_function_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@public
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_function_auth_same_type',
         apis: {
           'greeting.dart': '''
 import 'package:celest/celest.dart';
 
 @authenticated
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testNoErrors(
+        name: 'api_public_no_auth',
+        apis: {
+          'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testErrors(
+        name: 'api_authenticated_no_auth',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
 String sayHello() => 'Hello, World!';
 ''',
         },

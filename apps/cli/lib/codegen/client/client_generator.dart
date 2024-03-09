@@ -22,6 +22,10 @@ final class ClientGenerator {
     _library = LibraryBuilder()
       ..name = ''
       ..comments.addAll(kClientHeader)
+      ..directives.addAll([
+        if (project.auth != null)
+          Directive.export('package:celest_auth/celest_auth.dart'),
+      ])
       ..body.addAll([
         _client,
         _celestEnvironment,
@@ -89,8 +93,7 @@ final class ClientGenerator {
   late final _clientClass = ClassBuilder()
     ..name = ClientTypes.clientClass.name
     ..mixins.addAll([
-      if (_hasServer)
-        refer('CelestBase', 'package:celest_core/celest_core.dart'),
+      if (_hasServer) refer('CelestBase', 'package:celest_core/_internal.dart'),
     ])
     ..methods.addAll([
       Method(
@@ -162,6 +165,20 @@ final class ClientGenerator {
           ..type = refer('CelestEnvironment')
           ..name = '_currentEnvironment',
       ),
+      Field(
+        (f) => f
+          ..late = true
+          ..modifier = FieldModifier.final$
+          ..type = refer(
+            'SecureStorage',
+            'package:celest_core/_internal.dart',
+          )
+          ..name = '_secureStorage'
+          ..assignment = refer(
+            'SecureStorage',
+            'package:celest_core/_internal.dart',
+          ).newInstance([]).code,
+      ),
       if (_hasServer) ...[
         Field(
           (f) => f
@@ -169,7 +186,12 @@ final class ClientGenerator {
             ..late = true
             ..type = DartTypes.http.client
             ..name = 'httpClient'
-            ..assignment = DartTypes.http.client.newInstance([]).code,
+            ..assignment = refer(
+              'CelestHttpClient',
+              'package:celest_core/_internal.dart',
+            ).newInstance([], {
+              'secureStorage': refer('_secureStorage'),
+            }).code,
         ),
         Field(
           (f) => f
@@ -240,8 +262,11 @@ final class ClientGenerator {
               ..modifier = FieldModifier.final$
               ..type = ClientTypes.authClass.ref
               ..name = '_auth'
-              ..assignment =
-                  ClientTypes.authClass.ref.newInstance([refer('this')]).code,
+              ..assignment = ClientTypes.authClass.ref.newInstance([
+                refer('this'),
+              ], {
+                'secureStorage': refer('_secureStorage'),
+              }).code,
           ),
         )
         ..methods.add(
@@ -260,10 +285,16 @@ final class ClientGenerator {
         ..statements.insert(
           0,
           refer('_auth').property('signOut').call([]).wrapWithBlockIf(
-            refer('environment').notEqualTo(refer('_currentEnvironment')),
+            refer('_initialized').and(
+              refer('environment').notEqualTo(refer('_currentEnvironment')),
+            ),
           ),
         )
-        ..addExpression(refer('_auth').property('init').call([]));
+        ..addExpression(
+          refer('scheduleMicrotask', 'dart:async').call([
+            refer('_auth').property('init'),
+          ]),
+        );
     }
 
     if (customSerializers.isNotEmpty) {

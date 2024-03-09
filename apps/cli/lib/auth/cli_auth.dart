@@ -1,7 +1,7 @@
-import 'package:celest_auth/src/auth.dart';
-import 'package:celest_auth/src/flows/email_flow.dart';
+import 'package:celest_auth/celest_auth.dart';
+import 'package:celest_auth/src/auth_impl.dart';
 import 'package:celest_cli/src/context.dart' as ctx;
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final auth = _CliAuth();
@@ -17,7 +17,11 @@ final class _CliClient with CelestBase {
 }
 
 extension type _CliAuth._(AuthImpl _hub) implements Auth {
-  _CliAuth() : _hub = AuthImpl(const _CliClient());
+  _CliAuth()
+      : _hub = AuthImpl(
+          const _CliClient(),
+          secureStorage: SecureStorage(),
+        );
 
   Email get email => Email(_hub);
 }

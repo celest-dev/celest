@@ -11,7 +11,7 @@
           "envVars": [],
           "policySet": {
             "policies": {
-              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_3c4d30e0": {
+              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_a10b1400": {
                 "effect": "permit",
                 "principal": {
                   "op": "in",
@@ -46,7 +46,7 @@
           "envVars": [],
           "policySet": {
             "policies": {
-              "Celest::CloudFunction::sayHelloPublic_public_4b1682b0": {
+              "Celest::CloudFunction::sayHelloPublic_public_da03b700": {
                 "effect": "permit",
                 "principal": {
                   "op": "All"
@@ -90,7 +90,7 @@
       },
       "policySet": {
         "policies": {
-          "Celest::CloudApi::authenticated_lib_authenticated_1405eed0": {
+          "Celest::CloudApi::authenticated_lib_authenticated_119e8e41": {
             "effect": "permit",
             "principal": {
               "op": "in",
@@ -130,7 +130,7 @@
       },
       "policySet": {
         "policies": {
-          "Celest::CloudApi::public_lib_public_f8d87e00": {
+          "Celest::CloudApi::public_lib_public_145ba2ec": {
             "effect": "permit",
             "principal": {
               "op": "All"

@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:io' as _$io;
 
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/util/globals.dart';
 
 final Celest celest = Celest();
@@ -26,6 +27,8 @@ class Celest {
   var _initialized = false;
 
   late CelestEnvironment _currentEnvironment;
+
+  late final SecureStorage _secureStorage = SecureStorage();
 
   T _checkInitialized<T>(T Function() value) {
     if (!_initialized) {

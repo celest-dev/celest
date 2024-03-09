@@ -24,7 +24,7 @@ final class ClientAuthGenerator {
         ..declaredRepresentationType = _hubClass
         ..name = '_hub',
     )
-    ..implements.add(refer('Auth', 'package:celest_auth/src/auth.dart'))
+    ..implements.add(refer('Auth', 'package:celest_auth/celest_auth.dart'))
     ..constructors.add(
       Constructor(
         (c) => c
@@ -32,18 +32,40 @@ final class ClientAuthGenerator {
             Parameter(
               (p) => p
                 ..name = 'celest'
-                ..type =
-                    refer('CelestBase', 'package:celest_core/celest_core.dart'),
+                ..type = refer(
+                  'CelestBase',
+                  'package:celest_core/_internal.dart',
+                ),
+            ),
+          )
+          ..optionalParameters.add(
+            Parameter(
+              (p) => p
+                ..name = 'secureStorage'
+                ..type = refer(
+                  'SecureStorage',
+                  'package:celest_core/_internal.dart',
+                )
+                ..named = true
+                ..required = true,
             ),
           )
           ..initializers.add(
-            refer('_hub').assign(_hubClass.newInstance([refer('celest')])).code,
+            refer('_hub')
+                .assign(
+                  _hubClass.newInstance([
+                    refer('celest'),
+                  ], {
+                    'secureStorage': refer('secureStorage'),
+                  }),
+                )
+                .code,
           ),
       ),
     );
 
   static final _hubClass =
-      refer('AuthImpl', 'package:celest_auth/src/auth.dart');
+      refer('AuthImpl', 'package:celest_auth/src/auth_impl.dart');
 
   Library generate() {
     for (final provider in auth.providers) {
@@ -51,7 +73,7 @@ final class ClientAuthGenerator {
         case ast.AuthProviderType.email:
           final emailClass = refer(
             'Email',
-            'package:celest_auth/src/flows/email_flow.dart',
+            'package:celest_auth/src/auth_impl.dart',
           );
           _client.methods.add(
             Method(
