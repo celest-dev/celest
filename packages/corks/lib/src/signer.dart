@@ -1,47 +1,57 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:corks/corks_proto.dart' as proto;
+import 'package:corks/src/interop/to_proto.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 
-abstract interface class Signable<S extends Signed> {
-  S signed(Uint8List signature);
-  Uint8List encode();
-}
-
-final class SignableBytes implements Signable<SignedBytes> {
-  const SignableBytes(this.bytes);
-
-  final Uint8List bytes;
-
-  @override
-  Uint8List encode() => bytes;
-
-  @override
-  SignedBytes signed(Uint8List signature) => SignedBytes(
-        block: this,
-        signature: signature,
-      );
+mixin Signable implements ToProto {
+  Future<SignedBlock> sign(Signer signer) async {
+    final proto = toProto();
+    final typeUrl = utf8.encode(proto.info_.qualifiedMessageName);
+    await signer.sign(typeUrl);
+    final bytes = proto.writeToBuffer();
+    final signature = await signer.sign(bytes);
+    return SignedBlock(
+      block: bytes,
+      typeUrl: proto.info_.qualifiedMessageName,
+      signature: signature,
+    );
+  }
 }
 
 @immutable
-abstract interface class Signed {
-  Signable get block;
-  Uint8List get signature;
-}
-
-final class SignedBytes implements Signed {
-  const SignedBytes({
+final class SignedBlock implements ToProto<proto.SignedBlock> {
+  const SignedBlock({
     required this.block,
+    required this.typeUrl,
     required this.signature,
   });
 
-  @override
-  final SignableBytes block;
+  factory SignedBlock.fromProto(proto.SignedBlock proto) => SignedBlock(
+        block: Uint8List.fromList(proto.block),
+        typeUrl: utf8.decode(proto.typeUrl),
+        signature: Uint8List.fromList(proto.signature),
+      );
+
+  Future<bool> verify(Signer signer) async {
+    await signer.sign(utf8.encode(typeUrl));
+    final signature = await signer.sign(block);
+    return Digest(signature) == Digest(signature);
+  }
+
+  final Uint8List block;
+  final String typeUrl;
+  final Uint8List signature;
 
   @override
-  final Uint8List signature;
+  proto.SignedBlock toProto() => proto.SignedBlock(
+        block: block,
+        typeUrl: utf8.encode(typeUrl),
+        signature: signature,
+      );
 }
 
 abstract interface class Signer {
@@ -49,36 +59,35 @@ abstract interface class Signer {
   const Signer._();
 
   Uint8List get keyId;
-  Future<S> sign<S extends Signed>(Signable<S> block);
+  Future<Uint8List> sign(Uint8List bytes);
   Future<Uint8List> close();
 }
 
 final class _Signer extends Signer {
   _Signer(this.keyId, Uint8List key)
-      : _hmac = Hmac(sha256, key),
+      : hmac = Hmac(sha256, key),
         super._();
 
   @override
   final Uint8List keyId;
 
-  Hmac _hmac;
-  late Uint8List _signature;
-  var _closed = false;
+  Hmac hmac;
+  late Uint8List signature;
+  var closed = false;
 
   @override
-  Future<S> sign<S extends Signed>(Signable<S> block) async {
-    if (_closed) {
+  Future<Uint8List> sign(Uint8List bytes) async {
+    if (closed) {
       throw StateError('Signer is closed');
     }
-    final bytes = block.encode();
-    _signature = await Future(() => _hmac.convert(bytes).bytes as Uint8List);
-    _hmac = Hmac(sha256, _signature);
-    return block.signed(_signature);
+    signature = await Future(() => hmac.convert(bytes).bytes as Uint8List);
+    hmac = Hmac(sha256, signature);
+    return signature;
   }
 
   @override
   Future<Uint8List> close() async {
-    _closed = true;
-    return _signature;
+    closed = true;
+    return signature;
   }
 }

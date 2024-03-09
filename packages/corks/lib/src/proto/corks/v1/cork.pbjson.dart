@@ -19,8 +19,8 @@ const Cork$json = {
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 12, '10': 'id'},
     {'1': 'key_id', '3': 2, '4': 1, '5': 12, '10': 'keyId'},
-    {'1': 'bearer', '3': 3, '4': 1, '5': 11, '6': '.corks.v1.Bearer', '9': 0, '10': 'bearer', '17': true},
-    {'1': 'caveats', '3': 4, '4': 3, '5': 11, '6': '.corks.v1.Caveat', '10': 'caveats'},
+    {'1': 'bearer', '3': 3, '4': 1, '5': 11, '6': '.corks.v1.SignedBlock', '9': 0, '10': 'bearer', '17': true},
+    {'1': 'caveats', '3': 4, '4': 3, '5': 11, '6': '.corks.v1.SignedBlock', '10': 'caveats'},
     {'1': 'signature', '3': 5, '4': 1, '5': 12, '10': 'signature'},
   ],
   '8': [
@@ -30,42 +30,23 @@ const Cork$json = {
 
 /// Descriptor for `Cork`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List corkDescriptor = $convert.base64Decode(
-    'CgRDb3JrEg4KAmlkGAEgASgMUgJpZBIVCgZrZXlfaWQYAiABKAxSBWtleUlkEi0KBmJlYXJlch'
-    'gDIAEoCzIQLmNvcmtzLnYxLkJlYXJlckgAUgZiZWFyZXKIAQESKgoHY2F2ZWF0cxgEIAMoCzIQ'
-    'LmNvcmtzLnYxLkNhdmVhdFIHY2F2ZWF0cxIcCglzaWduYXR1cmUYBSABKAxSCXNpZ25hdHVyZU'
-    'IJCgdfYmVhcmVy');
+    'CgRDb3JrEg4KAmlkGAEgASgMUgJpZBIVCgZrZXlfaWQYAiABKAxSBWtleUlkEjIKBmJlYXJlch'
+    'gDIAEoCzIVLmNvcmtzLnYxLlNpZ25lZEJsb2NrSABSBmJlYXJlcogBARIvCgdjYXZlYXRzGAQg'
+    'AygLMhUuY29ya3MudjEuU2lnbmVkQmxvY2tSB2NhdmVhdHMSHAoJc2lnbmF0dXJlGAUgASgMUg'
+    'lzaWduYXR1cmVCCQoHX2JlYXJlcg==');
 
-@$core.Deprecated('Use bearerDescriptor instead')
-const Bearer$json = {
-  '1': 'Bearer',
+@$core.Deprecated('Use signedBlockDescriptor instead')
+const SignedBlock$json = {
+  '1': 'SignedBlock',
   '2': [
-    {'1': 'signature', '3': 1, '4': 1, '5': 12, '10': 'signature'},
-    {'1': 'entity', '3': 2, '4': 1, '5': 11, '6': '.cedar.v3.Entity', '9': 0, '10': 'entity'},
-  ],
-  '8': [
-    {'1': 'bearer'},
+    {'1': 'block', '3': 1, '4': 1, '5': 12, '10': 'block'},
+    {'1': 'type_url', '3': 2, '4': 1, '5': 12, '10': 'typeUrl'},
+    {'1': 'signature', '3': 3, '4': 1, '5': 12, '10': 'signature'},
   ],
 };
 
-/// Descriptor for `Bearer`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List bearerDescriptor = $convert.base64Decode(
-    'CgZCZWFyZXISHAoJc2lnbmF0dXJlGAEgASgMUglzaWduYXR1cmUSKgoGZW50aXR5GAIgASgLMh'
-    'AuY2VkYXIudjMuRW50aXR5SABSBmVudGl0eUIICgZiZWFyZXI=');
-
-@$core.Deprecated('Use caveatDescriptor instead')
-const Caveat$json = {
-  '1': 'Caveat',
-  '2': [
-    {'1': 'signature', '3': 1, '4': 1, '5': 12, '10': 'signature'},
-    {'1': 'policy', '3': 2, '4': 1, '5': 11, '6': '.cedar.v3.Policy', '9': 0, '10': 'policy'},
-  ],
-  '8': [
-    {'1': 'block'},
-  ],
-};
-
-/// Descriptor for `Caveat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List caveatDescriptor = $convert.base64Decode(
-    'CgZDYXZlYXQSHAoJc2lnbmF0dXJlGAEgASgMUglzaWduYXR1cmUSKgoGcG9saWN5GAIgASgLMh'
-    'AuY2VkYXIudjMuUG9saWN5SABSBnBvbGljeUIHCgVibG9jaw==');
+/// Descriptor for `SignedBlock`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List signedBlockDescriptor = $convert.base64Decode(
+    'CgtTaWduZWRCbG9jaxIUCgVibG9jaxgBIAEoDFIFYmxvY2sSGQoIdHlwZV91cmwYAiABKAxSB3'
+    'R5cGVVcmwSHAoJc2lnbmF0dXJlGAMgASgMUglzaWduYXR1cmU=');
 

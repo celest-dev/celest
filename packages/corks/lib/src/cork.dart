@@ -5,10 +5,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:cedar_core/cedar_core.dart' as cedar;
+import 'package:corks/corks_proto.dart' as proto;
 import 'package:corks/src/interop/proto_interop.dart';
-import 'package:corks/src/interop/to_proto.dart';
-import 'package:corks/src/proto/cedar/v3/policy.pb.dart' as proto;
-import 'package:corks/src/proto/corks/v1/cork.pb.dart' as proto;
+import 'package:corks/src/proto/google/protobuf/any.pb.dart' as proto;
 import 'package:corks/src/signer.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
@@ -70,14 +69,16 @@ final class Cork {
     if (Digest(signer.keyId) != Digest(keyId)) {
       return false;
     }
-
-    await signer.sign(SignableBytes(id));
-
-    if (bearer case final bearer?) {
-      await signer.sign(bearer.block);
+    await signer.sign(id);
+    if (bearer != null) {
+      if (!await bearer.verify(signer)) {
+        return false;
+      }
     }
     for (final caveat in _caveats) {
-      await signer.sign(caveat.block);
+      if (!await caveat.verify(signer)) {
+        return false;
+      }
     }
     return Digest(await signer.close()) == Digest(signature);
   }
@@ -112,19 +113,23 @@ final class CorkBuilder {
   final Bearer? _bearer;
   final List<Caveat> _caveats = [];
 
-  void addPolicyCaveat(cedar.CedarPolicy policy) =>
-      _caveats.add(_PolicyCaveat(policy: policy.toProto()));
+  void addPolicyCaveat(cedar.CedarPolicy policy) {
+    if (policy.effect != cedar.CedarPolicyEffect.forbid) {
+      throw ArgumentError('Policy must have effect "forbid"');
+    }
+    _caveats.add(Caveat.policy(policy: policy));
+  }
 
   Future<Cork> build(Signer signer) async {
-    await signer.sign(SignableBytes(_id));
+    await signer.sign(_id);
 
     SignedBearer? signedBearer;
     if (_bearer case final bearer?) {
-      signedBearer = await signer.sign(bearer);
+      signedBearer = SignedBearer(await bearer.sign(signer));
     }
     final signedCaveats = <SignedCaveat>[];
     for (final caveat in _caveats) {
-      signedCaveats.add(await signer.sign(caveat));
+      signedCaveats.add(SignedCaveat(await caveat.sign(signer)));
     }
     return Cork._(
       id: _id,
@@ -137,7 +142,7 @@ final class CorkBuilder {
 }
 
 @immutable
-sealed class Bearer implements Signable<SignedBearer> {
+sealed class Bearer with Signable {
   const Bearer();
 
   factory Bearer.entity({
@@ -159,87 +164,64 @@ final class EntityBearer extends Bearer {
   final cedar.CedarEntity entity;
 
   @override
-  Uint8List encode() => entity.toProto().writeToBuffer();
-
-  @override
-  SignedBearer signed(Uint8List signature) => SignedBearer(
-        block: this,
-        signature: signature,
-      );
+  proto.Entity toProto() => entity.toProto();
 }
 
-final class SignedBearer implements Signed, ToProto<proto.Bearer> {
-  const SignedBearer({
-    required this.block,
-    required this.signature,
-  });
+extension type SignedBearer(SignedBlock _block) implements SignedBlock {
+  SignedBearer.fromProto(proto.SignedBlock proto)
+      : _block = SignedBlock.fromProto(proto);
 
-  factory SignedBearer.fromProto(proto.Bearer proto) => SignedBearer(
-        block: EntityBearer(entity: proto.entity.fromProto()),
-        signature: Uint8List.fromList(proto.signature),
-      );
-
-  @override
-  final Bearer block;
-
-  @override
-  final Uint8List signature;
-
-  @override
-  proto.Bearer toProto() {
-    final message = proto.Bearer(signature: signature);
-    return switch (block) {
-      EntityBearer(:final entity) => message..entity = entity.toProto(),
-    };
+  Bearer get bearer {
+    final any = proto.Any(
+      typeUrl: typeUrl,
+      value: block,
+    );
+    final entity = proto.Entity();
+    if (!any.canUnpackInto(entity)) {
+      throw ArgumentError('Invalid bearer type: $typeUrl');
+    }
+    any.unpackInto(entity);
+    return Bearer.entity(
+      entity: entity.fromProto(),
+    );
   }
 }
 
 @immutable
-sealed class Caveat implements Signable<SignedCaveat> {
+sealed class Caveat with Signable {
   const Caveat();
+
+  factory Caveat.policy({
+    required cedar.CedarPolicy policy,
+  }) =>
+      PolicyCaveat(policy: policy);
 }
 
-final class _PolicyCaveat extends Caveat {
-  const _PolicyCaveat({
+final class PolicyCaveat extends Caveat {
+  const PolicyCaveat({
     required this.policy,
   });
 
-  final proto.Policy policy;
+  final cedar.CedarPolicy policy;
 
   @override
-  SignedCaveat signed(Uint8List signature) => SignedCaveat(
-        block: this,
-        signature: signature,
-      );
-
-  @override
-  Uint8List encode() => policy.writeToBuffer();
+  proto.Policy toProto() => policy.toProto();
 }
 
-final class SignedCaveat implements Signed, ToProto<proto.Caveat> {
-  const SignedCaveat({
-    required this.block,
-    required this.signature,
-  });
+extension type SignedCaveat(SignedBlock _block) implements SignedBlock {
+  SignedCaveat.fromProto(proto.SignedBlock proto)
+      : _block = SignedBlock.fromProto(proto);
 
-  factory SignedCaveat.fromProto(proto.Caveat proto) => SignedCaveat(
-        block: _PolicyCaveat(policy: proto.policy),
-        signature: Uint8List.fromList(proto.signature),
-      );
-
-  @override
-  final Caveat block;
-
-  @override
-  final Uint8List signature;
-
-  @override
-  proto.Caveat toProto() {
-    final message = proto.Caveat(
-      signature: signature,
+  Caveat get caveat {
+    final any = proto.Any(
+      typeUrl: typeUrl,
+      value: block,
     );
-    return switch (block) {
-      _PolicyCaveat(:final policy) => message..policy = policy,
-    };
+    final policy = proto.Policy();
+    if (!any.canUnpackInto(policy)) {
+      throw ArgumentError('Invalid caveat type: $typeUrl');
+    }
+    any.unpackInto(policy);
+    return PolicyCaveat(policy: policy.fromProto());
   }
 }
