@@ -1,3 +1,7 @@
+## 0.3.0-dev.1
+
+- Initial release of Celest Auth
+
 ## 0.2.0
 
 - Bumps minimum Dart SDK to 3.3
