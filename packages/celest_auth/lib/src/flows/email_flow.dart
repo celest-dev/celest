@@ -13,12 +13,12 @@ extension type Email(AuthImpl _hub) {
   ///
   /// OTP codes are valid for 15 minutes and can be resent after 60 seconds
   /// by calling `resend` on the returned state object.
-  Future<EmailNeedsVerification> signIn({
+  Future<EmailNeedsVerification> authenticate({
     required String email,
   }) async {
     final flowController = await _hub.requestFlow();
     final flow = EmailFlow._(_hub, flowController);
-    return flow._signIn(email: email);
+    return flow._authenticate(email: email);
   }
 }
 
@@ -30,7 +30,7 @@ final class EmailFlow implements AuthFlow {
 
   EmailProtocol get _protocol => _hub.protocol.email;
 
-  Future<EmailNeedsVerification> _signIn({
+  Future<EmailNeedsVerification> _authenticate({
     required String email,
   }) {
     return _flowController.capture(() async {
@@ -80,8 +80,8 @@ final class _EmailNeedsVerification extends EmailNeedsVerification {
   }
 
   @override
-  Future<User> verifyOtp(String otp) async {
-    final authenticated = await _flow._verifyOtp(email: email, otp: otp);
+  Future<User> verify(String otpCode) async {
+    final authenticated = await _flow._verifyOtp(email: email, otp: otpCode);
     return authenticated.user;
   }
 

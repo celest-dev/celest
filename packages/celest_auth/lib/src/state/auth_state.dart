@@ -28,7 +28,7 @@ abstract class EmailNeedsVerification extends AuthFlowInProgress {
   final String email;
 
   Future<void> resend();
-  Future<User> verifyOtp(String otp);
+  Future<User> verify(String otpCode);
 }
 
 /// The [user] is authenticated and their identity has been verified.

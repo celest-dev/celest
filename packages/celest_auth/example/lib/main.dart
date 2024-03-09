@@ -20,7 +20,7 @@ class _MainAppState extends State<MainApp> {
 
   Future<void> signUp() async {
     try {
-      await celest.auth.email.signIn(email: _emailController.text);
+      await celest.auth.email.authenticate(email: _emailController.text);
       _emailController.clear();
     } on Exception catch (e, st) {
       debugPrint('Error: $e');
@@ -92,7 +92,7 @@ class _MainAppState extends State<MainApp> {
                           ),
                           const SizedBox(height: 16),
                           TextButton(
-                            onPressed: () => state.verifyOtp(
+                            onPressed: () => state.verify(
                               _otpController.text,
                             ),
                             child: const Text('Verify OTP'),
