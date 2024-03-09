@@ -1,7 +1,14 @@
 import 'package:cedar/cedar.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 /// The decision of an authorization request.
-enum CedarAuthorizationDecision { allow, deny }
+enum CedarAuthorizationDecision {
+  @JsonValue('Allow')
+  allow,
+
+  @JsonValue('Deny')
+  deny,
+}
 
 /// {@template cedar.cedar_authorization_response}
 /// The response to a [CedarAuthorizer] request.
