@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
@@ -9,6 +10,7 @@ import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:hub/context.dart' show HubMetadata;
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
@@ -129,5 +131,23 @@ extension CelestProjectUriStorage on Storage {
   Uri setLocalUri(String projectName, Uri uri) {
     write('$projectName.localUri', uri.toString());
     return uri;
+  }
+
+  HubMetadata? getMetadata(String projectName) {
+    final keyId = read('$projectName.keyId');
+    final key = read('$projectName.key');
+    if (keyId != null && key != null) {
+      return HubMetadata(
+        keyId: base64Decode(keyId),
+        key: base64Decode(key),
+      );
+    }
+    return null;
+  }
+
+  HubMetadata setMetadata(String projectName, HubMetadata metadata) {
+    write('$projectName.keyId', base64Encode(metadata.keyId));
+    write('$projectName.key', base64Encode(metadata.key!));
+    return metadata;
   }
 }

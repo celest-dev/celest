@@ -20,7 +20,7 @@ extension type _CliAuth._(AuthImpl _hub) implements Auth {
   _CliAuth()
       : _hub = AuthImpl(
           const _CliClient(),
-          secureStorage: SecureStorage(),
+          secureStorage: ctx.storage,
         );
 
   Email get email => Email(_hub);

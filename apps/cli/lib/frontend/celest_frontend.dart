@@ -577,9 +577,12 @@ final class CelestFrontend implements Closeable {
       final dbDir =
           celestProject.config.configDir.childDirectory(resolvedProject.name);
       await dbDir.create();
+
+      final metadata = storage.getMetadata(resolvedProject.name) ??
+          storage.setMetadata(resolvedProject.name, HubMetadata.test());
       final envConfig = EnvironmentConfig(
         dbDir: dbDir.path,
-        metadata: HubMetadata.test(),
+        metadata: metadata,
         logDatabaseStatements: false,
       );
       await env.init(
