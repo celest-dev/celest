@@ -908,7 +908,8 @@ final class CelestAnalyzer {
     final authDefinition =
         topLevelConstants.firstWhereOrNull((el) => el.element.type.isAuth);
     if (authDefinition == null) {
-      _reportError('$authFilepath: No `Auth` type found');
+      // TODO(dnys1): Report error?
+      _logger.finest('No `Auth` definition found in $authFilepath');
       return false;
     }
 

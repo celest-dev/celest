@@ -1,20 +1,22 @@
 import 'package:celest_auth/src/auth.dart';
 import 'package:celest_auth/src/flows/email_flow.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/src/storage/storage.dart';
+import 'package:http/http.dart' as http;
 
 final auth = _CliAuth(
   baseUri: baseUri,
   httpClient: httpClient,
 );
 
-final class _CliAuth extends AuthImpl with Email {
+extension type _CliAuth._(AuthImpl _hub) implements Auth {
   _CliAuth({
-    required super.baseUri,
-    required super.httpClient,
-  });
+    required Uri baseUri,
+    required http.Client httpClient,
+  }) : _hub = AuthImpl(
+          baseUri: baseUri,
+          httpClient: httpClient,
+          secureStorage: storage,
+        );
 
-  @override
-  // ignore: overridden_fields
-  final Storage secureStorage = storage;
+  Email get email => Email(_hub);
 }

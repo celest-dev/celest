@@ -1,3 +1,4 @@
+import 'package:celest_cli/codegen/client/categories/client_auth_generator.dart';
 import 'package:celest_cli/codegen/client/categories/client_functions_generator.dart';
 import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
@@ -217,6 +218,39 @@ final class ClientGenerator {
 
       clientInitBody.addExpression(
         refer('_baseUri').assign(refer('environment').property('baseUri')),
+      );
+    }
+    if (project.auth case final auth?) {
+      final authLibrary = ClientAuthGenerator(auth: auth).generate();
+      libraries[ClientPaths.auth] = authLibrary;
+      _clientClass
+        ..fields.add(
+          Field(
+            (f) => f
+              ..late = true
+              ..modifier = FieldModifier.final$
+              ..type = ClientTypes.authClass.ref
+              ..name = '_auth'
+              ..assignment = ClientTypes.authClass.ref.newInstance([], {
+                'baseUri': refer('_baseUri'),
+                'httpClient': refer('httpClient'),
+              }).code,
+          ),
+        )
+        ..methods.add(
+          Method(
+            (m) => m
+              ..returns = ClientTypes.authClass.ref
+              ..type = MethodType.getter
+              ..name = 'auth'
+              ..lambda = true
+              ..body = refer('_checkInitialized').call([
+                Method((m) => m..body = refer('_auth').code).closure,
+              ]).code,
+          ),
+        );
+      clientInitBody.addExpression(
+        refer('_auth').property('init').call([]),
       );
     }
 

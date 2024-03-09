@@ -14,6 +14,7 @@ final class ProjectResolver extends AstVisitor<void> {
       ..sdkInfo.replace(project.sdkInfo);
     project.apis.values.forEach(visitApi);
     project.envVars.forEach(visitEnvironmentVariable);
+    project.auth?.accept(this);
   }
 
   @override
@@ -97,12 +98,13 @@ final class ProjectResolver extends AstVisitor<void> {
 
   @override
   void visitAuth(Auth auth) {
-    _resolvedProject.auth.providers.addAll([
-      for (final provider in auth.providers)
-        ResolvedAuthProvider(name: provider.name, type: provider.type),
-    ]);
+    auth.providers.forEach(visitAuthProvider);
   }
 
   @override
-  void visitAuthProvider(AuthProvider provider) {}
+  void visitAuthProvider(AuthProvider provider) {
+    _resolvedProject.auth.providers.add(
+      ResolvedAuthProvider(name: provider.name, type: provider.type),
+    );
+  }
 }

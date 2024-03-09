@@ -1370,13 +1370,14 @@ void sayHello(
     });
 
     group('auth', () {
-      testErrors(
-        name: 'no_auth',
-        authDart: '',
-        errors: [
-          'No `Auth` type found',
-        ],
-      );
+      // TODO(dnys1): Report error?
+      // testErrors(
+      //   name: 'no_auth',
+      //   authDart: '',
+      //   errors: [
+      //     'No `Auth` type found',
+      //   ],
+      // );
 
       testNoErrors(
         name: 'valid_inline_provider',

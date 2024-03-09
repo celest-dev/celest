@@ -6,14 +6,11 @@ import 'package:code_builder/code_builder.dart';
 abstract final class ClientPaths {
   static String get client =>
       p.join(projectPaths.projectRoot, 'lib', 'client.dart');
-  static String get models =>
-      p.join(projectPaths.projectRoot, 'lib', 'models.dart');
-  static String get exceptions =>
-      p.join(projectPaths.projectRoot, 'lib', 'exceptions.dart');
   static String get functions =>
       p.join(projectPaths.clientOutputsDir, 'functions.dart');
   static String get serializers =>
       p.join(projectPaths.clientOutputsDir, 'serializers.dart');
+  static String get auth => p.join(projectPaths.clientOutputsDir, 'auth.dart');
 }
 
 final class ClientTypes {
@@ -29,6 +26,8 @@ final class ClientTypes {
         '${ClientTypes.functionsClass.name}${api.name.pascalCase}',
         ClientPaths.functions,
       );
+  static ClientTypes get authClass =>
+      ClientTypes._('CelestAuth', ClientPaths.auth);
 
   final String name;
   final String uri;

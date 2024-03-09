@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -18,12 +20,19 @@ import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_proto/ast.dart' as ast;
 import 'package:celest_proto/ast.dart';
 import 'package:celest_proto/celest_proto.dart';
+import 'package:http/http.dart';
+import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, env;
+import 'package:hub/user_hub/user_hub_configuration.dart';
+import 'package:hub/user_hub/user_hub_server.dart';
+import 'package:hub/util/email.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
+import 'package:platform/platform.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
 import 'package:yaml_edit/yaml_edit.dart';
@@ -43,7 +52,7 @@ final class CelestFrontend implements Closeable {
       ProcessSignal.sigint.watch(),
       // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
       // handler raises an exception.
-      if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+      if (!io.Platform.isWindows) ProcessSignal.sigterm.watch(),
     ]).listen((signal) {
       logger.fine('Got exit signal: $signal');
       if (!_stopSignal.isCompleted) {
@@ -134,7 +143,7 @@ final class CelestFrontend implements Closeable {
         final changedPaths = events.map((event) => event.path).toSet();
         logger.finest(
           '${events.length} watcher events since last compile: ',
-          changedPaths.join(Platform.lineTerminator),
+          changedPaths.join(io.Platform.lineTerminator),
         );
         if (reloading) return;
         reloading = true;
@@ -277,6 +286,7 @@ final class CelestFrontend implements Closeable {
 
   ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
+  UserHubServer? _userHub;
   var _didFirstCompile = false;
 
   /// The current project being compiled.
@@ -339,7 +349,7 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                port: storage.getLocalUri(project.name).port,
+                proxyPort: storage.getLocalUri(project.name).port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -515,7 +525,7 @@ final class CelestFrontend implements Closeable {
     List<String> invalidatedPaths, {
     required ResolvedProject resolvedProject,
     RestartMode restartMode = RestartMode.hotReload,
-    int? port,
+    required int? proxyPort,
   }) async {
     final envVars = resolvedProject.envVars.map((envVar) => envVar.name);
     if (_localApiRunner == null) {
@@ -524,9 +534,13 @@ final class CelestFrontend implements Closeable {
           path: projectPaths.localApiEntrypoint,
           envVars: envVars,
           verbose: verbose,
-          port: port,
         );
       });
+      _userHub = await _startUserHub(
+        proxyPort: proxyPort,
+        localApiPort: _localApiRunner!.port,
+        resolvedProject: resolvedProject,
+      );
     } else {
       switch (restartMode) {
         case RestartMode.hotReload:
@@ -541,9 +555,21 @@ final class CelestFrontend implements Closeable {
               path: projectPaths.localApiEntrypoint,
               envVars: envVars,
               verbose: verbose,
-              port: port,
             );
           });
+      }
+      assert(_userHub != null);
+      final configureUri =
+          Uri.http('localhost:${_userHub!.port}', '/_configure');
+      final configureResp = await httpClient.post(
+        configureUri,
+        body: jsonEncode(resolvedProject.toJson()),
+      );
+      if (configureResp.statusCode != 200) {
+        throw ClientException(
+          'Failed to configure user hub: ${configureResp.body}',
+          configureUri,
+        );
       }
     }
     if (stopped) {
@@ -551,8 +577,45 @@ final class CelestFrontend implements Closeable {
     }
     return ast.LocalDeployedProject.from(
       projectAst: resolvedProject,
-      port: _localApiRunner!.port,
+      port: _userHub!.port,
     );
+  }
+
+  Future<UserHubServer> _startUserHub({
+    required int? proxyPort,
+    required int localApiPort,
+    required ast.ResolvedProject resolvedProject,
+  }) async {
+    return performance.trace('CelestFrontend', 'startUserHub', () async {
+      final dbDir =
+          celestProject.config.configDir.childDirectory(resolvedProject.name);
+      await dbDir.create();
+      final envConfig = EnvironmentConfig(
+        dbDir: dbDir.path,
+        metadata: HubMetadata.test(),
+        logDatabaseStatements: false,
+      );
+      await env.init(
+        serverName: 'UserHub',
+        config: envConfig,
+        emailProvider: EmailPrinter(),
+        platform: FakePlatform.fromPlatform(platform).copyWith(
+          // Clear out the environment for the user hub so that sensitive info
+          // in the local environment is not used by mistake.
+          environment: {},
+        ),
+        logger: logger,
+      );
+      return UserHubServer.start(
+        port: proxyPort ?? await const DefaultPortFinder().findOpenPort(),
+        userApiUri: Uri.http('localhost:$localApiPort'),
+        config: UserHubConfiguration(
+          rpName: resolvedProject.name,
+          rpId: 'localhost',
+          resolvedProject: resolvedProject,
+        ),
+      );
+    });
   }
 
   S _checkDeployState<S extends DeployState>(DeployState state) {
@@ -736,7 +799,19 @@ final class CelestFrontend implements Closeable {
           Future.value(_reloadStream?.cancel()),
           Future.value(_watcherSub?.cancel()),
           Future.value(_localApiRunner?.close()),
+          Future.value(_userHub?.close(force: true)),
         ]);
         logger.finest('Stopped Celest frontend');
       });
+}
+
+final class EmailPrinter implements EmailProvider {
+  @override
+  Future<void> sendTransactionalEmail({
+    required String to,
+    required TransactionalEmail email,
+  }) async {
+    final otpCode = (email as OtpCodeEmail).otp;
+    cliLogger.info('[$to] Received OTP code: $otpCode');
+  }
 }
