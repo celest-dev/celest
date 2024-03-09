@@ -1,6 +1,7 @@
 name: cedar
 description: Core types and interfaces of the Cedar policy language in Dart.
 version: 0.1.0
+repository: https://github.com/celest-dev/celest/tree/main/packages/cedar
 
 environment:
   sdk: ^3.3.0
