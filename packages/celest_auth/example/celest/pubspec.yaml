@@ -6,8 +6,8 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  celest: ^0.3.0-dev.1
-  celest_core: ^0.3.0-dev.1
+  celest: ^0.3.0-0
+  celest_core: ^0.3.0-0
   http: ">=0.13.0 <2.0.0"
 
 dependency_overrides:
