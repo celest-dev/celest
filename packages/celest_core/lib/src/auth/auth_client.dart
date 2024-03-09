@@ -17,6 +17,11 @@ final class AuthClient with BaseProtocol implements AuthProtocol {
   }
 
   @override
+  Future<void> signOut() async {
+    await postJson('/_auth/sign-out', {});
+  }
+
+  @override
   late final EmailClient email = EmailClient(celest);
 }
 

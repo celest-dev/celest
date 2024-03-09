@@ -1,3 +1,7 @@
+## 0.3.0-dev.2
+
+- Add `signOut` method to `AuthProtocol` for clearing browser cookies
+
 ## 0.3.0-dev.1
 
 - Adds `SecureStorage` interface for storage of sensitive data in the platform keychain

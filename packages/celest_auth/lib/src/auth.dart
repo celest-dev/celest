@@ -20,5 +20,5 @@ abstract interface class Auth {
   Stream<AuthState> get authStateChanges;
 
   /// Signs out the current user, if any.
-  void signOut();
+  Future<void> signOut();
 }
