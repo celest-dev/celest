@@ -1,6 +1,7 @@
 name: corks
 description: An embedded authorization token format, based off Google's macaroons.
 version: 0.1.0
+repository: https://github.com/celest-dev/celest/tree/main/packages/corks
 
 environment:
   sdk: ^3.3.0
