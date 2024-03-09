@@ -1,11 +1,9 @@
-name: cedar_ffi
+name: corks
 on:
   pull_request:
     paths:
-      - ".github/workflows/cedar_ffi.yaml"
-      - "packages/cedar_ffi/**"
-      - "packages/cedar_ffi/third_party/cedar"
-      - "packages/cedar_ffi/third_party/cedar/**"
+      - ".github/workflows/corks.yaml"
+      - "packages/corks/**"
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
@@ -36,8 +34,8 @@ jobs:
       - name: Setup Rust
         run: rustup update stable && rustup default stable
       - name: Get Packages
-        working-directory: packages/cedar_ffi
+        working-directory: packages/corks
         run: dart pub get
       - name: Test
-        working-directory: packages/cedar_ffi
+        working-directory: packages/corks
         run: dart --enable-experiment=native-assets test --fail-fast

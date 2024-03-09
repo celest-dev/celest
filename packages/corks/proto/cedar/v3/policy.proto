@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package cedar.v3;
+
+import "cedar/v3/entity_id.proto";
+import "cedar/v3/expr.proto";
+
+enum PolicyEffect {
+  POLICY_EFFECT_UNSPECIFIED = 0;
+  POLICY_EFFECT_PERMIT = 1;
+  POLICY_EFFECT_FORBID = 2;
+}
+
+enum PolicyOp {
+  POLICY_OP_UNSPECIFIED = 0;
+  POLICY_OP_ALL = 1;
+  POLICY_OP_EQUALS = 2;
+  POLICY_OP_IN = 3;
+  POLICY_OP_IS = 4;
+}
+
+enum PolicyConditionKind {
+  POLICY_CONDITION_KIND_UNSPECIFIED = 0;
+  POLICY_CONDITION_KIND_WHEN = 1;
+  POLICY_CONDITION_KIND_UNLESS = 2;
+}
+
+message Policy {
+  optional string id = 1;
+  PolicyEffect effect = 2;
+  PolicyPrincipal principal = 3;
+  PolicyAction action = 4;
+  PolicyResource resource = 5;
+  repeated PolicyCondition conditions = 6;
+  map<string, string> annotations = 7;
+}
+
+message PolicyPrincipal {
+  PolicyOp op = 1;
+  optional EntityId entity = 2;
+  optional string entity_type = 3;
+}
+
+message PolicyAction {
+  PolicyOp op = 1;
+  optional EntityId entity = 2;
+  repeated EntityId entities = 3;
+}
+
+message PolicyResource {
+  PolicyOp op = 1;
+  optional EntityId entity = 2;
+  optional string entity_type = 3;
+}
+
+message PolicyCondition {
+  PolicyConditionKind kind = 1;
+  Expr body = 2;
+}

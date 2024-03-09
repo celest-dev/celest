@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package cedar.v3;
+
+import "cedar/v3/entity_id.proto";
+import "cedar/v3/value.proto";
+
+message Entity {
+  EntityId uid = 1;
+  repeated EntityId parents = 2;
+  map<string, Value> attributes = 3;
+}
