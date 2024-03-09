@@ -82,10 +82,14 @@ final class AuthImpl implements Auth {
   }
 
   @override
-  void signOut() {
+  Future<void> signOut() async {
     localStorage.delete('userId');
     secureStorage.delete('cork');
-    _authStateController.add(const Unauthenticated());
+    try {
+      await protocol.signOut();
+    } finally {
+      _authStateController.add(const Unauthenticated());
+    }
   }
 
   final CelestBase celest;

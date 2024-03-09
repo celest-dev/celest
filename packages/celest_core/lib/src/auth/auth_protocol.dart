@@ -5,6 +5,7 @@ abstract interface class AuthProtocol {
   EmailProtocol get email;
 
   Future<User> userInfo();
+  Future<void> signOut();
 }
 
 abstract interface class EmailProtocol {
