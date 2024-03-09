@@ -14,10 +14,10 @@ dependencies:
   aws_common: ^0.6.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
-  cedar_common:
-    path: ../../celest/packages/cedar_common
-  cedar_dart:
-    path: ../../packages/cedar_dart
+  cedar:
+    path: ../../celest/packages/cedar
+  cedar_ffi:
+    path: ../../packages/cedar_ffi
   celest:
     path: ../../celest/packages/celest
   celest_auth:
@@ -73,8 +73,8 @@ dependencies:
 
 dependency_overrides:
   built_value: ^8.9.0
-  cedar_common:
-    path: ../../celest/packages/cedar_common
+  cedar:
+    path: ../../celest/packages/cedar
   celest:
     path: ../../celest/packages/celest
   celest_auth:

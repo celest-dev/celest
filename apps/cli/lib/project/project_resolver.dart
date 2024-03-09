@@ -1,4 +1,4 @@
-import 'package:cedar_common/cedar_common.dart';
+import 'package:cedar/cedar.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';
