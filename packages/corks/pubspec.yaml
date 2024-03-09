@@ -7,8 +7,8 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  cedar_core:
-    path: ../cedar_core
+  cedar:
+    path: ../cedar
   crypto: ^3.0.3
   fixnum: ^1.1.0
   meta: ^1.10.0

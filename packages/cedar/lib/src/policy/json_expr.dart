@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cedar_core/src/ast/cedar_entity_id.dart';
+import 'package:cedar/src/ast/cedar_entity_id.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 

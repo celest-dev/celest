@@ -14,8 +14,8 @@ dependencies:
   flutter_state_notifier: ^1.0.0
 
 dependency_overrides:
-  cedar_core:
-    path: ../../cedar_core
+  cedar:
+    path: ../../cedar
   celest:
     path: ../../celest
   celest_auth:

@@ -1,4 +1,4 @@
-name: cedar_core
+name: cedar
 description: Base types and utilities of the Cedar policy language.
 version: 0.1.0
 

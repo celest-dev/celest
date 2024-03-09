@@ -1,7 +1,7 @@
-// TODO(dnys1): Get this working with a dependency on cedar_dart.
+// TODO(dnys1): Get this working with a dependency on cedar.
 
-// import 'package:cedar_core/cedar_core.dart' as cedar;
-// import 'package:cedar_dart/testing/cedar_test_corpus.dart';
+// import 'package:cedar/cedar.dart' as cedar;
+// import 'package:cedar/testing/cedar_test_corpus.dart';
 // import 'package:corks/src/interop/proto_interop.dart';
 // import 'package:test/test.dart';
 

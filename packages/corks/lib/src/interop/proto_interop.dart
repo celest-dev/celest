@@ -3,7 +3,7 @@ library;
 
 import 'dart:typed_data';
 
-import 'package:cedar_core/cedar_core.dart' as cedar;
+import 'package:cedar/cedar.dart' as cedar;
 import 'package:corks/src/proto/cedar/v3/entity.pb.dart';
 import 'package:corks/src/proto/cedar/v3/entity_id.pb.dart';
 import 'package:corks/src/proto/cedar/v3/expr.pb.dart';

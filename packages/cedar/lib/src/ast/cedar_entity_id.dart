@@ -1,6 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:cedar_core/src/ast/cedar_node.dart';
+import 'package:cedar/src/ast/cedar_node.dart';
 
 part 'cedar_entity_id.g.dart';
 
