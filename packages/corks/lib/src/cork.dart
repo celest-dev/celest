@@ -71,7 +71,8 @@ final class Cork {
     }
     await signer.sign(id);
     if (bearer != null) {
-      if (!await bearer.verify(signer)) {
+      // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54664
+      if (!await bearer!.verify(signer)) {
         return false;
       }
     }
