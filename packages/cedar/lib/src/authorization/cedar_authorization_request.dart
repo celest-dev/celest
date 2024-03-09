@@ -22,5 +22,5 @@ final class CedarAuthorizationRequest {
   final CedarEntityId? resource;
 
   /// The context of the request.
-  final Map<String, Object?>? context;
+  final Map<String, CedarValueJson>? context;
 }

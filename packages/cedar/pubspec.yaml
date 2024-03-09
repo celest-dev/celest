@@ -1,5 +1,5 @@
 name: cedar
-description: Base types and utilities of the Cedar policy language.
+description: Core types and interfaces of the Cedar policy language in Dart.
 version: 0.1.0
 
 environment:

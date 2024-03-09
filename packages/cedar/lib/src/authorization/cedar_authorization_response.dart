@@ -20,7 +20,7 @@ final class CedarAuthorizationResponse {
     List<String>? reasons,
     List<String>? errors,
   })  : reasons = reasons ?? const [],
-        errors = errors ?? const [];
+        errorMessages = errors ?? const [];
 
   /// The decision of the authorization request.
   final CedarAuthorizationDecision decision;
@@ -30,8 +30,8 @@ final class CedarAuthorizationResponse {
   /// If no policies applied to the request, this will be empty.
   final List<String> reasons;
 
-  /// The policy IDs which caused evaluation errors during the request.
+  /// Any evaluation errors which occurred during the request.
   ///
   /// If no errors occurred, this will be empty.
-  final List<String> errors;
+  final List<String> errorMessages;
 }
