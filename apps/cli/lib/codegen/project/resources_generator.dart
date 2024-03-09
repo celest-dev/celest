@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:aws_common/aws_common.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';
@@ -146,22 +145,62 @@ final class ResourcesGenerator {
     }
   }
 
-  Library generate() {
-    final allApis = project.apis.values;
-    if (allApis.isNotEmpty) {
-      // Ensures consistent ordering in output file which helps with diffs.
-      final apis = SplayTreeMap<String, Field>();
-      final functions = SplayTreeMap<String, Field>();
-      for (final api in allApis) {
-        _generateApi(
-          api,
-          apis: apis,
-          functions: functions,
-        );
-      }
-      _beginClass('Apis').fields.addAll(apis.build().values);
-      _beginClass('Functions').fields.addAll(functions.build().values);
+  void _generateContext() {
+    final context = _beginClass('Context')
+      ..constructors.add(
+        Constructor(
+          (c) => c
+            ..name = '_'
+            ..constant = true
+            ..requiredParameters.add(
+              Parameter(
+                (p) => p
+                  ..name = 'key'
+                  ..toThis = true,
+              ),
+            ),
+        ),
+      )
+      ..fields.add(
+        Field(
+          (f) => f
+            ..modifier = FieldModifier.final$
+            ..type = DartTypes.core.string
+            ..name = 'key',
+        ),
+      );
+    if (project.auth != null) {
+      context.constructors.add(
+        Constructor(
+          (c) => c
+            ..constant = true
+            ..name = 'user'
+            ..initializers.add(
+              refer('this')
+                  .property('_')
+                  .call([literalString(raw: true, r'$user')]).code,
+            ),
+        ),
+      );
     }
+  }
+
+  Library generate() {
+    // final allApis = project.apis.values;
+    // if (allApis.isNotEmpty) {
+    //   // Ensures consistent ordering in output file which helps with diffs.
+    //   final apis = SplayTreeMap<String, Field>();
+    //   final functions = SplayTreeMap<String, Field>();
+    //   for (final api in allApis) {
+    //     _generateApi(
+    //       api,
+    //       apis: apis,
+    //       functions: functions,
+    //     );
+    //   }
+    //   _beginClass('Apis').fields.addAll(apis.build().values);
+    //   _beginClass('Functions').fields.addAll(functions.build().values);
+    // }
     if (project.envVars.isNotEmpty) {
       _generateEnv(project.envVars);
     }
