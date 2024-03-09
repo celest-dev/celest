@@ -7,8 +7,6 @@ environment:
 dependencies:
   celest:
     path: ../../../../../celest/packages/celest
-  celest_auth:
-    path: ../../../../../celest/packages/celest_auth
   celest_core:
     path: ../../../../../celest/packages/celest_core
   http: ^1.0.0

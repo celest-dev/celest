@@ -17,7 +17,7 @@ dependencies:
   cedar:
     path: ../../celest/packages/cedar
   cedar_ffi:
-    path: ../../packages/cedar_ffi
+    path: ../../celest/packages/cedar_ffi
   celest:
     path: ../../celest/packages/celest
   celest_auth:
@@ -75,6 +75,8 @@ dependency_overrides:
   built_value: ^8.9.0
   cedar:
     path: ../../celest/packages/cedar
+  cedar_ffi:
+    path: ../../celest/packages/cedar_ffi
   celest:
     path: ../../celest/packages/celest
   celest_auth:

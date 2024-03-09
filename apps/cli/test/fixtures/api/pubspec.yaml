@@ -16,10 +16,16 @@ dependencies:
   shelf: ^1.4.1
 
 dependency_overrides:
+  cedar:
+    path: ../../../../../celest/packages/cedar
   celest:
     path: ../../../../../celest/packages/celest
+  celest_auth:
+    path: ../../../../../celest/packages/celest_auth
   celest_core:
     path: ../../../../../celest/packages/celest_core
+  corks:
+    path: ../../../../../celest/packages/corks
 
 dev_dependencies:
   test: any
