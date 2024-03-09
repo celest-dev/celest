@@ -43,10 +43,11 @@ final class AuthImpl implements Auth {
       try {
         final user = await protocol.userInfo();
         initialState = Authenticated(user);
+        _authStateController.add(initialState);
       } on UnauthorizedException {
         initialState = const Unauthenticated();
+        signOut();
       }
-      _authStateController.add(initialState);
       return initialState;
     });
   }
