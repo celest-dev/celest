@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:celest_cli/init/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:process/src/interface/common.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
@@ -77,14 +76,7 @@ base mixin Configure on CelestCommand {
       await appPubspecFile.writeAsString(updatedPubspec.toString());
       try {
         await runPub(
-          exe: getExecutablePath(
-                'flutter',
-                fileSystem.currentDirectory.path,
-                platform: platform,
-                fs: fileSystem,
-                throwOnFailure: false,
-              ) ??
-              'flutter',
+          exe: 'flutter',
           action: PubAction.get,
           workingDirectory: projectPaths.appRoot,
         );

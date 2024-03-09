@@ -103,7 +103,7 @@ final class StartCommand extends CelestCommand with Configure {
     _currentProgress = cliLogger.progress('Starting Celest');
 
     if (!await fileSystem
-        .directory(projectPaths.projectDart)
+        .directory(projectPaths.projectRoot)
         .childDirectory('.dart_tool')
         .childFile('package_config.json')
         .exists()) {
