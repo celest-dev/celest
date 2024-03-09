@@ -165,21 +165,21 @@ final class ClientGenerator {
           ..type = refer('CelestEnvironment')
           ..name = '_currentEnvironment',
       ),
-      Field(
-        (f) => f
-          ..late = true
-          ..modifier = FieldModifier.final$
-          ..type = refer(
-            'SecureStorage',
-            'package:celest_core/_internal.dart',
-          )
-          ..name = '_secureStorage'
-          ..assignment = refer(
-            'SecureStorage',
-            'package:celest_core/_internal.dart',
-          ).newInstance([]).code,
-      ),
       if (_hasServer) ...[
+        Field(
+          (f) => f
+            ..late = true
+            ..modifier = FieldModifier.final$
+            ..type = refer(
+              'SecureStorage',
+              'package:celest_core/_internal.dart',
+            )
+            ..name = '_secureStorage'
+            ..assignment = refer(
+              'SecureStorage',
+              'package:celest_core/_internal.dart',
+            ).newInstance([]).code,
+        ),
         Field(
           (f) => f
             ..annotations.add(DartTypes.core.override)
