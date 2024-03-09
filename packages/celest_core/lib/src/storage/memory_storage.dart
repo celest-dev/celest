@@ -4,11 +4,13 @@ import 'package:celest_core/src/storage/storage.dart';
 /// An in-memory implementation of [Storage] and [SecureStorage].
 final class MemoryStorage implements Storage, SecureStorage {
   MemoryStorage({
-    required this.scope,
-  });
+    String? scope,
+  }) : scope = scope ?? _defaultScope;
 
   final _storage = <String, String>{};
   final String scope;
+
+  static const _defaultScope = 'dev.celest.cli';
 
   @override
   void clear() => _storage.removeWhere((key, _) => key.startsWith('$scope/'));

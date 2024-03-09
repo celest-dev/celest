@@ -10,6 +10,7 @@ environment:
 dependencies:
   collection: ^1.18.0
   ffi: ^2.1.2
+  http: ">=0.13.0 <2.0.0"
   jni: ^0.7.2
   meta: ^1.10.0
   os_detect: ^2.0.1
