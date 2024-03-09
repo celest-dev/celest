@@ -247,10 +247,11 @@ final class CelestAnalyzer {
       await celestProject.invalidate({projectPaths.resourcesDart});
     }
 
-    await _collectApis();
+    var hasAuth = false;
     if (zDebugMode || platform.environment.containsKey('CELEST_ENABLE_AUTH')) {
-      await _collectAuth();
+      hasAuth = await _collectAuth();
     }
+    await _collectApis(hasAuth: hasAuth);
     return CelestAnalysisResult.success(
       project: _project.build(),
       errors: _errors,
@@ -352,8 +353,11 @@ final class CelestAnalyzer {
       ..location = projectDefineLocation;
   }
 
-  List<ast.ApiMetadata> _collectApiMetadata(Element element) {
-    var hasAuth = false;
+  List<ast.ApiMetadata> _collectApiMetadata(
+    Element element, {
+    required bool hasAuth,
+  }) {
+    var hasAuthMetadata = false;
     return element.metadata
         .map((annotation) {
           final location = annotation.sourceLocation(element.source!);
@@ -363,37 +367,44 @@ final class CelestAnalyzer {
             /// for suggestions on how to resolve the error/links to docs.
             _reportError(
               'Could not resolve annotation. Annotations must be '
-              'authorization grants like `@api.authenticated()` or '
-              '`@api.public()`.',
+              'authorization grants like `@authenticated`.',
               location: location,
             );
             return null;
           }
 
-          void assertSingleAuth() {
-            if (hasAuth) {
+          void enforceAuthRequirements() {
+            if (hasAuthMetadata) {
               _reportError(
-                'Only one `api.authenticated` or `api.public` annotation '
+                'Only one `@authenticated` annotation '
                 'may be specified on the same function or API library.',
                 location: location,
               );
             }
-            hasAuth = true;
+            if (!hasAuth) {
+              _reportError(
+                'The `@authenticated` annotation may only be used in '
+                'projects with authentication enabled.',
+                location: location,
+              );
+            }
+            hasAuthMetadata = true;
           }
 
           switch (type) {
             case _ when type.isApiAuthenticated:
-              assertSingleAuth();
+              enforceAuthRequirements();
               return ast.ApiAuthenticated(location: location);
             case _ when type.isApiPublic:
-              assertSingleAuth();
-              return ast.ApiPublic(location: location);
+              //   assertSingleAuth();
+              //   return ast.ApiPublic(location: location);
+              unreachable();
             case _ when type.isMiddleware:
               // return ast.ApiMiddleware(
               //   type: typeHelper.toReference(type),
               //   location: location,
               // );
-              throw unreachable();
+              unreachable();
             default:
               return null;
           }
@@ -469,7 +480,9 @@ final class CelestAnalyzer {
     );
   }
 
-  Future<void> _collectApis() async {
+  Future<void> _collectApis({
+    required bool hasAuth,
+  }) async {
     final apiDir = fileSystem.directory(projectPaths.apisDir);
     if (!await apiDir.exists()) {
       return;
@@ -491,6 +504,7 @@ final class CelestAnalyzer {
       final baseApi = await _collectApi(
         apiName: apiName,
         apiFile: apiPath,
+        hasAuth: hasAuth,
       );
       if (baseApi == null) {
         return;
@@ -648,6 +662,7 @@ final class CelestAnalyzer {
   Future<ast.Api?> _collectApi({
     required String apiName,
     required String apiFile,
+    required bool hasAuth,
   }) async {
     if (apiName.startsWith('_')) {
       // This would lead to private fields being generated in the client. It
@@ -681,7 +696,7 @@ final class CelestAnalyzer {
     }
 
     final library = apiLibraryResult.element;
-    final libraryMetdata = _collectApiMetadata(library);
+    final libraryMetdata = _collectApiMetadata(library, hasAuth: hasAuth);
     final apiExceptionTypes = _collectExceptionTypes(library);
     final functions = Map.fromEntries(
       (await library.topLevelElements
@@ -786,7 +801,7 @@ final class CelestAnalyzer {
           returnType: typeHelper.toReference(returnType),
           flattenedReturnType: typeHelper.toReference(returnType.flattened),
           location: func.sourceLocation,
-          metadata: _collectApiMetadata(func),
+          metadata: _collectApiMetadata(func, hasAuth: hasAuth),
           annotations: func.metadata
               .map((annotation) => annotation.toCodeBuilder)
               .nonNulls
@@ -860,11 +875,11 @@ final class CelestAnalyzer {
     );
   }
 
-  Future<void> _collectAuth() async {
+  Future<bool> _collectAuth() async {
     final authFilepath = projectPaths.authDart;
     final authFile = fileSystem.file(authFilepath);
     if (!authFile.existsSync()) {
-      return;
+      return false;
     }
 
     final authLibrary = await _resolveLibrary(authFile.path);
@@ -882,19 +897,19 @@ final class CelestAnalyzer {
           ),
         );
       }
-      return;
+      return false;
     }
 
     final (topLevelConstants, hasErrors) =
         authLibrary.element.topLevelConstants(onError: _reportError);
     if (hasErrors) {
-      return;
+      return false;
     }
     final authDefinition =
         topLevelConstants.firstWhereOrNull((el) => el.element.type.isAuth);
     if (authDefinition == null) {
       _reportError('$authFilepath: No `Auth` type found');
-      return;
+      return false;
     }
 
     final (
@@ -911,22 +926,22 @@ final class CelestAnalyzer {
         'The `providers` field is required on `Auth` definitions',
         location: authDefinitionLocation,
       );
-      return;
+      return false;
     }
     if (authProviders.isEmpty) {
       _reportError(
         'At least one Auth provider must be specified in `providers`',
         location: authDefinitionLocation,
       );
-      return;
+      return false;
     }
 
     final uniqueAuthProviders = <ast.AuthProvider>{};
     for (final authProvider in authProviders) {
       final ast.AuthProviderType type;
       switch (authProvider.type) {
-        case InterfaceType(isAuthProviderGoogle: true):
-          type = ast.AuthProviderType.google;
+        case InterfaceType(isAuthProviderEmail: true):
+          type = ast.AuthProviderType.email;
         default:
           _reportError(
             'Unknown auth provider type: ${authProvider.type}',
@@ -949,6 +964,7 @@ final class CelestAnalyzer {
     _project.auth
       ..location = authDefinitionLocation
       ..providers.addAll(uniqueAuthProviders);
+    return true;
   }
 }
 

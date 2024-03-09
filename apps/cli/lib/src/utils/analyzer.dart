@@ -80,11 +80,17 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isAuthProviderGoogle => switch (element) {
+  bool get isAuthProviderEmail => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == '_GoogleAuthProvider' && library.isPackageCelest,
+          name == '_EmailAuthProvider' && library.isPackageCelest,
         _ => false,
       };
+
+  // bool get isAuthProviderGoogle => switch (element) {
+  //       ClassElement(:final name, :final library) =>
+  //         name == '_GoogleAuthProvider' && library.isPackageCelest,
+  //       _ => false,
+  //     };
 
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -100,7 +106,7 @@ extension DartTypeHelper on DartType {
 
   bool get isApiAuthenticated => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'authenticated' && library.isCelestApi,
+          name == '_Authenticated' && library.isPackageCelest,
         _ => false,
       };
 

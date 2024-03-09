@@ -87,8 +87,7 @@ dependencies:
     if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     d.dir('auth', [
       if (authDart != null) d.file('auth.dart', '''
-import 'package:celest/src/auth/auth.dart';
-import 'package:celest/src/auth/auth_provider.dart';
+import 'package:celest/celest.dart';
 
 $authDart
 '''),
@@ -96,12 +95,17 @@ $authDart
     if (apis.isNotEmpty)
       d.dir('functions', [
         for (final MapEntry(key: fileName, value: contents) in apis.entries)
-          d.file(fileName, '''
+          d.file(
+            fileName,
+            contents.startsWith('@')
+                ? contents
+                : '''
 import 'package:$name/exceptions.dart';
 import 'package:$name/models.dart';
 
 $contents
-'''),
+''',
+          ),
       ]),
     if (config.isNotEmpty)
       d.dir('config', [
@@ -1101,8 +1105,105 @@ void sayHello() {}
 void sayHello() {}
 ''',
         },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
         errors: [
           "The name 'sayHello' is already defined",
+        ],
+      );
+
+      testNoErrors(
+        name: 'api_authenticated',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testErrors(
+        name: 'multiple_api_auth_same_type',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testNoErrors(
+        name: 'function_authenticated',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testErrors(
+        name: 'auth_not_configured_for_function',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'The `@authenticated` annotation may only be used in '
+              'projects with authentication enabled.',
+        ],
+      );
+
+      testErrors(
+        name: 'auth_not_configured_for_library',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'The `@authenticated` annotation may only be used in '
+              'projects with authentication enabled.',
         ],
       );
     });
@@ -1282,7 +1383,7 @@ void sayHello(
         authDart: '''
 const auth = Auth(
   providers: [
-    AuthProvider.google(),
+    AuthProvider.email(),
   ],
 );
 ''',
@@ -1292,16 +1393,16 @@ const auth = Auth(
               .has((it) => it.providers, 'providers')
               .single
               .has((it) => it.type, 'type')
-              .equals(AuthProviderType.google);
+              .equals(AuthProviderType.email);
         },
       );
 
       testNoErrors(
         name: 'valid_referenced_provider',
         authDart: '''
-const google = AuthProvider.google();
+const email = AuthProvider.email();
 const auth = Auth(
-  providers: [google],
+  providers: [email],
 );
 ''',
         expectProject: (project) {
@@ -1310,7 +1411,7 @@ const auth = Auth(
               .has((it) => it.providers, 'providers')
               .single
               .has((it) => it.type, 'type')
-              .equals(AuthProviderType.google);
+              .equals(AuthProviderType.email);
         },
       );
 
@@ -1329,9 +1430,9 @@ const auth = Auth(
       testErrors(
         name: 'duplicate_provider',
         authDart: '''
-const google = AuthProvider.google();
+const email = AuthProvider.email();
 const auth = Auth(
-  providers: [google, google],
+  providers: [email, email],
 );
 ''',
         errors: [
