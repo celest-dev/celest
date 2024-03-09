@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:corks/corks_proto.dart' as proto;
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 

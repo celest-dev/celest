@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
-import 'package:cedar_common/cedar_common.dart';
+import 'package:cedar_core/cedar_core.dart';
 
 part 'serializers.g.dart';
 

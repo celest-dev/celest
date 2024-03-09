@@ -1,6 +1,6 @@
-import 'package:cedar_common/src/ast/cedar_entity_id.dart';
-import 'package:cedar_common/src/ast/cedar_node.dart';
-import 'package:cedar_common/src/util.dart';
+import 'package:cedar_core/src/ast/cedar_entity_id.dart';
+import 'package:cedar_core/src/ast/cedar_node.dart';
+import 'package:cedar_core/src/util.dart';
 
 final class CedarSchema implements CedarNode {
   CedarSchema({

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:cedar_common/cedar_common.dart';
+import 'package:cedar_core/cedar_core.dart';
 import 'package:corks/corks.dart';
 import 'package:test/test.dart';
 

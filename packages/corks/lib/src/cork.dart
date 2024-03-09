@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:cedar_common/cedar_common.dart' as cedar;
+import 'package:cedar_core/cedar_core.dart' as cedar;
 import 'package:corks/src/interop/proto_interop.dart';
 import 'package:corks/src/interop/to_proto.dart';
 import 'package:corks/src/proto/cedar/v3/policy.pb.dart' as proto;

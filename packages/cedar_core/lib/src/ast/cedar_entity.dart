@@ -1,9 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:cedar_common/src/ast/cedar_entity_id.dart';
-import 'package:cedar_common/src/ast/cedar_node.dart';
-import 'package:cedar_common/src/policy/json_expr.dart';
+import 'package:cedar_core/src/ast/cedar_entity_id.dart';
+import 'package:cedar_core/src/ast/cedar_node.dart';
+import 'package:cedar_core/src/policy/json_expr.dart';
 
 part 'cedar_entity.g.dart';
 

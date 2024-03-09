@@ -1,5 +1,5 @@
-name: cedar_common
-description: Base types and utilities of the Cedar language in Dart.
+name: cedar_core
+description: Base types and utilities of the Cedar policy language.
 version: 0.1.0
 
 environment:

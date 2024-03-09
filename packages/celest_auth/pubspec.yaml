@@ -17,7 +17,7 @@ dependencies:
   async: ^2.11.0
   built_collection: ^5.1.1
   built_value: ^8.9.1
-  cedar_common: ^0.1.0
+  cedar_core: ^0.1.0
   celest_core: ^0.2.0
   chunked_stream: ^1.4.2
   corks: ^0.1.0

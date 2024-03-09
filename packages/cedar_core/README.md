@@ -1,4 +1,4 @@
-# cedar_common
+# cedar_core
 
 Base types and utilities of the Cedar language in Dart.
 
