@@ -81,7 +81,6 @@ final class SecureStoragePlatformDarwin extends SecureStoragePlatform {
     final query = {
       ..._baseQuery(arena),
       kSecAttrAccount: key.toCFString(arena),
-      kSecMatchLimit: kSecMatchLimitOne,
     };
     final gets = SecItemCopyMatching(query.toCFDictionary(arena), nullptr);
     if (gets != errSecSuccess && gets != errSecItemNotFound) {
@@ -116,7 +115,6 @@ final class SecureStoragePlatformDarwin extends SecureStoragePlatform {
     final query = {
       ..._baseQuery(arena),
       kSecAttrAccount: key.toCFString(arena),
-      kSecMatchLimit: kSecMatchLimitOne,
     };
     try {
       _check(
