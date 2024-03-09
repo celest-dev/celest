@@ -1,6 +1,7 @@
-## 0.2.2-wip
+## 0.3.0-dev.1
 
-- Adds `SecureStorage` interface for storage of sensitive data in the platform keychain.
+- Adds `SecureStorage` interface for storage of sensitive data in the platform keychain
+- Adds core Auth types and interfaces
 
 ## 0.2.1
 

@@ -1,11 +1,12 @@
 name: celest_core
 description: Celest types and utilities shared between the client and the cloud.
-version: 0.2.1
+version: 0.3.0-dev.1
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_core
 
 environment:
   sdk: ^3.3.0
+  flutter: ">=3.19.0"
 
 dependencies:
   collection: ^1.18.0
