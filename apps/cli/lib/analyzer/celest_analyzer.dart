@@ -249,10 +249,7 @@ final class CelestAnalyzer {
       await celestProject.invalidate({projectPaths.resourcesDart});
     }
 
-    var hasAuth = false;
-    if (zDebugMode || platform.environment.containsKey('CELEST_ENABLE_AUTH')) {
-      hasAuth = await _collectAuth();
-    }
+    final hasAuth = await _collectAuth();
     await _collectApis(hasAuth: hasAuth);
     return CelestAnalysisResult.success(
       project: _project.build(),
