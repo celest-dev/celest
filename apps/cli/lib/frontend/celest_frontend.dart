@@ -599,9 +599,8 @@ final class CelestFrontend implements Closeable {
       return UserHubServer.start(
         port: proxyPort ?? await const DefaultPortFinder().findOpenPort(),
         userApiUri: Uri.http('localhost:$localApiPort'),
-        config: UserHubConfiguration(
+        config: UserHubConfiguration.development(
           rpName: resolvedProject.name,
-          rpId: 'localhost',
           resolvedProject: resolvedProject,
         ),
       );
