@@ -1,6 +1,6 @@
 name: celest_core
 description: Celest types and utilities shared between the client and the cloud.
-version: 0.3.0-dev.2
+version: 0.3.0
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_core
 
