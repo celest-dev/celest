@@ -49,7 +49,12 @@ void main(List<String> args) async {
     id: 'package:$packageName/src/ffi/cedar_bindings.g.dart',
     linkMode: LinkMode.dynamic,
     target: buildConfig.target,
-    path: AssetAbsolutePath(binaryOut),
+    path: switch (buildConfig.target) {
+      Target.windowsArm64 ||
+      Target.windowsX64 when buildConfig.buildMode == BuildMode.release =>
+        AssetInProcess(),
+      _ => AssetAbsolutePath(binaryOut),
+    },
   );
   buildLogs.writeln('Compiled asset: ${nativeAsset.toString()}');
   buildOutput.assets.add(nativeAsset);
