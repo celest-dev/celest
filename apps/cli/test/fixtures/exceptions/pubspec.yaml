@@ -22,8 +22,8 @@ dependency_overrides:
     path: ../../../../../celest/packages/celest_auth
   celest_core:
     path: ../../../../../celest/packages/celest_core
-  corks:
-    path: ../../../../../celest/packages/corks
+  corks_cedar:
+    path: ../../../../../celest/packages/corks_cedar
 
 dev_dependencies:
   test: any
