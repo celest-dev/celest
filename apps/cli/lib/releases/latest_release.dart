@@ -10,7 +10,7 @@ import 'package:pub_semver/pub_semver.dart';
 final _releasesEndpoint =
     CelestReleasesInfo.baseUri.resolve('${Abi.current()}/releases.json');
 
-Future<CelestReleasesInfo> _retrieveCliReleases() async {
+Future<CelestReleasesInfo> retrieveCliReleases() async {
   final releasesResp = await httpClient.get(_releasesEndpoint);
   if (releasesResp.statusCode != 200) {
     throw CelestException(
@@ -28,7 +28,7 @@ Future<CelestReleasesInfo> _retrieveCliReleases() async {
 }
 
 Future<CelestReleaseInfo> retrieveLatestRelease() async {
-  final releasesInfo = await _retrieveCliReleases();
+  final releasesInfo = await retrieveCliReleases();
   return switch (Version.parse(packageVersion)) {
     Version(isPreRelease: true) => maxBy<CelestReleaseInfo, Version>(
         [

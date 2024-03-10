@@ -174,16 +174,29 @@ Future<void> main() async {
               '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb'
         ),
     ],
+    if (platform.isWindows) ...[
+      for (final dll in fileSystem
+          .directory(buildPath)
+          .listSync()
+          .whereType<File>()
+          .where((f) => p.extension(f.path) == '.dll'))
+        (
+          localPath: dll.path,
+          storagePath: '$osArch/$version/${p.basename(dll.path)}',
+        ),
+    ],
   ];
   print('Uploading storage paths: $storagePaths');
   for (final (:localPath, :storagePath) in storagePaths) {
-    final bytes = await fileSystem.file(localPath).readAsBytes();
-    await bucket.writeBytes(
+    final bucketSink = bucket.write(
       storagePath,
-      bytes,
       metadata: objectMetadata,
       contentType: switch (platform.operatingSystem) {
-        'windows' => 'application/appx',
+        'windows' => switch (p.extension(storagePath)) {
+            '.appx' => 'application/appx',
+            '.dll' => 'application/octet-stream',
+            _ => unreachable(),
+          },
         'macos' => 'application/octet-stream',
         'linux' => switch (p.extension(storagePath)) {
             '.deb' => 'application/vnd.debian.binary-package',
@@ -193,6 +206,7 @@ Future<void> main() async {
         _ => unreachable(),
       },
     );
+    await fileSystem.file(localPath).openRead().pipe(bucketSink);
   }
 
   final latestRelease = CelestReleaseInfo(
