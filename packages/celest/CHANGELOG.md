@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Makes request context not specific to Celest
+
 ## 0.3.0
 
 - Initial release of Celest Auth with email OTP support

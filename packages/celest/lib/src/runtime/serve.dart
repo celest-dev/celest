@@ -57,7 +57,7 @@ abstract base class CloudFunctionTarget {
     init();
   }
 
-  static const _contextHeaderPrefix = 'X-Celest-Context-';
+  static const _contextHeaderPrefix = 'X-Context-';
   static final _contextHeaderMatcher = RegExp(
     _contextHeaderPrefix,
     caseSensitive: false,
@@ -65,12 +65,16 @@ abstract base class CloudFunctionTarget {
 
   Future<Response> _handler(Request request) async {
     final bodyJson = await request.decodeJson();
+    final context = <String, String>{};
+    request.headers.forEach((key, value) {
+      key = key.toLowerCase();
+      if (key.startsWith(_contextHeaderMatcher)) {
+        context[key.substring(_contextHeaderPrefix.length)] = value;
+      }
+    });
     final response = await runZoned(
       () => handle({
-        for (final MapEntry(:key, :value) in request.headers.entries)
-          if (key.startsWith(_contextHeaderMatcher))
-            '\$${key.substring(_contextHeaderPrefix.length).toLowerCase()}':
-                value,
+        r'$context': context,
         ...bodyJson,
       }),
       zoneSpecification: ZoneSpecification(
