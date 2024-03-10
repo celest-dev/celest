@@ -347,7 +347,7 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                proxyPort: storage.getLocalUri(project.name).port,
+                proxyPort: secureStorage.getLocalUri(project.name).port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -360,11 +360,11 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: storage.setLocalUri(
+                localUri: secureStorage.setLocalUri(
                   project.name,
                   Uri.http('localhost:${projectOutputs.port}'),
                 ),
-                productionUri: storage.getProductionUri(project.name),
+                productionUri: secureStorage.getProductionUri(project.name),
               ),
             );
 
@@ -442,8 +442,8 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: storage.getLocalUri(project.name),
-                productionUri: storage.setProductionUri(
+                localUri: secureStorage.getLocalUri(project.name),
+                productionUri: secureStorage.setProductionUri(
                   project.name,
                   projectOutputs.baseUri,
                 ),
@@ -578,8 +578,8 @@ final class CelestFrontend implements Closeable {
           celestProject.config.configDir.childDirectory(resolvedProject.name);
       await dbDir.create();
 
-      final metadata = storage.getMetadata(resolvedProject.name) ??
-          storage.setMetadata(resolvedProject.name, HubMetadata.test());
+      final metadata = secureStorage.getMetadata(resolvedProject.name) ??
+          secureStorage.setMetadata(resolvedProject.name, HubMetadata.test());
       final envConfig = EnvironmentConfig(
         dbDir: dbDir.path,
         metadata: metadata,

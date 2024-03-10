@@ -7,20 +7,24 @@ import 'package:http/http.dart' as http;
 final auth = _CliAuth();
 
 final class _CliClient with CelestBase {
-  const _CliClient();
+  _CliClient();
 
   @override
   Uri get baseUri => ctx.baseUri;
 
   @override
-  http.Client get httpClient => ctx.httpClient;
+  late final http.Client httpClient = CelestHttpClient(
+    secureStorage: ctx.secureStorage,
+    baseClient: ctx.httpClient,
+  );
 }
 
 extension type _CliAuth._(AuthImpl _hub) implements Auth {
   _CliAuth()
       : _hub = AuthImpl(
-          const _CliClient(),
-          secureStorage: ctx.storage,
+          _CliClient(),
+          secureStorage: ctx.secureStorage,
+          localStorage: ctx.localStorage,
         );
 
   Email get email => Email(_hub);
