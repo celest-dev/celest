@@ -1,6 +1,6 @@
-## 0.3.0-dev.1
+## 0.3.0
 
-- Initial release of Celest Auth
+- Initial release of Celest Auth with email OTP support
 
 ## 0.2.0
 
