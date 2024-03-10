@@ -17,10 +17,11 @@ final class SayHelloAuthenticatedTarget extends _i1.CloudFunctionTarget {
 
   @override
   Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+    final $context = (request[r'$context'] as Map<String, String>?) ?? const {};
     try {
       await _i2.sayHelloAuthenticated(
-          user: _i3.Serializers.instance.deserialize<_i4.User>(
-              _i5.jsonDecode((request[r'$user'] as String))));
+          user: _i3.Serializers.instance
+              .deserialize<_i4.User>(_i5.jsonDecode($context[r'$user']!)));
       return (statusCode: 200, body: {'response': null});
     } on _i6.SerializationException catch (e) {
       const statusCode = 400;

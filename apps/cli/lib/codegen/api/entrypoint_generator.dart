@@ -59,11 +59,17 @@ final class EntrypointGenerator {
             function.name,
             function.location.sourceUrl.toString(),
           );
-          if (function.parameters
-              .any((param) => param.type.isFunctionContext)) {
+          if (function.parameters.any((param) => param.isContextKey)) {
+            final contextMapType = DartTypes.core.map(
+              DartTypes.core.string,
+              DartTypes.core.string,
+            );
             b.addExpression(
-              declareFinal('celestContext').assign(
-                DartTypes.celest.functionContext.newInstance([]),
+              declareFinal(r'$context').assign(
+                refer('request')
+                    .index(literalString(raw: true, r'$context'))
+                    .asA(contextMapType.nullable)
+                    .ifNullThen(literalConstMap({})),
               ),
             );
           }
@@ -71,9 +77,7 @@ final class EntrypointGenerator {
           final namedParams = <String, Expression>{};
           for (final param in function.parameters) {
             Expression paramExp;
-            if (param.type.isFunctionContext) {
-              paramExp = refer('celestContext');
-            } else if (param.references case final reference?) {
+            if (param.references case final reference?) {
               switch (reference.type) {
                 case NodeType.environmentVariable:
                   paramExp = DartTypes.io.platform
@@ -93,11 +97,11 @@ final class EntrypointGenerator {
                     paramExp = toType.property('parse').call([paramExp]);
                   }
                 case NodeType.userContext:
-                  final paramJson = refer('request').index(
+                  final paramJson = refer(r'$context').index(
                     literalString(raw: true, reference.name.toLowerCase()),
                   );
                   paramExp = DartTypes.convert.jsonDecode.call([
-                    paramJson.asA(DartTypes.core.string),
+                    paramJson.nullChecked,
                   ]);
                   if (param.type.isNullableOrFalse) {
                     paramExp = paramJson
