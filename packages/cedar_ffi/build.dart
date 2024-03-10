@@ -52,6 +52,7 @@ void main(List<String> args) async {
     path: AssetAbsolutePath(binaryOut),
   );
   buildLogs.writeln('Compiled asset: ${nativeAsset.toString()}');
+  buildOutput.assets.add(nativeAsset);
   if (buildConfig.target case Target.windowsArm64 || Target.windowsX64) {
     buildOutput.assets.add(
       Asset(
@@ -61,8 +62,6 @@ void main(List<String> args) async {
         path: AssetInProcess(),
       ),
     );
-  } else {
-    buildOutput.assets.add(nativeAsset);
   }
 
   // Write the output according to the native assets protocol so that Dart or
