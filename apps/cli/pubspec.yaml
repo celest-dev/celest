@@ -37,6 +37,7 @@ dependencies:
   crypto: ^3.0.3
   dart_style: ^2.3.4
   drift: ^2.16.0
+  email_validator: ^2.1.17
   file: ^7.0.0
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1

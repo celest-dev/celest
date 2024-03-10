@@ -3,6 +3,7 @@ import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:email_validator/email_validator.dart';
 
 final class DeployCommand extends CelestCommand with Configure {
   @override
@@ -22,9 +23,14 @@ final class DeployCommand extends CelestCommand with Configure {
       'Celest Cloud is available now for our early-bird customers. '
       'If you have an invite code, please enter it below.',
     );
-    final email = cliLogger.prompt('Invite code:');
-    if (email.isEmpty) {
-      return 1;
+    String? email;
+    while (email == null) {
+      final input = cliLogger.prompt('Invite code:');
+      if (input.isEmpty || !EmailValidator.validate(input, true)) {
+        cliLogger.err('Invalid email address');
+        continue;
+      }
+      email = input;
     }
     analytics.identifyUser(
       set: {
