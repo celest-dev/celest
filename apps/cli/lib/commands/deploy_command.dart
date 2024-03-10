@@ -1,3 +1,4 @@
+import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
@@ -66,8 +67,15 @@ final class DeployCommand extends CelestCommand with Configure {
     await super.run();
     await configure();
 
-    final cork = storage.read('cork');
-    if (cork == null) {
+    AuthState initialState;
+    try {
+      initialState = await auth.init();
+    } on Exception {
+      initialState = const Unauthenticated();
+    }
+
+    if (initialState is Unauthenticated) {
+      await auth.signOut().onError((_, __) {});
       logger.finest('Unauthenticated user. Signing up...');
       final res = await signUp();
       if (res != 0) {
