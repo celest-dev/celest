@@ -50,7 +50,7 @@ final class LocalApiRunner implements Closeable {
     int? port,
     @visibleForTesting StringSink? stdoutPipe,
     @visibleForTesting StringSink? stderrPipe,
-    @visibleForTesting PortFinder portFinder = const DefaultPortFinder(),
+    @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
     final env = <String, String>{};
     for (final envVar in envVars) {
