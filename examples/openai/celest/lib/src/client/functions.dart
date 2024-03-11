@@ -28,6 +28,8 @@ class CelestFunctionsOpenAi {
     switch ($code) {
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
       case r'InternalServerException':
         throw Serializers.instance
             .deserialize<InternalServerException>($details);

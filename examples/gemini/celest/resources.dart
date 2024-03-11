@@ -6,28 +6,6 @@ library;
 
 import 'package:celest/celest.dart';
 
-@Deprecated('Use `Apis` instead.')
-typedef apis = Apis;
-
-abstract final class Apis {
-  static const gemini = CloudApi(name: r'gemini');
-}
-
-@Deprecated('Use `Functions` instead.')
-typedef functions = Functions;
-
-abstract final class Functions {
-  static const geminiAvailableModels = CloudFunction(
-    api: r'gemini',
-    functionName: r'availableModels',
-  );
-
-  static const geminiGenerateContent = CloudFunction(
-    api: r'gemini',
-    functionName: r'generateContent',
-  );
-}
-
 @Deprecated('Use `Env` instead.')
 typedef env = Env;
 

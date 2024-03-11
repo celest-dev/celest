@@ -6,8 +6,8 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  celest: ^0.3.0-0
-  celest_core: ^0.3.0-0
+  celest: ^0.3.0
+  celest_core: ^0.3.0
   http: ">=0.13.0 <2.0.0"
 
 dependency_overrides:
@@ -21,3 +21,6 @@ dependency_overrides:
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.0
+celest:
+  project:
+    id: 018e29a5-dfab-7a35-8d2d-5b8859cf3c0a
