@@ -28,12 +28,14 @@ abstract class EmailNeedsVerification extends AuthFlowInProgress {
   final String email;
 
   Future<void> resend();
-  Future<User> verify(String otpCode);
+  Future<User> verify({required String otpCode});
 }
 
 /// The [user] is authenticated and their identity has been verified.
 final class Authenticated extends AuthState {
-  const Authenticated(this.user);
+  const Authenticated({
+    required this.user,
+  });
 
   final User user;
 }

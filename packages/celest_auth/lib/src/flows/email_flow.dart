@@ -55,7 +55,7 @@ final class EmailFlow implements AuthFlow {
       );
       _hub.secureStorage.write('cork', user.cork);
       _hub.localStorage.write('userId', user.user.userId);
-      return Authenticated(user.user);
+      return Authenticated(user: user.user);
     });
   }
 
@@ -80,7 +80,7 @@ final class _EmailNeedsVerification extends EmailNeedsVerification {
   }
 
   @override
-  Future<User> verify(String otpCode) async {
+  Future<User> verify({required String otpCode}) async {
     final authenticated = await _flow._verifyOtp(email: email, otp: otpCode);
     return authenticated.user;
   }
