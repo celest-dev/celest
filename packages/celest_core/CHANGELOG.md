@@ -1,8 +1,8 @@
-## 0.3.0-dev.2
+## 0.3.1
 
-- Add `signOut` method to `AuthProtocol` for clearing browser cookies
+- Fix secure storage issues on Android and Linux
 
-## 0.3.0-dev.1
+## 0.3.0
 
 - Adds `SecureStorage` interface for storage of sensitive data in the platform keychain
 - Adds core Auth types and interfaces

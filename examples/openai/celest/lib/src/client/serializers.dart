@@ -35,6 +35,14 @@ void initSerializers() {
     },
   ));
   Serializers.instance
+      .put(Serializer.define<UnauthorizedException, Map<String, Object?>?>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return UnauthorizedException(
+          (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
+    },
+  ));
+  Serializers.instance
       .put(Serializer.define<SerializationException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,

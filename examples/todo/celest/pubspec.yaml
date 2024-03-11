@@ -6,8 +6,8 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  celest: ^0.2.0
-  celest_core: ^0.2.0
+  celest: ^0.3.0
+  celest_core: ^0.3.0
   http: ">=0.13.0 <2.0.0"
   uuid: ^4.3.3
 

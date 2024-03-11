@@ -1,10 +1,6 @@
-import 'dart:isolate';
-
 import 'package:celest_core/src/http/http_client.vm.dart'
     if (dart.library.js_interop) 'package:celest_core/src/http/http_client.web.dart';
 import 'package:celest_core/src/storage/secure/secure_storage.dart';
-import 'package:celest_core/src/storage/storage.dart';
-import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as http;
 
 final class CelestHttpClient extends http.BaseClient {
@@ -21,7 +17,7 @@ final class CelestHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    final cork = await _readStorage(_secureStorage, 'cork');
+    final cork = _secureStorage.read('cork');
     if (cork != null) {
       request.headers['authorization'] = 'Bearer $cork';
     }
@@ -34,11 +30,4 @@ final class CelestHttpClient extends http.BaseClient {
       _inner.close();
     }
   }
-}
-
-Future<String?> _readStorage(Storage storage, String key) async {
-  if (kIsWeb) {
-    return null;
-  }
-  return Isolate.run(() => storage.read(key));
 }

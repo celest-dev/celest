@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:io' as _$io;
 
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
 
@@ -23,16 +24,20 @@ enum CelestEnvironment {
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
         production =>
-          Uri.parse('https://openai-example-xpsv-v76lntiq7q-wl.a.run.app'),
+          Uri.parse('https://openai-example-usok-v76lntiq7q-wl.a.run.app'),
       };
 }
 
-class Celest {
+class Celest with CelestBase {
   var _initialized = false;
 
   late CelestEnvironment _currentEnvironment;
 
-  late _$http.Client httpClient = _$http.Client();
+  late final SecureStorage _secureStorage = SecureStorage();
+
+  @override
+  late _$http.Client httpClient =
+      CelestHttpClient(secureStorage: _secureStorage);
 
   late Uri _baseUri;
 
@@ -49,6 +54,7 @@ class Celest {
   CelestEnvironment get currentEnvironment =>
       _checkInitialized(() => _currentEnvironment);
 
+  @override
   Uri get baseUri => _checkInitialized(() => _baseUri);
 
   CelestFunctions get functions => _checkInitialized(() => _functions);
