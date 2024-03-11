@@ -47,15 +47,15 @@ The CLI will also create a folder in your project called `celest`, which will in
 ```shell
 flutter_app/
 └── celest/
-    ├── config/
-    │   └── .env            # Environment variables
-    ├── functions/          # Celest Functions folder
-    |   └── greeting.dart   # Example API file
+    ├── functions/                        # Celest Functions folder
+    |   └── greeting.dart                 # Example API file
     ├── lib/
-    │   │── client.dart     # Generated client for your Flutter app
-    │   ├── models.dart     # Custom API models
-    │   └── exceptions.dart # Custom API exceptions
-    └── test/               # Tests for your backend
+    │   │── client.dart                   # Generated client for your Flutter app
+    │   ├── models/                       # Custom API models
+    |   |   └── person.dart
+    │   └── exceptions/                   # Custom API exceptions
+    |       └── bad_name_exception.dart
+    └── test/                             # Tests for your backend
 ```
 
 To get started building your serverless cloud function, navigate to the `<flutter_app>/celest/functions/` folder and create a file named `<api_name>.dart`. You can create as many APIs as you want in this directory. Think of each file as a way to organize and group multiple Celest Functions of similar functionality into a namespace.
@@ -63,11 +63,15 @@ To get started building your serverless cloud function, navigate to the `<flutte
 Celest Functions are defined as top-level functions as shown below.
 
 ```dart
-Future<String> sayHello(String name) async {
+Future<String> sayHello({
+  required String name,
+}) async {
   return 'Hello, $name';
 }
 
-Future<String> sayGoodbye(String name) async {
+Future<String> sayGoodbye({
+  required String name,
+}) async {
   return 'Goodbye, $name';
 }
 ```
@@ -98,7 +102,7 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: FutureBuilder(
             // Call your function using the Celest client
-            future: celest.functions.greeting.sayHello('Celest'),
+            future: celest.functions.greeting.sayHello(name: 'Celest'),
             builder: (_, snapshot) => switch (snapshot) {
               AsyncSnapshot(:final data?) => Text(data),
               AsyncSnapshot(:final error?) =>
@@ -113,7 +117,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](/docs/functions/introduction.md) to learn more about using Celest Functions.
+You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](https://celest.dev/docs/functions/introduction) to learn more about using Celest Functions.
 
 ## Connect with us
 

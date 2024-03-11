@@ -1,0 +1,4 @@
+[submodule "packages/cedar_ffi/third_party/cedar"]
+	path = packages/cedar_ffi/third_party/cedar
+	url = https://github.com/cedar-policy/cedar
+	branch = release/3.1.x

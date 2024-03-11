@@ -1,0 +1,34 @@
+name: celest_auth_example
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  celest_backend:
+    path: celest/
+  flutter:
+    sdk: flutter
+  flutter_state_notifier: ^1.0.0
+
+dependency_overrides:
+  cedar:
+    path: ../../cedar
+  celest:
+    path: ../../celest
+  celest_auth:
+    path: ../
+  celest_core:
+    path: ../../celest_core
+  corks_cedar:
+    path: ../../corks_cedar
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

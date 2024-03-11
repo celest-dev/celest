@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/serialization/serializers/big_int_serializer.dart';
-import 'package:celest_core/src/serialization/serializers/cloud_exception_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/date_time_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/duration_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/regexp_serializer.dart';
@@ -20,6 +19,17 @@ import 'package:meta/meta.dart';
 abstract base class Serializer<Dart extends Object?> {
   /// {@macro celest_core.serialization.serializer}
   const Serializer();
+
+  /// Defines a [Serializer] for a [Dart] type with the given [serialize] and
+  /// [deserialize] methods.
+  static Serializer<Dart> define<Dart extends Object?, Wire extends Object?>({
+    required Object? Function(Dart value) serialize,
+    required Dart Function(Wire value) deserialize,
+  }) =>
+      _Serializer<Dart, Wire>(
+        serialize: serialize,
+        deserialize: deserialize,
+      );
 
   /// Serializes [value] to the wire type.
   Object? serialize(Dart value);
@@ -44,6 +54,26 @@ abstract base class Serializer<Dart extends Object?> {
   }
 }
 
+final class _Serializer<Dart extends Object?, Wire extends Object?>
+    extends Serializer<Dart> {
+  const _Serializer({
+    required Object? Function(Dart value) serialize,
+    required Dart Function(Wire value) deserialize,
+  })  : _serialize = serialize,
+        _deserialize = deserialize;
+
+  final Object? Function(Dart value) _serialize;
+  final Dart Function(Wire value) _deserialize;
+
+  @override
+  Object? serialize(Dart value) => _serialize(value);
+
+  @override
+  Dart deserialize(Object? value) => _deserialize(
+        assertWireType<Wire>(value),
+      );
+}
+
 typedef _Nullable<T> = T?;
 bool _isNullable<T>() => null is T;
 
@@ -61,31 +91,34 @@ abstract mixin class Serializers {
   static final Serializers _instance = Serializers();
 
   /// Serializes [value] to the wire type.
-  Object? serialize<T>(T value) {
-    final serializer = expect<T>();
+  Object? serialize<T>(T value, [TypeToken<T>? typeToken]) {
+    final serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.serialize)
         : serializer.serialize(value);
   }
 
   /// Deserializes [value] to [T].
-  T deserialize<T>(Object? value) {
-    final serializer = expect<T>();
+  T deserialize<T>(Object? value, [TypeToken<T>? typeToken]) {
+    final serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.deserialize) as T
         : serializer.deserialize(value);
   }
 
   /// Gets the [Serializer] for type [Dart].
-  Serializer<Dart>? get<Dart>();
+  Serializer<Dart>? get<Dart>([TypeToken<Dart>? typeToken]);
 
   /// Gets the [Serializer] for type [Dart] and asserts its existence.
-  Serializer<Dart> expect<Dart>();
+  Serializer<Dart> expect<Dart>([TypeToken<Dart>? typeToken]);
 
   /// Puts a [Serializer] for type [Dart].
   ///
   /// Returns the previously registered [Serializer] if it existed.
-  Serializer<Dart>? put<Dart>(Serializer<Dart> serializer);
+  Serializer<Dart>? put<Dart>(
+    Serializer<Dart> serializer, [
+    TypeToken<Dart>? typeToken,
+  ]);
 }
 
 final class _Serializers extends Serializers {
@@ -98,33 +131,58 @@ final class _Serializers extends Serializers {
     put<Uri>(const UriSerializer());
     put<UriData>(const UriDataSerializer());
     put<Uint8List>(const Uint8ListSerializer());
-    put<BadRequestException>(const BadRequestExceptionSerializer());
-    put<InternalServerException>(const InternalServerExceptionSerializer());
   }
 
-  final _serializersByType = <Type, Serializer>{};
+  final _serializersByType = <TypeToken<Object?>, Serializer>{};
 
   @override
-  Serializer<Dart> expect<Dart>() {
-    final serializer = get<Dart>();
+  Serializer<Dart> expect<Dart>([TypeToken<Dart>? typeToken]) {
+    typeToken ??= TypeToken<Dart>();
+    final serializer = get<Dart>(typeToken);
     if (serializer == null) {
       throw SerializationException(
-        'No serializer found for $Dart. Did you forget to call `celest.init()` '
-        "at the start of your Flutter app's `main` function?",
+        'No serializer found for $typeToken. Did you forget to call '
+        "`celest.init()` at the start of your Flutter app's `main` function?",
       );
     }
     return serializer;
   }
 
   @override
-  Serializer<Dart>? get<Dart>() =>
-      _serializersByType[Dart] as Serializer<Dart>?;
+  Serializer<Dart>? get<Dart>([TypeToken<Dart>? typeToken]) =>
+      _serializersByType[typeToken ?? TypeToken<Dart>()] as Serializer<Dart>?;
 
   @override
-  Serializer<Dart>? put<Dart>(Serializer<Dart> serializer) {
-    final existing = get<Dart>();
-    _serializersByType[Dart] = serializer;
-    _serializersByType[_Nullable<Dart>] = serializer;
+  Serializer<Dart>? put<Dart>(
+    Serializer<Dart> serializer, [
+    TypeToken<Dart>? typeToken,
+  ]) {
+    typeToken ??= TypeToken<Dart>();
+    final existing = get<Dart>(typeToken);
+    _serializersByType[typeToken] = serializer;
+    _serializersByType[typeToken.nullable] = serializer;
     return existing;
   }
+}
+
+@immutable
+final class TypeToken<T> {
+  const TypeToken([this._typeName]);
+
+  final String? _typeName;
+
+  String get typeName => _typeName ?? '$T';
+  Type get type => T;
+
+  TypeToken<Object?> get nullable => TypeToken<_Nullable<T>>(_typeName);
+
+  @override
+  bool operator ==(Object other) =>
+      other is TypeToken && other._typeName == _typeName && other.type == type;
+
+  @override
+  int get hashCode => Object.hash(_typeName, type);
+
+  @override
+  String toString() => typeName;
 }

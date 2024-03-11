@@ -1,0 +1,6 @@
+version: v1
+managed:
+  enabled: true
+plugins:
+  - plugin: buf.build/protocolbuffers/dart:v21.1.2
+    out: ../lib/src/proto

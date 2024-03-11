@@ -1,3 +1,24 @@
+## 0.3.1
+
+- Fix secure storage issues on Android and Linux
+
+## 0.3.0
+
+- Adds `SecureStorage` interface for storage of sensitive data in the platform keychain
+- Adds core Auth types and interfaces
+
+## 0.2.1
+
+- Overrides `toString` for `CloudException` types.
+
+## 0.2.0
+
+- Bumps minimum Dart SDK to 3.3
+- Adds `JsonValue` hierarchy for representing JSON primitives safely
+- Adds `Serializer.define` for creating serializers from functions
+- Adds `TypeToken` to enable serialization of extension types
+- Make `SerializationException` implement `BadRequestException`
+
 ## 0.1.1
 
 - Update README

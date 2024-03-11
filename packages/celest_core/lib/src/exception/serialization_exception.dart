@@ -7,11 +7,16 @@ import 'package:celest_core/celest_core.dart';
 /// deserialize a value.
 /// {@endtemplate}
 final class SerializationException extends FormatException
-    implements CelestException {
+    implements BadRequestException, CelestException {
   /// Creates a [SerializationException] with the given [message].
   ///
   /// {@macro celest_core_exceptions_serialization_exception}
   const SerializationException(super.message);
+
+  @override
+  // TODO(dnys1): Find a better resolution to this.
+  // ignore: overridden_fields
+  final Null source = null;
 
   @override
   String toString() => 'SerializationException: $message';

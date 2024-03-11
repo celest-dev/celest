@@ -18,7 +18,7 @@ const int defaultCelestPort = 7777;
 Future<void> serve({
   required Map<String, CloudFunctionTarget> targets,
 }) async {
-  final router = Router();
+  final router = Router()..get('/_health', (_) => Response.ok('OK'));
   for (final MapEntry(key: route, value: target) in targets.entries) {
     router.post(route, target._handler);
   }
@@ -58,10 +58,26 @@ abstract base class CloudFunctionTarget {
     init();
   }
 
+  static const _contextHeaderPrefix = 'X-Context-';
+  static final _contextHeaderMatcher = RegExp(
+    _contextHeaderPrefix,
+    caseSensitive: false,
+  );
+
   Future<Response> _handler(Request request) async {
     final bodyJson = await request.decodeJson();
+    final context = <String, String>{};
+    request.headers.forEach((key, value) {
+      key = key.toLowerCase();
+      if (key.startsWith(_contextHeaderMatcher)) {
+        context[key.substring(_contextHeaderPrefix.length)] = value;
+      }
+    });
     final response = await runZoned(
-      () => handle(bodyJson),
+      () => handle({
+        r'$context': context,
+        ...bodyJson,
+      }),
       zoneSpecification: ZoneSpecification(
         print: (self, parent, zone, message) {
           parent.print(zone, '[$name] $message');
@@ -91,7 +107,7 @@ abstract base class CloudFunctionTarget {
 
 Handler _heartbeatMiddleware(Handler inner) {
   return (request) async {
-    print(request.handlerPath);
+    print(request.requestedUri.path);
     return inner(request);
   };
 }
@@ -122,18 +138,6 @@ Handler _cloudExceptionMiddleware(Handler inner) {
   return (request) async {
     try {
       return await inner(request);
-    } on BadRequestException catch (e) {
-      print('Bad request: ${e.message}');
-      return _badRequest(
-        code: 'BadRequestException',
-        details: Serializers.instance.serialize(e),
-      );
-    } on InternalServerException catch (e) {
-      print('Internal server error: ${e.message}');
-      return _internalServerError(
-        code: 'InternalServerException',
-        details: Serializers.instance.serialize(e),
-      );
     } on Exception catch (e, st) {
       print('An unexpected error occurred: $e');
       print(st);

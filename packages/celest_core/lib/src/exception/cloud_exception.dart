@@ -7,7 +7,7 @@ sealed class CloudException implements CelestException {}
 /// An exception thrown by a Cloud Function when a request contains invalid
 /// data or otherwise lead to a recoverable exception.
 /// {@endtemplate}
-final class BadRequestException implements CloudException {
+class BadRequestException implements CloudException {
   /// Creates a [BadRequestException] with the given [message].
   ///
   /// {@macro celest_core_exception_bad_request_exception}
@@ -15,13 +15,26 @@ final class BadRequestException implements CloudException {
 
   @override
   final String message;
+
+  @override
+  String toString() => 'BadRequestException: $message';
+}
+
+final class UnauthorizedException implements CloudException {
+  const UnauthorizedException([this.message = 'Unauthorized']);
+
+  @override
+  final String message;
+
+  @override
+  String toString() => 'UnauthorizedException: $message';
 }
 
 /// {@template celest_core.exception.internal_server_exception}
 /// An exception thrown by a Cloud Function when an unrecoverable internal error
 /// occurs.
 /// {@endtemplate}
-final class InternalServerException implements CloudException {
+class InternalServerException implements CloudException {
   /// Creates a [InternalServerException] with the given [message].
   ///
   /// {@macro celest_core_exception_internal_server_exception}
@@ -29,4 +42,7 @@ final class InternalServerException implements CloudException {
 
   @override
   final String message;
+
+  @override
+  String toString() => 'InternalServerException: $message';
 }
