@@ -1,8 +1,8 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/project_init.dart';
+import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
-import 'package:celest_cli/init/project_migrator.dart';
 import 'package:celest_cli/init/pub/pub_action.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
@@ -11,7 +11,7 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-final class StartCommand extends CelestCommand with Configure {
+final class StartCommand extends CelestCommand with Configure, Migrate {
   StartCommand();
 
   @override
@@ -62,18 +62,6 @@ final class StartCommand extends CelestCommand with Configure {
     return projectName;
   }
 
-  Future<void> _migrateProject() async {
-    logger.finest(
-      'Migrating project at "${projectPaths.projectRoot}"...',
-    );
-    await performance.trace('StartCommand', 'migrateProject', () async {
-      await ProjectMigrator(
-        appRoot: projectPaths.appRoot,
-        projectRoot: projectPaths.projectRoot,
-      ).migrate();
-    });
-  }
-
   @override
   Future<int> run() async {
     await super.run();
@@ -96,7 +84,7 @@ final class StartCommand extends CelestCommand with Configure {
 
     await configure(
       createProject: _createProject,
-      migrateProject: _migrateProject,
+      migrateProject: migrateProject,
     );
 
     _currentProgress?.complete('Project generated successfully');

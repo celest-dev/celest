@@ -1,11 +1,12 @@
 import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/project_init.dart';
+import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:email_validator/email_validator.dart';
 
-final class DeployCommand extends CelestCommand with Configure {
+final class DeployCommand extends CelestCommand with Configure, Migrate {
   @override
   String get name => 'deploy';
 
@@ -68,7 +69,15 @@ final class DeployCommand extends CelestCommand with Configure {
   @override
   Future<int> run() async {
     await super.run();
-    await configure();
+    await configure(
+      createProject: () {
+        throw const CelestException(
+          'No Celest project found in the current directory. '
+          'To create a new project, run `celest start`.',
+        );
+      },
+      migrateProject: migrateProject,
+    );
 
     AuthState initialState;
     try {
