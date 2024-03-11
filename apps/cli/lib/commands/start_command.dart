@@ -58,6 +58,12 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
         projectRoot: projectPaths.projectRoot,
         projectName: projectName,
       ).generate();
+      logger.fine('Project generated successfully');
+      await runPub(
+        action: PubAction.get,
+        workingDirectory: projectPaths.projectRoot,
+      );
+      logger.fine('Successfully ran `pub get` in ${projectPaths.projectRoot}');
     });
     return projectName;
   }
@@ -89,17 +95,6 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
 
     _currentProgress?.complete('Project generated successfully');
     _currentProgress = cliLogger.progress('Starting Celest');
-
-    if (!await fileSystem
-        .directory(projectPaths.projectRoot)
-        .childDirectory('.dart_tool')
-        .childFile('package_config.json')
-        .exists()) {
-      await runPub(
-        action: PubAction.get,
-        workingDirectory: projectPaths.projectRoot,
-      );
-    }
 
     // Start the Celest Frontend Loop
     return CelestFrontend().run(
