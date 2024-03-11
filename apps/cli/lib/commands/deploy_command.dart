@@ -45,7 +45,7 @@ final class DeployCommand extends CelestCommand with Configure {
       if (verificationCode.isEmpty) {
         return 1;
       }
-      final user = await flow.verify(verificationCode);
+      final user = await flow.verify(otpCode: verificationCode);
 
       analytics.capture(
         'sign_up_succeeded',
