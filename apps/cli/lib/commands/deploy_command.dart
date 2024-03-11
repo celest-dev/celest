@@ -15,9 +15,6 @@ final class DeployCommand extends CelestCommand with Configure {
   @override
   String get category => 'Project';
 
-  @override
-  bool get hidden => true;
-
   Future<int> signUp() async {
     cliLogger.warn(
       'Celest Cloud is available now for our early-bird customers. '
