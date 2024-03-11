@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:cli_script/cli_script.dart';
 
@@ -27,26 +29,37 @@ Future<void> runPub({
     <String>[exe, 'pub', action.name],
     workingDirectory: workingDirectory,
   );
-  final stdout = process.stdout.lines;
-  final stderr = process.stderr.lines;
-  await Future.any([
-    process.exitCode.then((exitCode) {
-      if (exitCode != 0) {
-        throw CelestException(
-          'Failed to run `pub get`. Please run `$exe pub get` manually in '
-          '$workingDirectory and try again.',
-        );
-      }
-    }),
-    stdout.firstWhere(action.matcher.hasMatch),
-    stderr.first.then((err) {
-      throw CelestException(
-        'Failed to run `pub get`. Please run `$exe pub get` manually in '
-        '$workingDirectory and try again.',
+  final completer = Completer<void>();
+  final stdout = process.stdout.lines.listen((line) {
+    if (action.matcher.hasMatch(line)) {
+      completer.complete();
+    }
+  });
+  final stderr = process.stderr.lines.listen((line) {
+    completer.completeError(
+      CelestException(
+        'Failed to run `pub ${action.name}`. Please run `$exe pub ${action.name}` '
+        'manually in $workingDirectory and try again.',
         additionalContext: {
-          'error': err,
+          'error': line,
         },
-      );
-    }),
-  ]);
+      ),
+    );
+  });
+  try {
+    await Future.any([
+      process.exitCode.then((exitCode) {
+        if (exitCode != 0) {
+          throw CelestException(
+            'Failed to run `pub get`. Please run `$exe pub get` manually in '
+            '$workingDirectory and try again.',
+          );
+        }
+      }),
+      completer.future,
+    ]);
+  } finally {
+    unawaited(stdout.cancel());
+    unawaited(stderr.cancel());
+  }
 }
