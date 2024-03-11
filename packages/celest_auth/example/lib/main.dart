@@ -93,7 +93,7 @@ class _MainAppState extends State<MainApp> {
                           const SizedBox(height: 16),
                           TextButton(
                             onPressed: () => state.verify(
-                              _otpController.text,
+                              otpCode: _otpController.text,
                             ),
                             child: const Text('Verify OTP'),
                           ),
