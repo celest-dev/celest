@@ -87,7 +87,6 @@ final class DeployCommand extends CelestCommand with Configure, Migrate {
     }
 
     if (initialState is Unauthenticated) {
-      await auth.signOut().onError((_, __) {});
       logger.finest('Unauthenticated user. Signing up...');
       final res = await signUp();
       if (res != 0) {
