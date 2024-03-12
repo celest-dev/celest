@@ -8,3 +8,5 @@ analyzer:
   errors:
     # To prevent issues publishing.
     depend_on_referenced_packages: error
+  exclude:
+    - "**/*.ffi.dart"

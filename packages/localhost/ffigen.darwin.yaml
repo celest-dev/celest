@@ -3,11 +3,16 @@ description: |
   Bindings for the Bonjour/DNS-SD (Service Discovery) framework on iOS & macOS.
 
   Regenerate bindings with `dart run ffigen --config=ffigen.darwin.yaml`.
-language: objc
-output: "lib/src/darwin/bonjour.g.dart"
+language: c
+output: "lib/src/darwin/bonjour.ffi.dart"
+compiler-opts:
+  - "-I/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
+  - "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
 headers:
   entry-points:
     - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/dns_sd.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/dns_util.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/resolv.h"
 preamble: |
   // ignore_for_file: type=lint
   // ignore_for_file: return_of_invalid_type, unnecessary_non_null_assertion
@@ -15,22 +20,24 @@ comments:
   style: any
   length: full
 
+ffi-native:
+ignore-source-errors: true
 exclude-all-by-default: true
 functions:
   include:
     - DNS.*
+    - .*dn_comp
     - dispatch_.*
 structs:
   include:
     - DNS.*
+    - dns_.*
     - dispatch_.*
-objc-interfaces:
-  include:
-    - NSObject
 unnamed-enums:
   include:
     - kDNS.*
 typedefs:
   include:
     - DNS.*
+    - dns_.*
     - dispatch_.*

@@ -3,7 +3,7 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 import 'package:localhost/localhost.dart';
-import 'package:localhost/src/darwin/bonjour.g.dart';
+import 'package:localhost/src/darwin/bonjour.ffi.dart';
 import 'package:logging/logging.dart';
 
 const int _kDNSFlagsNone = 0;
@@ -11,8 +11,6 @@ const int _kDNSAllInterfaces = 0;
 
 final class LocalClientDarwin implements LocalClient {
   static final Logger logger = Logger('LocalClient');
-  static final BonjourFramework _bonjour =
-      BonjourFramework(DynamicLibrary.process());
 
   final Map<LocalServiceId, LocalService> _cache = {};
 
@@ -24,7 +22,7 @@ final class LocalClientDarwin implements LocalClient {
     DNSServiceRef? sdRef;
     void cleanUp() {
       if (sdRef != null) {
-        _bonjour.DNSServiceRefDeallocate(sdRef!);
+        DNSServiceRefDeallocate(sdRef!);
         sdRef = null;
       }
     }
@@ -96,7 +94,7 @@ final class LocalClientDarwin implements LocalClient {
       final sdRefPtr = arena<DNSServiceRef>();
       // https://developer.apple.com/documentation/dnssd/1804742-dnsservicebrowse
       // https://developer.apple.com/library/archive/documentation/Networking/Conceptual/dns_discovery_api/Articles/browse.html#//apple_ref/doc/uid/TP40002486-SW1
-      final browseRet = _bonjour.DNSServiceBrowse(
+      final browseRet = DNSServiceBrowse(
         sdRefPtr, // sdRef
         _kDNSFlagsNone, // flags
         _kDNSAllInterfaces, // interfaceIndex
@@ -116,9 +114,9 @@ final class LocalClientDarwin implements LocalClient {
       }
       sdRef = sdRefPtr.value;
       assert(sdRef != nullptr);
-      final setQueueRet = _bonjour.DNSServiceSetDispatchQueue(
+      final setQueueRet = DNSServiceSetDispatchQueue(
         sdRef!,
-        _bonjour.dispatch_get_current_queue(),
+        dispatch_get_current_queue(),
       );
       if (setQueueRet != kDNSServiceErr_NoError) {
         final errorMessage = _dnsErrorString(setQueueRet);
