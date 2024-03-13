@@ -76,12 +76,33 @@ final BuiltSet<CedarPolicyConditionKind> _$CedarPolicyConditionKindValues =
   _$unless,
 ]);
 
+const CedarSlotId _$principal = const CedarSlotId._('principal');
+const CedarSlotId _$resource = const CedarSlotId._('resource');
+
+CedarSlotId _$CedarSlotIdValueOf(String name) {
+  switch (name) {
+    case 'principal':
+      return _$principal;
+    case 'resource':
+      return _$resource;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<CedarSlotId> _$CedarSlotIdValues =
+    new BuiltSet<CedarSlotId>(const <CedarSlotId>[
+  _$principal,
+  _$resource,
+]);
+
 Serializer<CedarPolicyEffect> _$cedarPolicyEffectSerializer =
     new _$CedarPolicyEffectSerializer();
 Serializer<CedarPolicyOp> _$cedarPolicyOpSerializer =
     new _$CedarPolicyOpSerializer();
 Serializer<CedarPolicyConditionKind> _$cedarPolicyConditionKindSerializer =
     new _$CedarPolicyConditionKindSerializer();
+Serializer<CedarSlotId> _$cedarSlotIdSerializer = new _$CedarSlotIdSerializer();
 Serializer<CedarPolicy> _$cedarPolicySerializer = new _$CedarPolicySerializer();
 Serializer<CedarPolicyPrincipal> _$cedarPolicyPrincipalSerializer =
     new _$CedarPolicyPrincipalSerializer();
@@ -158,6 +179,33 @@ class _$CedarPolicyConditionKindSerializer
           Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       CedarPolicyConditionKind.valueOf(serialized as String);
+}
+
+class _$CedarSlotIdSerializer implements PrimitiveSerializer<CedarSlotId> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'principal': '?principal',
+    'resource': '?resource',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    '?principal': 'principal',
+    '?resource': 'resource',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[CedarSlotId];
+  @override
+  final String wireName = 'CedarSlotId';
+
+  @override
+  Object serialize(Serializers serializers, CedarSlotId object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  CedarSlotId deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      CedarSlotId.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
 }
 
 class _$CedarPolicySerializer implements StructuredSerializer<CedarPolicy> {
@@ -282,6 +330,13 @@ class _$CedarPolicyPrincipalSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.slot;
+    if (value != null) {
+      result
+        ..add('slot')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CedarSlotId)));
+    }
     return result;
   }
 
@@ -308,6 +363,10 @@ class _$CedarPolicyPrincipalSerializer
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'slot':
+          result.slot = serializers.deserialize(value,
+              specifiedType: const FullType(CedarSlotId)) as CedarSlotId?;
           break;
       }
     }
@@ -417,6 +476,13 @@ class _$CedarPolicyResourceSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.slot;
+    if (value != null) {
+      result
+        ..add('slot')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CedarSlotId)));
+    }
     return result;
   }
 
@@ -443,6 +509,10 @@ class _$CedarPolicyResourceSerializer
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'slot':
+          result.slot = serializers.deserialize(value,
+              specifiedType: const FullType(CedarSlotId)) as CedarSlotId?;
           break;
       }
     }
@@ -693,12 +763,15 @@ class _$CedarPolicyPrincipal extends CedarPolicyPrincipal {
   final CedarEntityId? entity;
   @override
   final String? entityType;
+  @override
+  final CedarSlotId? slot;
 
   factory _$CedarPolicyPrincipal(
           [void Function(CedarPolicyPrincipalBuilder)? updates]) =>
       (new CedarPolicyPrincipalBuilder()..update(updates))._build();
 
-  _$CedarPolicyPrincipal._({required this.op, this.entity, this.entityType})
+  _$CedarPolicyPrincipal._(
+      {required this.op, this.entity, this.entityType, this.slot})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(op, r'CedarPolicyPrincipal', 'op');
   }
@@ -718,7 +791,8 @@ class _$CedarPolicyPrincipal extends CedarPolicyPrincipal {
     return other is CedarPolicyPrincipal &&
         op == other.op &&
         entity == other.entity &&
-        entityType == other.entityType;
+        entityType == other.entityType &&
+        slot == other.slot;
   }
 
   @override
@@ -727,6 +801,7 @@ class _$CedarPolicyPrincipal extends CedarPolicyPrincipal {
     _$hash = $jc(_$hash, op.hashCode);
     _$hash = $jc(_$hash, entity.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, slot.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -736,7 +811,8 @@ class _$CedarPolicyPrincipal extends CedarPolicyPrincipal {
     return (newBuiltValueToStringHelper(r'CedarPolicyPrincipal')
           ..add('op', op)
           ..add('entity', entity)
-          ..add('entityType', entityType))
+          ..add('entityType', entityType)
+          ..add('slot', slot))
         .toString();
   }
 }
@@ -758,6 +834,10 @@ class CedarPolicyPrincipalBuilder
   String? get entityType => _$this._entityType;
   set entityType(String? entityType) => _$this._entityType = entityType;
 
+  CedarSlotId? _slot;
+  CedarSlotId? get slot => _$this._slot;
+  set slot(CedarSlotId? slot) => _$this._slot = slot;
+
   CedarPolicyPrincipalBuilder();
 
   CedarPolicyPrincipalBuilder get _$this {
@@ -766,6 +846,7 @@ class CedarPolicyPrincipalBuilder
       _op = $v.op;
       _entity = $v.entity?.toBuilder();
       _entityType = $v.entityType;
+      _slot = $v.slot;
       _$v = null;
     }
     return this;
@@ -794,7 +875,8 @@ class CedarPolicyPrincipalBuilder
               op: BuiltValueNullFieldError.checkNotNull(
                   op, r'CedarPolicyPrincipal', 'op'),
               entity: _entity?.build(),
-              entityType: entityType);
+              entityType: entityType,
+              slot: slot);
     } catch (_) {
       late String _$failedField;
       try {
@@ -946,12 +1028,15 @@ class _$CedarPolicyResource extends CedarPolicyResource {
   final CedarEntityId? entity;
   @override
   final String? entityType;
+  @override
+  final CedarSlotId? slot;
 
   factory _$CedarPolicyResource(
           [void Function(CedarPolicyResourceBuilder)? updates]) =>
       (new CedarPolicyResourceBuilder()..update(updates))._build();
 
-  _$CedarPolicyResource._({required this.op, this.entity, this.entityType})
+  _$CedarPolicyResource._(
+      {required this.op, this.entity, this.entityType, this.slot})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(op, r'CedarPolicyResource', 'op');
   }
@@ -971,7 +1056,8 @@ class _$CedarPolicyResource extends CedarPolicyResource {
     return other is CedarPolicyResource &&
         op == other.op &&
         entity == other.entity &&
-        entityType == other.entityType;
+        entityType == other.entityType &&
+        slot == other.slot;
   }
 
   @override
@@ -980,6 +1066,7 @@ class _$CedarPolicyResource extends CedarPolicyResource {
     _$hash = $jc(_$hash, op.hashCode);
     _$hash = $jc(_$hash, entity.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, slot.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -989,7 +1076,8 @@ class _$CedarPolicyResource extends CedarPolicyResource {
     return (newBuiltValueToStringHelper(r'CedarPolicyResource')
           ..add('op', op)
           ..add('entity', entity)
-          ..add('entityType', entityType))
+          ..add('entityType', entityType)
+          ..add('slot', slot))
         .toString();
   }
 }
@@ -1011,6 +1099,10 @@ class CedarPolicyResourceBuilder
   String? get entityType => _$this._entityType;
   set entityType(String? entityType) => _$this._entityType = entityType;
 
+  CedarSlotId? _slot;
+  CedarSlotId? get slot => _$this._slot;
+  set slot(CedarSlotId? slot) => _$this._slot = slot;
+
   CedarPolicyResourceBuilder();
 
   CedarPolicyResourceBuilder get _$this {
@@ -1019,6 +1111,7 @@ class CedarPolicyResourceBuilder
       _op = $v.op;
       _entity = $v.entity?.toBuilder();
       _entityType = $v.entityType;
+      _slot = $v.slot;
       _$v = null;
     }
     return this;
@@ -1047,7 +1140,8 @@ class CedarPolicyResourceBuilder
               op: BuiltValueNullFieldError.checkNotNull(
                   op, r'CedarPolicyResource', 'op'),
               entity: _entity?.build(),
-              entityType: entityType);
+              entityType: entityType,
+              slot: slot);
     } catch (_) {
       late String _$failedField;
       try {

@@ -80,6 +80,27 @@ class CedarPolicyConditionKind extends EnumClass {
       _$cedarPolicyConditionKindSerializer;
 }
 
+class CedarSlotId extends EnumClass {
+  const CedarSlotId._(super.name);
+
+  @BuiltValueEnumConst(wireName: '?principal')
+  static const CedarSlotId principal = _$principal;
+
+  @BuiltValueEnumConst(wireName: '?resource')
+  static const CedarSlotId resource = _$resource;
+
+  static BuiltSet<CedarSlotId> get values => _$CedarSlotIdValues;
+  static CedarSlotId valueOf(String name) => _$CedarSlotIdValueOf(name);
+
+  static CedarSlotId fromJson(String json) =>
+      cedarSerializers.deserializeWith(CedarSlotId.serializer, json)!;
+
+  String toJson() =>
+      cedarSerializers.serializeWith(CedarSlotId.serializer, this) as String;
+
+  static Serializer<CedarSlotId> get serializer => _$cedarSlotIdSerializer;
+}
+
 abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
   factory CedarPolicy({
     required CedarPolicyEffect effect,
@@ -130,6 +151,8 @@ abstract class CedarPolicy implements Built<CedarPolicy, CedarPolicyBuilder> {
   BuiltList<CedarPolicyCondition> get conditions;
   BuiltMap<String, String>? get annotations;
 
+  bool get isTemplate => principal.slot != null || resource.slot != null;
+
   Map<String, Object?> toJson() => {
         'effect': effect.toJson(),
         'principal': principal.toJson(),
@@ -148,11 +171,13 @@ abstract class CedarPolicyPrincipal
     required CedarPolicyOp op,
     CedarEntityId? entity,
     String? entityType,
+    CedarSlotId? slot,
   }) {
     return CedarPolicyPrincipal.build((b) {
       b
         ..op = op
-        ..entityType = entityType;
+        ..entityType = entityType
+        ..slot = slot;
       if (entity != null) {
         b.entity.replace(entity);
       }
@@ -166,6 +191,9 @@ abstract class CedarPolicyPrincipal
           ? null
           : CedarEntityId.fromJson(json['entity'] as Map<String, Object?>),
       entityType: json['entity_type'] as String?,
+      slot: json['slot'] == null
+          ? null
+          : CedarSlotId.fromJson(json['slot'] as String),
     );
   }
 
@@ -180,15 +208,25 @@ abstract class CedarPolicyPrincipal
       case CedarPolicyOp.all:
         _expectAbsent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
+        _expectAbsent('slot', policy.slot);
       case CedarPolicyOp.equals:
-        _expectPresent('entity', policy._entity);
+        if (policy._entity == null && policy.slot == null) {
+          throw ArgumentError(
+            'entity and slot must be specified for op equals',
+          );
+        }
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.in$:
-        _expectPresent('entity', policy._entity);
+        if (policy._entity == null && policy.slot == null) {
+          throw ArgumentError(
+            'entity and slot must be specified for op in',
+          );
+        }
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.is$:
         _expectPresent('entityType', policy.entityType);
         _expectAbsent('entity', policy._entity);
+        _expectAbsent('slot', policy.slot);
       default:
         throw ArgumentError.value(policy.op, 'op', 'Invalid op for principal');
     }
@@ -199,11 +237,13 @@ abstract class CedarPolicyPrincipal
 
   @BuiltValueField(wireName: 'entity_type')
   String? get entityType;
+  CedarSlotId? get slot;
 
   Map<String, Object?> toJson() => {
         'op': op.toJson(),
         if (entity != null) 'entity': entity!.toJson(),
         if (entityType != null) 'entity_type': entityType,
+        if (slot != null) 'slot': slot!.toJson(),
       };
 
   static Serializer<CedarPolicyPrincipal> get serializer =>
@@ -301,11 +341,13 @@ abstract class CedarPolicyResource
     required CedarPolicyOp op,
     CedarEntityId? entity,
     String? entityType,
+    CedarSlotId? slot,
   }) {
     return CedarPolicyResource.build((b) {
       b
         ..op = op
-        ..entityType = entityType;
+        ..entityType = entityType
+        ..slot = slot;
       if (entity != null) {
         b.entity.replace(entity);
       }
@@ -323,15 +365,25 @@ abstract class CedarPolicyResource
       case CedarPolicyOp.all:
         _expectAbsent('entity', policy._entity);
         _expectAbsent('entityType', policy.entityType);
+        _expectAbsent('slot', policy.slot);
       case CedarPolicyOp.equals:
-        _expectPresent('entity', policy._entity);
+        if (policy._entity == null && policy.slot == null) {
+          throw ArgumentError(
+            'entity and slot must be specified for op equals',
+          );
+        }
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.in$:
-        _expectPresent('entity', policy._entity);
+        if (policy._entity == null && policy.slot == null) {
+          throw ArgumentError(
+            'entity and slot must be specified for op in',
+          );
+        }
         _expectAbsent('entityType', policy.entityType);
       case CedarPolicyOp.is$:
         _expectPresent('entityType', policy.entityType);
         _expectAbsent('entity', policy._entity);
+        _expectAbsent('slot', policy.slot);
       default:
         throw ArgumentError.value(policy.op, 'op', 'Invalid op for resource');
     }
@@ -342,11 +394,13 @@ abstract class CedarPolicyResource
 
   @BuiltValueField(wireName: 'entity_type')
   String? get entityType;
+  CedarSlotId? get slot;
 
   Map<String, Object?> toJson() => {
         'op': op.toJson(),
         if (entity != null) 'entity': entity!.toJson(),
         if (entityType != null) 'entity_type': entityType,
+        if (slot != null) 'slot': slot!.toJson(),
       };
 
   factory CedarPolicyResource.fromJson(Map<String, Object?> json) {
@@ -356,6 +410,9 @@ abstract class CedarPolicyResource
           ? null
           : CedarEntityId.fromJson(json['entity'] as Map<String, Object?>),
       entityType: json['entity_type'] as String?,
+      slot: json['slot'] == null
+          ? null
+          : CedarSlotId.fromJson(json['slot'] as String),
     );
   }
 

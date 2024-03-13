@@ -554,6 +554,7 @@ extension ExprToProto on cedar.JsonExpr {
               slotId: switch (slotId) {
                 cedar.CedarSlotId.principal => SlotId.SLOT_ID_PRINCIPAL,
                 cedar.CedarSlotId.resource => SlotId.SLOT_ID_RESOURCE,
+                _ => throw UnimplementedError(),
               },
             ),
           ),

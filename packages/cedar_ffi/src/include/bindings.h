@@ -25,6 +25,20 @@ typedef struct CCedarPolicySetResult {
    */
   const char *const *policy_ids;
   /**
+   * The number of templates in the policy set.
+   */
+  uintptr_t templates_len;
+  /**
+   * The templates in the policy set, in JSON format.
+   *
+   * This is only valid if `templates_len` is greater than 0 and `errors_len` is 0.
+   */
+  const char *const *templates;
+  /**
+   * The IDs for the `templates` in the policy set.
+   */
+  const char *const *template_ids;
+  /**
    * The number of errors encountered while parsing the policy set.
    */
   uintptr_t errors_len;
@@ -164,6 +178,13 @@ typedef struct CCedarQuery {
  * Parses a policy set from a Cedar policy string into JSON.
  */
 struct CCedarPolicySetResult cedar_parse_policy_set(const char *policies);
+
+/**
+ * Links a policy template to a set of entities.
+ *
+ * Returns the linked policy template in JSON format.
+ */
+const char *cedar_link_policy_template(const char *policy_template_json, const char *entities_json);
 
 /**
  * Initializes the Cedar policy engine with the given configuration.

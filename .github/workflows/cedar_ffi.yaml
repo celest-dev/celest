@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/cedar_ffi.yaml"
+      - "packages/cedar/**"
       - "packages/cedar_ffi/**"
       - "packages/cedar_ffi/third_party/cedar"
       - "packages/cedar_ffi/third_party/cedar/**"
@@ -32,9 +33,8 @@ jobs:
           submodules: true
       - name: Setup Dart
         uses: dart-lang/setup-dart@fedb1266e91cf51be2fdb382869461a434b920a3 # main
-      # Will often be out-of-date on runners
       - name: Setup Rust
-        run: rustup update stable && rustup default stable
+        uses: actions-rust-lang/setup-rust-toolchain@b113a30d27a8e59c969077c0a0168cc13dab5ffc # 1.8.0
       - name: Get Packages
         working-directory: packages/cedar_ffi
         run: dart pub get
