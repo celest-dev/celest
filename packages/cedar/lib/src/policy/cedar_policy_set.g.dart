@@ -24,6 +24,10 @@ class _$CedarPolicySetSerializer
       serializers.serialize(object.policies,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(CedarPolicy)])),
+      'templates',
+      serializers.serialize(object.templates,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(CedarPolicy)])),
     ];
 
     return result;
@@ -48,6 +52,13 @@ class _$CedarPolicySetSerializer
                 const FullType(CedarPolicy)
               ]))!);
           break;
+        case 'templates':
+          result.templates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(CedarPolicy)
+              ]))!);
+          break;
       }
     }
 
@@ -58,13 +69,18 @@ class _$CedarPolicySetSerializer
 class _$CedarPolicySet extends CedarPolicySet {
   @override
   final BuiltMap<String, CedarPolicy> policies;
+  @override
+  final BuiltMap<String, CedarPolicy> templates;
 
   factory _$CedarPolicySet([void Function(CedarPolicySetBuilder)? updates]) =>
       (new CedarPolicySetBuilder()..update(updates))._build();
 
-  _$CedarPolicySet._({required this.policies}) : super._() {
+  _$CedarPolicySet._({required this.policies, required this.templates})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         policies, r'CedarPolicySet', 'policies');
+    BuiltValueNullFieldError.checkNotNull(
+        templates, r'CedarPolicySet', 'templates');
   }
 
   @override
@@ -78,13 +94,16 @@ class _$CedarPolicySet extends CedarPolicySet {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CedarPolicySet && policies == other.policies;
+    return other is CedarPolicySet &&
+        policies == other.policies &&
+        templates == other.templates;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, policies.hashCode);
+    _$hash = $jc(_$hash, templates.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -92,7 +111,8 @@ class _$CedarPolicySet extends CedarPolicySet {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'CedarPolicySet')
-          ..add('policies', policies))
+          ..add('policies', policies)
+          ..add('templates', templates))
         .toString();
   }
 }
@@ -107,12 +127,19 @@ class CedarPolicySetBuilder
   set policies(MapBuilder<String, CedarPolicy>? policies) =>
       _$this._policies = policies;
 
+  MapBuilder<String, CedarPolicy>? _templates;
+  MapBuilder<String, CedarPolicy> get templates =>
+      _$this._templates ??= new MapBuilder<String, CedarPolicy>();
+  set templates(MapBuilder<String, CedarPolicy>? templates) =>
+      _$this._templates = templates;
+
   CedarPolicySetBuilder();
 
   CedarPolicySetBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _policies = $v.policies.toBuilder();
+      _templates = $v.templates.toBuilder();
       _$v = null;
     }
     return this;
@@ -135,12 +162,16 @@ class CedarPolicySetBuilder
   _$CedarPolicySet _build() {
     _$CedarPolicySet _$result;
     try {
-      _$result = _$v ?? new _$CedarPolicySet._(policies: policies.build());
+      _$result = _$v ??
+          new _$CedarPolicySet._(
+              policies: policies.build(), templates: templates.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'policies';
         policies.build();
+        _$failedField = 'templates';
+        templates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CedarPolicySet', _$failedField, e.toString());

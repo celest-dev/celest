@@ -1,13 +1,13 @@
 name: corks_cedar
 description: An embedded authorization token format, based off Google's macaroons.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/celest-dev/celest/tree/main/packages/corks_cedar
 
 environment:
   sdk: ^3.3.0
 
 dependencies:
-  cedar: ^0.1.0
+  cedar: ^0.1.1
   crypto: ^3.0.3
   fixnum: ^1.1.0
   meta: ^1.10.0

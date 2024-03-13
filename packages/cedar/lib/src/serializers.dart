@@ -17,5 +17,6 @@ part 'serializers.g.dart';
   CedarPolicyAction,
   CedarPolicyResource,
   CedarPolicyCondition,
+  CedarSlotId,
 ])
 final Serializers cedarSerializers = _$cedarSerializers;
