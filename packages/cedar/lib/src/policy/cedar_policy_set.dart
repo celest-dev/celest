@@ -10,17 +10,26 @@ abstract class CedarPolicySet
     implements Built<CedarPolicySet, CedarPolicySetBuilder> {
   factory CedarPolicySet({
     Map<String, CedarPolicy> policies = const {},
+    Map<String, CedarPolicy> templates = const {},
   }) {
-    return _$CedarPolicySet._(policies: policies.build());
+    return _$CedarPolicySet._(
+      policies: policies.build(),
+      templates: templates.build(),
+    );
   }
 
   factory CedarPolicySet.fromJson(Map<String, Object?> json) {
-    return CedarPolicySet(
-      policies: {
-        for (final MapEntry(key: id, value: json) in json.entries)
-          id: CedarPolicy.fromJson(json as Map<String, Object?>),
-      },
-    );
+    return CedarPolicySet.build((b) {
+      for (final MapEntry(key: id, value: json) in json.entries) {
+        final policyOrTemplate =
+            CedarPolicy.fromJson(json as Map<String, Object?>);
+        if (policyOrTemplate.isTemplate) {
+          b.templates[id] = policyOrTemplate;
+        } else {
+          b.policies[id] = policyOrTemplate;
+        }
+      }
+    });
   }
 
   factory CedarPolicySet.build([
@@ -30,7 +39,7 @@ abstract class CedarPolicySet
   const CedarPolicySet._();
 
   BuiltMap<String, CedarPolicy> get policies;
-  // TODO(dnys1): Templates
+  BuiltMap<String, CedarPolicy> get templates;
 
   Map<String, Object?> toJson() =>
       policies.asMap().map((key, value) => MapEntry(key, value.toJson()));

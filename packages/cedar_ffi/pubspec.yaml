@@ -1,6 +1,6 @@
 name: cedar_ffi
 description: FFI bindings for the Cedar policy language, written in Rust.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/celest-dev/celest/tree/main/packages/cedar_ffi
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   built_collection: ^5.1.1
   built_value: ^8.9.1
-  cedar: ^0.1.0
+  cedar: ^0.1.1
   cli_config: ^0.1.1
   collection: ^1.18.0
   ffi: ^2.1.0

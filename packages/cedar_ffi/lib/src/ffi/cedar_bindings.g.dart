@@ -11,6 +11,16 @@ external CCedarPolicySetResult cedar_parse_policy_set(
   ffi.Pointer<ffi.Char> policies,
 );
 
+/// Links a policy template to a set of entities
+@ffi.Native<
+        ffi.Pointer<ffi.Char> Function(
+            ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>(
+    symbol: 'cedar_link_policy_template', isLeaf: true)
+external ffi.Pointer<ffi.Char> cedar_link_policy_template(
+  ffi.Pointer<ffi.Char> policy_template_json,
+  ffi.Pointer<ffi.Char> entities_json,
+);
+
 /// Initializes the Cedar policy engine with the given configuration.
 ///
 /// This must be called exactly once before any other Cedar functions are called.
@@ -54,6 +64,18 @@ final class CCedarPolicySetResult extends ffi.Struct {
 
   /// The IDs for the `policies` in the policy set.
   external ffi.Pointer<ffi.Pointer<ffi.Char>> policy_ids;
+
+  /// The number of templates in the policy set.
+  @ffi.UintPtr()
+  external int templates_len;
+
+  /// The templates in the policy set, in JSON format.
+  ///
+  /// This is only valid if `templates_len` is greater than 0 and `errors_len` is 0.
+  external ffi.Pointer<ffi.Pointer<ffi.Char>> templates;
+
+  /// The IDs for the `templates` in the policy set.
+  external ffi.Pointer<ffi.Pointer<ffi.Char>> template_ids;
 
   /// The number of errors encountered while parsing the policy set.
   @ffi.UintPtr()
