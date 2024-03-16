@@ -14,8 +14,10 @@ permit(
 ''';
 
       final policySet = CedarPolicySetFfi.fromCedar(principalTemplate);
-
       expect(policySet.templates, hasLength(1));
+
+      final serded = CedarPolicySet.fromJson(policySet.toJson());
+      expect(serded.templates, hasLength(1));
 
       final template = policySet.templates.values.first;
       expect(template.isTemplate, true);
@@ -39,8 +41,10 @@ permit(
 ''';
 
       final policySet = CedarPolicySetFfi.fromCedar(resourceTemplate);
-
       expect(policySet.templates, hasLength(1));
+
+      final serded = CedarPolicySet.fromJson(policySet.toJson());
+      expect(serded.templates, hasLength(1));
 
       final template = policySet.templates.values.first;
       expect(template.isTemplate, true);

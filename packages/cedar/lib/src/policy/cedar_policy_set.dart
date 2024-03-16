@@ -41,8 +41,10 @@ abstract class CedarPolicySet
   BuiltMap<String, CedarPolicy> get policies;
   BuiltMap<String, CedarPolicy> get templates;
 
-  Map<String, Object?> toJson() =>
-      policies.asMap().map((key, value) => MapEntry(key, value.toJson()));
+  Map<String, Object?> toJson() => {
+        ...policies.asMap().map((key, value) => MapEntry(key, value.toJson())),
+        ...templates.asMap().map((key, value) => MapEntry(key, value.toJson())),
+      };
 
   static Serializer<CedarPolicySet> get serializer =>
       _$cedarPolicySetSerializer;
