@@ -21,4 +21,4 @@ cbindgen = "0.26"
 wasm-pack = "0.12.1"
 
 [dev-dependencies]
-wasm-bindgen-test = "0.3.40"
+wasm-bindgen-test = "0.3.42"
