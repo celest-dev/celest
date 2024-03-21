@@ -7,7 +7,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-anyhow = { version = "1.0.79" }
+anyhow = { version = "1.0.81" }
 cedar-policy = { path = "../third_party/cedar/cedar-policy" }
 log = "0.4.20"
 once_cell = "1.19.0"
