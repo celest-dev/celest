@@ -35,14 +35,38 @@ Map<String, Map<String, Object?>> parsePolicies(String policiesIdl) {
       case bindings.CCedarPolicySetResult(
           :final policies,
           :final policy_ids,
-          :final policies_len
+          :final policies_len,
+          :final templates,
+          :final template_ids,
+          :final templates_len,
         ):
         return {
           for (var i = 0; i < policies_len; i++)
             policy_ids[i].cast<Utf8>().toDartString():
                 jsonDecode(policies[i].cast<Utf8>().toDartString())
                     as Map<String, Object?>,
+          for (var i = 0; i < templates_len; i++)
+            template_ids[i].cast<Utf8>().toDartString():
+                jsonDecode(templates[i].cast<Utf8>().toDartString())
+                    as Map<String, Object?>,
         };
     }
   });
+}
+
+extension CedarPolicyLinkFfi on CedarPolicy {
+  CedarPolicy link(Map<CedarSlotId, CedarEntityId> values) => using((arena) {
+        final linkedPolicy = bindings.cedar_link_policy_template(
+          jsonEncode(toJson()).toNativeUtf8(allocator: arena).cast(),
+          jsonEncode(values.map((k, v) => MapEntry(k.toJson(), v.toString())))
+              .toNativeUtf8(allocator: arena)
+              .cast(),
+        );
+        if (linkedPolicy == nullptr) {
+          throw FormatException('Could not link policy');
+        }
+        return CedarPolicy.fromJson(
+          jsonDecode(linkedPolicy.cast<Utf8>().toDartString()),
+        );
+      });
 }

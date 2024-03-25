@@ -17,9 +17,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
         with:
           cache: true
       - name: Get Packages
@@ -37,9 +37,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
         with:
           cache: true
       - name: Get Packages
@@ -73,9 +73,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
         with:
           cache: true
       - name: Get Packages (Example)
@@ -100,9 +100,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
         with:
           cache: true
       - name: Install Build Dependencies
@@ -134,9 +134,9 @@ jobs:
   #   timeout-minutes: 15
   #   steps:
   #     - name: Git Checkout
-  #       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+  #       uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
   #     - name: Setup Flutter
-  #       uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+  #       uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
   #       with:
   #         cache: true
   #     - name: Get Packages
@@ -157,9 +157,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@62f096cacda5168a3bd7b95793373be14fa4fbaf # 2.13.0
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
         with:
           cache: true
       - name: Get Packages

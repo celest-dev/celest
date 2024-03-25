@@ -18,6 +18,7 @@ Serializers _$cedarSerializers = (new Serializers().toBuilder()
       ..add(CedarPolicyPrincipal.serializer)
       ..add(CedarPolicyResource.serializer)
       ..add(CedarPolicySet.serializer)
+      ..add(CedarSlotId.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CedarEntityId)]),
           () => new ListBuilder<CedarEntityId>())
@@ -36,6 +37,10 @@ Serializers _$cedarSerializers = (new Serializers().toBuilder()
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(CedarPolicy)]),
+          () => new MapBuilder<String, CedarPolicy>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(CedarPolicy)]),

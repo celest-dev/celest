@@ -25,14 +25,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Git Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
         with:
           submodules: true
       - name: Setup Dart
         uses: dart-lang/setup-dart@fedb1266e91cf51be2fdb382869461a434b920a3 # main
-      # Will often be out-of-date on runners
-      - name: Setup Rust
-        run: rustup update stable && rustup default stable
       - name: Get Packages
         working-directory: packages/corks_cedar
         run: dart pub get

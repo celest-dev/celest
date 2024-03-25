@@ -7,6 +7,7 @@ library;
 import 'dart:convert';
 
 import 'package:cedar/src/ast/cedar_entity_id.dart';
+import 'package:cedar/src/policy/cedar_policy.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
@@ -585,13 +586,11 @@ final class JsonExprVariable extends JsonExpr {
   int get hashCode => Object.hash(op, variable);
 }
 
-enum CedarSlotId { principal, resource }
-
 final class JsonExprSlot extends JsonExpr {
   const JsonExprSlot(this.slotId);
 
   factory JsonExprSlot.fromJson(String json) {
-    return JsonExprSlot(CedarSlotId.values.byName(json.substring(1)));
+    return JsonExprSlot(CedarSlotId.fromJson(json));
   }
 
   final CedarSlotId slotId;
@@ -600,7 +599,7 @@ final class JsonExprSlot extends JsonExpr {
   JsonExprOpCode get op => JsonExprOpCode.slot;
 
   @override
-  String valueToJson() => '?${slotId.name}';
+  String valueToJson() => slotId.toJson();
 
   @override
   bool operator ==(Object other) =>
