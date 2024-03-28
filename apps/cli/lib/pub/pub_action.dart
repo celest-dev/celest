@@ -29,7 +29,9 @@ Future<void> runPub({
     <String>[exe, 'pub', action.name],
     workingDirectory: workingDirectory,
   );
-  final completer = Completer<void>();
+  // Must be sync so that completer only completes once before `finally` block
+  // cancels subscription.
+  final completer = Completer<void>.sync();
   final stdout = process.stdout.lines.listen((line) {
     if (action.matcher.hasMatch(line)) {
       completer.complete();
