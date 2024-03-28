@@ -1,4 +1,4 @@
-import 'package:celest_cli/init/pub/pubspec.dart';
+import 'package:celest_cli/pub/pubspec.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:test/test.dart';

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:celest_cli/init/pub/project_dependency.dart';
-import 'package:celest_cli/init/pub/pub_action.dart';
-import 'package:celest_cli/init/pub/pub_environment.dart';
-import 'package:celest_cli/init/pub/pubspec.dart';
+import 'package:celest_cli/pub/project_dependency.dart';
+import 'package:celest_cli/pub/pub_action.dart';
+import 'package:celest_cli/pub/pub_environment.dart';
+import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';

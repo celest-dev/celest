@@ -2,7 +2,7 @@ import 'dart:io' show Platform, ProcessException, ProcessStartMode;
 import 'dart:math';
 
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/init/pub/pub_environment.dart';
+import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:checks/checks.dart';
 import 'package:file/file.dart';

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:celest_cli/init/pub/language_version.dart';
-import 'package:celest_cli/init/pub/pub_exceptions.dart';
-import 'package:celest_cli/init/pub/pub_package.dart';
-import 'package:celest_cli/init/pub/pubspec_lock.dart';
+import 'package:celest_cli/pub/language_version.dart';
+import 'package:celest_cli/pub/pub_exceptions.dart';
+import 'package:celest_cli/pub/pub_package.dart';
+import 'package:celest_cli/pub/pubspec_lock.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:convert/convert.dart';
 import 'package:meta/meta.dart';

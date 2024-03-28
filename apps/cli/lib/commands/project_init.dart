@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:celest_cli/init/pub/pub_action.dart';
+import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';

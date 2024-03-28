@@ -1,6 +1,6 @@
 import 'package:celest_cli/init/project_item.dart';
-import 'package:celest_cli/init/pub/project_dependency.dart';
-import 'package:celest_cli/init/pub/pub_environment.dart';
+import 'package:celest_cli/pub/project_dependency.dart';
+import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
 import 'package:pub_semver/pub_semver.dart';

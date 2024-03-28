@@ -1,4 +1,4 @@
-import 'package:celest_cli/init/pub/language_version.dart';
+import 'package:celest_cli/pub/language_version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:pub_semver/pub_semver.dart';
 

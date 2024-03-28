@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/init/pub/pub_environment.dart';
 import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_proto/ast.dart';

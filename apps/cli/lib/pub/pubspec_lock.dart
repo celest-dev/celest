@@ -2,9 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:celest_cli/init/pub/pub_package.dart';
-import 'package:celest_cli/init/pub/pub_source.dart';
-import 'package:celest_cli/init/pub/sdk_constraint.dart';
+import 'package:celest_cli/pub/pub_package.dart';
+import 'package:celest_cli/pub/pub_source.dart';
+import 'package:celest_cli/pub/sdk_constraint.dart';
 import 'package:collection/collection.dart' hide mapMap;
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
