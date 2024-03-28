@@ -771,6 +771,40 @@ class ValidCustomJson {
       );
 
       testNoErrors(
+        name: 'custom_json_in_mixin',
+        lib: {
+          'models': {
+            'test.dart': '''
+class NotSerializable with _NotSerializable {
+  NotSerializable({
+    Future<int>? value,
+  }): value = value ?? Future.value(42);
+
+  factory NotSerializable.fromJson(Map<String, dynamic> json) {
+    return NotSerializable(
+      value: Future.value(json['value'] as int),
+    );
+  }
+
+  final Future<int> value;
+}
+
+mixin _NotSerializable on NotSerializable {
+  Map<String, dynamic> toJson() => {'value': 42};
+}
+''',
+          },
+        },
+        apis: {
+          'test.dart': '''
+import 'package:custom_json_in_mixin/models/test.dart';
+
+NotSerializable test() => NotSerializable();
+''',
+        },
+      );
+
+      testNoErrors(
         name: 'valid_static_fromJson',
         apis: {
           'greeting.dart': '''

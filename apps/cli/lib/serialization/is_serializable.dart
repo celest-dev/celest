@@ -1126,7 +1126,12 @@ typedef InterfaceMembers = ({
 });
 
 extension on InterfaceType {
-  MethodElement? get toJsonMethod => getMethod('toJson');
+  MethodElement? get toJsonMethod => switch (element) {
+        // Extension types always reset the toJson method to the representation
+        // type.
+        ExtensionTypeElement() => getMethod('toJson'),
+        _ => lookUpMethod2('toJson', element.library),
+      };
 
   ExecutableElement? get fromJsonCtor =>
       lookUpConstructor('fromJson', element.library) ??
