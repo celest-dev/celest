@@ -76,7 +76,8 @@
                   }
                 ]
               }
-            }
+            },
+            "templates": {}
           }
         },
         "sayHelloPublic": {
@@ -107,7 +108,8 @@
                 },
                 "conditions": []
               }
-            }
+            },
+            "templates": {}
           }
         },
         "sayHello": {
@@ -195,7 +197,8 @@
               }
             ]
           }
-        }
+        },
+        "templates": {}
       }
     },
     "public_lib": {
@@ -231,7 +234,8 @@
             },
             "conditions": []
           }
-        }
+        },
+        "templates": {}
       }
     }
   },
