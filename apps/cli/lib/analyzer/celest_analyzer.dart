@@ -262,13 +262,14 @@ final class CelestAnalyzer {
     switch (library) {
       case ResolvedLibraryResult():
         return library;
+      case NotLibraryButPartResult():
+        return _resolvePartFile(path);
       case UriOfExternalLibraryResult():
       case CannotResolveUriResult():
       case DisposedAnalysisContextResult():
       case InvalidPathResult():
       case NotElementOfThisSessionResult():
       case NotLibraryButAugmentationResult():
-      case NotLibraryButPartResult():
       case NotPathOfUriResult():
       case InvalidResult():
       case _:
@@ -276,6 +277,23 @@ final class CelestAnalyzer {
           'Could not resolve library at "$path": ${library.runtimeType}',
         );
     }
+  }
+
+  Future<ResolvedLibraryResult> _resolvePartFile(String path) async {
+    final unit = await _context.currentSession.getResolvedUnit(path);
+    if (unit case ResolvedUnitResult(:final libraryElement)) {
+      final resolvedLibrary = await _context.currentSession
+          .getResolvedLibraryByElement(libraryElement);
+      if (resolvedLibrary is! ResolvedLibraryResult) {
+        throw StateError(
+          'Could not resolve library for part file at "$path": ${unit.runtimeType}',
+        );
+      }
+      return resolvedLibrary;
+    }
+    throw StateError(
+      'Could not resolve part file at "$path": ${unit.runtimeType}',
+    );
   }
 
   Future<ast.ProjectBuilder?> _findProject() async {

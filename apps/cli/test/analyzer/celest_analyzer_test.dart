@@ -32,7 +32,7 @@ Future<CelestProject> newProject({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  Map<String, String> lib = const {},
+  Map<String, Object /* String | Map<String, Object?>*/ > lib = const {},
   String? parentDirectory,
 }) async {
   projectDart ??= _simpleProjectDart(name);
@@ -115,14 +115,28 @@ $contents
     d.dir('lib', [
       d.file('models.dart', models ?? ''),
       d.file('exceptions.dart', exceptions ?? ''),
-      for (final MapEntry(key: fileName, value: contents) in lib.entries)
-        d.file(fileName, contents),
+      ..._nestedDescriptor(lib),
     ]),
   ]);
   await project.create(parentDirectory);
   final projectRoot = p.join(parentDirectory ?? d.sandbox, name);
   await init(projectRoot: projectRoot);
   return celestProject;
+}
+
+Iterable<d.Descriptor> _nestedDescriptor(
+  Map<String, Object> descriptors,
+) sync* {
+  for (final MapEntry(key: name, value: contents) in descriptors.entries) {
+    yield switch (contents) {
+      String() => d.file(name, contents),
+      Map() => d.dir(
+          name,
+          _nestedDescriptor(contents.cast()),
+        ),
+      _ => unreachable(),
+    };
+  }
 }
 
 void testNoErrors({
@@ -136,7 +150,7 @@ void testNoErrors({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  Map<String, String> lib = const {},
+  Map<String, Object> lib = const {},
   void Function(Project)? expectProject,
 }) {
   testErrors(
@@ -167,7 +181,7 @@ void testErrors({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  Map<String, String> lib = const {},
+  Map<String, Object> lib = const {},
   required List<Object /* String | Matcher */ > errors,
   void Function(Project)? expectProject,
 }) {
@@ -209,8 +223,72 @@ void testErrors({
 }
 
 void main() {
-  group('Analyzer Errors', () {
+  group('CelestAnalyzer', () {
     setUpAll(initTests);
+
+    group('part files', () {
+      testNoErrors(
+        name: 'can_resolve_part_files',
+        lib: {
+          'models': {
+            'test.dart': '''
+part 'test.g.dart';
+''',
+            'test.g.dart': '''
+part of 'test.dart';
+
+class Test {}
+''',
+          },
+        },
+        apis: {
+          'test.dart': '''
+import 'package:can_resolve_part_files/models/test.dart';
+
+Test test() => Test();
+''',
+        },
+      );
+
+      testNoErrors(
+        name: 'can_define_to_json_in_part_files',
+        lib: {
+          'models': {
+            'test.dart': '''
+part 'test.g.dart';
+
+class NotSerializable with _NotSerializable {
+  NotSerializable({
+    Future<int>? value,
+  }): value = value ?? Future.value(42);
+
+  factory NotSerializable.fromJson(Map<String, dynamic> json) {
+    return NotSerializable(
+      value: Future.value(json['value'] as int),
+    );
+  }
+
+  final Future<int> value;
+}
+''',
+            'test.g.dart': '''
+part of 'test.dart';
+
+mixin _NotSerializable on NotSerializable {
+  Map<String, dynamic> toJson() => {'value': 42};
+}
+''',
+          },
+        },
+        apis: {
+          'test.dart': '''
+import 'package:can_define_to_json_in_part_files/models/test.dart';
+
+NotSerializable test() => NotSerializable();
+''',
+        },
+      );
+    });
 
     group('project.dart', () {
       testNoErrors(
