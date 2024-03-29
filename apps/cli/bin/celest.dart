@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:celest_cli/commands/billing/subscribe_command.dart';
+import 'package:celest_cli/commands/billing/unsubscribe_command.dart';
 import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
@@ -41,6 +43,8 @@ void main(List<String> args) async {
   )
     ..addCommand(StartCommand())
     ..addCommand(DeployCommand())
+    ..addCommand(SubscribeCommand())
+    ..addCommand(UnsubscribeCommand())
     ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand());
   await cli.run(args);
