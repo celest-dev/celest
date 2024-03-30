@@ -609,6 +609,7 @@ final class CelestFrontend implements Closeable {
             await _localApiRunner!.close();
             _localApiRunner = await LocalApiRunner.start(
               path: projectPaths.localApiEntrypoint,
+              port: _localApiRunner?.port,
               envVars: envVars,
               verbose: verbose,
             );
