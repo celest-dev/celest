@@ -48,3 +48,8 @@ DeployClient get deployService => DeployClient(
       baseUri: baseUri,
       httpClient: ctx.httpClient,
     );
+ProjectClient get projectService => ProjectClient(
+      secureStorage: ctx.secureStorage,
+      baseUri: baseUri,
+      httpClient: ctx.httpClient,
+    );

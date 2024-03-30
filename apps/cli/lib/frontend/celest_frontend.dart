@@ -395,12 +395,60 @@ final class CelestFrontend implements Closeable {
     }
   }
 
+  /// Gets or creates a project with the given [projectName] in the authenticated
+  /// user's organization.
+  Future<String?> _getOrCreateProject({
+    required String projectName,
+  }) async {
+    final GetProjectResponse(:project) =
+        await projectService.getProject(projectName: projectName);
+    if (project != null) {
+      return project.projectId;
+    }
+    final shouldCreate = cliLogger.confirm(
+      'Would you like to create a new project?',
+    );
+    if (!shouldCreate) {
+      return null;
+    }
+    final quotas = await projectService.precheckProject(
+      projectName: projectName,
+    );
+    final availableProjectTypes = [
+      if (quotas.limits.remainingFree > 0) ProjectType.free,
+      if (quotas.limits.remainingPremium > 0) ProjectType.premium,
+    ];
+    if (availableProjectTypes.isEmpty) {
+      cliLogger.err(
+        'Unfortunately, you have no remaining projects in your '
+        'organization. Please upgrade your plan to create more projects.',
+      );
+      return null;
+    }
+    final projectType = cliLogger.chooseOne(
+      'Great! Which project type would you like to create?',
+      choices: availableProjectTypes,
+      display: (type) => type.displayName,
+    );
+    final CreateProjectResponse(:projectId) =
+        await projectService.createProject(
+      projectName: projectName,
+      projectType: projectType,
+    );
+    await _saveProjectId(projectId);
+    cliLogger.success('Your project has been created! Starting deployment...');
+    return projectId;
+  }
+
   /// Builds the current project for deployment to the cloud.
   Future<int> build() async {
     Progress? currentProgress;
+    var projectId = await _loadProjectId();
     try {
       while (!stopped) {
-        currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
+        if (projectId != null) {
+          currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
+        }
         _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
@@ -419,6 +467,15 @@ final class CelestFrontend implements Closeable {
             fail(errors);
             await _nextChangeSet();
           case AnalysisSuccessResult(:final project):
+            projectId ??= await _getOrCreateProject(
+              projectName: project.name,
+            );
+            if (projectId == null) {
+              // CX declined creation or can't create more.
+              return 0;
+            }
+
+            currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
             await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
 
@@ -437,6 +494,7 @@ final class CelestFrontend implements Closeable {
               iteration++;
             });
             final projectOutputs = await _deployProject(
+              projectId: projectId,
               resolvedProject: resolvedProject,
             );
             await _generateClientCode(
@@ -620,6 +678,19 @@ final class CelestFrontend implements Closeable {
     return state;
   }
 
+  Future<String?> _loadProjectId() async {
+    final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
+    if (!pubspecFile.existsSync()) {
+      return null;
+    }
+    final pubspec = YamlEditor(await pubspecFile.readAsString());
+    try {
+      return pubspec.parseAt(['celest', 'project', 'id']).value as String?;
+    } on Object {
+      return null;
+    }
+  }
+
   Future<void> _saveProjectId(String projectId) async {
     logger.finer('Saving project ID to pubspec.yaml: $projectId');
     final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
@@ -636,12 +707,13 @@ final class CelestFrontend implements Closeable {
   }
 
   Future<ast.RemoteDeployedProject> _deployProject({
+    required String projectId,
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
         logger.fine('Creating deployment');
         final createResult = await deployService.createDeployment(
-          projectName: resolvedProject.name,
+          projectId: projectId,
           ast: resolvedProject,
         );
         if (stopped) {
