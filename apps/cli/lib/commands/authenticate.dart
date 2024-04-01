@@ -5,7 +5,7 @@ import 'package:email_validator/email_validator.dart';
 
 base mixin Authenticate on CelestCommand {
   Future<int> signUp() async {
-    cliLogger.info(
+    cliLogger.success(
       "Welcome! To get started with Celest Cloud, we'll need to verify your "
       'email.',
     );
@@ -28,7 +28,7 @@ base mixin Authenticate on CelestCommand {
       final flow = await auth.email.authenticate(email: email);
       cliLogger.info(
         'We have sent you an email with a verification code. '
-        'Please enter it below to accept the invite.',
+        'Please enter it below to verify your account.',
       );
       final verificationCode = cliLogger.prompt('Verification code:');
       if (verificationCode.isEmpty) {
