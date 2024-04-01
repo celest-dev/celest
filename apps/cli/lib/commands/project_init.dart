@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
-import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -73,7 +72,6 @@ base mixin Configure on CelestCommand {
         final downloadProgress =
             cliLogger.progress('Downloading additional resources');
         try {
-          final releases = await retrieveCliReleases();
           // TODO(dnys1): Fix native asset build
           // final thisRelease = releases.releases[packageVersion];
           // if (thisRelease == null) {
@@ -81,11 +79,11 @@ base mixin Configure on CelestCommand {
           //     'Failed to find release information for version $packageVersion.',
           //   );
           // }
-          final latest = releases.latest;
-          final path = latest.installer!;
+          // https://releases.celest.devcelest-latest-windows_x64.appx
           final dll = CelestReleasesInfo.baseUri.resolve(
-            p.url.join(p.url.dirname(path), 'cedar_ffi.dll'),
+            '${Abi.current()}/latest/cedar_ffi.dll',
           );
+          logger.finest('Downloading cedar_ffi.dll from $dll');
           final download = await httpClient.send(Request('GET', dll));
           if (download.statusCode != 200) {
             throw Exception('Failed to download cedar_ffi.dll');
