@@ -1,3 +1,5 @@
+## 0.4.0-dev.1
+
 ## 0.3.1
 
 - Makes request context not specific to Celest
