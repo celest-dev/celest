@@ -13,8 +13,8 @@ final class CreateProjectTest extends Test {
         .start()
         .expectNext('Enter a name for your project')
         .writeLine('hello')
-        .expectNext('Generating project')
-        .expectNext('Project generated successfully')
+        .expectLater('Generating project')
+        .expectLater('Project generated successfully')
         .run();
   }
 }

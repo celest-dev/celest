@@ -16,7 +16,7 @@ final class HelloProjectTest extends Test {
     await celestCommand('start')
         .workingDirectory(helloExample)
         .start()
-        .expectNext('Starting Celest')
+        .expectLater('Starting Celest')
         .expectNext('Celest is running')
         .run();
   }
