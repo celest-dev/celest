@@ -39,25 +39,18 @@ void main(List<String> args) async {
       if (!File.fromUri(binaryOut).existsSync()) {
         throw Exception('$binaryOut does not exist');
       }
+      final linkMode = config.targetOS == OS.windows
+          ? LookupInProcess()
+          : DynamicLoadingBundled();
+      final file = config.targetOS == OS.windows ? null : binaryOut;
       final nativeAsset = NativeCodeAsset(
         package: packageName,
         name: 'src/ffi/cedar_bindings.g.dart',
-        linkMode: DynamicLoadingBundled(),
+        linkMode: linkMode,
         os: config.targetOS,
         architecture: config.targetArchitecture,
-        file: binaryOut,
+        file: file,
       );
-      if (config.targetOS == OS.windows) {
-        output.addAsset(
-          NativeCodeAsset(
-            package: config.packageName,
-            name: 'src/ffi/cedar_bindings.g.dart',
-            linkMode: LookupInProcess(),
-            os: config.targetOS,
-            architecture: config.targetArchitecture,
-          ),
-        );
-      }
       buildLogs.writeln('Compiled asset: ${nativeAsset.toString()}');
       output.addAsset(nativeAsset);
     });
