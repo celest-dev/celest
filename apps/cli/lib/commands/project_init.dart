@@ -8,7 +8,6 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cli_common/src/platform/windows_paths.dart';
-import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart';
@@ -64,7 +63,8 @@ base mixin Configure on CelestCommand {
 
     await _updateAppPubspec();
 
-    if (platform.isWindows && kReleaseMode) {
+    if (platform.isWindows &&
+        !DynamicLibrary.process().providesSymbol('cedar_init')) {
       final appDir = PathProviderWindows().getApplicationSupportPath()!;
       final file =
           fileSystem.file(p.join(appDir, packageVersion, 'cedar_ffi.dll'));
