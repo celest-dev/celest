@@ -74,13 +74,15 @@ base mixin Configure on CelestCommand {
             cliLogger.progress('Downloading additional resources');
         try {
           final releases = await retrieveCliReleases();
-          final thisRelease = releases.releases[packageVersion];
-          if (thisRelease == null) {
-            throw Exception(
-              'Failed to find release information for version $packageVersion.',
-            );
-          }
-          final path = thisRelease.installer!;
+          // TODO(dnys1): Fix native asset build
+          // final thisRelease = releases.releases[packageVersion];
+          // if (thisRelease == null) {
+          //   throw Exception(
+          //     'Failed to find release information for version $packageVersion.',
+          //   );
+          // }
+          final latest = releases.latest;
+          final path = latest.installer!;
           final dll = CelestReleasesInfo.baseUri.resolve(
             p.url.join(p.url.dirname(path), 'cedar_ffi.dll'),
           );
