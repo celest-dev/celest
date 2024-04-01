@@ -5,13 +5,13 @@ import 'package:email_validator/email_validator.dart';
 
 base mixin Authenticate on CelestCommand {
   Future<int> signUp() async {
-    cliLogger.warn(
-      'Celest Cloud is available now for our early-bird customers. '
-      'If you have an invite code, please enter it below.',
+    cliLogger.info(
+      "Welcome! To get started with Celest Cloud, we'll need to verify your "
+      'email.',
     );
     String? email;
     while (email == null) {
-      final input = cliLogger.prompt('Invite code:');
+      final input = cliLogger.prompt('Email:');
       if (input.isEmpty || !EmailValidator.validate(input, true)) {
         cliLogger.err('Invalid email address');
         continue;
