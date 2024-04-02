@@ -32,7 +32,6 @@ jobs:
         working-directory: packages/platform/storage
         run: dart format --set-exit-if-changed .
   test_darwin:
-    needs: analyze_and_format
     runs-on: macos-latest-xlarge
     timeout-minutes: 20
     steps:
@@ -66,7 +65,6 @@ jobs:
         working-directory: packages/platform/storage/example
         run: flutter test -d macos integration_test/storage_test.dart
   test_android:
-    needs: analyze_and_format
     runs-on:
       group: public
       labels: linux
@@ -95,7 +93,6 @@ jobs:
           arch: x86_64
           script: cd packages/platform/storage/example && flutter test -d emulator integration_test/storage_test.dart
   test_linux:
-    needs: analyze_and_format
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -129,7 +126,6 @@ jobs:
   # TODO: Re-enable
   #       Need to fix this: Git error. Command: `git clone --mirror https://github.com/dart-lang/native /c/Users/runneradmin/.pub-cache\git\cache\native-647c69ed8027da6d6def6bc40efa87cf1a2f76aa`
   test_windows:
-    needs: analyze_and_format
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
@@ -152,7 +148,6 @@ jobs:
         working-directory: packages/platform/storage/example
         run: flutter test -d windows integration_test/storage_test.dart
   test_web:
-    needs: analyze_and_format
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
