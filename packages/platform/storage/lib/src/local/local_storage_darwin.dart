@@ -19,7 +19,7 @@ final class LocalStoragePlatformDarwin extends LocalStoragePlatform {
   /// identifier and the scope, which creates a new domain for the user defaults
   /// which can be shared between apps.
   ///
-  /// See the discussion here: https://developer.apple.com/documentation/foundation/nsuserdefaults/1409957-initwithsuitename?language=objc
+  /// See the discussion here: https://developer.apple.com/documentation/foundation/nsuserdefaults/1409957-initwithsuitename#discussion
   late final _suiteName = () {
     final String domain = scope == null ? namespace : '$namespace.$scope';
     if (_bundleIdentifier != null && domain == _bundleIdentifier.toString()) {

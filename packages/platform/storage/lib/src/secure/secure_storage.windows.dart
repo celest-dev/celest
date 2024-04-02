@@ -1,12 +1,6 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:ffi/ffi.dart';
-import 'package:path/path.dart' as p;
-import 'package:platform_storage/src/native/windows/windows_paths.dart';
-import 'package:platform_storage/src/secure/secure_storage_exception.dart';
+import 'package:platform_storage/platform_storage.dart';
+import 'package:platform_storage/src/native/windows/winrt/passwordcredential.dart';
+import 'package:platform_storage/src/native/windows/winrt/passwordvault.dart';
 import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
 import 'package:win32/win32.dart';
 
@@ -16,127 +10,83 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
     super.scope,
   }) : super.base();
 
-  late final String _storagePath = p.joinAll([
-    // The LocalAppData folder
-    PathProviderWindows.getApplicationCachePath()!,
-    if (scope != null) ...[namespace, '$scope.json'] else '$namespace.json',
-  ]);
-  late final File _storage = File(_storagePath);
+  // https://github.com/microsoft/Windows-universal-samples/blob/bb470280e493a888d98ac367edf3b85f8c053c4f/Samples/PasswordVault/cs/Scenario2_Manage.xaml.cs#L25
+  static const int _elementNotFound = 0x80070490;
 
-  Map<String, String> _readData() {
-    if (!_storage.existsSync()) {
-      return {};
-    }
-    return (jsonDecode(_storage.readAsStringSync()) as Map).cast();
-  }
+  late final _vault = PasswordVault();
+  late final _resource = scope == null ? namespace : '$namespace.$scope';
 
-  void _writeData(Map<String, String> data) {
-    if (!_storage.existsSync()) {
-      _storage.createSync(recursive: true);
+  @override
+  String? read(String key) {
+    try {
+      final credential = _vault.retrieve(_resource, key);
+      if (credential == null) {
+        return null;
+      }
+      credential.retrievePassword();
+      return credential.password;
+    } on WindowsException catch (e, st) {
+      if (e.hr == _elementNotFound) {
+        return null;
+      }
+      Error.throwWithStackTrace(
+        PlatformStorageUnknownException(e.toString()),
+        st,
+      );
     }
-    _storage.writeAsStringSync(jsonEncode(data));
   }
 
   @override
-  void clear() {
-    if (_storage.existsSync()) {
-      _storage.deleteSync();
+  String write(String key, String value) {
+    try {
+      final credential = PasswordCredential.createPasswordCredential(
+        _resource,
+        key,
+        value,
+      );
+      _vault.add(credential);
+      return value;
+    } on WindowsException catch (e, st) {
+      Error.throwWithStackTrace(
+        PlatformStorageUnknownException(e.toString()),
+        st,
+      );
     }
   }
 
   @override
   String? delete(String key) {
-    final data = _readData();
-    final value = data.remove(key);
-    _writeData(data);
-    return value;
-  }
-
-  @override
-  String? read(String key) {
-    final value = _readData()[key];
-    if (value == null) {
-      return null;
+    try {
+      final credential = _vault.retrieve(_resource, key);
+      if (credential == null) {
+        return null;
+      }
+      final password = credential.password;
+      _vault.remove(credential);
+      return password;
+    } on WindowsException catch (e, st) {
+      if (e.hr == _elementNotFound) {
+        return null;
+      }
+      Error.throwWithStackTrace(
+        PlatformStorageUnknownException(e.toString()),
+        st,
+      );
     }
-    return _decrypt(value);
   }
 
   @override
-  String write(String key, String value) {
-    final encrypted = _encrypt(value);
-    final data = _readData()..[key] = encrypted;
-    _writeData(data);
-    return value;
-  }
-
-  WindowsException get _lastException =>
-      WindowsException(HRESULT_FROM_WIN32(GetLastError()));
-
-  /// A wrapper around [CryptProtectData] for encrypting [Uint8List].
-  String _encrypt(String value) {
-    return using((Arena arena) {
-      final bytes = utf8.encode(value);
-      final blob = bytes.allocatePointerInArena(arena);
-      final dataPtr = arena<CRYPT_INTEGER_BLOB>()
-        ..ref.cbData = bytes.length
-        ..ref.pbData = blob;
-      final encryptedPtr = arena<CRYPT_INTEGER_BLOB>();
-      CryptProtectData(
-        dataPtr,
-        nullptr, // no label
-        nullptr, // no added entropy
-        nullptr, // reserved
-        nullptr, // no prompt
-        0, // default flag
-        encryptedPtr,
-      );
-      final err = GetLastError();
-      if (err != WIN32_ERROR.ERROR_SUCCESS) {
-        throw SecureStorageUnknownException(_lastException.toString());
+  void clear() {
+    try {
+      final credentials = _vault.findAllByResource(_resource);
+      for (final credential in credentials) {
+        _vault.remove(credential);
       }
-      final encryptedBlob = encryptedPtr.ref;
-      final encryptedBytes =
-          encryptedBlob.pbData.asTypedList(encryptedBlob.cbData);
-      return base64Encode(encryptedBytes);
-    });
-  }
-
-  /// A wrapper around [CryptUnprotectData] for decrypting a blob.
-  String _decrypt(String value) {
-    return using((Arena arena) {
-      final data = base64Decode(value);
-      final blob = data.allocatePointerInArena(arena);
-      final dataPtr = arena<CRYPT_INTEGER_BLOB>()
-        ..ref.cbData = data.length
-        ..ref.pbData = blob;
-      final unencryptedPtr = arena<CRYPT_INTEGER_BLOB>();
-      CryptUnprotectData(
-        dataPtr,
-        nullptr, // no label
-        nullptr, // no added entropy
-        nullptr, // reserved
-        nullptr, // no prompt
-        0, // default flag
-        unencryptedPtr,
+    } on WindowsException catch (e, st) {
+      Error.throwWithStackTrace(
+        PlatformStorageUnknownException(e.toString()),
+        st,
       );
-      final err = GetLastError();
-      if (err != WIN32_ERROR.ERROR_SUCCESS) {
-        throw SecureStorageUnknownException(_lastException.toString());
-      }
-      final unencryptedDataBlob = unencryptedPtr.ref;
-      final unencryptedBlob = unencryptedDataBlob.pbData.asTypedList(
-        unencryptedDataBlob.cbData,
-      );
-      return utf8.decode(unencryptedBlob);
-    });
-  }
-}
-
-extension on Uint8List {
-  /// Alternative to [allocatePointer] from win32, which uses an [Arena].
-  Pointer<Uint8> allocatePointerInArena(Arena arena) {
-    final ptr = arena<Uint8>(length);
-    ptr.asTypedList(length).setAll(0, this);
-    return ptr;
+    }
   }
 }

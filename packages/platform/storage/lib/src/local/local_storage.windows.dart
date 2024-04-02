@@ -1,59 +1,50 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:path/path.dart' as p;
-import 'package:platform_storage/src/native/windows/windows_paths.dart';
 import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
+import 'package:windows_storage/windows_storage.dart';
 
-final class SecureStoragePlatformWindows extends SecureStoragePlatform {
-  SecureStoragePlatformWindows({
+final class LocalStoragePlatformWindows extends SecureStoragePlatform {
+  LocalStoragePlatformWindows({
     required super.namespace,
     super.scope,
   }) : super.base();
 
-  late final String _storagePath = p.joinAll([
-    // The RoamingAppData folder
-    PathProviderWindows.getApplicationSupportPath()!,
-    if (scope != null) ...[namespace, '$scope.json'] else '$namespace.json',
-  ]);
-  late final File _storage = File(_storagePath);
+  final _settings = ApplicationData.current!.roamingSettings!;
+  late final _container = scope == null
+      ? _settings
+      : _settings.createContainer(
+          scope!,
+          ApplicationDataCreateDisposition.always,
+        )!;
 
-  Map<String, String> _readData() {
-    if (!_storage.existsSync()) {
-      return {};
-    }
-    return (jsonDecode(_storage.readAsStringSync()) as Map).cast();
+  @override
+  String? delete(String key) {
+    final stored = read(key);
+    _container.values!.remove(key);
+    return stored;
   }
 
-  void _writeData(Map<String, String> data) {
-    if (!_storage.existsSync()) {
-      _storage.createSync(recursive: true);
-    }
-    _storage.writeAsStringSync(jsonEncode(data));
+  @override
+  String? read(String key) => _container.values!.lookup(key) as String?;
+
+  @override
+  String write(String key, String value) {
+    _container.values!.insert(key, value);
+    return value;
   }
 
   @override
   void clear() {
-    if (_storage.existsSync()) {
-      _storage.deleteSync();
+    for (final key in _container.values!.getView().keys) {
+      _container.values!.remove(key);
+    }
+    if (scope case final scope?) {
+      _settings.deleteContainer(scope);
     }
   }
 
   @override
-  String? delete(String key) {
-    final data = _readData();
-    final value = data.remove(key);
-    _writeData(data);
-    return value;
-  }
-
-  @override
-  String? read(String key) => _readData()[key];
-
-  @override
-  String write(String key, String value) {
-    final data = _readData()..[key] = value;
-    _writeData(data);
-    return value;
+  void close() {
+    _container.close();
+    _settings.close();
+    super.close();
   }
 }
