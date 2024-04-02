@@ -34,7 +34,11 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final SecureStorage _secureStorage = SecureStorage();
+  late final String _namespace = 'TODO';
+
+  late final PlatformSecureStorage _secureStorage = PlatformSecureStorage(
+    namespace: _namespace,
+  );
 
   @override
   late _$http.Client httpClient =

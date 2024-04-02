@@ -12,7 +12,8 @@ extension type CelestAuth._(_$auth_impl.AuthImpl _hub)
     implements _$celest_auth.Auth {
   CelestAuth(
     CelestBase celest, {
-    required SecureStorage secureStorage,
+    required PlatformSecureStorage secureStorage,
+    PlatformLocalStorage? localStorage,
   }) : _hub = _$auth_impl.AuthImpl(
           celest,
           secureStorage: secureStorage,
