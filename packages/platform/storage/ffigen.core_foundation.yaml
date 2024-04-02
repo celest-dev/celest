@@ -1,0 +1,50 @@
+name: CoreFoundation
+description: |
+  Bindings for Core Foundation on iOS/macOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.core_foundation.yaml`.
+language: "c"
+output:
+  bindings: "lib/src/native/darwin/core_foundation.ffi.dart"
+compiler-opts:
+  - "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+headers:
+  entry-points:
+    - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDictionary.h"
+    - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFString.h"
+    - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFData.h"
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+
+ffi-native:
+exclude-all-by-default: true
+typedefs:
+  include:
+    - CF.*
+globals:
+  include:
+    - kCF.*
+functions:
+  include:
+    - CFDictionary.*
+    - CFDataCreate
+    - CFStringGetCStringPtr
+    - CFStringGetCString
+    - CFStringGetLength
+    - CFStringGetMaximumSizeForEncoding
+    - CFStringCreateWithCString
+    - CFDataGetBytePtr
+    - CFRelease
+structs:
+  rename:
+    "__CFString": CFString
+    "__CFData": CFData
+    "__CFDictionary": CFDictionary
+unnamed-enums:
+  include:
+    - kCF.*
