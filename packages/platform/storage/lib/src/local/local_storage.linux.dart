@@ -7,6 +7,7 @@ import 'package:native_synchronization/primitives.dart';
 import 'package:path/path.dart' as p;
 import 'package:platform_storage/src/local/local_storage_platform.vm.dart';
 import 'package:platform_storage/src/native/linux/glib.ffi.dart';
+import 'package:platform_storage/src/native/linux/linux.dart';
 import 'package:xdg_directories/xdg_directories.dart' as xdg;
 
 final class LocalStoragePlatformLinux extends LocalStoragePlatform {
@@ -38,7 +39,7 @@ final class LocalStoragePlatformLinux extends LocalStoragePlatform {
   ]);
 
   @override
-  String get namespace => throw UnimplementedError();
+  String get namespace => linux.applicationId;
 
   /// Protects [_storage] from concurrent access and ensures API transactionality.
   final Mutex _mutex = Mutex();

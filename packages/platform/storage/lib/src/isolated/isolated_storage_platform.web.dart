@@ -4,7 +4,7 @@ import 'package:platform_storage/platform_storage.dart';
 final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
   IsolatedStoragePlatform({
     required PlatformStorageFactory factory,
-    required String namespace,
+    String? namespace,
     String? scope,
   }) : _impl = factory(
           namespace: namespace,

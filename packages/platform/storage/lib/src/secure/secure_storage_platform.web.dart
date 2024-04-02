@@ -3,6 +3,6 @@ import 'package:platform_storage/src/secure/secure_storage.dart';
 
 extension type SecureStoragePlatform._(PlatformSecureStorage _impl)
     implements PlatformSecureStorage {
-  SecureStoragePlatform({required String namespace, String? scope})
+  SecureStoragePlatform({String? namespace, String? scope})
       : _impl = PlatformMemoryStorage(namespace: namespace, scope: scope);
 }

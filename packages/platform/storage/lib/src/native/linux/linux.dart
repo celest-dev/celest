@@ -1,7 +1,10 @@
 import 'dart:ffi';
+import 'dart:io';
 
+import 'package:ffi/ffi.dart';
 import 'package:platform_storage/src/native/linux/glib.ffi.dart';
 import 'package:platform_storage/src/native/linux/libsecret.ffi.dart';
+import 'package:platform_storage/src/util/functional.dart';
 
 final linux = LinuxCommon._();
 
@@ -19,4 +22,17 @@ final class LinuxCommon {
 
   late final Libsecret libSecret =
       Libsecret(DynamicLibrary.open('libsecret-1.so.0'));
+
+  late final String applicationId = lazy(() {
+    final exeName = File('/proc/self/exe').resolveSymbolicLinksSync();
+    try {
+      final application = gio.g_application_get_default();
+      if (application == nullptr) {
+        return exeName;
+      }
+      return gio.g_application_get_application_id(application).toDartString();
+    } on Object {
+      return exeName;
+    }
+  });
 }
