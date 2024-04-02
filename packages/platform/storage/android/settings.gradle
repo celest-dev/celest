@@ -1,0 +1,6 @@
+rootProject.name = 'platform_storage'
+dependencyResolutionManagement {
+   repositories {
+       google()
+   }
+}
