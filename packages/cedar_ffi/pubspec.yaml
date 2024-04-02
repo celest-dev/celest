@@ -27,33 +27,3 @@ dev_dependencies:
   lints: ^3.0.0
   path: ^1.8.3
   test: ^1.21.0
-
-ffigen:
-  name: CedarFfi
-  description: C bindings to the Cedar policy engine
-  ffi-native:
-  language: c
-  headers:
-    entry-points:
-      - "src/include/bindings.h"
-  compiler-opts:
-    # Suppress nullability warnings on macOS
-    - "-Wno-nullability-completeness"
-    # Ignore warnings about availability macro
-    - "-Wno-availability"
-  output:
-    bindings: "lib/src/ffi/cedar_bindings.g.dart"
-  comments:
-    style: any
-    length: full
-  exclude-all-by-default: true
-  functions:
-    include:
-      - "cedar_.*"
-    leaf:
-      # All C APIs are leaf functions (e.g. they do not call into Dart)
-      include:
-        - ".*"
-  structs:
-    include:
-      - "CCedar.*"

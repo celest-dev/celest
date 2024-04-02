@@ -1,0 +1,27 @@
+name: CedarFfiSymbols
+description: C bindings to the Cedar policy engine (symbols-only)
+ffi-native:
+language: c
+headers:
+  entry-points:
+    - "src/include/bindings.h"
+compiler-opts:
+  # Suppress nullability warnings on macOS
+  - "-Wno-nullability-completeness"
+  # Ignore warnings about availability macro
+  - "-Wno-availability"
+output:
+  bindings: "lib/src/ffi/cedar_bindings.symbols.ffi.dart"
+  symbol-file:
+    output: 'package:cedar_ffi/src/ffi/symbols.yaml'
+    import-path: 'package:cedar_ffi/src/ffi/cedar_bindings.symbols.ffi.dart'
+comments:
+  style: any
+  length: full
+exclude-all-by-default: true
+structs:
+  include:
+    - "CCedar.*"
+    - "CedarStore"
+    - "CInitResult"
+    - "CAuthorizationDecision"

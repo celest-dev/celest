@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:cedar/cedar.dart';
-import 'package:cedar_ffi/src/ffi/cedar_bindings.g.dart' as bindings;
+import 'package:cedar_ffi/src/ffi/cedar_bindings.dart';
 import 'package:ffi/ffi.dart';
 
 /// An FFI extension of [CedarPolicySet].
@@ -21,7 +21,7 @@ Map<String, Map<String, Object?>> parsePolicies(String policiesIdl) {
       policiesIdl.toNativeUtf8(allocator: arena).cast(),
     );
     switch (cPolicies) {
-      case bindings.CCedarPolicySetResult(:final errors, :final errors_len)
+      case CCedarPolicySetResult(:final errors, :final errors_len)
           when errors_len > 0:
         final errorStrings = <String>[];
         for (var i = 0; i < errors_len; i++) {
@@ -32,7 +32,7 @@ Map<String, Map<String, Object?>> parsePolicies(String policiesIdl) {
           '${errorStrings.join(', ')}',
           policiesIdl,
         );
-      case bindings.CCedarPolicySetResult(
+      case CCedarPolicySetResult(
           :final policies,
           :final policy_ids,
           :final policies_len,
