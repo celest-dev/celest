@@ -5,6 +5,7 @@ repository: https://github.com/celest-dev/celest/tree/main/packages/platform/sto
 
 environment:
   sdk: ^3.3.0
+  flutter: ">=3.19.0"
 
 dependencies:
   ffi: ^2.1.2
