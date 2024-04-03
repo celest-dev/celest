@@ -31,8 +31,8 @@ The platform implementations for local `PlatformStorage` are:
 | -------- | -------------- |
 | iOS/macOS | [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults) |
 | Android | [SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences) |
-| Linux | [gsettings](https://developer.gnome.org/gio/stable/GSettings.html) |
-| Windows | [Windows.Storage.ApplicationData.Current.LocalSettings](https://docs.microsoft.com/en-us/uwp/api/windows.storage.applicationdata.current.localsettings) |
+| Linux | JSON file |
+| Windows | [Registry](https://learn.microsoft.com/en-us/windows/win32/sysinfo/about-the-registry) |
 | Web | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) |
 
 ### Secure Storage
@@ -53,7 +53,7 @@ The platform implementations for `PlatformSecureStorage` are:
 | iOS/macOS | [Keychain](https://developer.apple.com/documentation/security/keychain_services) |
 | Android | [EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) |
 | Linux | [libsecret](https://wiki.gnome.org/Projects/Libsecret) |
-| Windows | [Windows.Security.Credentials.PasswordVault](https://docs.microsoft.com/en-us/uwp/api/windows.security.credentials.passwordvault) |
+| Windows | [Windows Credential API](https://learn.microsoft.com/en-us/windows/win32/api/wincred/) |
 | Web | In-Memory (See [Web](#Web)) |
 
 ### Isolated Storage

@@ -18,8 +18,8 @@ dependencies:
   stream_channel: ^2.1.2
   web: ^0.5.1
   win32: ^5.4.0
+  win32_registry: ^1.1.2
   windows_applicationmodel: ^0.2.0
-  windows_storage: ^0.2.0
   xdg_directories: ^1.0.4
 
 dev_dependencies:

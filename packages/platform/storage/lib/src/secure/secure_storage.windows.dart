@@ -18,7 +18,7 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
   }) : super.base();
 
   @override
-  String get namespace => windows.applicationId ?? '';
+  String get namespace => windows.applicationId;
 
   WindowsException get _lastException =>
       WindowsException(HRESULT_FROM_WIN32(GetLastError()));
