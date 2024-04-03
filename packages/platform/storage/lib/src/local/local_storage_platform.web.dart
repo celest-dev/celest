@@ -1,9 +1,9 @@
-import 'package:platform_storage/platform_storage.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:web/web.dart' as web;
 
-/// The browser implementation of [PlatformLocalStorage].
-final class LocalStoragePlatform implements PlatformLocalStorage {
-  LocalStoragePlatform({String? namespace, this.scope})
+/// The browser implementation of [NativeLocalStorage].
+final class NativeLocalStoragePlatform implements NativeLocalStorage {
+  NativeLocalStoragePlatform({String? namespace, this.scope})
       : namespace = namespace ?? web.window.location.hostname;
 
   @override
@@ -50,22 +50,22 @@ final class LocalStoragePlatform implements PlatformLocalStorage {
   }
 
   @override
-  PlatformSecureStorage get secure =>
-      PlatformSecureStorage(namespace: namespace, scope: scope);
+  NativeSecureStorage get secure =>
+      NativeSecureStorage(namespace: namespace, scope: scope);
 
-  IsolatedPlatformStorage? _isolated;
+  IsolatedNativeStorage? _isolated;
   @override
-  IsolatedPlatformStorage get isolated => _isolated ??= IsolatedPlatformStorage(
-        factory: LocalStoragePlatform.new,
+  IsolatedNativeStorage get isolated => _isolated ??= IsolatedNativeStorage(
+        factory: NativeLocalStoragePlatform.new,
         namespace: namespace,
         scope: scope,
       );
 
   @override
-  PlatformLocalStorage scoped(String scope) => LocalStoragePlatform(
+  NativeLocalStorage scoped(String scope) => NativeLocalStoragePlatform(
         namespace: namespace,
         scope: switch (this.scope) {
-          final currentScope? => '$currentScope.$scope',
+          final currentScope? => '$currentScope/$scope',
           null => scope,
         },
       );

@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:native_storage/src/local/local_storage_platform.vm.dart';
+import 'package:native_storage/src/native/darwin/darwin.dart';
+import 'package:native_storage/src/native/darwin/foundation.ffi.dart';
+import 'package:native_storage/src/util/functional.dart';
 import 'package:path/path.dart' as p;
-import 'package:platform_storage/src/local/local_storage_platform.vm.dart';
-import 'package:platform_storage/src/native/darwin/darwin.dart';
-import 'package:platform_storage/src/native/darwin/foundation.ffi.dart';
-import 'package:platform_storage/src/util/functional.dart';
 
-final class LocalStoragePlatformDarwin extends LocalStoragePlatform {
+final class LocalStoragePlatformDarwin extends NativeLocalStoragePlatform {
   LocalStoragePlatformDarwin({
     String? namespace,
     super.scope,

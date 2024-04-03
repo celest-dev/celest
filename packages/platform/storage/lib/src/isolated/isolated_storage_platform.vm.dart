@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:platform_storage/platform_storage.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
 enum IsolatedStorageCommand { read, write, delete, clear }
 
 typedef StorageConfig = ({
-  PlatformStorageFactory factory,
+  NativeStorageFactory factory,
   String? namespace,
   String? scope,
 });
@@ -26,11 +26,11 @@ final class IsolatedStorageRequest {
   final IsolatedStorageCommand command;
   final String? key;
   final String? value;
-  final (PlatformStorageException, StackTrace)? error;
+  final (NativeStorageException, StackTrace)? error;
 
   IsolatedStorageRequest result({
     String? value,
-    (PlatformStorageException, StackTrace)? error,
+    (NativeStorageException, StackTrace)? error,
   }) {
     return IsolatedStorageRequest(
       id: id,
@@ -54,11 +54,11 @@ final class IsolatedStorageRequest {
 
 typedef IsolatedStorageResponse = String?;
 
-/// The VM implementation of [IsolatedPlatformStorage] which uses an [Isolate]
+/// The VM implementation of [IsolatedNativeStorage] which uses an [Isolate]
 /// to handle storage operations.
-final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
-  IsolatedStoragePlatform({
-    required PlatformStorageFactory factory,
+final class IsolatedNativeStoragePlatform implements IsolatedNativeStorage {
+  IsolatedNativeStoragePlatform({
+    required NativeStorageFactory factory,
     String? namespace,
     String? scope,
   }) : _config = (
@@ -195,7 +195,7 @@ final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
   }
 }
 
-extension on PlatformStorage {
+extension on NativeStorage {
   IsolatedStorageRequest handle(IsolatedStorageRequest request) {
     final IsolatedStorageRequest(
       :command,
@@ -231,8 +231,8 @@ extension on PlatformStorage {
       }
     } on Object catch (e, st) {
       final storageException = switch (e) {
-        PlatformStorageException() => e,
-        _ => PlatformStorageUnknownException(e.toString()),
+        NativeStorageException() => e,
+        _ => NativeStorageUnknownException(e.toString()),
       };
       return request.result(error: (storageException, st));
     }

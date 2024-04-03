@@ -1,34 +1,34 @@
 import 'dart:io';
 
 import 'package:meta/meta.dart';
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/secure/secure_storage.android.dart';
-import 'package:platform_storage/src/secure/secure_storage.darwin.dart';
-import 'package:platform_storage/src/secure/secure_storage.linux.dart';
-import 'package:platform_storage/src/secure/secure_storage.windows.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/secure/secure_storage.android.dart';
+import 'package:native_storage/src/secure/secure_storage.darwin.dart';
+import 'package:native_storage/src/secure/secure_storage.linux.dart';
+import 'package:native_storage/src/secure/secure_storage.windows.dart';
 
-abstract base class SecureStoragePlatform implements PlatformSecureStorage {
-  factory SecureStoragePlatform({
+abstract base class NativeSecureStoragePlatform implements NativeSecureStorage {
+  factory NativeSecureStoragePlatform({
     String? namespace,
     String? scope,
   }) {
     if (Platform.isIOS || Platform.isMacOS) {
-      return SecureStoragePlatformDarwin(namespace: namespace, scope: scope);
+      return SecureStorageDarwin(namespace: namespace, scope: scope);
     }
     if (Platform.isAndroid) {
-      return SecureStoragePlatformAndroid(namespace: namespace, scope: scope);
+      return SecureStorageAndroid(namespace: namespace, scope: scope);
     }
     if (Platform.isLinux) {
-      return SecureStoragePlatformLinux(namespace: namespace, scope: scope);
+      return SecureStorageLinux(namespace: namespace, scope: scope);
     }
     if (Platform.isWindows) {
-      return SecureStoragePlatformWindows(namespace: namespace, scope: scope);
+      return SecureStorageWindows(namespace: namespace, scope: scope);
     }
     throw UnsupportedError('This platform is not yet supported.');
   }
 
   @protected
-  SecureStoragePlatform.base({
+  NativeSecureStoragePlatform.base({
     this.scope,
   });
 
@@ -43,18 +43,18 @@ abstract base class SecureStoragePlatform implements PlatformSecureStorage {
   }
 
   @override
-  PlatformSecureStorage get secure => this;
+  NativeSecureStorage get secure => this;
 
-  IsolatedPlatformStorage? _isolated;
+  IsolatedNativeStorage? _isolated;
   @override
-  IsolatedPlatformStorage get isolated => _isolated ??= IsolatedPlatformStorage(
-        factory: SecureStoragePlatform.new,
+  IsolatedNativeStorage get isolated => _isolated ??= IsolatedNativeStorage(
+        factory: NativeSecureStoragePlatform.new,
         namespace: namespace,
         scope: scope,
       );
 
   @override
-  PlatformSecureStorage scoped(String scope) => SecureStoragePlatform(
+  NativeSecureStorage scoped(String scope) => NativeSecureStoragePlatform(
         namespace: namespace,
         scope: switch (this.scope) {
           final currentScope? => '$currentScope/$scope',

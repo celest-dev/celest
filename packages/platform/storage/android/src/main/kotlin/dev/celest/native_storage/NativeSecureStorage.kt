@@ -1,6 +1,5 @@
-package dev.celest.platform_storage
+package dev.celest.native_storage
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.Keep
@@ -11,11 +10,11 @@ import androidx.security.crypto.MasterKey
 // - https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences
 // - https://developer.android.com/guide/topics/data/autobackup#IncludingFiles
 @Keep
-class PlatformSecureStorage(
+class NativeSecureStorage(
     context: Context,
     namespace: String,
     scope: String?,
-) : PlatformStorage(context, namespace, scope) {
+) : NativeStorage(context, namespace, scope) {
 
     override val sharedPreferences: SharedPreferences by lazy {
         val masterKey = MasterKey.Builder(context)

@@ -1,9 +1,9 @@
-import 'package:platform_storage/platform_storage.dart';
+import 'package:native_storage/native_storage.dart';
 
 import '../example/integration_test/storage_shared.dart';
 
 void main() {
-  sharedTests('PlatformMemoryStorage', PlatformMemoryStorage.new);
-  sharedTests('PlatformSecureStorage', PlatformSecureStorage.new);
-  sharedTests('PlatformLocalStorage', PlatformLocalStorage.new);
+  sharedTests('PlatformMemoryStorage', NativeMemoryStorage.new);
+  sharedTests('PlatformSecureStorage', NativeSecureStorage.new);
+  sharedTests('PlatformLocalStorage', NativeLocalStorage.new);
 }

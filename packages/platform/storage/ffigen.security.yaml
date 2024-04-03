@@ -21,7 +21,7 @@ comments:
   style: any
   length: full
 library-imports:
-  cf: "package:platform_storage/src/native/darwin/core_foundation.ffi.dart"
+  cf: "package:native_storage/src/native/darwin/core_foundation.ffi.dart"
 
 ffi-native:
 exclude-all-by-default: true

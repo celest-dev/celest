@@ -2,19 +2,19 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/native/darwin/core_foundation.ffi.dart';
+import 'package:native_storage/src/native/darwin/darwin.dart';
+import 'package:native_storage/src/native/darwin/darwin_ffi_helpers.dart';
+import 'package:native_storage/src/native/darwin/security.ffi.dart';
+import 'package:native_storage/src/secure/secure_storage_exception.dart';
+import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
+import 'package:native_storage/src/util/functional.dart';
+import 'package:native_storage/src/util/globals.dart';
 import 'package:path/path.dart' as p;
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/native/darwin/core_foundation.ffi.dart';
-import 'package:platform_storage/src/native/darwin/darwin.dart';
-import 'package:platform_storage/src/native/darwin/darwin_ffi_helpers.dart';
-import 'package:platform_storage/src/native/darwin/security.ffi.dart';
-import 'package:platform_storage/src/secure/secure_storage_exception.dart';
-import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
-import 'package:platform_storage/src/util/functional.dart';
-import 'package:platform_storage/src/util/globals.dart';
 
-final class SecureStoragePlatformDarwin extends SecureStoragePlatform {
-  SecureStoragePlatformDarwin({
+final class SecureStorageDarwin extends NativeSecureStoragePlatform {
+  SecureStorageDarwin({
     String? namespace,
     super.scope,
   })  : _namespace = namespace,
@@ -167,8 +167,8 @@ final class SecureStoragePlatformDarwin extends SecureStoragePlatform {
   }
 }
 
-extension type SecurityFrameworkException(PlatformStorageException exception)
-    implements PlatformStorageException {
+extension type SecurityFrameworkException(NativeStorageException exception)
+    implements NativeStorageException {
   factory SecurityFrameworkException.fromStatus(int status, {String? key}) {
     if (kReleaseMode) {
       key = null;

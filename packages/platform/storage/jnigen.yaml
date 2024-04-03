@@ -16,8 +16,8 @@ output:
     structure: single_file
 
 classes:
-  - dev.celest.platform_storage.PlatformStorage
-  - dev.celest.platform_storage.PlatformLocalStorage
-  - dev.celest.platform_storage.PlatformSecureStorage
+  - dev.celest.native_storage.NativeStorage
+  - dev.celest.native_storage.NativeLocalStorage
+  - dev.celest.native_storage.NativeSecureStorage
   - android.app.Activity
   - android.content.Context

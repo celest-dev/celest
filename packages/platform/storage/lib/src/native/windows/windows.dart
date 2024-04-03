@@ -2,9 +2,9 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
+import 'package:native_storage/src/native_storage_exception.dart';
+import 'package:native_storage/src/util/functional.dart';
 import 'package:path/path.dart' as p;
-import 'package:platform_storage/src/platform_storage_exception.dart';
-import 'package:platform_storage/src/util/functional.dart';
 import 'package:win32/win32.dart';
 import 'package:windows_applicationmodel/windows_applicationmodel.dart';
 
@@ -49,7 +49,7 @@ final class WindowsCommon {
     if (FAILED(
       GetModuleFileName(0, lptstrFilename, MAX_PATH),
     )) {
-      throw PlatformStorageException(
+      throw NativeStorageException(
         'Could not retrieve filename: $_lastException',
       );
     }
@@ -76,7 +76,7 @@ final class WindowsCommon {
         lenTranslate,
       ),
     )) {
-      throw PlatformStorageException(
+      throw NativeStorageException(
         'Could not retrieve translation info: $_lastException',
       );
     }

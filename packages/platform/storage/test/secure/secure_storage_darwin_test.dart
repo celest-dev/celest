@@ -1,7 +1,7 @@
 @TestOn('mac-os')
 
-import 'package:platform_storage/src/native/darwin/security.ffi.dart';
-import 'package:platform_storage/src/secure/secure_storage.darwin.dart';
+import 'package:native_storage/src/native/darwin/security.ffi.dart';
+import 'package:native_storage/src/secure/secure_storage.darwin.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -5,15 +5,15 @@ import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/native/windows/windows.dart';
-import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
-import 'package:platform_storage/src/util/functional.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/native/windows/windows.dart';
+import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
+import 'package:native_storage/src/util/functional.dart';
 import 'package:win32/win32.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-final class SecureStoragePlatformWindows extends SecureStoragePlatform {
-  SecureStoragePlatformWindows({
+final class SecureStorageWindows extends NativeSecureStoragePlatform {
+  SecureStorageWindows({
     String? namespace,
     super.scope,
   })  : _namespace = namespace,
@@ -97,7 +97,7 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
       encryptedPtr,
     );
     if (GetLastError() case final hr && != WIN32_ERROR.ERROR_SUCCESS) {
-      throw PlatformStorageException(_windowsException(hr).toString());
+      throw NativeStorageException(_windowsException(hr).toString());
     }
     final encryptedBlob = encryptedPtr.ref;
     final encryptedBytes =
@@ -123,7 +123,7 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
       unencryptedPtr,
     );
     if (GetLastError() case final hr && != WIN32_ERROR.ERROR_SUCCESS) {
-      throw PlatformStorageException(_windowsException(hr).toString());
+      throw NativeStorageException(_windowsException(hr).toString());
     }
     final unencryptedDataBlob = unencryptedPtr.ref;
     final unencryptedBlob = unencryptedDataBlob.pbData.asTypedList(
@@ -133,26 +133,6 @@ final class SecureStoragePlatformWindows extends SecureStoragePlatform {
     return utf8.decode(unencryptedBlob);
   }
 }
-
-/// https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentialw
-const CRED_MAX_CREDENTIAL_BLOB_SIZE = 5 * 512;
-
-/// https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credenumeratew
-int CredEnumerate(
-  Pointer<Utf16> TargetName,
-  int Flags,
-  Pointer<Uint32> Count,
-  Pointer<Pointer<CREDENTIAL>> Credential,
-) =>
-    _CredEnumerate(TargetName, Flags, Count, Credential);
-
-final _CredEnumerate = _advapi32.lookupFunction<
-    Int32 Function(Pointer<Utf16> TargetName, Uint32 Flags,
-        Pointer<Uint32> Count, Pointer<Pointer<CREDENTIAL>> Credential),
-    int Function(Pointer<Utf16> TargetName, int Flags, Pointer<Uint32> Count,
-        Pointer<Pointer<CREDENTIAL>> Credential)>('CredEnumerateW');
-
-final _advapi32 = DynamicLibrary.open('advapi32.dll');
 
 extension on Uint8List {
   /// Alternative to [allocatePointer] from win32, which uses an [Arena].

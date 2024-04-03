@@ -21,20 +21,20 @@ import "dart:ffi" as ffi;
 import "package:jni/internal_helpers_for_jnigen.dart";
 import "package:jni/jni.dart" as jni;
 
-/// from: dev.celest.platform_storage.PlatformStorage
-class PlatformStorage extends jni.JObject {
+/// from: dev.celest.native_storage.NativeStorage
+class NativeStorage extends jni.JObject {
   @override
-  late final jni.JObjType<PlatformStorage> $type = type;
+  late final jni.JObjType<NativeStorage> $type = type;
 
-  PlatformStorage.fromRef(
+  NativeStorage.fromRef(
     jni.JObjectPtr ref,
   ) : super.fromRef(ref);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/platform_storage/PlatformStorage");
+      jni.Jni.findJClass(r"dev/celest/native_storage/NativeStorage");
 
   /// The type which includes information such as the signature of this class.
-  static const type = $PlatformStorageType();
+  static const type = $NativeStorageType();
   static final _id_getContext = jni.Jni.accessors.getMethodIDOf(
       _class.reference, r"getContext", r"()Landroid/content/Context;");
 
@@ -130,13 +130,13 @@ class PlatformStorage extends jni.JObject {
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1, kotlin.jvm.internal.DefaultConstructorMarker defaultConstructorMarker)
   /// The returned object must be released after use, by calling the [release] method.
-  factory PlatformStorage(
+  factory NativeStorage(
     Context context,
     jni.JString string,
     jni.JString string1,
     jni.JObject defaultConstructorMarker,
   ) {
-    return PlatformStorage.fromRef(
+    return NativeStorage.fromRef(
         jni.Jni.accessors.newObjectWithArgs(_class.reference, _id_new0, [
       context.reference,
       string.reference,
@@ -146,14 +146,14 @@ class PlatformStorage extends jni.JObject {
   }
 }
 
-final class $PlatformStorageType extends jni.JObjType<PlatformStorage> {
-  const $PlatformStorageType();
+final class $NativeStorageType extends jni.JObjType<NativeStorage> {
+  const $NativeStorageType();
 
   @override
-  String get signature => r"Ldev/celest/platform_storage/PlatformStorage;";
+  String get signature => r"Ldev/celest/native_storage/NativeStorage;";
 
   @override
-  PlatformStorage fromRef(jni.JObjectPtr ref) => PlatformStorage.fromRef(ref);
+  NativeStorage fromRef(jni.JObjectPtr ref) => NativeStorage.fromRef(ref);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();
@@ -162,29 +162,29 @@ final class $PlatformStorageType extends jni.JObjType<PlatformStorage> {
   final superCount = 1;
 
   @override
-  int get hashCode => ($PlatformStorageType).hashCode;
+  int get hashCode => ($NativeStorageType).hashCode;
 
   @override
   bool operator ==(Object other) {
-    return other.runtimeType == ($PlatformStorageType) &&
-        other is $PlatformStorageType;
+    return other.runtimeType == ($NativeStorageType) &&
+        other is $NativeStorageType;
   }
 }
 
-/// from: dev.celest.platform_storage.PlatformLocalStorage
-class PlatformLocalStorage extends PlatformStorage {
+/// from: dev.celest.native_storage.NativeLocalStorage
+class NativeLocalStorage extends NativeStorage {
   @override
-  late final jni.JObjType<PlatformLocalStorage> $type = type;
+  late final jni.JObjType<NativeLocalStorage> $type = type;
 
-  PlatformLocalStorage.fromRef(
+  NativeLocalStorage.fromRef(
     jni.JObjectPtr ref,
   ) : super.fromRef(ref);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/platform_storage/PlatformLocalStorage");
+      jni.Jni.findJClass(r"dev/celest/native_storage/NativeLocalStorage");
 
   /// The type which includes information such as the signature of this class.
-  static const type = $PlatformLocalStorageType();
+  static const type = $NativeLocalStorageType();
   static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
       r"<init>",
@@ -192,12 +192,12 @@ class PlatformLocalStorage extends PlatformStorage {
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
-  factory PlatformLocalStorage.new1(
+  factory NativeLocalStorage.new1(
     Context context,
     jni.JString string,
     jni.JString string1,
   ) {
-    return PlatformLocalStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
+    return NativeLocalStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
         _class.reference,
         _id_new1,
         [context.reference, string.reference, string1.reference]).object);
@@ -218,47 +218,46 @@ class PlatformLocalStorage extends PlatformStorage {
   }
 }
 
-final class $PlatformLocalStorageType
-    extends jni.JObjType<PlatformLocalStorage> {
-  const $PlatformLocalStorageType();
+final class $NativeLocalStorageType extends jni.JObjType<NativeLocalStorage> {
+  const $NativeLocalStorageType();
 
   @override
-  String get signature => r"Ldev/celest/platform_storage/PlatformLocalStorage;";
+  String get signature => r"Ldev/celest/native_storage/NativeLocalStorage;";
 
   @override
-  PlatformLocalStorage fromRef(jni.JObjectPtr ref) =>
-      PlatformLocalStorage.fromRef(ref);
+  NativeLocalStorage fromRef(jni.JObjectPtr ref) =>
+      NativeLocalStorage.fromRef(ref);
 
   @override
-  jni.JObjType get superType => const $PlatformStorageType();
+  jni.JObjType get superType => const $NativeStorageType();
 
   @override
   final superCount = 2;
 
   @override
-  int get hashCode => ($PlatformLocalStorageType).hashCode;
+  int get hashCode => ($NativeLocalStorageType).hashCode;
 
   @override
   bool operator ==(Object other) {
-    return other.runtimeType == ($PlatformLocalStorageType) &&
-        other is $PlatformLocalStorageType;
+    return other.runtimeType == ($NativeLocalStorageType) &&
+        other is $NativeLocalStorageType;
   }
 }
 
-/// from: dev.celest.platform_storage.PlatformSecureStorage
-class PlatformSecureStorage extends PlatformStorage {
+/// from: dev.celest.native_storage.NativeSecureStorage
+class NativeSecureStorage extends NativeStorage {
   @override
-  late final jni.JObjType<PlatformSecureStorage> $type = type;
+  late final jni.JObjType<NativeSecureStorage> $type = type;
 
-  PlatformSecureStorage.fromRef(
+  NativeSecureStorage.fromRef(
     jni.JObjectPtr ref,
   ) : super.fromRef(ref);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/platform_storage/PlatformSecureStorage");
+      jni.Jni.findJClass(r"dev/celest/native_storage/NativeSecureStorage");
 
   /// The type which includes information such as the signature of this class.
-  static const type = $PlatformSecureStorageType();
+  static const type = $NativeSecureStorageType();
   static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
       r"<init>",
@@ -266,12 +265,12 @@ class PlatformSecureStorage extends PlatformStorage {
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
-  factory PlatformSecureStorage.new1(
+  factory NativeSecureStorage.new1(
     Context context,
     jni.JString string,
     jni.JString string1,
   ) {
-    return PlatformSecureStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
+    return NativeSecureStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
         _class.reference,
         _id_new1,
         [context.reference, string.reference, string1.reference]).object);
@@ -292,31 +291,29 @@ class PlatformSecureStorage extends PlatformStorage {
   }
 }
 
-final class $PlatformSecureStorageType
-    extends jni.JObjType<PlatformSecureStorage> {
-  const $PlatformSecureStorageType();
+final class $NativeSecureStorageType extends jni.JObjType<NativeSecureStorage> {
+  const $NativeSecureStorageType();
 
   @override
-  String get signature =>
-      r"Ldev/celest/platform_storage/PlatformSecureStorage;";
+  String get signature => r"Ldev/celest/native_storage/NativeSecureStorage;";
 
   @override
-  PlatformSecureStorage fromRef(jni.JObjectPtr ref) =>
-      PlatformSecureStorage.fromRef(ref);
+  NativeSecureStorage fromRef(jni.JObjectPtr ref) =>
+      NativeSecureStorage.fromRef(ref);
 
   @override
-  jni.JObjType get superType => const $PlatformStorageType();
+  jni.JObjType get superType => const $NativeStorageType();
 
   @override
   final superCount = 2;
 
   @override
-  int get hashCode => ($PlatformSecureStorageType).hashCode;
+  int get hashCode => ($NativeSecureStorageType).hashCode;
 
   @override
   bool operator ==(Object other) {
-    return other.runtimeType == ($PlatformSecureStorageType) &&
-        other is $PlatformSecureStorageType;
+    return other.runtimeType == ($NativeSecureStorageType) &&
+        other is $NativeSecureStorageType;
   }
 }
 

@@ -1,8 +1,8 @@
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:platform_storage/src/native/darwin/foundation.ffi.dart';
-import 'package:platform_storage/src/util/globals.dart';
+import 'package:native_storage/src/native/darwin/foundation.ffi.dart';
+import 'package:native_storage/src/util/globals.dart';
 
 final darwin = DarwinCommon._();
 

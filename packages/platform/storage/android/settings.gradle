@@ -1,4 +1,4 @@
-rootProject.name = 'platform_storage'
+rootProject.name = 'native_storage'
 dependencyResolutionManagement {
    repositories {
        google()

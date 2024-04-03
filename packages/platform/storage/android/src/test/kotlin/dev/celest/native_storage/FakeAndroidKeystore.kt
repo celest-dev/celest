@@ -1,4 +1,4 @@
-package dev.celest.platform_storage
+package dev.celest.native_storage
 
 import java.io.InputStream
 import java.io.OutputStream

@@ -1,11 +1,10 @@
-import 'package:platform_storage/src/isolated/isolated_storage.dart';
-import 'package:platform_storage/src/platform_storage.dart';
-import 'package:platform_storage/src/secure/secure_storage.dart';
+import 'package:native_storage/src/isolated/isolated_storage.dart';
+import 'package:native_storage/src/native_storage.dart';
+import 'package:native_storage/src/secure/secure_storage.dart';
 
-/// An in-memory implementation of [PlatformStorage] and [PlatformSecureStorage].
-final class PlatformMemoryStorage
-    implements PlatformStorage, PlatformSecureStorage {
-  PlatformMemoryStorage({
+/// An in-memory implementation of [NativeStorage] and [NativeSecureStorage].
+final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
+  NativeMemoryStorage({
     String? namespace,
     this.scope,
   }) : namespace = namespace ?? '';
@@ -36,21 +35,21 @@ final class PlatformMemoryStorage
   void close() => clear();
 
   @override
-  PlatformSecureStorage get secure => this;
+  NativeSecureStorage get secure => this;
 
-  IsolatedPlatformStorage? _isolated;
+  IsolatedNativeStorage? _isolated;
   @override
-  IsolatedPlatformStorage get isolated => _isolated ??= IsolatedPlatformStorage(
-        factory: PlatformMemoryStorage.new,
+  IsolatedNativeStorage get isolated => _isolated ??= IsolatedNativeStorage(
+        factory: NativeMemoryStorage.new,
         namespace: namespace,
         scope: scope,
       );
 
   @override
-  PlatformMemoryStorage scoped(String scope) => PlatformMemoryStorage(
+  NativeMemoryStorage scoped(String scope) => NativeMemoryStorage(
         namespace: namespace,
         scope: switch (this.scope) {
-          final currentScope? => '$currentScope.$scope',
+          final currentScope? => '$currentScope/$scope',
           null => scope,
         },
       );

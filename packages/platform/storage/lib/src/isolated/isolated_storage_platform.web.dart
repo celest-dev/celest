@@ -1,9 +1,9 @@
-import 'package:platform_storage/platform_storage.dart';
+import 'package:native_storage/native_storage.dart';
 
-/// The browser implementation of [IsolatedPlatformStorage].
-final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
-  IsolatedStoragePlatform({
-    required PlatformStorageFactory factory,
+/// The browser implementation of [IsolatedNativeStorage].
+final class IsolatedNativeStoragePlatform implements IsolatedNativeStorage {
+  IsolatedNativeStoragePlatform({
+    required NativeStorageFactory factory,
     String? namespace,
     String? scope,
   }) : _impl = factory(
@@ -11,9 +11,9 @@ final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
           scope: scope,
         );
 
-  IsolatedStoragePlatform.from(this._impl);
+  IsolatedNativeStoragePlatform.from(this._impl);
 
-  final PlatformStorage _impl;
+  final NativeStorage _impl;
 
   @override
   Future<void> clear() async {

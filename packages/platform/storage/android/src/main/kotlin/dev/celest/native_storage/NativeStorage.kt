@@ -1,15 +1,14 @@
-package dev.celest.platform_storage
+package dev.celest.native_storage
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.Keep
 
 /**
- * Base class for platform storage implementations.
+ * Base class for native storage implementations.
  */
 @Keep
-sealed class PlatformStorage(
+sealed class NativeStorage(
     protected val context: Context,
     protected val namespace: String,
     private val scope: String?,

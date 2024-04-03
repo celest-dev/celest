@@ -1,4 +1,4 @@
-# platform_storage
+# native_storage
 
 Provides a unified API for accessing platform-native storage functionality, such as the iOS Keychain and Android SharedPreferences.
 Sync and async APIs are provided for all storage operations, where asynchronous APIs use an `Isolate` to perform the operation in 

@@ -1,7 +1,7 @@
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/util/globals.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/util/globals.dart';
 
-sealed class SecureStorageException implements PlatformStorageException {
+sealed class SecureStorageException implements NativeStorageException {
   const SecureStorageException();
 }
 
@@ -57,4 +57,4 @@ final class SecureStorageAccessDeniedException extends SecureStorageException {
   String toString() => 'AccessDeniedException: $message';
 }
 
-typedef SecureStorageUnknownException = PlatformStorageUnknownException;
+typedef SecureStorageUnknownException = NativeStorageUnknownException;

@@ -1,5 +1,5 @@
 import 'package:jni/jni.dart';
-import 'package:platform_storage/src/native/android/jni_bindings.ffi.dart';
+import 'package:native_storage/src/native/android/jni_bindings.ffi.dart';
 
 final android = AndroidCommon._();
 
@@ -15,18 +15,18 @@ final class AndroidCommon {
   late final String packageName =
       _mainActivityContext.getPackageName().toDartString();
 
-  PlatformLocalStorage localStorage(String namespace, String? scope) {
+  NativeLocalStorage localStorage(String namespace, String? scope) {
     scope ??= ''; // Can't pass `null`
-    return PlatformLocalStorage.new1(
+    return NativeLocalStorage.new1(
       _mainActivityContext,
       namespace.toJString(),
       scope.toJString(),
     );
   }
 
-  PlatformSecureStorage secureStorage(String namespace, String? scope) {
+  NativeSecureStorage secureStorage(String namespace, String? scope) {
     scope ??= ''; // Can't pass `null`
-    return PlatformSecureStorage.new1(
+    return NativeSecureStorage.new1(
       _mainActivityContext,
       namespace.toJString(),
       scope.toJString(),

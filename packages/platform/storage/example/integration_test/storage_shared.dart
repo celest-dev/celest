@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:platform_storage/platform_storage.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:test/test.dart';
 
-void sharedTests(String name, PlatformStorageFactory factory) {
+void sharedTests(String name, NativeStorageFactory factory) {
   group(name, () {
     const allowedNamespaces = ['com.domain.scope'];
     for (final namespace in allowedNamespaces) {

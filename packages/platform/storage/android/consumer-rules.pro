@@ -1,1 +1,1 @@
--keep class dev.celest.platform_storage.** { *; }
+-keep class dev.celest.native_storage.** { *; }

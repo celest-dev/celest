@@ -1,27 +1,27 @@
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/isolated/isolated_storage_platform.vm.dart'
-    if (dart.library.js_interop) 'package:platform_storage/src/isolated/isolated_storage_platform.web.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/isolated/isolated_storage_platform.vm.dart'
+    if (dart.library.js_interop) 'package:native_storage/src/isolated/isolated_storage_platform.web.dart';
 
-/// A [PlatformStorage] constructor.
-typedef PlatformStorageFactory = PlatformStorage Function({
+/// A [NativeStorage] constructor.
+typedef NativeStorageFactory = NativeStorage Function({
   String? namespace,
   String? scope,
 });
 
-/// {@template platform_storage.isolated_platform_storage}
-/// A [PlatformStorage] that performs storage operations asynchronously on a
+/// {@template native_storage.isolated_native_storage}
+/// A [NativeStorage] that performs storage operations asynchronously on a
 /// separate isolate.
 ///
 /// On Web platforms, this simply returns an asynchronous wrapper over the same
 /// non-isolated storage.
 /// {@endtemplate}
-abstract interface class IsolatedPlatformStorage {
-  /// {@macro platform_storage.isolated_platform_storage}
-  factory IsolatedPlatformStorage({
-    required PlatformStorageFactory factory,
+abstract interface class IsolatedNativeStorage {
+  /// {@macro native_storage.isolated_native_storage}
+  factory IsolatedNativeStorage({
+    required NativeStorageFactory factory,
     String? namespace,
     String? scope,
-  }) = IsolatedStoragePlatform;
+  }) = IsolatedNativeStoragePlatform;
 
   /// Reads a value asynchronously from storage on a background thread.
   Future<String?> read(String key);
@@ -36,7 +36,7 @@ abstract interface class IsolatedPlatformStorage {
   /// `scope` from storage.
   Future<void> clear();
 
-  /// {@macro platform_storage.platform_storage.close}
+  /// {@macro native_storage.native_storage.close}
   ///
   /// If [force] is `true`, any pending requests will be cancelled and complete
   /// with an error. Defaults to `false`.

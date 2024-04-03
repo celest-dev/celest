@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  platform_storage:
+  native_storage:
     path: ../
 
 dev_dependencies:

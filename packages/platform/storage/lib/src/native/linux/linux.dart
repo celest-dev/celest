@@ -2,10 +2,10 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
-import 'package:platform_storage/src/native/linux/glib.ffi.dart';
-import 'package:platform_storage/src/native/linux/libsecret.ffi.dart';
-import 'package:platform_storage/src/util/functional.dart';
-import 'package:platform_storage/src/util/native.dart';
+import 'package:native_storage/src/native/linux/glib.ffi.dart';
+import 'package:native_storage/src/native/linux/libsecret.ffi.dart';
+import 'package:native_storage/src/util/functional.dart';
+import 'package:native_storage/src/util/native.dart';
 import 'package:xdg_directories/xdg_directories.dart' as xdg;
 
 final linux = LinuxCommon._();

@@ -1,10 +1,10 @@
-import 'package:platform_storage/src/local/local_storage_platform.vm.dart';
-import 'package:platform_storage/src/native/windows/windows.dart';
-import 'package:platform_storage/src/util/functional.dart';
+import 'package:native_storage/src/local/local_storage_platform.vm.dart';
+import 'package:native_storage/src/native/windows/windows.dart';
+import 'package:native_storage/src/util/functional.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-final class LocalStoragePlatformWindows extends LocalStoragePlatform {
-  LocalStoragePlatformWindows({
+final class LocalStorageWindows extends NativeLocalStoragePlatform {
+  LocalStorageWindows({
     String? namespace,
     super.scope,
   })  : _namespace = namespace,

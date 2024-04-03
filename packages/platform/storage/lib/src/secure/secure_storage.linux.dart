@@ -2,15 +2,15 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
-import 'package:platform_storage/src/native/linux/glib.ffi.dart';
-import 'package:platform_storage/src/native/linux/libsecret.ffi.dart';
-import 'package:platform_storage/src/native/linux/linux.dart';
-import 'package:platform_storage/src/secure/secure_storage_exception.dart';
-import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
-import 'package:platform_storage/src/util/functional.dart';
+import 'package:native_storage/src/native/linux/glib.ffi.dart';
+import 'package:native_storage/src/native/linux/libsecret.ffi.dart';
+import 'package:native_storage/src/native/linux/linux.dart';
+import 'package:native_storage/src/secure/secure_storage_exception.dart';
+import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
+import 'package:native_storage/src/util/functional.dart';
 
-final class SecureStoragePlatformLinux extends SecureStoragePlatform {
-  SecureStoragePlatformLinux({
+final class SecureStorageLinux extends NativeSecureStoragePlatform {
+  SecureStorageLinux({
     String? namespace,
     super.scope,
   })  : _namespace = namespace,

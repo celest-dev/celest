@@ -1,12 +1,12 @@
 import 'package:jni/jni.dart';
-import 'package:platform_storage/src/isolated/isolated_storage.dart';
-import 'package:platform_storage/src/isolated/isolated_storage_platform.web.dart'
+import 'package:native_storage/src/isolated/isolated_storage.dart';
+import 'package:native_storage/src/isolated/isolated_storage_platform.web.dart'
     as unsupported;
-import 'package:platform_storage/src/native/android/android.dart';
-import 'package:platform_storage/src/secure/secure_storage_platform.vm.dart';
+import 'package:native_storage/src/native/android/android.dart';
+import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
 
-final class SecureStoragePlatformAndroid extends SecureStoragePlatform {
-  SecureStoragePlatformAndroid({
+final class SecureStorageAndroid extends NativeSecureStoragePlatform {
+  SecureStorageAndroid({
     String? namespace,
     super.scope,
   })  : _namespace = namespace,
@@ -49,6 +49,6 @@ final class SecureStoragePlatformAndroid extends SecureStoragePlatform {
 // jni objects cannot be shared across isolates
 // TODO(dnys1): Should be fixed in jni 0.8.0
   @override
-  IsolatedPlatformStorage get isolated =>
-      unsupported.IsolatedStoragePlatform.from(this);
+  IsolatedNativeStorage get isolated =>
+      unsupported.IsolatedNativeStoragePlatform.from(this);
 }

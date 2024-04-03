@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:meta/meta.dart';
-import 'package:platform_storage/platform_storage.dart';
-import 'package:platform_storage/src/local/local_storage.android.dart';
-import 'package:platform_storage/src/local/local_storage.linux.dart';
-import 'package:platform_storage/src/local/local_storage.windows.dart';
-import 'package:platform_storage/src/local/local_storage_darwin.dart';
+import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/local/local_storage.android.dart';
+import 'package:native_storage/src/local/local_storage.linux.dart';
+import 'package:native_storage/src/local/local_storage.windows.dart';
+import 'package:native_storage/src/local/local_storage_darwin.dart';
 
-/// The VM implementation of [PlatformLocalStorage].
-abstract base class LocalStoragePlatform implements PlatformLocalStorage {
-  factory LocalStoragePlatform({
+/// The VM implementation of [NativeLocalStorage].
+abstract base class NativeLocalStoragePlatform implements NativeLocalStorage {
+  factory NativeLocalStoragePlatform({
     String? namespace,
     String? scope,
   }) {
@@ -20,16 +20,16 @@ abstract base class LocalStoragePlatform implements PlatformLocalStorage {
       return LocalStoragePlatformAndroid(namespace: namespace, scope: scope);
     }
     if (Platform.isWindows) {
-      return LocalStoragePlatformWindows(namespace: namespace, scope: scope);
+      return LocalStorageWindows(namespace: namespace, scope: scope);
     }
     if (Platform.isLinux) {
-      return LocalStoragePlatformLinux(namespace: namespace, scope: scope);
+      return LocalStorageLinux(namespace: namespace, scope: scope);
     }
     throw UnsupportedError('This platform is not yet supported.');
   }
 
   @protected
-  LocalStoragePlatform.base({
+  NativeLocalStoragePlatform.base({
     this.scope,
   });
 
@@ -44,19 +44,19 @@ abstract base class LocalStoragePlatform implements PlatformLocalStorage {
   }
 
   @override
-  PlatformSecureStorage get secure =>
-      PlatformSecureStorage(namespace: namespace, scope: scope);
+  NativeSecureStorage get secure =>
+      NativeSecureStorage(namespace: namespace, scope: scope);
 
-  IsolatedPlatformStorage? _isolated;
+  IsolatedNativeStorage? _isolated;
   @override
-  IsolatedPlatformStorage get isolated => _isolated ??= IsolatedPlatformStorage(
-        factory: LocalStoragePlatform.new,
+  IsolatedNativeStorage get isolated => _isolated ??= IsolatedNativeStorage(
+        factory: NativeLocalStoragePlatform.new,
         namespace: namespace,
         scope: scope,
       );
 
   @override
-  PlatformLocalStorage scoped(String scope) => LocalStoragePlatform(
+  NativeLocalStorage scoped(String scope) => NativeLocalStoragePlatform(
         namespace: namespace,
         scope: switch (this.scope) {
           final currentScope? => '$currentScope.$scope',
