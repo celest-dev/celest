@@ -1,0 +1,6 @@
+rootProject.name = 'native_storage'
+dependencyResolutionManagement {
+   repositories {
+       google()
+   }
+}

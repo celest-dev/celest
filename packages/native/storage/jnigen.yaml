@@ -1,0 +1,23 @@
+# Regenerate bindings with `dart run jnigen --config jnigen.yaml`.
+
+summarizer:
+  backend: asm
+
+android_sdk_config:
+  add_gradle_deps: true
+  android_example: "example/"
+
+suspend_fun_to_async: true
+
+output:
+  bindings_type: dart_only
+  dart:
+    path: "lib/src/native/android/jni_bindings.ffi.dart"
+    structure: single_file
+
+classes:
+  - dev.celest.native_storage.NativeStorage
+  - dev.celest.native_storage.NativeLocalStorage
+  - dev.celest.native_storage.NativeSecureStorage
+  - android.app.Activity
+  - android.content.Context

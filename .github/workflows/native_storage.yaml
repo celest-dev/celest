@@ -1,0 +1,168 @@
+name: native_storage
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/native_storage.yaml"
+      - "packages/native/storage/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+jobs:
+  analyze_and_format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/native/storage
+        run: dart pub get
+      - name: Analyze
+        working-directory: packages/native/storage
+        run: dart analyze
+      - name: Format
+        working-directory: packages/native/storage
+        run: dart format --set-exit-if-changed .
+  test_darwin:
+    runs-on: macos-latest-xlarge
+    timeout-minutes: 20
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/native/storage
+        run: dart pub get
+      - name: Test
+        working-directory: packages/native/storage
+        run: dart test
+      - name: Get Packages (Example)
+        working-directory: packages/native/storage/example
+        run: flutter pub get
+      - name: Setup iOS Simulator
+        run: |
+          RUNTIME=$(xcrun simctl list runtimes | grep 'iOS 17' | tail -n 1 | cut -d' ' -f 7)
+          echo "Using runtime: $RUNTIME"
+          xcrun simctl create ios 'iPhone 15 Pro Max' $RUNTIME
+          echo "Booting simulator"
+          xcrun simctl boot ios
+          echo "Booted simulator"
+      - name: Test (iOS)
+        working-directory: packages/native/storage/example
+        run: flutter test -d ios integration_test/storage_test.dart
+      - name: Test (macOS)
+        working-directory: packages/native/storage/example
+        run: flutter test -d macos integration_test/storage_test.dart
+  test_android:
+    runs-on:
+      group: public
+      labels: linux
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Get Packages (Example)
+        working-directory: packages/native/storage/example
+        run: flutter pub get
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test (Android)
+        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
+        with:
+          # Matches `package:jni` compileSdkVersion
+          # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
+          api-level: 31
+          arch: x86_64
+          script: cd packages/native/storage/example && flutter test -d emulator integration_test/storage_test.dart
+  test_linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Install Build Dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+      - name: Setup Test Environment
+        working-directory: packages/native/storage
+        run: tool/setup-ci.sh
+      - name: Get Packages
+        working-directory: packages/native/storage
+        run: dart pub get
+      - name: Test
+        working-directory: packages/native/storage
+        run: dart test
+      - name: Get Packages (Example)
+        working-directory: packages/native/storage/example
+        run: flutter pub get
+      - name: Test (Linux)
+        working-directory: packages/native/storage/example
+        run: |
+          # Headless tests require virtual display for the linux tests to run.
+          export DISPLAY=:99
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+          flutter test -d linux integration_test/storage_test.dart
+  # TODO: Re-enable
+  #       Need to fix this: Git error. Command: `git clone --mirror https://github.com/dart-lang/native /c/Users/runneradmin/.pub-cache\git\cache\native-647c69ed8027da6d6def6bc40efa87cf1a2f76aa`
+  test_windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/native/storage
+        run: dart pub get --no-example
+      # - name: Test
+      #   working-directory: packages/native/storage
+      #   run: dart test
+      - name: Get Packages (Example)
+        working-directory: packages/native/storage/example
+        run: flutter pub get
+      - name: Test (Windows)
+        working-directory: packages/native/storage/example
+        run: flutter test -d windows integration_test/storage_test.dart
+  test_web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/native/storage
+        run: dart pub get
+      - name: Test (Chrome, dart2js)
+        working-directory: packages/native/storage
+        run: dart test -p chrome
+      - name: Test (Chrome, dart2wasm)
+        working-directory: packages/native/storage
+        run: dart test -p chrome -c dart2wasm

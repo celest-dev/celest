@@ -1,0 +1,1 @@
+-keep class dev.celest.native_storage.** { *; }
