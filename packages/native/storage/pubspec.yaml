@@ -1,15 +1,23 @@
 name: native_storage
 description: A Dart-only package for accessing platform-native storage functionality.
-version: 0.1.0
-repository: https://github.com/celest-dev/celest/tree/main/packages/platform/storage
+version: 0.1.1
+repository: https://github.com/celest-dev/celest/tree/main/packages/native/storage
 
 environment:
   sdk: ^3.3.0
   flutter: ">=3.19.0"
 
+# Explicitly declare platform support to help `pana`
+platforms:
+  web:
+  windows:
+  macos:
+  linux:
+  ios:
+  android:
+
 dependencies:
   ffi: ^2.1.2
-  gsettings: ^0.2.8
   jni: ^0.7.3
   logging: ^1.2.0
   meta: ^1.11.0
