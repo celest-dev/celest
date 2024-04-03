@@ -1,6 +1,7 @@
 package dev.celest.platform_storage
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.Keep
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -11,17 +12,17 @@ import androidx.security.crypto.MasterKey
 // - https://developer.android.com/guide/topics/data/autobackup#IncludingFiles
 @Keep
 class PlatformSecureStorage(
-    mainActivity: Activity,
+    context: Context,
     namespace: String,
     scope: String?,
-) : PlatformStorage(mainActivity, namespace, scope) {
+) : PlatformStorage(context, namespace, scope) {
 
     override val sharedPreferences: SharedPreferences by lazy {
-        val masterKey = MasterKey.Builder(mainActivity)
+        val masterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
         val sharedPreferences = EncryptedSharedPreferences.create(
-            mainActivity,
+            context,
             namespace,
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

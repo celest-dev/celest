@@ -23,7 +23,7 @@ void sharedTests(String name, PlatformStorageFactory factory) {
         storage.close();
       });
 
-      group('scope=$namespace', () {
+      group('namespace=$namespace', () {
         group('write', () {
           test('writes a new key-value pair to storage', () {
             storage.write(key, 'value');

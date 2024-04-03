@@ -11,6 +11,8 @@ final class IsolatedStoragePlatform implements IsolatedPlatformStorage {
           scope: scope,
         );
 
+  IsolatedStoragePlatform.from(this._impl);
+
   final PlatformStorage _impl;
 
   @override

@@ -7,12 +7,12 @@ import androidx.annotation.Keep
 
 @Keep
 class PlatformLocalStorage(
-    mainActivity: Activity,
+    context: Context,
     namespace: String,
     scope: String?,
-) : PlatformStorage(mainActivity, namespace, scope) {
+) : PlatformStorage(context, namespace, scope) {
 
     override val sharedPreferences: SharedPreferences =
-        mainActivity.getSharedPreferences(namespace, Context.MODE_PRIVATE)
+        context.getSharedPreferences(namespace, Context.MODE_PRIVATE)
 
 }

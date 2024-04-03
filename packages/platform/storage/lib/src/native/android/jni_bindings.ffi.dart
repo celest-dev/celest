@@ -35,14 +35,14 @@ class PlatformStorage extends jni.JObject {
 
   /// The type which includes information such as the signature of this class.
   static const type = $PlatformStorageType();
-  static final _id_getMainActivity = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getMainActivity", r"()Landroid/app/Activity;");
+  static final _id_getContext = jni.Jni.accessors.getMethodIDOf(
+      _class.reference, r"getContext", r"()Landroid/content/Context;");
 
-  /// from: protected final android.app.Activity getMainActivity()
+  /// from: protected final android.content.Context getContext()
   /// The returned object must be released after use, by calling the [release] method.
-  Activity getMainActivity() {
-    return const $ActivityType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getMainActivity, jni.JniCallType.objectType, []).object);
+  Context getContext() {
+    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
+        reference, _id_getContext, jni.JniCallType.objectType, []).object);
   }
 
   static final _id_getNamespace = jni.Jni.accessors.getMethodIDOf(
@@ -53,16 +53,6 @@ class PlatformStorage extends jni.JObject {
   jni.JString getNamespace() {
     return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
         reference, _id_getNamespace, jni.JniCallType.objectType, []).object);
-  }
-
-  static final _id_getScope = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getScope", r"()Ljava/lang/String;");
-
-  /// from: protected final java.lang.String getScope()
-  /// The returned object must be released after use, by calling the [release] method.
-  jni.JString getScope() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getScope, jni.JniCallType.objectType, []).object);
   }
 
   static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
@@ -136,19 +126,19 @@ class PlatformStorage extends jni.JObject {
   static final _id_new0 = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
       r"<init>",
-      r"(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V");
+      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V");
 
-  /// from: public void <init>(android.app.Activity activity, java.lang.String string, java.lang.String string1, kotlin.jvm.internal.DefaultConstructorMarker defaultConstructorMarker)
+  /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1, kotlin.jvm.internal.DefaultConstructorMarker defaultConstructorMarker)
   /// The returned object must be released after use, by calling the [release] method.
   factory PlatformStorage(
-    Activity activity,
+    Context context,
     jni.JString string,
     jni.JString string1,
     jni.JObject defaultConstructorMarker,
   ) {
     return PlatformStorage.fromRef(
         jni.Jni.accessors.newObjectWithArgs(_class.reference, _id_new0, [
-      activity.reference,
+      context.reference,
       string.reference,
       string1.reference,
       defaultConstructorMarker.reference
@@ -198,19 +188,19 @@ class PlatformLocalStorage extends PlatformStorage {
   static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
       r"<init>",
-      r"(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V");
+      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V");
 
-  /// from: public void <init>(android.app.Activity activity, java.lang.String string, java.lang.String string1)
+  /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
   factory PlatformLocalStorage.new1(
-    Activity activity,
+    Context context,
     jni.JString string,
     jni.JString string1,
   ) {
     return PlatformLocalStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
         _class.reference,
         _id_new1,
-        [activity.reference, string.reference, string1.reference]).object);
+        [context.reference, string.reference, string1.reference]).object);
   }
 
   static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
@@ -272,19 +262,19 @@ class PlatformSecureStorage extends PlatformStorage {
   static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
       _class.reference,
       r"<init>",
-      r"(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V");
+      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V");
 
-  /// from: public void <init>(android.app.Activity activity, java.lang.String string, java.lang.String string1)
+  /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
   factory PlatformSecureStorage.new1(
-    Activity activity,
+    Context context,
     jni.JString string,
     jni.JString string1,
   ) {
     return PlatformSecureStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
         _class.reference,
         _id_new1,
-        [activity.reference, string.reference, string1.reference]).object);
+        [context.reference, string.reference, string1.reference]).object);
   }
 
   static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(

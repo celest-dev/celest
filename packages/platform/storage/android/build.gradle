@@ -30,7 +30,7 @@ android {
         namespace 'dev.celest.platform_storage'
     }
 
-    compileSdk 31
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -55,8 +55,17 @@ android {
             minifyEnabled false
         }
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
     implementation 'androidx.security:security-crypto:[1.1.0-alpha04,)'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.10.3'
+    testImplementation 'androidx.test:core-ktx:1.5.0'
 }

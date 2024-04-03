@@ -10,7 +10,7 @@ import androidx.annotation.Keep
  */
 @Keep
 sealed class PlatformStorage(
-    protected val mainActivity: Activity,
+    protected val context: Context,
     protected val namespace: String,
     private val scope: String?,
 ) {
@@ -23,19 +23,23 @@ sealed class PlatformStorage(
     /**
      * The prefix to set on all keys.
      */
-    private val prefix: String = if (scope != null) "$scope/" else ""
+    private val prefix: String = if (scope.isNullOrEmpty()) "" else "$scope/"
 
     private val editor: SharedPreferences.Editor
         get() = sharedPreferences.edit()
 
     fun write(key: String, value: String?) {
+        println("Writing: $prefix$key")
         with(editor) {
             putString("$prefix$key", value)
             apply()
         }
     }
 
-    fun read(key: String): String? = sharedPreferences.getString("$prefix$key", null)
+    fun read(key: String): String? {
+        println("Reading: $prefix$key")
+        return sharedPreferences.getString("$prefix$key", null)
+    }
 
     fun delete(key: String): String? {
         val current = read("$prefix$key")
