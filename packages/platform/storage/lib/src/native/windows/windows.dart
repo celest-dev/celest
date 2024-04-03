@@ -55,17 +55,13 @@ final class WindowsCommon {
     }
     final verSize = GetFileVersionInfoSize(lptstrFilename, nullptr);
     if (verSize == 0) {
-      throw PlatformStorageException(
-        'Could not retrieve file info size: $_lastException',
-      );
+      return null;
     }
     final verData = arena<BYTE>(verSize);
     if (FAILED(
       GetFileVersionInfo(lptstrFilename, NULL, verSize, verData),
     )) {
-      throw PlatformStorageException(
-        'Could not retrieve file info: $_lastException',
-      );
+      return null;
     }
 
     final lpTranslate = arena<Pointer<_LANGANDCODEPAGE>>();
@@ -118,13 +114,19 @@ final class WindowsCommon {
     }
 
     final companyName = valueFor('CompanyName');
+    if (companyName == null) {
+      return null;
+    }
     final applicationName = valueFor('ProductName');
-    if (companyName != null && applicationName != null) {
+    if (applicationName == null) {
       return (
         companyName: companyName,
-        productName: applicationName,
+        productName: applicationId,
       );
     }
-    return null;
+    return (
+      companyName: companyName,
+      productName: applicationName,
+    );
   });
 }
