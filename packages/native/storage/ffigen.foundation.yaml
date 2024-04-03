@@ -1,0 +1,28 @@
+name: Foundation
+description: |
+  Bindings for Foundation on iOS/macOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.foundation.yaml`.
+language: "objc"
+output:
+  bindings: "lib/src/native/darwin/foundation.ffi.dart"
+compiler-opts:
+  - "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+headers:
+  entry-points:
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSBundle.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSUserDefaults.h"
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+
+ffi-native:
+exclude-all-by-default: true
+objc-interfaces:
+  include:
+    - NSBundle
+    - NSUserDefaults

@@ -1,0 +1,82 @@
+name: SecurityFramework
+description: |
+  Bindings for Security.framework on iOS/macOS.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.security.yaml`.
+language: "c"
+output:
+  bindings: "lib/src/native/darwin/security.ffi.dart"
+compiler-opts:
+  - "-F/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+headers:
+  entry-points:
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecItem.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecBase.h"
+    - "/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Security.framework/Headers/SecKeychainItem.h"
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+library-imports:
+  cf: "package:native_storage/src/native/darwin/core_foundation.ffi.dart"
+
+ffi-native:
+exclude-all-by-default: true
+typedefs:
+  include:
+    - Sec.*
+functions:
+  include:
+    - Sec.*
+globals:
+  include:
+    - kSec.*
+    - kCF.*
+unnamed-enums:
+  include:
+    - errSec.*
+type-map:
+  typedefs:
+    CFString:
+      lib: cf
+      c-type: CFString
+      dart-type: CFString
+    CFType:
+      lib: cf
+      c-type: CFType
+      dart-type: CFType
+    CFArray:
+      lib: cf
+      c-type: CFArray
+      dart-type: CFArray
+    CFArrayRef:
+      lib: cf
+      c-type: CFArrayRef
+      dart-type: CFArrayRef
+    CFData:
+      lib: cf
+      c-type: CFData
+      dart-type: CFData
+    CFDataRef:
+      lib: cf
+      c-type: CFDataRef
+      dart-type: CFDataRef
+    CFDictionary:
+      lib: cf
+      c-type: CFDictionary
+      dart-type: CFDictionary
+    CFStringRef:
+      lib: cf
+      c-type: CFStringRef
+      dart-type: CFStringRef
+    CFTypeRef:
+      lib: cf
+      c-type: CFTypeRef
+      dart-type: CFTypeRef
+    CFDictionaryRef:
+      lib: cf
+      c-type: CFDictionaryRef
+      dart-type: CFDictionaryRef

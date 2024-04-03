@@ -1,0 +1,53 @@
+name: Glib
+description: |
+  Bindings for glib on Linux.
+
+  Regenerate bindings with `dart run ffigen --config=ffigen.glib.yaml`.
+language: c
+output: lib/src/native/linux/glib.ffi.dart
+headers:
+  entry-points:
+    - /usr/include/glib-2.0/glib.h
+    - /usr/include/glib-2.0/glib-object.h
+    - /usr/include/glib-2.0/gio/gio.h
+preamble: |
+  // ignore_for_file: type=lint
+  // ignore_for_file: return_of_invalid_type
+  // ignore_for_file: unnecessary_non_null_assertion
+comments:
+  style: any
+  length: full
+
+exclude-all-by-default: true
+typedefs:
+  include:
+    - gboolean
+    - gint
+    - gpointer
+    - gchar
+functions:
+  include:
+    - g_hash_table_new
+    - g_hash_table_insert
+    - g_hash_table_destroy
+    - g_application_get_default
+    - g_application_get_application_id
+    - g_get_user_config_dir
+    - g_error_free
+structs:
+  include:
+    - _GError
+    - _GHashTable
+    - _GCancellable
+    - _GObject
+  rename:
+    "_GError": GError
+    "_GHashTable": GHashTable
+    "_GCancellable": GCancellable
+    "_GObject": GObject
+type-map:
+  typedefs:
+    gchar:
+      lib: pkg_ffi
+      c-type: Utf8
+      dart-type: Char
