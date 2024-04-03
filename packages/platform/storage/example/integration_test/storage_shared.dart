@@ -13,9 +13,8 @@ void sharedTests(String name, PlatformStorageFactory factory) {
       setUp(() {
         storage.clear();
         // Add some randomness to prevent overlap between concurrent tests.
-        final charset = 'abc123'.codeUnits;
         key = String.fromCharCodes(
-          List.generate(10, (_) => charset[_random.nextInt(charset.length)]),
+          List.generate(10, (_) => _random.nextInt(255) + 1),
         );
       });
 
