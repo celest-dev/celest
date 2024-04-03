@@ -9,6 +9,14 @@ final windows = WindowsCommon._();
 final class WindowsCommon {
   WindowsCommon._();
 
+  late final bool canUseWinRT = lazy(() {
+    try {
+      return Package.current != null;
+    } on Object {
+      return false;
+    }
+  });
+
   late final String? applicationId = lazy(() {
     final exeName = p.basenameWithoutExtension(Platform.resolvedExecutable);
     try {

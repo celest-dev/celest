@@ -6,34 +6,82 @@ a background thread.
 
 > See [Web support](#Web) below for more info on how this package behaves in a browser environment.
 
-## `PlatformStorage`
+## Storage Types
 
 All implementations conform to the `PlatformStorage` interface, which provides a simple API for reading and writing key-value pairs.
+There are three variations of `PlatformStorage`: `PlatformLocalStorage`, `PlatformSecureStorage`, and `IsolatedPlatformStorage`. 
+By default, a `PlatformLocalStorage` instance is returned.
 
-There are two flavors of `PlatformStorage` currently: `PlatformLocalStorage` and `PlatformSecureStorage`. Both are constructed with
-a required `namespace` parameter and optional `scope`. The `namespace` represents the isolation boundary of the storage values, while
-the `scope` is used to separate storage data between different parts of the app,
+### Local Storage
 
-It is recommended to use your application or bundle identifier as the `namespace`.
+Using a `PlatformLocalStorage` instance, you can read/write values to your application's local data storage which are isolated to your
+application and persisted across app restarts.
 
-### `PlatformLocalStorage`
+```dart
+final storage = PlatformStorage();
+storage.write('key', 'value');
+print(storage.read('key')); // value
+```
 
 The local storage APIs are useful for storing non-sensitive data that should persist across app restarts and be deleted alongside the app.
 
-The platform implementations for `PlatformLocalStorage` are:
-- **iOS/macOS**: The `UserDefaults` API with a [suite name](https://developer.apple.com/documentation/foundation/nsuserdefaults/1409957-initwithsuitename#discussion) of `namespace<.scope>`.
-- **Android**: The `SharedPreferences` API with a [name](https://developer.android.com/reference/android/content/Context.html#getSharedPreferences(java.lang.String,%20int)) of `namespace<.scope>`.
-- **Linux**: The `gsettings` API with a schema path of `namespace<.scope>`.
-- **Windows**: The `Windows.Storage.ApplicationData.Current.LocalSettings` API with a container name of `namespace<.scope>`.
-- **Web**: The `localStorage` API with a key prefix of `namespace<.scope>`.
+The platform implementations for local `PlatformStorage` are:
 
-### `PlatformSecureStorage`
+| Platform | Implementation |
+| -------- | -------------- |
+| iOS/macOS | [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults) |
+| Android | [SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences) |
+| Linux | [gsettings](https://developer.gnome.org/gio/stable/GSettings.html) |
+| Windows | [Windows.Storage.ApplicationData.Current.LocalSettings](https://docs.microsoft.com/en-us/uwp/api/windows.storage.applicationdata.current.localsettings) |
+| Web | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) |
 
-The secure storage APIs are useful for storing sensitive data that should persist across app restarts and be deleted alongside the app.
+### Secure Storage
+
+Sometimes you may need to store sensitive data, such as API keys or user credentials, in a way that is more secure than local storage.
+In this case, use the `secure` getter on a `PlatformStorage` instance to get a secure variation.
+
+```dart
+final secureStorage = storage.secure;
+secureStorage.write('key', 'value'); // value is encrypted before being stored
+print(secureStorage.read('key')); // value
+```
 
 The platform implementations for `PlatformSecureStorage` are:
-- **iOS**: The iOS Keychain with a service name of `namespace<.scope>`.
-- **Android**: The Android KeyStore with an alias of `namespace<.scope>`.
-- **Linux**: The `libsecret` API with a schema path of `namespace<.scope>`.
-- **Windows**: The Windows Credential Locker with a resource name of `namespace<.scope>`.
-- **Web**: The `localStorage` API with a key prefix of `namespace<.scope>`.
+
+| Platform | Implementation |
+| -------- | -------------- |
+| iOS/macOS | [Keychain](https://developer.apple.com/documentation/security/keychain_services) |
+| Android | [EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) |
+| Linux | [libsecret](https://wiki.gnome.org/Projects/Libsecret) |
+| Windows | [Windows.Security.Credentials.PasswordVault](https://docs.microsoft.com/en-us/uwp/api/windows.security.credentials.passwordvault) |
+| Web | In-Memory (See [Web](#Web)) |
+
+### Isolated Storage
+
+The APIs shown above are all synchronous, which means they will block the main thread while reading/writing data. If you need to perform
+storage operations in the background, use the `isolated` getter on a `PlatformStorage` instance to get an isolated variation.
+
+```dart
+final isolatedStorage = storage.isolated;
+await isolated.write('key', 'value'); // value is written in a background thread
+print(await isolated.read('key')); // value
+```
+
+These can be combined to create a secure, isolated storage for example:
+
+```dart
+final secureIsolatedStorage = storage.secure.isolated;
+await secureIsolatedStorage.write('key', 'value'); // value is encrypted and written in a background thread
+print(await secureIsolatedStorage.read); // value
+```
+
+The platform implementations for `IsolatedPlatformStorage` are the same as the local/secure storage implementations, but the operations 
+are performed using an [Isolate](https://api.dart.dev/stable/dart-isolate/Isolate-class.html).
+
+### Web
+
+When running in a browser environment, there is [no way](https://auth0.com/blog/secure-browser-storage-the-facts/) to securely persist
+sensitive data. As a result, the `PlatformSecureStorage` implementation for web is an in-memory store that does not persist data across
+page reloads. The `PlatformLocalStorage` implementation for web, however, uses the browser's `localStorage` API for persistence.
+
+The `IsolatedPlatformStorage` implementation for web uses the `PlatformLocalStorage` implementation, but does not perform calls in a Web Worker.

@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:ffi/ffi.dart';
 import 'package:native_synchronization/primitives.dart';
 import 'package:path/path.dart' as p;
 import 'package:platform_storage/src/local/local_storage_platform.vm.dart';
-import 'package:platform_storage/src/native/linux/glib.ffi.dart';
 import 'package:platform_storage/src/native/linux/linux.dart';
-import 'package:xdg_directories/xdg_directories.dart' as xdg;
 
 final class LocalStoragePlatformLinux extends LocalStoragePlatform {
   LocalStoragePlatformLinux({
@@ -16,25 +12,8 @@ final class LocalStoragePlatformLinux extends LocalStoragePlatform {
     super.scope,
   }) : super.base();
 
-  static final Glib? _glib = () {
-    try {
-      return Glib(DynamicLibrary.open('libglib-2.0.so.0'));
-    } on Object {
-      return null;
-    }
-  }();
-  static final String _userConfigHome = () {
-    if (_glib case final glib?) {
-      final userConfigHome = glib.g_get_user_config_dir();
-      if (userConfigHome != nullptr) {
-        return userConfigHome.toDartString();
-      }
-    }
-    return xdg.configHome.path;
-  }();
-
   late final String _storagePath = p.joinAll([
-    _userConfigHome,
+    linux.userConfigHome,
     if (scope != null) '$namespace.$scope.json' else '$namespace.json',
   ]);
 

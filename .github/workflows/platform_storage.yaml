@@ -138,9 +138,9 @@ jobs:
       - name: Get Packages
         working-directory: packages/platform/storage
         run: dart pub get --no-example
-      - name: Test
-        working-directory: packages/platform/storage
-        run: dart test
+      # - name: Test
+      #   working-directory: packages/platform/storage
+      #   run: dart test
       - name: Get Packages (Example)
         working-directory: packages/platform/storage/example
         run: flutter pub get

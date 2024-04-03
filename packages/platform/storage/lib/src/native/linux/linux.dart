@@ -5,6 +5,8 @@ import 'package:ffi/ffi.dart';
 import 'package:platform_storage/src/native/linux/glib.ffi.dart';
 import 'package:platform_storage/src/native/linux/libsecret.ffi.dart';
 import 'package:platform_storage/src/util/functional.dart';
+import 'package:platform_storage/src/util/native.dart';
+import 'package:xdg_directories/xdg_directories.dart' as xdg;
 
 final linux = LinuxCommon._();
 
@@ -34,5 +36,15 @@ final class LinuxCommon {
     } on Object {
       return exeName;
     }
+  });
+
+  late final String userConfigHome = lazy(() {
+    if (tryOpenDylib('libglib-2.0.so.0') != null) {
+      final userConfigHome = glib.g_get_user_config_dir();
+      if (userConfigHome != nullptr) {
+        return userConfigHome.toDartString();
+      }
+    }
+    return xdg.configHome.path;
   });
 }

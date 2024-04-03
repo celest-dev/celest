@@ -1,6 +1,6 @@
 import 'package:platform_storage/platform_storage.dart';
 import 'package:platform_storage/src/isolated/isolated_storage_platform.vm.dart'
-    if (dart.library.js_interop) 'package:platform_storage/src/isolated/isolated_storage_platform.unsupported.dart';
+    if (dart.library.js_interop) 'package:platform_storage/src/isolated/isolated_storage_platform.web.dart';
 
 /// A [PlatformStorage] constructor.
 typedef PlatformStorageFactory = PlatformStorage Function({
