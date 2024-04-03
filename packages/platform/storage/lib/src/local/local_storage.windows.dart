@@ -7,10 +7,16 @@ final class LocalStoragePlatformWindows extends LocalStoragePlatform {
   LocalStoragePlatformWindows({
     String? namespace,
     super.scope,
-  }) : super.base();
+  })  : _namespace = namespace,
+        super.base();
+
+  final String? _namespace;
 
   @override
   late final String namespace = lazy(() {
+    if (_namespace != null) {
+      return _namespace;
+    }
     if (windows.applicationInfo case (:final companyName, :final productName)) {
       return '$companyName\\$productName';
     }
@@ -29,9 +35,12 @@ final class LocalStoragePlatformWindows extends LocalStoragePlatform {
 
   @override
   String? delete(String key) {
-    final stored = read(key);
+    final current = read(key);
+    if (current == null) {
+      return null;
+    }
     _registry.deleteValue(key);
-    return stored;
+    return current;
   }
 
   @override
@@ -45,10 +54,10 @@ final class LocalStoragePlatformWindows extends LocalStoragePlatform {
 
   @override
   void clear() {
-    for (final value in _registry.values) {
+    for (final value in List.of(_registry.values)) {
       _registry.deleteValue(value.name);
     }
-    for (final subkey in _registry.subkeyNames) {
+    for (final subkey in List.of(_registry.subkeyNames)) {
       _registry.deleteKey(subkey, recursive: true);
     }
   }

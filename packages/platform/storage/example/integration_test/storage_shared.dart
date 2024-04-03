@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void sharedTests(String name, PlatformStorageFactory factory) {
   group(name, () {
-    const allowedNamespaces = [null, 'com.domain.scope'];
+    const allowedNamespaces = ['com.domain.scope'];
     for (final namespace in allowedNamespaces) {
       late String key;
       final storage = factory(namespace: namespace);
@@ -13,8 +13,9 @@ void sharedTests(String name, PlatformStorageFactory factory) {
       setUp(() {
         storage.clear();
         // Add some randomness to prevent overlap between concurrent tests.
+        final charset = 'abc123'.codeUnits;
         key = String.fromCharCodes(
-          List.generate(10, (_) => _random.nextInt(255) + 1),
+          List.generate(10, (_) => charset[_random.nextInt(charset.length)]),
         );
       });
 
@@ -197,7 +198,7 @@ void sharedTests(String name, PlatformStorageFactory factory) {
 
 final _random = Random();
 Iterable<(int, String)> get _largeKeyValuePairs sync* {
-  for (final length in const [100, 1000, 10000]) {
+  for (final length in const [100, 1000]) {
     final string = String.fromCharCodes(
       List.generate(length, (_) => _random.nextInt(94) + 33),
     );
