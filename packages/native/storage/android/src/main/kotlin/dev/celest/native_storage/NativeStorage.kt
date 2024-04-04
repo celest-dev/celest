@@ -51,7 +51,11 @@ sealed class NativeStorage(
 
     fun clear() {
         with(editor) {
-            clear()
+            sharedPreferences.all.keys.forEach { key ->
+                if (key.startsWith(prefix)) {
+                    remove(key)
+                }
+            }
             apply()
         }
     }
