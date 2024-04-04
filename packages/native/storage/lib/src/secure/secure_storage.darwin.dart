@@ -145,10 +145,8 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
     final query = {
       ..._baseQuery(arena),
       kSecReturnAttributes: kCFBooleanTrue,
-      // Required when `useDataProtection` is disabled, however can only be
-      // passed on macOS. Passing it on iOS will fail.
-      if (Platform.isMacOS && !darwin.useDataProtection)
-        kSecMatchLimit: kSecMatchLimitAll,
+      // Required when `useDataProtection` is disabled.
+      if (!darwin.useDataProtection) kSecMatchLimit: kSecMatchLimitAll,
     };
 
     final result = arena<CFArrayRef>();
