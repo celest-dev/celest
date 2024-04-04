@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
+import 'package:path/path.dart' as p;
 import 'package:native_storage/src/native/linux/glib.ffi.dart';
 import 'package:native_storage/src/native/linux/libsecret.ffi.dart';
 import 'package:native_storage/src/util/functional.dart';
@@ -26,7 +27,8 @@ final class LinuxCommon {
       Libsecret(DynamicLibrary.open('libsecret-1.so.0'));
 
   late final String applicationId = lazy(() {
-    final exeName = File('/proc/self/exe').resolveSymbolicLinksSync();
+    final exeName = p.basenameWithoutExtension(
+        File('/proc/self/exe').resolveSymbolicLinksSync());
     try {
       final application = gio.g_application_get_default();
       if (application == nullptr) {

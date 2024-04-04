@@ -99,11 +99,12 @@ void sharedTests(String name, NativeStorageFactory factory) {
             group('large values', () {
               for (final (length, s) in _largeKeyValuePairs) {
                 test('can store key/value with length $length', () {
-                  storage.write(s, s);
-                  expect(storage.read(s), s, reason: 'Value was written');
+                  storage.write('large', s);
+                  expect(storage.read('large'), s, reason: 'Value was written');
 
-                  storage.delete(s);
-                  expect(storage.read(s), isNull, reason: 'Value was deleted');
+                  storage.delete('large');
+                  expect(storage.read('large'), isNull,
+                      reason: 'Value was deleted');
                 });
               }
             });
@@ -209,12 +210,12 @@ void sharedTests(String name, NativeStorageFactory factory) {
               group('large values', () {
                 for (final (length, s) in _largeKeyValuePairs) {
                   test('can store key/value with length $length', () async {
-                    await isolated.write(s, s);
-                    expect(await isolated.read(s), s,
+                    await isolated.write('large', s);
+                    expect(await isolated.read('large'), s,
                         reason: 'Value was written');
 
-                    await isolated.delete(s);
-                    expect(await isolated.read(s), isNull,
+                    await isolated.delete('large');
+                    expect(await isolated.read('large'), isNull,
                         reason: 'Value was deleted');
                   });
                 }

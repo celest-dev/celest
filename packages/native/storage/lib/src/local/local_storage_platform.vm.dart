@@ -62,7 +62,7 @@ abstract base class NativeLocalStoragePlatform implements NativeLocalStorage {
   NativeLocalStorage scoped(String scope) => NativeLocalStoragePlatform(
         namespace: namespace,
         scope: switch (this.scope) {
-          final currentScope? => '$currentScope.$scope',
+          final currentScope? => '$currentScope/$scope',
           null => scope,
         },
       );
