@@ -129,7 +129,7 @@ void sharedTests(String name, NativeStorageFactory factory) {
               test(
                 'shares with non-isolated storage',
                 // The NativeMemoryStorage does not share.
-                skip: name == 'NativeMemoryStorage',
+                skip: storage is NativeMemoryStorage,
                 () async {
                   storage.write(key, 'value');
                   expect(await isolated.read(key), 'value');
