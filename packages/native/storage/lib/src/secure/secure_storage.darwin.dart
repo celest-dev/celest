@@ -147,8 +147,8 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
       kSecReturnAttributes: kCFBooleanTrue,
       // Required when `useDataProtection` is disabled, however can only be
       // passed on macOS. Passing it on iOS will fail.
-      // if (Platform.isMacOS && !darwin.useDataProtection)
-      kSecMatchLimit: kSecMatchLimitAll,
+      if (Platform.isMacOS && !darwin.useDataProtection)
+        kSecMatchLimit: kSecMatchLimitAll,
     };
 
     final result = arena<CFArrayRef>();
@@ -171,8 +171,7 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
         kSecAttrAccount.cast(),
       ).cast<CFString>().toDartString()!;
       if (scope == null || itemKey.startsWith(_prefix)) {
-        // Remove all other info besides the item's primary key to avoid a
-        // bad lookup.
+        // Use the item's primary key to avoid a bad lookup.
         final primaryKey = {
           kSecClass: kSecClassGenericPassword,
           kSecAttrService: namespace.toCFString(arena),

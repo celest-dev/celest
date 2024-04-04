@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void sharedTests(String name, NativeStorageFactory factory) {
   group(name, () {
-    const allowedNamespaces = [null, 'com.domain.scope'];
+    const allowedNamespaces = [null, 'com.domain.myapp'];
     const allowedScopes = [null, 'scope', 'scope1/scope2'];
     for (final namespace in allowedNamespaces) {
       for (final scope in allowedScopes) {
