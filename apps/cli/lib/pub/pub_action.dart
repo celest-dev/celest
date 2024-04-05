@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:cli_script/cli_script.dart';
@@ -66,19 +65,15 @@ Future<void> runPub({
           );
         }
       }),
-      completer.future.then((_) {
-        final packageConfig = fileSystem
-            .directory(workingDirectory)
-            .childDirectory('.dart_tool')
-            .childFile('package_config.json');
-        if (packageConfig.existsSync()) {
-          return Future<void>.value();
-        }
-        return packageConfig
-            .watch()
-            .firstWhere((event) => event.type == FileSystemEvent.create);
-      }),
+      completer.future,
     ]);
+    final packageConfig = fileSystem
+        .directory(workingDirectory)
+        .childDirectory('.dart_tool')
+        .childFile('package_config.json');
+    while (!await packageConfig.exists()) {
+      await Future<void>.delayed(Duration.zero);
+    }
   } finally {
     unawaited(stdout.cancel());
     unawaited(stderr.cancel());
