@@ -22,6 +22,9 @@ void main() {
     for (final (action, exe) in matrix) {
       group('${exe.split('/').last} pub ${action.name}', () {
         late Directory tempDir;
+        File packageConfig() => tempDir
+            .childDirectory('.dart_tool')
+            .childFile('package_config.json');
 
         setUp(() {
           tempDir =
@@ -52,6 +55,7 @@ dependencies:
             ),
             completes,
           );
+          expect(packageConfig().existsSync(), true);
         });
 
         test('proxies failures gracefully', () async {
@@ -104,6 +108,7 @@ dependencies:
             ),
             completes,
           );
+          expect(packageConfig().existsSync(), true);
         });
 
         test('works with flutter environment constraint', () async {
@@ -125,6 +130,7 @@ dependencies:
             ),
             completes,
           );
+          expect(packageConfig().existsSync(), true);
         });
       });
     }
