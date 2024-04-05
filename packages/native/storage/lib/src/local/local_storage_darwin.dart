@@ -50,15 +50,11 @@ final class LocalStoragePlatformDarwin extends NativeLocalStoragePlatform {
 
   @override
   void clear() {
-    final allValues = _userDefaults.persistentDomainForName_(
-      darwin.nsString(namespace),
-    );
-    if (allValues == null) {
-      return;
-    }
-    for (var i = 0; i < allValues.allKeys.count; i++) {
-      final key = NSString.castFrom(allValues.allKeys.objectAtIndex_(i));
-      if (scope == null || key.toString().startsWith(scope!)) {
+    final allValues = _userDefaults.dictionaryRepresentation();
+    final allKeys = allValues.allKeys;
+    for (var i = 0; i < allKeys.count; i++) {
+      final key = NSString.castFrom(allKeys.objectAtIndex_(i));
+      if (scope == null || key.toString().startsWith(_prefix)) {
         _userDefaults.removeObjectForKey_(key);
       }
     }
