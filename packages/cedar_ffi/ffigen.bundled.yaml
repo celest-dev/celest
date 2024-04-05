@@ -1,0 +1,28 @@
+name: CedarFfiBundled
+description: C bindings to the Cedar policy engine (bundled native asset)
+ffi-native:
+language: c
+headers:
+  entry-points:
+    - "src/include/bindings.h"
+compiler-opts:
+  # Suppress nullability warnings on macOS
+  - "-Wno-nullability-completeness"
+  # Ignore warnings about availability macro
+  - "-Wno-availability"
+output:
+  bindings: "lib/src/ffi/cedar_bindings.bundled.ffi.dart"
+comments:
+  style: any
+  length: full
+exclude-all-by-default: true
+import:
+  symbol-files:
+    - 'package:cedar_ffi/src/ffi/symbols.yaml'
+functions:
+  include:
+    - "cedar_.*"
+  leaf:
+    # All C APIs are leaf functions (e.g. they do not call into Dart)
+    include:
+      - ".*"

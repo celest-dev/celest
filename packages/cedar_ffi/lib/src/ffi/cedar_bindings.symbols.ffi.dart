@@ -4,51 +4,7 @@
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 
-/// Parses a policy set from a Cedar policy string into JSON.
-@ffi.Native<CCedarPolicySetResult Function(ffi.Pointer<ffi.Char>)>(
-    symbol: 'cedar_parse_policy_set', isLeaf: true)
-external CCedarPolicySetResult cedar_parse_policy_set(
-  ffi.Pointer<ffi.Char> policies,
-);
-
-/// Links a policy template to a set of entities
-@ffi.Native<
-        ffi.Pointer<ffi.Char> Function(
-            ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>(
-    symbol: 'cedar_link_policy_template', isLeaf: true)
-external ffi.Pointer<ffi.Char> cedar_link_policy_template(
-  ffi.Pointer<ffi.Char> policy_template_json,
-  ffi.Pointer<ffi.Char> entities_json,
-);
-
-/// Initializes the Cedar policy engine with the given configuration.
-///
-/// This must be called exactly once before any other Cedar functions are called.
-@ffi.Native<CInitResult Function(ffi.Pointer<CCedarConfig>)>(
-    symbol: 'cedar_init', isLeaf: true)
-external CInitResult cedar_init(
-  ffi.Pointer<CCedarConfig> config,
-);
-
-/// De-initializes the Cedar policy engine.
-///
-/// This must be called exactly once when the Cedar policy engine is no longer needed.
-@ffi.Native<ffi.Void Function(ffi.Pointer<CedarStore>)>(
-    symbol: 'cedar_deinit', isLeaf: true)
-external void cedar_deinit(
-  ffi.Pointer<CedarStore> store,
-);
-
-/// Performs a Cedar authorization check.
-///
-/// This must be called after [cedar_init] has been called.
-@ffi.Native<
-    CAuthorizationDecision Function(ffi.Pointer<CedarStore>,
-        ffi.Pointer<CCedarQuery>)>(symbol: 'cedar_is_authorized', isLeaf: true)
-external CAuthorizationDecision cedar_is_authorized(
-  ffi.Pointer<CedarStore> store,
-  ffi.Pointer<CCedarQuery> query,
-);
+final class CedarStore extends ffi.Opaque {}
 
 /// The result of parsing policies from a Cedar policy string into JSON
 /// via [cedar_parse_policies].
@@ -85,6 +41,17 @@ final class CCedarPolicySetResult extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Char>> errors;
 }
 
+/// The result of initializing the Cedar policy engine via [cedar_init].
+final class CInitResult extends ffi.Struct {
+  /// Whether the operation succeeded.
+  external ffi.Pointer<CedarStore> store;
+
+  /// The error message, if any.
+  ///
+  /// Can be `null` to indicate no error.
+  external ffi.Pointer<ffi.Char> error;
+}
+
 final class CCedarConfig extends ffi.Struct {
   /// The Cedar schema, in JSON format.
   ///
@@ -112,51 +79,6 @@ final class CCedarConfig extends ffi.Struct {
   /// Must be one of: `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`.
   external ffi.Pointer<ffi.Char> log_level;
 }
-
-final class CCedarQuery extends ffi.Struct {
-  /// The principal to check authorization for, in entity UID format.
-  ///
-  /// Can be `null` to indicate an anonymous principal.
-  external ffi.Pointer<ffi.Char> principal_str;
-
-  /// The resource to check authorization for, in entity UID format.
-  ///
-  /// Can be `null` to indicate an anonymous resource.
-  external ffi.Pointer<ffi.Char> resource_str;
-
-  /// The action to check authorization for, in entity UID format.
-  ///
-  /// Can be `null` to indicate an anonymous action.
-  external ffi.Pointer<ffi.Char> action_str;
-
-  /// The check's context, if any, in JSON format.
-  ///
-  /// Can be `null` to indicate no context.
-  external ffi.Pointer<ffi.Char> context_json;
-
-  /// The Cedar entities, in JSON format.
-  ///
-  /// Can be `null` to use the existing entities.
-  external ffi.Pointer<ffi.Char> entities_json;
-
-  /// The Cedar policies, in JSON format.
-  ///
-  /// Can be `null` to use the existing policies.
-  external ffi.Pointer<ffi.Char> policies_json;
-}
-
-/// The result of initializing the Cedar policy engine via [cedar_init].
-final class CInitResult extends ffi.Struct {
-  /// Whether the operation succeeded.
-  external ffi.Pointer<CedarStore> store;
-
-  /// The error message, if any.
-  ///
-  /// Can be `null` to indicate no error.
-  external ffi.Pointer<ffi.Char> error;
-}
-
-final class CedarStore extends ffi.Opaque {}
 
 final class CAuthorizationDecision extends ffi.Struct {
   /// Whether the request is authorized.
@@ -190,4 +112,36 @@ final class CAuthorizationDecision extends ffi.Struct {
   /// Will be `0` if there are no errors.
   @ffi.UintPtr()
   external int errors_len;
+}
+
+final class CCedarQuery extends ffi.Struct {
+  /// The principal to check authorization for, in entity UID format.
+  ///
+  /// Can be `null` to indicate an anonymous principal.
+  external ffi.Pointer<ffi.Char> principal_str;
+
+  /// The resource to check authorization for, in entity UID format.
+  ///
+  /// Can be `null` to indicate an anonymous resource.
+  external ffi.Pointer<ffi.Char> resource_str;
+
+  /// The action to check authorization for, in entity UID format.
+  ///
+  /// Can be `null` to indicate an anonymous action.
+  external ffi.Pointer<ffi.Char> action_str;
+
+  /// The check's context, if any, in JSON format.
+  ///
+  /// Can be `null` to indicate no context.
+  external ffi.Pointer<ffi.Char> context_json;
+
+  /// The Cedar entities, in JSON format.
+  ///
+  /// Can be `null` to use the existing entities.
+  external ffi.Pointer<ffi.Char> entities_json;
+
+  /// The Cedar policies, in JSON format.
+  ///
+  /// Can be `null` to use the existing policies.
+  external ffi.Pointer<ffi.Char> policies_json;
 }

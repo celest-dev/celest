@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:cedar/cedar.dart';
-import 'package:cedar_ffi/src/ffi/cedar_bindings.g.dart' as bindings;
+import 'package:cedar_ffi/src/ffi/cedar_bindings.dart';
 import 'package:ffi/ffi.dart';
 import 'package:meta/meta.dart';
 
@@ -24,7 +24,7 @@ final class CedarEngine implements CedarAuthorizer, Finalizable {
     @visibleForTesting bool validate = true,
   }) {
     final storeRef = using((arena) {
-      final config = arena<bindings.CCedarConfig>();
+      final config = arena<CCedarConfig>();
       config.ref
         ..schema_json =
             jsonEncode(schema.toJson()).toNativeUtf8(allocator: arena).cast()
@@ -61,16 +61,16 @@ final class CedarEngine implements CedarAuthorizer, Finalizable {
   }
 
   CedarEngine._({
-    required Pointer<bindings.CedarStore> ref,
+    required Pointer<CedarStore> ref,
   }) : _ref = ref;
 
-  static final Finalizer<Pointer<bindings.CedarStore>> _finalizer = Finalizer(
+  static final Finalizer<Pointer<CedarStore>> _finalizer = Finalizer(
     bindings.cedar_deinit,
   );
 
   var _closed = false;
 
-  final Pointer<bindings.CedarStore> _ref;
+  final Pointer<CedarStore> _ref;
 
   @override
   CedarAuthorizationResponse isAuthorized(
@@ -82,7 +82,7 @@ final class CedarEngine implements CedarAuthorizer, Finalizable {
       throw StateError('Cedar engine is closed');
     }
     return using((arena) {
-      final query = arena<bindings.CCedarQuery>();
+      final query = arena<CCedarQuery>();
       query.ref
         ..principal_str = switch (request.principal) {
           final principal? => principal.normalized
@@ -122,13 +122,13 @@ final class CedarEngine implements CedarAuthorizer, Finalizable {
         };
       final cDecision = bindings.cedar_is_authorized(_ref, query);
       return switch (cDecision) {
-        bindings.CAuthorizationDecision(:final completion_error)
+        CAuthorizationDecision(:final completion_error)
             when completion_error != nullptr =>
           throw Exception(
             'Error performing authorization: '
             '${completion_error.cast<Utf8>().toDartString()}',
           ),
-        bindings.CAuthorizationDecision(
+        CAuthorizationDecision(
           :final is_authorized,
           :final reasons,
           :final reasons_len,

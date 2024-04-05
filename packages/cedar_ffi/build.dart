@@ -10,7 +10,8 @@ final IOSink buildLogs = () {
     Platform.script.resolve('.dart_tool/build.log'),
   );
   logsFile.createSync(recursive: true);
-  return logsFile.openWrite(mode: FileMode.write);
+  return logsFile.openWrite(mode: FileMode.write)
+    ..writeln('Starting build: ${DateTime.now()}');
 }();
 
 void main(List<String> args) async {
@@ -18,7 +19,10 @@ void main(List<String> args) async {
     await build(args, (config, output) async {
       buildLogs.writeln(config.toString());
 
-      output.addDependency(config.packageRoot.resolve('src/'));
+      output.addDependencies([
+        config.packageRoot.resolve('build.dart'),
+        config.packageRoot.resolve('src/'),
+      ]);
 
       // Build the Rust code in `src/` to `target/`.
       //
@@ -39,9 +43,27 @@ void main(List<String> args) async {
       if (!File.fromUri(binaryOut).existsSync()) {
         throw Exception('$binaryOut does not exist');
       }
+      if (config.targetOS == OS.windows) {
+        // Workaround for https://github.com/dart-lang/sdk/issues/55207
+        //
+        // Bundle a second asset which can resolve symbols from a previously
+        // loaded DLL. This allows having a fallback mechanism, since you
+        // cannot add duplicate assets.
+        //
+        // This only matters in release mode, but since `config.buildMode` is
+        // always set to `release` in Dart, it's no good.
+        final loadedAsset = NativeCodeAsset(
+          package: packageName,
+          name: 'src/ffi/cedar_bindings.loaded.ffi.dart',
+          linkMode: LookupInProcess(),
+          os: config.targetOS,
+          architecture: config.targetArchitecture,
+        );
+        output.addAsset(loadedAsset);
+      }
       final nativeAsset = NativeCodeAsset(
         package: packageName,
-        name: 'src/ffi/cedar_bindings.g.dart',
+        name: 'src/ffi/cedar_bindings.bundled.ffi.dart',
         linkMode: DynamicLoadingBundled(),
         os: config.targetOS,
         architecture: config.targetArchitecture,
