@@ -9,9 +9,6 @@ import 'package:native_storage/src/secure/secure_storage.dart';
 abstract interface class NativeStorage {
   /// {@macro native_storage.native_local_storage}
   ///
-  /// **NOTE**: Neither [namespace] nor [scope] may contain a path separator
-  /// character (`/`).
-  ///
   /// ## Namespace
   ///
   /// {@macro native_storage.native_storage.namespace}
@@ -22,21 +19,46 @@ abstract interface class NativeStorage {
   factory NativeStorage({
     String? namespace,
     String? scope,
-  }) = NativeLocalStorage;
+  }) {
+    final isValidNamespace =
+        namespace == null || _validNamespace.hasMatch(namespace);
+    if (!isValidNamespace) {
+      throw ArgumentError.value(
+        namespace,
+        'namespace',
+        'Invalid namespace. Must match $_validNamespace',
+      );
+    }
+    return NativeLocalStorage(namespace: namespace, scope: scope);
+  }
+
+  static final _validNamespace = RegExp(
+    r'^[a-z0-9]+(\.[a-z0-9]+)+$',
+    caseSensitive: false,
+  );
 
   /// {@template native_storage.native_storage.namespace}
   /// The main identifier all values are stored under.
   ///
   /// To avoid conflicts with other storage instances, this value should be
   /// unique to the app or package. It is recommended to always use your
-  /// application or bundle identifier.
+  /// application or bundle identifier, which is the default if not passed.
+  ///
+  /// If provided, it must match the regular expression
+  /// `^[a-z0-9]+(\.[a-z0-9]+)+$`, which is that of an bundle identifier.
   /// {@endtemplate}
   String get namespace;
 
   /// {@template native_storage.native_storage.scope}
-  /// An optional identifier to further scope values under.
+  /// An optional tag for separating values for different parts of your app.
   ///
-  /// This can be used to separate values for different parts of your app.
+  /// This can be passed to [NativeStorage.new] or dynamically created via
+  /// [scoped] which will create a subscope if this is not `null`.
+  ///
+  /// Scopes are separated by a `/` character and, unlike [namespace], are used
+  /// to create a logical, but not physical, separation of values. For example,
+  /// if [scope] is `settings`, calling `storage.write('theme', 'dark')` will
+  /// store the value under the storage key `settings/theme`.
   /// {@endtemplate}
   String? get scope;
 
@@ -66,7 +88,7 @@ abstract interface class NativeStorage {
   /// {@macro native_storage.isolated_native_storage}
   IsolatedNativeStorage get isolated;
 
-  /// Creates a new [PlatformStorage] instance with the same configuration as
+  /// Creates a new [NativeStorage] instance with the same configuration as
   /// this instance, but with the provided [scope].
   ///
   /// If the current instance already has a [scope], the new instance will have

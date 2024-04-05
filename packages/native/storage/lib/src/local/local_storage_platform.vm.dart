@@ -39,13 +39,16 @@ abstract base class NativeLocalStoragePlatform implements NativeLocalStorage {
   @override
   @mustCallSuper
   void close() {
+    _secure?.close();
+    _secure = null;
     _isolated?.close().ignore();
     _isolated = null;
   }
 
+  NativeSecureStorage? _secure;
   @override
   NativeSecureStorage get secure =>
-      NativeSecureStorage(namespace: namespace, scope: scope);
+      _secure ??= NativeSecureStorage(namespace: namespace, scope: scope);
 
   IsolatedNativeStorage? _isolated;
   @override
@@ -59,7 +62,7 @@ abstract base class NativeLocalStoragePlatform implements NativeLocalStorage {
   NativeLocalStorage scoped(String scope) => NativeLocalStoragePlatform(
         namespace: namespace,
         scope: switch (this.scope) {
-          final currentScope? => '$currentScope.$scope',
+          final currentScope? => '$currentScope/$scope',
           null => scope,
         },
       );

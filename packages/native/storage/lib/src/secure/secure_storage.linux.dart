@@ -31,6 +31,8 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
   @override
   late final String namespace = _namespace ?? _appName;
 
+  late final String _prefix = scope == null ? '' : '$scope/';
+
   Pointer<SecretSchema> _schema(Arena arena) {
     final schema = arena<SecretSchema>()
       ..ref.name = namespace.toNativeUtf8(allocator: arena)
@@ -39,9 +41,10 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
       ..ref.attributes[0].type =
           SecretSchemaAttributeType.SECRET_SCHEMA_ATTRIBUTE_STRING;
     if (scope != null) {
-      schema.ref.attributes[1].name = 'scope'.toNativeUtf8(allocator: arena);
-      schema.ref.attributes[1].type =
-          SecretSchemaAttributeType.SECRET_SCHEMA_ATTRIBUTE_STRING;
+      schema
+        ..ref.attributes[1].name = 'scope'.toNativeUtf8(allocator: arena)
+        ..ref.attributes[1].type =
+            SecretSchemaAttributeType.SECRET_SCHEMA_ATTRIBUTE_STRING;
     }
     return schema;
   }
@@ -58,11 +61,11 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
         'key'.toNativeUtf8(allocator: arena).cast(),
         key.toNativeUtf8(allocator: arena).cast(),
       );
-      if (scope != null) {
+      if (scope case final scope?) {
         linux.glib.g_hash_table_insert(
           hashTable,
           'scope'.toNativeUtf8(allocator: arena).cast(),
-          scope!.toNativeUtf8(allocator: arena).cast(),
+          scope.toNativeUtf8(allocator: arena).cast(),
         );
       }
     }
@@ -74,15 +77,36 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
   void clear() => using((arena) {
         final schema = _schema(arena);
         final attributes = _attributes(arena: arena);
-        _check(
-          (err) => linux.libSecret.secret_password_clearv_sync(
+        final secrets = _check(
+          (err) => linux.libSecret.secret_password_searchv_sync(
             schema,
             attributes,
+            SecretSearchFlags.SECRET_SEARCH_ALL,
             nullptr,
             err,
           ),
           arena: arena,
         );
+        if (secrets == nullptr) {
+          return;
+        }
+        final count = linux.glib.g_list_length(secrets);
+        for (var i = 0; i < count; i++) {
+          final secret =
+              linux.glib.g_list_nth_data(secrets, i).cast<SecretItem>();
+          final label =
+              linux.libSecret.secret_item_get_label(secret).toDartString();
+          if (scope == null || label.startsWith(_prefix)) {
+            _check(
+              (err) => linux.libSecret.secret_item_delete_sync(
+                secret,
+                nullptr,
+                err,
+              ),
+              arena: arena,
+            );
+          }
+        }
       });
 
   @override
@@ -126,14 +150,14 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
   String write(String key, String value) {
     using((arena) {
       final schema = _schema(arena);
-      final label = key.toNativeUtf8(allocator: arena);
+      final label = '$_prefix$key'.toNativeUtf8(allocator: arena);
       final secret = value.toNativeUtf8(allocator: arena);
       final attributes = _attributes(key: key, arena: arena);
       _check(
         (err) => linux.libSecret.secret_password_storev_sync(
           schema,
           attributes,
-          nullptr,
+          SECRET_COLLECTION_DEFAULT.toNativeUtf8(allocator: arena),
           label,
           secret,
           nullptr,

@@ -18,11 +18,11 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
     String? namespace,
     super.scope,
   })  : _namespace = namespace,
-        super.base() {
-    print('Running with namespace: $namespace, scope: $scope');
-  }
+        super.base();
 
   final String? _namespace;
+  late final String _prefix = scope == null ? '' : '$scope/';
+  String _scoped(String key) => '$_prefix$key';
 
   @override
   late final String namespace = lazy(() {
@@ -32,10 +32,9 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
   });
 
   Map<CFStringRef, Pointer> _baseQuery(Arena arena) {
-    final service = scope == null ? namespace : '$namespace/$scope';
     return {
       kSecClass: kSecClassGenericPassword,
-      kSecAttrService: service.toCFString(arena),
+      kSecAttrService: namespace.toCFString(arena),
       if (darwin.useDataProtection)
         kSecUseDataProtectionKeychain: kCFBooleanTrue,
     };
@@ -46,17 +45,18 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
 
   @override
   String? delete(String key) => using((arena) {
-        final current = _read(key, arena: arena);
-        _delete(key, arena: arena);
+        final current = _read(_scoped(key), arena: arena);
+        _delete(_scoped(key), arena: arena);
         return current;
       });
 
   @override
-  String? read(String key) => using((arena) => _read(key, arena: arena));
+  String? read(String key) =>
+      using((arena) => _read(_scoped(key), arena: arena));
 
   @override
   String write(String key, String value) => using((arena) {
-        _write(key, value, arena: arena);
+        _write(_scoped(key), value, arena: arena);
         return value;
       });
 
@@ -67,7 +67,6 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
       kSecAttrAccount: key.toCFString(arena),
       kSecReturnData: kCFBooleanTrue,
       kSecMatchLimit: kSecMatchLimitOne,
-      kSecReturnData: kCFBooleanTrue,
     };
     try {
       final result = arena<CFTypeRef>();
@@ -144,15 +143,39 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
   void _clear({required Arena arena}) {
     final query = {
       ..._baseQuery(arena),
-      // Required when `useDataProtection` is disabled, however can only be
-      // passed on macOS. Passing it on iOS will fail.
-      if (Platform.isMacOS && !darwin.useDataProtection)
-        kSecMatchLimit: kSecMatchLimitAll,
+      kSecReturnAttributes: kCFBooleanTrue,
+      // Required when `useDataProtection` is disabled.
+      if (!darwin.useDataProtection) kSecMatchLimit: kSecMatchLimitAll,
     };
+
+    final result = arena<CFArrayRef>();
     try {
-      _check(() => SecItemDelete(query.toCFDictionary(arena)));
+      // Find all keys for the namespace.
+      _check(
+        () => SecItemCopyMatching(query.toCFDictionary(arena), result.cast()),
+      );
     } on SecureStorageItemNotFoundException {
       // OK. Keychain will throw this error if there are no items.
+      return;
+    }
+
+    final items = result.value;
+    assert(items != nullptr, 'items should not be null');
+    for (var i = 0; i < CFArrayGetCount(items); i++) {
+      final item = CFArrayGetValueAtIndex(items, i).cast<CFDictionary>();
+      final itemKey = CFDictionaryGetValue(
+        item,
+        kSecAttrAccount.cast(),
+      ).cast<CFString>().toDartString()!;
+      if (scope == null || itemKey.startsWith(_prefix)) {
+        // Use the item's primary key to avoid a bad lookup.
+        final primaryKey = {
+          kSecClass: kSecClassGenericPassword,
+          kSecAttrService: namespace.toCFString(arena),
+          kSecAttrAccount: itemKey.toCFString(arena),
+        }.toCFDictionary(arena);
+        _check(() => SecItemDelete(primaryKey), key: itemKey);
+      }
     }
   }
 

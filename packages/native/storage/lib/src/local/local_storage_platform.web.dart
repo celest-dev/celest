@@ -1,4 +1,6 @@
 import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/isolated/isolated_storage_platform.unsupported.dart'
+    as unsupported;
 import 'package:web/web.dart' as web;
 
 /// The browser implementation of [NativeLocalStorage].
@@ -45,21 +47,21 @@ final class NativeLocalStoragePlatform implements NativeLocalStorage {
 
   @override
   void close() {
+    _secure?.close();
+    _secure = null;
     _isolated?.close().ignore();
     _isolated = null;
   }
 
+  NativeSecureStorage? _secure;
   @override
   NativeSecureStorage get secure =>
-      NativeSecureStorage(namespace: namespace, scope: scope);
+      _secure ??= NativeSecureStorage(namespace: namespace, scope: scope);
 
   IsolatedNativeStorage? _isolated;
   @override
-  IsolatedNativeStorage get isolated => _isolated ??= IsolatedNativeStorage(
-        factory: NativeLocalStoragePlatform.new,
-        namespace: namespace,
-        scope: scope,
-      );
+  IsolatedNativeStorage get isolated =>
+      _isolated ??= unsupported.IsolatedNativeStoragePlatform.from(this);
 
   @override
   NativeLocalStorage scoped(String scope) => NativeLocalStoragePlatform(

@@ -1,6 +1,7 @@
 import 'package:native_storage/native_storage.dart';
-import 'package:native_storage/src/isolated/isolated_storage_platform.vm.dart'
-    if (dart.library.js_interop) 'package:native_storage/src/isolated/isolated_storage_platform.web.dart';
+import 'package:native_storage/src/isolated/isolated_storage_platform.unsupported.dart'
+    if (dart.library.js_interop) 'package:native_storage/src/isolated/isolated_storage_platform.web.dart'
+    if (dart.library.isolate) 'package:native_storage/src/isolated/isolated_storage_platform.vm.dart';
 
 /// A [NativeStorage] constructor.
 typedef NativeStorageFactory = NativeStorage Function({

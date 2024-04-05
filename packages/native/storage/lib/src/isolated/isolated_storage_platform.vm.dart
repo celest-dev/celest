@@ -2,57 +2,14 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:native_storage/native_storage.dart';
-import 'package:stack_trace/stack_trace.dart';
+import 'package:native_storage/src/isolated/isolated_storage_request.dart';
 import 'package:stream_channel/isolate_channel.dart';
-
-enum IsolatedStorageCommand { read, write, delete, clear }
 
 typedef StorageConfig = ({
   NativeStorageFactory factory,
   String? namespace,
   String? scope,
 });
-
-final class IsolatedStorageRequest {
-  const IsolatedStorageRequest({
-    required this.id,
-    required this.command,
-    this.key,
-    this.value,
-    this.error,
-  });
-
-  final int id;
-  final IsolatedStorageCommand command;
-  final String? key;
-  final String? value;
-  final (NativeStorageException, StackTrace)? error;
-
-  IsolatedStorageRequest result({
-    String? value,
-    (NativeStorageException, StackTrace)? error,
-  }) {
-    return IsolatedStorageRequest(
-      id: id,
-      command: command,
-      key: key,
-      value: value,
-      error: error,
-    );
-  }
-
-  String? unwrap() {
-    if (error case (final error, final stackTrace)) {
-      Error.throwWithStackTrace(
-        error,
-        Chain([stackTrace, Chain.current()].map(Trace.from)),
-      );
-    }
-    return value;
-  }
-}
-
-typedef IsolatedStorageResponse = String?;
 
 /// The VM implementation of [IsolatedNativeStorage] which uses an [Isolate]
 /// to handle storage operations.
@@ -175,23 +132,28 @@ final class IsolatedNativeStoragePlatform implements IsolatedNativeStorage {
       return;
     }
     _closed = true;
-    if (force) {
-      for (final pendingRequest in _pendingRequests.values) {
-        pendingRequest.completeError(StateError('Storage is closed'));
+    try {
+      if (force) {
+        for (final pendingRequest in _pendingRequests.values) {
+          pendingRequest.completeError(StateError('Storage is closed'));
+        }
+      } else {
+        await Future.wait([
+          for (final pendingRequest in _pendingRequests.values)
+            pendingRequest.future,
+        ]);
       }
-    } else {
-      await Future.wait([
-        for (final pendingRequest in _pendingRequests.values)
-          pendingRequest.future,
-      ]);
+    } finally {
+      _pendingRequests.clear();
+      unawaited(_listener?.cancel());
+      _listener = null;
+      _channel?.sink.close();
+      _channel = null;
+      _isolate?.kill();
+      _isolate = null;
+      _spawned?.ignore();
+      _spawned = null;
     }
-    _pendingRequests.clear();
-    unawaited(_listener?.cancel());
-    _listener = null;
-    _channel?.sink.close();
-    _channel = null;
-    _isolate?.kill();
-    _isolate = null;
   }
 }
 
