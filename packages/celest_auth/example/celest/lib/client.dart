@@ -34,15 +34,11 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final String _namespace = 'TODO';
-
-  late final PlatformSecureStorage _secureStorage = PlatformSecureStorage(
-    namespace: _namespace,
-  );
+  late final NativeStorage _storage = NativeStorage().scoped('celest');
 
   @override
   late _$http.Client httpClient =
-      CelestHttpClient(secureStorage: _secureStorage);
+      CelestHttpClient(secureStorage: _storage.secure);
 
   late Uri _baseUri;
 
@@ -50,7 +46,7 @@ class Celest with CelestBase {
 
   late final CelestAuth _auth = CelestAuth(
     this,
-    secureStorage: _secureStorage,
+    storage: _storage,
   );
 
   T _checkInitialized<T>(T Function() value) {

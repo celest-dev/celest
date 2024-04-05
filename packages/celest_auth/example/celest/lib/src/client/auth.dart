@@ -12,11 +12,10 @@ extension type CelestAuth._(_$auth_impl.AuthImpl _hub)
     implements _$celest_auth.Auth {
   CelestAuth(
     CelestBase celest, {
-    required PlatformSecureStorage secureStorage,
-    PlatformLocalStorage? localStorage,
+    required NativeStorage storage,
   }) : _hub = _$auth_impl.AuthImpl(
           celest,
-          secureStorage: secureStorage,
+          storage: storage,
         );
 
   _$auth_impl.Email get email => _$auth_impl.Email(_hub);

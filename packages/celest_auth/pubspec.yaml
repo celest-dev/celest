@@ -28,8 +28,8 @@ dependencies:
 dependency_overrides:
   celest_core:
     path: ../celest_core
-  platform_storage:
-    path: ../platform/storage
+  native_storage:
+    path: ../native/storage
 
 dev_dependencies:
   build_runner: ^2.4.8

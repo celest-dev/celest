@@ -14,11 +14,11 @@ dependencies:
   meta: ^1.10.0
   os_detect: ^2.0.1
   path: ^1.9.0
-  platform_storage: ^0.1.0
+  native_storage: ^0.1.0
 
 dependency_overrides:
-  platform_storage:
-    path: ../platform/storage
+  native_storage:
+    path: ../native/storage
 
 dev_dependencies:
   lints: ^3.0.0

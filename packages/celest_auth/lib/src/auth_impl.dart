@@ -12,14 +12,8 @@ export 'flows/email_flow.dart';
 final class AuthImpl implements Auth {
   AuthImpl(
     this.celest, {
-    required PlatformSecureStorage secureStorage,
-    PlatformLocalStorage? localStorage,
-  })  : secureStorage = secureStorage.scoped('celest_auth'),
-        localStorage = (localStorage ??
-                PlatformLocalStorage(
-                    namespace: secureStorage.namespace,
-                    scope: secureStorage.scope))
-            .scoped('celest_auth');
+    required NativeStorage storage,
+  }) : _storage = storage.scoped('auth');
 
   AuthState? _authState;
 
@@ -98,8 +92,10 @@ final class AuthImpl implements Auth {
   }
 
   final CelestBase celest;
-  final PlatformLocalStorage localStorage;
-  final PlatformSecureStorage secureStorage;
+  final NativeStorage _storage;
+
+  NativeStorage get localStorage => _storage;
+  NativeSecureStorage get secureStorage => _storage.secure;
 
   late final AuthClient protocol = AuthClient(celest);
 

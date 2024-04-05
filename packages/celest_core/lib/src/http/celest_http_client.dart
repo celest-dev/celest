@@ -5,20 +5,20 @@ import 'package:http/http.dart' as http;
 
 final class CelestHttpClient extends http.BaseClient {
   CelestHttpClient({
-    PlatformSecureStorage? secureStorage,
+    NativeSecureStorage? secureStorage,
     http.Client? baseClient,
   })  : _secureStorage = secureStorage,
         _ownsInner = baseClient == null,
         _inner = baseClient ?? createHttpClient();
 
-  final PlatformSecureStorage? _secureStorage;
+  final NativeSecureStorage? _secureStorage;
   final bool _ownsInner;
   final http.Client _inner;
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     if (_secureStorage != null) {
-      final cork = await _secureStorage.isolated.read('cork');
+      final cork = await _secureStorage.isolated.read('auth/cork');
       if (cork != null) {
         request.headers['authorization'] = 'Bearer $cork';
       }
