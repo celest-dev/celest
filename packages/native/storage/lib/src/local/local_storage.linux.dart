@@ -13,11 +13,13 @@ final class LocalStorageLinux extends NativeLocalStoragePlatform {
 
   late final String _storagePath = p.joinAll([
     linux.userConfigHome,
-    if (scope != null) ...[namespace, '$scope.json'] else '$namespace.json',
+    '$namespace.json',
   ]);
 
   @override
   String get namespace => linux.applicationId;
+
+  late final String _prefix = scope == null ? '' : '$scope/';
 
   late final File _storage = File(_storagePath);
 
@@ -37,25 +39,26 @@ final class LocalStorageLinux extends NativeLocalStoragePlatform {
 
   @override
   void clear() {
-    if (_storage.existsSync()) {
-      _storage.deleteSync();
-    }
+    final updated = _readData()
+      ..removeWhere((key, _) => key.startsWith(_prefix));
+    _writeData(updated);
   }
 
   @override
   String? delete(String key) {
     final data = _readData();
-    final value = data.remove(key);
+    final value = data.remove('$_prefix$key');
     _writeData(data);
     return value;
   }
 
   @override
-  String? read(String key) => _readData()[key];
+  String? read(String key) => _readData()['$_prefix$key'];
 
   @override
   String write(String key, String value) {
-    final data = _readData()..[key] = value;
+    final data = _readData();
+    data['$_prefix$key'] = value;
     _writeData(data);
     return value;
   }

@@ -50,6 +50,642 @@ class Glib {
   late final _g_get_user_config_dir = _g_get_user_config_dirPtr
       .asFunction<ffi.Pointer<pkg_ffi.Utf8> Function()>();
 
+  /// Doubly linked lists
+  ffi.Pointer<GList> g_list_alloc() {
+    return _g_list_alloc();
+  }
+
+  late final _g_list_allocPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<GList> Function()>>(
+          'g_list_alloc');
+  late final _g_list_alloc =
+      _g_list_allocPtr.asFunction<ffi.Pointer<GList> Function()>();
+
+  void g_list_free(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_free(
+      list,
+    );
+  }
+
+  late final _g_list_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<GList>)>>(
+          'g_list_free');
+  late final _g_list_free =
+      _g_list_freePtr.asFunction<void Function(ffi.Pointer<GList>)>();
+
+  void g_list_free_1(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_free_1(
+      list,
+    );
+  }
+
+  late final _g_list_free_1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<GList>)>>(
+          'g_list_free_1');
+  late final _g_list_free_1 =
+      _g_list_free_1Ptr.asFunction<void Function(ffi.Pointer<GList>)>();
+
+  void g_list_free_full(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(gpointer)>> free_func,
+  ) {
+    return _g_list_free_full(
+      list,
+      free_func,
+    );
+  }
+
+  late final _g_list_free_fullPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<GList>,
+                  ffi.Pointer<
+                      ffi.NativeFunction<ffi.Void Function(gpointer)>>)>>(
+      'g_list_free_full');
+  late final _g_list_free_full = _g_list_free_fullPtr.asFunction<
+      void Function(ffi.Pointer<GList>,
+          ffi.Pointer<ffi.NativeFunction<ffi.Void Function(gpointer)>>)>();
+
+  ffi.Pointer<GList> g_list_append(
+    ffi.Pointer<GList> list,
+    gpointer data,
+  ) {
+    return _g_list_append(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_appendPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, gpointer)>>('g_list_append');
+  late final _g_list_append = _g_list_appendPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>, gpointer)>();
+
+  ffi.Pointer<GList> g_list_prepend(
+    ffi.Pointer<GList> list,
+    gpointer data,
+  ) {
+    return _g_list_prepend(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_prependPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, gpointer)>>('g_list_prepend');
+  late final _g_list_prepend = _g_list_prependPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>, gpointer)>();
+
+  ffi.Pointer<GList> g_list_insert(
+    ffi.Pointer<GList> list,
+    gpointer data,
+    int position,
+  ) {
+    return _g_list_insert(
+      list,
+      data,
+      position,
+    );
+  }
+
+  late final _g_list_insertPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, gpointer, gint)>>('g_list_insert');
+  late final _g_list_insert = _g_list_insertPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, gpointer, int)>();
+
+  ffi.Pointer<GList> g_list_insert_sorted(
+    ffi.Pointer<GList> list,
+    gpointer data,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>
+        func,
+  ) {
+    return _g_list_insert_sorted(
+      list,
+      data,
+      func,
+    );
+  }
+
+  late final _g_list_insert_sortedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>)>>)>>('g_list_insert_sorted');
+  late final _g_list_insert_sorted = _g_list_insert_sortedPtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>,
+          gpointer,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gint Function(
+                      ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>)>();
+
+  ffi.Pointer<GList> g_list_insert_sorted_with_data(
+    ffi.Pointer<GList> list,
+    gpointer data,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>
+        func,
+    gpointer user_data,
+  ) {
+    return _g_list_insert_sorted_with_data(
+      list,
+      data,
+      func,
+      user_data,
+    );
+  }
+
+  late final _g_list_insert_sorted_with_dataPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>>('g_list_insert_sorted_with_data');
+  late final _g_list_insert_sorted_with_data =
+      _g_list_insert_sorted_with_dataPtr.asFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>();
+
+  ffi.Pointer<GList> g_list_insert_before(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<GList> sibling,
+    gpointer data,
+  ) {
+    return _g_list_insert_before(
+      list,
+      sibling,
+      data,
+    );
+  }
+
+  late final _g_list_insert_beforePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<GList>,
+              gpointer)>>('g_list_insert_before');
+  late final _g_list_insert_before = _g_list_insert_beforePtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>, ffi.Pointer<GList>, gpointer)>();
+
+  ffi.Pointer<GList> g_list_insert_before_link(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<GList> sibling,
+    ffi.Pointer<GList> link_,
+  ) {
+    return _g_list_insert_before_link(
+      list,
+      sibling,
+      link_,
+    );
+  }
+
+  late final _g_list_insert_before_linkPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<GList>,
+              ffi.Pointer<GList>)>>('g_list_insert_before_link');
+  late final _g_list_insert_before_link =
+      _g_list_insert_before_linkPtr.asFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<GList>, ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_concat(
+    ffi.Pointer<GList> list1,
+    ffi.Pointer<GList> list2,
+  ) {
+    return _g_list_concat(
+      list1,
+      list2,
+    );
+  }
+
+  late final _g_list_concatPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<GList>)>>('g_list_concat');
+  late final _g_list_concat = _g_list_concatPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_remove(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.Void> data,
+  ) {
+    return _g_list_remove(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_removePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>>('g_list_remove');
+  late final _g_list_remove = _g_list_removePtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<GList> g_list_remove_all(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.Void> data,
+  ) {
+    return _g_list_remove_all(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_remove_allPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>>('g_list_remove_all');
+  late final _g_list_remove_all = _g_list_remove_allPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<GList> g_list_remove_link(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<GList> llink,
+  ) {
+    return _g_list_remove_link(
+      list,
+      llink,
+    );
+  }
+
+  late final _g_list_remove_linkPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<GList>)>>('g_list_remove_link');
+  late final _g_list_remove_link = _g_list_remove_linkPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_delete_link(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<GList> link_,
+  ) {
+    return _g_list_delete_link(
+      list,
+      link_,
+    );
+  }
+
+  late final _g_list_delete_linkPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<GList>)>>('g_list_delete_link');
+  late final _g_list_delete_link = _g_list_delete_linkPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_reverse(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_reverse(
+      list,
+    );
+  }
+
+  late final _g_list_reversePtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>>(
+      'g_list_reverse');
+  late final _g_list_reverse = _g_list_reversePtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_copy(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_copy(
+      list,
+    );
+  }
+
+  late final _g_list_copyPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>>(
+      'g_list_copy');
+  late final _g_list_copy = _g_list_copyPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_copy_deep(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<
+            ffi
+            .NativeFunction<gpointer Function(ffi.Pointer<ffi.Void>, gpointer)>>
+        func,
+    gpointer user_data,
+  ) {
+    return _g_list_copy_deep(
+      list,
+      func,
+      user_data,
+    );
+  }
+
+  late final _g_list_copy_deepPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gpointer Function(ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>>('g_list_copy_deep');
+  late final _g_list_copy_deep = _g_list_copy_deepPtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gpointer Function(ffi.Pointer<ffi.Void>, gpointer)>>,
+          gpointer)>();
+
+  ffi.Pointer<GList> g_list_nth(
+    ffi.Pointer<GList> list,
+    int n,
+  ) {
+    return _g_list_nth(
+      list,
+      n,
+    );
+  }
+
+  late final _g_list_nthPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.UnsignedInt)>>('g_list_nth');
+  late final _g_list_nth = _g_list_nthPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>, int)>();
+
+  ffi.Pointer<GList> g_list_nth_prev(
+    ffi.Pointer<GList> list,
+    int n,
+  ) {
+    return _g_list_nth_prev(
+      list,
+      n,
+    );
+  }
+
+  late final _g_list_nth_prevPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.UnsignedInt)>>('g_list_nth_prev');
+  late final _g_list_nth_prev = _g_list_nth_prevPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>, int)>();
+
+  ffi.Pointer<GList> g_list_find(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.Void> data,
+  ) {
+    return _g_list_find(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_findPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>>('g_list_find');
+  late final _g_list_find = _g_list_findPtr.asFunction<
+      ffi.Pointer<GList> Function(ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<GList> g_list_find_custom(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.Void> data,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>
+        func,
+  ) {
+    return _g_list_find_custom(
+      list,
+      data,
+      func,
+    );
+  }
+
+  late final _g_list_find_customPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>)>>)>>('g_list_find_custom');
+  late final _g_list_find_custom = _g_list_find_customPtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>,
+          ffi.Pointer<ffi.Void>,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gint Function(
+                      ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>)>();
+
+  int g_list_position(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<GList> llink,
+  ) {
+    return _g_list_position(
+      list,
+      llink,
+    );
+  }
+
+  late final _g_list_positionPtr = _lookup<
+      ffi.NativeFunction<
+          gint Function(
+              ffi.Pointer<GList>, ffi.Pointer<GList>)>>('g_list_position');
+  late final _g_list_position = _g_list_positionPtr
+      .asFunction<int Function(ffi.Pointer<GList>, ffi.Pointer<GList>)>();
+
+  int g_list_index(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.Void> data,
+  ) {
+    return _g_list_index(
+      list,
+      data,
+    );
+  }
+
+  late final _g_list_indexPtr = _lookup<
+      ffi.NativeFunction<
+          gint Function(
+              ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>>('g_list_index');
+  late final _g_list_index = _g_list_indexPtr
+      .asFunction<int Function(ffi.Pointer<GList>, ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<GList> g_list_last(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_last(
+      list,
+    );
+  }
+
+  late final _g_list_lastPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>>(
+      'g_list_last');
+  late final _g_list_last = _g_list_lastPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>();
+
+  ffi.Pointer<GList> g_list_first(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_first(
+      list,
+    );
+  }
+
+  late final _g_list_firstPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>>(
+      'g_list_first');
+  late final _g_list_first = _g_list_firstPtr
+      .asFunction<ffi.Pointer<GList> Function(ffi.Pointer<GList>)>();
+
+  int g_list_length(
+    ffi.Pointer<GList> list,
+  ) {
+    return _g_list_length(
+      list,
+    );
+  }
+
+  late final _g_list_lengthPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<GList>)>>(
+          'g_list_length');
+  late final _g_list_length =
+      _g_list_lengthPtr.asFunction<int Function(ffi.Pointer<GList>)>();
+
+  void g_list_foreach(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(gpointer, gpointer)>> func,
+    gpointer user_data,
+  ) {
+    return _g_list_foreach(
+      list,
+      func,
+      user_data,
+    );
+  }
+
+  late final _g_list_foreachPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<GList>,
+              ffi.Pointer<
+                  ffi.NativeFunction<ffi.Void Function(gpointer, gpointer)>>,
+              gpointer)>>('g_list_foreach');
+  late final _g_list_foreach = _g_list_foreachPtr.asFunction<
+      void Function(
+          ffi.Pointer<GList>,
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(gpointer, gpointer)>>,
+          gpointer)>();
+
+  ffi.Pointer<GList> g_list_sort(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>
+        compare_func,
+  ) {
+    return _g_list_sort(
+      list,
+      compare_func,
+    );
+  }
+
+  late final _g_list_sortPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>)>>)>>('g_list_sort');
+  late final _g_list_sort = _g_list_sortPtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gint Function(
+                      ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>)>();
+
+  ffi.Pointer<GList> g_list_sort_with_data(
+    ffi.Pointer<GList> list,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>
+        compare_func,
+    gpointer user_data,
+  ) {
+    return _g_list_sort_with_data(
+      list,
+      compare_func,
+      user_data,
+    );
+  }
+
+  late final _g_list_sort_with_dataPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GList> Function(
+              ffi.Pointer<GList>,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>>('g_list_sort_with_data');
+  late final _g_list_sort_with_data = _g_list_sort_with_dataPtr.asFunction<
+      ffi.Pointer<GList> Function(
+          ffi.Pointer<GList>,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gint Function(
+                      ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>,
+          gpointer)>();
+
+  gpointer g_list_nth_data(
+    ffi.Pointer<GList> list,
+    int n,
+  ) {
+    return _g_list_nth_data(
+      list,
+      n,
+    );
+  }
+
+  late final _g_list_nth_dataPtr = _lookup<
+      ffi.NativeFunction<
+          gpointer Function(
+              ffi.Pointer<GList>, ffi.UnsignedInt)>>('g_list_nth_data');
+  late final _g_list_nth_data = _g_list_nth_dataPtr
+      .asFunction<gpointer Function(ffi.Pointer<GList>, int)>();
+
   ffi.Pointer<GHashTable> g_hash_table_new(
     ffi.Pointer<
             ffi.NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<ffi.Void>)>>
@@ -119,6 +755,29 @@ class Glib {
   late final _g_hash_table_insert = _g_hash_table_insertPtr
       .asFunction<int Function(ffi.Pointer<GHashTable>, gpointer, gpointer)>();
 
+  void g_list_push_allocator(
+    ffi.Pointer<_GAllocator> allocator,
+  ) {
+    return _g_list_push_allocator(
+      allocator,
+    );
+  }
+
+  late final _g_list_push_allocatorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_GAllocator>)>>(
+          'g_list_push_allocator');
+  late final _g_list_push_allocator = _g_list_push_allocatorPtr
+      .asFunction<void Function(ffi.Pointer<_GAllocator>)>();
+
+  void g_list_pop_allocator() {
+    return _g_list_pop_allocator();
+  }
+
+  late final _g_list_pop_allocatorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('g_list_pop_allocator');
+  late final _g_list_pop_allocator =
+      _g_list_pop_allocatorPtr.asFunction<void Function()>();
+
   ffi.Pointer<pkg_ffi.Utf8> g_application_get_application_id(
     ffi.Pointer<_GApplication> application,
   ) {
@@ -144,6 +803,354 @@ class Glib {
           'g_application_get_default');
   late final _g_application_get_default = _g_application_get_defaultPtr
       .asFunction<ffi.Pointer<_GApplication> Function()>();
+
+  int g_list_model_get_type() {
+    return _g_list_model_get_type();
+  }
+
+  late final _g_list_model_get_typePtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function()>>(
+          'g_list_model_get_type');
+  late final _g_list_model_get_type =
+      _g_list_model_get_typePtr.asFunction<int Function()>();
+
+  int g_list_model_get_item_type(
+    ffi.Pointer<_GListModel> list,
+  ) {
+    return _g_list_model_get_item_type(
+      list,
+    );
+  }
+
+  late final _g_list_model_get_item_typePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.UnsignedLong Function(ffi.Pointer<_GListModel>)>>(
+      'g_list_model_get_item_type');
+  late final _g_list_model_get_item_type = _g_list_model_get_item_typePtr
+      .asFunction<int Function(ffi.Pointer<_GListModel>)>();
+
+  int g_list_model_get_n_items(
+    ffi.Pointer<_GListModel> list,
+  ) {
+    return _g_list_model_get_n_items(
+      list,
+    );
+  }
+
+  late final _g_list_model_get_n_itemsPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<_GListModel>)>>(
+      'g_list_model_get_n_items');
+  late final _g_list_model_get_n_items = _g_list_model_get_n_itemsPtr
+      .asFunction<int Function(ffi.Pointer<_GListModel>)>();
+
+  gpointer g_list_model_get_item(
+    ffi.Pointer<_GListModel> list,
+    int position,
+  ) {
+    return _g_list_model_get_item(
+      list,
+      position,
+    );
+  }
+
+  late final _g_list_model_get_itemPtr = _lookup<
+      ffi.NativeFunction<
+          gpointer Function(ffi.Pointer<_GListModel>,
+              ffi.UnsignedInt)>>('g_list_model_get_item');
+  late final _g_list_model_get_item = _g_list_model_get_itemPtr
+      .asFunction<gpointer Function(ffi.Pointer<_GListModel>, int)>();
+
+  ffi.Pointer<GObject> g_list_model_get_object(
+    ffi.Pointer<_GListModel> list,
+    int position,
+  ) {
+    return _g_list_model_get_object(
+      list,
+      position,
+    );
+  }
+
+  late final _g_list_model_get_objectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<GObject> Function(ffi.Pointer<_GListModel>,
+              ffi.UnsignedInt)>>('g_list_model_get_object');
+  late final _g_list_model_get_object = _g_list_model_get_objectPtr.asFunction<
+      ffi.Pointer<GObject> Function(ffi.Pointer<_GListModel>, int)>();
+
+  void g_list_model_items_changed(
+    ffi.Pointer<_GListModel> list,
+    int position,
+    int removed,
+    int added,
+  ) {
+    return _g_list_model_items_changed(
+      list,
+      position,
+      removed,
+      added,
+    );
+  }
+
+  late final _g_list_model_items_changedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<_GListModel>, ffi.UnsignedInt,
+              ffi.UnsignedInt, ffi.UnsignedInt)>>('g_list_model_items_changed');
+  late final _g_list_model_items_changed = _g_list_model_items_changedPtr
+      .asFunction<void Function(ffi.Pointer<_GListModel>, int, int, int)>();
+
+  int g_list_store_get_type() {
+    return _g_list_store_get_type();
+  }
+
+  late final _g_list_store_get_typePtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function()>>(
+          'g_list_store_get_type');
+  late final _g_list_store_get_type =
+      _g_list_store_get_typePtr.asFunction<int Function()>();
+
+  ffi.Pointer<_GListStore> g_list_store_new(
+    int item_type,
+  ) {
+    return _g_list_store_new(
+      item_type,
+    );
+  }
+
+  late final _g_list_store_newPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<_GListStore> Function(ffi.UnsignedLong)>>(
+      'g_list_store_new');
+  late final _g_list_store_new =
+      _g_list_store_newPtr.asFunction<ffi.Pointer<_GListStore> Function(int)>();
+
+  void g_list_store_insert(
+    ffi.Pointer<_GListStore> store,
+    int position,
+    gpointer item,
+  ) {
+    return _g_list_store_insert(
+      store,
+      position,
+      item,
+    );
+  }
+
+  late final _g_list_store_insertPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<_GListStore>, ffi.UnsignedInt,
+              gpointer)>>('g_list_store_insert');
+  late final _g_list_store_insert = _g_list_store_insertPtr
+      .asFunction<void Function(ffi.Pointer<_GListStore>, int, gpointer)>();
+
+  int g_list_store_insert_sorted(
+    ffi.Pointer<_GListStore> store,
+    gpointer item,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>
+        compare_func,
+    gpointer user_data,
+  ) {
+    return _g_list_store_insert_sorted(
+      store,
+      item,
+      compare_func,
+      user_data,
+    );
+  }
+
+  late final _g_list_store_insert_sortedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.UnsignedInt Function(
+              ffi.Pointer<_GListStore>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>>('g_list_store_insert_sorted');
+  late final _g_list_store_insert_sorted =
+      _g_list_store_insert_sortedPtr.asFunction<
+          int Function(
+              ffi.Pointer<_GListStore>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>();
+
+  void g_list_store_sort(
+    ffi.Pointer<_GListStore> store,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gint Function(
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>
+        compare_func,
+    gpointer user_data,
+  ) {
+    return _g_list_store_sort(
+      store,
+      compare_func,
+      user_data,
+    );
+  }
+
+  late final _g_list_store_sortPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<_GListStore>,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gint Function(ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<ffi.Void>, gpointer)>>,
+              gpointer)>>('g_list_store_sort');
+  late final _g_list_store_sort = _g_list_store_sortPtr.asFunction<
+      void Function(
+          ffi.Pointer<_GListStore>,
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  gint Function(
+                      ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, gpointer)>>,
+          gpointer)>();
+
+  void g_list_store_append(
+    ffi.Pointer<_GListStore> store,
+    gpointer item,
+  ) {
+    return _g_list_store_append(
+      store,
+      item,
+    );
+  }
+
+  late final _g_list_store_appendPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<_GListStore>, gpointer)>>('g_list_store_append');
+  late final _g_list_store_append = _g_list_store_appendPtr
+      .asFunction<void Function(ffi.Pointer<_GListStore>, gpointer)>();
+
+  void g_list_store_remove(
+    ffi.Pointer<_GListStore> store,
+    int position,
+  ) {
+    return _g_list_store_remove(
+      store,
+      position,
+    );
+  }
+
+  late final _g_list_store_removePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<_GListStore>,
+              ffi.UnsignedInt)>>('g_list_store_remove');
+  late final _g_list_store_remove = _g_list_store_removePtr
+      .asFunction<void Function(ffi.Pointer<_GListStore>, int)>();
+
+  void g_list_store_remove_all(
+    ffi.Pointer<_GListStore> store,
+  ) {
+    return _g_list_store_remove_all(
+      store,
+    );
+  }
+
+  late final _g_list_store_remove_allPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_GListStore>)>>(
+          'g_list_store_remove_all');
+  late final _g_list_store_remove_all = _g_list_store_remove_allPtr
+      .asFunction<void Function(ffi.Pointer<_GListStore>)>();
+
+  void g_list_store_splice(
+    ffi.Pointer<_GListStore> store,
+    int position,
+    int n_removals,
+    ffi.Pointer<gpointer> additions,
+    int n_additions,
+  ) {
+    return _g_list_store_splice(
+      store,
+      position,
+      n_removals,
+      additions,
+      n_additions,
+    );
+  }
+
+  late final _g_list_store_splicePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<_GListStore>,
+              ffi.UnsignedInt,
+              ffi.UnsignedInt,
+              ffi.Pointer<gpointer>,
+              ffi.UnsignedInt)>>('g_list_store_splice');
+  late final _g_list_store_splice = _g_list_store_splicePtr.asFunction<
+      void Function(
+          ffi.Pointer<_GListStore>, int, int, ffi.Pointer<gpointer>, int)>();
+
+  int g_list_store_find(
+    ffi.Pointer<_GListStore> store,
+    gpointer item,
+    ffi.Pointer<ffi.UnsignedInt> position,
+  ) {
+    return _g_list_store_find(
+      store,
+      item,
+      position,
+    );
+  }
+
+  late final _g_list_store_findPtr = _lookup<
+      ffi.NativeFunction<
+          gboolean Function(ffi.Pointer<_GListStore>, gpointer,
+              ffi.Pointer<ffi.UnsignedInt>)>>('g_list_store_find');
+  late final _g_list_store_find = _g_list_store_findPtr.asFunction<
+      int Function(
+          ffi.Pointer<_GListStore>, gpointer, ffi.Pointer<ffi.UnsignedInt>)>();
+
+  int g_list_store_find_with_equal_func(
+    ffi.Pointer<_GListStore> store,
+    gpointer item,
+    ffi.Pointer<
+            ffi.NativeFunction<
+                gboolean Function(
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>
+        equal_func,
+    ffi.Pointer<ffi.UnsignedInt> position,
+  ) {
+    return _g_list_store_find_with_equal_func(
+      store,
+      item,
+      equal_func,
+      position,
+    );
+  }
+
+  late final _g_list_store_find_with_equal_funcPtr = _lookup<
+          ffi.NativeFunction<
+              gboolean Function(
+                  ffi.Pointer<_GListStore>,
+                  gpointer,
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          gboolean Function(
+                              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>,
+                  ffi.Pointer<ffi.UnsignedInt>)>>(
+      'g_list_store_find_with_equal_func');
+  late final _g_list_store_find_with_equal_func =
+      _g_list_store_find_with_equal_funcPtr.asFunction<
+          int Function(
+              ffi.Pointer<_GListStore>,
+              gpointer,
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      gboolean Function(
+                          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>,
+              ffi.Pointer<ffi.UnsignedInt>)>();
 }
 
 final class GError extends ffi.Struct {
@@ -159,10 +1166,21 @@ final class GError extends ffi.Struct {
 typedef gint = ffi.Int;
 typedef Dartgint = int;
 
+final class GList extends ffi.Struct {
+  external gpointer data;
+
+  external ffi.Pointer<GList> next;
+
+  external ffi.Pointer<GList> prev;
+}
+
+typedef gpointer = ffi.Pointer<ffi.Void>;
+
 final class GHashTable extends ffi.Opaque {}
 
 typedef gboolean = gint;
-typedef gpointer = ffi.Pointer<ffi.Void>;
+
+final class _GAllocator extends ffi.Opaque {}
 
 /// GObject:
 ///
@@ -227,3 +1245,7 @@ final class _GApplication extends ffi.Struct {
 }
 
 final class _GApplicationPrivate extends ffi.Opaque {}
+
+final class _GListModel extends ffi.Opaque {}
+
+final class _GListStore extends ffi.Opaque {}

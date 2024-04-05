@@ -52,6 +52,12 @@ external final CFAllocatorRef kCFAllocatorNull;
 @ffi.Native<CFAllocatorRef>()
 external final CFAllocatorRef kCFAllocatorUseContext;
 
+/// Polymorphic CF functions
+@ffi.Native<CFTypeID Function(CFTypeRef)>()
+external int CFGetTypeID(
+  CFTypeRef cf,
+);
+
 @ffi.Native<ffi.Void Function(CFTypeRef)>()
 external void CFRelease(
   CFTypeRef cf,
@@ -638,6 +644,642 @@ external void CFDictionaryRemoveAllValues(
 @ffi.Native<CFArrayCallBacks>()
 external final CFArrayCallBacks kCFTypeArrayCallBacks;
 
+/// !
+/// @function CFArrayGetTypeID
+/// Returns the type identifier of all CFArray instances.
+@ffi.Native<CFTypeID Function()>()
+external int CFArrayGetTypeID();
+
+/// !
+/// @function CFArrayCreate
+/// Creates a new immutable array with the given values.
+/// @param allocator The CFAllocator which should be used to allocate
+/// memory for the array and its storage for values. This
+/// parameter may be NULL in which case the current default
+/// CFAllocator is used. If this reference is not a valid
+/// CFAllocator, the behavior is undefined.
+/// @param values A C array of the pointer-sized values to be in the
+/// array. The values in the array are ordered in the same order
+/// in which they appear in this C array. This parameter may be
+/// NULL if the numValues parameter is 0. This C array is not
+/// changed or freed by this function. If this parameter is not
+/// a valid pointer to a C array of at least numValues pointers,
+/// the behavior is undefined.
+/// @param numValues The number of values to copy from the values C
+/// array into the CFArray. This number will be the count of the
+/// array.
+/// If this parameter is negative, or greater than the number of
+/// values actually in the value's C array, the behavior is
+/// undefined.
+/// @param callBacks A pointer to a CFArrayCallBacks structure
+/// initialized with the callbacks for the array to use on each
+/// value in the array. The retain callback will be used within
+/// this function, for example, to retain all of the new values
+/// from the values C array. A copy of the contents of the
+/// callbacks structure is made, so that a pointer to a
+/// structure on the stack can be passed in, or can be reused
+/// for multiple array creations. If the version field of this
+/// callbacks structure is not one of the defined ones for
+/// CFArray, the behavior is undefined. The retain field may be
+/// NULL, in which case the CFArray will do nothing to add a
+/// retain to the contained values for the array. The release
+/// field may be NULL, in which case the CFArray will do nothing
+/// to remove the array's retain (if any) on the values when the
+/// array is destroyed. If the copyDescription field is NULL,
+/// the array will create a simple description for the value. If
+/// the equal field is NULL, the array will use pointer equality
+/// to test for equality of values. This callbacks parameter
+/// itself may be NULL, which is treated as if a valid structure
+/// of version 0 with all fields NULL had been passed in.
+/// Otherwise, if any of the fields are not valid pointers to
+/// functions of the correct type, or this parameter is not a
+/// valid pointer to a  CFArrayCallBacks callbacks structure,
+/// the behavior is undefined. If any of the values put into the
+/// array is not one understood by one of the callback functions
+/// the behavior when that callback function is used is
+/// undefined.
+/// @result A reference to the new immutable CFArray.
+@ffi.Native<
+    CFArrayRef Function(CFAllocatorRef, ffi.Pointer<ffi.Pointer<ffi.Void>>,
+        CFIndex, ffi.Pointer<CFArrayCallBacks>)>()
+external CFArrayRef CFArrayCreate(
+  CFAllocatorRef allocator,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
+  int numValues,
+  ffi.Pointer<CFArrayCallBacks> callBacks,
+);
+
+/// !
+/// @function CFArrayCreateCopy
+/// Creates a new immutable array with the values from the given array.
+/// @param allocator The CFAllocator which should be used to allocate
+/// memory for the array and its storage for values. This
+/// parameter may be NULL in which case the current default
+/// CFAllocator is used. If this reference is not a valid
+/// CFAllocator, the behavior is undefined.
+/// @param theArray The array which is to be copied. The values from the
+/// array are copied as pointers into the new array (that is,
+/// the values themselves are copied, not that which the values
+/// point to, if anything). However, the values are also
+/// retained by the new array. The count of the new array will
+/// be the same as the given array. The new array uses the same
+/// callbacks as the array to be copied. If this parameter is
+/// not a valid CFArray, the behavior is undefined.
+/// @result A reference to the new immutable CFArray.
+@ffi.Native<CFArrayRef Function(CFAllocatorRef, CFArrayRef)>()
+external CFArrayRef CFArrayCreateCopy(
+  CFAllocatorRef allocator,
+  CFArrayRef theArray,
+);
+
+/// !
+/// @function CFArrayCreateMutable
+/// Creates a new empty mutable array.
+/// @param allocator The CFAllocator which should be used to allocate
+/// memory for the array and its storage for values. This
+/// parameter may be NULL in which case the current default
+/// CFAllocator is used. If this reference is not a valid
+/// CFAllocator, the behavior is undefined.
+/// @param capacity A hint about the number of values that will be held
+/// by the CFArray. Pass 0 for no hint. The implementation may
+/// ignore this hint, or may use it to optimize various
+/// operations. An array's actual capacity is only limited by
+/// address space and available memory constraints). If this
+/// parameter is negative, the behavior is undefined.
+/// @param callBacks A pointer to a CFArrayCallBacks structure
+/// initialized with the callbacks for the array to use on each
+/// value in the array. A copy of the contents of the
+/// callbacks structure is made, so that a pointer to a
+/// structure on the stack can be passed in, or can be reused
+/// for multiple array creations. If the version field of this
+/// callbacks structure is not one of the defined ones for
+/// CFArray, the behavior is undefined. The retain field may be
+/// NULL, in which case the CFArray will do nothing to add a
+/// retain to the contained values for the array. The release
+/// field may be NULL, in which case the CFArray will do nothing
+/// to remove the array's retain (if any) on the values when the
+/// array is destroyed. If the copyDescription field is NULL,
+/// the array will create a simple description for the value. If
+/// the equal field is NULL, the array will use pointer equality
+/// to test for equality of values. This callbacks parameter
+/// itself may be NULL, which is treated as if a valid structure
+/// of version 0 with all fields NULL had been passed in.
+/// Otherwise, if any of the fields are not valid pointers to
+/// functions of the correct type, or this parameter is not a
+/// valid pointer to a  CFArrayCallBacks callbacks structure,
+/// the behavior is undefined. If any of the values put into the
+/// array is not one understood by one of the callback functions
+/// the behavior when that callback function is used is
+/// undefined.
+/// @result A reference to the new mutable CFArray.
+@ffi.Native<
+    CFMutableArrayRef Function(
+        CFAllocatorRef, CFIndex, ffi.Pointer<CFArrayCallBacks>)>()
+external CFMutableArrayRef CFArrayCreateMutable(
+  CFAllocatorRef allocator,
+  int capacity,
+  ffi.Pointer<CFArrayCallBacks> callBacks,
+);
+
+/// !
+/// @function CFArrayCreateMutableCopy
+/// Creates a new mutable array with the values from the given array.
+/// @param allocator The CFAllocator which should be used to allocate
+/// memory for the array and its storage for values. This
+/// parameter may be NULL in which case the current default
+/// CFAllocator is used. If this reference is not a valid
+/// CFAllocator, the behavior is undefined.
+/// @param capacity A hint about the number of values that will be held
+/// by the CFArray. Pass 0 for no hint. The implementation may
+/// ignore this hint, or may use it to optimize various
+/// operations. An array's actual capacity is only limited by
+/// address space and available memory constraints).
+/// This parameter must be greater than or equal
+/// to the count of the array which is to be copied, or the
+/// behavior is undefined. If this parameter is negative, the
+/// behavior is undefined.
+/// @param theArray The array which is to be copied. The values from the
+/// array are copied as pointers into the new array (that is,
+/// the values themselves are copied, not that which the values
+/// point to, if anything). However, the values are also
+/// retained by the new array. The count of the new array will
+/// be the same as the given array. The new array uses the same
+/// callbacks as the array to be copied. If this parameter is
+/// not a valid CFArray, the behavior is undefined.
+/// @result A reference to the new mutable CFArray.
+@ffi.Native<CFMutableArrayRef Function(CFAllocatorRef, CFIndex, CFArrayRef)>()
+external CFMutableArrayRef CFArrayCreateMutableCopy(
+  CFAllocatorRef allocator,
+  int capacity,
+  CFArrayRef theArray,
+);
+
+/// !
+/// @function CFArrayGetCount
+/// Returns the number of values currently in the array.
+/// @param theArray The array to be queried. If this parameter is not a valid
+/// CFArray, the behavior is undefined.
+/// @result The number of values in the array.
+@ffi.Native<CFIndex Function(CFArrayRef)>()
+external int CFArrayGetCount(
+  CFArrayRef theArray,
+);
+
+/// !
+/// @function CFArrayGetCountOfValue
+/// Counts the number of times the given value occurs in the array.
+/// @param theArray The array to be searched. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param range The range within the array to search. If the range
+/// location or end point (defined by the location plus length
+/// minus 1) is outside the index space of the array (0 to
+/// N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// @param value The value for which to find matches in the array. The
+/// equal() callback provided when the array was created is
+/// used to compare. If the equal() callback was NULL, pointer
+/// equality (in C, ==) is used. If value, or any of the values
+/// in the array, are not understood by the equal() callback,
+/// the behavior is undefined.
+/// @result The number of times the given value occurs in the array,
+/// within the specified range.
+@ffi.Native<CFIndex Function(CFArrayRef, CFRange, ffi.Pointer<ffi.Void>)>()
+external int CFArrayGetCountOfValue(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayContainsValue
+/// Reports whether or not the value is in the array.
+/// @param theArray The array to be searched. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param range The range within the array to search. If the range
+/// location or end point (defined by the location plus length
+/// minus 1) is outside the index space of the array (0 to
+/// N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// @param value The value for which to find matches in the array. The
+/// equal() callback provided when the array was created is
+/// used to compare. If the equal() callback was NULL, pointer
+/// equality (in C, ==) is used. If value, or any of the values
+/// in the array, are not understood by the equal() callback,
+/// the behavior is undefined.
+/// @result true, if the value is in the specified range of the array,
+/// otherwise false.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFArrayRef, CFRange, ffi.Pointer<ffi.Void>)>()
+external int CFArrayContainsValue(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayGetValueAtIndex
+/// Retrieves the value at the given index.
+/// @param theArray The array to be queried. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param idx The index of the value to retrieve. If the index is
+/// outside the index space of the array (0 to N-1 inclusive,
+/// where N is the count of the array), the behavior is
+/// undefined.
+/// @result The value with the given index in the array.
+@ffi.Native<ffi.Pointer<ffi.Void> Function(CFArrayRef, CFIndex)>()
+external ffi.Pointer<ffi.Void> CFArrayGetValueAtIndex(
+  CFArrayRef theArray,
+  int idx,
+);
+
+/// !
+/// @function CFArrayGetValues
+/// Fills the buffer with values from the array.
+/// @param theArray The array to be queried. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param range The range of values within the array to retrieve. If
+/// the range location or end point (defined by the location
+/// plus length minus 1) is outside the index space of the
+/// array (0 to N-1 inclusive, where N is the count of the
+/// array), the behavior is undefined. If the range length is
+/// negative, the behavior is undefined. The range may be empty
+/// (length 0), in which case no values are put into the buffer.
+/// @param values A C array of pointer-sized values to be filled with
+/// values from the array. The values in the C array are ordered
+/// in the same order in which they appear in the array. If this
+/// parameter is not a valid pointer to a C array of at least
+/// range.length pointers, the behavior is undefined.
+@ffi.Native<
+    ffi.Void Function(
+        CFArrayRef, CFRange, ffi.Pointer<ffi.Pointer<ffi.Void>>)>()
+external void CFArrayGetValues(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
+);
+
+/// !
+/// @function CFArrayApplyFunction
+/// Calls a function once for each value in the array.
+/// @param theArray The array to be operated upon. If this parameter is not
+/// a valid CFArray, the behavior is undefined.
+/// @param range The range of values within the array to which to apply
+/// the function. If the range location or end point (defined by
+/// the location plus length minus 1) is outside the index
+/// space of the array (0 to N-1 inclusive, where N is the count
+/// of the array), the behavior is undefined. If the range
+/// length is negative, the behavior is undefined. The range may
+/// be empty (length 0).
+/// @param applier The callback function to call once for each value in
+/// the given range in the array. If this parameter is not a
+/// pointer to a function of the correct prototype, the behavior
+/// is undefined. If there are values in the range which the
+/// applier function does not expect or cannot properly apply
+/// to, the behavior is undefined.
+/// @param context A pointer-sized user-defined value, which is passed
+/// as the second parameter to the applier function, but is
+/// otherwise unused by this function. If the context is not
+/// what is expected by the applier function, the behavior is
+/// undefined.
+@ffi.Native<
+    ffi.Void Function(
+        CFArrayRef, CFRange, CFArrayApplierFunction, ffi.Pointer<ffi.Void>)>()
+external void CFArrayApplyFunction(
+  CFArrayRef theArray,
+  CFRange range,
+  CFArrayApplierFunction applier,
+  ffi.Pointer<ffi.Void> context,
+);
+
+/// !
+/// @function CFArrayGetFirstIndexOfValue
+/// Searches the array for the value.
+/// @param theArray The array to be searched. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param range The range within the array to search. If the range
+/// location or end point (defined by the location plus length
+/// minus 1) is outside the index space of the array (0 to
+/// N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// The search progresses from the smallest index defined by
+/// the range to the largest.
+/// @param value The value for which to find a match in the array. The
+/// equal() callback provided when the array was created is
+/// used to compare. If the equal() callback was NULL, pointer
+/// equality (in C, ==) is used. If value, or any of the values
+/// in the array, are not understood by the equal() callback,
+/// the behavior is undefined.
+/// @result The lowest index of the matching values in the range, or
+/// kCFNotFound if no value in the range matched.
+@ffi.Native<CFIndex Function(CFArrayRef, CFRange, ffi.Pointer<ffi.Void>)>()
+external int CFArrayGetFirstIndexOfValue(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayGetLastIndexOfValue
+/// Searches the array for the value.
+/// @param theArray The array to be searched. If this parameter is not a
+/// valid CFArray, the behavior is undefined.
+/// @param range The range within the array to search. If the range
+/// location or end point (defined by the location plus length
+/// minus 1) is outside the index space of the array (0 to
+/// N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// The search progresses from the largest index defined by the
+/// range to the smallest.
+/// @param value The value for which to find a match in the array. The
+/// equal() callback provided when the array was created is
+/// used to compare. If the equal() callback was NULL, pointer
+/// equality (in C, ==) is used. If value, or any of the values
+/// in the array, are not understood by the equal() callback,
+/// the behavior is undefined.
+/// @result The highest index of the matching values in the range, or
+/// kCFNotFound if no value in the range matched.
+@ffi.Native<CFIndex Function(CFArrayRef, CFRange, ffi.Pointer<ffi.Void>)>()
+external int CFArrayGetLastIndexOfValue(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayBSearchValues
+/// Searches the array for the value using a binary search algorithm.
+/// @param theArray The array to be searched. If this parameter is not a
+/// valid CFArray, the behavior is undefined. If the array is
+/// not sorted from least to greatest according to the
+/// comparator function, the behavior is undefined.
+/// @param range The range within the array to search. If the range
+/// location or end point (defined by the location plus length
+/// minus 1) is outside the index space of the array (0 to
+/// N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// @param value The value for which to find a match in the array. If
+/// value, or any of the values in the array, are not understood
+/// by the comparator callback, the behavior is undefined.
+/// @param comparator The function with the comparator function type
+/// signature which is used in the binary search operation to
+/// compare values in the array with the given value. If this
+/// parameter is not a pointer to a function of the correct
+/// prototype, the behavior is undefined. If there are values
+/// in the range which the comparator function does not expect
+/// or cannot properly compare, the behavior is undefined.
+/// @param context A pointer-sized user-defined value, which is passed
+/// as the third parameter to the comparator function, but is
+/// otherwise unused by this function. If the context is not
+/// what is expected by the comparator function, the behavior is
+/// undefined.
+/// @result The return value is either 1) the index of a value that
+/// matched, if the target value matches one or more in the
+/// range, 2) greater than or equal to the end point of the
+/// range, if the value is greater than all the values in the
+/// range, or 3) the index of the value greater than the target
+/// value, if the value lies between two of (or less than all
+/// of) the values in the range.
+@ffi.Native<
+    CFIndex Function(CFArrayRef, CFRange, ffi.Pointer<ffi.Void>,
+        CFComparatorFunction, ffi.Pointer<ffi.Void>)>()
+external int CFArrayBSearchValues(
+  CFArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Void> value,
+  CFComparatorFunction comparator,
+  ffi.Pointer<ffi.Void> context,
+);
+
+/// !
+/// @function CFArrayAppendValue
+/// Adds the value to the array giving it a new largest index.
+/// @param theArray The array to which the value is to be added. If this
+/// parameter is not a valid mutable CFArray, the behavior is
+/// undefined.
+/// @param value The value to add to the array. The value is retained by
+/// the array using the retain callback provided when the array
+/// was created. If the value is not of the sort expected by the
+/// retain callback, the behavior is undefined. The value is
+/// assigned to the index one larger than the previous largest
+/// index, and the count of the array is increased by one.
+@ffi.Native<ffi.Void Function(CFMutableArrayRef, ffi.Pointer<ffi.Void>)>()
+external void CFArrayAppendValue(
+  CFMutableArrayRef theArray,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayInsertValueAtIndex
+/// Adds the value to the array, giving it the given index.
+/// @param theArray The array to which the value is to be added. If this
+/// parameter is not a valid mutable CFArray, the behavior is
+/// undefined.
+/// @param idx The index to which to add the new value. If the index is
+/// outside the index space of the array (0 to N inclusive,
+/// where N is the count of the array before the operation), the
+/// behavior is undefined. If the index is the same as N, this
+/// function has the same effect as CFArrayAppendValue().
+/// @param value The value to add to the array. The value is retained by
+/// the array using the retain callback provided when the array
+/// was created. If the value is not of the sort expected by the
+/// retain callback, the behavior is undefined. The value is
+/// assigned to the given index, and all values with equal and
+/// larger indices have their indexes increased by one.
+@ffi.Native<
+    ffi.Void Function(CFMutableArrayRef, CFIndex, ffi.Pointer<ffi.Void>)>()
+external void CFArrayInsertValueAtIndex(
+  CFMutableArrayRef theArray,
+  int idx,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArraySetValueAtIndex
+/// Changes the value with the given index in the array.
+/// @param theArray The array in which the value is to be changed. If this
+/// parameter is not a valid mutable CFArray, the behavior is
+/// undefined.
+/// @param idx The index to which to set the new value. If the index is
+/// outside the index space of the array (0 to N inclusive,
+/// where N is the count of the array before the operation), the
+/// behavior is undefined. If the index is the same as N, this
+/// function has the same effect as CFArrayAppendValue().
+/// @param value The value to set in the array. The value is retained by
+/// the array using the retain callback provided when the array
+/// was created, and the previous value with that index is
+/// released. If the value is not of the sort expected by the
+/// retain callback, the behavior is undefined. The indices of
+/// other values is not affected.
+@ffi.Native<
+    ffi.Void Function(CFMutableArrayRef, CFIndex, ffi.Pointer<ffi.Void>)>()
+external void CFArraySetValueAtIndex(
+  CFMutableArrayRef theArray,
+  int idx,
+  ffi.Pointer<ffi.Void> value,
+);
+
+/// !
+/// @function CFArrayRemoveValueAtIndex
+/// Removes the value with the given index from the array.
+/// @param theArray The array from which the value is to be removed. If
+/// this parameter is not a valid mutable CFArray, the behavior
+/// is undefined.
+/// @param idx The index from which to remove the value. If the index is
+/// outside the index space of the array (0 to N-1 inclusive,
+/// where N is the count of the array before the operation), the
+/// behavior is undefined.
+@ffi.Native<ffi.Void Function(CFMutableArrayRef, CFIndex)>()
+external void CFArrayRemoveValueAtIndex(
+  CFMutableArrayRef theArray,
+  int idx,
+);
+
+/// !
+/// @function CFArrayRemoveAllValues
+/// Removes all the values from the array, making it empty.
+/// @param theArray The array from which all of the values are to be
+/// removed. If this parameter is not a valid mutable CFArray,
+/// the behavior is undefined.
+@ffi.Native<ffi.Void Function(CFMutableArrayRef)>()
+external void CFArrayRemoveAllValues(
+  CFMutableArrayRef theArray,
+);
+
+/// !
+/// @function CFArrayReplaceValues
+/// Replaces a range of values in the array.
+/// @param theArray The array from which all of the values are to be
+/// removed. If this parameter is not a valid mutable CFArray,
+/// the behavior is undefined.
+/// @param range The range of values within the array to replace. If the
+/// range location or end point (defined by the location plus
+/// length minus 1) is outside the index space of the array (0
+/// to N inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0),
+/// in which case the new values are merely inserted at the
+/// range location.
+/// @param newValues A C array of the pointer-sized values to be placed
+/// into the array. The new values in the array are ordered in
+/// the same order in which they appear in this C array. This
+/// parameter may be NULL if the newCount parameter is 0. This
+/// C array is not changed or freed by this function. If this
+/// parameter is not a valid pointer to a C array of at least
+/// newCount pointers, the behavior is undefined.
+/// @param newCount The number of values to copy from the values C
+/// array into the CFArray. If this parameter is different than
+/// the range length, the excess newCount values will be
+/// inserted after the range, or the excess range values will be
+/// deleted. This parameter may be 0, in which case no new
+/// values are replaced into the array and the values in the
+/// range are simply removed. If this parameter is negative, or
+/// greater than the number of values actually in the newValues
+/// C array, the behavior is undefined.
+@ffi.Native<
+    ffi.Void Function(CFMutableArrayRef, CFRange,
+        ffi.Pointer<ffi.Pointer<ffi.Void>>, CFIndex)>()
+external void CFArrayReplaceValues(
+  CFMutableArrayRef theArray,
+  CFRange range,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> newValues,
+  int newCount,
+);
+
+/// !
+/// @function CFArrayExchangeValuesAtIndices
+/// Exchanges the values at two indices of the array.
+/// @param theArray The array of which the values are to be swapped. If
+/// this parameter is not a valid mutable CFArray, the behavior
+/// is undefined.
+/// @param idx1 The first index whose values should be swapped. If the
+/// index is outside the index space of the array (0 to N-1
+/// inclusive, where N is the count of the array before the
+/// operation), the behavior is undefined.
+/// @param idx2 The second index whose values should be swapped. If the
+/// index is outside the index space of the array (0 to N-1
+/// inclusive, where N is the count of the array before the
+/// operation), the behavior is undefined.
+@ffi.Native<ffi.Void Function(CFMutableArrayRef, CFIndex, CFIndex)>()
+external void CFArrayExchangeValuesAtIndices(
+  CFMutableArrayRef theArray,
+  int idx1,
+  int idx2,
+);
+
+/// !
+/// @function CFArraySortValues
+/// Sorts the values in the array using the given comparison function.
+/// @param theArray The array whose values are to be sorted. If this
+/// parameter is not a valid mutable CFArray, the behavior is
+/// undefined.
+/// @param range The range of values within the array to sort. If the
+/// range location or end point (defined by the location plus
+/// length minus 1) is outside the index space of the array (0
+/// to N-1 inclusive, where N is the count of the array), the
+/// behavior is undefined. If the range length is negative, the
+/// behavior is undefined. The range may be empty (length 0).
+/// @param comparator The function with the comparator function type
+/// signature which is used in the sort operation to compare
+/// values in the array with the given value. If this parameter
+/// is not a pointer to a function of the correct prototype, the
+/// the behavior is undefined. If there are values in the array
+/// which the comparator function does not expect or cannot
+/// properly compare, the behavior is undefined. The values in
+/// the range are sorted from least to greatest according to
+/// this function.
+/// @param context A pointer-sized user-defined value, which is passed
+/// as the third parameter to the comparator function, but is
+/// otherwise unused by this function. If the context is not
+/// what is expected by the comparator function, the behavior is
+/// undefined.
+@ffi.Native<
+    ffi.Void Function(CFMutableArrayRef, CFRange, CFComparatorFunction,
+        ffi.Pointer<ffi.Void>)>()
+external void CFArraySortValues(
+  CFMutableArrayRef theArray,
+  CFRange range,
+  CFComparatorFunction comparator,
+  ffi.Pointer<ffi.Void> context,
+);
+
+/// !
+/// @function CFArrayAppendArray
+/// Adds the values from an array to another array.
+/// @param theArray The array to which values from the otherArray are to
+/// be added. If this parameter is not a valid mutable CFArray,
+/// the behavior is undefined.
+/// @param otherArray The array providing the values to be added to the
+/// array. If this parameter is not a valid CFArray, the
+/// behavior is undefined.
+/// @param otherRange The range within the otherArray from which to add
+/// the values to the array. If the range location or end point
+/// (defined by the location plus length minus 1) is outside
+/// the index space of the otherArray (0 to N-1 inclusive, where
+/// N is the count of the otherArray), the behavior is
+/// undefined. The new values are retained by the array using
+/// the retain callback provided when the array was created. If
+/// the values are not of the sort expected by the retain
+/// callback, the behavior is undefined. The values are assigned
+/// to the indices one larger than the previous largest index
+/// in the array, and beyond, and the count of the array is
+/// increased by range.length. The values are assigned new
+/// indices in the array from smallest to largest index in the
+/// order in which they appear in the otherArray.
+@ffi.Native<ffi.Void Function(CFMutableArrayRef, CFArrayRef, CFRange)>()
+external void CFArrayAppendArray(
+  CFMutableArrayRef theArray,
+  CFArrayRef otherArray,
+  CFRange otherRange,
+);
+
+@ffi.Native<CFTypeID Function()>()
+external int CFDataGetTypeID();
+
 @ffi.Native<
     CFDataRef Function(
         CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>, CFIndex)>()
@@ -647,9 +1289,103 @@ external CFDataRef CFDataCreate(
   int length,
 );
 
+@ffi.Native<
+    CFDataRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>, CFIndex,
+        CFAllocatorRef)>()
+external CFDataRef CFDataCreateWithBytesNoCopy(
+  CFAllocatorRef allocator,
+  ffi.Pointer<ffi.UnsignedChar> bytes,
+  int length,
+  CFAllocatorRef bytesDeallocator,
+);
+
+/// Pass kCFAllocatorNull as bytesDeallocator to assure the bytes aren't freed
+@ffi.Native<CFDataRef Function(CFAllocatorRef, CFDataRef)>()
+external CFDataRef CFDataCreateCopy(
+  CFAllocatorRef allocator,
+  CFDataRef theData,
+);
+
+@ffi.Native<CFMutableDataRef Function(CFAllocatorRef, CFIndex)>()
+external CFMutableDataRef CFDataCreateMutable(
+  CFAllocatorRef allocator,
+  int capacity,
+);
+
+@ffi.Native<CFMutableDataRef Function(CFAllocatorRef, CFIndex, CFDataRef)>()
+external CFMutableDataRef CFDataCreateMutableCopy(
+  CFAllocatorRef allocator,
+  int capacity,
+  CFDataRef theData,
+);
+
+@ffi.Native<CFIndex Function(CFDataRef)>()
+external int CFDataGetLength(
+  CFDataRef theData,
+);
+
 @ffi.Native<ffi.Pointer<ffi.UnsignedChar> Function(CFDataRef)>()
 external ffi.Pointer<ffi.UnsignedChar> CFDataGetBytePtr(
   CFDataRef theData,
+);
+
+@ffi.Native<ffi.Pointer<ffi.UnsignedChar> Function(CFMutableDataRef)>()
+external ffi.Pointer<ffi.UnsignedChar> CFDataGetMutableBytePtr(
+  CFMutableDataRef theData,
+);
+
+@ffi.Native<
+    ffi.Void Function(CFDataRef, CFRange, ffi.Pointer<ffi.UnsignedChar>)>()
+external void CFDataGetBytes(
+  CFDataRef theData,
+  CFRange range,
+  ffi.Pointer<ffi.UnsignedChar> buffer,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableDataRef, CFIndex)>()
+external void CFDataSetLength(
+  CFMutableDataRef theData,
+  int length,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableDataRef, CFIndex)>()
+external void CFDataIncreaseLength(
+  CFMutableDataRef theData,
+  int extraLength,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableDataRef, ffi.Pointer<ffi.UnsignedChar>, CFIndex)>()
+external void CFDataAppendBytes(
+  CFMutableDataRef theData,
+  ffi.Pointer<ffi.UnsignedChar> bytes,
+  int length,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableDataRef, CFRange, ffi.Pointer<ffi.UnsignedChar>, CFIndex)>()
+external void CFDataReplaceBytes(
+  CFMutableDataRef theData,
+  CFRange range,
+  ffi.Pointer<ffi.UnsignedChar> newBytes,
+  int newLength,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableDataRef, CFRange)>()
+external void CFDataDeleteBytes(
+  CFMutableDataRef theData,
+  CFRange range,
+);
+
+@ffi.Native<
+    CFRange Function(CFDataRef, CFDataRef, CFRange, CFDataSearchFlags)>()
+external CFRange CFDataFind(
+  CFDataRef theData,
+  CFDataRef dataToFind,
+  CFRange searchRange,
+  int compareOptions,
 );
 
 /// Returns the display name for the given value.  The key tells what
@@ -805,6 +1541,20 @@ external final CFStringRef kCFErrorURLKey;
 @ffi.Native<CFStringRef>()
 external final CFStringRef kCFErrorFilePathKey;
 
+/// CFString type ID
+@ffi.Native<CFTypeID Function()>()
+external int CFStringGetTypeID();
+
+/// The following four functions copy the provided buffer into CFString's internal storage.
+@ffi.Native<
+    CFStringRef Function(
+        CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>, CFStringEncoding)>()
+external CFStringRef CFStringCreateWithPascalString(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedChar> pStr,
+  int encoding,
+);
+
 @ffi.Native<
     CFStringRef Function(
         CFAllocatorRef, ffi.Pointer<ffi.Char>, CFStringEncoding)>()
@@ -814,10 +1564,210 @@ external CFStringRef CFStringCreateWithCString(
   int encoding,
 );
 
+/// The following takes an explicit length, and allows you to specify whether the data is an external format --- that is, whether to pay attention to the BOM character (if any) and do byte swapping if necessary
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>, CFIndex,
+        CFStringEncoding, ffi.UnsignedChar)>()
+external CFStringRef CFStringCreateWithBytes(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedChar> bytes,
+  int numBytes,
+  int encoding,
+  int isExternalRepresentation,
+);
+
+@ffi.Native<
+    CFStringRef Function(
+        CFAllocatorRef, ffi.Pointer<ffi.UnsignedShort>, CFIndex)>()
+external CFStringRef CFStringCreateWithCharacters(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedShort> chars,
+  int numChars,
+);
+
+/// These functions try not to copy the provided buffer. The buffer will be deallocated
+/// with the provided contentsDeallocator when it's no longer needed; to not free
+/// the buffer, specify kCFAllocatorNull here. As usual, NULL means default allocator.
+///
+/// NOTE: Do not count on these buffers as being used by the string;
+/// in some cases the CFString might free the buffer and use something else
+/// (for instance if it decides to always use Unicode encoding internally).
+///
+/// NOTE: If you are not transferring ownership of the buffer to the CFString
+/// (for instance, you supplied contentsDeallocator = kCFAllocatorNull), it is your
+/// responsibility to assure the buffer does not go away during the lifetime of the string.
+/// If the string is retained or copied, its lifetime might extend in ways you cannot
+/// predict. So, for strings created with buffers whose lifetimes you cannot
+/// guarantee, you need to be extremely careful --- do not hand it out to any
+/// APIs which might retain or copy the strings.
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>,
+        CFStringEncoding, CFAllocatorRef)>()
+external CFStringRef CFStringCreateWithPascalStringNoCopy(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedChar> pStr,
+  int encoding,
+  CFAllocatorRef contentsDeallocator,
+);
+
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.Char>,
+        CFStringEncoding, CFAllocatorRef)>()
+external CFStringRef CFStringCreateWithCStringNoCopy(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.Char> cStr,
+  int encoding,
+  CFAllocatorRef contentsDeallocator,
+);
+
+/// The following takes an explicit length, and allows you to specify whether the data is an external format --- that is, whether to pay attention to the BOM character (if any) and do byte swapping if necessary
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedChar>, CFIndex,
+        CFStringEncoding, ffi.UnsignedChar, CFAllocatorRef)>()
+external CFStringRef CFStringCreateWithBytesNoCopy(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedChar> bytes,
+  int numBytes,
+  int encoding,
+  int isExternalRepresentation,
+  CFAllocatorRef contentsDeallocator,
+);
+
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedShort>,
+        CFIndex, CFAllocatorRef)>()
+external CFStringRef CFStringCreateWithCharactersNoCopy(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedShort> chars,
+  int numChars,
+  CFAllocatorRef contentsDeallocator,
+);
+
+/// Create copies of part or all of the string.
+@ffi.Native<CFStringRef Function(CFAllocatorRef, CFStringRef, CFRange)>()
+external CFStringRef CFStringCreateWithSubstring(
+  CFAllocatorRef alloc,
+  CFStringRef str,
+  CFRange range,
+);
+
+@ffi.Native<CFStringRef Function(CFAllocatorRef, CFStringRef)>()
+external CFStringRef CFStringCreateCopy(
+  CFAllocatorRef alloc,
+  CFStringRef theString,
+);
+
+/// These functions create a CFString from the provided printf-like format string and arguments.
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, CFDictionaryRef, CFStringRef)>()
+external CFStringRef CFStringCreateWithFormat(
+  CFAllocatorRef alloc,
+  CFDictionaryRef formatOptions,
+  CFStringRef format,
+);
+
+@ffi.Native<
+    CFStringRef Function(
+        CFAllocatorRef, CFDictionaryRef, CFStringRef, ffi.Pointer<ffi.Char>)>()
+external CFStringRef CFStringCreateWithFormatAndArguments(
+  CFAllocatorRef alloc,
+  CFDictionaryRef formatOptions,
+  CFStringRef format,
+  ffi.Pointer<ffi.Char> arguments,
+);
+
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, CFDictionaryRef, CFStringRef,
+        CFStringRef, ffi.Pointer<CFErrorRef>)>()
+external CFStringRef CFStringCreateStringWithValidatedFormat(
+  CFAllocatorRef alloc,
+  CFDictionaryRef formatOptions,
+  CFStringRef validFormatSpecifiers,
+  CFStringRef format,
+  ffi.Pointer<CFErrorRef> errorPtr,
+);
+
+@ffi.Native<
+    CFStringRef Function(CFAllocatorRef, CFDictionaryRef, CFStringRef,
+        CFStringRef, ffi.Pointer<ffi.Char>, ffi.Pointer<CFErrorRef>)>()
+external CFStringRef CFStringCreateStringWithValidatedFormatAndArguments(
+  CFAllocatorRef alloc,
+  CFDictionaryRef formatOptions,
+  CFStringRef validFormatSpecifiers,
+  CFStringRef format,
+  ffi.Pointer<ffi.Char> arguments,
+  ffi.Pointer<CFErrorRef> errorPtr,
+);
+
+/// Functions to create mutable strings. "maxLength", if not 0, is a hard bound on the length of the string. If 0, there is no limit on the length.
+@ffi.Native<CFMutableStringRef Function(CFAllocatorRef, CFIndex)>()
+external CFMutableStringRef CFStringCreateMutable(
+  CFAllocatorRef alloc,
+  int maxLength,
+);
+
+@ffi.Native<CFMutableStringRef Function(CFAllocatorRef, CFIndex, CFStringRef)>()
+external CFMutableStringRef CFStringCreateMutableCopy(
+  CFAllocatorRef alloc,
+  int maxLength,
+  CFStringRef theString,
+);
+
+/// This function creates a mutable string that has a developer supplied and directly editable backing store.
+/// The string will be manipulated within the provided buffer (if any) until it outgrows capacity; then the
+/// externalCharactersAllocator will be consulted for more memory. When the CFString is deallocated, the
+/// buffer will be freed with the externalCharactersAllocator. If you provide kCFAllocatorNull here, and the buffer
+/// needs to grow, then CFString will switch to using the default allocator. See comments at top of this file for more info.
+@ffi.Native<
+    CFMutableStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.UnsignedShort>,
+        CFIndex, CFIndex, CFAllocatorRef)>()
+external CFMutableStringRef CFStringCreateMutableWithExternalCharactersNoCopy(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.UnsignedShort> chars,
+  int numChars,
+  int capacity,
+  CFAllocatorRef externalCharactersAllocator,
+);
+
 /// Number of 16-bit Unicode characters in the string.
 @ffi.Native<CFIndex Function(CFStringRef)>()
 external int CFStringGetLength(
   CFStringRef theString,
+);
+
+/// Extracting the contents of the string. For obtaining multiple characters, calling
+/// CFStringGetCharacters() is more efficient than multiple calls to CFStringGetCharacterAtIndex().
+/// If the length of the string is not known (so you can't use a fixed size buffer for CFStringGetCharacters()),
+/// another method is to use is CFStringGetCharacterFromInlineBuffer() (see further below).
+@ffi.Native<ffi.UnsignedShort Function(CFStringRef, CFIndex)>()
+external int CFStringGetCharacterAtIndex(
+  CFStringRef theString,
+  int idx,
+);
+
+@ffi.Native<
+    ffi.Void Function(CFStringRef, CFRange, ffi.Pointer<ffi.UnsignedShort>)>()
+external void CFStringGetCharacters(
+  CFStringRef theString,
+  CFRange range,
+  ffi.Pointer<ffi.UnsignedShort> buffer,
+);
+
+/// These two convert into the provided buffer; they return false if conversion isn't possible
+/// (due to conversion error, or not enough space in the provided buffer).
+/// These functions do zero-terminate or put the length byte; the provided bufferSize should include
+/// space for this (so pass 256 for Str255). More sophisticated usages can go through CFStringGetBytes().
+/// These functions are equivalent to calling CFStringGetBytes() with
+/// the range of the string; lossByte = 0; and isExternalRepresentation = false;
+/// if successful, they then insert the leading length or terminating zero, as desired.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFStringRef, ffi.Pointer<ffi.UnsignedChar>,
+        CFIndex, CFStringEncoding)>()
+external int CFStringGetPascalString(
+  CFStringRef theString,
+  ffi.Pointer<ffi.UnsignedChar> buffer,
+  int bufferSize,
+  int encoding,
 );
 
 @ffi.Native<
@@ -830,16 +1780,611 @@ external int CFStringGetCString(
   int encoding,
 );
 
+/// These functions attempt to return in O(1) time the desired format for the string.
+/// Note that although this means a pointer to the internal structure is being returned,
+/// this can't always be counted on. Please see note at the top of the file for more
+/// details.
+@ffi.Native<
+    ffi.Pointer<ffi.UnsignedChar> Function(CFStringRef, CFStringEncoding)>()
+external ffi.Pointer<ffi.UnsignedChar> CFStringGetPascalStringPtr(
+  CFStringRef theString,
+  int encoding,
+);
+
 @ffi.Native<ffi.Pointer<ffi.Char> Function(CFStringRef, CFStringEncoding)>()
 external ffi.Pointer<ffi.Char> CFStringGetCStringPtr(
   CFStringRef theString,
   int encoding,
 );
 
+@ffi.Native<ffi.Pointer<ffi.UnsignedShort> Function(CFStringRef)>()
+external ffi.Pointer<ffi.UnsignedShort> CFStringGetCharactersPtr(
+  CFStringRef theString,
+);
+
+/// The primitive conversion routine; allows you to convert a string piece at a time
+/// into a fixed size buffer. Returns number of characters converted.
+/// Characters that cannot be converted to the specified encoding are represented
+/// with the byte specified by lossByte; if lossByte is 0, then lossy conversion
+/// is not allowed and conversion stops, returning partial results.
+/// Pass buffer==NULL if you don't care about the converted string (but just the convertability,
+/// or number of bytes required).
+/// maxBufLength indicates the maximum number of bytes to generate. It is ignored when buffer==NULL.
+/// Does not zero-terminate. If you want to create Pascal or C string, allow one extra byte at start or end.
+/// Setting isExternalRepresentation causes any extra bytes that would allow
+/// the data to be made persistent to be included; for instance, the Unicode BOM. Note that
+/// CFString prepends UTF encoded data with the Unicode BOM <http://www.unicode.org/faq/utf_bom.html>
+/// when generating external representation if the target encoding allows. It's important to note that
+/// only UTF-8, UTF-16, and UTF-32 define the handling of the byte order mark character, and the "LE"
+/// and "BE" variants of UTF-16 and UTF-32 don't.
+@ffi.Native<
+    CFIndex Function(
+        CFStringRef,
+        CFRange,
+        CFStringEncoding,
+        ffi.UnsignedChar,
+        ffi.UnsignedChar,
+        ffi.Pointer<ffi.UnsignedChar>,
+        CFIndex,
+        ffi.Pointer<CFIndex>)>()
+external int CFStringGetBytes(
+  CFStringRef theString,
+  CFRange range,
+  int encoding,
+  int lossByte,
+  int isExternalRepresentation,
+  ffi.Pointer<ffi.UnsignedChar> buffer,
+  int maxBufLen,
+  ffi.Pointer<CFIndex> usedBufLen,
+);
+
+/// Convenience functions String <-> Data. These generate "external" formats, that is, formats that
+/// can be written out to disk. For instance, if the encoding is Unicode,
+/// CFStringCreateFromExternalRepresentation() pays attention to the BOM character (if any)
+/// and does byte swapping if necessary. Similarly CFStringCreateExternalRepresentation() will
+/// include a BOM character if appropriate. See CFStringGetBytes() for more on this and lossByte.
+@ffi.Native<CFStringRef Function(CFAllocatorRef, CFDataRef, CFStringEncoding)>()
+external CFStringRef CFStringCreateFromExternalRepresentation(
+  CFAllocatorRef alloc,
+  CFDataRef data,
+  int encoding,
+);
+
+@ffi.Native<
+    CFDataRef Function(
+        CFAllocatorRef, CFStringRef, CFStringEncoding, ffi.UnsignedChar)>()
+external CFDataRef CFStringCreateExternalRepresentation(
+  CFAllocatorRef alloc,
+  CFStringRef theString,
+  int encoding,
+  int lossByte,
+);
+
+/// Hints about the contents of a string
+@ffi.Native<CFStringEncoding Function(CFStringRef)>()
+external int CFStringGetSmallestEncoding(
+  CFStringRef theString,
+);
+
+@ffi.Native<CFStringEncoding Function(CFStringRef)>()
+external int CFStringGetFastestEncoding(
+  CFStringRef theString,
+);
+
+/// General encoding info
+@ffi.Native<CFStringEncoding Function()>()
+external int CFStringGetSystemEncoding();
+
 @ffi.Native<CFIndex Function(CFIndex, CFStringEncoding)>()
 external int CFStringGetMaximumSizeForEncoding(
   int length,
   int encoding,
+);
+
+/// Extract the contents of the string as a NULL-terminated 8-bit string appropriate for passing to POSIX APIs (for example, normalized for HFS+).  The string is zero-terminated. false will be returned if the conversion results don't fit into the buffer.  Use CFStringGetMaximumSizeOfFileSystemRepresentation() if you want to make sure the buffer is of sufficient length.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFStringRef, ffi.Pointer<ffi.Char>, CFIndex)>()
+external int CFStringGetFileSystemRepresentation(
+  CFStringRef string,
+  ffi.Pointer<ffi.Char> buffer,
+  int maxBufLen,
+);
+
+/// Get the upper bound on the number of bytes required to hold the file system representation for the string. This result is returned quickly as a very rough approximation, and could be much larger than the actual space required. The result includes space for the zero termination. If you are allocating a buffer for long-term keeping, it's recommended that you reallocate it smaller (to be the right size) after calling CFStringGetFileSystemRepresentation().
+@ffi.Native<CFIndex Function(CFStringRef)>()
+external int CFStringGetMaximumSizeOfFileSystemRepresentation(
+  CFStringRef string,
+);
+
+/// Create a CFString from the specified zero-terminated POSIX file system representation.  If the conversion fails (possible due to bytes in the buffer not being a valid sequence of bytes for the appropriate character encoding), NULL is returned.
+@ffi.Native<CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.Char>)>()
+external CFStringRef CFStringCreateWithFileSystemRepresentation(
+  CFAllocatorRef alloc,
+  ffi.Pointer<ffi.Char> buffer,
+);
+
+/// The main comparison routine; compares specified range of the first string to (the full range of) the second string.
+/// locale == NULL indicates canonical locale (the return value from CFLocaleGetSystem()).
+/// kCFCompareNumerically, added in 10.2, does not work if kCFCompareLocalized is specified on systems before 10.3
+/// kCFCompareBackwards and kCFCompareAnchored are not applicable.
+/// rangeToCompare applies to the first string; that is, only the substring of theString1 specified by rangeToCompare is compared against all of theString2.
+@ffi.Native<
+    CFComparisonResult Function(
+        CFStringRef, CFStringRef, CFRange, CFStringCompareFlags, CFLocaleRef)>()
+external int CFStringCompareWithOptionsAndLocale(
+  CFStringRef theString1,
+  CFStringRef theString2,
+  CFRange rangeToCompare,
+  int compareOptions,
+  CFLocaleRef locale,
+);
+
+/// Comparison convenience. Uses the current user locale (the return value from CFLocaleCopyCurrent()) if kCFCompareLocalized. Refer to CFStringCompareWithOptionsAndLocale() for more info.
+@ffi.Native<
+    CFComparisonResult Function(
+        CFStringRef, CFStringRef, CFRange, CFStringCompareFlags)>()
+external int CFStringCompareWithOptions(
+  CFStringRef theString1,
+  CFStringRef theString2,
+  CFRange rangeToCompare,
+  int compareOptions,
+);
+
+/// Comparison convenience suitable for passing as sorting functions.
+/// kCFCompareNumerically, added in 10.2, does not work if kCFCompareLocalized is specified on systems before 10.3
+/// kCFCompareBackwards and kCFCompareAnchored are not applicable.
+@ffi.Native<
+    CFComparisonResult Function(
+        CFStringRef, CFStringRef, CFStringCompareFlags)>()
+external int CFStringCompare(
+  CFStringRef theString1,
+  CFStringRef theString2,
+  int compareOptions,
+);
+
+/// CFStringFindWithOptionsAndLocale() returns the found range in the CFRange * argument; you can pass NULL for simple discovery check.
+/// locale == NULL indicates canonical locale (the return value from CFLocaleGetSystem()).
+/// If stringToFind is the empty string (zero length), nothing is found.
+/// Ignores the kCFCompareNumerically option.
+/// Only the substring of theString specified by rangeToSearch is searched for stringToFind.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFStringRef, CFStringRef, CFRange,
+        CFStringCompareFlags, CFLocaleRef, ffi.Pointer<CFRange>)>()
+external int CFStringFindWithOptionsAndLocale(
+  CFStringRef theString,
+  CFStringRef stringToFind,
+  CFRange rangeToSearch,
+  int searchOptions,
+  CFLocaleRef locale,
+  ffi.Pointer<CFRange> result,
+);
+
+/// Find convenience. Uses the current user locale (the return value from CFLocaleCopyCurrent()) if kCFCompareLocalized. Refer to CFStringFindWithOptionsAndLocale() for more info.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFStringRef, CFStringRef, CFRange,
+        CFStringCompareFlags, ffi.Pointer<CFRange>)>()
+external int CFStringFindWithOptions(
+  CFStringRef theString,
+  CFStringRef stringToFind,
+  CFRange rangeToSearch,
+  int searchOptions,
+  ffi.Pointer<CFRange> result,
+);
+
+/// CFStringCreateArrayWithFindResults() returns an array of CFRange pointers, or NULL if there are no matches.
+/// Overlapping instances are not found; so looking for "AA" in "AAA" finds just one range.
+/// Post 10.1: If kCFCompareBackwards is provided, the scan is done from the end (which can give a different result), and
+/// the results are stored in the array backwards (last found range in slot 0).
+/// If stringToFind is the empty string (zero length), nothing is found.
+/// kCFCompareAnchored causes just the consecutive instances at start (or end, if kCFCompareBackwards) to be reported. So, searching for "AB" in "ABABXAB..." you just get the first two occurrences.
+/// Ignores the kCFCompareNumerically option.
+/// Only the substring of theString specified by rangeToSearch is searched for stringToFind.
+@ffi.Native<
+    CFArrayRef Function(CFAllocatorRef, CFStringRef, CFStringRef, CFRange,
+        CFStringCompareFlags)>()
+external CFArrayRef CFStringCreateArrayWithFindResults(
+  CFAllocatorRef alloc,
+  CFStringRef theString,
+  CFStringRef stringToFind,
+  CFRange rangeToSearch,
+  int compareOptions,
+);
+
+/// Find conveniences; see comments above concerning empty string and options.
+@ffi.Native<CFRange Function(CFStringRef, CFStringRef, CFStringCompareFlags)>()
+external CFRange CFStringFind(
+  CFStringRef theString,
+  CFStringRef stringToFind,
+  int compareOptions,
+);
+
+@ffi.Native<ffi.UnsignedChar Function(CFStringRef, CFStringRef)>()
+external int CFStringHasPrefix(
+  CFStringRef theString,
+  CFStringRef prefix,
+);
+
+@ffi.Native<ffi.UnsignedChar Function(CFStringRef, CFStringRef)>()
+external int CFStringHasSuffix(
+  CFStringRef theString,
+  CFStringRef suffix,
+);
+
+/// !
+/// @function CFStringGetRangeOfComposedCharactersAtIndex
+/// Returns the range of the composed character sequence at the specified index.
+/// @param theString The CFString which is to be searched.  If this
+/// parameter is not a valid CFString, the behavior is
+/// undefined.
+/// @param theIndex The index of the character contained in the
+/// composed character sequence.  If the index is
+/// outside the index space of the string (0 to N-1 inclusive,
+/// where N is the length of the string), the behavior is
+/// undefined.
+/// @result The range of the composed character sequence.
+@ffi.Native<CFRange Function(CFStringRef, CFIndex)>()
+external CFRange CFStringGetRangeOfComposedCharactersAtIndex(
+  CFStringRef theString,
+  int theIndex,
+);
+
+/// !
+/// @function CFStringFindCharacterFromSet
+/// Query the range of the first character contained in the specified character set.
+/// @param theString The CFString which is to be searched.  If this
+/// parameter is not a valid CFString, the behavior is
+/// undefined.
+/// @param theSet The CFCharacterSet against which the membership
+/// of characters is checked.  If this parameter is not a valid
+/// CFCharacterSet, the behavior is undefined.
+/// @param rangeToSearch The range of characters within the string to search. If
+/// the range location or end point (defined by the location
+/// plus length minus 1) are outside the index space of the
+/// string (0 to N-1 inclusive, where N is the length of the
+/// string), the behavior is undefined. If the range length is
+/// negative, the behavior is undefined. The range may be empty
+/// (length 0), in which case no search is performed.
+/// @param searchOptions The bitwise-or'ed option flags to control
+/// the search behavior.  The supported options are
+/// kCFCompareBackwards andkCFCompareAnchored.
+/// If other option flags are specified, the behavior
+/// is undefined.
+/// @param result The pointer to a CFRange supplied by the caller in
+/// which the search result is stored.  Note that the length
+/// of this range can be more than 1, if for instance the
+/// result is a composed character. If a pointer to an invalid
+/// memory is specified, the behavior is undefined.
+/// @result true, if at least a character which is a member of the character
+/// set is found and result is filled, otherwise, false.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFStringRef, CFCharacterSetRef, CFRange,
+        CFStringCompareFlags, ffi.Pointer<CFRange>)>()
+external int CFStringFindCharacterFromSet(
+  CFStringRef theString,
+  CFCharacterSetRef theSet,
+  CFRange rangeToSearch,
+  int searchOptions,
+  ffi.Pointer<CFRange> result,
+);
+
+/// Find range of bounds of the line(s) that span the indicated range (startIndex, numChars),
+/// taking into account various possible line separator sequences (CR, CRLF, LF, and Unicode NextLine, LineSeparator, ParagraphSeparator).
+/// All return values are "optional" (provide NULL if you don't want them)
+/// lineBeginIndex: index of first character in line
+/// lineEndIndex: index of first character of the next line (including terminating line separator characters)
+/// contentsEndIndex: index of the first line separator character
+/// Thus, lineEndIndex - lineBeginIndex is the number of chars in the line, including the line separators
+/// contentsEndIndex - lineBeginIndex is the number of chars in the line w/out the line separators
+@ffi.Native<
+    ffi.Void Function(CFStringRef, CFRange, ffi.Pointer<CFIndex>,
+        ffi.Pointer<CFIndex>, ffi.Pointer<CFIndex>)>()
+external void CFStringGetLineBounds(
+  CFStringRef theString,
+  CFRange range,
+  ffi.Pointer<CFIndex> lineBeginIndex,
+  ffi.Pointer<CFIndex> lineEndIndex,
+  ffi.Pointer<CFIndex> contentsEndIndex,
+);
+
+/// Same as CFStringGetLineBounds(), however, will only look for paragraphs. Won't stop at Unicode NextLine or LineSeparator characters.
+@ffi.Native<
+    ffi.Void Function(CFStringRef, CFRange, ffi.Pointer<CFIndex>,
+        ffi.Pointer<CFIndex>, ffi.Pointer<CFIndex>)>()
+external void CFStringGetParagraphBounds(
+  CFStringRef string,
+  CFRange range,
+  ffi.Pointer<CFIndex> parBeginIndex,
+  ffi.Pointer<CFIndex> parEndIndex,
+  ffi.Pointer<CFIndex> contentsEndIndex,
+);
+
+/// !
+/// @function CFStringGetHyphenationLocationBeforeIndex
+/// Retrieve the first potential hyphenation location found before the specified location.
+/// @param string The CFString which is to be hyphenated.  If this
+/// parameter is not a valid CFString, the behavior is
+/// undefined.
+/// @param location An index in the string.  If a valid hyphen index is returned, it
+/// will be before this index.
+/// @param limitRange The range of characters within the string to search. If
+/// the range location or end point (defined by the location
+/// plus length minus 1) are outside the index space of the
+/// string (0 to N-1 inclusive, where N is the length of the
+/// string), the behavior is undefined. If the range length is
+/// negative, the behavior is undefined. The range may be empty
+/// (length 0), in which case no hyphen location is generated.
+/// @param options Reserved for future use.
+/// @param locale Specifies which language's hyphenation conventions to use.
+/// This must be a valid locale.  Hyphenation data is not available
+/// for all locales.  You can use CFStringIsHyphenationAvailableForLocale
+/// to test for availability of hyphenation data.
+/// @param character The suggested hyphen character to insert.  Pass NULL if you
+/// do not need this information.
+/// @result an index in the string where it is appropriate to insert a hyphen, if
+/// one exists; else kCFNotFound
+@ffi.Native<
+    CFIndex Function(CFStringRef, CFIndex, CFRange, CFOptionFlags, CFLocaleRef,
+        ffi.Pointer<ffi.UnsignedInt>)>()
+external int CFStringGetHyphenationLocationBeforeIndex(
+  CFStringRef string,
+  int location,
+  CFRange limitRange,
+  int options,
+  CFLocaleRef locale,
+  ffi.Pointer<ffi.UnsignedInt> character,
+);
+
+@ffi.Native<ffi.UnsignedChar Function(CFLocaleRef)>()
+external int CFStringIsHyphenationAvailableForLocale(
+  CFLocaleRef locale,
+);
+
+/// Exploding and joining strings with a separator string
+@ffi.Native<CFStringRef Function(CFAllocatorRef, CFArrayRef, CFStringRef)>()
+external CFStringRef CFStringCreateByCombiningStrings(
+  CFAllocatorRef alloc,
+  CFArrayRef theArray,
+  CFStringRef separatorString,
+);
+
+@ffi.Native<CFArrayRef Function(CFAllocatorRef, CFStringRef, CFStringRef)>()
+external CFArrayRef CFStringCreateArrayBySeparatingStrings(
+  CFAllocatorRef alloc,
+  CFStringRef theString,
+  CFStringRef separatorString,
+);
+
+/// Parsing non-localized numbers from strings
+@ffi.Native<ffi.Int Function(CFStringRef)>()
+external int CFStringGetIntValue(
+  CFStringRef str,
+);
+
+@ffi.Native<ffi.Double Function(CFStringRef)>()
+external double CFStringGetDoubleValue(
+  CFStringRef str,
+);
+
+/// CFStringAppend("abcdef", "xxxxx") -> "abcdefxxxxx"
+/// CFStringDelete("abcdef", CFRangeMake(2, 3)) -> "abf"
+/// CFStringReplace("abcdef", CFRangeMake(2, 3), "xxxxx") -> "abxxxxxf"
+/// CFStringReplaceAll("abcdef", "xxxxx") -> "xxxxx"
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFStringRef)>()
+external void CFStringAppend(
+  CFMutableStringRef theString,
+  CFStringRef appendedString,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableStringRef, ffi.Pointer<ffi.UnsignedShort>, CFIndex)>()
+external void CFStringAppendCharacters(
+  CFMutableStringRef theString,
+  ffi.Pointer<ffi.UnsignedShort> chars,
+  int numChars,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableStringRef, ffi.Pointer<ffi.UnsignedChar>, CFStringEncoding)>()
+external void CFStringAppendPascalString(
+  CFMutableStringRef theString,
+  ffi.Pointer<ffi.UnsignedChar> pStr,
+  int encoding,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableStringRef, ffi.Pointer<ffi.Char>, CFStringEncoding)>()
+external void CFStringAppendCString(
+  CFMutableStringRef theString,
+  ffi.Pointer<ffi.Char> cStr,
+  int encoding,
+);
+
+@ffi.Native<
+    ffi.Void Function(CFMutableStringRef, CFDictionaryRef, CFStringRef)>()
+external void CFStringAppendFormat(
+  CFMutableStringRef theString,
+  CFDictionaryRef formatOptions,
+  CFStringRef format,
+);
+
+@ffi.Native<
+    ffi.Void Function(CFMutableStringRef, CFDictionaryRef, CFStringRef,
+        ffi.Pointer<ffi.Char>)>()
+external void CFStringAppendFormatAndArguments(
+  CFMutableStringRef theString,
+  CFDictionaryRef formatOptions,
+  CFStringRef format,
+  ffi.Pointer<ffi.Char> arguments,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFIndex, CFStringRef)>()
+external void CFStringInsert(
+  CFMutableStringRef str,
+  int idx,
+  CFStringRef insertedStr,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFRange)>()
+external void CFStringDelete(
+  CFMutableStringRef theString,
+  CFRange range,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFRange, CFStringRef)>()
+external void CFStringReplace(
+  CFMutableStringRef theString,
+  CFRange range,
+  CFStringRef replacement,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFStringRef)>()
+external void CFStringReplaceAll(
+  CFMutableStringRef theString,
+  CFStringRef replacement,
+);
+
+/// Replace all occurrences of target in rangeToSearch of theString with replacement.
+/// Pays attention to kCFCompareCaseInsensitive, kCFCompareBackwards, kCFCompareNonliteral, and kCFCompareAnchored.
+/// kCFCompareBackwards can be used to do the replacement starting from the end, which could give a different result.
+/// ex. AAAAA, replace AA with B -> BBA or ABB; latter if kCFCompareBackwards
+/// kCFCompareAnchored assures only anchored but multiple instances are found (the instances must be consecutive at start or end)
+/// ex. AAXAA, replace A with B -> BBXBB or BBXAA; latter if kCFCompareAnchored
+/// Returns number of replacements performed.
+@ffi.Native<
+    CFIndex Function(CFMutableStringRef, CFStringRef, CFStringRef, CFRange,
+        CFStringCompareFlags)>()
+external int CFStringFindAndReplace(
+  CFMutableStringRef theString,
+  CFStringRef stringToFind,
+  CFStringRef replacementString,
+  CFRange rangeToSearch,
+  int compareOptions,
+);
+
+/// This function will make the contents of a mutable CFString point directly at the specified UniChar array.
+/// It works only with CFStrings created with CFStringCreateMutableWithExternalCharactersNoCopy().
+/// This function does not free the previous buffer.
+/// The string will be manipulated within the provided buffer (if any) until it outgrows capacity; then the
+/// externalCharactersAllocator will be consulted for more memory.
+/// See comments at the top of this file for more info.
+@ffi.Native<
+    ffi.Void Function(
+        CFMutableStringRef, ffi.Pointer<ffi.UnsignedShort>, CFIndex, CFIndex)>()
+external void CFStringSetExternalCharactersNoCopy(
+  CFMutableStringRef theString,
+  ffi.Pointer<ffi.UnsignedShort> chars,
+  int length,
+  int capacity,
+);
+
+/// CFStringPad() will pad or cut down a string to the specified size.
+/// The pad string is used as the fill string; indexIntoPad specifies which character to start with.
+/// CFStringPad("abc", " ", 9, 0) ->  "abc      "
+/// CFStringPad("abc", ". ", 9, 1) -> "abc . . ."
+/// CFStringPad("abcdef", ?, 3, ?) -> "abc"
+///
+/// CFStringTrim() will trim the specified string from both ends of the string.
+/// CFStringTrimWhitespace() will do the same with white space characters (tab, newline, etc)
+/// CFStringTrim("  abc ", " ") -> "abc"
+/// CFStringTrim("* * * *abc * ", "* ") -> "*abc "
+@ffi.Native<
+    ffi.Void Function(CFMutableStringRef, CFStringRef, CFIndex, CFIndex)>()
+external void CFStringPad(
+  CFMutableStringRef theString,
+  CFStringRef padString,
+  int length,
+  int indexIntoPad,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFStringRef)>()
+external void CFStringTrim(
+  CFMutableStringRef theString,
+  CFStringRef trimString,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef)>()
+external void CFStringTrimWhitespace(
+  CFMutableStringRef theString,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFLocaleRef)>()
+external void CFStringLowercase(
+  CFMutableStringRef theString,
+  CFLocaleRef locale,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFLocaleRef)>()
+external void CFStringUppercase(
+  CFMutableStringRef theString,
+  CFLocaleRef locale,
+);
+
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFLocaleRef)>()
+external void CFStringCapitalize(
+  CFMutableStringRef theString,
+  CFLocaleRef locale,
+);
+
+/// !
+/// @function CFStringNormalize
+/// Normalizes the string into the specified form as described in
+/// Unicode Technical Report #15.
+/// @param theString  The string which is to be normalized.  If this
+/// parameter is not a valid mutable CFString, the behavior is
+/// undefined.
+/// @param theForm  The form into which the string is to be normalized.
+/// If this parameter is not a valid CFStringNormalizationForm value,
+/// the behavior is undefined.
+@ffi.Native<ffi.Void Function(CFMutableStringRef, CFStringNormalizationForm)>()
+external void CFStringNormalize(
+  CFMutableStringRef theString,
+  int theForm,
+);
+
+/// !
+/// @function CFStringFold
+/// Folds the string into the form specified by the flags.
+/// Character foldings are operations that convert any of a set of characters
+/// sharing similar semantics into a single representative from that set.
+/// This function can be used to preprocess strings that are to be compared,
+/// searched, or indexed.
+/// Note that folding does not include normalization, so it is necessary
+/// to use CFStringNormalize in addition to CFStringFold in order to obtain
+/// the effect of kCFCompareNonliteral.
+/// @param theString  The string which is to be folded.  If this parameter is not
+/// a valid mutable CFString, the behavior is undefined.
+/// @param theFlags  The equivalency flags which describes the character folding form.
+/// Only those flags containing the word "insensitive" are recognized here; other flags are ignored.
+/// Folding with kCFCompareCaseInsensitive removes case distinctions in accordance with the mapping
+/// specified by ftp://ftp.unicode.org/Public/UNIDATA/CaseFolding.txt.  Folding with
+/// kCFCompareDiacriticInsensitive removes distinctions of accents and other diacritics.  Folding
+/// with kCFCompareWidthInsensitive removes character width distinctions by mapping characters in
+/// the range U+FF00-U+FFEF to their ordinary equivalents.
+/// @param theLocale The locale tailoring the character folding behavior. If NULL,
+/// it's considered to be the system locale returned from CFLocaleGetSystem().
+/// If non-NULL and not a valid CFLocale object, the behavior is undefined.
+@ffi.Native<
+    ffi.Void Function(CFMutableStringRef, CFStringCompareFlags, CFLocaleRef)>()
+external void CFStringFold(
+  CFMutableStringRef theString,
+  int theFlags,
+  CFLocaleRef theLocale,
+);
+
+/// Perform string transliteration.  The transformation represented by transform is applied to the given range of string, modifying it in place. Only the specified range will be modified, but the transform may look at portions of the string outside that range for context. NULL range pointer causes the whole string to be transformed. On return, range is modified to reflect the new range corresponding to the original range. reverse indicates that the inverse transform should be used instead, if it exists. If the transform is successful, true is returned; if unsuccessful, false. Reasons for the transform being unsuccessful include an invalid transform identifier, or attempting to reverse an irreversible transform.
+///
+/// You can pass one of the predefined transforms below, or any valid ICU transform ID as defined in the ICU User Guide. Note that we do not support arbitrary set of ICU transform rules.
+@ffi.Native<
+    ffi.UnsignedChar Function(CFMutableStringRef, ffi.Pointer<CFRange>,
+        CFStringRef, ffi.UnsignedChar)>()
+external int CFStringTransform(
+  CFMutableStringRef string,
+  ffi.Pointer<CFRange> range,
+  CFStringRef transform,
+  int reverse,
 );
 
 /// Transform identifiers for CFStringTransform()
@@ -891,6 +2436,64 @@ external final CFStringRef kCFStringTransformToUnicodeName;
 @ffi.Native<CFStringRef>()
 external final CFStringRef kCFStringTransformStripDiacritics;
 
+/// This returns availability of the encoding on the system
+@ffi.Native<ffi.UnsignedChar Function(CFStringEncoding)>()
+external int CFStringIsEncodingAvailable(
+  int encoding,
+);
+
+/// This function returns list of available encodings.  The returned list is terminated with kCFStringEncodingInvalidId and owned by the system.
+@ffi.Native<ffi.Pointer<CFStringEncoding> Function()>()
+external ffi.Pointer<CFStringEncoding> CFStringGetListOfAvailableEncodings();
+
+/// Returns name of the encoding; non-localized.
+@ffi.Native<CFStringRef Function(CFStringEncoding)>()
+external CFStringRef CFStringGetNameOfEncoding(
+  int encoding,
+);
+
+/// ID mapping functions from/to Cocoa NSStringEncoding.  Returns kCFStringEncodingInvalidId if no mapping exists.
+@ffi.Native<ffi.UnsignedLong Function(CFStringEncoding)>()
+external int CFStringConvertEncodingToNSStringEncoding(
+  int encoding,
+);
+
+@ffi.Native<CFStringEncoding Function(ffi.UnsignedLong)>()
+external int CFStringConvertNSStringEncodingToEncoding(
+  int encoding,
+);
+
+/// ID mapping functions from/to Microsoft Windows codepage (covers both OEM & ANSI).  Returns kCFStringEncodingInvalidId if no mapping exists.
+@ffi.Native<ffi.UnsignedInt Function(CFStringEncoding)>()
+external int CFStringConvertEncodingToWindowsCodepage(
+  int encoding,
+);
+
+@ffi.Native<CFStringEncoding Function(ffi.UnsignedInt)>()
+external int CFStringConvertWindowsCodepageToEncoding(
+  int codepage,
+);
+
+/// ID mapping functions from/to IANA registery charset names.  Returns kCFStringEncodingInvalidId if no mapping exists.
+@ffi.Native<CFStringEncoding Function(CFStringRef)>()
+external int CFStringConvertIANACharSetNameToEncoding(
+  CFStringRef theString,
+);
+
+@ffi.Native<CFStringRef Function(CFStringEncoding)>()
+external CFStringRef CFStringConvertEncodingToIANACharSetName(
+  int encoding,
+);
+
+/// Returns the most compatible MacOS script value for the input encoding */
+/// /* i.e. kCFStringEncodingMacRoman -> kCFStringEncodingMacRoman */
+/// /*	kCFStringEncodingWindowsLatin1 -> kCFStringEncodingMacRoman */
+/// /*	kCFStringEncodingISO_2022_JP -> kCFStringEncodingMacJapanese
+@ffi.Native<CFStringEncoding Function(CFStringEncoding)>()
+external int CFStringGetMostCompatibleMacStringEncoding(
+  int encoding,
+);
+
 typedef CFIndex = ffi.Long;
 typedef DartCFIndex = int;
 
@@ -908,6 +2511,9 @@ final class __CFNull extends ffi.Opaque {}
 typedef CFAllocatorRef = ffi.Pointer<__CFAllocator>;
 
 final class __CFAllocator extends ffi.Opaque {}
+
+typedef CFTypeID = ffi.UnsignedLong;
+typedef DartCFTypeID = int;
 
 /// Base "type" of all "CF objects", and polymorphic functions on them
 typedef CFTypeRef = ffi.Pointer<ffi.Void>;
@@ -1019,9 +2625,6 @@ final class CFDictionaryValueCallBacks extends ffi.Struct {
   external CFDictionaryEqualCallBack equal;
 }
 
-typedef CFTypeID = ffi.UnsignedLong;
-typedef DartCFTypeID = int;
-
 /// !
 /// @typedef CFDictionaryRef
 /// This is the type of a reference to immutable CFDictionarys.
@@ -1107,10 +2710,64 @@ typedef CFArrayEqualCallBackFunction = ffi.UnsignedChar Function(
     ffi.Pointer<ffi.Void> value1, ffi.Pointer<ffi.Void> value2);
 typedef DartCFArrayEqualCallBackFunction = int Function(
     ffi.Pointer<ffi.Void> value1, ffi.Pointer<ffi.Void> value2);
+
+/// !
+/// @typedef CFArrayRef
+/// This is the type of a reference to immutable CFArrays.
+typedef CFArrayRef = ffi.Pointer<CFArray>;
+
+final class CFArray extends ffi.Opaque {}
+
+/// !
+/// @typedef CFMutableArrayRef
+/// This is the type of a reference to mutable CFArrays.
+typedef CFMutableArrayRef = ffi.Pointer<CFArray>;
+
+/// Range type
+final class CFRange extends ffi.Struct {
+  @CFIndex()
+  external int location;
+
+  @CFIndex()
+  external int length;
+}
+
+/// !
+/// @typedef CFArrayApplierFunction
+/// Type of the callback function used by the apply functions of
+/// CFArrays.
+/// @param value The current value from the array.
+/// @param context The user-defined context parameter given to the apply
+/// function.
+typedef CFArrayApplierFunction
+    = ffi.Pointer<ffi.NativeFunction<CFArrayApplierFunctionFunction>>;
+typedef CFArrayApplierFunctionFunction = ffi.Void Function(
+    ffi.Pointer<ffi.Void> value, ffi.Pointer<ffi.Void> context);
+typedef DartCFArrayApplierFunctionFunction = void Function(
+    ffi.Pointer<ffi.Void> value, ffi.Pointer<ffi.Void> context);
+
+/// A standard comparison function
+typedef CFComparatorFunction
+    = ffi.Pointer<ffi.NativeFunction<CFComparatorFunctionFunction>>;
+typedef CFComparatorFunctionFunction = CFComparisonResult Function(
+    ffi.Pointer<ffi.Void> val1,
+    ffi.Pointer<ffi.Void> val2,
+    ffi.Pointer<ffi.Void> context);
+typedef DartCFComparatorFunctionFunction = DartCFIndex Function(
+    ffi.Pointer<ffi.Void> val1,
+    ffi.Pointer<ffi.Void> val2,
+    ffi.Pointer<ffi.Void> context);
+
+/// Values returned from comparison functions
+typedef CFComparisonResult = CFIndex;
 typedef CFDataRef = ffi.Pointer<CFData>;
 
 final class CFData extends ffi.Opaque {}
 
+typedef CFMutableDataRef = ffi.Pointer<CFData>;
+typedef CFDataSearchFlags = CFOptionFlags;
+typedef CFOptionFlags = ffi.UnsignedLong;
+typedef DartCFOptionFlags = int;
 typedef CFNotificationName = CFStringRef;
 typedef CFLocaleKey = CFStringRef;
 
@@ -1121,6 +2778,35 @@ typedef CFErrorDomain = CFStringRef;
 /// Identifier for character encoding; the values are the same as Text Encoding Converter TextEncoding.
 typedef CFStringEncoding = ffi.UnsignedInt;
 typedef DartCFStringEncoding = int;
+
+/// !
+/// @typedef CFErrorRef
+/// This is the type of a reference to CFErrors.  CFErrorRef is toll-free bridged with NSError.
+typedef CFErrorRef = ffi.Pointer<__CFError>;
+
+final class __CFError extends ffi.Opaque {}
+
+typedef CFMutableStringRef = ffi.Pointer<CFString>;
+
+/// Find and compare flags; these are OR'ed together and provided as CFStringCompareFlags in the various functions.
+typedef CFStringCompareFlags = CFOptionFlags;
+typedef CFLocaleRef = ffi.Pointer<__CFLocale>;
+
+final class __CFLocale extends ffi.Opaque {}
+
+/// !
+/// @typedef CFCharacterSetRef
+/// This is the type of a reference to immutable CFCharacterSets.
+typedef CFCharacterSetRef = ffi.Pointer<__CFCharacterSet>;
+
+final class __CFCharacterSet extends ffi.Opaque {}
+
+/// !
+/// @typedef CFStringNormalizationForm
+/// This is the type of Unicode normalization forms as described in
+/// Unicode Technical Report #15. To normalize for use with file
+/// system calls, use CFStringGetFileSystemRepresentation().
+typedef CFStringNormalizationForm = CFIndex;
 
 const int kCFCompareLessThan = -1;
 

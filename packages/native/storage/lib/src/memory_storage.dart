@@ -7,7 +7,14 @@ final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
   NativeMemoryStorage({
     String? namespace,
     this.scope,
-  }) : namespace = namespace ?? '';
+  })  : namespace = namespace ?? '',
+        _storage = {};
+
+  NativeMemoryStorage._({
+    required this.namespace,
+    this.scope,
+    Map<String, String>? storage,
+  }) : _storage = storage ?? {};
 
   @override
   final String namespace;
@@ -15,7 +22,7 @@ final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
   @override
   final String? scope;
 
-  final _storage = <String, String>{};
+  final Map<String, String> _storage;
   late final String _prefix =
       scope == null ? '$namespace/' : '$namespace/$scope/';
 
@@ -32,7 +39,11 @@ final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
   String write(String key, String value) => _storage['$_prefix$key'] = value;
 
   @override
-  void close() => clear();
+  void close() {
+    clear();
+    _isolated?.close().ignore();
+    _isolated = null;
+  }
 
   @override
   NativeSecureStorage get secure => this;
@@ -46,11 +57,12 @@ final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
       );
 
   @override
-  NativeMemoryStorage scoped(String scope) => NativeMemoryStorage(
+  NativeMemoryStorage scoped(String scope) => NativeMemoryStorage._(
         namespace: namespace,
         scope: switch (this.scope) {
           final currentScope? => '$currentScope/$scope',
           null => scope,
         },
+        storage: _storage,
       );
 }

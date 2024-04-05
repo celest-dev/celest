@@ -30,6 +30,7 @@ functions:
     - g_hash_table_new
     - g_hash_table_insert
     - g_hash_table_destroy
+    - g_list_.*
     - g_application_get_default
     - g_application_get_application_id
     - g_get_user_config_dir
@@ -37,11 +38,13 @@ functions:
 structs:
   include:
     - _GError
+    - _GList
     - _GHashTable
     - _GCancellable
     - _GObject
   rename:
     "_GError": GError
+    "_GList": GList
     "_GHashTable": GHashTable
     "_GCancellable": GCancellable
     "_GObject": GObject

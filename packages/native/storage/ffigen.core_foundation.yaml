@@ -31,20 +31,18 @@ globals:
     - kCF.*
 functions:
   include:
+    - CFArray.*
     - CFDictionary.*
-    - CFDataCreate
-    - CFStringGetCStringPtr
-    - CFStringGetCString
-    - CFStringGetLength
-    - CFStringGetMaximumSizeForEncoding
-    - CFStringCreateWithCString
-    - CFDataGetBytePtr
+    - CFString.*
+    - CFData.*
+    - CFGetTypeID
     - CFRelease
 structs:
   rename:
     "__CFString": CFString
     "__CFData": CFData
     "__CFDictionary": CFDictionary
+    "__CFArray": CFArray
 unnamed-enums:
   include:
     - kCF.*

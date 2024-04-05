@@ -1,6 +1,6 @@
 import 'package:jni/jni.dart';
 import 'package:native_storage/src/isolated/isolated_storage.dart';
-import 'package:native_storage/src/isolated/isolated_storage_platform.web.dart'
+import 'package:native_storage/src/isolated/isolated_storage_platform.unsupported.dart'
     as unsupported;
 import 'package:native_storage/src/local/local_storage_platform.vm.dart';
 import 'package:native_storage/src/native/android/android.dart';

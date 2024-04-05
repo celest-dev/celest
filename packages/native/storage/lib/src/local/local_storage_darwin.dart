@@ -23,25 +23,28 @@ final class LocalStoragePlatformDarwin extends NativeLocalStoragePlatform {
   });
 
   late final NSUserDefaults _userDefaults = darwin.userDefaults(namespace);
+  late final String _prefix = scope == null ? '' : '$scope/';
 
   @override
   String? read(String key) {
-    return _userDefaults.stringForKey_(darwin.nsString(key))?.toString();
+    return _userDefaults
+        .stringForKey_(darwin.nsString('$_prefix$key'))
+        ?.toString();
   }
 
   @override
   String write(String key, String value) {
     _userDefaults.setObject_forKey_(
       darwin.nsString(value),
-      darwin.nsString(key),
+      darwin.nsString('$_prefix$key'),
     );
     return value;
   }
 
   @override
   String? delete(String key) {
-    final existing = read(key);
-    _userDefaults.removeObjectForKey_(darwin.nsString(key));
+    final existing = read('$_prefix$key');
+    _userDefaults.removeObjectForKey_(darwin.nsString('$_prefix$key'));
     return existing;
   }
 

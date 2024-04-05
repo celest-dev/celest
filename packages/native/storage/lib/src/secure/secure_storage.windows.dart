@@ -29,12 +29,14 @@ final class SecureStorageWindows extends NativeSecureStoragePlatform {
 
   late final _registry = lazy(() {
     final hkcu = Registry.currentUser;
-    final rootKey = hkcu
+    var key = hkcu
         .createKey('SOFTWARE\\Classes\\Local Settings\\Software\\$namespace');
     if (scope case final scope?) {
-      return rootKey.createKey(scope);
+      for (final path in scope.split('/')) {
+        key = key.createKey(path);
+      }
     }
-    return rootKey;
+    return key;
   });
 
   @override

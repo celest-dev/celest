@@ -60,6 +60,28 @@ extension MapToCFDictionary on Map<Pointer, Pointer> {
   }
 }
 
+extension CFDictionaryToMap on CFDictionaryRef {
+  /// Converts `this` to a [Map<Pointer, Pointer>].
+  Map<String, Object?> toDartMap() {
+    final count = CFDictionaryGetCount(this);
+    final keys = calloc<CFTypeRef>(count);
+    final values = calloc<CFTypeRef>(count);
+    CFDictionaryGetKeysAndValues(this, keys, values);
+    final map = <String, Object?>{};
+    for (var i = 0; i < count; i++) {
+      final key = keys[i].cast<CFString>().toDartString()!;
+      final value = values[i];
+      final typeID = CFGetTypeID(value);
+      if (typeID == CFStringGetTypeID()) {
+        map[key] = value.cast<CFString>().toDartString();
+      }
+    }
+    calloc.free(keys);
+    calloc.free(values);
+    return map;
+  }
+}
+
 extension CFDataRefToString on CFDataRef {
   /// Converts `this` to a [String].
   String? toDartString() {
