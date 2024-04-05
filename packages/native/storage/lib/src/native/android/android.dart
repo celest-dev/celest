@@ -8,9 +8,9 @@ final class AndroidCommon {
 
   // Must be getters so that they are fresh for each JNI call
   late final Activity _mainActivity =
-      Activity.fromRef(Jni.getCurrentActivity());
+      Activity.fromReference(Jni.getCurrentActivity());
   late final Context _mainActivityContext =
-      Context.fromRef(_mainActivity.reference);
+      Context.fromReference(_mainActivity.reference);
 
   late final String packageName =
       _mainActivityContext.getPackageName().toDartString();
