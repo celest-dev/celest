@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:cli_script/cli_script.dart';
@@ -33,6 +34,9 @@ Future<void> runPub({
     },
     workingDirectory: workingDirectory,
   );
+  // TODO(dnys1): Remove when fixed in pub https://github.com/dart-lang/sdk/issues/55289
+  // and we can rely on the exit code taking a reasonable amount of time.
+
   // Must be sync so that completer only completes once before `finally` block
   // cancels subscription.
   final completer = Completer<void>.sync();
@@ -62,7 +66,18 @@ Future<void> runPub({
           );
         }
       }),
-      completer.future,
+      completer.future.then((_) {
+        final packageConfig = fileSystem
+            .directory(workingDirectory)
+            .childDirectory('.dart_tool')
+            .childFile('package_config.json');
+        if (packageConfig.existsSync()) {
+          return Future<void>.value();
+        }
+        return packageConfig
+            .watch()
+            .firstWhere((event) => event.type == FileSystemEvent.create);
+      }),
     ]);
   } finally {
     unawaited(stdout.cancel());
