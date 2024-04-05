@@ -17,9 +17,7 @@ void sharedTests(String name, NativeStorageFactory factory) {
             setUp(() {
               storage.clear();
               // Add some randomness to prevent overlap between concurrent tests.
-              key = String.fromCharCodes(
-                List.generate(10, (_) => _random.nextInt(255) + 1),
-              );
+              key = _randomString(10);
             });
 
             tearDownAll(() {
@@ -116,9 +114,7 @@ void sharedTests(String name, NativeStorageFactory factory) {
               setUp(() async {
                 await isolated.clear();
                 // Add some randomness to prevent overlap between concurrent tests.
-                key = String.fromCharCodes(
-                  List.generate(10, (_) => _random.nextInt(255) + 1),
-                );
+                key = _randomString(10);
               });
 
               tearDownAll(() async {
@@ -210,12 +206,13 @@ void sharedTests(String name, NativeStorageFactory factory) {
               group('large values', () {
                 for (final (length, s) in _largeKeyValuePairs) {
                   test('can store key/value with length $length', () async {
-                    await isolated.write('large', s);
-                    expect(await isolated.read('large'), s,
+                    final key = 'large-$length';
+                    await isolated.write(key, s);
+                    expect(await isolated.read(key), s,
                         reason: 'Value was written');
 
-                    await isolated.delete('large');
-                    expect(await isolated.read('large'), isNull,
+                    await isolated.delete(key);
+                    expect(await isolated.read(key), isNull,
                         reason: 'Value was deleted');
                   });
                 }
@@ -256,16 +253,26 @@ void sharedTests(String name, NativeStorageFactory factory) {
 
       expect(parent.read('key'), 'parentValue');
       expect(child.read('key'), isNull);
+
+      parent.clear();
     });
   });
 }
 
 final _random = Random();
+
+String _randomString(int length) {
+  const charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  final buf = StringBuffer();
+  for (var i = 0; i < length; i++) {
+    buf.write(charset[_random.nextInt(charset.length)]);
+  }
+  return buf.toString();
+}
+
 Iterable<(int, String)> get _largeKeyValuePairs sync* {
   for (final length in const [100, 1000]) {
-    final string = String.fromCharCodes(
-      List.generate(length, (_) => _random.nextInt(94) + 33),
-    );
+    final string = _randomString(length);
     yield (length, string);
   }
 }

@@ -67,7 +67,6 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
       kSecAttrAccount: key.toCFString(arena),
       kSecReturnData: kCFBooleanTrue,
       kSecMatchLimit: kSecMatchLimitOne,
-      kSecReturnData: kCFBooleanTrue,
     };
     try {
       final result = arena<CFTypeRef>();
