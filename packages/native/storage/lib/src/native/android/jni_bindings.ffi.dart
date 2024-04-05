@@ -4,6 +4,7 @@
 // ignore_for_file: camel_case_extensions
 // ignore_for_file: camel_case_types
 // ignore_for_file: constant_identifier_names
+// ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: no_leading_underscores_for_local_identifiers
@@ -26,107 +27,102 @@ class NativeStorage extends jni.JObject {
   @override
   late final jni.JObjType<NativeStorage> $type = type;
 
-  NativeStorage.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  NativeStorage.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/native_storage/NativeStorage");
+      jni.JClass.forName(r"dev/celest/native_storage/NativeStorage");
 
   /// The type which includes information such as the signature of this class.
   static const type = $NativeStorageType();
-  static final _id_getContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getContext", r"()Landroid/content/Context;");
+  static final _id_getContext = _class.instanceMethodId(
+    r"getContext",
+    r"()Landroid/content/Context;",
+  );
 
   /// from: protected final android.content.Context getContext()
   /// The returned object must be released after use, by calling the [release] method.
   Context getContext() {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getContext, jni.JniCallType.objectType, []).object);
+    return _id_getContext(this, const $ContextType(), []);
   }
 
-  static final _id_getNamespace = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getNamespace", r"()Ljava/lang/String;");
+  static final _id_getNamespace = _class.instanceMethodId(
+    r"getNamespace",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: protected final java.lang.String getNamespace()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getNamespace() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getNamespace, jni.JniCallType.objectType, []).object);
+    return _id_getNamespace(this, const jni.JStringType(), []);
   }
 
-  static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSharedPreferences",
-      r"()Landroid/content/SharedPreferences;");
+  static final _id_getSharedPreferences = _class.instanceMethodId(
+    r"getSharedPreferences",
+    r"()Landroid/content/SharedPreferences;",
+  );
 
   /// from: protected abstract android.content.SharedPreferences getSharedPreferences()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSharedPreferences() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSharedPreferences,
-        jni.JniCallType.objectType, []).object);
+    return _id_getSharedPreferences(this, const jni.JObjectType(), []);
   }
 
-  static final _id_write = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"write", r"(Ljava/lang/String;Ljava/lang/String;)V");
+  static final _id_write = _class.instanceMethodId(
+    r"write",
+    r"(Ljava/lang/String;Ljava/lang/String;)V",
+  );
 
   /// from: public final void write(java.lang.String string, java.lang.String string1)
   void write(
     jni.JString string,
     jni.JString string1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_write,
-        jni.JniCallType.voidType,
-        [string.reference, string1.reference]).check();
+    _id_write(this, const jni.jvoidType(),
+        [string.reference.pointer, string1.reference.pointer]);
   }
 
-  static final _id_read = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"read", r"(Ljava/lang/String;)Ljava/lang/String;");
+  static final _id_read = _class.instanceMethodId(
+    r"read",
+    r"(Ljava/lang/String;)Ljava/lang/String;",
+  );
 
   /// from: public final java.lang.String read(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString read(
     jni.JString string,
   ) {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_read,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_read(this, const jni.JStringType(), [string.reference.pointer]);
   }
 
-  static final _id_delete = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"delete", r"(Ljava/lang/String;)Ljava/lang/String;");
+  static final _id_delete = _class.instanceMethodId(
+    r"delete",
+    r"(Ljava/lang/String;)Ljava/lang/String;",
+  );
 
   /// from: public final java.lang.String delete(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString delete(
     jni.JString string,
   ) {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_delete,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_delete(
+        this, const jni.JStringType(), [string.reference.pointer]);
   }
 
-  static final _id_clear =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"clear", r"()V");
+  static final _id_clear = _class.instanceMethodId(
+    r"clear",
+    r"()V",
+  );
 
   /// from: public final void clear()
   void clear() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_clear, jni.JniCallType.voidType, []).check();
+    _id_clear(this, const jni.jvoidType(), []);
   }
 
-  static final _id_new0 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"<init>",
-      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V");
+  static final _id_new0 = _class.constructorId(
+    r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V",
+  );
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1, kotlin.jvm.internal.DefaultConstructorMarker defaultConstructorMarker)
   /// The returned object must be released after use, by calling the [release] method.
@@ -136,13 +132,12 @@ class NativeStorage extends jni.JObject {
     jni.JString string1,
     jni.JObject defaultConstructorMarker,
   ) {
-    return NativeStorage.fromRef(
-        jni.Jni.accessors.newObjectWithArgs(_class.reference, _id_new0, [
-      context.reference,
-      string.reference,
-      string1.reference,
-      defaultConstructorMarker.reference
-    ]).object);
+    return NativeStorage.fromReference(_id_new0(_class, referenceType, [
+      context.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer,
+      defaultConstructorMarker.reference.pointer
+    ]));
   }
 }
 
@@ -153,7 +148,8 @@ final class $NativeStorageType extends jni.JObjType<NativeStorage> {
   String get signature => r"Ldev/celest/native_storage/NativeStorage;";
 
   @override
-  NativeStorage fromRef(jni.JObjectPtr ref) => NativeStorage.fromRef(ref);
+  NativeStorage fromReference(jni.JReference reference) =>
+      NativeStorage.fromReference(reference);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();
@@ -176,19 +172,18 @@ class NativeLocalStorage extends NativeStorage {
   @override
   late final jni.JObjType<NativeLocalStorage> $type = type;
 
-  NativeLocalStorage.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  NativeLocalStorage.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/native_storage/NativeLocalStorage");
+      jni.JClass.forName(r"dev/celest/native_storage/NativeLocalStorage");
 
   /// The type which includes information such as the signature of this class.
   static const type = $NativeLocalStorageType();
-  static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"<init>",
-      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V");
+  static final _id_new1 = _class.constructorId(
+    r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+  );
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
@@ -197,24 +192,22 @@ class NativeLocalStorage extends NativeStorage {
     jni.JString string,
     jni.JString string1,
   ) {
-    return NativeLocalStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
-        _class.reference,
-        _id_new1,
-        [context.reference, string.reference, string1.reference]).object);
+    return NativeLocalStorage.fromReference(_id_new1(_class, referenceType, [
+      context.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer
+    ]));
   }
 
-  static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSharedPreferences",
-      r"()Landroid/content/SharedPreferences;");
+  static final _id_getSharedPreferences = _class.instanceMethodId(
+    r"getSharedPreferences",
+    r"()Landroid/content/SharedPreferences;",
+  );
 
   /// from: protected android.content.SharedPreferences getSharedPreferences()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSharedPreferences() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSharedPreferences,
-        jni.JniCallType.objectType, []).object);
+    return _id_getSharedPreferences(this, const jni.JObjectType(), []);
   }
 }
 
@@ -225,8 +218,8 @@ final class $NativeLocalStorageType extends jni.JObjType<NativeLocalStorage> {
   String get signature => r"Ldev/celest/native_storage/NativeLocalStorage;";
 
   @override
-  NativeLocalStorage fromRef(jni.JObjectPtr ref) =>
-      NativeLocalStorage.fromRef(ref);
+  NativeLocalStorage fromReference(jni.JReference reference) =>
+      NativeLocalStorage.fromReference(reference);
 
   @override
   jni.JObjType get superType => const $NativeStorageType();
@@ -249,19 +242,18 @@ class NativeSecureStorage extends NativeStorage {
   @override
   late final jni.JObjType<NativeSecureStorage> $type = type;
 
-  NativeSecureStorage.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  NativeSecureStorage.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
   static final _class =
-      jni.Jni.findJClass(r"dev/celest/native_storage/NativeSecureStorage");
+      jni.JClass.forName(r"dev/celest/native_storage/NativeSecureStorage");
 
   /// The type which includes information such as the signature of this class.
   static const type = $NativeSecureStorageType();
-  static final _id_new1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"<init>",
-      r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V");
+  static final _id_new1 = _class.constructorId(
+    r"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+  );
 
   /// from: public void <init>(android.content.Context context, java.lang.String string, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
@@ -270,24 +262,22 @@ class NativeSecureStorage extends NativeStorage {
     jni.JString string,
     jni.JString string1,
   ) {
-    return NativeSecureStorage.fromRef(jni.Jni.accessors.newObjectWithArgs(
-        _class.reference,
-        _id_new1,
-        [context.reference, string.reference, string1.reference]).object);
+    return NativeSecureStorage.fromReference(_id_new1(_class, referenceType, [
+      context.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer
+    ]));
   }
 
-  static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSharedPreferences",
-      r"()Landroid/content/SharedPreferences;");
+  static final _id_getSharedPreferences = _class.instanceMethodId(
+    r"getSharedPreferences",
+    r"()Landroid/content/SharedPreferences;",
+  );
 
   /// from: protected android.content.SharedPreferences getSharedPreferences()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSharedPreferences() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSharedPreferences,
-        jni.JniCallType.objectType, []).object);
+    return _id_getSharedPreferences(this, const jni.JObjectType(), []);
   }
 }
 
@@ -298,8 +288,8 @@ final class $NativeSecureStorageType extends jni.JObjType<NativeSecureStorage> {
   String get signature => r"Ldev/celest/native_storage/NativeSecureStorage;";
 
   @override
-  NativeSecureStorage fromRef(jni.JObjectPtr ref) =>
-      NativeSecureStorage.fromRef(ref);
+  NativeSecureStorage fromReference(jni.JReference reference) =>
+      NativeSecureStorage.fromReference(reference);
 
   @override
   jni.JObjType get superType => const $NativeStorageType();
@@ -322,22 +312,23 @@ class Activity_ScreenCaptureCallback extends jni.JObject {
   @override
   late final jni.JObjType<Activity_ScreenCaptureCallback> $type = type;
 
-  Activity_ScreenCaptureCallback.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  Activity_ScreenCaptureCallback.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
   static final _class =
-      jni.Jni.findJClass(r"android/app/Activity$ScreenCaptureCallback");
+      jni.JClass.forName(r"android/app/Activity$ScreenCaptureCallback");
 
   /// The type which includes information such as the signature of this class.
   static const type = $Activity_ScreenCaptureCallbackType();
-  static final _id_onScreenCaptured = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onScreenCaptured", r"()V");
+  static final _id_onScreenCaptured = _class.instanceMethodId(
+    r"onScreenCaptured",
+    r"()V",
+  );
 
   /// from: public abstract void onScreenCaptured()
   void onScreenCaptured() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onScreenCaptured, jni.JniCallType.voidType, []).check();
+    _id_onScreenCaptured(this, const jni.jvoidType(), []);
   }
 }
 
@@ -349,8 +340,8 @@ final class $Activity_ScreenCaptureCallbackType
   String get signature => r"Landroid/app/Activity$ScreenCaptureCallback;";
 
   @override
-  Activity_ScreenCaptureCallback fromRef(jni.JObjectPtr ref) =>
-      Activity_ScreenCaptureCallback.fromRef(ref);
+  Activity_ScreenCaptureCallback fromReference(jni.JReference reference) =>
+      Activity_ScreenCaptureCallback.fromReference(reference);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();
@@ -373,11 +364,11 @@ class Activity extends jni.JObject {
   @override
   late final jni.JObjType<Activity> $type = type;
 
-  Activity.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  Activity.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
-  static final _class = jni.Jni.findJClass(r"android/app/Activity");
+  static final _class = jni.JClass.forName(r"android/app/Activity");
 
   /// The type which includes information such as the signature of this class.
   static const type = $ActivityType();
@@ -396,9 +387,7 @@ class Activity extends jni.JObject {
 
   /// from: static public final int DEFAULT_KEYS_SHORTCUT
   static const DEFAULT_KEYS_SHORTCUT = 2;
-
-  static final _id_FOCUSED_STATE_SET = jni.Jni.accessors.getStaticFieldIDOf(
-    _class.reference,
+  static final _id_FOCUSED_STATE_SET = _class.staticFieldId(
     r"FOCUSED_STATE_SET",
     r"[I",
   );
@@ -406,10 +395,7 @@ class Activity extends jni.JObject {
   /// from: static protected final int[] FOCUSED_STATE_SET
   /// The returned object must be released after use, by calling the [release] method.
   static jni.JArray<jni.jint> get FOCUSED_STATE_SET =>
-      const jni.JArrayType(jni.jintType()).fromRef(jni.Jni.accessors
-          .getStaticField(_class.reference, _id_FOCUSED_STATE_SET,
-              jni.JniCallType.objectType)
-          .object);
+      _id_FOCUSED_STATE_SET.get(_class, const jni.JArrayType(jni.jintType()));
 
   /// from: static public final int FULLSCREEN_MODE_REQUEST_ENTER
   static const FULLSCREEN_MODE_REQUEST_ENTER = 1;
@@ -431,590 +417,560 @@ class Activity extends jni.JObject {
 
   /// from: static public final int RESULT_OK
   static const RESULT_OK = -1;
-
-  static final _id_new0 =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"<init>", r"()V");
+  static final _id_new0 = _class.constructorId(
+    r"()V",
+  );
 
   /// from: public void <init>()
   /// The returned object must be released after use, by calling the [release] method.
   factory Activity() {
-    return Activity.fromRef(jni.Jni.accessors
-        .newObjectWithArgs(_class.reference, _id_new0, []).object);
+    return Activity.fromReference(_id_new0(_class, referenceType, []));
   }
 
-  static final _id_getIntent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getIntent", r"()Landroid/content/Intent;");
+  static final _id_getIntent = _class.instanceMethodId(
+    r"getIntent",
+    r"()Landroid/content/Intent;",
+  );
 
   /// from: public android.content.Intent getIntent()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getIntent() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getIntent, jni.JniCallType.objectType, []).object);
+    return _id_getIntent(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setIntent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setIntent", r"(Landroid/content/Intent;)V");
+  static final _id_setIntent = _class.instanceMethodId(
+    r"setIntent",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public void setIntent(android.content.Intent intent)
   void setIntent(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setIntent,
-        jni.JniCallType.voidType, [intent.reference]).check();
+    _id_setIntent(this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_setLocusContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setLocusContext",
-      r"(Landroid/content/LocusId;Landroid/os/Bundle;)V");
+  static final _id_setLocusContext = _class.instanceMethodId(
+    r"setLocusContext",
+    r"(Landroid/content/LocusId;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void setLocusContext(android.content.LocusId locusId, android.os.Bundle bundle)
   void setLocusContext(
     jni.JObject locusId,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setLocusContext,
-        jni.JniCallType.voidType,
-        [locusId.reference, bundle.reference]).check();
+    _id_setLocusContext(this, const jni.jvoidType(),
+        [locusId.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_getApplication = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getApplication", r"()Landroid/app/Application;");
+  static final _id_getApplication = _class.instanceMethodId(
+    r"getApplication",
+    r"()Landroid/app/Application;",
+  );
 
   /// from: public final android.app.Application getApplication()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getApplication() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getApplication, jni.JniCallType.objectType, []).object);
+    return _id_getApplication(this, const jni.JObjectType(), []);
   }
 
-  static final _id_isChild =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isChild", r"()Z");
+  static final _id_isChild = _class.instanceMethodId(
+    r"isChild",
+    r"()Z",
+  );
 
   /// from: public final boolean isChild()
   bool isChild() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isChild, jni.JniCallType.booleanType, []).boolean;
+    return _id_isChild(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_getParent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getParent", r"()Landroid/app/Activity;");
+  static final _id_getParent = _class.instanceMethodId(
+    r"getParent",
+    r"()Landroid/app/Activity;",
+  );
 
   /// from: public final android.app.Activity getParent()
   /// The returned object must be released after use, by calling the [release] method.
   Activity getParent() {
-    return const $ActivityType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getParent, jni.JniCallType.objectType, []).object);
+    return _id_getParent(this, const $ActivityType(), []);
   }
 
-  static final _id_getWindowManager = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getWindowManager", r"()Landroid/view/WindowManager;");
+  static final _id_getWindowManager = _class.instanceMethodId(
+    r"getWindowManager",
+    r"()Landroid/view/WindowManager;",
+  );
 
   /// from: public android.view.WindowManager getWindowManager()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getWindowManager() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getWindowManager,
-        jni.JniCallType.objectType, []).object);
+    return _id_getWindowManager(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getWindow = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getWindow", r"()Landroid/view/Window;");
+  static final _id_getWindow = _class.instanceMethodId(
+    r"getWindow",
+    r"()Landroid/view/Window;",
+  );
 
   /// from: public android.view.Window getWindow()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getWindow() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getWindow, jni.JniCallType.objectType, []).object);
+    return _id_getWindow(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getLoaderManager = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getLoaderManager", r"()Landroid/app/LoaderManager;");
+  static final _id_getLoaderManager = _class.instanceMethodId(
+    r"getLoaderManager",
+    r"()Landroid/app/LoaderManager;",
+  );
 
   /// from: public android.app.LoaderManager getLoaderManager()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getLoaderManager() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getLoaderManager,
-        jni.JniCallType.objectType, []).object);
+    return _id_getLoaderManager(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getCurrentFocus = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getCurrentFocus", r"()Landroid/view/View;");
+  static final _id_getCurrentFocus = _class.instanceMethodId(
+    r"getCurrentFocus",
+    r"()Landroid/view/View;",
+  );
 
   /// from: public android.view.View getCurrentFocus()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getCurrentFocus() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getCurrentFocus, jni.JniCallType.objectType, []).object);
+    return _id_getCurrentFocus(this, const jni.JObjectType(), []);
   }
 
-  static final _id_attachBaseContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"attachBaseContext", r"(Landroid/content/Context;)V");
+  static final _id_attachBaseContext = _class.instanceMethodId(
+    r"attachBaseContext",
+    r"(Landroid/content/Context;)V",
+  );
 
   /// from: protected void attachBaseContext(android.content.Context context)
   void attachBaseContext(
     Context context,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_attachBaseContext,
-        jni.JniCallType.voidType,
-        [context.reference]).check();
+    _id_attachBaseContext(
+        this, const jni.jvoidType(), [context.reference.pointer]);
   }
 
-  static final _id_registerActivityLifecycleCallbacks = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"registerActivityLifecycleCallbacks",
-          r"(Landroid/app/Application$ActivityLifecycleCallbacks;)V");
+  static final _id_registerActivityLifecycleCallbacks = _class.instanceMethodId(
+    r"registerActivityLifecycleCallbacks",
+    r"(Landroid/app/Application$ActivityLifecycleCallbacks;)V",
+  );
 
   /// from: public void registerActivityLifecycleCallbacks(android.app.Application$ActivityLifecycleCallbacks activityLifecycleCallbacks)
   void registerActivityLifecycleCallbacks(
     jni.JObject activityLifecycleCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerActivityLifecycleCallbacks,
-        jni.JniCallType.voidType,
-        [activityLifecycleCallbacks.reference]).check();
+    _id_registerActivityLifecycleCallbacks(this, const jni.jvoidType(),
+        [activityLifecycleCallbacks.reference.pointer]);
   }
 
-  static final _id_unregisterActivityLifecycleCallbacks = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"unregisterActivityLifecycleCallbacks",
-          r"(Landroid/app/Application$ActivityLifecycleCallbacks;)V");
+  static final _id_unregisterActivityLifecycleCallbacks =
+      _class.instanceMethodId(
+    r"unregisterActivityLifecycleCallbacks",
+    r"(Landroid/app/Application$ActivityLifecycleCallbacks;)V",
+  );
 
   /// from: public void unregisterActivityLifecycleCallbacks(android.app.Application$ActivityLifecycleCallbacks activityLifecycleCallbacks)
   void unregisterActivityLifecycleCallbacks(
     jni.JObject activityLifecycleCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterActivityLifecycleCallbacks,
-        jni.JniCallType.voidType,
-        [activityLifecycleCallbacks.reference]).check();
+    _id_unregisterActivityLifecycleCallbacks(this, const jni.jvoidType(),
+        [activityLifecycleCallbacks.reference.pointer]);
   }
 
-  static final _id_registerComponentCallbacks = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerComponentCallbacks",
-      r"(Landroid/content/ComponentCallbacks;)V");
+  static final _id_registerComponentCallbacks = _class.instanceMethodId(
+    r"registerComponentCallbacks",
+    r"(Landroid/content/ComponentCallbacks;)V",
+  );
 
   /// from: public void registerComponentCallbacks(android.content.ComponentCallbacks componentCallbacks)
   void registerComponentCallbacks(
     jni.JObject componentCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerComponentCallbacks,
-        jni.JniCallType.voidType,
-        [componentCallbacks.reference]).check();
+    _id_registerComponentCallbacks(
+        this, const jni.jvoidType(), [componentCallbacks.reference.pointer]);
   }
 
-  static final _id_unregisterComponentCallbacks = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"unregisterComponentCallbacks",
-          r"(Landroid/content/ComponentCallbacks;)V");
+  static final _id_unregisterComponentCallbacks = _class.instanceMethodId(
+    r"unregisterComponentCallbacks",
+    r"(Landroid/content/ComponentCallbacks;)V",
+  );
 
   /// from: public void unregisterComponentCallbacks(android.content.ComponentCallbacks componentCallbacks)
   void unregisterComponentCallbacks(
     jni.JObject componentCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterComponentCallbacks,
-        jni.JniCallType.voidType,
-        [componentCallbacks.reference]).check();
+    _id_unregisterComponentCallbacks(
+        this, const jni.jvoidType(), [componentCallbacks.reference.pointer]);
   }
 
-  static final _id_onCreate = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onCreate", r"(Landroid/os/Bundle;)V");
+  static final _id_onCreate = _class.instanceMethodId(
+    r"onCreate",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: protected void onCreate(android.os.Bundle bundle)
   void onCreate(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onCreate,
-        jni.JniCallType.voidType, [bundle.reference]).check();
+    _id_onCreate(this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_getSplashScreen = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getSplashScreen", r"()Landroid/window/SplashScreen;");
+  static final _id_getSplashScreen = _class.instanceMethodId(
+    r"getSplashScreen",
+    r"()Landroid/window/SplashScreen;",
+  );
 
   /// from: public final android.window.SplashScreen getSplashScreen()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSplashScreen() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getSplashScreen, jni.JniCallType.objectType, []).object);
+    return _id_getSplashScreen(this, const jni.JObjectType(), []);
   }
 
-  static final _id_onCreate1 = jni.Jni.accessors.getMethodIDOf(_class.reference,
-      r"onCreate", r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V");
+  static final _id_onCreate1 = _class.instanceMethodId(
+    r"onCreate",
+    r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V",
+  );
 
   /// from: public void onCreate(android.os.Bundle bundle, android.os.PersistableBundle persistableBundle)
   void onCreate1(
     jni.JObject bundle,
     jni.JObject persistableBundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreate1,
-        jni.JniCallType.voidType,
-        [bundle.reference, persistableBundle.reference]).check();
+    _id_onCreate1(this, const jni.jvoidType(),
+        [bundle.reference.pointer, persistableBundle.reference.pointer]);
   }
 
-  static final _id_onRestoreInstanceState = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onRestoreInstanceState", r"(Landroid/os/Bundle;)V");
+  static final _id_onRestoreInstanceState = _class.instanceMethodId(
+    r"onRestoreInstanceState",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: protected void onRestoreInstanceState(android.os.Bundle bundle)
   void onRestoreInstanceState(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onRestoreInstanceState,
-        jni.JniCallType.voidType,
-        [bundle.reference]).check();
+    _id_onRestoreInstanceState(
+        this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onRestoreInstanceState1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onRestoreInstanceState",
-      r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V");
+  static final _id_onRestoreInstanceState1 = _class.instanceMethodId(
+    r"onRestoreInstanceState",
+    r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V",
+  );
 
   /// from: public void onRestoreInstanceState(android.os.Bundle bundle, android.os.PersistableBundle persistableBundle)
   void onRestoreInstanceState1(
     jni.JObject bundle,
     jni.JObject persistableBundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onRestoreInstanceState1,
-        jni.JniCallType.voidType,
-        [bundle.reference, persistableBundle.reference]).check();
+    _id_onRestoreInstanceState1(this, const jni.jvoidType(),
+        [bundle.reference.pointer, persistableBundle.reference.pointer]);
   }
 
-  static final _id_onPostCreate = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onPostCreate", r"(Landroid/os/Bundle;)V");
+  static final _id_onPostCreate = _class.instanceMethodId(
+    r"onPostCreate",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: protected void onPostCreate(android.os.Bundle bundle)
   void onPostCreate(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onPostCreate,
-        jni.JniCallType.voidType, [bundle.reference]).check();
+    _id_onPostCreate(this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onPostCreate1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onPostCreate",
-      r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V");
+  static final _id_onPostCreate1 = _class.instanceMethodId(
+    r"onPostCreate",
+    r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V",
+  );
 
   /// from: public void onPostCreate(android.os.Bundle bundle, android.os.PersistableBundle persistableBundle)
   void onPostCreate1(
     jni.JObject bundle,
     jni.JObject persistableBundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPostCreate1,
-        jni.JniCallType.voidType,
-        [bundle.reference, persistableBundle.reference]).check();
+    _id_onPostCreate1(this, const jni.jvoidType(),
+        [bundle.reference.pointer, persistableBundle.reference.pointer]);
   }
 
-  static final _id_onStart =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onStart", r"()V");
+  static final _id_onStart = _class.instanceMethodId(
+    r"onStart",
+    r"()V",
+  );
 
   /// from: protected void onStart()
   void onStart() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onStart, jni.JniCallType.voidType, []).check();
+    _id_onStart(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onRestart =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onRestart", r"()V");
+  static final _id_onRestart = _class.instanceMethodId(
+    r"onRestart",
+    r"()V",
+  );
 
   /// from: protected void onRestart()
   void onRestart() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onRestart, jni.JniCallType.voidType, []).check();
+    _id_onRestart(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onStateNotSaved = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onStateNotSaved", r"()V");
+  static final _id_onStateNotSaved = _class.instanceMethodId(
+    r"onStateNotSaved",
+    r"()V",
+  );
 
   /// from: public void onStateNotSaved()
   void onStateNotSaved() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onStateNotSaved, jni.JniCallType.voidType, []).check();
+    _id_onStateNotSaved(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onResume =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onResume", r"()V");
+  static final _id_onResume = _class.instanceMethodId(
+    r"onResume",
+    r"()V",
+  );
 
   /// from: protected void onResume()
   void onResume() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onResume, jni.JniCallType.voidType, []).check();
+    _id_onResume(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onPostResume = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onPostResume", r"()V");
+  static final _id_onPostResume = _class.instanceMethodId(
+    r"onPostResume",
+    r"()V",
+  );
 
   /// from: protected void onPostResume()
   void onPostResume() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onPostResume, jni.JniCallType.voidType, []).check();
+    _id_onPostResume(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onTopResumedActivityChanged = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onTopResumedActivityChanged", r"(Z)V");
+  static final _id_onTopResumedActivityChanged = _class.instanceMethodId(
+    r"onTopResumedActivityChanged",
+    r"(Z)V",
+  );
 
   /// from: public void onTopResumedActivityChanged(boolean z)
   void onTopResumedActivityChanged(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onTopResumedActivityChanged,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_onTopResumedActivityChanged(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_isVoiceInteraction = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isVoiceInteraction", r"()Z");
+  static final _id_isVoiceInteraction = _class.instanceMethodId(
+    r"isVoiceInteraction",
+    r"()Z",
+  );
 
   /// from: public boolean isVoiceInteraction()
   bool isVoiceInteraction() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isVoiceInteraction, jni.JniCallType.booleanType, []).boolean;
+    return _id_isVoiceInteraction(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_isVoiceInteractionRoot = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isVoiceInteractionRoot", r"()Z");
+  static final _id_isVoiceInteractionRoot = _class.instanceMethodId(
+    r"isVoiceInteractionRoot",
+    r"()Z",
+  );
 
   /// from: public boolean isVoiceInteractionRoot()
   bool isVoiceInteractionRoot() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isVoiceInteractionRoot, jni.JniCallType.booleanType, []).boolean;
+    return _id_isVoiceInteractionRoot(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_getVoiceInteractor = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getVoiceInteractor",
-      r"()Landroid/app/VoiceInteractor;");
+  static final _id_getVoiceInteractor = _class.instanceMethodId(
+    r"getVoiceInteractor",
+    r"()Landroid/app/VoiceInteractor;",
+  );
 
   /// from: public android.app.VoiceInteractor getVoiceInteractor()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getVoiceInteractor() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getVoiceInteractor,
-        jni.JniCallType.objectType, []).object);
+    return _id_getVoiceInteractor(this, const jni.JObjectType(), []);
   }
 
-  static final _id_isLocalVoiceInteractionSupported = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"isLocalVoiceInteractionSupported", r"()Z");
+  static final _id_isLocalVoiceInteractionSupported = _class.instanceMethodId(
+    r"isLocalVoiceInteractionSupported",
+    r"()Z",
+  );
 
   /// from: public boolean isLocalVoiceInteractionSupported()
   bool isLocalVoiceInteractionSupported() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_isLocalVoiceInteractionSupported,
-        jni.JniCallType.booleanType, []).boolean;
+    return _id_isLocalVoiceInteractionSupported(
+        this, const jni.jbooleanType(), []);
   }
 
-  static final _id_startLocalVoiceInteraction = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startLocalVoiceInteraction",
-      r"(Landroid/os/Bundle;)V");
+  static final _id_startLocalVoiceInteraction = _class.instanceMethodId(
+    r"startLocalVoiceInteraction",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: public void startLocalVoiceInteraction(android.os.Bundle bundle)
   void startLocalVoiceInteraction(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startLocalVoiceInteraction,
-        jni.JniCallType.voidType,
-        [bundle.reference]).check();
+    _id_startLocalVoiceInteraction(
+        this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onLocalVoiceInteractionStarted = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"onLocalVoiceInteractionStarted", r"()V");
+  static final _id_onLocalVoiceInteractionStarted = _class.instanceMethodId(
+    r"onLocalVoiceInteractionStarted",
+    r"()V",
+  );
 
   /// from: public void onLocalVoiceInteractionStarted()
   void onLocalVoiceInteractionStarted() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onLocalVoiceInteractionStarted,
-        jni.JniCallType.voidType, []).check();
+    _id_onLocalVoiceInteractionStarted(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onLocalVoiceInteractionStopped = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"onLocalVoiceInteractionStopped", r"()V");
+  static final _id_onLocalVoiceInteractionStopped = _class.instanceMethodId(
+    r"onLocalVoiceInteractionStopped",
+    r"()V",
+  );
 
   /// from: public void onLocalVoiceInteractionStopped()
   void onLocalVoiceInteractionStopped() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onLocalVoiceInteractionStopped,
-        jni.JniCallType.voidType, []).check();
+    _id_onLocalVoiceInteractionStopped(this, const jni.jvoidType(), []);
   }
 
-  static final _id_stopLocalVoiceInteraction = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"stopLocalVoiceInteraction", r"()V");
+  static final _id_stopLocalVoiceInteraction = _class.instanceMethodId(
+    r"stopLocalVoiceInteraction",
+    r"()V",
+  );
 
   /// from: public void stopLocalVoiceInteraction()
   void stopLocalVoiceInteraction() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_stopLocalVoiceInteraction, jni.JniCallType.voidType, []).check();
+    _id_stopLocalVoiceInteraction(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onNewIntent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onNewIntent", r"(Landroid/content/Intent;)V");
+  static final _id_onNewIntent = _class.instanceMethodId(
+    r"onNewIntent",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: protected void onNewIntent(android.content.Intent intent)
   void onNewIntent(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onNewIntent,
-        jni.JniCallType.voidType, [intent.reference]).check();
+    _id_onNewIntent(this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_onSaveInstanceState = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onSaveInstanceState", r"(Landroid/os/Bundle;)V");
+  static final _id_onSaveInstanceState = _class.instanceMethodId(
+    r"onSaveInstanceState",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: protected void onSaveInstanceState(android.os.Bundle bundle)
   void onSaveInstanceState(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onSaveInstanceState,
-        jni.JniCallType.voidType,
-        [bundle.reference]).check();
+    _id_onSaveInstanceState(
+        this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onSaveInstanceState1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onSaveInstanceState",
-      r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V");
+  static final _id_onSaveInstanceState1 = _class.instanceMethodId(
+    r"onSaveInstanceState",
+    r"(Landroid/os/Bundle;Landroid/os/PersistableBundle;)V",
+  );
 
   /// from: public void onSaveInstanceState(android.os.Bundle bundle, android.os.PersistableBundle persistableBundle)
   void onSaveInstanceState1(
     jni.JObject bundle,
     jni.JObject persistableBundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onSaveInstanceState1,
-        jni.JniCallType.voidType,
-        [bundle.reference, persistableBundle.reference]).check();
+    _id_onSaveInstanceState1(this, const jni.jvoidType(),
+        [bundle.reference.pointer, persistableBundle.reference.pointer]);
   }
 
-  static final _id_onPause =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onPause", r"()V");
+  static final _id_onPause = _class.instanceMethodId(
+    r"onPause",
+    r"()V",
+  );
 
   /// from: protected void onPause()
   void onPause() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onPause, jni.JniCallType.voidType, []).check();
+    _id_onPause(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onUserLeaveHint = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onUserLeaveHint", r"()V");
+  static final _id_onUserLeaveHint = _class.instanceMethodId(
+    r"onUserLeaveHint",
+    r"()V",
+  );
 
   /// from: protected void onUserLeaveHint()
   void onUserLeaveHint() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onUserLeaveHint, jni.JniCallType.voidType, []).check();
+    _id_onUserLeaveHint(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onCreateThumbnail = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onCreateThumbnail",
-      r"(Landroid/graphics/Bitmap;Landroid/graphics/Canvas;)Z");
+  static final _id_onCreateThumbnail = _class.instanceMethodId(
+    r"onCreateThumbnail",
+    r"(Landroid/graphics/Bitmap;Landroid/graphics/Canvas;)Z",
+  );
 
   /// from: public boolean onCreateThumbnail(android.graphics.Bitmap bitmap, android.graphics.Canvas canvas)
   bool onCreateThumbnail(
     jni.JObject bitmap,
     jni.JObject canvas,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateThumbnail,
-        jni.JniCallType.booleanType,
-        [bitmap.reference, canvas.reference]).boolean;
+    return _id_onCreateThumbnail(this, const jni.jbooleanType(),
+        [bitmap.reference.pointer, canvas.reference.pointer]);
   }
 
-  static final _id_onCreateDescription = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onCreateDescription", r"()Ljava/lang/CharSequence;");
+  static final _id_onCreateDescription = _class.instanceMethodId(
+    r"onCreateDescription",
+    r"()Ljava/lang/CharSequence;",
+  );
 
   /// from: public java.lang.CharSequence onCreateDescription()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onCreateDescription() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateDescription,
-        jni.JniCallType.objectType, []).object);
+    return _id_onCreateDescription(this, const jni.JObjectType(), []);
   }
 
-  static final _id_onProvideAssistData = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onProvideAssistData", r"(Landroid/os/Bundle;)V");
+  static final _id_onProvideAssistData = _class.instanceMethodId(
+    r"onProvideAssistData",
+    r"(Landroid/os/Bundle;)V",
+  );
 
   /// from: public void onProvideAssistData(android.os.Bundle bundle)
   void onProvideAssistData(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onProvideAssistData,
-        jni.JniCallType.voidType,
-        [bundle.reference]).check();
+    _id_onProvideAssistData(
+        this, const jni.jvoidType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onProvideAssistContent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onProvideAssistContent",
-      r"(Landroid/app/assist/AssistContent;)V");
+  static final _id_onProvideAssistContent = _class.instanceMethodId(
+    r"onProvideAssistContent",
+    r"(Landroid/app/assist/AssistContent;)V",
+  );
 
   /// from: public void onProvideAssistContent(android.app.assist.AssistContent assistContent)
   void onProvideAssistContent(
     jni.JObject assistContent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onProvideAssistContent,
-        jni.JniCallType.voidType,
-        [assistContent.reference]).check();
+    _id_onProvideAssistContent(
+        this, const jni.jvoidType(), [assistContent.reference.pointer]);
   }
 
-  static final _id_onGetDirectActions = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onGetDirectActions",
-      r"(Landroid/os/CancellationSignal;Ljava/util/function/Consumer;)V");
+  static final _id_onGetDirectActions = _class.instanceMethodId(
+    r"onGetDirectActions",
+    r"(Landroid/os/CancellationSignal;Ljava/util/function/Consumer;)V",
+  );
 
   /// from: public void onGetDirectActions(android.os.CancellationSignal cancellationSignal, java.util.function.Consumer consumer)
   void onGetDirectActions(
     jni.JObject cancellationSignal,
     jni.JObject consumer,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onGetDirectActions,
-        jni.JniCallType.voidType,
-        [cancellationSignal.reference, consumer.reference]).check();
+    _id_onGetDirectActions(this, const jni.jvoidType(),
+        [cancellationSignal.reference.pointer, consumer.reference.pointer]);
   }
 
-  static final _id_onPerformDirectAction = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onPerformDirectAction",
-      r"(Ljava/lang/String;Landroid/os/Bundle;Landroid/os/CancellationSignal;Ljava/util/function/Consumer;)V");
+  static final _id_onPerformDirectAction = _class.instanceMethodId(
+    r"onPerformDirectAction",
+    r"(Ljava/lang/String;Landroid/os/Bundle;Landroid/os/CancellationSignal;Ljava/util/function/Consumer;)V",
+  );
 
   /// from: public void onPerformDirectAction(java.lang.String string, android.os.Bundle bundle, android.os.CancellationSignal cancellationSignal, java.util.function.Consumer consumer)
   void onPerformDirectAction(
@@ -1023,40 +979,38 @@ class Activity extends jni.JObject {
     jni.JObject cancellationSignal,
     jni.JObject consumer,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onPerformDirectAction, jni.JniCallType.voidType, [
-      string.reference,
-      bundle.reference,
-      cancellationSignal.reference,
-      consumer.reference
-    ]).check();
+    _id_onPerformDirectAction(this, const jni.jvoidType(), [
+      string.reference.pointer,
+      bundle.reference.pointer,
+      cancellationSignal.reference.pointer,
+      consumer.reference.pointer
+    ]);
   }
 
-  static final _id_requestShowKeyboardShortcuts = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"requestShowKeyboardShortcuts", r"()V");
+  static final _id_requestShowKeyboardShortcuts = _class.instanceMethodId(
+    r"requestShowKeyboardShortcuts",
+    r"()V",
+  );
 
   /// from: public final void requestShowKeyboardShortcuts()
   void requestShowKeyboardShortcuts() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_requestShowKeyboardShortcuts, jni.JniCallType.voidType, []).check();
+    _id_requestShowKeyboardShortcuts(this, const jni.jvoidType(), []);
   }
 
-  static final _id_dismissKeyboardShortcutsHelper = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"dismissKeyboardShortcutsHelper", r"()V");
+  static final _id_dismissKeyboardShortcutsHelper = _class.instanceMethodId(
+    r"dismissKeyboardShortcutsHelper",
+    r"()V",
+  );
 
   /// from: public final void dismissKeyboardShortcutsHelper()
   void dismissKeyboardShortcutsHelper() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dismissKeyboardShortcutsHelper,
-        jni.JniCallType.voidType, []).check();
+    _id_dismissKeyboardShortcutsHelper(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onProvideKeyboardShortcuts = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onProvideKeyboardShortcuts",
-      r"(Ljava/util/List;Landroid/view/Menu;I)V");
+  static final _id_onProvideKeyboardShortcuts = _class.instanceMethodId(
+    r"onProvideKeyboardShortcuts",
+    r"(Ljava/util/List;Landroid/view/Menu;I)V",
+  );
 
   /// from: public void onProvideKeyboardShortcuts(java.util.List list, android.view.Menu menu, int i)
   void onProvideKeyboardShortcuts(
@@ -1064,350 +1018,328 @@ class Activity extends jni.JObject {
     jni.JObject menu,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onProvideKeyboardShortcuts,
-        jni.JniCallType.voidType,
-        [list.reference, menu.reference, jni.JValueInt(i)]).check();
+    _id_onProvideKeyboardShortcuts(this, const jni.jvoidType(),
+        [list.reference.pointer, menu.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_showAssist = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"showAssist", r"(Landroid/os/Bundle;)Z");
+  static final _id_showAssist = _class.instanceMethodId(
+    r"showAssist",
+    r"(Landroid/os/Bundle;)Z",
+  );
 
   /// from: public boolean showAssist(android.os.Bundle bundle)
   bool showAssist(
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_showAssist,
-        jni.JniCallType.booleanType, [bundle.reference]).boolean;
+    return _id_showAssist(
+        this, const jni.jbooleanType(), [bundle.reference.pointer]);
   }
 
-  static final _id_onStop =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onStop", r"()V");
+  static final _id_onStop = _class.instanceMethodId(
+    r"onStop",
+    r"()V",
+  );
 
   /// from: protected void onStop()
   void onStop() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onStop, jni.JniCallType.voidType, []).check();
+    _id_onStop(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onDestroy =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onDestroy", r"()V");
+  static final _id_onDestroy = _class.instanceMethodId(
+    r"onDestroy",
+    r"()V",
+  );
 
   /// from: protected void onDestroy()
   void onDestroy() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onDestroy, jni.JniCallType.voidType, []).check();
+    _id_onDestroy(this, const jni.jvoidType(), []);
   }
 
-  static final _id_reportFullyDrawn = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"reportFullyDrawn", r"()V");
+  static final _id_reportFullyDrawn = _class.instanceMethodId(
+    r"reportFullyDrawn",
+    r"()V",
+  );
 
   /// from: public void reportFullyDrawn()
   void reportFullyDrawn() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_reportFullyDrawn, jni.JniCallType.voidType, []).check();
+    _id_reportFullyDrawn(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onMultiWindowModeChanged = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onMultiWindowModeChanged",
-      r"(ZLandroid/content/res/Configuration;)V");
+  static final _id_onMultiWindowModeChanged = _class.instanceMethodId(
+    r"onMultiWindowModeChanged",
+    r"(ZLandroid/content/res/Configuration;)V",
+  );
 
   /// from: public void onMultiWindowModeChanged(boolean z, android.content.res.Configuration configuration)
   void onMultiWindowModeChanged(
     bool z,
     jni.JObject configuration,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onMultiWindowModeChanged,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0, configuration.reference]).check();
+    _id_onMultiWindowModeChanged(this, const jni.jvoidType(),
+        [z ? 1 : 0, configuration.reference.pointer]);
   }
 
-  static final _id_onMultiWindowModeChanged1 = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onMultiWindowModeChanged", r"(Z)V");
+  static final _id_onMultiWindowModeChanged1 = _class.instanceMethodId(
+    r"onMultiWindowModeChanged",
+    r"(Z)V",
+  );
 
   /// from: public void onMultiWindowModeChanged(boolean z)
   void onMultiWindowModeChanged1(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onMultiWindowModeChanged1,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_onMultiWindowModeChanged1(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_isInMultiWindowMode = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isInMultiWindowMode", r"()Z");
+  static final _id_isInMultiWindowMode = _class.instanceMethodId(
+    r"isInMultiWindowMode",
+    r"()Z",
+  );
 
   /// from: public boolean isInMultiWindowMode()
   bool isInMultiWindowMode() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isInMultiWindowMode, jni.JniCallType.booleanType, []).boolean;
+    return _id_isInMultiWindowMode(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_onPictureInPictureModeChanged = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onPictureInPictureModeChanged",
-          r"(ZLandroid/content/res/Configuration;)V");
+  static final _id_onPictureInPictureModeChanged = _class.instanceMethodId(
+    r"onPictureInPictureModeChanged",
+    r"(ZLandroid/content/res/Configuration;)V",
+  );
 
   /// from: public void onPictureInPictureModeChanged(boolean z, android.content.res.Configuration configuration)
   void onPictureInPictureModeChanged(
     bool z,
     jni.JObject configuration,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPictureInPictureModeChanged,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0, configuration.reference]).check();
+    _id_onPictureInPictureModeChanged(this, const jni.jvoidType(),
+        [z ? 1 : 0, configuration.reference.pointer]);
   }
 
-  static final _id_onPictureInPictureUiStateChanged = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onPictureInPictureUiStateChanged",
-          r"(Landroid/app/PictureInPictureUiState;)V");
+  static final _id_onPictureInPictureUiStateChanged = _class.instanceMethodId(
+    r"onPictureInPictureUiStateChanged",
+    r"(Landroid/app/PictureInPictureUiState;)V",
+  );
 
   /// from: public void onPictureInPictureUiStateChanged(android.app.PictureInPictureUiState pictureInPictureUiState)
   void onPictureInPictureUiStateChanged(
     jni.JObject pictureInPictureUiState,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPictureInPictureUiStateChanged,
-        jni.JniCallType.voidType,
-        [pictureInPictureUiState.reference]).check();
+    _id_onPictureInPictureUiStateChanged(this, const jni.jvoidType(),
+        [pictureInPictureUiState.reference.pointer]);
   }
 
-  static final _id_onPictureInPictureModeChanged1 = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"onPictureInPictureModeChanged", r"(Z)V");
+  static final _id_onPictureInPictureModeChanged1 = _class.instanceMethodId(
+    r"onPictureInPictureModeChanged",
+    r"(Z)V",
+  );
 
   /// from: public void onPictureInPictureModeChanged(boolean z)
   void onPictureInPictureModeChanged1(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPictureInPictureModeChanged1,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_onPictureInPictureModeChanged1(
+        this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_isInPictureInPictureMode = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isInPictureInPictureMode", r"()Z");
+  static final _id_isInPictureInPictureMode = _class.instanceMethodId(
+    r"isInPictureInPictureMode",
+    r"()Z",
+  );
 
   /// from: public boolean isInPictureInPictureMode()
   bool isInPictureInPictureMode() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isInPictureInPictureMode, jni.JniCallType.booleanType, []).boolean;
+    return _id_isInPictureInPictureMode(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_enterPictureInPictureMode = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"enterPictureInPictureMode", r"()V");
+  static final _id_enterPictureInPictureMode = _class.instanceMethodId(
+    r"enterPictureInPictureMode",
+    r"()V",
+  );
 
   /// from: public void enterPictureInPictureMode()
   void enterPictureInPictureMode() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_enterPictureInPictureMode, jni.JniCallType.voidType, []).check();
+    _id_enterPictureInPictureMode(this, const jni.jvoidType(), []);
   }
 
-  static final _id_enterPictureInPictureMode1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"enterPictureInPictureMode",
-      r"(Landroid/app/PictureInPictureParams;)Z");
+  static final _id_enterPictureInPictureMode1 = _class.instanceMethodId(
+    r"enterPictureInPictureMode",
+    r"(Landroid/app/PictureInPictureParams;)Z",
+  );
 
   /// from: public boolean enterPictureInPictureMode(android.app.PictureInPictureParams pictureInPictureParams)
   bool enterPictureInPictureMode1(
     jni.JObject pictureInPictureParams,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_enterPictureInPictureMode1,
-        jni.JniCallType.booleanType,
-        [pictureInPictureParams.reference]).boolean;
+    return _id_enterPictureInPictureMode1(this, const jni.jbooleanType(),
+        [pictureInPictureParams.reference.pointer]);
   }
 
-  static final _id_setPictureInPictureParams = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setPictureInPictureParams",
-      r"(Landroid/app/PictureInPictureParams;)V");
+  static final _id_setPictureInPictureParams = _class.instanceMethodId(
+    r"setPictureInPictureParams",
+    r"(Landroid/app/PictureInPictureParams;)V",
+  );
 
   /// from: public void setPictureInPictureParams(android.app.PictureInPictureParams pictureInPictureParams)
   void setPictureInPictureParams(
     jni.JObject pictureInPictureParams,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setPictureInPictureParams,
-        jni.JniCallType.voidType,
-        [pictureInPictureParams.reference]).check();
+    _id_setPictureInPictureParams(this, const jni.jvoidType(),
+        [pictureInPictureParams.reference.pointer]);
   }
 
-  static final _id_getMaxNumPictureInPictureActions = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"getMaxNumPictureInPictureActions", r"()I");
+  static final _id_getMaxNumPictureInPictureActions = _class.instanceMethodId(
+    r"getMaxNumPictureInPictureActions",
+    r"()I",
+  );
 
   /// from: public int getMaxNumPictureInPictureActions()
   int getMaxNumPictureInPictureActions() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getMaxNumPictureInPictureActions,
-        jni.JniCallType.intType, []).integer;
+    return _id_getMaxNumPictureInPictureActions(this, const jni.jintType(), []);
   }
 
-  static final _id_onPictureInPictureRequested = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onPictureInPictureRequested", r"()Z");
+  static final _id_onPictureInPictureRequested = _class.instanceMethodId(
+    r"onPictureInPictureRequested",
+    r"()Z",
+  );
 
   /// from: public boolean onPictureInPictureRequested()
   bool onPictureInPictureRequested() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPictureInPictureRequested,
-        jni.JniCallType.booleanType, []).boolean;
+    return _id_onPictureInPictureRequested(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_requestFullscreenMode = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"requestFullscreenMode",
-      r"(ILandroid/os/OutcomeReceiver;)V");
+  static final _id_requestFullscreenMode = _class.instanceMethodId(
+    r"requestFullscreenMode",
+    r"(ILandroid/os/OutcomeReceiver;)V",
+  );
 
   /// from: public void requestFullscreenMode(int i, android.os.OutcomeReceiver outcomeReceiver)
   void requestFullscreenMode(
     int i,
     jni.JObject outcomeReceiver,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requestFullscreenMode,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), outcomeReceiver.reference]).check();
+    _id_requestFullscreenMode(this, const jni.jvoidType(),
+        [jni.JValueInt(i), outcomeReceiver.reference.pointer]);
   }
 
-  static final _id_setShouldDockBigOverlays = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setShouldDockBigOverlays", r"(Z)V");
+  static final _id_setShouldDockBigOverlays = _class.instanceMethodId(
+    r"setShouldDockBigOverlays",
+    r"(Z)V",
+  );
 
   /// from: public void setShouldDockBigOverlays(boolean z)
   void setShouldDockBigOverlays(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setShouldDockBigOverlays,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setShouldDockBigOverlays(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_shouldDockBigOverlays = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"shouldDockBigOverlays", r"()Z");
+  static final _id_shouldDockBigOverlays = _class.instanceMethodId(
+    r"shouldDockBigOverlays",
+    r"()Z",
+  );
 
   /// from: public boolean shouldDockBigOverlays()
   bool shouldDockBigOverlays() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_shouldDockBigOverlays, jni.JniCallType.booleanType, []).boolean;
+    return _id_shouldDockBigOverlays(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_onConfigurationChanged = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onConfigurationChanged",
-      r"(Landroid/content/res/Configuration;)V");
+  static final _id_onConfigurationChanged = _class.instanceMethodId(
+    r"onConfigurationChanged",
+    r"(Landroid/content/res/Configuration;)V",
+  );
 
   /// from: public void onConfigurationChanged(android.content.res.Configuration configuration)
   void onConfigurationChanged(
     jni.JObject configuration,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onConfigurationChanged,
-        jni.JniCallType.voidType,
-        [configuration.reference]).check();
+    _id_onConfigurationChanged(
+        this, const jni.jvoidType(), [configuration.reference.pointer]);
   }
 
-  static final _id_getChangingConfigurations = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getChangingConfigurations", r"()I");
+  static final _id_getChangingConfigurations = _class.instanceMethodId(
+    r"getChangingConfigurations",
+    r"()I",
+  );
 
   /// from: public int getChangingConfigurations()
   int getChangingConfigurations() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_getChangingConfigurations, jni.JniCallType.intType, []).integer;
+    return _id_getChangingConfigurations(this, const jni.jintType(), []);
   }
 
-  static final _id_getLastNonConfigurationInstance = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getLastNonConfigurationInstance",
-          r"()Ljava/lang/Object;");
+  static final _id_getLastNonConfigurationInstance = _class.instanceMethodId(
+    r"getLastNonConfigurationInstance",
+    r"()Ljava/lang/Object;",
+  );
 
   /// from: public java.lang.Object getLastNonConfigurationInstance()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getLastNonConfigurationInstance() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getLastNonConfigurationInstance,
-        jni.JniCallType.objectType, []).object);
+    return _id_getLastNonConfigurationInstance(
+        this, const jni.JObjectType(), []);
   }
 
-  static final _id_onRetainNonConfigurationInstance = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onRetainNonConfigurationInstance",
-          r"()Ljava/lang/Object;");
+  static final _id_onRetainNonConfigurationInstance = _class.instanceMethodId(
+    r"onRetainNonConfigurationInstance",
+    r"()Ljava/lang/Object;",
+  );
 
   /// from: public java.lang.Object onRetainNonConfigurationInstance()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onRetainNonConfigurationInstance() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onRetainNonConfigurationInstance,
-        jni.JniCallType.objectType, []).object);
+    return _id_onRetainNonConfigurationInstance(
+        this, const jni.JObjectType(), []);
   }
 
-  static final _id_onLowMemory =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"onLowMemory", r"()V");
+  static final _id_onLowMemory = _class.instanceMethodId(
+    r"onLowMemory",
+    r"()V",
+  );
 
   /// from: public void onLowMemory()
   void onLowMemory() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onLowMemory, jni.JniCallType.voidType, []).check();
+    _id_onLowMemory(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onTrimMemory = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onTrimMemory", r"(I)V");
+  static final _id_onTrimMemory = _class.instanceMethodId(
+    r"onTrimMemory",
+    r"(I)V",
+  );
 
   /// from: public void onTrimMemory(int i)
   void onTrimMemory(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onTrimMemory,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_onTrimMemory(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getFragmentManager = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getFragmentManager",
-      r"()Landroid/app/FragmentManager;");
+  static final _id_getFragmentManager = _class.instanceMethodId(
+    r"getFragmentManager",
+    r"()Landroid/app/FragmentManager;",
+  );
 
   /// from: public android.app.FragmentManager getFragmentManager()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getFragmentManager() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getFragmentManager,
-        jni.JniCallType.objectType, []).object);
+    return _id_getFragmentManager(this, const jni.JObjectType(), []);
   }
 
-  static final _id_onAttachFragment = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onAttachFragment", r"(Landroid/app/Fragment;)V");
+  static final _id_onAttachFragment = _class.instanceMethodId(
+    r"onAttachFragment",
+    r"(Landroid/app/Fragment;)V",
+  );
 
   /// from: public void onAttachFragment(android.app.Fragment fragment)
   void onAttachFragment(
     jni.JObject fragment,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onAttachFragment,
-        jni.JniCallType.voidType, [fragment.reference]).check();
+    _id_onAttachFragment(
+        this, const jni.jvoidType(), [fragment.reference.pointer]);
   }
 
-  static final _id_managedQuery = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"managedQuery",
-      r"(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;");
+  static final _id_managedQuery = _class.instanceMethodId(
+    r"managedQuery",
+    r"(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;",
+  );
 
   /// from: public final android.database.Cursor managedQuery(android.net.Uri uri, java.lang.String[] strings, java.lang.String string, java.lang.String[] strings1, java.lang.String string1)
   /// The returned object must be released after use, by calling the [release] method.
@@ -1418,48 +1350,45 @@ class Activity extends jni.JObject {
     jni.JArray<jni.JString> strings1,
     jni.JString string1,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_managedQuery, jni.JniCallType.objectType, [
-      uri.reference,
-      strings.reference,
-      string.reference,
-      strings1.reference,
-      string1.reference
-    ]).object);
+    return _id_managedQuery(this, const jni.JObjectType(), [
+      uri.reference.pointer,
+      strings.reference.pointer,
+      string.reference.pointer,
+      strings1.reference.pointer,
+      string1.reference.pointer
+    ]);
   }
 
-  static final _id_startManagingCursor = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startManagingCursor",
-      r"(Landroid/database/Cursor;)V");
+  static final _id_startManagingCursor = _class.instanceMethodId(
+    r"startManagingCursor",
+    r"(Landroid/database/Cursor;)V",
+  );
 
   /// from: public void startManagingCursor(android.database.Cursor cursor)
   void startManagingCursor(
     jni.JObject cursor,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startManagingCursor,
-        jni.JniCallType.voidType,
-        [cursor.reference]).check();
+    _id_startManagingCursor(
+        this, const jni.jvoidType(), [cursor.reference.pointer]);
   }
 
-  static final _id_stopManagingCursor = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"stopManagingCursor", r"(Landroid/database/Cursor;)V");
+  static final _id_stopManagingCursor = _class.instanceMethodId(
+    r"stopManagingCursor",
+    r"(Landroid/database/Cursor;)V",
+  );
 
   /// from: public void stopManagingCursor(android.database.Cursor cursor)
   void stopManagingCursor(
     jni.JObject cursor,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_stopManagingCursor,
-        jni.JniCallType.voidType,
-        [cursor.reference]).check();
+    _id_stopManagingCursor(
+        this, const jni.jvoidType(), [cursor.reference.pointer]);
   }
 
-  static final _id_findViewById = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"findViewById", r"(I)Landroid/view/View;");
+  static final _id_findViewById = _class.instanceMethodId(
+    r"findViewById",
+    r"(I)Landroid/view/View;",
+  );
 
   /// from: public T findViewById(int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -1467,15 +1396,13 @@ class Activity extends jni.JObject {
     int i, {
     required jni.JObjType<$T> T,
   }) {
-    return T.fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_findViewById,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_findViewById(this, T, [jni.JValueInt(i)]);
   }
 
-  static final _id_requireViewById = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"requireViewById", r"(I)Landroid/view/View;");
+  static final _id_requireViewById = _class.instanceMethodId(
+    r"requireViewById",
+    r"(I)Landroid/view/View;",
+  );
 
   /// from: public final T requireViewById(int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -1483,203 +1410,189 @@ class Activity extends jni.JObject {
     int i, {
     required jni.JObjType<$T> T,
   }) {
-    return T.fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requireViewById,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_requireViewById(this, T, [jni.JValueInt(i)]);
   }
 
-  static final _id_getActionBar = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getActionBar", r"()Landroid/app/ActionBar;");
+  static final _id_getActionBar = _class.instanceMethodId(
+    r"getActionBar",
+    r"()Landroid/app/ActionBar;",
+  );
 
   /// from: public android.app.ActionBar getActionBar()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getActionBar() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getActionBar, jni.JniCallType.objectType, []).object);
+    return _id_getActionBar(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setActionBar = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setActionBar", r"(Landroid/widget/Toolbar;)V");
+  static final _id_setActionBar = _class.instanceMethodId(
+    r"setActionBar",
+    r"(Landroid/widget/Toolbar;)V",
+  );
 
   /// from: public void setActionBar(android.widget.Toolbar toolbar)
   void setActionBar(
     jni.JObject toolbar,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setActionBar,
-        jni.JniCallType.voidType, [toolbar.reference]).check();
+    _id_setActionBar(this, const jni.jvoidType(), [toolbar.reference.pointer]);
   }
 
-  static final _id_setContentView = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setContentView", r"(I)V");
+  static final _id_setContentView = _class.instanceMethodId(
+    r"setContentView",
+    r"(I)V",
+  );
 
   /// from: public void setContentView(int i)
   void setContentView(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setContentView,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setContentView(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setContentView1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setContentView", r"(Landroid/view/View;)V");
+  static final _id_setContentView1 = _class.instanceMethodId(
+    r"setContentView",
+    r"(Landroid/view/View;)V",
+  );
 
   /// from: public void setContentView(android.view.View view)
   void setContentView1(
     jni.JObject view,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setContentView1,
-        jni.JniCallType.voidType, [view.reference]).check();
+    _id_setContentView1(this, const jni.jvoidType(), [view.reference.pointer]);
   }
 
-  static final _id_setContentView2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setContentView",
-      r"(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V");
+  static final _id_setContentView2 = _class.instanceMethodId(
+    r"setContentView",
+    r"(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V",
+  );
 
   /// from: public void setContentView(android.view.View view, android.view.ViewGroup$LayoutParams layoutParams)
   void setContentView2(
     jni.JObject view,
     jni.JObject layoutParams,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setContentView2,
-        jni.JniCallType.voidType,
-        [view.reference, layoutParams.reference]).check();
+    _id_setContentView2(this, const jni.jvoidType(),
+        [view.reference.pointer, layoutParams.reference.pointer]);
   }
 
-  static final _id_addContentView = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"addContentView",
-      r"(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V");
+  static final _id_addContentView = _class.instanceMethodId(
+    r"addContentView",
+    r"(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V",
+  );
 
   /// from: public void addContentView(android.view.View view, android.view.ViewGroup$LayoutParams layoutParams)
   void addContentView(
     jni.JObject view,
     jni.JObject layoutParams,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_addContentView,
-        jni.JniCallType.voidType,
-        [view.reference, layoutParams.reference]).check();
+    _id_addContentView(this, const jni.jvoidType(),
+        [view.reference.pointer, layoutParams.reference.pointer]);
   }
 
-  static final _id_getContentTransitionManager = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getContentTransitionManager",
-          r"()Landroid/transition/TransitionManager;");
+  static final _id_getContentTransitionManager = _class.instanceMethodId(
+    r"getContentTransitionManager",
+    r"()Landroid/transition/TransitionManager;",
+  );
 
   /// from: public android.transition.TransitionManager getContentTransitionManager()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getContentTransitionManager() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getContentTransitionManager,
-        jni.JniCallType.objectType, []).object);
+    return _id_getContentTransitionManager(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setContentTransitionManager = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setContentTransitionManager",
-          r"(Landroid/transition/TransitionManager;)V");
+  static final _id_setContentTransitionManager = _class.instanceMethodId(
+    r"setContentTransitionManager",
+    r"(Landroid/transition/TransitionManager;)V",
+  );
 
   /// from: public void setContentTransitionManager(android.transition.TransitionManager transitionManager)
   void setContentTransitionManager(
     jni.JObject transitionManager,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setContentTransitionManager,
-        jni.JniCallType.voidType,
-        [transitionManager.reference]).check();
+    _id_setContentTransitionManager(
+        this, const jni.jvoidType(), [transitionManager.reference.pointer]);
   }
 
-  static final _id_getContentScene = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getContentScene", r"()Landroid/transition/Scene;");
+  static final _id_getContentScene = _class.instanceMethodId(
+    r"getContentScene",
+    r"()Landroid/transition/Scene;",
+  );
 
   /// from: public android.transition.Scene getContentScene()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getContentScene() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getContentScene, jni.JniCallType.objectType, []).object);
+    return _id_getContentScene(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setFinishOnTouchOutside = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setFinishOnTouchOutside", r"(Z)V");
+  static final _id_setFinishOnTouchOutside = _class.instanceMethodId(
+    r"setFinishOnTouchOutside",
+    r"(Z)V",
+  );
 
   /// from: public void setFinishOnTouchOutside(boolean z)
   void setFinishOnTouchOutside(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setFinishOnTouchOutside,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setFinishOnTouchOutside(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setDefaultKeyMode = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setDefaultKeyMode", r"(I)V");
+  static final _id_setDefaultKeyMode = _class.instanceMethodId(
+    r"setDefaultKeyMode",
+    r"(I)V",
+  );
 
   /// from: public final void setDefaultKeyMode(int i)
   void setDefaultKeyMode(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setDefaultKeyMode,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i)]).check();
+    _id_setDefaultKeyMode(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_onKeyDown = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onKeyDown", r"(ILandroid/view/KeyEvent;)Z");
+  static final _id_onKeyDown = _class.instanceMethodId(
+    r"onKeyDown",
+    r"(ILandroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean onKeyDown(int i, android.view.KeyEvent keyEvent)
   bool onKeyDown(
     int i,
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onKeyDown,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), keyEvent.reference]).boolean;
+    return _id_onKeyDown(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), keyEvent.reference.pointer]);
   }
 
-  static final _id_onKeyLongPress = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onKeyLongPress", r"(ILandroid/view/KeyEvent;)Z");
+  static final _id_onKeyLongPress = _class.instanceMethodId(
+    r"onKeyLongPress",
+    r"(ILandroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean onKeyLongPress(int i, android.view.KeyEvent keyEvent)
   bool onKeyLongPress(
     int i,
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onKeyLongPress,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), keyEvent.reference]).boolean;
+    return _id_onKeyLongPress(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), keyEvent.reference.pointer]);
   }
 
-  static final _id_onKeyUp = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onKeyUp", r"(ILandroid/view/KeyEvent;)Z");
+  static final _id_onKeyUp = _class.instanceMethodId(
+    r"onKeyUp",
+    r"(ILandroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean onKeyUp(int i, android.view.KeyEvent keyEvent)
   bool onKeyUp(
     int i,
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onKeyUp,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), keyEvent.reference]).boolean;
+    return _id_onKeyUp(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), keyEvent.reference.pointer]);
   }
 
-  static final _id_onKeyMultiple = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onKeyMultiple", r"(IILandroid/view/KeyEvent;)Z");
+  static final _id_onKeyMultiple = _class.instanceMethodId(
+    r"onKeyMultiple",
+    r"(IILandroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean onKeyMultiple(int i, int i1, android.view.KeyEvent keyEvent)
   bool onKeyMultiple(
@@ -1687,274 +1600,258 @@ class Activity extends jni.JObject {
     int i1,
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onKeyMultiple,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), jni.JValueInt(i1), keyEvent.reference]).boolean;
+    return _id_onKeyMultiple(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), jni.JValueInt(i1), keyEvent.reference.pointer]);
   }
 
-  static final _id_onBackPressed = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onBackPressed", r"()V");
+  static final _id_onBackPressed = _class.instanceMethodId(
+    r"onBackPressed",
+    r"()V",
+  );
 
   /// from: public void onBackPressed()
   void onBackPressed() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onBackPressed, jni.JniCallType.voidType, []).check();
+    _id_onBackPressed(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onKeyShortcut = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onKeyShortcut", r"(ILandroid/view/KeyEvent;)Z");
+  static final _id_onKeyShortcut = _class.instanceMethodId(
+    r"onKeyShortcut",
+    r"(ILandroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean onKeyShortcut(int i, android.view.KeyEvent keyEvent)
   bool onKeyShortcut(
     int i,
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onKeyShortcut,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), keyEvent.reference]).boolean;
+    return _id_onKeyShortcut(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), keyEvent.reference.pointer]);
   }
 
-  static final _id_onTouchEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onTouchEvent", r"(Landroid/view/MotionEvent;)Z");
+  static final _id_onTouchEvent = _class.instanceMethodId(
+    r"onTouchEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean onTouchEvent(android.view.MotionEvent motionEvent)
   bool onTouchEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onTouchEvent,
-        jni.JniCallType.booleanType, [motionEvent.reference]).boolean;
+    return _id_onTouchEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_onTrackballEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onTrackballEvent", r"(Landroid/view/MotionEvent;)Z");
+  static final _id_onTrackballEvent = _class.instanceMethodId(
+    r"onTrackballEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean onTrackballEvent(android.view.MotionEvent motionEvent)
   bool onTrackballEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onTrackballEvent,
-        jni.JniCallType.booleanType, [motionEvent.reference]).boolean;
+    return _id_onTrackballEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_onGenericMotionEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onGenericMotionEvent",
-      r"(Landroid/view/MotionEvent;)Z");
+  static final _id_onGenericMotionEvent = _class.instanceMethodId(
+    r"onGenericMotionEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean onGenericMotionEvent(android.view.MotionEvent motionEvent)
   bool onGenericMotionEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onGenericMotionEvent,
-        jni.JniCallType.booleanType,
-        [motionEvent.reference]).boolean;
+    return _id_onGenericMotionEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_onUserInteraction = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onUserInteraction", r"()V");
+  static final _id_onUserInteraction = _class.instanceMethodId(
+    r"onUserInteraction",
+    r"()V",
+  );
 
   /// from: public void onUserInteraction()
   void onUserInteraction() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onUserInteraction, jni.JniCallType.voidType, []).check();
+    _id_onUserInteraction(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onWindowAttributesChanged = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onWindowAttributesChanged",
-      r"(Landroid/view/WindowManager$LayoutParams;)V");
+  static final _id_onWindowAttributesChanged = _class.instanceMethodId(
+    r"onWindowAttributesChanged",
+    r"(Landroid/view/WindowManager$LayoutParams;)V",
+  );
 
   /// from: public void onWindowAttributesChanged(android.view.WindowManager$LayoutParams layoutParams)
   void onWindowAttributesChanged(
     jni.JObject layoutParams,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onWindowAttributesChanged,
-        jni.JniCallType.voidType,
-        [layoutParams.reference]).check();
+    _id_onWindowAttributesChanged(
+        this, const jni.jvoidType(), [layoutParams.reference.pointer]);
   }
 
-  static final _id_onContentChanged = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onContentChanged", r"()V");
+  static final _id_onContentChanged = _class.instanceMethodId(
+    r"onContentChanged",
+    r"()V",
+  );
 
   /// from: public void onContentChanged()
   void onContentChanged() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onContentChanged, jni.JniCallType.voidType, []).check();
+    _id_onContentChanged(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onWindowFocusChanged = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onWindowFocusChanged", r"(Z)V");
+  static final _id_onWindowFocusChanged = _class.instanceMethodId(
+    r"onWindowFocusChanged",
+    r"(Z)V",
+  );
 
   /// from: public void onWindowFocusChanged(boolean z)
   void onWindowFocusChanged(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onWindowFocusChanged,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_onWindowFocusChanged(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_onAttachedToWindow = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onAttachedToWindow", r"()V");
+  static final _id_onAttachedToWindow = _class.instanceMethodId(
+    r"onAttachedToWindow",
+    r"()V",
+  );
 
   /// from: public void onAttachedToWindow()
   void onAttachedToWindow() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_onAttachedToWindow, jni.JniCallType.voidType, []).check();
+    _id_onAttachedToWindow(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onDetachedFromWindow = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onDetachedFromWindow", r"()V");
+  static final _id_onDetachedFromWindow = _class.instanceMethodId(
+    r"onDetachedFromWindow",
+    r"()V",
+  );
 
   /// from: public void onDetachedFromWindow()
   void onDetachedFromWindow() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_onDetachedFromWindow, jni.JniCallType.voidType, []).check();
+    _id_onDetachedFromWindow(this, const jni.jvoidType(), []);
   }
 
-  static final _id_hasWindowFocus = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"hasWindowFocus", r"()Z");
+  static final _id_hasWindowFocus = _class.instanceMethodId(
+    r"hasWindowFocus",
+    r"()Z",
+  );
 
   /// from: public boolean hasWindowFocus()
   bool hasWindowFocus() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_hasWindowFocus, jni.JniCallType.booleanType, []).boolean;
+    return _id_hasWindowFocus(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_dispatchKeyEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"dispatchKeyEvent", r"(Landroid/view/KeyEvent;)Z");
+  static final _id_dispatchKeyEvent = _class.instanceMethodId(
+    r"dispatchKeyEvent",
+    r"(Landroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean dispatchKeyEvent(android.view.KeyEvent keyEvent)
   bool dispatchKeyEvent(
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_dispatchKeyEvent,
-        jni.JniCallType.booleanType, [keyEvent.reference]).boolean;
+    return _id_dispatchKeyEvent(
+        this, const jni.jbooleanType(), [keyEvent.reference.pointer]);
   }
 
-  static final _id_dispatchKeyShortcutEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"dispatchKeyShortcutEvent",
-      r"(Landroid/view/KeyEvent;)Z");
+  static final _id_dispatchKeyShortcutEvent = _class.instanceMethodId(
+    r"dispatchKeyShortcutEvent",
+    r"(Landroid/view/KeyEvent;)Z",
+  );
 
   /// from: public boolean dispatchKeyShortcutEvent(android.view.KeyEvent keyEvent)
   bool dispatchKeyShortcutEvent(
     jni.JObject keyEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dispatchKeyShortcutEvent,
-        jni.JniCallType.booleanType,
-        [keyEvent.reference]).boolean;
+    return _id_dispatchKeyShortcutEvent(
+        this, const jni.jbooleanType(), [keyEvent.reference.pointer]);
   }
 
-  static final _id_dispatchTouchEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"dispatchTouchEvent",
-      r"(Landroid/view/MotionEvent;)Z");
+  static final _id_dispatchTouchEvent = _class.instanceMethodId(
+    r"dispatchTouchEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean dispatchTouchEvent(android.view.MotionEvent motionEvent)
   bool dispatchTouchEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dispatchTouchEvent,
-        jni.JniCallType.booleanType,
-        [motionEvent.reference]).boolean;
+    return _id_dispatchTouchEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_dispatchTrackballEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"dispatchTrackballEvent",
-      r"(Landroid/view/MotionEvent;)Z");
+  static final _id_dispatchTrackballEvent = _class.instanceMethodId(
+    r"dispatchTrackballEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean dispatchTrackballEvent(android.view.MotionEvent motionEvent)
   bool dispatchTrackballEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dispatchTrackballEvent,
-        jni.JniCallType.booleanType,
-        [motionEvent.reference]).boolean;
+    return _id_dispatchTrackballEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_dispatchGenericMotionEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"dispatchGenericMotionEvent",
-      r"(Landroid/view/MotionEvent;)Z");
+  static final _id_dispatchGenericMotionEvent = _class.instanceMethodId(
+    r"dispatchGenericMotionEvent",
+    r"(Landroid/view/MotionEvent;)Z",
+  );
 
   /// from: public boolean dispatchGenericMotionEvent(android.view.MotionEvent motionEvent)
   bool dispatchGenericMotionEvent(
     jni.JObject motionEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dispatchGenericMotionEvent,
-        jni.JniCallType.booleanType,
-        [motionEvent.reference]).boolean;
+    return _id_dispatchGenericMotionEvent(
+        this, const jni.jbooleanType(), [motionEvent.reference.pointer]);
   }
 
-  static final _id_dispatchPopulateAccessibilityEvent = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"dispatchPopulateAccessibilityEvent",
-          r"(Landroid/view/accessibility/AccessibilityEvent;)Z");
+  static final _id_dispatchPopulateAccessibilityEvent = _class.instanceMethodId(
+    r"dispatchPopulateAccessibilityEvent",
+    r"(Landroid/view/accessibility/AccessibilityEvent;)Z",
+  );
 
   /// from: public boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent accessibilityEvent)
   bool dispatchPopulateAccessibilityEvent(
     jni.JObject accessibilityEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_dispatchPopulateAccessibilityEvent,
-        jni.JniCallType.booleanType,
-        [accessibilityEvent.reference]).boolean;
+    return _id_dispatchPopulateAccessibilityEvent(
+        this, const jni.jbooleanType(), [accessibilityEvent.reference.pointer]);
   }
 
-  static final _id_onCreatePanelView = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onCreatePanelView", r"(I)Landroid/view/View;");
+  static final _id_onCreatePanelView = _class.instanceMethodId(
+    r"onCreatePanelView",
+    r"(I)Landroid/view/View;",
+  );
 
   /// from: public android.view.View onCreatePanelView(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onCreatePanelView(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreatePanelView,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_onCreatePanelView(
+        this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_onCreatePanelMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onCreatePanelMenu", r"(ILandroid/view/Menu;)Z");
+  static final _id_onCreatePanelMenu = _class.instanceMethodId(
+    r"onCreatePanelMenu",
+    r"(ILandroid/view/Menu;)Z",
+  );
 
   /// from: public boolean onCreatePanelMenu(int i, android.view.Menu menu)
   bool onCreatePanelMenu(
     int i,
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreatePanelMenu,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), menu.reference]).boolean;
+    return _id_onCreatePanelMenu(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), menu.reference.pointer]);
   }
 
-  static final _id_onPreparePanel = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onPreparePanel",
-      r"(ILandroid/view/View;Landroid/view/Menu;)Z");
+  static final _id_onPreparePanel = _class.instanceMethodId(
+    r"onPreparePanel",
+    r"(ILandroid/view/View;Landroid/view/Menu;)Z",
+  );
 
   /// from: public boolean onPreparePanel(int i, android.view.View view, android.view.Menu menu)
   bool onPreparePanel(
@@ -1962,197 +1859,187 @@ class Activity extends jni.JObject {
     jni.JObject view,
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPreparePanel,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), view.reference, menu.reference]).boolean;
+    return _id_onPreparePanel(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), view.reference.pointer, menu.reference.pointer]);
   }
 
-  static final _id_onMenuOpened = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onMenuOpened", r"(ILandroid/view/Menu;)Z");
+  static final _id_onMenuOpened = _class.instanceMethodId(
+    r"onMenuOpened",
+    r"(ILandroid/view/Menu;)Z",
+  );
 
   /// from: public boolean onMenuOpened(int i, android.view.Menu menu)
   bool onMenuOpened(
     int i,
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onMenuOpened,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), menu.reference]).boolean;
+    return _id_onMenuOpened(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), menu.reference.pointer]);
   }
 
-  static final _id_onMenuItemSelected = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onMenuItemSelected", r"(ILandroid/view/MenuItem;)Z");
+  static final _id_onMenuItemSelected = _class.instanceMethodId(
+    r"onMenuItemSelected",
+    r"(ILandroid/view/MenuItem;)Z",
+  );
 
   /// from: public boolean onMenuItemSelected(int i, android.view.MenuItem menuItem)
   bool onMenuItemSelected(
     int i,
     jni.JObject menuItem,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onMenuItemSelected,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), menuItem.reference]).boolean;
+    return _id_onMenuItemSelected(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), menuItem.reference.pointer]);
   }
 
-  static final _id_onPanelClosed = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onPanelClosed", r"(ILandroid/view/Menu;)V");
+  static final _id_onPanelClosed = _class.instanceMethodId(
+    r"onPanelClosed",
+    r"(ILandroid/view/Menu;)V",
+  );
 
   /// from: public void onPanelClosed(int i, android.view.Menu menu)
   void onPanelClosed(
     int i,
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onPanelClosed,
-        jni.JniCallType.voidType, [jni.JValueInt(i), menu.reference]).check();
+    _id_onPanelClosed(this, const jni.jvoidType(),
+        [jni.JValueInt(i), menu.reference.pointer]);
   }
 
-  static final _id_invalidateOptionsMenu = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"invalidateOptionsMenu", r"()V");
+  static final _id_invalidateOptionsMenu = _class.instanceMethodId(
+    r"invalidateOptionsMenu",
+    r"()V",
+  );
 
   /// from: public void invalidateOptionsMenu()
   void invalidateOptionsMenu() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_invalidateOptionsMenu, jni.JniCallType.voidType, []).check();
+    _id_invalidateOptionsMenu(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onCreateOptionsMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onCreateOptionsMenu", r"(Landroid/view/Menu;)Z");
+  static final _id_onCreateOptionsMenu = _class.instanceMethodId(
+    r"onCreateOptionsMenu",
+    r"(Landroid/view/Menu;)Z",
+  );
 
   /// from: public boolean onCreateOptionsMenu(android.view.Menu menu)
   bool onCreateOptionsMenu(
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateOptionsMenu,
-        jni.JniCallType.booleanType,
-        [menu.reference]).boolean;
+    return _id_onCreateOptionsMenu(
+        this, const jni.jbooleanType(), [menu.reference.pointer]);
   }
 
-  static final _id_onPrepareOptionsMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onPrepareOptionsMenu", r"(Landroid/view/Menu;)Z");
+  static final _id_onPrepareOptionsMenu = _class.instanceMethodId(
+    r"onPrepareOptionsMenu",
+    r"(Landroid/view/Menu;)Z",
+  );
 
   /// from: public boolean onPrepareOptionsMenu(android.view.Menu menu)
   bool onPrepareOptionsMenu(
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPrepareOptionsMenu,
-        jni.JniCallType.booleanType,
-        [menu.reference]).boolean;
+    return _id_onPrepareOptionsMenu(
+        this, const jni.jbooleanType(), [menu.reference.pointer]);
   }
 
-  static final _id_onOptionsItemSelected = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onOptionsItemSelected",
-      r"(Landroid/view/MenuItem;)Z");
+  static final _id_onOptionsItemSelected = _class.instanceMethodId(
+    r"onOptionsItemSelected",
+    r"(Landroid/view/MenuItem;)Z",
+  );
 
   /// from: public boolean onOptionsItemSelected(android.view.MenuItem menuItem)
   bool onOptionsItemSelected(
     jni.JObject menuItem,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onOptionsItemSelected,
-        jni.JniCallType.booleanType,
-        [menuItem.reference]).boolean;
+    return _id_onOptionsItemSelected(
+        this, const jni.jbooleanType(), [menuItem.reference.pointer]);
   }
 
-  static final _id_onNavigateUp = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onNavigateUp", r"()Z");
+  static final _id_onNavigateUp = _class.instanceMethodId(
+    r"onNavigateUp",
+    r"()Z",
+  );
 
   /// from: public boolean onNavigateUp()
   bool onNavigateUp() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onNavigateUp, jni.JniCallType.booleanType, []).boolean;
+    return _id_onNavigateUp(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_onNavigateUpFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onNavigateUpFromChild", r"(Landroid/app/Activity;)Z");
+  static final _id_onNavigateUpFromChild = _class.instanceMethodId(
+    r"onNavigateUpFromChild",
+    r"(Landroid/app/Activity;)Z",
+  );
 
   /// from: public boolean onNavigateUpFromChild(android.app.Activity activity)
   bool onNavigateUpFromChild(
     Activity activity,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onNavigateUpFromChild,
-        jni.JniCallType.booleanType,
-        [activity.reference]).boolean;
+    return _id_onNavigateUpFromChild(
+        this, const jni.jbooleanType(), [activity.reference.pointer]);
   }
 
-  static final _id_onCreateNavigateUpTaskStack = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onCreateNavigateUpTaskStack",
-          r"(Landroid/app/TaskStackBuilder;)V");
+  static final _id_onCreateNavigateUpTaskStack = _class.instanceMethodId(
+    r"onCreateNavigateUpTaskStack",
+    r"(Landroid/app/TaskStackBuilder;)V",
+  );
 
   /// from: public void onCreateNavigateUpTaskStack(android.app.TaskStackBuilder taskStackBuilder)
   void onCreateNavigateUpTaskStack(
     jni.JObject taskStackBuilder,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateNavigateUpTaskStack,
-        jni.JniCallType.voidType,
-        [taskStackBuilder.reference]).check();
+    _id_onCreateNavigateUpTaskStack(
+        this, const jni.jvoidType(), [taskStackBuilder.reference.pointer]);
   }
 
-  static final _id_onPrepareNavigateUpTaskStack = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onPrepareNavigateUpTaskStack",
-          r"(Landroid/app/TaskStackBuilder;)V");
+  static final _id_onPrepareNavigateUpTaskStack = _class.instanceMethodId(
+    r"onPrepareNavigateUpTaskStack",
+    r"(Landroid/app/TaskStackBuilder;)V",
+  );
 
   /// from: public void onPrepareNavigateUpTaskStack(android.app.TaskStackBuilder taskStackBuilder)
   void onPrepareNavigateUpTaskStack(
     jni.JObject taskStackBuilder,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPrepareNavigateUpTaskStack,
-        jni.JniCallType.voidType,
-        [taskStackBuilder.reference]).check();
+    _id_onPrepareNavigateUpTaskStack(
+        this, const jni.jvoidType(), [taskStackBuilder.reference.pointer]);
   }
 
-  static final _id_onOptionsMenuClosed = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onOptionsMenuClosed", r"(Landroid/view/Menu;)V");
+  static final _id_onOptionsMenuClosed = _class.instanceMethodId(
+    r"onOptionsMenuClosed",
+    r"(Landroid/view/Menu;)V",
+  );
 
   /// from: public void onOptionsMenuClosed(android.view.Menu menu)
   void onOptionsMenuClosed(
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onOptionsMenuClosed,
-        jni.JniCallType.voidType,
-        [menu.reference]).check();
+    _id_onOptionsMenuClosed(
+        this, const jni.jvoidType(), [menu.reference.pointer]);
   }
 
-  static final _id_openOptionsMenu = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"openOptionsMenu", r"()V");
+  static final _id_openOptionsMenu = _class.instanceMethodId(
+    r"openOptionsMenu",
+    r"()V",
+  );
 
   /// from: public void openOptionsMenu()
   void openOptionsMenu() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_openOptionsMenu, jni.JniCallType.voidType, []).check();
+    _id_openOptionsMenu(this, const jni.jvoidType(), []);
   }
 
-  static final _id_closeOptionsMenu = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"closeOptionsMenu", r"()V");
+  static final _id_closeOptionsMenu = _class.instanceMethodId(
+    r"closeOptionsMenu",
+    r"()V",
+  );
 
   /// from: public void closeOptionsMenu()
   void closeOptionsMenu() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_closeOptionsMenu, jni.JniCallType.voidType, []).check();
+    _id_closeOptionsMenu(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onCreateContextMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onCreateContextMenu",
-      r"(Landroid/view/ContextMenu;Landroid/view/View;Landroid/view/ContextMenu$ContextMenuInfo;)V");
+  static final _id_onCreateContextMenu = _class.instanceMethodId(
+    r"onCreateContextMenu",
+    r"(Landroid/view/ContextMenu;Landroid/view/View;Landroid/view/ContextMenu$ContextMenuInfo;)V",
+  );
 
   /// from: public void onCreateContextMenu(android.view.ContextMenu contextMenu, android.view.View view, android.view.ContextMenu$ContextMenuInfo contextMenuInfo)
   void onCreateContextMenu(
@@ -2160,111 +2047,105 @@ class Activity extends jni.JObject {
     jni.JObject view,
     jni.JObject contextMenuInfo,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onCreateContextMenu, jni.JniCallType.voidType, [
-      contextMenu.reference,
-      view.reference,
-      contextMenuInfo.reference
-    ]).check();
+    _id_onCreateContextMenu(this, const jni.jvoidType(), [
+      contextMenu.reference.pointer,
+      view.reference.pointer,
+      contextMenuInfo.reference.pointer
+    ]);
   }
 
-  static final _id_registerForContextMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"registerForContextMenu", r"(Landroid/view/View;)V");
+  static final _id_registerForContextMenu = _class.instanceMethodId(
+    r"registerForContextMenu",
+    r"(Landroid/view/View;)V",
+  );
 
   /// from: public void registerForContextMenu(android.view.View view)
   void registerForContextMenu(
     jni.JObject view,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerForContextMenu,
-        jni.JniCallType.voidType,
-        [view.reference]).check();
+    _id_registerForContextMenu(
+        this, const jni.jvoidType(), [view.reference.pointer]);
   }
 
-  static final _id_unregisterForContextMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"unregisterForContextMenu", r"(Landroid/view/View;)V");
+  static final _id_unregisterForContextMenu = _class.instanceMethodId(
+    r"unregisterForContextMenu",
+    r"(Landroid/view/View;)V",
+  );
 
   /// from: public void unregisterForContextMenu(android.view.View view)
   void unregisterForContextMenu(
     jni.JObject view,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterForContextMenu,
-        jni.JniCallType.voidType,
-        [view.reference]).check();
+    _id_unregisterForContextMenu(
+        this, const jni.jvoidType(), [view.reference.pointer]);
   }
 
-  static final _id_openContextMenu = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"openContextMenu", r"(Landroid/view/View;)V");
+  static final _id_openContextMenu = _class.instanceMethodId(
+    r"openContextMenu",
+    r"(Landroid/view/View;)V",
+  );
 
   /// from: public void openContextMenu(android.view.View view)
   void openContextMenu(
     jni.JObject view,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_openContextMenu,
-        jni.JniCallType.voidType, [view.reference]).check();
+    _id_openContextMenu(this, const jni.jvoidType(), [view.reference.pointer]);
   }
 
-  static final _id_closeContextMenu = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"closeContextMenu", r"()V");
+  static final _id_closeContextMenu = _class.instanceMethodId(
+    r"closeContextMenu",
+    r"()V",
+  );
 
   /// from: public void closeContextMenu()
   void closeContextMenu() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_closeContextMenu, jni.JniCallType.voidType, []).check();
+    _id_closeContextMenu(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onContextItemSelected = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onContextItemSelected",
-      r"(Landroid/view/MenuItem;)Z");
+  static final _id_onContextItemSelected = _class.instanceMethodId(
+    r"onContextItemSelected",
+    r"(Landroid/view/MenuItem;)Z",
+  );
 
   /// from: public boolean onContextItemSelected(android.view.MenuItem menuItem)
   bool onContextItemSelected(
     jni.JObject menuItem,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onContextItemSelected,
-        jni.JniCallType.booleanType,
-        [menuItem.reference]).boolean;
+    return _id_onContextItemSelected(
+        this, const jni.jbooleanType(), [menuItem.reference.pointer]);
   }
 
-  static final _id_onContextMenuClosed = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onContextMenuClosed", r"(Landroid/view/Menu;)V");
+  static final _id_onContextMenuClosed = _class.instanceMethodId(
+    r"onContextMenuClosed",
+    r"(Landroid/view/Menu;)V",
+  );
 
   /// from: public void onContextMenuClosed(android.view.Menu menu)
   void onContextMenuClosed(
     jni.JObject menu,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onContextMenuClosed,
-        jni.JniCallType.voidType,
-        [menu.reference]).check();
+    _id_onContextMenuClosed(
+        this, const jni.jvoidType(), [menu.reference.pointer]);
   }
 
-  static final _id_onCreateDialog = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onCreateDialog", r"(I)Landroid/app/Dialog;");
+  static final _id_onCreateDialog = _class.instanceMethodId(
+    r"onCreateDialog",
+    r"(I)Landroid/app/Dialog;",
+  );
 
   /// from: protected android.app.Dialog onCreateDialog(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onCreateDialog(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateDialog,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_onCreateDialog(
+        this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_onCreateDialog1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onCreateDialog",
-      r"(ILandroid/os/Bundle;)Landroid/app/Dialog;");
+  static final _id_onCreateDialog1 = _class.instanceMethodId(
+    r"onCreateDialog",
+    r"(ILandroid/os/Bundle;)Landroid/app/Dialog;",
+  );
 
   /// from: protected android.app.Dialog onCreateDialog(int i, android.os.Bundle bundle)
   /// The returned object must be released after use, by calling the [release] method.
@@ -2272,29 +2153,28 @@ class Activity extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateDialog1,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i), bundle.reference]).object);
+    return _id_onCreateDialog1(this, const jni.JObjectType(),
+        [jni.JValueInt(i), bundle.reference.pointer]);
   }
 
-  static final _id_onPrepareDialog = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onPrepareDialog", r"(ILandroid/app/Dialog;)V");
+  static final _id_onPrepareDialog = _class.instanceMethodId(
+    r"onPrepareDialog",
+    r"(ILandroid/app/Dialog;)V",
+  );
 
   /// from: protected void onPrepareDialog(int i, android.app.Dialog dialog)
   void onPrepareDialog(
     int i,
     jni.JObject dialog,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_onPrepareDialog,
-        jni.JniCallType.voidType, [jni.JValueInt(i), dialog.reference]).check();
+    _id_onPrepareDialog(this, const jni.jvoidType(),
+        [jni.JValueInt(i), dialog.reference.pointer]);
   }
 
-  static final _id_onPrepareDialog1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onPrepareDialog",
-      r"(ILandroid/app/Dialog;Landroid/os/Bundle;)V");
+  static final _id_onPrepareDialog1 = _class.instanceMethodId(
+    r"onPrepareDialog",
+    r"(ILandroid/app/Dialog;Landroid/os/Bundle;)V",
+  );
 
   /// from: protected void onPrepareDialog(int i, android.app.Dialog dialog, android.os.Bundle bundle)
   void onPrepareDialog1(
@@ -2302,98 +2182,98 @@ class Activity extends jni.JObject {
     jni.JObject dialog,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onPrepareDialog1,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), dialog.reference, bundle.reference]).check();
+    _id_onPrepareDialog1(this, const jni.jvoidType(),
+        [jni.JValueInt(i), dialog.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_showDialog =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"showDialog", r"(I)V");
+  static final _id_showDialog = _class.instanceMethodId(
+    r"showDialog",
+    r"(I)V",
+  );
 
   /// from: public final void showDialog(int i)
   void showDialog(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_showDialog,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_showDialog(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_showDialog1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"showDialog", r"(ILandroid/os/Bundle;)Z");
+  static final _id_showDialog1 = _class.instanceMethodId(
+    r"showDialog",
+    r"(ILandroid/os/Bundle;)Z",
+  );
 
   /// from: public final boolean showDialog(int i, android.os.Bundle bundle)
   bool showDialog1(
     int i,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_showDialog1,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i), bundle.reference]).boolean;
+    return _id_showDialog1(this, const jni.jbooleanType(),
+        [jni.JValueInt(i), bundle.reference.pointer]);
   }
 
-  static final _id_dismissDialog = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"dismissDialog", r"(I)V");
+  static final _id_dismissDialog = _class.instanceMethodId(
+    r"dismissDialog",
+    r"(I)V",
+  );
 
   /// from: public final void dismissDialog(int i)
   void dismissDialog(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_dismissDialog,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_dismissDialog(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_removeDialog = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"removeDialog", r"(I)V");
+  static final _id_removeDialog = _class.instanceMethodId(
+    r"removeDialog",
+    r"(I)V",
+  );
 
   /// from: public final void removeDialog(int i)
   void removeDialog(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_removeDialog,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_removeDialog(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_onSearchRequested = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onSearchRequested", r"(Landroid/view/SearchEvent;)Z");
+  static final _id_onSearchRequested = _class.instanceMethodId(
+    r"onSearchRequested",
+    r"(Landroid/view/SearchEvent;)Z",
+  );
 
   /// from: public boolean onSearchRequested(android.view.SearchEvent searchEvent)
   bool onSearchRequested(
     jni.JObject searchEvent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onSearchRequested,
-        jni.JniCallType.booleanType,
-        [searchEvent.reference]).boolean;
+    return _id_onSearchRequested(
+        this, const jni.jbooleanType(), [searchEvent.reference.pointer]);
   }
 
-  static final _id_onSearchRequested1 = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onSearchRequested", r"()Z");
+  static final _id_onSearchRequested1 = _class.instanceMethodId(
+    r"onSearchRequested",
+    r"()Z",
+  );
 
   /// from: public boolean onSearchRequested()
   bool onSearchRequested1() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_onSearchRequested1, jni.JniCallType.booleanType, []).boolean;
+    return _id_onSearchRequested1(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_getSearchEvent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getSearchEvent", r"()Landroid/view/SearchEvent;");
+  static final _id_getSearchEvent = _class.instanceMethodId(
+    r"getSearchEvent",
+    r"()Landroid/view/SearchEvent;",
+  );
 
   /// from: public final android.view.SearchEvent getSearchEvent()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSearchEvent() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getSearchEvent, jni.JniCallType.objectType, []).object);
+    return _id_getSearchEvent(this, const jni.JObjectType(), []);
   }
 
-  static final _id_startSearch = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startSearch",
-      r"(Ljava/lang/String;ZLandroid/os/Bundle;Z)V");
+  static final _id_startSearch = _class.instanceMethodId(
+    r"startSearch",
+    r"(Ljava/lang/String;ZLandroid/os/Bundle;Z)V",
+  );
 
   /// from: public void startSearch(java.lang.String string, boolean z, android.os.Bundle bundle, boolean z1)
   void startSearch(
@@ -2402,153 +2282,147 @@ class Activity extends jni.JObject {
     jni.JObject bundle,
     bool z1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startSearch,
-        jni.JniCallType.voidType,
-        [string.reference, z ? 1 : 0, bundle.reference, z1 ? 1 : 0]).check();
+    _id_startSearch(this, const jni.jvoidType(), [
+      string.reference.pointer,
+      z ? 1 : 0,
+      bundle.reference.pointer,
+      z1 ? 1 : 0
+    ]);
   }
 
-  static final _id_triggerSearch = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"triggerSearch",
-      r"(Ljava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_triggerSearch = _class.instanceMethodId(
+    r"triggerSearch",
+    r"(Ljava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void triggerSearch(java.lang.String string, android.os.Bundle bundle)
   void triggerSearch(
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_triggerSearch,
-        jni.JniCallType.voidType, [string.reference, bundle.reference]).check();
+    _id_triggerSearch(this, const jni.jvoidType(),
+        [string.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_takeKeyEvents = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"takeKeyEvents", r"(Z)V");
+  static final _id_takeKeyEvents = _class.instanceMethodId(
+    r"takeKeyEvents",
+    r"(Z)V",
+  );
 
   /// from: public void takeKeyEvents(boolean z)
   void takeKeyEvents(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_takeKeyEvents,
-        jni.JniCallType.voidType, [z ? 1 : 0]).check();
+    _id_takeKeyEvents(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_requestWindowFeature = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"requestWindowFeature", r"(I)Z");
+  static final _id_requestWindowFeature = _class.instanceMethodId(
+    r"requestWindowFeature",
+    r"(I)Z",
+  );
 
   /// from: public final boolean requestWindowFeature(int i)
   bool requestWindowFeature(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requestWindowFeature,
-        jni.JniCallType.booleanType,
-        [jni.JValueInt(i)]).boolean;
+    return _id_requestWindowFeature(
+        this, const jni.jbooleanType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setFeatureDrawableResource = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setFeatureDrawableResource", r"(II)V");
+  static final _id_setFeatureDrawableResource = _class.instanceMethodId(
+    r"setFeatureDrawableResource",
+    r"(II)V",
+  );
 
   /// from: public final void setFeatureDrawableResource(int i, int i1)
   void setFeatureDrawableResource(
     int i,
     int i1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setFeatureDrawableResource,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1)]).check();
+    _id_setFeatureDrawableResource(
+        this, const jni.jvoidType(), [jni.JValueInt(i), jni.JValueInt(i1)]);
   }
 
-  static final _id_setFeatureDrawableUri = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setFeatureDrawableUri", r"(ILandroid/net/Uri;)V");
+  static final _id_setFeatureDrawableUri = _class.instanceMethodId(
+    r"setFeatureDrawableUri",
+    r"(ILandroid/net/Uri;)V",
+  );
 
   /// from: public final void setFeatureDrawableUri(int i, android.net.Uri uri)
   void setFeatureDrawableUri(
     int i,
     jni.JObject uri,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setFeatureDrawableUri,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), uri.reference]).check();
+    _id_setFeatureDrawableUri(
+        this, const jni.jvoidType(), [jni.JValueInt(i), uri.reference.pointer]);
   }
 
-  static final _id_setFeatureDrawable = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setFeatureDrawable",
-      r"(ILandroid/graphics/drawable/Drawable;)V");
+  static final _id_setFeatureDrawable = _class.instanceMethodId(
+    r"setFeatureDrawable",
+    r"(ILandroid/graphics/drawable/Drawable;)V",
+  );
 
   /// from: public final void setFeatureDrawable(int i, android.graphics.drawable.Drawable drawable)
   void setFeatureDrawable(
     int i,
     jni.JObject drawable,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setFeatureDrawable,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), drawable.reference]).check();
+    _id_setFeatureDrawable(this, const jni.jvoidType(),
+        [jni.JValueInt(i), drawable.reference.pointer]);
   }
 
-  static final _id_setFeatureDrawableAlpha = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setFeatureDrawableAlpha", r"(II)V");
+  static final _id_setFeatureDrawableAlpha = _class.instanceMethodId(
+    r"setFeatureDrawableAlpha",
+    r"(II)V",
+  );
 
   /// from: public final void setFeatureDrawableAlpha(int i, int i1)
   void setFeatureDrawableAlpha(
     int i,
     int i1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setFeatureDrawableAlpha,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1)]).check();
+    _id_setFeatureDrawableAlpha(
+        this, const jni.jvoidType(), [jni.JValueInt(i), jni.JValueInt(i1)]);
   }
 
-  static final _id_getLayoutInflater = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getLayoutInflater",
-      r"()Landroid/view/LayoutInflater;");
+  static final _id_getLayoutInflater = _class.instanceMethodId(
+    r"getLayoutInflater",
+    r"()Landroid/view/LayoutInflater;",
+  );
 
   /// from: public android.view.LayoutInflater getLayoutInflater()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getLayoutInflater() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getLayoutInflater,
-        jni.JniCallType.objectType, []).object);
+    return _id_getLayoutInflater(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getMenuInflater = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getMenuInflater", r"()Landroid/view/MenuInflater;");
+  static final _id_getMenuInflater = _class.instanceMethodId(
+    r"getMenuInflater",
+    r"()Landroid/view/MenuInflater;",
+  );
 
   /// from: public android.view.MenuInflater getMenuInflater()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getMenuInflater() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getMenuInflater, jni.JniCallType.objectType, []).object);
+    return _id_getMenuInflater(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setTheme =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"setTheme", r"(I)V");
+  static final _id_setTheme = _class.instanceMethodId(
+    r"setTheme",
+    r"(I)V",
+  );
 
   /// from: public void setTheme(int i)
   void setTheme(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTheme,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setTheme(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_onApplyThemeResource = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onApplyThemeResource",
-      r"(Landroid/content/res/Resources$Theme;IZ)V");
+  static final _id_onApplyThemeResource = _class.instanceMethodId(
+    r"onApplyThemeResource",
+    r"(Landroid/content/res/Resources$Theme;IZ)V",
+  );
 
   /// from: protected void onApplyThemeResource(android.content.res.Resources$Theme theme, int i, boolean z)
   void onApplyThemeResource(
@@ -2556,32 +2430,28 @@ class Activity extends jni.JObject {
     int i,
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onApplyThemeResource,
-        jni.JniCallType.voidType,
-        [theme.reference, jni.JValueInt(i), z ? 1 : 0]).check();
+    _id_onApplyThemeResource(this, const jni.jvoidType(),
+        [theme.reference.pointer, jni.JValueInt(i), z ? 1 : 0]);
   }
 
-  static final _id_requestPermissions = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"requestPermissions", r"([Ljava/lang/String;I)V");
+  static final _id_requestPermissions = _class.instanceMethodId(
+    r"requestPermissions",
+    r"([Ljava/lang/String;I)V",
+  );
 
   /// from: public final void requestPermissions(java.lang.String[] strings, int i)
   void requestPermissions(
     jni.JArray<jni.JString> strings,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requestPermissions,
-        jni.JniCallType.voidType,
-        [strings.reference, jni.JValueInt(i)]).check();
+    _id_requestPermissions(this, const jni.jvoidType(),
+        [strings.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_onRequestPermissionsResult = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onRequestPermissionsResult",
-      r"(I[Ljava/lang/String;[I)V");
+  static final _id_onRequestPermissionsResult = _class.instanceMethodId(
+    r"onRequestPermissionsResult",
+    r"(I[Ljava/lang/String;[I)V",
+  );
 
   /// from: public void onRequestPermissionsResult(int i, java.lang.String[] strings, int[] is)
   void onRequestPermissionsResult(
@@ -2589,49 +2459,42 @@ class Activity extends jni.JObject {
     jni.JArray<jni.JString> strings,
     jni.JArray<jni.jint> is0,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onRequestPermissionsResult,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), strings.reference, is0.reference]).check();
+    _id_onRequestPermissionsResult(this, const jni.jvoidType(),
+        [jni.JValueInt(i), strings.reference.pointer, is0.reference.pointer]);
   }
 
-  static final _id_shouldShowRequestPermissionRationale = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"shouldShowRequestPermissionRationale",
-          r"(Ljava/lang/String;)Z");
+  static final _id_shouldShowRequestPermissionRationale =
+      _class.instanceMethodId(
+    r"shouldShowRequestPermissionRationale",
+    r"(Ljava/lang/String;)Z",
+  );
 
   /// from: public boolean shouldShowRequestPermissionRationale(java.lang.String string)
   bool shouldShowRequestPermissionRationale(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_shouldShowRequestPermissionRationale,
-        jni.JniCallType.booleanType,
-        [string.reference]).boolean;
+    return _id_shouldShowRequestPermissionRationale(
+        this, const jni.jbooleanType(), [string.reference.pointer]);
   }
 
-  static final _id_startActivityForResult = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityForResult",
-      r"(Landroid/content/Intent;I)V");
+  static final _id_startActivityForResult = _class.instanceMethodId(
+    r"startActivityForResult",
+    r"(Landroid/content/Intent;I)V",
+  );
 
   /// from: public void startActivityForResult(android.content.Intent intent, int i)
   void startActivityForResult(
     jni.JObject intent,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityForResult,
-        jni.JniCallType.voidType,
-        [intent.reference, jni.JValueInt(i)]).check();
+    _id_startActivityForResult(this, const jni.jvoidType(),
+        [intent.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_startActivityForResult1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityForResult",
-      r"(Landroid/content/Intent;ILandroid/os/Bundle;)V");
+  static final _id_startActivityForResult1 = _class.instanceMethodId(
+    r"startActivityForResult",
+    r"(Landroid/content/Intent;ILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startActivityForResult(android.content.Intent intent, int i, android.os.Bundle bundle)
   void startActivityForResult1(
@@ -2639,28 +2502,24 @@ class Activity extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityForResult1,
-        jni.JniCallType.voidType,
-        [intent.reference, jni.JValueInt(i), bundle.reference]).check();
+    _id_startActivityForResult1(this, const jni.jvoidType(),
+        [intent.reference.pointer, jni.JValueInt(i), bundle.reference.pointer]);
   }
 
-  static final _id_isActivityTransitionRunning = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isActivityTransitionRunning", r"()Z");
+  static final _id_isActivityTransitionRunning = _class.instanceMethodId(
+    r"isActivityTransitionRunning",
+    r"()Z",
+  );
 
   /// from: public boolean isActivityTransitionRunning()
   bool isActivityTransitionRunning() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_isActivityTransitionRunning,
-        jni.JniCallType.booleanType, []).boolean;
+    return _id_isActivityTransitionRunning(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_startIntentSenderForResult = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSenderForResult",
-      r"(Landroid/content/IntentSender;ILandroid/content/Intent;III)V");
+  static final _id_startIntentSenderForResult = _class.instanceMethodId(
+    r"startIntentSenderForResult",
+    r"(Landroid/content/IntentSender;ILandroid/content/Intent;III)V",
+  );
 
   /// from: public void startIntentSenderForResult(android.content.IntentSender intentSender, int i, android.content.Intent intent, int i1, int i2, int i3)
   void startIntentSenderForResult(
@@ -2671,21 +2530,20 @@ class Activity extends jni.JObject {
     int i2,
     int i3,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSenderForResult, jni.JniCallType.voidType, [
-      intentSender.reference,
+    _id_startIntentSenderForResult(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
       jni.JValueInt(i),
-      intent.reference,
+      intent.reference.pointer,
       jni.JValueInt(i1),
       jni.JValueInt(i2),
       jni.JValueInt(i3)
-    ]).check();
+    ]);
   }
 
-  static final _id_startIntentSenderForResult1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSenderForResult",
-      r"(Landroid/content/IntentSender;ILandroid/content/Intent;IIILandroid/os/Bundle;)V");
+  static final _id_startIntentSenderForResult1 = _class.instanceMethodId(
+    r"startIntentSenderForResult",
+    r"(Landroid/content/IntentSender;ILandroid/content/Intent;IIILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startIntentSenderForResult(android.content.IntentSender intentSender, int i, android.content.Intent intent, int i1, int i2, int i3, android.os.Bundle bundle)
   void startIntentSenderForResult1(
@@ -2697,75 +2555,74 @@ class Activity extends jni.JObject {
     int i3,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSenderForResult1, jni.JniCallType.voidType, [
-      intentSender.reference,
+    _id_startIntentSenderForResult1(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
       jni.JValueInt(i),
-      intent.reference,
+      intent.reference.pointer,
       jni.JValueInt(i1),
       jni.JValueInt(i2),
       jni.JValueInt(i3),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_startActivity = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"startActivity", r"(Landroid/content/Intent;)V");
+  static final _id_startActivity = _class.instanceMethodId(
+    r"startActivity",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public void startActivity(android.content.Intent intent)
   void startActivity(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivity,
-        jni.JniCallType.voidType, [intent.reference]).check();
+    _id_startActivity(this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_startActivity1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivity",
-      r"(Landroid/content/Intent;Landroid/os/Bundle;)V");
+  static final _id_startActivity1 = _class.instanceMethodId(
+    r"startActivity",
+    r"(Landroid/content/Intent;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void startActivity(android.content.Intent intent, android.os.Bundle bundle)
   void startActivity1(
     jni.JObject intent,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivity1,
-        jni.JniCallType.voidType, [intent.reference, bundle.reference]).check();
+    _id_startActivity1(this, const jni.jvoidType(),
+        [intent.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_startActivities = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"startActivities", r"([Landroid/content/Intent;)V");
+  static final _id_startActivities = _class.instanceMethodId(
+    r"startActivities",
+    r"([Landroid/content/Intent;)V",
+  );
 
   /// from: public void startActivities(android.content.Intent[] intents)
   void startActivities(
     jni.JArray<jni.JObject> intents,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivities,
-        jni.JniCallType.voidType, [intents.reference]).check();
+    _id_startActivities(
+        this, const jni.jvoidType(), [intents.reference.pointer]);
   }
 
-  static final _id_startActivities1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivities",
-      r"([Landroid/content/Intent;Landroid/os/Bundle;)V");
+  static final _id_startActivities1 = _class.instanceMethodId(
+    r"startActivities",
+    r"([Landroid/content/Intent;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void startActivities(android.content.Intent[] intents, android.os.Bundle bundle)
   void startActivities1(
     jni.JArray<jni.JObject> intents,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivities1,
-        jni.JniCallType.voidType,
-        [intents.reference, bundle.reference]).check();
+    _id_startActivities1(this, const jni.jvoidType(),
+        [intents.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_startIntentSender = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSender",
-      r"(Landroid/content/IntentSender;Landroid/content/Intent;III)V");
+  static final _id_startIntentSender = _class.instanceMethodId(
+    r"startIntentSender",
+    r"(Landroid/content/IntentSender;Landroid/content/Intent;III)V",
+  );
 
   /// from: public void startIntentSender(android.content.IntentSender intentSender, android.content.Intent intent, int i, int i1, int i2)
   void startIntentSender(
@@ -2775,20 +2632,19 @@ class Activity extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSender, jni.JniCallType.voidType, [
-      intentSender.reference,
-      intent.reference,
+    _id_startIntentSender(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2)
-    ]).check();
+    ]);
   }
 
-  static final _id_startIntentSender1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSender",
-      r"(Landroid/content/IntentSender;Landroid/content/Intent;IIILandroid/os/Bundle;)V");
+  static final _id_startIntentSender1 = _class.instanceMethodId(
+    r"startIntentSender",
+    r"(Landroid/content/IntentSender;Landroid/content/Intent;IIILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startIntentSender(android.content.IntentSender intentSender, android.content.Intent intent, int i, int i1, int i2, android.os.Bundle bundle)
   void startIntentSender1(
@@ -2799,38 +2655,34 @@ class Activity extends jni.JObject {
     int i2,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSender1, jni.JniCallType.voidType, [
-      intentSender.reference,
-      intent.reference,
+    _id_startIntentSender1(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_startActivityIfNeeded = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityIfNeeded",
-      r"(Landroid/content/Intent;I)Z");
+  static final _id_startActivityIfNeeded = _class.instanceMethodId(
+    r"startActivityIfNeeded",
+    r"(Landroid/content/Intent;I)Z",
+  );
 
   /// from: public boolean startActivityIfNeeded(android.content.Intent intent, int i)
   bool startActivityIfNeeded(
     jni.JObject intent,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityIfNeeded,
-        jni.JniCallType.booleanType,
-        [intent.reference, jni.JValueInt(i)]).boolean;
+    return _id_startActivityIfNeeded(this, const jni.jbooleanType(),
+        [intent.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_startActivityIfNeeded1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityIfNeeded",
-      r"(Landroid/content/Intent;ILandroid/os/Bundle;)Z");
+  static final _id_startActivityIfNeeded1 = _class.instanceMethodId(
+    r"startActivityIfNeeded",
+    r"(Landroid/content/Intent;ILandroid/os/Bundle;)Z",
+  );
 
   /// from: public boolean startActivityIfNeeded(android.content.Intent intent, int i, android.os.Bundle bundle)
   bool startActivityIfNeeded1(
@@ -2838,50 +2690,41 @@ class Activity extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityIfNeeded1,
-        jni.JniCallType.booleanType,
-        [intent.reference, jni.JValueInt(i), bundle.reference]).boolean;
+    return _id_startActivityIfNeeded1(this, const jni.jbooleanType(),
+        [intent.reference.pointer, jni.JValueInt(i), bundle.reference.pointer]);
   }
 
-  static final _id_startNextMatchingActivity = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startNextMatchingActivity",
-      r"(Landroid/content/Intent;)Z");
+  static final _id_startNextMatchingActivity = _class.instanceMethodId(
+    r"startNextMatchingActivity",
+    r"(Landroid/content/Intent;)Z",
+  );
 
   /// from: public boolean startNextMatchingActivity(android.content.Intent intent)
   bool startNextMatchingActivity(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startNextMatchingActivity,
-        jni.JniCallType.booleanType,
-        [intent.reference]).boolean;
+    return _id_startNextMatchingActivity(
+        this, const jni.jbooleanType(), [intent.reference.pointer]);
   }
 
-  static final _id_startNextMatchingActivity1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startNextMatchingActivity",
-      r"(Landroid/content/Intent;Landroid/os/Bundle;)Z");
+  static final _id_startNextMatchingActivity1 = _class.instanceMethodId(
+    r"startNextMatchingActivity",
+    r"(Landroid/content/Intent;Landroid/os/Bundle;)Z",
+  );
 
   /// from: public boolean startNextMatchingActivity(android.content.Intent intent, android.os.Bundle bundle)
   bool startNextMatchingActivity1(
     jni.JObject intent,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startNextMatchingActivity1,
-        jni.JniCallType.booleanType,
-        [intent.reference, bundle.reference]).boolean;
+    return _id_startNextMatchingActivity1(this, const jni.jbooleanType(),
+        [intent.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_startActivityFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityFromChild",
-      r"(Landroid/app/Activity;Landroid/content/Intent;I)V");
+  static final _id_startActivityFromChild = _class.instanceMethodId(
+    r"startActivityFromChild",
+    r"(Landroid/app/Activity;Landroid/content/Intent;I)V",
+  );
 
   /// from: public void startActivityFromChild(android.app.Activity activity, android.content.Intent intent, int i)
   void startActivityFromChild(
@@ -2889,17 +2732,17 @@ class Activity extends jni.JObject {
     jni.JObject intent,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityFromChild,
-        jni.JniCallType.voidType,
-        [activity.reference, intent.reference, jni.JValueInt(i)]).check();
+    _id_startActivityFromChild(this, const jni.jvoidType(), [
+      activity.reference.pointer,
+      intent.reference.pointer,
+      jni.JValueInt(i)
+    ]);
   }
 
-  static final _id_startActivityFromChild1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityFromChild",
-      r"(Landroid/app/Activity;Landroid/content/Intent;ILandroid/os/Bundle;)V");
+  static final _id_startActivityFromChild1 = _class.instanceMethodId(
+    r"startActivityFromChild",
+    r"(Landroid/app/Activity;Landroid/content/Intent;ILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startActivityFromChild(android.app.Activity activity, android.content.Intent intent, int i, android.os.Bundle bundle)
   void startActivityFromChild1(
@@ -2908,19 +2751,18 @@ class Activity extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startActivityFromChild1, jni.JniCallType.voidType, [
-      activity.reference,
-      intent.reference,
+    _id_startActivityFromChild1(this, const jni.jvoidType(), [
+      activity.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_startActivityFromFragment = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityFromFragment",
-      r"(Landroid/app/Fragment;Landroid/content/Intent;I)V");
+  static final _id_startActivityFromFragment = _class.instanceMethodId(
+    r"startActivityFromFragment",
+    r"(Landroid/app/Fragment;Landroid/content/Intent;I)V",
+  );
 
   /// from: public void startActivityFromFragment(android.app.Fragment fragment, android.content.Intent intent, int i)
   void startActivityFromFragment(
@@ -2928,17 +2770,17 @@ class Activity extends jni.JObject {
     jni.JObject intent,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivityFromFragment,
-        jni.JniCallType.voidType,
-        [fragment.reference, intent.reference, jni.JValueInt(i)]).check();
+    _id_startActivityFromFragment(this, const jni.jvoidType(), [
+      fragment.reference.pointer,
+      intent.reference.pointer,
+      jni.JValueInt(i)
+    ]);
   }
 
-  static final _id_startActivityFromFragment1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivityFromFragment",
-      r"(Landroid/app/Fragment;Landroid/content/Intent;ILandroid/os/Bundle;)V");
+  static final _id_startActivityFromFragment1 = _class.instanceMethodId(
+    r"startActivityFromFragment",
+    r"(Landroid/app/Fragment;Landroid/content/Intent;ILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startActivityFromFragment(android.app.Fragment fragment, android.content.Intent intent, int i, android.os.Bundle bundle)
   void startActivityFromFragment1(
@@ -2947,19 +2789,18 @@ class Activity extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startActivityFromFragment1, jni.JniCallType.voidType, [
-      fragment.reference,
-      intent.reference,
+    _id_startActivityFromFragment1(this, const jni.jvoidType(), [
+      fragment.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_startIntentSenderFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSenderFromChild",
-      r"(Landroid/app/Activity;Landroid/content/IntentSender;ILandroid/content/Intent;III)V");
+  static final _id_startIntentSenderFromChild = _class.instanceMethodId(
+    r"startIntentSenderFromChild",
+    r"(Landroid/app/Activity;Landroid/content/IntentSender;ILandroid/content/Intent;III)V",
+  );
 
   /// from: public void startIntentSenderFromChild(android.app.Activity activity, android.content.IntentSender intentSender, int i, android.content.Intent intent, int i1, int i2, int i3)
   void startIntentSenderFromChild(
@@ -2971,22 +2812,21 @@ class Activity extends jni.JObject {
     int i2,
     int i3,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSenderFromChild, jni.JniCallType.voidType, [
-      activity.reference,
-      intentSender.reference,
+    _id_startIntentSenderFromChild(this, const jni.jvoidType(), [
+      activity.reference.pointer,
+      intentSender.reference.pointer,
       jni.JValueInt(i),
-      intent.reference,
+      intent.reference.pointer,
       jni.JValueInt(i1),
       jni.JValueInt(i2),
       jni.JValueInt(i3)
-    ]).check();
+    ]);
   }
 
-  static final _id_startIntentSenderFromChild1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSenderFromChild",
-      r"(Landroid/app/Activity;Landroid/content/IntentSender;ILandroid/content/Intent;IIILandroid/os/Bundle;)V");
+  static final _id_startIntentSenderFromChild1 = _class.instanceMethodId(
+    r"startIntentSenderFromChild",
+    r"(Landroid/app/Activity;Landroid/content/IntentSender;ILandroid/content/Intent;IIILandroid/os/Bundle;)V",
+  );
 
   /// from: public void startIntentSenderFromChild(android.app.Activity activity, android.content.IntentSender intentSender, int i, android.content.Intent intent, int i1, int i2, int i3, android.os.Bundle bundle)
   void startIntentSenderFromChild1(
@@ -2999,21 +2839,22 @@ class Activity extends jni.JObject {
     int i3,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSenderFromChild1, jni.JniCallType.voidType, [
-      activity.reference,
-      intentSender.reference,
+    _id_startIntentSenderFromChild1(this, const jni.jvoidType(), [
+      activity.reference.pointer,
+      intentSender.reference.pointer,
       jni.JValueInt(i),
-      intent.reference,
+      intent.reference.pointer,
       jni.JValueInt(i1),
       jni.JValueInt(i2),
       jni.JValueInt(i3),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_overrideActivityTransition = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"overrideActivityTransition", r"(III)V");
+  static final _id_overrideActivityTransition = _class.instanceMethodId(
+    r"overrideActivityTransition",
+    r"(III)V",
+  );
 
   /// from: public void overrideActivityTransition(int i, int i1, int i2)
   void overrideActivityTransition(
@@ -3021,16 +2862,14 @@ class Activity extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_overrideActivityTransition,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1), jni.JValueInt(i2)]).check();
+    _id_overrideActivityTransition(this, const jni.jvoidType(),
+        [jni.JValueInt(i), jni.JValueInt(i1), jni.JValueInt(i2)]);
   }
 
-  static final _id_overrideActivityTransition1 = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"overrideActivityTransition", r"(IIII)V");
+  static final _id_overrideActivityTransition1 = _class.instanceMethodId(
+    r"overrideActivityTransition",
+    r"(IIII)V",
+  );
 
   /// from: public void overrideActivityTransition(int i, int i1, int i2, int i3)
   void overrideActivityTransition1(
@@ -3039,47 +2878,45 @@ class Activity extends jni.JObject {
     int i2,
     int i3,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_overrideActivityTransition1, jni.JniCallType.voidType, [
+    _id_overrideActivityTransition1(this, const jni.jvoidType(), [
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2),
       jni.JValueInt(i3)
-    ]).check();
+    ]);
   }
 
-  static final _id_clearOverrideActivityTransition = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"clearOverrideActivityTransition", r"(I)V");
+  static final _id_clearOverrideActivityTransition = _class.instanceMethodId(
+    r"clearOverrideActivityTransition",
+    r"(I)V",
+  );
 
   /// from: public void clearOverrideActivityTransition(int i)
   void clearOverrideActivityTransition(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_clearOverrideActivityTransition,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i)]).check();
+    _id_clearOverrideActivityTransition(
+        this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_overridePendingTransition = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"overridePendingTransition", r"(II)V");
+  static final _id_overridePendingTransition = _class.instanceMethodId(
+    r"overridePendingTransition",
+    r"(II)V",
+  );
 
   /// from: public void overridePendingTransition(int i, int i1)
   void overridePendingTransition(
     int i,
     int i1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_overridePendingTransition,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1)]).check();
+    _id_overridePendingTransition(
+        this, const jni.jvoidType(), [jni.JValueInt(i), jni.JValueInt(i1)]);
   }
 
-  static final _id_overridePendingTransition1 = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"overridePendingTransition", r"(III)V");
+  static final _id_overridePendingTransition1 = _class.instanceMethodId(
+    r"overridePendingTransition",
+    r"(III)V",
+  );
 
   /// from: public void overridePendingTransition(int i, int i1, int i2)
   void overridePendingTransition1(
@@ -3087,238 +2924,246 @@ class Activity extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_overridePendingTransition1,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1), jni.JValueInt(i2)]).check();
+    _id_overridePendingTransition1(this, const jni.jvoidType(),
+        [jni.JValueInt(i), jni.JValueInt(i1), jni.JValueInt(i2)]);
   }
 
-  static final _id_setResult =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"setResult", r"(I)V");
+  static final _id_setResult = _class.instanceMethodId(
+    r"setResult",
+    r"(I)V",
+  );
 
   /// from: public final void setResult(int i)
   void setResult(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setResult,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setResult(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setResult1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setResult", r"(ILandroid/content/Intent;)V");
+  static final _id_setResult1 = _class.instanceMethodId(
+    r"setResult",
+    r"(ILandroid/content/Intent;)V",
+  );
 
   /// from: public final void setResult(int i, android.content.Intent intent)
   void setResult1(
     int i,
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setResult1,
-        jni.JniCallType.voidType, [jni.JValueInt(i), intent.reference]).check();
+    _id_setResult1(this, const jni.jvoidType(),
+        [jni.JValueInt(i), intent.reference.pointer]);
   }
 
-  static final _id_getReferrer = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getReferrer", r"()Landroid/net/Uri;");
+  static final _id_getReferrer = _class.instanceMethodId(
+    r"getReferrer",
+    r"()Landroid/net/Uri;",
+  );
 
   /// from: public android.net.Uri getReferrer()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getReferrer() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getReferrer, jni.JniCallType.objectType, []).object);
+    return _id_getReferrer(this, const jni.JObjectType(), []);
   }
 
-  static final _id_onProvideReferrer = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onProvideReferrer", r"()Landroid/net/Uri;");
+  static final _id_onProvideReferrer = _class.instanceMethodId(
+    r"onProvideReferrer",
+    r"()Landroid/net/Uri;",
+  );
 
   /// from: public android.net.Uri onProvideReferrer()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onProvideReferrer() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onProvideReferrer,
-        jni.JniCallType.objectType, []).object);
+    return _id_onProvideReferrer(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getCallingPackage = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getCallingPackage", r"()Ljava/lang/String;");
+  static final _id_getCallingPackage = _class.instanceMethodId(
+    r"getCallingPackage",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public java.lang.String getCallingPackage()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getCallingPackage() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getCallingPackage,
-        jni.JniCallType.objectType, []).object);
+    return _id_getCallingPackage(this, const jni.JStringType(), []);
   }
 
-  static final _id_getCallingActivity = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getCallingActivity",
-      r"()Landroid/content/ComponentName;");
+  static final _id_getCallingActivity = _class.instanceMethodId(
+    r"getCallingActivity",
+    r"()Landroid/content/ComponentName;",
+  );
 
   /// from: public android.content.ComponentName getCallingActivity()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getCallingActivity() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getCallingActivity,
-        jni.JniCallType.objectType, []).object);
+    return _id_getCallingActivity(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getLaunchedFromUid = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getLaunchedFromUid", r"()I");
+  static final _id_getLaunchedFromUid = _class.instanceMethodId(
+    r"getLaunchedFromUid",
+    r"()I",
+  );
 
   /// from: public int getLaunchedFromUid()
   int getLaunchedFromUid() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getLaunchedFromUid, jni.JniCallType.intType, []).integer;
+    return _id_getLaunchedFromUid(this, const jni.jintType(), []);
   }
 
-  static final _id_getLaunchedFromPackage = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getLaunchedFromPackage", r"()Ljava/lang/String;");
+  static final _id_getLaunchedFromPackage = _class.instanceMethodId(
+    r"getLaunchedFromPackage",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public java.lang.String getLaunchedFromPackage()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getLaunchedFromPackage() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getLaunchedFromPackage,
-        jni.JniCallType.objectType, []).object);
+    return _id_getLaunchedFromPackage(this, const jni.JStringType(), []);
   }
 
-  static final _id_setVisible =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"setVisible", r"(Z)V");
+  static final _id_setVisible = _class.instanceMethodId(
+    r"setVisible",
+    r"(Z)V",
+  );
 
   /// from: public void setVisible(boolean z)
   void setVisible(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setVisible,
-        jni.JniCallType.voidType, [z ? 1 : 0]).check();
+    _id_setVisible(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_isFinishing =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isFinishing", r"()Z");
+  static final _id_isFinishing = _class.instanceMethodId(
+    r"isFinishing",
+    r"()Z",
+  );
 
   /// from: public boolean isFinishing()
   bool isFinishing() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isFinishing, jni.JniCallType.booleanType, []).boolean;
+    return _id_isFinishing(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_isDestroyed =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isDestroyed", r"()Z");
+  static final _id_isDestroyed = _class.instanceMethodId(
+    r"isDestroyed",
+    r"()Z",
+  );
 
   /// from: public boolean isDestroyed()
   bool isDestroyed() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isDestroyed, jni.JniCallType.booleanType, []).boolean;
+    return _id_isDestroyed(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_isChangingConfigurations = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isChangingConfigurations", r"()Z");
+  static final _id_isChangingConfigurations = _class.instanceMethodId(
+    r"isChangingConfigurations",
+    r"()Z",
+  );
 
   /// from: public boolean isChangingConfigurations()
   bool isChangingConfigurations() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isChangingConfigurations, jni.JniCallType.booleanType, []).boolean;
+    return _id_isChangingConfigurations(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_recreate =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"recreate", r"()V");
+  static final _id_recreate = _class.instanceMethodId(
+    r"recreate",
+    r"()V",
+  );
 
   /// from: public void recreate()
   void recreate() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_recreate, jni.JniCallType.voidType, []).check();
+    _id_recreate(this, const jni.jvoidType(), []);
   }
 
-  static final _id_finish =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"finish", r"()V");
+  static final _id_finish = _class.instanceMethodId(
+    r"finish",
+    r"()V",
+  );
 
   /// from: public void finish()
   void finish() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_finish, jni.JniCallType.voidType, []).check();
+    _id_finish(this, const jni.jvoidType(), []);
   }
 
-  static final _id_finishAffinity = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"finishAffinity", r"()V");
+  static final _id_finishAffinity = _class.instanceMethodId(
+    r"finishAffinity",
+    r"()V",
+  );
 
   /// from: public void finishAffinity()
   void finishAffinity() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_finishAffinity, jni.JniCallType.voidType, []).check();
+    _id_finishAffinity(this, const jni.jvoidType(), []);
   }
 
-  static final _id_finishFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"finishFromChild", r"(Landroid/app/Activity;)V");
+  static final _id_finishFromChild = _class.instanceMethodId(
+    r"finishFromChild",
+    r"(Landroid/app/Activity;)V",
+  );
 
   /// from: public void finishFromChild(android.app.Activity activity)
   void finishFromChild(
     Activity activity,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_finishFromChild,
-        jni.JniCallType.voidType, [activity.reference]).check();
+    _id_finishFromChild(
+        this, const jni.jvoidType(), [activity.reference.pointer]);
   }
 
-  static final _id_finishAfterTransition = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"finishAfterTransition", r"()V");
+  static final _id_finishAfterTransition = _class.instanceMethodId(
+    r"finishAfterTransition",
+    r"()V",
+  );
 
   /// from: public void finishAfterTransition()
   void finishAfterTransition() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_finishAfterTransition, jni.JniCallType.voidType, []).check();
+    _id_finishAfterTransition(this, const jni.jvoidType(), []);
   }
 
-  static final _id_finishActivity = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"finishActivity", r"(I)V");
+  static final _id_finishActivity = _class.instanceMethodId(
+    r"finishActivity",
+    r"(I)V",
+  );
 
   /// from: public void finishActivity(int i)
   void finishActivity(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_finishActivity,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_finishActivity(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_finishActivityFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"finishActivityFromChild",
-      r"(Landroid/app/Activity;I)V");
+  static final _id_finishActivityFromChild = _class.instanceMethodId(
+    r"finishActivityFromChild",
+    r"(Landroid/app/Activity;I)V",
+  );
 
   /// from: public void finishActivityFromChild(android.app.Activity activity, int i)
   void finishActivityFromChild(
     Activity activity,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_finishActivityFromChild,
-        jni.JniCallType.voidType,
-        [activity.reference, jni.JValueInt(i)]).check();
+    _id_finishActivityFromChild(this, const jni.jvoidType(),
+        [activity.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_finishAndRemoveTask = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"finishAndRemoveTask", r"()V");
+  static final _id_finishAndRemoveTask = _class.instanceMethodId(
+    r"finishAndRemoveTask",
+    r"()V",
+  );
 
   /// from: public void finishAndRemoveTask()
   void finishAndRemoveTask() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_finishAndRemoveTask, jni.JniCallType.voidType, []).check();
+    _id_finishAndRemoveTask(this, const jni.jvoidType(), []);
   }
 
-  static final _id_releaseInstance = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"releaseInstance", r"()Z");
+  static final _id_releaseInstance = _class.instanceMethodId(
+    r"releaseInstance",
+    r"()Z",
+  );
 
   /// from: public boolean releaseInstance()
   bool releaseInstance() {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_releaseInstance,
-        jni.JniCallType.booleanType, []).boolean;
+    return _id_releaseInstance(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_onActivityResult = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onActivityResult", r"(IILandroid/content/Intent;)V");
+  static final _id_onActivityResult = _class.instanceMethodId(
+    r"onActivityResult",
+    r"(IILandroid/content/Intent;)V",
+  );
 
   /// from: protected void onActivityResult(int i, int i1, android.content.Intent intent)
   void onActivityResult(
@@ -3326,32 +3171,28 @@ class Activity extends jni.JObject {
     int i1,
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onActivityResult,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), jni.JValueInt(i1), intent.reference]).check();
+    _id_onActivityResult(this, const jni.jvoidType(),
+        [jni.JValueInt(i), jni.JValueInt(i1), intent.reference.pointer]);
   }
 
-  static final _id_onActivityReenter = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onActivityReenter", r"(ILandroid/content/Intent;)V");
+  static final _id_onActivityReenter = _class.instanceMethodId(
+    r"onActivityReenter",
+    r"(ILandroid/content/Intent;)V",
+  );
 
   /// from: public void onActivityReenter(int i, android.content.Intent intent)
   void onActivityReenter(
     int i,
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onActivityReenter,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i), intent.reference]).check();
+    _id_onActivityReenter(this, const jni.jvoidType(),
+        [jni.JValueInt(i), intent.reference.pointer]);
   }
 
-  static final _id_createPendingResult = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createPendingResult",
-      r"(ILandroid/content/Intent;I)Landroid/app/PendingIntent;");
+  static final _id_createPendingResult = _class.instanceMethodId(
+    r"createPendingResult",
+    r"(ILandroid/content/Intent;I)Landroid/app/PendingIntent;",
+  );
 
   /// from: public android.app.PendingIntent createPendingResult(int i, android.content.Intent intent, int i1)
   /// The returned object must be released after use, by calling the [release] method.
@@ -3360,370 +3201,348 @@ class Activity extends jni.JObject {
     jni.JObject intent,
     int i1,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createPendingResult,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i), intent.reference, jni.JValueInt(i1)]).object);
+    return _id_createPendingResult(this, const jni.JObjectType(),
+        [jni.JValueInt(i), intent.reference.pointer, jni.JValueInt(i1)]);
   }
 
-  static final _id_setRequestedOrientation = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setRequestedOrientation", r"(I)V");
+  static final _id_setRequestedOrientation = _class.instanceMethodId(
+    r"setRequestedOrientation",
+    r"(I)V",
+  );
 
   /// from: public void setRequestedOrientation(int i)
   void setRequestedOrientation(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setRequestedOrientation,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i)]).check();
+    _id_setRequestedOrientation(
+        this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getRequestedOrientation = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getRequestedOrientation", r"()I");
+  static final _id_getRequestedOrientation = _class.instanceMethodId(
+    r"getRequestedOrientation",
+    r"()I",
+  );
 
   /// from: public int getRequestedOrientation()
   int getRequestedOrientation() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_getRequestedOrientation, jni.JniCallType.intType, []).integer;
+    return _id_getRequestedOrientation(this, const jni.jintType(), []);
   }
 
-  static final _id_getTaskId =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"getTaskId", r"()I");
+  static final _id_getTaskId = _class.instanceMethodId(
+    r"getTaskId",
+    r"()I",
+  );
 
   /// from: public int getTaskId()
   int getTaskId() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getTaskId, jni.JniCallType.intType, []).integer;
+    return _id_getTaskId(this, const jni.jintType(), []);
   }
 
-  static final _id_isTaskRoot =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isTaskRoot", r"()Z");
+  static final _id_isTaskRoot = _class.instanceMethodId(
+    r"isTaskRoot",
+    r"()Z",
+  );
 
   /// from: public boolean isTaskRoot()
   bool isTaskRoot() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isTaskRoot, jni.JniCallType.booleanType, []).boolean;
+    return _id_isTaskRoot(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_moveTaskToBack = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"moveTaskToBack", r"(Z)Z");
+  static final _id_moveTaskToBack = _class.instanceMethodId(
+    r"moveTaskToBack",
+    r"(Z)Z",
+  );
 
   /// from: public boolean moveTaskToBack(boolean z)
   bool moveTaskToBack(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_moveTaskToBack,
-        jni.JniCallType.booleanType, [z ? 1 : 0]).boolean;
+    return _id_moveTaskToBack(this, const jni.jbooleanType(), [z ? 1 : 0]);
   }
 
-  static final _id_getLocalClassName = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getLocalClassName", r"()Ljava/lang/String;");
+  static final _id_getLocalClassName = _class.instanceMethodId(
+    r"getLocalClassName",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public java.lang.String getLocalClassName()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getLocalClassName() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getLocalClassName,
-        jni.JniCallType.objectType, []).object);
+    return _id_getLocalClassName(this, const jni.JStringType(), []);
   }
 
-  static final _id_getComponentName = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getComponentName",
-      r"()Landroid/content/ComponentName;");
+  static final _id_getComponentName = _class.instanceMethodId(
+    r"getComponentName",
+    r"()Landroid/content/ComponentName;",
+  );
 
   /// from: public android.content.ComponentName getComponentName()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getComponentName() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getComponentName,
-        jni.JniCallType.objectType, []).object);
+    return _id_getComponentName(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getPreferences",
-      r"(I)Landroid/content/SharedPreferences;");
+  static final _id_getPreferences = _class.instanceMethodId(
+    r"getPreferences",
+    r"(I)Landroid/content/SharedPreferences;",
+  );
 
   /// from: public android.content.SharedPreferences getPreferences(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getPreferences(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getPreferences,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_getPreferences(
+        this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_isLaunchedFromBubble = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isLaunchedFromBubble", r"()Z");
+  static final _id_isLaunchedFromBubble = _class.instanceMethodId(
+    r"isLaunchedFromBubble",
+    r"()Z",
+  );
 
   /// from: public boolean isLaunchedFromBubble()
   bool isLaunchedFromBubble() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isLaunchedFromBubble, jni.JniCallType.booleanType, []).boolean;
+    return _id_isLaunchedFromBubble(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_getSystemService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSystemService",
-      r"(Ljava/lang/String;)Ljava/lang/Object;");
+  static final _id_getSystemService = _class.instanceMethodId(
+    r"getSystemService",
+    r"(Ljava/lang/String;)Ljava/lang/Object;",
+  );
 
   /// from: public java.lang.Object getSystemService(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSystemService(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSystemService,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_getSystemService(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_setTitle = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setTitle", r"(Ljava/lang/CharSequence;)V");
+  static final _id_setTitle = _class.instanceMethodId(
+    r"setTitle",
+    r"(Ljava/lang/CharSequence;)V",
+  );
 
   /// from: public void setTitle(java.lang.CharSequence charSequence)
   void setTitle(
     jni.JObject charSequence,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTitle,
-        jni.JniCallType.voidType, [charSequence.reference]).check();
+    _id_setTitle(this, const jni.jvoidType(), [charSequence.reference.pointer]);
   }
 
-  static final _id_setTitle1 =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"setTitle", r"(I)V");
+  static final _id_setTitle1 = _class.instanceMethodId(
+    r"setTitle",
+    r"(I)V",
+  );
 
   /// from: public void setTitle(int i)
   void setTitle1(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTitle1,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setTitle1(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setTitleColor = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setTitleColor", r"(I)V");
+  static final _id_setTitleColor = _class.instanceMethodId(
+    r"setTitleColor",
+    r"(I)V",
+  );
 
   /// from: public void setTitleColor(int i)
   void setTitleColor(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTitleColor,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setTitleColor(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getTitle = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getTitle", r"()Ljava/lang/CharSequence;");
+  static final _id_getTitle = _class.instanceMethodId(
+    r"getTitle",
+    r"()Ljava/lang/CharSequence;",
+  );
 
   /// from: public final java.lang.CharSequence getTitle()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getTitle() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getTitle, jni.JniCallType.objectType, []).object);
+    return _id_getTitle(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getTitleColor = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getTitleColor", r"()I");
+  static final _id_getTitleColor = _class.instanceMethodId(
+    r"getTitleColor",
+    r"()I",
+  );
 
   /// from: public final int getTitleColor()
   int getTitleColor() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getTitleColor, jni.JniCallType.intType, []).integer;
+    return _id_getTitleColor(this, const jni.jintType(), []);
   }
 
-  static final _id_onTitleChanged = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"onTitleChanged", r"(Ljava/lang/CharSequence;I)V");
+  static final _id_onTitleChanged = _class.instanceMethodId(
+    r"onTitleChanged",
+    r"(Ljava/lang/CharSequence;I)V",
+  );
 
   /// from: protected void onTitleChanged(java.lang.CharSequence charSequence, int i)
   void onTitleChanged(
     jni.JObject charSequence,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onTitleChanged,
-        jni.JniCallType.voidType,
-        [charSequence.reference, jni.JValueInt(i)]).check();
+    _id_onTitleChanged(this, const jni.jvoidType(),
+        [charSequence.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_onChildTitleChanged = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onChildTitleChanged",
-      r"(Landroid/app/Activity;Ljava/lang/CharSequence;)V");
+  static final _id_onChildTitleChanged = _class.instanceMethodId(
+    r"onChildTitleChanged",
+    r"(Landroid/app/Activity;Ljava/lang/CharSequence;)V",
+  );
 
   /// from: protected void onChildTitleChanged(android.app.Activity activity, java.lang.CharSequence charSequence)
   void onChildTitleChanged(
     Activity activity,
     jni.JObject charSequence,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onChildTitleChanged,
-        jni.JniCallType.voidType,
-        [activity.reference, charSequence.reference]).check();
+    _id_onChildTitleChanged(this, const jni.jvoidType(),
+        [activity.reference.pointer, charSequence.reference.pointer]);
   }
 
-  static final _id_setTaskDescription = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setTaskDescription",
-      r"(Landroid/app/ActivityManager$TaskDescription;)V");
+  static final _id_setTaskDescription = _class.instanceMethodId(
+    r"setTaskDescription",
+    r"(Landroid/app/ActivityManager$TaskDescription;)V",
+  );
 
   /// from: public void setTaskDescription(android.app.ActivityManager$TaskDescription taskDescription)
   void setTaskDescription(
     jni.JObject taskDescription,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setTaskDescription,
-        jni.JniCallType.voidType,
-        [taskDescription.reference]).check();
+    _id_setTaskDescription(
+        this, const jni.jvoidType(), [taskDescription.reference.pointer]);
   }
 
-  static final _id_setProgressBarVisibility = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setProgressBarVisibility", r"(Z)V");
+  static final _id_setProgressBarVisibility = _class.instanceMethodId(
+    r"setProgressBarVisibility",
+    r"(Z)V",
+  );
 
   /// from: public final void setProgressBarVisibility(boolean z)
   void setProgressBarVisibility(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setProgressBarVisibility,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setProgressBarVisibility(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setProgressBarIndeterminateVisibility = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"setProgressBarIndeterminateVisibility", r"(Z)V");
+  static final _id_setProgressBarIndeterminateVisibility =
+      _class.instanceMethodId(
+    r"setProgressBarIndeterminateVisibility",
+    r"(Z)V",
+  );
 
   /// from: public final void setProgressBarIndeterminateVisibility(boolean z)
   void setProgressBarIndeterminateVisibility(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setProgressBarIndeterminateVisibility,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setProgressBarIndeterminateVisibility(
+        this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setProgressBarIndeterminate = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setProgressBarIndeterminate", r"(Z)V");
+  static final _id_setProgressBarIndeterminate = _class.instanceMethodId(
+    r"setProgressBarIndeterminate",
+    r"(Z)V",
+  );
 
   /// from: public final void setProgressBarIndeterminate(boolean z)
   void setProgressBarIndeterminate(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setProgressBarIndeterminate,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setProgressBarIndeterminate(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setProgress = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setProgress", r"(I)V");
+  static final _id_setProgress = _class.instanceMethodId(
+    r"setProgress",
+    r"(I)V",
+  );
 
   /// from: public final void setProgress(int i)
   void setProgress(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setProgress,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setProgress(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setSecondaryProgress = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setSecondaryProgress", r"(I)V");
+  static final _id_setSecondaryProgress = _class.instanceMethodId(
+    r"setSecondaryProgress",
+    r"(I)V",
+  );
 
   /// from: public final void setSecondaryProgress(int i)
   void setSecondaryProgress(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setSecondaryProgress,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i)]).check();
+    _id_setSecondaryProgress(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setVolumeControlStream = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setVolumeControlStream", r"(I)V");
+  static final _id_setVolumeControlStream = _class.instanceMethodId(
+    r"setVolumeControlStream",
+    r"(I)V",
+  );
 
   /// from: public final void setVolumeControlStream(int i)
   void setVolumeControlStream(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setVolumeControlStream,
-        jni.JniCallType.voidType,
-        [jni.JValueInt(i)]).check();
+    _id_setVolumeControlStream(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getVolumeControlStream = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getVolumeControlStream", r"()I");
+  static final _id_getVolumeControlStream = _class.instanceMethodId(
+    r"getVolumeControlStream",
+    r"()I",
+  );
 
   /// from: public final int getVolumeControlStream()
   int getVolumeControlStream() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_getVolumeControlStream, jni.JniCallType.intType, []).integer;
+    return _id_getVolumeControlStream(this, const jni.jintType(), []);
   }
 
-  static final _id_setMediaController = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setMediaController",
-      r"(Landroid/media/session/MediaController;)V");
+  static final _id_setMediaController = _class.instanceMethodId(
+    r"setMediaController",
+    r"(Landroid/media/session/MediaController;)V",
+  );
 
   /// from: public final void setMediaController(android.media.session.MediaController mediaController)
   void setMediaController(
     jni.JObject mediaController,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setMediaController,
-        jni.JniCallType.voidType,
-        [mediaController.reference]).check();
+    _id_setMediaController(
+        this, const jni.jvoidType(), [mediaController.reference.pointer]);
   }
 
-  static final _id_getMediaController = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getMediaController",
-      r"()Landroid/media/session/MediaController;");
+  static final _id_getMediaController = _class.instanceMethodId(
+    r"getMediaController",
+    r"()Landroid/media/session/MediaController;",
+  );
 
   /// from: public final android.media.session.MediaController getMediaController()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getMediaController() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getMediaController,
-        jni.JniCallType.objectType, []).object);
+    return _id_getMediaController(this, const jni.JObjectType(), []);
   }
 
-  static final _id_runOnUiThread = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"runOnUiThread", r"(Ljava/lang/Runnable;)V");
+  static final _id_runOnUiThread = _class.instanceMethodId(
+    r"runOnUiThread",
+    r"(Ljava/lang/Runnable;)V",
+  );
 
   /// from: public final void runOnUiThread(java.lang.Runnable runnable)
   void runOnUiThread(
     jni.JObject runnable,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_runOnUiThread,
-        jni.JniCallType.voidType, [runnable.reference]).check();
+    _id_runOnUiThread(
+        this, const jni.jvoidType(), [runnable.reference.pointer]);
   }
 
-  static final _id_onCreateView = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onCreateView",
-      r"(Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;");
+  static final _id_onCreateView = _class.instanceMethodId(
+    r"onCreateView",
+    r"(Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;",
+  );
 
   /// from: public android.view.View onCreateView(java.lang.String string, android.content.Context context, android.util.AttributeSet attributeSet)
   /// The returned object must be released after use, by calling the [release] method.
@@ -3732,17 +3551,17 @@ class Activity extends jni.JObject {
     Context context,
     jni.JObject attributeSet,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onCreateView,
-        jni.JniCallType.objectType,
-        [string.reference, context.reference, attributeSet.reference]).object);
+    return _id_onCreateView(this, const jni.JObjectType(), [
+      string.reference.pointer,
+      context.reference.pointer,
+      attributeSet.reference.pointer
+    ]);
   }
 
-  static final _id_onCreateView1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onCreateView",
-      r"(Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;");
+  static final _id_onCreateView1 = _class.instanceMethodId(
+    r"onCreateView",
+    r"(Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;",
+  );
 
   /// from: public android.view.View onCreateView(android.view.View view, java.lang.String string, android.content.Context context, android.util.AttributeSet attributeSet)
   /// The returned object must be released after use, by calling the [release] method.
@@ -3752,19 +3571,18 @@ class Activity extends jni.JObject {
     Context context,
     jni.JObject attributeSet,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_onCreateView1, jni.JniCallType.objectType, [
-      view.reference,
-      string.reference,
-      context.reference,
-      attributeSet.reference
-    ]).object);
+    return _id_onCreateView1(this, const jni.JObjectType(), [
+      view.reference.pointer,
+      string.reference.pointer,
+      context.reference.pointer,
+      attributeSet.reference.pointer
+    ]);
   }
 
-  static final _id_dump = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"dump",
-      r"(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V");
+  static final _id_dump = _class.instanceMethodId(
+    r"dump",
+    r"(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V",
+  );
 
   /// from: public void dump(java.lang.String string, java.io.FileDescriptor fileDescriptor, java.io.PrintWriter printWriter, java.lang.String[] strings)
   void dump(
@@ -3773,113 +3591,113 @@ class Activity extends jni.JObject {
     jni.JObject printWriter,
     jni.JArray<jni.JString> strings,
   ) {
-    return jni.Jni.accessors
-        .callMethodWithArgs(reference, _id_dump, jni.JniCallType.voidType, [
-      string.reference,
-      fileDescriptor.reference,
-      printWriter.reference,
-      strings.reference
-    ]).check();
+    _id_dump(this, const jni.jvoidType(), [
+      string.reference.pointer,
+      fileDescriptor.reference.pointer,
+      printWriter.reference.pointer,
+      strings.reference.pointer
+    ]);
   }
 
-  static final _id_isImmersive =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isImmersive", r"()Z");
+  static final _id_isImmersive = _class.instanceMethodId(
+    r"isImmersive",
+    r"()Z",
+  );
 
   /// from: public boolean isImmersive()
   bool isImmersive() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isImmersive, jni.JniCallType.booleanType, []).boolean;
+    return _id_isImmersive(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_setTranslucent = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setTranslucent", r"(Z)Z");
+  static final _id_setTranslucent = _class.instanceMethodId(
+    r"setTranslucent",
+    r"(Z)Z",
+  );
 
   /// from: public boolean setTranslucent(boolean z)
   bool setTranslucent(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTranslucent,
-        jni.JniCallType.booleanType, [z ? 1 : 0]).boolean;
+    return _id_setTranslucent(this, const jni.jbooleanType(), [z ? 1 : 0]);
   }
 
-  static final _id_requestVisibleBehind = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"requestVisibleBehind", r"(Z)Z");
+  static final _id_requestVisibleBehind = _class.instanceMethodId(
+    r"requestVisibleBehind",
+    r"(Z)Z",
+  );
 
   /// from: public boolean requestVisibleBehind(boolean z)
   bool requestVisibleBehind(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requestVisibleBehind,
-        jni.JniCallType.booleanType,
-        [z ? 1 : 0]).boolean;
+    return _id_requestVisibleBehind(
+        this, const jni.jbooleanType(), [z ? 1 : 0]);
   }
 
-  static final _id_onVisibleBehindCanceled = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onVisibleBehindCanceled", r"()V");
+  static final _id_onVisibleBehindCanceled = _class.instanceMethodId(
+    r"onVisibleBehindCanceled",
+    r"()V",
+  );
 
   /// from: public void onVisibleBehindCanceled()
   void onVisibleBehindCanceled() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_onVisibleBehindCanceled, jni.JniCallType.voidType, []).check();
+    _id_onVisibleBehindCanceled(this, const jni.jvoidType(), []);
   }
 
-  static final _id_onEnterAnimationComplete = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onEnterAnimationComplete", r"()V");
+  static final _id_onEnterAnimationComplete = _class.instanceMethodId(
+    r"onEnterAnimationComplete",
+    r"()V",
+  );
 
   /// from: public void onEnterAnimationComplete()
   void onEnterAnimationComplete() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_onEnterAnimationComplete, jni.JniCallType.voidType, []).check();
+    _id_onEnterAnimationComplete(this, const jni.jvoidType(), []);
   }
 
-  static final _id_setImmersive = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setImmersive", r"(Z)V");
+  static final _id_setImmersive = _class.instanceMethodId(
+    r"setImmersive",
+    r"(Z)V",
+  );
 
   /// from: public void setImmersive(boolean z)
   void setImmersive(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setImmersive,
-        jni.JniCallType.voidType, [z ? 1 : 0]).check();
+    _id_setImmersive(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setVrModeEnabled = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"setVrModeEnabled",
-      r"(ZLandroid/content/ComponentName;)V");
+  static final _id_setVrModeEnabled = _class.instanceMethodId(
+    r"setVrModeEnabled",
+    r"(ZLandroid/content/ComponentName;)V",
+  );
 
   /// from: public void setVrModeEnabled(boolean z, android.content.ComponentName componentName)
   void setVrModeEnabled(
     bool z,
     jni.JObject componentName,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setVrModeEnabled,
-        jni.JniCallType.voidType, [z ? 1 : 0, componentName.reference]).check();
+    _id_setVrModeEnabled(this, const jni.jvoidType(),
+        [z ? 1 : 0, componentName.reference.pointer]);
   }
 
-  static final _id_startActionMode = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActionMode",
-      r"(Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;");
+  static final _id_startActionMode = _class.instanceMethodId(
+    r"startActionMode",
+    r"(Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;",
+  );
 
   /// from: public android.view.ActionMode startActionMode(android.view.ActionMode$Callback callback)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject startActionMode(
     jni.JObject callback,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActionMode,
-        jni.JniCallType.objectType,
-        [callback.reference]).object);
+    return _id_startActionMode(
+        this, const jni.JObjectType(), [callback.reference.pointer]);
   }
 
-  static final _id_startActionMode1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActionMode",
-      r"(Landroid/view/ActionMode$Callback;I)Landroid/view/ActionMode;");
+  static final _id_startActionMode1 = _class.instanceMethodId(
+    r"startActionMode",
+    r"(Landroid/view/ActionMode$Callback;I)Landroid/view/ActionMode;",
+  );
 
   /// from: public android.view.ActionMode startActionMode(android.view.ActionMode$Callback callback, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -3887,33 +3705,28 @@ class Activity extends jni.JObject {
     jni.JObject callback,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActionMode1,
-        jni.JniCallType.objectType,
-        [callback.reference, jni.JValueInt(i)]).object);
+    return _id_startActionMode1(this, const jni.JObjectType(),
+        [callback.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_onWindowStartingActionMode = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onWindowStartingActionMode",
-      r"(Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;");
+  static final _id_onWindowStartingActionMode = _class.instanceMethodId(
+    r"onWindowStartingActionMode",
+    r"(Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;",
+  );
 
   /// from: public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode$Callback callback)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject onWindowStartingActionMode(
     jni.JObject callback,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onWindowStartingActionMode,
-        jni.JniCallType.objectType,
-        [callback.reference]).object);
+    return _id_onWindowStartingActionMode(
+        this, const jni.JObjectType(), [callback.reference.pointer]);
   }
 
-  static final _id_onWindowStartingActionMode1 = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"onWindowStartingActionMode",
-          r"(Landroid/view/ActionMode$Callback;I)Landroid/view/ActionMode;");
+  static final _id_onWindowStartingActionMode1 = _class.instanceMethodId(
+    r"onWindowStartingActionMode",
+    r"(Landroid/view/ActionMode$Callback;I)Landroid/view/ActionMode;",
+  );
 
   /// from: public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode$Callback callback, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -3921,291 +3734,261 @@ class Activity extends jni.JObject {
     jni.JObject callback,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onWindowStartingActionMode1,
-        jni.JniCallType.objectType,
-        [callback.reference, jni.JValueInt(i)]).object);
+    return _id_onWindowStartingActionMode1(this, const jni.JObjectType(),
+        [callback.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_onActionModeStarted = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onActionModeStarted",
-      r"(Landroid/view/ActionMode;)V");
+  static final _id_onActionModeStarted = _class.instanceMethodId(
+    r"onActionModeStarted",
+    r"(Landroid/view/ActionMode;)V",
+  );
 
   /// from: public void onActionModeStarted(android.view.ActionMode actionMode)
   void onActionModeStarted(
     jni.JObject actionMode,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onActionModeStarted,
-        jni.JniCallType.voidType,
-        [actionMode.reference]).check();
+    _id_onActionModeStarted(
+        this, const jni.jvoidType(), [actionMode.reference.pointer]);
   }
 
-  static final _id_onActionModeFinished = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"onActionModeFinished",
-      r"(Landroid/view/ActionMode;)V");
+  static final _id_onActionModeFinished = _class.instanceMethodId(
+    r"onActionModeFinished",
+    r"(Landroid/view/ActionMode;)V",
+  );
 
   /// from: public void onActionModeFinished(android.view.ActionMode actionMode)
   void onActionModeFinished(
     jni.JObject actionMode,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_onActionModeFinished,
-        jni.JniCallType.voidType,
-        [actionMode.reference]).check();
+    _id_onActionModeFinished(
+        this, const jni.jvoidType(), [actionMode.reference.pointer]);
   }
 
-  static final _id_shouldUpRecreateTask = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"shouldUpRecreateTask",
-      r"(Landroid/content/Intent;)Z");
+  static final _id_shouldUpRecreateTask = _class.instanceMethodId(
+    r"shouldUpRecreateTask",
+    r"(Landroid/content/Intent;)Z",
+  );
 
   /// from: public boolean shouldUpRecreateTask(android.content.Intent intent)
   bool shouldUpRecreateTask(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_shouldUpRecreateTask,
-        jni.JniCallType.booleanType,
-        [intent.reference]).boolean;
+    return _id_shouldUpRecreateTask(
+        this, const jni.jbooleanType(), [intent.reference.pointer]);
   }
 
-  static final _id_navigateUpTo = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"navigateUpTo", r"(Landroid/content/Intent;)Z");
+  static final _id_navigateUpTo = _class.instanceMethodId(
+    r"navigateUpTo",
+    r"(Landroid/content/Intent;)Z",
+  );
 
   /// from: public boolean navigateUpTo(android.content.Intent intent)
   bool navigateUpTo(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_navigateUpTo,
-        jni.JniCallType.booleanType, [intent.reference]).boolean;
+    return _id_navigateUpTo(
+        this, const jni.jbooleanType(), [intent.reference.pointer]);
   }
 
-  static final _id_navigateUpToFromChild = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"navigateUpToFromChild",
-      r"(Landroid/app/Activity;Landroid/content/Intent;)Z");
+  static final _id_navigateUpToFromChild = _class.instanceMethodId(
+    r"navigateUpToFromChild",
+    r"(Landroid/app/Activity;Landroid/content/Intent;)Z",
+  );
 
   /// from: public boolean navigateUpToFromChild(android.app.Activity activity, android.content.Intent intent)
   bool navigateUpToFromChild(
     Activity activity,
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_navigateUpToFromChild,
-        jni.JniCallType.booleanType,
-        [activity.reference, intent.reference]).boolean;
+    return _id_navigateUpToFromChild(this, const jni.jbooleanType(),
+        [activity.reference.pointer, intent.reference.pointer]);
   }
 
-  static final _id_getParentActivityIntent = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getParentActivityIntent",
-      r"()Landroid/content/Intent;");
+  static final _id_getParentActivityIntent = _class.instanceMethodId(
+    r"getParentActivityIntent",
+    r"()Landroid/content/Intent;",
+  );
 
   /// from: public android.content.Intent getParentActivityIntent()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getParentActivityIntent() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getParentActivityIntent,
-        jni.JniCallType.objectType, []).object);
+    return _id_getParentActivityIntent(this, const jni.JObjectType(), []);
   }
 
-  static final _id_setEnterSharedElementCallback = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setEnterSharedElementCallback",
-          r"(Landroid/app/SharedElementCallback;)V");
+  static final _id_setEnterSharedElementCallback = _class.instanceMethodId(
+    r"setEnterSharedElementCallback",
+    r"(Landroid/app/SharedElementCallback;)V",
+  );
 
   /// from: public void setEnterSharedElementCallback(android.app.SharedElementCallback sharedElementCallback)
   void setEnterSharedElementCallback(
     jni.JObject sharedElementCallback,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setEnterSharedElementCallback,
-        jni.JniCallType.voidType,
-        [sharedElementCallback.reference]).check();
+    _id_setEnterSharedElementCallback(
+        this, const jni.jvoidType(), [sharedElementCallback.reference.pointer]);
   }
 
-  static final _id_setExitSharedElementCallback = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setExitSharedElementCallback",
-          r"(Landroid/app/SharedElementCallback;)V");
+  static final _id_setExitSharedElementCallback = _class.instanceMethodId(
+    r"setExitSharedElementCallback",
+    r"(Landroid/app/SharedElementCallback;)V",
+  );
 
   /// from: public void setExitSharedElementCallback(android.app.SharedElementCallback sharedElementCallback)
   void setExitSharedElementCallback(
     jni.JObject sharedElementCallback,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setExitSharedElementCallback,
-        jni.JniCallType.voidType,
-        [sharedElementCallback.reference]).check();
+    _id_setExitSharedElementCallback(
+        this, const jni.jvoidType(), [sharedElementCallback.reference.pointer]);
   }
 
-  static final _id_postponeEnterTransition = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"postponeEnterTransition", r"()V");
+  static final _id_postponeEnterTransition = _class.instanceMethodId(
+    r"postponeEnterTransition",
+    r"()V",
+  );
 
   /// from: public void postponeEnterTransition()
   void postponeEnterTransition() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_postponeEnterTransition, jni.JniCallType.voidType, []).check();
+    _id_postponeEnterTransition(this, const jni.jvoidType(), []);
   }
 
-  static final _id_startPostponedEnterTransition = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"startPostponedEnterTransition", r"()V");
+  static final _id_startPostponedEnterTransition = _class.instanceMethodId(
+    r"startPostponedEnterTransition",
+    r"()V",
+  );
 
   /// from: public void startPostponedEnterTransition()
   void startPostponedEnterTransition() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startPostponedEnterTransition,
-        jni.JniCallType.voidType, []).check();
+    _id_startPostponedEnterTransition(this, const jni.jvoidType(), []);
   }
 
-  static final _id_requestDragAndDropPermissions = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"requestDragAndDropPermissions",
-          r"(Landroid/view/DragEvent;)Landroid/view/DragAndDropPermissions;");
+  static final _id_requestDragAndDropPermissions = _class.instanceMethodId(
+    r"requestDragAndDropPermissions",
+    r"(Landroid/view/DragEvent;)Landroid/view/DragAndDropPermissions;",
+  );
 
   /// from: public android.view.DragAndDropPermissions requestDragAndDropPermissions(android.view.DragEvent dragEvent)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject requestDragAndDropPermissions(
     jni.JObject dragEvent,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_requestDragAndDropPermissions,
-        jni.JniCallType.objectType,
-        [dragEvent.reference]).object);
+    return _id_requestDragAndDropPermissions(
+        this, const jni.JObjectType(), [dragEvent.reference.pointer]);
   }
 
-  static final _id_startLockTask = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"startLockTask", r"()V");
+  static final _id_startLockTask = _class.instanceMethodId(
+    r"startLockTask",
+    r"()V",
+  );
 
   /// from: public void startLockTask()
   void startLockTask() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startLockTask, jni.JniCallType.voidType, []).check();
+    _id_startLockTask(this, const jni.jvoidType(), []);
   }
 
-  static final _id_stopLockTask = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"stopLockTask", r"()V");
+  static final _id_stopLockTask = _class.instanceMethodId(
+    r"stopLockTask",
+    r"()V",
+  );
 
   /// from: public void stopLockTask()
   void stopLockTask() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_stopLockTask, jni.JniCallType.voidType, []).check();
+    _id_stopLockTask(this, const jni.jvoidType(), []);
   }
 
-  static final _id_showLockTaskEscapeMessage = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"showLockTaskEscapeMessage", r"()V");
+  static final _id_showLockTaskEscapeMessage = _class.instanceMethodId(
+    r"showLockTaskEscapeMessage",
+    r"()V",
+  );
 
   /// from: public void showLockTaskEscapeMessage()
   void showLockTaskEscapeMessage() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_showLockTaskEscapeMessage, jni.JniCallType.voidType, []).check();
+    _id_showLockTaskEscapeMessage(this, const jni.jvoidType(), []);
   }
 
-  static final _id_setRecentsScreenshotEnabled = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setRecentsScreenshotEnabled", r"(Z)V");
+  static final _id_setRecentsScreenshotEnabled = _class.instanceMethodId(
+    r"setRecentsScreenshotEnabled",
+    r"(Z)V",
+  );
 
   /// from: public void setRecentsScreenshotEnabled(boolean z)
   void setRecentsScreenshotEnabled(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setRecentsScreenshotEnabled,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setRecentsScreenshotEnabled(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setShowWhenLocked = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setShowWhenLocked", r"(Z)V");
+  static final _id_setShowWhenLocked = _class.instanceMethodId(
+    r"setShowWhenLocked",
+    r"(Z)V",
+  );
 
   /// from: public void setShowWhenLocked(boolean z)
   void setShowWhenLocked(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_setShowWhenLocked, jni.JniCallType.voidType, [z ? 1 : 0]).check();
+    _id_setShowWhenLocked(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setInheritShowWhenLocked = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setInheritShowWhenLocked", r"(Z)V");
+  static final _id_setInheritShowWhenLocked = _class.instanceMethodId(
+    r"setInheritShowWhenLocked",
+    r"(Z)V",
+  );
 
   /// from: public void setInheritShowWhenLocked(boolean z)
   void setInheritShowWhenLocked(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_setInheritShowWhenLocked,
-        jni.JniCallType.voidType,
-        [z ? 1 : 0]).check();
+    _id_setInheritShowWhenLocked(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_setTurnScreenOn = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"setTurnScreenOn", r"(Z)V");
+  static final _id_setTurnScreenOn = _class.instanceMethodId(
+    r"setTurnScreenOn",
+    r"(Z)V",
+  );
 
   /// from: public void setTurnScreenOn(boolean z)
   void setTurnScreenOn(
     bool z,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTurnScreenOn,
-        jni.JniCallType.voidType, [z ? 1 : 0]).check();
+    _id_setTurnScreenOn(this, const jni.jvoidType(), [z ? 1 : 0]);
   }
 
-  static final _id_getOnBackInvokedDispatcher = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getOnBackInvokedDispatcher",
-      r"()Landroid/window/OnBackInvokedDispatcher;");
+  static final _id_getOnBackInvokedDispatcher = _class.instanceMethodId(
+    r"getOnBackInvokedDispatcher",
+    r"()Landroid/window/OnBackInvokedDispatcher;",
+  );
 
   /// from: public android.window.OnBackInvokedDispatcher getOnBackInvokedDispatcher()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getOnBackInvokedDispatcher() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getOnBackInvokedDispatcher,
-        jni.JniCallType.objectType, []).object);
+    return _id_getOnBackInvokedDispatcher(this, const jni.JObjectType(), []);
   }
 
-  static final _id_registerScreenCaptureCallback = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerScreenCaptureCallback",
-      r"(Ljava/util/concurrent/Executor;Landroid/app/Activity$ScreenCaptureCallback;)V");
+  static final _id_registerScreenCaptureCallback = _class.instanceMethodId(
+    r"registerScreenCaptureCallback",
+    r"(Ljava/util/concurrent/Executor;Landroid/app/Activity$ScreenCaptureCallback;)V",
+  );
 
   /// from: public void registerScreenCaptureCallback(java.util.concurrent.Executor executor, android.app.Activity$ScreenCaptureCallback screenCaptureCallback)
   void registerScreenCaptureCallback(
     jni.JObject executor,
     Activity_ScreenCaptureCallback screenCaptureCallback,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerScreenCaptureCallback,
-        jni.JniCallType.voidType,
-        [executor.reference, screenCaptureCallback.reference]).check();
+    _id_registerScreenCaptureCallback(this, const jni.jvoidType(),
+        [executor.reference.pointer, screenCaptureCallback.reference.pointer]);
   }
 
-  static final _id_unregisterScreenCaptureCallback = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"unregisterScreenCaptureCallback",
-          r"(Landroid/app/Activity$ScreenCaptureCallback;)V");
+  static final _id_unregisterScreenCaptureCallback = _class.instanceMethodId(
+    r"unregisterScreenCaptureCallback",
+    r"(Landroid/app/Activity$ScreenCaptureCallback;)V",
+  );
 
   /// from: public void unregisterScreenCaptureCallback(android.app.Activity$ScreenCaptureCallback screenCaptureCallback)
   void unregisterScreenCaptureCallback(
     Activity_ScreenCaptureCallback screenCaptureCallback,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterScreenCaptureCallback,
-        jni.JniCallType.voidType,
-        [screenCaptureCallback.reference]).check();
+    _id_unregisterScreenCaptureCallback(
+        this, const jni.jvoidType(), [screenCaptureCallback.reference.pointer]);
   }
 }
 
@@ -4216,7 +3999,8 @@ final class $ActivityType extends jni.JObjType<Activity> {
   String get signature => r"Landroid/app/Activity;";
 
   @override
-  Activity fromRef(jni.JObjectPtr ref) => Activity.fromRef(ref);
+  Activity fromReference(jni.JReference reference) =>
+      Activity.fromReference(reference);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();
@@ -4238,26 +4022,26 @@ class Context_BindServiceFlags extends jni.JObject {
   @override
   late final jni.JObjType<Context_BindServiceFlags> $type = type;
 
-  Context_BindServiceFlags.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  Context_BindServiceFlags.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
   static final _class =
-      jni.Jni.findJClass(r"android/content/Context$BindServiceFlags");
+      jni.JClass.forName(r"android/content/Context$BindServiceFlags");
 
   /// The type which includes information such as the signature of this class.
   static const type = $Context_BindServiceFlagsType();
-  static final _id_of = jni.Jni.accessors.getStaticMethodIDOf(_class.reference,
-      r"of", r"(J)Landroid/content/Context$BindServiceFlags;");
+  static final _id_of = _class.staticMethodId(
+    r"of",
+    r"(J)Landroid/content/Context$BindServiceFlags;",
+  );
 
   /// from: static public android.content.Context$BindServiceFlags of(long j)
   /// The returned object must be released after use, by calling the [release] method.
   static Context_BindServiceFlags of(
     int j,
   ) {
-    return const $Context_BindServiceFlagsType().fromRef(jni.Jni.accessors
-        .callStaticMethodWithArgs(
-            _class.reference, _id_of, jni.JniCallType.objectType, [j]).object);
+    return _id_of(_class, const $Context_BindServiceFlagsType(), [j]);
   }
 }
 
@@ -4269,8 +4053,8 @@ final class $Context_BindServiceFlagsType
   String get signature => r"Landroid/content/Context$BindServiceFlags;";
 
   @override
-  Context_BindServiceFlags fromRef(jni.JObjectPtr ref) =>
-      Context_BindServiceFlags.fromRef(ref);
+  Context_BindServiceFlags fromReference(jni.JReference reference) =>
+      Context_BindServiceFlags.fromReference(reference);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();
@@ -4293,41 +4077,103 @@ class Context extends jni.JObject {
   @override
   late final jni.JObjType<Context> $type = type;
 
-  Context.fromRef(
-    jni.JObjectPtr ref,
-  ) : super.fromRef(ref);
+  Context.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
 
-  static final _class = jni.Jni.findJClass(r"android/content/Context");
+  static final _class = jni.JClass.forName(r"android/content/Context");
 
   /// The type which includes information such as the signature of this class.
   static const type = $ContextType();
+  static final _id_ACCESSIBILITY_SERVICE = _class.staticFieldId(
+    r"ACCESSIBILITY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String ACCESSIBILITY_SERVICE
-  static const ACCESSIBILITY_SERVICE = r"""accessibility""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get ACCESSIBILITY_SERVICE =>
+      _id_ACCESSIBILITY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_ACCOUNT_SERVICE = _class.staticFieldId(
+    r"ACCOUNT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String ACCOUNT_SERVICE
-  static const ACCOUNT_SERVICE = r"""account""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get ACCOUNT_SERVICE =>
+      _id_ACCOUNT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_ACTIVITY_SERVICE = _class.staticFieldId(
+    r"ACTIVITY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String ACTIVITY_SERVICE
-  static const ACTIVITY_SERVICE = r"""activity""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get ACTIVITY_SERVICE =>
+      _id_ACTIVITY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_ALARM_SERVICE = _class.staticFieldId(
+    r"ALARM_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String ALARM_SERVICE
-  static const ALARM_SERVICE = r"""alarm""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get ALARM_SERVICE =>
+      _id_ALARM_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_APPWIDGET_SERVICE = _class.staticFieldId(
+    r"APPWIDGET_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String APPWIDGET_SERVICE
-  static const APPWIDGET_SERVICE = r"""appwidget""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get APPWIDGET_SERVICE =>
+      _id_APPWIDGET_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_APP_OPS_SERVICE = _class.staticFieldId(
+    r"APP_OPS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String APP_OPS_SERVICE
-  static const APP_OPS_SERVICE = r"""appops""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get APP_OPS_SERVICE =>
+      _id_APP_OPS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_APP_SEARCH_SERVICE = _class.staticFieldId(
+    r"APP_SEARCH_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String APP_SEARCH_SERVICE
-  static const APP_SEARCH_SERVICE = r"""app_search""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get APP_SEARCH_SERVICE =>
+      _id_APP_SEARCH_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_AUDIO_SERVICE = _class.staticFieldId(
+    r"AUDIO_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String AUDIO_SERVICE
-  static const AUDIO_SERVICE = r"""audio""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get AUDIO_SERVICE =>
+      _id_AUDIO_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_BATTERY_SERVICE = _class.staticFieldId(
+    r"BATTERY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String BATTERY_SERVICE
-  static const BATTERY_SERVICE = r"""batterymanager""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get BATTERY_SERVICE =>
+      _id_BATTERY_SERVICE.get(_class, const jni.JStringType());
 
   /// from: static public final int BIND_ABOVE_CLIENT
   static const BIND_ABOVE_CLIENT = 8;
@@ -4370,43 +4216,125 @@ class Context extends jni.JObject {
 
   /// from: static public final int BIND_WAIVE_PRIORITY
   static const BIND_WAIVE_PRIORITY = 32;
+  static final _id_BIOMETRIC_SERVICE = _class.staticFieldId(
+    r"BIOMETRIC_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String BIOMETRIC_SERVICE
-  static const BIOMETRIC_SERVICE = r"""biometric""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get BIOMETRIC_SERVICE =>
+      _id_BIOMETRIC_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_BLOB_STORE_SERVICE = _class.staticFieldId(
+    r"BLOB_STORE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String BLOB_STORE_SERVICE
-  static const BLOB_STORE_SERVICE = r"""blob_store""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get BLOB_STORE_SERVICE =>
+      _id_BLOB_STORE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_BLUETOOTH_SERVICE = _class.staticFieldId(
+    r"BLUETOOTH_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String BLUETOOTH_SERVICE
-  static const BLUETOOTH_SERVICE = r"""bluetooth""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get BLUETOOTH_SERVICE =>
+      _id_BLUETOOTH_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_BUGREPORT_SERVICE = _class.staticFieldId(
+    r"BUGREPORT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String BUGREPORT_SERVICE
-  static const BUGREPORT_SERVICE = r"""bugreport""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get BUGREPORT_SERVICE =>
+      _id_BUGREPORT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CAMERA_SERVICE = _class.staticFieldId(
+    r"CAMERA_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CAMERA_SERVICE
-  static const CAMERA_SERVICE = r"""camera""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CAMERA_SERVICE =>
+      _id_CAMERA_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CAPTIONING_SERVICE = _class.staticFieldId(
+    r"CAPTIONING_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CAPTIONING_SERVICE
-  static const CAPTIONING_SERVICE = r"""captioning""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CAPTIONING_SERVICE =>
+      _id_CAPTIONING_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CARRIER_CONFIG_SERVICE = _class.staticFieldId(
+    r"CARRIER_CONFIG_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CARRIER_CONFIG_SERVICE
-  static const CARRIER_CONFIG_SERVICE = r"""carrier_config""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CARRIER_CONFIG_SERVICE =>
+      _id_CARRIER_CONFIG_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CLIPBOARD_SERVICE = _class.staticFieldId(
+    r"CLIPBOARD_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CLIPBOARD_SERVICE
-  static const CLIPBOARD_SERVICE = r"""clipboard""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CLIPBOARD_SERVICE =>
+      _id_CLIPBOARD_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_COMPANION_DEVICE_SERVICE = _class.staticFieldId(
+    r"COMPANION_DEVICE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String COMPANION_DEVICE_SERVICE
-  static const COMPANION_DEVICE_SERVICE = r"""companiondevice""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get COMPANION_DEVICE_SERVICE =>
+      _id_COMPANION_DEVICE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CONNECTIVITY_DIAGNOSTICS_SERVICE = _class.staticFieldId(
+    r"CONNECTIVITY_DIAGNOSTICS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CONNECTIVITY_DIAGNOSTICS_SERVICE
-  static const CONNECTIVITY_DIAGNOSTICS_SERVICE =
-      r"""connectivity_diagnostics""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CONNECTIVITY_DIAGNOSTICS_SERVICE =>
+      _id_CONNECTIVITY_DIAGNOSTICS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CONNECTIVITY_SERVICE = _class.staticFieldId(
+    r"CONNECTIVITY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CONNECTIVITY_SERVICE
-  static const CONNECTIVITY_SERVICE = r"""connectivity""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CONNECTIVITY_SERVICE =>
+      _id_CONNECTIVITY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CONSUMER_IR_SERVICE = _class.staticFieldId(
+    r"CONSUMER_IR_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CONSUMER_IR_SERVICE
-  static const CONSUMER_IR_SERVICE = r"""consumer_ir""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CONSUMER_IR_SERVICE =>
+      _id_CONSUMER_IR_SERVICE.get(_class, const jni.JStringType());
 
   /// from: static public final int CONTEXT_IGNORE_SECURITY
   static const CONTEXT_IGNORE_SECURITY = 2;
@@ -4416,105 +4344,320 @@ class Context extends jni.JObject {
 
   /// from: static public final int CONTEXT_RESTRICTED
   static const CONTEXT_RESTRICTED = 4;
+  static final _id_CREDENTIAL_SERVICE = _class.staticFieldId(
+    r"CREDENTIAL_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CREDENTIAL_SERVICE
-  static const CREDENTIAL_SERVICE = r"""credential""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CREDENTIAL_SERVICE =>
+      _id_CREDENTIAL_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_CROSS_PROFILE_APPS_SERVICE = _class.staticFieldId(
+    r"CROSS_PROFILE_APPS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String CROSS_PROFILE_APPS_SERVICE
-  static const CROSS_PROFILE_APPS_SERVICE = r"""crossprofileapps""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get CROSS_PROFILE_APPS_SERVICE =>
+      _id_CROSS_PROFILE_APPS_SERVICE.get(_class, const jni.JStringType());
 
   /// from: static public final int DEVICE_ID_DEFAULT
   static const DEVICE_ID_DEFAULT = 0;
 
   /// from: static public final int DEVICE_ID_INVALID
   static const DEVICE_ID_INVALID = -1;
+  static final _id_DEVICE_LOCK_SERVICE = _class.staticFieldId(
+    r"DEVICE_LOCK_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DEVICE_LOCK_SERVICE
-  static const DEVICE_LOCK_SERVICE = r"""device_lock""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DEVICE_LOCK_SERVICE =>
+      _id_DEVICE_LOCK_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DEVICE_POLICY_SERVICE = _class.staticFieldId(
+    r"DEVICE_POLICY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DEVICE_POLICY_SERVICE
-  static const DEVICE_POLICY_SERVICE = r"""device_policy""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DEVICE_POLICY_SERVICE =>
+      _id_DEVICE_POLICY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DISPLAY_HASH_SERVICE = _class.staticFieldId(
+    r"DISPLAY_HASH_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DISPLAY_HASH_SERVICE
-  static const DISPLAY_HASH_SERVICE = r"""display_hash""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DISPLAY_HASH_SERVICE =>
+      _id_DISPLAY_HASH_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DISPLAY_SERVICE = _class.staticFieldId(
+    r"DISPLAY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DISPLAY_SERVICE
-  static const DISPLAY_SERVICE = r"""display""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DISPLAY_SERVICE =>
+      _id_DISPLAY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DOMAIN_VERIFICATION_SERVICE = _class.staticFieldId(
+    r"DOMAIN_VERIFICATION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DOMAIN_VERIFICATION_SERVICE
-  static const DOMAIN_VERIFICATION_SERVICE = r"""domain_verification""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DOMAIN_VERIFICATION_SERVICE =>
+      _id_DOMAIN_VERIFICATION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DOWNLOAD_SERVICE = _class.staticFieldId(
+    r"DOWNLOAD_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DOWNLOAD_SERVICE
-  static const DOWNLOAD_SERVICE = r"""download""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DOWNLOAD_SERVICE =>
+      _id_DOWNLOAD_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_DROPBOX_SERVICE = _class.staticFieldId(
+    r"DROPBOX_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String DROPBOX_SERVICE
-  static const DROPBOX_SERVICE = r"""dropbox""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get DROPBOX_SERVICE =>
+      _id_DROPBOX_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_EUICC_SERVICE = _class.staticFieldId(
+    r"EUICC_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String EUICC_SERVICE
-  static const EUICC_SERVICE = r"""euicc""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get EUICC_SERVICE =>
+      _id_EUICC_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_FILE_INTEGRITY_SERVICE = _class.staticFieldId(
+    r"FILE_INTEGRITY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String FILE_INTEGRITY_SERVICE
-  static const FILE_INTEGRITY_SERVICE = r"""file_integrity""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get FILE_INTEGRITY_SERVICE =>
+      _id_FILE_INTEGRITY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_FINGERPRINT_SERVICE = _class.staticFieldId(
+    r"FINGERPRINT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String FINGERPRINT_SERVICE
-  static const FINGERPRINT_SERVICE = r"""fingerprint""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get FINGERPRINT_SERVICE =>
+      _id_FINGERPRINT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_GAME_SERVICE = _class.staticFieldId(
+    r"GAME_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String GAME_SERVICE
-  static const GAME_SERVICE = r"""game""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get GAME_SERVICE =>
+      _id_GAME_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_GRAMMATICAL_INFLECTION_SERVICE = _class.staticFieldId(
+    r"GRAMMATICAL_INFLECTION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String GRAMMATICAL_INFLECTION_SERVICE
-  static const GRAMMATICAL_INFLECTION_SERVICE = r"""grammatical_inflection""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get GRAMMATICAL_INFLECTION_SERVICE =>
+      _id_GRAMMATICAL_INFLECTION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_HARDWARE_PROPERTIES_SERVICE = _class.staticFieldId(
+    r"HARDWARE_PROPERTIES_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String HARDWARE_PROPERTIES_SERVICE
-  static const HARDWARE_PROPERTIES_SERVICE = r"""hardware_properties""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get HARDWARE_PROPERTIES_SERVICE =>
+      _id_HARDWARE_PROPERTIES_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_HEALTHCONNECT_SERVICE = _class.staticFieldId(
+    r"HEALTHCONNECT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String HEALTHCONNECT_SERVICE
-  static const HEALTHCONNECT_SERVICE = r"""healthconnect""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get HEALTHCONNECT_SERVICE =>
+      _id_HEALTHCONNECT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_INPUT_METHOD_SERVICE = _class.staticFieldId(
+    r"INPUT_METHOD_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String INPUT_METHOD_SERVICE
-  static const INPUT_METHOD_SERVICE = r"""input_method""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get INPUT_METHOD_SERVICE =>
+      _id_INPUT_METHOD_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_INPUT_SERVICE = _class.staticFieldId(
+    r"INPUT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String INPUT_SERVICE
-  static const INPUT_SERVICE = r"""input""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get INPUT_SERVICE =>
+      _id_INPUT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_IPSEC_SERVICE = _class.staticFieldId(
+    r"IPSEC_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String IPSEC_SERVICE
-  static const IPSEC_SERVICE = r"""ipsec""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get IPSEC_SERVICE =>
+      _id_IPSEC_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_JOB_SCHEDULER_SERVICE = _class.staticFieldId(
+    r"JOB_SCHEDULER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String JOB_SCHEDULER_SERVICE
-  static const JOB_SCHEDULER_SERVICE = r"""jobscheduler""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get JOB_SCHEDULER_SERVICE =>
+      _id_JOB_SCHEDULER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_KEYGUARD_SERVICE = _class.staticFieldId(
+    r"KEYGUARD_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String KEYGUARD_SERVICE
-  static const KEYGUARD_SERVICE = r"""keyguard""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get KEYGUARD_SERVICE =>
+      _id_KEYGUARD_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_LAUNCHER_APPS_SERVICE = _class.staticFieldId(
+    r"LAUNCHER_APPS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String LAUNCHER_APPS_SERVICE
-  static const LAUNCHER_APPS_SERVICE = r"""launcherapps""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get LAUNCHER_APPS_SERVICE =>
+      _id_LAUNCHER_APPS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_LAYOUT_INFLATER_SERVICE = _class.staticFieldId(
+    r"LAYOUT_INFLATER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String LAYOUT_INFLATER_SERVICE
-  static const LAYOUT_INFLATER_SERVICE = r"""layout_inflater""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get LAYOUT_INFLATER_SERVICE =>
+      _id_LAYOUT_INFLATER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_LOCALE_SERVICE = _class.staticFieldId(
+    r"LOCALE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String LOCALE_SERVICE
-  static const LOCALE_SERVICE = r"""locale""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get LOCALE_SERVICE =>
+      _id_LOCALE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_LOCATION_SERVICE = _class.staticFieldId(
+    r"LOCATION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String LOCATION_SERVICE
-  static const LOCATION_SERVICE = r"""location""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get LOCATION_SERVICE =>
+      _id_LOCATION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MEDIA_COMMUNICATION_SERVICE = _class.staticFieldId(
+    r"MEDIA_COMMUNICATION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MEDIA_COMMUNICATION_SERVICE
-  static const MEDIA_COMMUNICATION_SERVICE = r"""media_communication""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MEDIA_COMMUNICATION_SERVICE =>
+      _id_MEDIA_COMMUNICATION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MEDIA_METRICS_SERVICE = _class.staticFieldId(
+    r"MEDIA_METRICS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MEDIA_METRICS_SERVICE
-  static const MEDIA_METRICS_SERVICE = r"""media_metrics""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MEDIA_METRICS_SERVICE =>
+      _id_MEDIA_METRICS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MEDIA_PROJECTION_SERVICE = _class.staticFieldId(
+    r"MEDIA_PROJECTION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MEDIA_PROJECTION_SERVICE
-  static const MEDIA_PROJECTION_SERVICE = r"""media_projection""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MEDIA_PROJECTION_SERVICE =>
+      _id_MEDIA_PROJECTION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MEDIA_ROUTER_SERVICE = _class.staticFieldId(
+    r"MEDIA_ROUTER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MEDIA_ROUTER_SERVICE
-  static const MEDIA_ROUTER_SERVICE = r"""media_router""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MEDIA_ROUTER_SERVICE =>
+      _id_MEDIA_ROUTER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MEDIA_SESSION_SERVICE = _class.staticFieldId(
+    r"MEDIA_SESSION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MEDIA_SESSION_SERVICE
-  static const MEDIA_SESSION_SERVICE = r"""media_session""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MEDIA_SESSION_SERVICE =>
+      _id_MEDIA_SESSION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_MIDI_SERVICE = _class.staticFieldId(
+    r"MIDI_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String MIDI_SERVICE
-  static const MIDI_SERVICE = r"""midi""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get MIDI_SERVICE =>
+      _id_MIDI_SERVICE.get(_class, const jni.JStringType());
 
   /// from: static public final int MODE_APPEND
   static const MODE_APPEND = 32768;
@@ -4536,33 +4679,95 @@ class Context extends jni.JObject {
 
   /// from: static public final int MODE_WORLD_WRITEABLE
   static const MODE_WORLD_WRITEABLE = 2;
+  static final _id_NETWORK_STATS_SERVICE = _class.staticFieldId(
+    r"NETWORK_STATS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String NETWORK_STATS_SERVICE
-  static const NETWORK_STATS_SERVICE = r"""netstats""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get NETWORK_STATS_SERVICE =>
+      _id_NETWORK_STATS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_NFC_SERVICE = _class.staticFieldId(
+    r"NFC_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String NFC_SERVICE
-  static const NFC_SERVICE = r"""nfc""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get NFC_SERVICE =>
+      _id_NFC_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_NOTIFICATION_SERVICE = _class.staticFieldId(
+    r"NOTIFICATION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String NOTIFICATION_SERVICE
-  static const NOTIFICATION_SERVICE = r"""notification""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get NOTIFICATION_SERVICE =>
+      _id_NOTIFICATION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_NSD_SERVICE = _class.staticFieldId(
+    r"NSD_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String NSD_SERVICE
-  static const NSD_SERVICE = r"""servicediscovery""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get NSD_SERVICE =>
+      _id_NSD_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_OVERLAY_SERVICE = _class.staticFieldId(
+    r"OVERLAY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String OVERLAY_SERVICE
-  static const OVERLAY_SERVICE = r"""overlay""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get OVERLAY_SERVICE =>
+      _id_OVERLAY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_PEOPLE_SERVICE = _class.staticFieldId(
+    r"PEOPLE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String PEOPLE_SERVICE
-  static const PEOPLE_SERVICE = r"""people""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get PEOPLE_SERVICE =>
+      _id_PEOPLE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_PERFORMANCE_HINT_SERVICE = _class.staticFieldId(
+    r"PERFORMANCE_HINT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String PERFORMANCE_HINT_SERVICE
-  static const PERFORMANCE_HINT_SERVICE = r"""performance_hint""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get PERFORMANCE_HINT_SERVICE =>
+      _id_PERFORMANCE_HINT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_POWER_SERVICE = _class.staticFieldId(
+    r"POWER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String POWER_SERVICE
-  static const POWER_SERVICE = r"""power""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get POWER_SERVICE =>
+      _id_POWER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_PRINT_SERVICE = _class.staticFieldId(
+    r"PRINT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String PRINT_SERVICE
-  static const PRINT_SERVICE = r"""print""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get PRINT_SERVICE =>
+      _id_PRINT_SERVICE.get(_class, const jni.JStringType());
 
   /// from: static public final int RECEIVER_EXPORTED
   static const RECEIVER_EXPORTED = 2;
@@ -4572,260 +4777,459 @@ class Context extends jni.JObject {
 
   /// from: static public final int RECEIVER_VISIBLE_TO_INSTANT_APPS
   static const RECEIVER_VISIBLE_TO_INSTANT_APPS = 1;
+  static final _id_RESTRICTIONS_SERVICE = _class.staticFieldId(
+    r"RESTRICTIONS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String RESTRICTIONS_SERVICE
-  static const RESTRICTIONS_SERVICE = r"""restrictions""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get RESTRICTIONS_SERVICE =>
+      _id_RESTRICTIONS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_ROLE_SERVICE = _class.staticFieldId(
+    r"ROLE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String ROLE_SERVICE
-  static const ROLE_SERVICE = r"""role""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get ROLE_SERVICE =>
+      _id_ROLE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_SEARCH_SERVICE = _class.staticFieldId(
+    r"SEARCH_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String SEARCH_SERVICE
-  static const SEARCH_SERVICE = r"""search""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get SEARCH_SERVICE =>
+      _id_SEARCH_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_SENSOR_SERVICE = _class.staticFieldId(
+    r"SENSOR_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String SENSOR_SERVICE
-  static const SENSOR_SERVICE = r"""sensor""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get SENSOR_SERVICE =>
+      _id_SENSOR_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_SHORTCUT_SERVICE = _class.staticFieldId(
+    r"SHORTCUT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String SHORTCUT_SERVICE
-  static const SHORTCUT_SERVICE = r"""shortcut""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get SHORTCUT_SERVICE =>
+      _id_SHORTCUT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_STATUS_BAR_SERVICE = _class.staticFieldId(
+    r"STATUS_BAR_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String STATUS_BAR_SERVICE
-  static const STATUS_BAR_SERVICE = r"""statusbar""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get STATUS_BAR_SERVICE =>
+      _id_STATUS_BAR_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_STORAGE_SERVICE = _class.staticFieldId(
+    r"STORAGE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String STORAGE_SERVICE
-  static const STORAGE_SERVICE = r"""storage""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get STORAGE_SERVICE =>
+      _id_STORAGE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_STORAGE_STATS_SERVICE = _class.staticFieldId(
+    r"STORAGE_STATS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String STORAGE_STATS_SERVICE
-  static const STORAGE_STATS_SERVICE = r"""storagestats""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get STORAGE_STATS_SERVICE =>
+      _id_STORAGE_STATS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_SYSTEM_HEALTH_SERVICE = _class.staticFieldId(
+    r"SYSTEM_HEALTH_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String SYSTEM_HEALTH_SERVICE
-  static const SYSTEM_HEALTH_SERVICE = r"""systemhealth""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get SYSTEM_HEALTH_SERVICE =>
+      _id_SYSTEM_HEALTH_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TELECOM_SERVICE = _class.staticFieldId(
+    r"TELECOM_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TELECOM_SERVICE
-  static const TELECOM_SERVICE = r"""telecom""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TELECOM_SERVICE =>
+      _id_TELECOM_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TELEPHONY_IMS_SERVICE = _class.staticFieldId(
+    r"TELEPHONY_IMS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TELEPHONY_IMS_SERVICE
-  static const TELEPHONY_IMS_SERVICE = r"""telephony_ims""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TELEPHONY_IMS_SERVICE =>
+      _id_TELEPHONY_IMS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TELEPHONY_SERVICE = _class.staticFieldId(
+    r"TELEPHONY_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TELEPHONY_SERVICE
-  static const TELEPHONY_SERVICE = r"""phone""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TELEPHONY_SERVICE =>
+      _id_TELEPHONY_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TELEPHONY_SUBSCRIPTION_SERVICE = _class.staticFieldId(
+    r"TELEPHONY_SUBSCRIPTION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TELEPHONY_SUBSCRIPTION_SERVICE
-  static const TELEPHONY_SUBSCRIPTION_SERVICE =
-      r"""telephony_subscription_service""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TELEPHONY_SUBSCRIPTION_SERVICE =>
+      _id_TELEPHONY_SUBSCRIPTION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TEXT_CLASSIFICATION_SERVICE = _class.staticFieldId(
+    r"TEXT_CLASSIFICATION_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TEXT_CLASSIFICATION_SERVICE
-  static const TEXT_CLASSIFICATION_SERVICE = r"""textclassification""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TEXT_CLASSIFICATION_SERVICE =>
+      _id_TEXT_CLASSIFICATION_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TEXT_SERVICES_MANAGER_SERVICE = _class.staticFieldId(
+    r"TEXT_SERVICES_MANAGER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TEXT_SERVICES_MANAGER_SERVICE
-  static const TEXT_SERVICES_MANAGER_SERVICE = r"""textservices""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TEXT_SERVICES_MANAGER_SERVICE =>
+      _id_TEXT_SERVICES_MANAGER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TV_INPUT_SERVICE = _class.staticFieldId(
+    r"TV_INPUT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TV_INPUT_SERVICE
-  static const TV_INPUT_SERVICE = r"""tv_input""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TV_INPUT_SERVICE =>
+      _id_TV_INPUT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_TV_INTERACTIVE_APP_SERVICE = _class.staticFieldId(
+    r"TV_INTERACTIVE_APP_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String TV_INTERACTIVE_APP_SERVICE
-  static const TV_INTERACTIVE_APP_SERVICE = r"""tv_interactive_app""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get TV_INTERACTIVE_APP_SERVICE =>
+      _id_TV_INTERACTIVE_APP_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_UI_MODE_SERVICE = _class.staticFieldId(
+    r"UI_MODE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String UI_MODE_SERVICE
-  static const UI_MODE_SERVICE = r"""uimode""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get UI_MODE_SERVICE =>
+      _id_UI_MODE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_USAGE_STATS_SERVICE = _class.staticFieldId(
+    r"USAGE_STATS_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String USAGE_STATS_SERVICE
-  static const USAGE_STATS_SERVICE = r"""usagestats""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get USAGE_STATS_SERVICE =>
+      _id_USAGE_STATS_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_USB_SERVICE = _class.staticFieldId(
+    r"USB_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String USB_SERVICE
-  static const USB_SERVICE = r"""usb""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get USB_SERVICE =>
+      _id_USB_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_USER_SERVICE = _class.staticFieldId(
+    r"USER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String USER_SERVICE
-  static const USER_SERVICE = r"""user""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get USER_SERVICE =>
+      _id_USER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_VIBRATOR_MANAGER_SERVICE = _class.staticFieldId(
+    r"VIBRATOR_MANAGER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String VIBRATOR_MANAGER_SERVICE
-  static const VIBRATOR_MANAGER_SERVICE = r"""vibrator_manager""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get VIBRATOR_MANAGER_SERVICE =>
+      _id_VIBRATOR_MANAGER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_VIBRATOR_SERVICE = _class.staticFieldId(
+    r"VIBRATOR_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String VIBRATOR_SERVICE
-  static const VIBRATOR_SERVICE = r"""vibrator""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get VIBRATOR_SERVICE =>
+      _id_VIBRATOR_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_VIRTUAL_DEVICE_SERVICE = _class.staticFieldId(
+    r"VIRTUAL_DEVICE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String VIRTUAL_DEVICE_SERVICE
-  static const VIRTUAL_DEVICE_SERVICE = r"""virtualdevice""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get VIRTUAL_DEVICE_SERVICE =>
+      _id_VIRTUAL_DEVICE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_VPN_MANAGEMENT_SERVICE = _class.staticFieldId(
+    r"VPN_MANAGEMENT_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String VPN_MANAGEMENT_SERVICE
-  static const VPN_MANAGEMENT_SERVICE = r"""vpn_management""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get VPN_MANAGEMENT_SERVICE =>
+      _id_VPN_MANAGEMENT_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WALLPAPER_SERVICE = _class.staticFieldId(
+    r"WALLPAPER_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WALLPAPER_SERVICE
-  static const WALLPAPER_SERVICE = r"""wallpaper""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WALLPAPER_SERVICE =>
+      _id_WALLPAPER_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WIFI_AWARE_SERVICE = _class.staticFieldId(
+    r"WIFI_AWARE_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WIFI_AWARE_SERVICE
-  static const WIFI_AWARE_SERVICE = r"""wifiaware""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WIFI_AWARE_SERVICE =>
+      _id_WIFI_AWARE_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WIFI_P2P_SERVICE = _class.staticFieldId(
+    r"WIFI_P2P_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WIFI_P2P_SERVICE
-  static const WIFI_P2P_SERVICE = r"""wifip2p""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WIFI_P2P_SERVICE =>
+      _id_WIFI_P2P_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WIFI_RTT_RANGING_SERVICE = _class.staticFieldId(
+    r"WIFI_RTT_RANGING_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WIFI_RTT_RANGING_SERVICE
-  static const WIFI_RTT_RANGING_SERVICE = r"""wifirtt""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WIFI_RTT_RANGING_SERVICE =>
+      _id_WIFI_RTT_RANGING_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WIFI_SERVICE = _class.staticFieldId(
+    r"WIFI_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WIFI_SERVICE
-  static const WIFI_SERVICE = r"""wifi""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WIFI_SERVICE =>
+      _id_WIFI_SERVICE.get(_class, const jni.JStringType());
+
+  static final _id_WINDOW_SERVICE = _class.staticFieldId(
+    r"WINDOW_SERVICE",
+    r"Ljava/lang/String;",
+  );
 
   /// from: static public final java.lang.String WINDOW_SERVICE
-  static const WINDOW_SERVICE = r"""window""";
+  /// The returned object must be released after use, by calling the [release] method.
+  static jni.JString get WINDOW_SERVICE =>
+      _id_WINDOW_SERVICE.get(_class, const jni.JStringType());
 
-  static final _id_new0 =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"<init>", r"()V");
+  static final _id_new0 = _class.constructorId(
+    r"()V",
+  );
 
   /// from: public void <init>()
   /// The returned object must be released after use, by calling the [release] method.
   factory Context() {
-    return Context.fromRef(jni.Jni.accessors
-        .newObjectWithArgs(_class.reference, _id_new0, []).object);
+    return Context.fromReference(_id_new0(_class, referenceType, []));
   }
 
-  static final _id_getAssets = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getAssets", r"()Landroid/content/res/AssetManager;");
+  static final _id_getAssets = _class.instanceMethodId(
+    r"getAssets",
+    r"()Landroid/content/res/AssetManager;",
+  );
 
   /// from: public abstract android.content.res.AssetManager getAssets()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getAssets() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getAssets, jni.JniCallType.objectType, []).object);
+    return _id_getAssets(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getResources = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getResources", r"()Landroid/content/res/Resources;");
+  static final _id_getResources = _class.instanceMethodId(
+    r"getResources",
+    r"()Landroid/content/res/Resources;",
+  );
 
   /// from: public abstract android.content.res.Resources getResources()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getResources() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getResources, jni.JniCallType.objectType, []).object);
+    return _id_getResources(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getPackageManager = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getPackageManager",
-      r"()Landroid/content/pm/PackageManager;");
+  static final _id_getPackageManager = _class.instanceMethodId(
+    r"getPackageManager",
+    r"()Landroid/content/pm/PackageManager;",
+  );
 
   /// from: public abstract android.content.pm.PackageManager getPackageManager()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getPackageManager() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getPackageManager,
-        jni.JniCallType.objectType, []).object);
+    return _id_getPackageManager(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getContentResolver = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getContentResolver",
-      r"()Landroid/content/ContentResolver;");
+  static final _id_getContentResolver = _class.instanceMethodId(
+    r"getContentResolver",
+    r"()Landroid/content/ContentResolver;",
+  );
 
   /// from: public abstract android.content.ContentResolver getContentResolver()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getContentResolver() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getContentResolver,
-        jni.JniCallType.objectType, []).object);
+    return _id_getContentResolver(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getMainLooper = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getMainLooper", r"()Landroid/os/Looper;");
+  static final _id_getMainLooper = _class.instanceMethodId(
+    r"getMainLooper",
+    r"()Landroid/os/Looper;",
+  );
 
   /// from: public abstract android.os.Looper getMainLooper()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getMainLooper() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getMainLooper, jni.JniCallType.objectType, []).object);
+    return _id_getMainLooper(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getMainExecutor = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getMainExecutor",
-      r"()Ljava/util/concurrent/Executor;");
+  static final _id_getMainExecutor = _class.instanceMethodId(
+    r"getMainExecutor",
+    r"()Ljava/util/concurrent/Executor;",
+  );
 
   /// from: public java.util.concurrent.Executor getMainExecutor()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getMainExecutor() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getMainExecutor, jni.JniCallType.objectType, []).object);
+    return _id_getMainExecutor(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getApplicationContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getApplicationContext",
-      r"()Landroid/content/Context;");
+  static final _id_getApplicationContext = _class.instanceMethodId(
+    r"getApplicationContext",
+    r"()Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context getApplicationContext()
   /// The returned object must be released after use, by calling the [release] method.
   Context getApplicationContext() {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getApplicationContext,
-        jni.JniCallType.objectType, []).object);
+    return _id_getApplicationContext(this, const $ContextType(), []);
   }
 
-  static final _id_registerComponentCallbacks = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerComponentCallbacks",
-      r"(Landroid/content/ComponentCallbacks;)V");
+  static final _id_registerComponentCallbacks = _class.instanceMethodId(
+    r"registerComponentCallbacks",
+    r"(Landroid/content/ComponentCallbacks;)V",
+  );
 
   /// from: public void registerComponentCallbacks(android.content.ComponentCallbacks componentCallbacks)
   void registerComponentCallbacks(
     jni.JObject componentCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerComponentCallbacks,
-        jni.JniCallType.voidType,
-        [componentCallbacks.reference]).check();
+    _id_registerComponentCallbacks(
+        this, const jni.jvoidType(), [componentCallbacks.reference.pointer]);
   }
 
-  static final _id_unregisterComponentCallbacks = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"unregisterComponentCallbacks",
-          r"(Landroid/content/ComponentCallbacks;)V");
+  static final _id_unregisterComponentCallbacks = _class.instanceMethodId(
+    r"unregisterComponentCallbacks",
+    r"(Landroid/content/ComponentCallbacks;)V",
+  );
 
   /// from: public void unregisterComponentCallbacks(android.content.ComponentCallbacks componentCallbacks)
   void unregisterComponentCallbacks(
     jni.JObject componentCallbacks,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterComponentCallbacks,
-        jni.JniCallType.voidType,
-        [componentCallbacks.reference]).check();
+    _id_unregisterComponentCallbacks(
+        this, const jni.jvoidType(), [componentCallbacks.reference.pointer]);
   }
 
-  static final _id_getText = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getText", r"(I)Ljava/lang/CharSequence;");
+  static final _id_getText = _class.instanceMethodId(
+    r"getText",
+    r"(I)Ljava/lang/CharSequence;",
+  );
 
   /// from: public final java.lang.CharSequence getText(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getText(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getText,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_getText(this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getString = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getString", r"(I)Ljava/lang/String;");
+  static final _id_getString = _class.instanceMethodId(
+    r"getString",
+    r"(I)Ljava/lang/String;",
+  );
 
   /// from: public final java.lang.String getString(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getString(
     int i,
   ) {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getString,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_getString(this, const jni.JStringType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getString1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getString",
-      r"(I[Ljava/lang/Object;)Ljava/lang/String;");
+  static final _id_getString1 = _class.instanceMethodId(
+    r"getString",
+    r"(I[Ljava/lang/Object;)Ljava/lang/String;",
+  );
 
   /// from: public final java.lang.String getString(int i, java.lang.Object[] objects)
   /// The returned object must be released after use, by calling the [release] method.
@@ -4833,100 +5237,90 @@ class Context extends jni.JObject {
     int i,
     jni.JArray<jni.JObject> objects,
   ) {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getString1,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i), objects.reference]).object);
+    return _id_getString1(this, const jni.JStringType(),
+        [jni.JValueInt(i), objects.reference.pointer]);
   }
 
-  static final _id_getColor =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"getColor", r"(I)I");
+  static final _id_getColor = _class.instanceMethodId(
+    r"getColor",
+    r"(I)I",
+  );
 
   /// from: public final int getColor(int i)
   int getColor(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_getColor,
-        jni.JniCallType.intType, [jni.JValueInt(i)]).integer;
+    return _id_getColor(this, const jni.jintType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getDrawable = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getDrawable",
-      r"(I)Landroid/graphics/drawable/Drawable;");
+  static final _id_getDrawable = _class.instanceMethodId(
+    r"getDrawable",
+    r"(I)Landroid/graphics/drawable/Drawable;",
+  );
 
   /// from: public final android.graphics.drawable.Drawable getDrawable(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getDrawable(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getDrawable,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_getDrawable(this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getColorStateList = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getColorStateList",
-      r"(I)Landroid/content/res/ColorStateList;");
+  static final _id_getColorStateList = _class.instanceMethodId(
+    r"getColorStateList",
+    r"(I)Landroid/content/res/ColorStateList;",
+  );
 
   /// from: public final android.content.res.ColorStateList getColorStateList(int i)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getColorStateList(
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getColorStateList,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_getColorStateList(
+        this, const jni.JObjectType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_setTheme =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"setTheme", r"(I)V");
+  static final _id_setTheme = _class.instanceMethodId(
+    r"setTheme",
+    r"(I)V",
+  );
 
   /// from: public abstract void setTheme(int i)
   void setTheme(
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setTheme,
-        jni.JniCallType.voidType, [jni.JValueInt(i)]).check();
+    _id_setTheme(this, const jni.jvoidType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_getTheme = jni.Jni.accessors.getMethodIDOf(_class.reference,
-      r"getTheme", r"()Landroid/content/res/Resources$Theme;");
+  static final _id_getTheme = _class.instanceMethodId(
+    r"getTheme",
+    r"()Landroid/content/res/Resources$Theme;",
+  );
 
   /// from: public abstract android.content.res.Resources$Theme getTheme()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getTheme() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getTheme, jni.JniCallType.objectType, []).object);
+    return _id_getTheme(this, const jni.JObjectType(), []);
   }
 
-  static final _id_obtainStyledAttributes = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"obtainStyledAttributes",
-      r"([I)Landroid/content/res/TypedArray;");
+  static final _id_obtainStyledAttributes = _class.instanceMethodId(
+    r"obtainStyledAttributes",
+    r"([I)Landroid/content/res/TypedArray;",
+  );
 
   /// from: public final android.content.res.TypedArray obtainStyledAttributes(int[] is)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject obtainStyledAttributes(
     jni.JArray<jni.jint> is0,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_obtainStyledAttributes,
-        jni.JniCallType.objectType,
-        [is0.reference]).object);
+    return _id_obtainStyledAttributes(
+        this, const jni.JObjectType(), [is0.reference.pointer]);
   }
 
-  static final _id_obtainStyledAttributes1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"obtainStyledAttributes",
-      r"(I[I)Landroid/content/res/TypedArray;");
+  static final _id_obtainStyledAttributes1 = _class.instanceMethodId(
+    r"obtainStyledAttributes",
+    r"(I[I)Landroid/content/res/TypedArray;",
+  );
 
   /// from: public final android.content.res.TypedArray obtainStyledAttributes(int i, int[] is)
   /// The returned object must be released after use, by calling the [release] method.
@@ -4934,17 +5328,14 @@ class Context extends jni.JObject {
     int i,
     jni.JArray<jni.jint> is0,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_obtainStyledAttributes1,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i), is0.reference]).object);
+    return _id_obtainStyledAttributes1(this, const jni.JObjectType(),
+        [jni.JValueInt(i), is0.reference.pointer]);
   }
 
-  static final _id_obtainStyledAttributes2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"obtainStyledAttributes",
-      r"(Landroid/util/AttributeSet;[I)Landroid/content/res/TypedArray;");
+  static final _id_obtainStyledAttributes2 = _class.instanceMethodId(
+    r"obtainStyledAttributes",
+    r"(Landroid/util/AttributeSet;[I)Landroid/content/res/TypedArray;",
+  );
 
   /// from: public final android.content.res.TypedArray obtainStyledAttributes(android.util.AttributeSet attributeSet, int[] is)
   /// The returned object must be released after use, by calling the [release] method.
@@ -4952,17 +5343,14 @@ class Context extends jni.JObject {
     jni.JObject attributeSet,
     jni.JArray<jni.jint> is0,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_obtainStyledAttributes2,
-        jni.JniCallType.objectType,
-        [attributeSet.reference, is0.reference]).object);
+    return _id_obtainStyledAttributes2(this, const jni.JObjectType(),
+        [attributeSet.reference.pointer, is0.reference.pointer]);
   }
 
-  static final _id_obtainStyledAttributes3 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"obtainStyledAttributes",
-      r"(Landroid/util/AttributeSet;[III)Landroid/content/res/TypedArray;");
+  static final _id_obtainStyledAttributes3 = _class.instanceMethodId(
+    r"obtainStyledAttributes",
+    r"(Landroid/util/AttributeSet;[III)Landroid/content/res/TypedArray;",
+  );
 
   /// from: public final android.content.res.TypedArray obtainStyledAttributes(android.util.AttributeSet attributeSet, int[] is, int i, int i1)
   /// The returned object must be released after use, by calling the [release] method.
@@ -4972,125 +5360,117 @@ class Context extends jni.JObject {
     int i,
     int i1,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_obtainStyledAttributes3, jni.JniCallType.objectType, [
-      attributeSet.reference,
-      is0.reference,
+    return _id_obtainStyledAttributes3(this, const jni.JObjectType(), [
+      attributeSet.reference.pointer,
+      is0.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1)
-    ]).object);
+    ]);
   }
 
-  static final _id_getClassLoader = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getClassLoader", r"()Ljava/lang/ClassLoader;");
+  static final _id_getClassLoader = _class.instanceMethodId(
+    r"getClassLoader",
+    r"()Ljava/lang/ClassLoader;",
+  );
 
   /// from: public abstract java.lang.ClassLoader getClassLoader()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getClassLoader() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getClassLoader, jni.JniCallType.objectType, []).object);
+    return _id_getClassLoader(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getPackageName = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getPackageName", r"()Ljava/lang/String;");
+  static final _id_getPackageName = _class.instanceMethodId(
+    r"getPackageName",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String getPackageName()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getPackageName() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getPackageName, jni.JniCallType.objectType, []).object);
+    return _id_getPackageName(this, const jni.JStringType(), []);
   }
 
-  static final _id_getOpPackageName = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getOpPackageName", r"()Ljava/lang/String;");
+  static final _id_getOpPackageName = _class.instanceMethodId(
+    r"getOpPackageName",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public java.lang.String getOpPackageName()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getOpPackageName() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getOpPackageName,
-        jni.JniCallType.objectType, []).object);
+    return _id_getOpPackageName(this, const jni.JStringType(), []);
   }
 
-  static final _id_getAttributionTag = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getAttributionTag", r"()Ljava/lang/String;");
+  static final _id_getAttributionTag = _class.instanceMethodId(
+    r"getAttributionTag",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public java.lang.String getAttributionTag()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getAttributionTag() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getAttributionTag,
-        jni.JniCallType.objectType, []).object);
+    return _id_getAttributionTag(this, const jni.JStringType(), []);
   }
 
-  static final _id_getAttributionSource = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getAttributionSource",
-      r"()Landroid/content/AttributionSource;");
+  static final _id_getAttributionSource = _class.instanceMethodId(
+    r"getAttributionSource",
+    r"()Landroid/content/AttributionSource;",
+  );
 
   /// from: public android.content.AttributionSource getAttributionSource()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getAttributionSource() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getAttributionSource,
-        jni.JniCallType.objectType, []).object);
+    return _id_getAttributionSource(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getParams = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getParams", r"()Landroid/content/ContextParams;");
+  static final _id_getParams = _class.instanceMethodId(
+    r"getParams",
+    r"()Landroid/content/ContextParams;",
+  );
 
   /// from: public android.content.ContextParams getParams()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getParams() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getParams, jni.JniCallType.objectType, []).object);
+    return _id_getParams(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getApplicationInfo = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getApplicationInfo",
-      r"()Landroid/content/pm/ApplicationInfo;");
+  static final _id_getApplicationInfo = _class.instanceMethodId(
+    r"getApplicationInfo",
+    r"()Landroid/content/pm/ApplicationInfo;",
+  );
 
   /// from: public abstract android.content.pm.ApplicationInfo getApplicationInfo()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getApplicationInfo() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getApplicationInfo,
-        jni.JniCallType.objectType, []).object);
+    return _id_getApplicationInfo(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getPackageResourcePath = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getPackageResourcePath", r"()Ljava/lang/String;");
+  static final _id_getPackageResourcePath = _class.instanceMethodId(
+    r"getPackageResourcePath",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String getPackageResourcePath()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getPackageResourcePath() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getPackageResourcePath,
-        jni.JniCallType.objectType, []).object);
+    return _id_getPackageResourcePath(this, const jni.JStringType(), []);
   }
 
-  static final _id_getPackageCodePath = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getPackageCodePath", r"()Ljava/lang/String;");
+  static final _id_getPackageCodePath = _class.instanceMethodId(
+    r"getPackageCodePath",
+    r"()Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String getPackageCodePath()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getPackageCodePath() {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getPackageCodePath,
-        jni.JniCallType.objectType, []).object);
+    return _id_getPackageCodePath(this, const jni.JStringType(), []);
   }
 
-  static final _id_getSharedPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSharedPreferences",
-      r"(Ljava/lang/String;I)Landroid/content/SharedPreferences;");
+  static final _id_getSharedPreferences = _class.instanceMethodId(
+    r"getSharedPreferences",
+    r"(Ljava/lang/String;I)Landroid/content/SharedPreferences;",
+  );
 
   /// from: public abstract android.content.SharedPreferences getSharedPreferences(java.lang.String string, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -5098,65 +5478,55 @@ class Context extends jni.JObject {
     jni.JString string,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSharedPreferences,
-        jni.JniCallType.objectType,
-        [string.reference, jni.JValueInt(i)]).object);
+    return _id_getSharedPreferences(this, const jni.JObjectType(),
+        [string.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_moveSharedPreferencesFrom = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"moveSharedPreferencesFrom",
-      r"(Landroid/content/Context;Ljava/lang/String;)Z");
+  static final _id_moveSharedPreferencesFrom = _class.instanceMethodId(
+    r"moveSharedPreferencesFrom",
+    r"(Landroid/content/Context;Ljava/lang/String;)Z",
+  );
 
   /// from: public abstract boolean moveSharedPreferencesFrom(android.content.Context context, java.lang.String string)
   bool moveSharedPreferencesFrom(
     Context context,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_moveSharedPreferencesFrom,
-        jni.JniCallType.booleanType,
-        [context.reference, string.reference]).boolean;
+    return _id_moveSharedPreferencesFrom(this, const jni.jbooleanType(),
+        [context.reference.pointer, string.reference.pointer]);
   }
 
-  static final _id_deleteSharedPreferences = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"deleteSharedPreferences", r"(Ljava/lang/String;)Z");
+  static final _id_deleteSharedPreferences = _class.instanceMethodId(
+    r"deleteSharedPreferences",
+    r"(Ljava/lang/String;)Z",
+  );
 
   /// from: public abstract boolean deleteSharedPreferences(java.lang.String string)
   bool deleteSharedPreferences(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_deleteSharedPreferences,
-        jni.JniCallType.booleanType,
-        [string.reference]).boolean;
+    return _id_deleteSharedPreferences(
+        this, const jni.jbooleanType(), [string.reference.pointer]);
   }
 
-  static final _id_openFileInput = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"openFileInput",
-      r"(Ljava/lang/String;)Ljava/io/FileInputStream;");
+  static final _id_openFileInput = _class.instanceMethodId(
+    r"openFileInput",
+    r"(Ljava/lang/String;)Ljava/io/FileInputStream;",
+  );
 
   /// from: public abstract java.io.FileInputStream openFileInput(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject openFileInput(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_openFileInput,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_openFileInput(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_openFileOutput = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"openFileOutput",
-      r"(Ljava/lang/String;I)Ljava/io/FileOutputStream;");
+  static final _id_openFileOutput = _class.instanceMethodId(
+    r"openFileOutput",
+    r"(Ljava/lang/String;I)Ljava/io/FileOutputStream;",
+  );
 
   /// from: public abstract java.io.FileOutputStream openFileOutput(java.lang.String string, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -5164,193 +5534,192 @@ class Context extends jni.JObject {
     jni.JString string,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_openFileOutput,
-        jni.JniCallType.objectType,
-        [string.reference, jni.JValueInt(i)]).object);
+    return _id_openFileOutput(this, const jni.JObjectType(),
+        [string.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_deleteFile = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"deleteFile", r"(Ljava/lang/String;)Z");
+  static final _id_deleteFile = _class.instanceMethodId(
+    r"deleteFile",
+    r"(Ljava/lang/String;)Z",
+  );
 
   /// from: public abstract boolean deleteFile(java.lang.String string)
   bool deleteFile(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_deleteFile,
-        jni.JniCallType.booleanType, [string.reference]).boolean;
+    return _id_deleteFile(
+        this, const jni.jbooleanType(), [string.reference.pointer]);
   }
 
-  static final _id_getFileStreamPath = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getFileStreamPath",
-      r"(Ljava/lang/String;)Ljava/io/File;");
+  static final _id_getFileStreamPath = _class.instanceMethodId(
+    r"getFileStreamPath",
+    r"(Ljava/lang/String;)Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getFileStreamPath(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getFileStreamPath(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getFileStreamPath,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_getFileStreamPath(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_getDataDir = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getDataDir", r"()Ljava/io/File;");
+  static final _id_getDataDir = _class.instanceMethodId(
+    r"getDataDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getDataDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getDataDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getDataDir, jni.JniCallType.objectType, []).object);
+    return _id_getDataDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getFilesDir = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getFilesDir", r"()Ljava/io/File;");
+  static final _id_getFilesDir = _class.instanceMethodId(
+    r"getFilesDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getFilesDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getFilesDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getFilesDir, jni.JniCallType.objectType, []).object);
+    return _id_getFilesDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getNoBackupFilesDir = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getNoBackupFilesDir", r"()Ljava/io/File;");
+  static final _id_getNoBackupFilesDir = _class.instanceMethodId(
+    r"getNoBackupFilesDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getNoBackupFilesDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getNoBackupFilesDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getNoBackupFilesDir,
-        jni.JniCallType.objectType, []).object);
+    return _id_getNoBackupFilesDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getExternalFilesDir = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getExternalFilesDir",
-      r"(Ljava/lang/String;)Ljava/io/File;");
+  static final _id_getExternalFilesDir = _class.instanceMethodId(
+    r"getExternalFilesDir",
+    r"(Ljava/lang/String;)Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getExternalFilesDir(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getExternalFilesDir(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getExternalFilesDir,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_getExternalFilesDir(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_getExternalFilesDirs = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getExternalFilesDirs",
-      r"(Ljava/lang/String;)[Ljava/io/File;");
+  static final _id_getExternalFilesDirs = _class.instanceMethodId(
+    r"getExternalFilesDirs",
+    r"(Ljava/lang/String;)[Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File[] getExternalFilesDirs(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JObject> getExternalFilesDirs(
     jni.JString string,
   ) {
-    return const jni.JArrayType(jni.JObjectType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(reference, _id_getExternalFilesDirs,
-            jni.JniCallType.objectType, [string.reference]).object);
+    return _id_getExternalFilesDirs(this,
+        const jni.JArrayType(jni.JObjectType()), [string.reference.pointer]);
   }
 
-  static final _id_getObbDir = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getObbDir", r"()Ljava/io/File;");
+  static final _id_getObbDir = _class.instanceMethodId(
+    r"getObbDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getObbDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getObbDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getObbDir, jni.JniCallType.objectType, []).object);
+    return _id_getObbDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getObbDirs = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getObbDirs", r"()[Ljava/io/File;");
+  static final _id_getObbDirs = _class.instanceMethodId(
+    r"getObbDirs",
+    r"()[Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File[] getObbDirs()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JObject> getObbDirs() {
-    return const jni.JArrayType(jni.JObjectType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(
-            reference, _id_getObbDirs, jni.JniCallType.objectType, []).object);
+    return _id_getObbDirs(this, const jni.JArrayType(jni.JObjectType()), []);
   }
 
-  static final _id_getCacheDir = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getCacheDir", r"()Ljava/io/File;");
+  static final _id_getCacheDir = _class.instanceMethodId(
+    r"getCacheDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getCacheDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getCacheDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getCacheDir, jni.JniCallType.objectType, []).object);
+    return _id_getCacheDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getCodeCacheDir = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"getCodeCacheDir", r"()Ljava/io/File;");
+  static final _id_getCodeCacheDir = _class.instanceMethodId(
+    r"getCodeCacheDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getCodeCacheDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getCodeCacheDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getCodeCacheDir, jni.JniCallType.objectType, []).object);
+    return _id_getCodeCacheDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getExternalCacheDir = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getExternalCacheDir", r"()Ljava/io/File;");
+  static final _id_getExternalCacheDir = _class.instanceMethodId(
+    r"getExternalCacheDir",
+    r"()Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getExternalCacheDir()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getExternalCacheDir() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getExternalCacheDir,
-        jni.JniCallType.objectType, []).object);
+    return _id_getExternalCacheDir(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getExternalCacheDirs = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getExternalCacheDirs", r"()[Ljava/io/File;");
+  static final _id_getExternalCacheDirs = _class.instanceMethodId(
+    r"getExternalCacheDirs",
+    r"()[Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File[] getExternalCacheDirs()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JObject> getExternalCacheDirs() {
-    return const jni.JArrayType(jni.JObjectType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(reference, _id_getExternalCacheDirs,
-            jni.JniCallType.objectType, []).object);
+    return _id_getExternalCacheDirs(
+        this, const jni.JArrayType(jni.JObjectType()), []);
   }
 
-  static final _id_getExternalMediaDirs = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getExternalMediaDirs", r"()[Ljava/io/File;");
+  static final _id_getExternalMediaDirs = _class.instanceMethodId(
+    r"getExternalMediaDirs",
+    r"()[Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File[] getExternalMediaDirs()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JObject> getExternalMediaDirs() {
-    return const jni.JArrayType(jni.JObjectType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(reference, _id_getExternalMediaDirs,
-            jni.JniCallType.objectType, []).object);
+    return _id_getExternalMediaDirs(
+        this, const jni.JArrayType(jni.JObjectType()), []);
   }
 
-  static final _id_fileList = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"fileList", r"()[Ljava/lang/String;");
+  static final _id_fileList = _class.instanceMethodId(
+    r"fileList",
+    r"()[Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String[] fileList()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JString> fileList() {
-    return const jni.JArrayType(jni.JStringType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(
-            reference, _id_fileList, jni.JniCallType.objectType, []).object);
+    return _id_fileList(this, const jni.JArrayType(jni.JStringType()), []);
   }
 
-  static final _id_getDir = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getDir", r"(Ljava/lang/String;I)Ljava/io/File;");
+  static final _id_getDir = _class.instanceMethodId(
+    r"getDir",
+    r"(Ljava/lang/String;I)Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getDir(java.lang.String string, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -5358,17 +5727,14 @@ class Context extends jni.JObject {
     jni.JString string,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getDir,
-        jni.JniCallType.objectType,
-        [string.reference, jni.JValueInt(i)]).object);
+    return _id_getDir(this, const jni.JObjectType(),
+        [string.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_openOrCreateDatabase = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"openOrCreateDatabase",
-      r"(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;");
+  static final _id_openOrCreateDatabase = _class.instanceMethodId(
+    r"openOrCreateDatabase",
+    r"(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;",
+  );
 
   /// from: public abstract android.database.sqlite.SQLiteDatabase openOrCreateDatabase(java.lang.String string, int i, android.database.sqlite.SQLiteDatabase$CursorFactory cursorFactory)
   /// The returned object must be released after use, by calling the [release] method.
@@ -5377,17 +5743,17 @@ class Context extends jni.JObject {
     int i,
     jni.JObject cursorFactory,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_openOrCreateDatabase,
-        jni.JniCallType.objectType,
-        [string.reference, jni.JValueInt(i), cursorFactory.reference]).object);
+    return _id_openOrCreateDatabase(this, const jni.JObjectType(), [
+      string.reference.pointer,
+      jni.JValueInt(i),
+      cursorFactory.reference.pointer
+    ]);
   }
 
-  static final _id_openOrCreateDatabase1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"openOrCreateDatabase",
-      r"(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;Landroid/database/DatabaseErrorHandler;)Landroid/database/sqlite/SQLiteDatabase;");
+  static final _id_openOrCreateDatabase1 = _class.instanceMethodId(
+    r"openOrCreateDatabase",
+    r"(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;Landroid/database/DatabaseErrorHandler;)Landroid/database/sqlite/SQLiteDatabase;",
+  );
 
   /// from: public abstract android.database.sqlite.SQLiteDatabase openOrCreateDatabase(java.lang.String string, int i, android.database.sqlite.SQLiteDatabase$CursorFactory cursorFactory, android.database.DatabaseErrorHandler databaseErrorHandler)
   /// The returned object must be released after use, by calling the [release] method.
@@ -5397,207 +5763,200 @@ class Context extends jni.JObject {
     jni.JObject cursorFactory,
     jni.JObject databaseErrorHandler,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_openOrCreateDatabase1, jni.JniCallType.objectType, [
-      string.reference,
+    return _id_openOrCreateDatabase1(this, const jni.JObjectType(), [
+      string.reference.pointer,
       jni.JValueInt(i),
-      cursorFactory.reference,
-      databaseErrorHandler.reference
-    ]).object);
+      cursorFactory.reference.pointer,
+      databaseErrorHandler.reference.pointer
+    ]);
   }
 
-  static final _id_moveDatabaseFrom = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"moveDatabaseFrom",
-      r"(Landroid/content/Context;Ljava/lang/String;)Z");
+  static final _id_moveDatabaseFrom = _class.instanceMethodId(
+    r"moveDatabaseFrom",
+    r"(Landroid/content/Context;Ljava/lang/String;)Z",
+  );
 
   /// from: public abstract boolean moveDatabaseFrom(android.content.Context context, java.lang.String string)
   bool moveDatabaseFrom(
     Context context,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_moveDatabaseFrom,
-        jni.JniCallType.booleanType,
-        [context.reference, string.reference]).boolean;
+    return _id_moveDatabaseFrom(this, const jni.jbooleanType(),
+        [context.reference.pointer, string.reference.pointer]);
   }
 
-  static final _id_deleteDatabase = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"deleteDatabase", r"(Ljava/lang/String;)Z");
+  static final _id_deleteDatabase = _class.instanceMethodId(
+    r"deleteDatabase",
+    r"(Ljava/lang/String;)Z",
+  );
 
   /// from: public abstract boolean deleteDatabase(java.lang.String string)
   bool deleteDatabase(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_deleteDatabase,
-        jni.JniCallType.booleanType, [string.reference]).boolean;
+    return _id_deleteDatabase(
+        this, const jni.jbooleanType(), [string.reference.pointer]);
   }
 
-  static final _id_getDatabasePath = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getDatabasePath",
-      r"(Ljava/lang/String;)Ljava/io/File;");
+  static final _id_getDatabasePath = _class.instanceMethodId(
+    r"getDatabasePath",
+    r"(Ljava/lang/String;)Ljava/io/File;",
+  );
 
   /// from: public abstract java.io.File getDatabasePath(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getDatabasePath(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getDatabasePath,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_getDatabasePath(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_databaseList = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"databaseList", r"()[Ljava/lang/String;");
+  static final _id_databaseList = _class.instanceMethodId(
+    r"databaseList",
+    r"()[Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String[] databaseList()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JArray<jni.JString> databaseList() {
-    return const jni.JArrayType(jni.JStringType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(reference, _id_databaseList,
-            jni.JniCallType.objectType, []).object);
+    return _id_databaseList(this, const jni.JArrayType(jni.JStringType()), []);
   }
 
-  static final _id_getWallpaper = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getWallpaper",
-      r"()Landroid/graphics/drawable/Drawable;");
+  static final _id_getWallpaper = _class.instanceMethodId(
+    r"getWallpaper",
+    r"()Landroid/graphics/drawable/Drawable;",
+  );
 
   /// from: public abstract android.graphics.drawable.Drawable getWallpaper()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getWallpaper() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getWallpaper, jni.JniCallType.objectType, []).object);
+    return _id_getWallpaper(this, const jni.JObjectType(), []);
   }
 
-  static final _id_peekWallpaper = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"peekWallpaper",
-      r"()Landroid/graphics/drawable/Drawable;");
+  static final _id_peekWallpaper = _class.instanceMethodId(
+    r"peekWallpaper",
+    r"()Landroid/graphics/drawable/Drawable;",
+  );
 
   /// from: public abstract android.graphics.drawable.Drawable peekWallpaper()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject peekWallpaper() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_peekWallpaper, jni.JniCallType.objectType, []).object);
+    return _id_peekWallpaper(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getWallpaperDesiredMinimumWidth = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"getWallpaperDesiredMinimumWidth", r"()I");
+  static final _id_getWallpaperDesiredMinimumWidth = _class.instanceMethodId(
+    r"getWallpaperDesiredMinimumWidth",
+    r"()I",
+  );
 
   /// from: public abstract int getWallpaperDesiredMinimumWidth()
   int getWallpaperDesiredMinimumWidth() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getWallpaperDesiredMinimumWidth,
-        jni.JniCallType.intType, []).integer;
+    return _id_getWallpaperDesiredMinimumWidth(this, const jni.jintType(), []);
   }
 
-  static final _id_getWallpaperDesiredMinimumHeight = jni.Jni.accessors
-      .getMethodIDOf(
-          _class.reference, r"getWallpaperDesiredMinimumHeight", r"()I");
+  static final _id_getWallpaperDesiredMinimumHeight = _class.instanceMethodId(
+    r"getWallpaperDesiredMinimumHeight",
+    r"()I",
+  );
 
   /// from: public abstract int getWallpaperDesiredMinimumHeight()
   int getWallpaperDesiredMinimumHeight() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getWallpaperDesiredMinimumHeight,
-        jni.JniCallType.intType, []).integer;
+    return _id_getWallpaperDesiredMinimumHeight(this, const jni.jintType(), []);
   }
 
-  static final _id_setWallpaper = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setWallpaper", r"(Landroid/graphics/Bitmap;)V");
+  static final _id_setWallpaper = _class.instanceMethodId(
+    r"setWallpaper",
+    r"(Landroid/graphics/Bitmap;)V",
+  );
 
   /// from: public abstract void setWallpaper(android.graphics.Bitmap bitmap)
   void setWallpaper(
     jni.JObject bitmap,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setWallpaper,
-        jni.JniCallType.voidType, [bitmap.reference]).check();
+    _id_setWallpaper(this, const jni.jvoidType(), [bitmap.reference.pointer]);
   }
 
-  static final _id_setWallpaper1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"setWallpaper", r"(Ljava/io/InputStream;)V");
+  static final _id_setWallpaper1 = _class.instanceMethodId(
+    r"setWallpaper",
+    r"(Ljava/io/InputStream;)V",
+  );
 
   /// from: public abstract void setWallpaper(java.io.InputStream inputStream)
   void setWallpaper1(
     jni.JObject inputStream,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_setWallpaper1,
-        jni.JniCallType.voidType, [inputStream.reference]).check();
+    _id_setWallpaper1(
+        this, const jni.jvoidType(), [inputStream.reference.pointer]);
   }
 
-  static final _id_clearWallpaper = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"clearWallpaper", r"()V");
+  static final _id_clearWallpaper = _class.instanceMethodId(
+    r"clearWallpaper",
+    r"()V",
+  );
 
   /// from: public abstract void clearWallpaper()
   void clearWallpaper() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_clearWallpaper, jni.JniCallType.voidType, []).check();
+    _id_clearWallpaper(this, const jni.jvoidType(), []);
   }
 
-  static final _id_startActivity = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"startActivity", r"(Landroid/content/Intent;)V");
+  static final _id_startActivity = _class.instanceMethodId(
+    r"startActivity",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public abstract void startActivity(android.content.Intent intent)
   void startActivity(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivity,
-        jni.JniCallType.voidType, [intent.reference]).check();
+    _id_startActivity(this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_startActivity1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivity",
-      r"(Landroid/content/Intent;Landroid/os/Bundle;)V");
+  static final _id_startActivity1 = _class.instanceMethodId(
+    r"startActivity",
+    r"(Landroid/content/Intent;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void startActivity(android.content.Intent intent, android.os.Bundle bundle)
   void startActivity1(
     jni.JObject intent,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivity1,
-        jni.JniCallType.voidType, [intent.reference, bundle.reference]).check();
+    _id_startActivity1(this, const jni.jvoidType(),
+        [intent.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_startActivities = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"startActivities", r"([Landroid/content/Intent;)V");
+  static final _id_startActivities = _class.instanceMethodId(
+    r"startActivities",
+    r"([Landroid/content/Intent;)V",
+  );
 
   /// from: public abstract void startActivities(android.content.Intent[] intents)
   void startActivities(
     jni.JArray<jni.JObject> intents,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_startActivities,
-        jni.JniCallType.voidType, [intents.reference]).check();
+    _id_startActivities(
+        this, const jni.jvoidType(), [intents.reference.pointer]);
   }
 
-  static final _id_startActivities1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startActivities",
-      r"([Landroid/content/Intent;Landroid/os/Bundle;)V");
+  static final _id_startActivities1 = _class.instanceMethodId(
+    r"startActivities",
+    r"([Landroid/content/Intent;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void startActivities(android.content.Intent[] intents, android.os.Bundle bundle)
   void startActivities1(
     jni.JArray<jni.JObject> intents,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startActivities1,
-        jni.JniCallType.voidType,
-        [intents.reference, bundle.reference]).check();
+    _id_startActivities1(this, const jni.jvoidType(),
+        [intents.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_startIntentSender = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSender",
-      r"(Landroid/content/IntentSender;Landroid/content/Intent;III)V");
+  static final _id_startIntentSender = _class.instanceMethodId(
+    r"startIntentSender",
+    r"(Landroid/content/IntentSender;Landroid/content/Intent;III)V",
+  );
 
   /// from: public abstract void startIntentSender(android.content.IntentSender intentSender, android.content.Intent intent, int i, int i1, int i2)
   void startIntentSender(
@@ -5607,20 +5966,19 @@ class Context extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSender, jni.JniCallType.voidType, [
-      intentSender.reference,
-      intent.reference,
+    _id_startIntentSender(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2)
-    ]).check();
+    ]);
   }
 
-  static final _id_startIntentSender1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startIntentSender",
-      r"(Landroid/content/IntentSender;Landroid/content/Intent;IIILandroid/os/Bundle;)V");
+  static final _id_startIntentSender1 = _class.instanceMethodId(
+    r"startIntentSender",
+    r"(Landroid/content/IntentSender;Landroid/content/Intent;IIILandroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void startIntentSender(android.content.IntentSender intentSender, android.content.Intent intent, int i, int i1, int i2, android.os.Bundle bundle)
   void startIntentSender1(
@@ -5631,62 +5989,61 @@ class Context extends jni.JObject {
     int i2,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_startIntentSender1, jni.JniCallType.voidType, [
-      intentSender.reference,
-      intent.reference,
+    _id_startIntentSender1(this, const jni.jvoidType(), [
+      intentSender.reference.pointer,
+      intent.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2),
-      bundle.reference
-    ]).check();
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendBroadcast = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"sendBroadcast", r"(Landroid/content/Intent;)V");
+  static final _id_sendBroadcast = _class.instanceMethodId(
+    r"sendBroadcast",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public abstract void sendBroadcast(android.content.Intent intent)
   void sendBroadcast(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_sendBroadcast,
-        jni.JniCallType.voidType, [intent.reference]).check();
+    _id_sendBroadcast(this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_sendBroadcast1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;)V");
+  static final _id_sendBroadcast1 = _class.instanceMethodId(
+    r"sendBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;)V",
+  );
 
   /// from: public abstract void sendBroadcast(android.content.Intent intent, java.lang.String string)
   void sendBroadcast1(
     jni.JObject intent,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_sendBroadcast1,
-        jni.JniCallType.voidType, [intent.reference, string.reference]).check();
+    _id_sendBroadcast1(this, const jni.jvoidType(),
+        [intent.reference.pointer, string.reference.pointer]);
   }
 
-  static final _id_sendBroadcastWithMultiplePermissions = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"sendBroadcastWithMultiplePermissions",
-          r"(Landroid/content/Intent;[Ljava/lang/String;)V");
+  static final _id_sendBroadcastWithMultiplePermissions =
+      _class.instanceMethodId(
+    r"sendBroadcastWithMultiplePermissions",
+    r"(Landroid/content/Intent;[Ljava/lang/String;)V",
+  );
 
   /// from: public void sendBroadcastWithMultiplePermissions(android.content.Intent intent, java.lang.String[] strings)
   void sendBroadcastWithMultiplePermissions(
     jni.JObject intent,
     jni.JArray<jni.JString> strings,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendBroadcastWithMultiplePermissions,
-        jni.JniCallType.voidType,
-        [intent.reference, strings.reference]).check();
+    _id_sendBroadcastWithMultiplePermissions(this, const jni.jvoidType(),
+        [intent.reference.pointer, strings.reference.pointer]);
   }
 
-  static final _id_sendBroadcast2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendBroadcast2 = _class.instanceMethodId(
+    r"sendBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void sendBroadcast(android.content.Intent intent, java.lang.String string, android.os.Bundle bundle)
   void sendBroadcast2(
@@ -5694,34 +6051,31 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendBroadcast2,
-        jni.JniCallType.voidType,
-        [intent.reference, string.reference, bundle.reference]).check();
+    _id_sendBroadcast2(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      string.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendOrderedBroadcast = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;)V");
+  static final _id_sendOrderedBroadcast = _class.instanceMethodId(
+    r"sendOrderedBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;)V",
+  );
 
   /// from: public abstract void sendOrderedBroadcast(android.content.Intent intent, java.lang.String string)
   void sendOrderedBroadcast(
     jni.JObject intent,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendOrderedBroadcast,
-        jni.JniCallType.voidType,
-        [intent.reference, string.reference]).check();
+    _id_sendOrderedBroadcast(this, const jni.jvoidType(),
+        [intent.reference.pointer, string.reference.pointer]);
   }
 
-  static final _id_sendOrderedBroadcast1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendOrderedBroadcast1 = _class.instanceMethodId(
+    r"sendOrderedBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void sendOrderedBroadcast(android.content.Intent intent, java.lang.String string, android.os.Bundle bundle)
   void sendOrderedBroadcast1(
@@ -5729,17 +6083,17 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendOrderedBroadcast1,
-        jni.JniCallType.voidType,
-        [intent.reference, string.reference, bundle.reference]).check();
+    _id_sendOrderedBroadcast1(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      string.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendOrderedBroadcast2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendOrderedBroadcast2 = _class.instanceMethodId(
+    r"sendOrderedBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void sendOrderedBroadcast(android.content.Intent intent, java.lang.String string, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string1, android.os.Bundle bundle)
   void sendOrderedBroadcast2(
@@ -5751,22 +6105,21 @@ class Context extends jni.JObject {
     jni.JString string1,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_sendOrderedBroadcast2, jni.JniCallType.voidType, [
-      intent.reference,
-      string.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendOrderedBroadcast2(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      string.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string1.reference,
-      bundle.reference
-    ]).check();
+      string1.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendOrderedBroadcast3 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendOrderedBroadcast3 = _class.instanceMethodId(
+    r"sendOrderedBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;Landroid/os/Bundle;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void sendOrderedBroadcast(android.content.Intent intent, java.lang.String string, android.os.Bundle bundle, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string1, android.os.Bundle bundle1)
   void sendOrderedBroadcast3(
@@ -5779,40 +6132,36 @@ class Context extends jni.JObject {
     jni.JString string1,
     jni.JObject bundle1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_sendOrderedBroadcast3, jni.JniCallType.voidType, [
-      intent.reference,
-      string.reference,
-      bundle.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendOrderedBroadcast3(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      string.reference.pointer,
+      bundle.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string1.reference,
-      bundle1.reference
-    ]).check();
+      string1.reference.pointer,
+      bundle1.reference.pointer
+    ]);
   }
 
-  static final _id_sendBroadcastAsUser = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendBroadcastAsUser",
-      r"(Landroid/content/Intent;Landroid/os/UserHandle;)V");
+  static final _id_sendBroadcastAsUser = _class.instanceMethodId(
+    r"sendBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;)V",
+  );
 
   /// from: public abstract void sendBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle)
   void sendBroadcastAsUser(
     jni.JObject intent,
     jni.JObject userHandle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendBroadcastAsUser,
-        jni.JniCallType.voidType,
-        [intent.reference, userHandle.reference]).check();
+    _id_sendBroadcastAsUser(this, const jni.jvoidType(),
+        [intent.reference.pointer, userHandle.reference.pointer]);
   }
 
-  static final _id_sendBroadcastAsUser1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendBroadcastAsUser",
-      r"(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;)V");
+  static final _id_sendBroadcastAsUser1 = _class.instanceMethodId(
+    r"sendBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;)V",
+  );
 
   /// from: public abstract void sendBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle, java.lang.String string)
   void sendBroadcastAsUser1(
@@ -5820,17 +6169,17 @@ class Context extends jni.JObject {
     jni.JObject userHandle,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendBroadcastAsUser1,
-        jni.JniCallType.voidType,
-        [intent.reference, userHandle.reference, string.reference]).check();
+    _id_sendBroadcastAsUser1(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      userHandle.reference.pointer,
+      string.reference.pointer
+    ]);
   }
 
-  static final _id_sendOrderedBroadcastAsUser = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcastAsUser",
-      r"(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendOrderedBroadcastAsUser = _class.instanceMethodId(
+    r"sendOrderedBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void sendOrderedBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle, java.lang.String string, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string1, android.os.Bundle bundle)
   void sendOrderedBroadcastAsUser(
@@ -5843,23 +6192,22 @@ class Context extends jni.JObject {
     jni.JString string1,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_sendOrderedBroadcastAsUser, jni.JniCallType.voidType, [
-      intent.reference,
-      userHandle.reference,
-      string.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendOrderedBroadcastAsUser(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      userHandle.reference.pointer,
+      string.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string1.reference,
-      bundle.reference
-    ]).check();
+      string1.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendOrderedBroadcast4 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendOrderedBroadcast",
-      r"(Landroid/content/Intent;Ljava/lang/String;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendOrderedBroadcast4 = _class.instanceMethodId(
+    r"sendOrderedBroadcast",
+    r"(Landroid/content/Intent;Ljava/lang/String;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void sendOrderedBroadcast(android.content.Intent intent, java.lang.String string, java.lang.String string1, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string2, android.os.Bundle bundle)
   void sendOrderedBroadcast4(
@@ -5872,54 +6220,49 @@ class Context extends jni.JObject {
     jni.JString string2,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_sendOrderedBroadcast4, jni.JniCallType.voidType, [
-      intent.reference,
-      string.reference,
-      string1.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendOrderedBroadcast4(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string2.reference,
-      bundle.reference
-    ]).check();
+      string2.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_sendStickyBroadcast = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"sendStickyBroadcast", r"(Landroid/content/Intent;)V");
+  static final _id_sendStickyBroadcast = _class.instanceMethodId(
+    r"sendStickyBroadcast",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public abstract void sendStickyBroadcast(android.content.Intent intent)
   void sendStickyBroadcast(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendStickyBroadcast,
-        jni.JniCallType.voidType,
-        [intent.reference]).check();
+    _id_sendStickyBroadcast(
+        this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_sendStickyBroadcast1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendStickyBroadcast",
-      r"(Landroid/content/Intent;Landroid/os/Bundle;)V");
+  static final _id_sendStickyBroadcast1 = _class.instanceMethodId(
+    r"sendStickyBroadcast",
+    r"(Landroid/content/Intent;Landroid/os/Bundle;)V",
+  );
 
   /// from: public void sendStickyBroadcast(android.content.Intent intent, android.os.Bundle bundle)
   void sendStickyBroadcast1(
     jni.JObject intent,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendStickyBroadcast1,
-        jni.JniCallType.voidType,
-        [intent.reference, bundle.reference]).check();
+    _id_sendStickyBroadcast1(this, const jni.jvoidType(),
+        [intent.reference.pointer, bundle.reference.pointer]);
   }
 
-  static final _id_sendStickyOrderedBroadcast = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendStickyOrderedBroadcast",
-      r"(Landroid/content/Intent;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendStickyOrderedBroadcast = _class.instanceMethodId(
+    r"sendStickyOrderedBroadcast",
+    r"(Landroid/content/Intent;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void sendStickyOrderedBroadcast(android.content.Intent intent, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string, android.os.Bundle bundle)
   void sendStickyOrderedBroadcast(
@@ -5930,53 +6273,47 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_sendStickyOrderedBroadcast, jni.JniCallType.voidType, [
-      intent.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendStickyOrderedBroadcast(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string.reference,
-      bundle.reference
-    ]).check();
+      string.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_removeStickyBroadcast = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"removeStickyBroadcast",
-      r"(Landroid/content/Intent;)V");
+  static final _id_removeStickyBroadcast = _class.instanceMethodId(
+    r"removeStickyBroadcast",
+    r"(Landroid/content/Intent;)V",
+  );
 
   /// from: public abstract void removeStickyBroadcast(android.content.Intent intent)
   void removeStickyBroadcast(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_removeStickyBroadcast,
-        jni.JniCallType.voidType,
-        [intent.reference]).check();
+    _id_removeStickyBroadcast(
+        this, const jni.jvoidType(), [intent.reference.pointer]);
   }
 
-  static final _id_sendStickyBroadcastAsUser = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"sendStickyBroadcastAsUser",
-      r"(Landroid/content/Intent;Landroid/os/UserHandle;)V");
+  static final _id_sendStickyBroadcastAsUser = _class.instanceMethodId(
+    r"sendStickyBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;)V",
+  );
 
   /// from: public abstract void sendStickyBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle)
   void sendStickyBroadcastAsUser(
     jni.JObject intent,
     jni.JObject userHandle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_sendStickyBroadcastAsUser,
-        jni.JniCallType.voidType,
-        [intent.reference, userHandle.reference]).check();
+    _id_sendStickyBroadcastAsUser(this, const jni.jvoidType(),
+        [intent.reference.pointer, userHandle.reference.pointer]);
   }
 
-  static final _id_sendStickyOrderedBroadcastAsUser = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"sendStickyOrderedBroadcastAsUser",
-          r"(Landroid/content/Intent;Landroid/os/UserHandle;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V");
+  static final _id_sendStickyOrderedBroadcastAsUser = _class.instanceMethodId(
+    r"sendStickyOrderedBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V",
+  );
 
   /// from: public abstract void sendStickyOrderedBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle, android.content.BroadcastReceiver broadcastReceiver, android.os.Handler handler, int i, java.lang.String string, android.os.Bundle bundle)
   void sendStickyOrderedBroadcastAsUser(
@@ -5988,38 +6325,35 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_sendStickyOrderedBroadcastAsUser, jni.JniCallType.voidType, [
-      intent.reference,
-      userHandle.reference,
-      broadcastReceiver.reference,
-      handler.reference,
+    _id_sendStickyOrderedBroadcastAsUser(this, const jni.jvoidType(), [
+      intent.reference.pointer,
+      userHandle.reference.pointer,
+      broadcastReceiver.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i),
-      string.reference,
-      bundle.reference
-    ]).check();
+      string.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_removeStickyBroadcastAsUser = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"removeStickyBroadcastAsUser",
-          r"(Landroid/content/Intent;Landroid/os/UserHandle;)V");
+  static final _id_removeStickyBroadcastAsUser = _class.instanceMethodId(
+    r"removeStickyBroadcastAsUser",
+    r"(Landroid/content/Intent;Landroid/os/UserHandle;)V",
+  );
 
   /// from: public abstract void removeStickyBroadcastAsUser(android.content.Intent intent, android.os.UserHandle userHandle)
   void removeStickyBroadcastAsUser(
     jni.JObject intent,
     jni.JObject userHandle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_removeStickyBroadcastAsUser,
-        jni.JniCallType.voidType,
-        [intent.reference, userHandle.reference]).check();
+    _id_removeStickyBroadcastAsUser(this, const jni.jvoidType(),
+        [intent.reference.pointer, userHandle.reference.pointer]);
   }
 
-  static final _id_registerReceiver = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerReceiver",
-      r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;");
+  static final _id_registerReceiver = _class.instanceMethodId(
+    r"registerReceiver",
+    r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;",
+  );
 
   /// from: public abstract android.content.Intent registerReceiver(android.content.BroadcastReceiver broadcastReceiver, android.content.IntentFilter intentFilter)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6027,17 +6361,14 @@ class Context extends jni.JObject {
     jni.JObject broadcastReceiver,
     jni.JObject intentFilter,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerReceiver,
-        jni.JniCallType.objectType,
-        [broadcastReceiver.reference, intentFilter.reference]).object);
+    return _id_registerReceiver(this, const jni.JObjectType(),
+        [broadcastReceiver.reference.pointer, intentFilter.reference.pointer]);
   }
 
-  static final _id_registerReceiver1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerReceiver",
-      r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;I)Landroid/content/Intent;");
+  static final _id_registerReceiver1 = _class.instanceMethodId(
+    r"registerReceiver",
+    r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;I)Landroid/content/Intent;",
+  );
 
   /// from: public abstract android.content.Intent registerReceiver(android.content.BroadcastReceiver broadcastReceiver, android.content.IntentFilter intentFilter, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6046,18 +6377,17 @@ class Context extends jni.JObject {
     jni.JObject intentFilter,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_registerReceiver1, jni.JniCallType.objectType, [
-      broadcastReceiver.reference,
-      intentFilter.reference,
+    return _id_registerReceiver1(this, const jni.JObjectType(), [
+      broadcastReceiver.reference.pointer,
+      intentFilter.reference.pointer,
       jni.JValueInt(i)
-    ]).object);
+    ]);
   }
 
-  static final _id_registerReceiver2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerReceiver",
-      r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;");
+  static final _id_registerReceiver2 = _class.instanceMethodId(
+    r"registerReceiver",
+    r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;",
+  );
 
   /// from: public abstract android.content.Intent registerReceiver(android.content.BroadcastReceiver broadcastReceiver, android.content.IntentFilter intentFilter, java.lang.String string, android.os.Handler handler)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6067,19 +6397,18 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject handler,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_registerReceiver2, jni.JniCallType.objectType, [
-      broadcastReceiver.reference,
-      intentFilter.reference,
-      string.reference,
-      handler.reference
-    ]).object);
+    return _id_registerReceiver2(this, const jni.JObjectType(), [
+      broadcastReceiver.reference.pointer,
+      intentFilter.reference.pointer,
+      string.reference.pointer,
+      handler.reference.pointer
+    ]);
   }
 
-  static final _id_registerReceiver3 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"registerReceiver",
-      r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;I)Landroid/content/Intent;");
+  static final _id_registerReceiver3 = _class.instanceMethodId(
+    r"registerReceiver",
+    r"(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;I)Landroid/content/Intent;",
+  );
 
   /// from: public abstract android.content.Intent registerReceiver(android.content.BroadcastReceiver broadcastReceiver, android.content.IntentFilter intentFilter, java.lang.String string, android.os.Handler handler, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6090,81 +6419,73 @@ class Context extends jni.JObject {
     jni.JObject handler,
     int i,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_registerReceiver3, jni.JniCallType.objectType, [
-      broadcastReceiver.reference,
-      intentFilter.reference,
-      string.reference,
-      handler.reference,
+    return _id_registerReceiver3(this, const jni.JObjectType(), [
+      broadcastReceiver.reference.pointer,
+      intentFilter.reference.pointer,
+      string.reference.pointer,
+      handler.reference.pointer,
       jni.JValueInt(i)
-    ]).object);
+    ]);
   }
 
-  static final _id_unregisterReceiver = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"unregisterReceiver",
-      r"(Landroid/content/BroadcastReceiver;)V");
+  static final _id_unregisterReceiver = _class.instanceMethodId(
+    r"unregisterReceiver",
+    r"(Landroid/content/BroadcastReceiver;)V",
+  );
 
   /// from: public abstract void unregisterReceiver(android.content.BroadcastReceiver broadcastReceiver)
   void unregisterReceiver(
     jni.JObject broadcastReceiver,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterReceiver,
-        jni.JniCallType.voidType,
-        [broadcastReceiver.reference]).check();
+    _id_unregisterReceiver(
+        this, const jni.jvoidType(), [broadcastReceiver.reference.pointer]);
   }
 
-  static final _id_startService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startService",
-      r"(Landroid/content/Intent;)Landroid/content/ComponentName;");
+  static final _id_startService = _class.instanceMethodId(
+    r"startService",
+    r"(Landroid/content/Intent;)Landroid/content/ComponentName;",
+  );
 
   /// from: public abstract android.content.ComponentName startService(android.content.Intent intent)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject startService(
     jni.JObject intent,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startService,
-        jni.JniCallType.objectType,
-        [intent.reference]).object);
+    return _id_startService(
+        this, const jni.JObjectType(), [intent.reference.pointer]);
   }
 
-  static final _id_startForegroundService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startForegroundService",
-      r"(Landroid/content/Intent;)Landroid/content/ComponentName;");
+  static final _id_startForegroundService = _class.instanceMethodId(
+    r"startForegroundService",
+    r"(Landroid/content/Intent;)Landroid/content/ComponentName;",
+  );
 
   /// from: public abstract android.content.ComponentName startForegroundService(android.content.Intent intent)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject startForegroundService(
     jni.JObject intent,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startForegroundService,
-        jni.JniCallType.objectType,
-        [intent.reference]).object);
+    return _id_startForegroundService(
+        this, const jni.JObjectType(), [intent.reference.pointer]);
   }
 
-  static final _id_stopService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"stopService", r"(Landroid/content/Intent;)Z");
+  static final _id_stopService = _class.instanceMethodId(
+    r"stopService",
+    r"(Landroid/content/Intent;)Z",
+  );
 
   /// from: public abstract boolean stopService(android.content.Intent intent)
   bool stopService(
     jni.JObject intent,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_stopService,
-        jni.JniCallType.booleanType, [intent.reference]).boolean;
+    return _id_stopService(
+        this, const jni.jbooleanType(), [intent.reference.pointer]);
   }
 
-  static final _id_bindService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindService",
-      r"(Landroid/content/Intent;Landroid/content/ServiceConnection;I)Z");
+  static final _id_bindService = _class.instanceMethodId(
+    r"bindService",
+    r"(Landroid/content/Intent;Landroid/content/ServiceConnection;I)Z",
+  );
 
   /// from: public abstract boolean bindService(android.content.Intent intent, android.content.ServiceConnection serviceConnection, int i)
   bool bindService(
@@ -6172,18 +6493,17 @@ class Context extends jni.JObject {
     jni.JObject serviceConnection,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindService, jni.JniCallType.booleanType, [
-      intent.reference,
-      serviceConnection.reference,
+    return _id_bindService(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      serviceConnection.reference.pointer,
       jni.JValueInt(i)
-    ]).boolean;
+    ]);
   }
 
-  static final _id_bindService1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindService",
-      r"(Landroid/content/Intent;Landroid/content/ServiceConnection;Landroid/content/Context$BindServiceFlags;)Z");
+  static final _id_bindService1 = _class.instanceMethodId(
+    r"bindService",
+    r"(Landroid/content/Intent;Landroid/content/ServiceConnection;Landroid/content/Context$BindServiceFlags;)Z",
+  );
 
   /// from: public boolean bindService(android.content.Intent intent, android.content.ServiceConnection serviceConnection, android.content.Context$BindServiceFlags bindServiceFlags)
   bool bindService1(
@@ -6191,18 +6511,17 @@ class Context extends jni.JObject {
     jni.JObject serviceConnection,
     Context_BindServiceFlags bindServiceFlags,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindService1, jni.JniCallType.booleanType, [
-      intent.reference,
-      serviceConnection.reference,
-      bindServiceFlags.reference
-    ]).boolean;
+    return _id_bindService1(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      serviceConnection.reference.pointer,
+      bindServiceFlags.reference.pointer
+    ]);
   }
 
-  static final _id_bindService2 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindService",
-      r"(Landroid/content/Intent;ILjava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z");
+  static final _id_bindService2 = _class.instanceMethodId(
+    r"bindService",
+    r"(Landroid/content/Intent;ILjava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z",
+  );
 
   /// from: public boolean bindService(android.content.Intent intent, int i, java.util.concurrent.Executor executor, android.content.ServiceConnection serviceConnection)
   bool bindService2(
@@ -6211,19 +6530,18 @@ class Context extends jni.JObject {
     jni.JObject executor,
     jni.JObject serviceConnection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindService2, jni.JniCallType.booleanType, [
-      intent.reference,
+    return _id_bindService2(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
       jni.JValueInt(i),
-      executor.reference,
-      serviceConnection.reference
-    ]).boolean;
+      executor.reference.pointer,
+      serviceConnection.reference.pointer
+    ]);
   }
 
-  static final _id_bindService3 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindService",
-      r"(Landroid/content/Intent;Landroid/content/Context$BindServiceFlags;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z");
+  static final _id_bindService3 = _class.instanceMethodId(
+    r"bindService",
+    r"(Landroid/content/Intent;Landroid/content/Context$BindServiceFlags;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z",
+  );
 
   /// from: public boolean bindService(android.content.Intent intent, android.content.Context$BindServiceFlags bindServiceFlags, java.util.concurrent.Executor executor, android.content.ServiceConnection serviceConnection)
   bool bindService3(
@@ -6232,19 +6550,18 @@ class Context extends jni.JObject {
     jni.JObject executor,
     jni.JObject serviceConnection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindService3, jni.JniCallType.booleanType, [
-      intent.reference,
-      bindServiceFlags.reference,
-      executor.reference,
-      serviceConnection.reference
-    ]).boolean;
+    return _id_bindService3(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      bindServiceFlags.reference.pointer,
+      executor.reference.pointer,
+      serviceConnection.reference.pointer
+    ]);
   }
 
-  static final _id_bindIsolatedService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindIsolatedService",
-      r"(Landroid/content/Intent;ILjava/lang/String;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z");
+  static final _id_bindIsolatedService = _class.instanceMethodId(
+    r"bindIsolatedService",
+    r"(Landroid/content/Intent;ILjava/lang/String;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z",
+  );
 
   /// from: public boolean bindIsolatedService(android.content.Intent intent, int i, java.lang.String string, java.util.concurrent.Executor executor, android.content.ServiceConnection serviceConnection)
   bool bindIsolatedService(
@@ -6254,20 +6571,19 @@ class Context extends jni.JObject {
     jni.JObject executor,
     jni.JObject serviceConnection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindIsolatedService, jni.JniCallType.booleanType, [
-      intent.reference,
+    return _id_bindIsolatedService(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
       jni.JValueInt(i),
-      string.reference,
-      executor.reference,
-      serviceConnection.reference
-    ]).boolean;
+      string.reference.pointer,
+      executor.reference.pointer,
+      serviceConnection.reference.pointer
+    ]);
   }
 
-  static final _id_bindIsolatedService1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindIsolatedService",
-      r"(Landroid/content/Intent;Landroid/content/Context$BindServiceFlags;Ljava/lang/String;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z");
+  static final _id_bindIsolatedService1 = _class.instanceMethodId(
+    r"bindIsolatedService",
+    r"(Landroid/content/Intent;Landroid/content/Context$BindServiceFlags;Ljava/lang/String;Ljava/util/concurrent/Executor;Landroid/content/ServiceConnection;)Z",
+  );
 
   /// from: public boolean bindIsolatedService(android.content.Intent intent, android.content.Context$BindServiceFlags bindServiceFlags, java.lang.String string, java.util.concurrent.Executor executor, android.content.ServiceConnection serviceConnection)
   bool bindIsolatedService1(
@@ -6277,20 +6593,19 @@ class Context extends jni.JObject {
     jni.JObject executor,
     jni.JObject serviceConnection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindIsolatedService1, jni.JniCallType.booleanType, [
-      intent.reference,
-      bindServiceFlags.reference,
-      string.reference,
-      executor.reference,
-      serviceConnection.reference
-    ]).boolean;
+    return _id_bindIsolatedService1(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      bindServiceFlags.reference.pointer,
+      string.reference.pointer,
+      executor.reference.pointer,
+      serviceConnection.reference.pointer
+    ]);
   }
 
-  static final _id_bindServiceAsUser = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindServiceAsUser",
-      r"(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z");
+  static final _id_bindServiceAsUser = _class.instanceMethodId(
+    r"bindServiceAsUser",
+    r"(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z",
+  );
 
   /// from: public boolean bindServiceAsUser(android.content.Intent intent, android.content.ServiceConnection serviceConnection, int i, android.os.UserHandle userHandle)
   bool bindServiceAsUser(
@@ -6299,19 +6614,18 @@ class Context extends jni.JObject {
     int i,
     jni.JObject userHandle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindServiceAsUser, jni.JniCallType.booleanType, [
-      intent.reference,
-      serviceConnection.reference,
+    return _id_bindServiceAsUser(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      serviceConnection.reference.pointer,
       jni.JValueInt(i),
-      userHandle.reference
-    ]).boolean;
+      userHandle.reference.pointer
+    ]);
   }
 
-  static final _id_bindServiceAsUser1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"bindServiceAsUser",
-      r"(Landroid/content/Intent;Landroid/content/ServiceConnection;Landroid/content/Context$BindServiceFlags;Landroid/os/UserHandle;)Z");
+  static final _id_bindServiceAsUser1 = _class.instanceMethodId(
+    r"bindServiceAsUser",
+    r"(Landroid/content/Intent;Landroid/content/ServiceConnection;Landroid/content/Context$BindServiceFlags;Landroid/os/UserHandle;)Z",
+  );
 
   /// from: public boolean bindServiceAsUser(android.content.Intent intent, android.content.ServiceConnection serviceConnection, android.content.Context$BindServiceFlags bindServiceFlags, android.os.UserHandle userHandle)
   bool bindServiceAsUser1(
@@ -6320,19 +6634,18 @@ class Context extends jni.JObject {
     Context_BindServiceFlags bindServiceFlags,
     jni.JObject userHandle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_bindServiceAsUser1, jni.JniCallType.booleanType, [
-      intent.reference,
-      serviceConnection.reference,
-      bindServiceFlags.reference,
-      userHandle.reference
-    ]).boolean;
+    return _id_bindServiceAsUser1(this, const jni.jbooleanType(), [
+      intent.reference.pointer,
+      serviceConnection.reference.pointer,
+      bindServiceFlags.reference.pointer,
+      userHandle.reference.pointer
+    ]);
   }
 
-  static final _id_updateServiceGroup = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"updateServiceGroup",
-      r"(Landroid/content/ServiceConnection;II)V");
+  static final _id_updateServiceGroup = _class.instanceMethodId(
+    r"updateServiceGroup",
+    r"(Landroid/content/ServiceConnection;II)V",
+  );
 
   /// from: public void updateServiceGroup(android.content.ServiceConnection serviceConnection, int i, int i1)
   void updateServiceGroup(
@@ -6340,31 +6653,30 @@ class Context extends jni.JObject {
     int i,
     int i1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_updateServiceGroup, jni.JniCallType.voidType, [
-      serviceConnection.reference,
+    _id_updateServiceGroup(this, const jni.jvoidType(), [
+      serviceConnection.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1)
-    ]).check();
+    ]);
   }
 
-  static final _id_unbindService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"unbindService",
-      r"(Landroid/content/ServiceConnection;)V");
+  static final _id_unbindService = _class.instanceMethodId(
+    r"unbindService",
+    r"(Landroid/content/ServiceConnection;)V",
+  );
 
   /// from: public abstract void unbindService(android.content.ServiceConnection serviceConnection)
   void unbindService(
     jni.JObject serviceConnection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(reference, _id_unbindService,
-        jni.JniCallType.voidType, [serviceConnection.reference]).check();
+    _id_unbindService(
+        this, const jni.jvoidType(), [serviceConnection.reference.pointer]);
   }
 
-  static final _id_startInstrumentation = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"startInstrumentation",
-      r"(Landroid/content/ComponentName;Ljava/lang/String;Landroid/os/Bundle;)Z");
+  static final _id_startInstrumentation = _class.instanceMethodId(
+    r"startInstrumentation",
+    r"(Landroid/content/ComponentName;Ljava/lang/String;Landroid/os/Bundle;)Z",
+  );
 
   /// from: public abstract boolean startInstrumentation(android.content.ComponentName componentName, java.lang.String string, android.os.Bundle bundle)
   bool startInstrumentation(
@@ -6372,34 +6684,31 @@ class Context extends jni.JObject {
     jni.JString string,
     jni.JObject bundle,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_startInstrumentation,
-        jni.JniCallType.booleanType,
-        [componentName.reference, string.reference, bundle.reference]).boolean;
+    return _id_startInstrumentation(this, const jni.jbooleanType(), [
+      componentName.reference.pointer,
+      string.reference.pointer,
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_getSystemService = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSystemService",
-      r"(Ljava/lang/String;)Ljava/lang/Object;");
+  static final _id_getSystemService = _class.instanceMethodId(
+    r"getSystemService",
+    r"(Ljava/lang/String;)Ljava/lang/Object;",
+  );
 
   /// from: public abstract java.lang.Object getSystemService(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getSystemService(
     jni.JString string,
   ) {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSystemService,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_getSystemService(
+        this, const jni.JObjectType(), [string.reference.pointer]);
   }
 
-  static final _id_getSystemService1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSystemService",
-      r"(Ljava/lang/Class;)Ljava/lang/Object;");
+  static final _id_getSystemService1 = _class.instanceMethodId(
+    r"getSystemService",
+    r"(Ljava/lang/Class;)Ljava/lang/Object;",
+  );
 
   /// from: public final T getSystemService(java.lang.Class class)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6407,32 +6716,27 @@ class Context extends jni.JObject {
     jni.JObject class0, {
     required jni.JObjType<$T> T,
   }) {
-    return T.fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSystemService1,
-        jni.JniCallType.objectType,
-        [class0.reference]).object);
+    return _id_getSystemService1(this, T, [class0.reference.pointer]);
   }
 
-  static final _id_getSystemServiceName = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"getSystemServiceName",
-      r"(Ljava/lang/Class;)Ljava/lang/String;");
+  static final _id_getSystemServiceName = _class.instanceMethodId(
+    r"getSystemServiceName",
+    r"(Ljava/lang/Class;)Ljava/lang/String;",
+  );
 
   /// from: public abstract java.lang.String getSystemServiceName(java.lang.Class class)
   /// The returned object must be released after use, by calling the [release] method.
   jni.JString getSystemServiceName(
     jni.JObject class0,
   ) {
-    return const jni.JStringType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_getSystemServiceName,
-        jni.JniCallType.objectType,
-        [class0.reference]).object);
+    return _id_getSystemServiceName(
+        this, const jni.JStringType(), [class0.reference.pointer]);
   }
 
-  static final _id_checkPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkPermission", r"(Ljava/lang/String;II)I");
+  static final _id_checkPermission = _class.instanceMethodId(
+    r"checkPermission",
+    r"(Ljava/lang/String;II)I",
+  );
 
   /// from: public abstract int checkPermission(java.lang.String string, int i, int i1)
   int checkPermission(
@@ -6440,60 +6744,53 @@ class Context extends jni.JObject {
     int i,
     int i1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkPermission,
-        jni.JniCallType.intType,
-        [string.reference, jni.JValueInt(i), jni.JValueInt(i1)]).integer;
+    return _id_checkPermission(this, const jni.jintType(),
+        [string.reference.pointer, jni.JValueInt(i), jni.JValueInt(i1)]);
   }
 
-  static final _id_checkCallingPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkCallingPermission", r"(Ljava/lang/String;)I");
+  static final _id_checkCallingPermission = _class.instanceMethodId(
+    r"checkCallingPermission",
+    r"(Ljava/lang/String;)I",
+  );
 
   /// from: public abstract int checkCallingPermission(java.lang.String string)
   int checkCallingPermission(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkCallingPermission,
-        jni.JniCallType.intType,
-        [string.reference]).integer;
+    return _id_checkCallingPermission(
+        this, const jni.jintType(), [string.reference.pointer]);
   }
 
-  static final _id_checkCallingOrSelfPermission = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"checkCallingOrSelfPermission",
-          r"(Ljava/lang/String;)I");
+  static final _id_checkCallingOrSelfPermission = _class.instanceMethodId(
+    r"checkCallingOrSelfPermission",
+    r"(Ljava/lang/String;)I",
+  );
 
   /// from: public abstract int checkCallingOrSelfPermission(java.lang.String string)
   int checkCallingOrSelfPermission(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkCallingOrSelfPermission,
-        jni.JniCallType.intType,
-        [string.reference]).integer;
+    return _id_checkCallingOrSelfPermission(
+        this, const jni.jintType(), [string.reference.pointer]);
   }
 
-  static final _id_checkSelfPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkSelfPermission", r"(Ljava/lang/String;)I");
+  static final _id_checkSelfPermission = _class.instanceMethodId(
+    r"checkSelfPermission",
+    r"(Ljava/lang/String;)I",
+  );
 
   /// from: public abstract int checkSelfPermission(java.lang.String string)
   int checkSelfPermission(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkSelfPermission,
-        jni.JniCallType.intType,
-        [string.reference]).integer;
+    return _id_checkSelfPermission(
+        this, const jni.jintType(), [string.reference.pointer]);
   }
 
-  static final _id_enforcePermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"enforcePermission",
-      r"(Ljava/lang/String;IILjava/lang/String;)V");
+  static final _id_enforcePermission = _class.instanceMethodId(
+    r"enforcePermission",
+    r"(Ljava/lang/String;IILjava/lang/String;)V",
+  );
 
   /// from: public abstract void enforcePermission(java.lang.String string, int i, int i1, java.lang.String string1)
   void enforcePermission(
@@ -6502,52 +6799,46 @@ class Context extends jni.JObject {
     int i1,
     jni.JString string1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_enforcePermission, jni.JniCallType.voidType, [
-      string.reference,
+    _id_enforcePermission(this, const jni.jvoidType(), [
+      string.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
-      string1.reference
-    ]).check();
+      string1.reference.pointer
+    ]);
   }
 
-  static final _id_enforceCallingPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"enforceCallingPermission",
-      r"(Ljava/lang/String;Ljava/lang/String;)V");
+  static final _id_enforceCallingPermission = _class.instanceMethodId(
+    r"enforceCallingPermission",
+    r"(Ljava/lang/String;Ljava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceCallingPermission(java.lang.String string, java.lang.String string1)
   void enforceCallingPermission(
     jni.JString string,
     jni.JString string1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_enforceCallingPermission,
-        jni.JniCallType.voidType,
-        [string.reference, string1.reference]).check();
+    _id_enforceCallingPermission(this, const jni.jvoidType(),
+        [string.reference.pointer, string1.reference.pointer]);
   }
 
-  static final _id_enforceCallingOrSelfPermission = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"enforceCallingOrSelfPermission",
-          r"(Ljava/lang/String;Ljava/lang/String;)V");
+  static final _id_enforceCallingOrSelfPermission = _class.instanceMethodId(
+    r"enforceCallingOrSelfPermission",
+    r"(Ljava/lang/String;Ljava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceCallingOrSelfPermission(java.lang.String string, java.lang.String string1)
   void enforceCallingOrSelfPermission(
     jni.JString string,
     jni.JString string1,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_enforceCallingOrSelfPermission,
-        jni.JniCallType.voidType,
-        [string.reference, string1.reference]).check();
+    _id_enforceCallingOrSelfPermission(this, const jni.jvoidType(),
+        [string.reference.pointer, string1.reference.pointer]);
   }
 
-  static final _id_grantUriPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"grantUriPermission",
-      r"(Ljava/lang/String;Landroid/net/Uri;I)V");
+  static final _id_grantUriPermission = _class.instanceMethodId(
+    r"grantUriPermission",
+    r"(Ljava/lang/String;Landroid/net/Uri;I)V",
+  );
 
   /// from: public abstract void grantUriPermission(java.lang.String string, android.net.Uri uri, int i)
   void grantUriPermission(
@@ -6555,32 +6846,28 @@ class Context extends jni.JObject {
     jni.JObject uri,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_grantUriPermission,
-        jni.JniCallType.voidType,
-        [string.reference, uri.reference, jni.JValueInt(i)]).check();
+    _id_grantUriPermission(this, const jni.jvoidType(),
+        [string.reference.pointer, uri.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_revokeUriPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"revokeUriPermission", r"(Landroid/net/Uri;I)V");
+  static final _id_revokeUriPermission = _class.instanceMethodId(
+    r"revokeUriPermission",
+    r"(Landroid/net/Uri;I)V",
+  );
 
   /// from: public abstract void revokeUriPermission(android.net.Uri uri, int i)
   void revokeUriPermission(
     jni.JObject uri,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_revokeUriPermission,
-        jni.JniCallType.voidType,
-        [uri.reference, jni.JValueInt(i)]).check();
+    _id_revokeUriPermission(
+        this, const jni.jvoidType(), [uri.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_revokeUriPermission1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"revokeUriPermission",
-      r"(Ljava/lang/String;Landroid/net/Uri;I)V");
+  static final _id_revokeUriPermission1 = _class.instanceMethodId(
+    r"revokeUriPermission",
+    r"(Ljava/lang/String;Landroid/net/Uri;I)V",
+  );
 
   /// from: public abstract void revokeUriPermission(java.lang.String string, android.net.Uri uri, int i)
   void revokeUriPermission1(
@@ -6588,15 +6875,14 @@ class Context extends jni.JObject {
     jni.JObject uri,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_revokeUriPermission1,
-        jni.JniCallType.voidType,
-        [string.reference, uri.reference, jni.JValueInt(i)]).check();
+    _id_revokeUriPermission1(this, const jni.jvoidType(),
+        [string.reference.pointer, uri.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_checkUriPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkUriPermission", r"(Landroid/net/Uri;III)I");
+  static final _id_checkUriPermission = _class.instanceMethodId(
+    r"checkUriPermission",
+    r"(Landroid/net/Uri;III)I",
+  );
 
   /// from: public abstract int checkUriPermission(android.net.Uri uri, int i, int i1, int i2)
   int checkUriPermission(
@@ -6605,17 +6891,18 @@ class Context extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_checkUriPermission, jni.JniCallType.intType, [
-      uri.reference,
+    return _id_checkUriPermission(this, const jni.jintType(), [
+      uri.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2)
-    ]).integer;
+    ]);
   }
 
-  static final _id_checkUriPermissions = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkUriPermissions", r"(Ljava/util/List;III)[I");
+  static final _id_checkUriPermissions = _class.instanceMethodId(
+    r"checkUriPermissions",
+    r"(Ljava/util/List;III)[I",
+  );
 
   /// from: public java.lang.Object[] checkUriPermissions(java.util.List list, int i, int i1, int i2)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6625,35 +6912,32 @@ class Context extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return const jni.JArrayType(jni.jintType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(
-            reference, _id_checkUriPermissions, jni.JniCallType.objectType, [
-      list.reference,
+    return _id_checkUriPermissions(this, const jni.JArrayType(jni.jintType()), [
+      list.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2)
-    ]).object);
+    ]);
   }
 
-  static final _id_checkCallingUriPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"checkCallingUriPermission", r"(Landroid/net/Uri;I)I");
+  static final _id_checkCallingUriPermission = _class.instanceMethodId(
+    r"checkCallingUriPermission",
+    r"(Landroid/net/Uri;I)I",
+  );
 
   /// from: public abstract int checkCallingUriPermission(android.net.Uri uri, int i)
   int checkCallingUriPermission(
     jni.JObject uri,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkCallingUriPermission,
-        jni.JniCallType.intType,
-        [uri.reference, jni.JValueInt(i)]).integer;
+    return _id_checkCallingUriPermission(
+        this, const jni.jintType(), [uri.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_checkCallingUriPermissions = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"checkCallingUriPermissions",
-      r"(Ljava/util/List;I)[I");
+  static final _id_checkCallingUriPermissions = _class.instanceMethodId(
+    r"checkCallingUriPermissions",
+    r"(Ljava/util/List;I)[I",
+  );
 
   /// from: public java.lang.Object[] checkCallingUriPermissions(java.util.List list, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6661,33 +6945,30 @@ class Context extends jni.JObject {
     jni.JList<jni.JObject> list,
     int i,
   ) {
-    return const jni.JArrayType(jni.jintType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(
-            reference,
-            _id_checkCallingUriPermissions,
-            jni.JniCallType.objectType,
-            [list.reference, jni.JValueInt(i)]).object);
+    return _id_checkCallingUriPermissions(
+        this,
+        const jni.JArrayType(jni.jintType()),
+        [list.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_checkCallingOrSelfUriPermission = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"checkCallingOrSelfUriPermission",
-          r"(Landroid/net/Uri;I)I");
+  static final _id_checkCallingOrSelfUriPermission = _class.instanceMethodId(
+    r"checkCallingOrSelfUriPermission",
+    r"(Landroid/net/Uri;I)I",
+  );
 
   /// from: public abstract int checkCallingOrSelfUriPermission(android.net.Uri uri, int i)
   int checkCallingOrSelfUriPermission(
     jni.JObject uri,
     int i,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_checkCallingOrSelfUriPermission,
-        jni.JniCallType.intType,
-        [uri.reference, jni.JValueInt(i)]).integer;
+    return _id_checkCallingOrSelfUriPermission(
+        this, const jni.jintType(), [uri.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_checkCallingOrSelfUriPermissions = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"checkCallingOrSelfUriPermissions",
-          r"(Ljava/util/List;I)[I");
+  static final _id_checkCallingOrSelfUriPermissions = _class.instanceMethodId(
+    r"checkCallingOrSelfUriPermissions",
+    r"(Ljava/util/List;I)[I",
+  );
 
   /// from: public java.lang.Object[] checkCallingOrSelfUriPermissions(java.util.List list, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6695,18 +6976,16 @@ class Context extends jni.JObject {
     jni.JList<jni.JObject> list,
     int i,
   ) {
-    return const jni.JArrayType(jni.jintType()).fromRef(jni.Jni.accessors
-        .callMethodWithArgs(
-            reference,
-            _id_checkCallingOrSelfUriPermissions,
-            jni.JniCallType.objectType,
-            [list.reference, jni.JValueInt(i)]).object);
+    return _id_checkCallingOrSelfUriPermissions(
+        this,
+        const jni.JArrayType(jni.jintType()),
+        [list.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_checkUriPermission1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"checkUriPermission",
-      r"(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;III)I");
+  static final _id_checkUriPermission1 = _class.instanceMethodId(
+    r"checkUriPermission",
+    r"(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;III)I",
+  );
 
   /// from: public abstract int checkUriPermission(android.net.Uri uri, java.lang.String string, java.lang.String string1, int i, int i1, int i2)
   int checkUriPermission1(
@@ -6717,21 +6996,20 @@ class Context extends jni.JObject {
     int i1,
     int i2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_checkUriPermission1, jni.JniCallType.intType, [
-      uri.reference,
-      string.reference,
-      string1.reference,
+    return _id_checkUriPermission1(this, const jni.jintType(), [
+      uri.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2)
-    ]).integer;
+    ]);
   }
 
-  static final _id_enforceUriPermission = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"enforceUriPermission",
-      r"(Landroid/net/Uri;IIILjava/lang/String;)V");
+  static final _id_enforceUriPermission = _class.instanceMethodId(
+    r"enforceUriPermission",
+    r"(Landroid/net/Uri;IIILjava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceUriPermission(android.net.Uri uri, int i, int i1, int i2, java.lang.String string)
   void enforceUriPermission(
@@ -6741,19 +7019,19 @@ class Context extends jni.JObject {
     int i2,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_enforceUriPermission, jni.JniCallType.voidType, [
-      uri.reference,
+    _id_enforceUriPermission(this, const jni.jvoidType(), [
+      uri.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2),
-      string.reference
-    ]).check();
+      string.reference.pointer
+    ]);
   }
 
-  static final _id_enforceCallingUriPermission = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"enforceCallingUriPermission",
-          r"(Landroid/net/Uri;ILjava/lang/String;)V");
+  static final _id_enforceCallingUriPermission = _class.instanceMethodId(
+    r"enforceCallingUriPermission",
+    r"(Landroid/net/Uri;ILjava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceCallingUriPermission(android.net.Uri uri, int i, java.lang.String string)
   void enforceCallingUriPermission(
@@ -6761,16 +7039,14 @@ class Context extends jni.JObject {
     int i,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_enforceCallingUriPermission,
-        jni.JniCallType.voidType,
-        [uri.reference, jni.JValueInt(i), string.reference]).check();
+    _id_enforceCallingUriPermission(this, const jni.jvoidType(),
+        [uri.reference.pointer, jni.JValueInt(i), string.reference.pointer]);
   }
 
-  static final _id_enforceCallingOrSelfUriPermission = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"enforceCallingOrSelfUriPermission",
-          r"(Landroid/net/Uri;ILjava/lang/String;)V");
+  static final _id_enforceCallingOrSelfUriPermission = _class.instanceMethodId(
+    r"enforceCallingOrSelfUriPermission",
+    r"(Landroid/net/Uri;ILjava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceCallingOrSelfUriPermission(android.net.Uri uri, int i, java.lang.String string)
   void enforceCallingOrSelfUriPermission(
@@ -6778,17 +7054,14 @@ class Context extends jni.JObject {
     int i,
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_enforceCallingOrSelfUriPermission,
-        jni.JniCallType.voidType,
-        [uri.reference, jni.JValueInt(i), string.reference]).check();
+    _id_enforceCallingOrSelfUriPermission(this, const jni.jvoidType(),
+        [uri.reference.pointer, jni.JValueInt(i), string.reference.pointer]);
   }
 
-  static final _id_enforceUriPermission1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"enforceUriPermission",
-      r"(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/String;)V");
+  static final _id_enforceUriPermission1 = _class.instanceMethodId(
+    r"enforceUriPermission",
+    r"(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/String;)V",
+  );
 
   /// from: public abstract void enforceUriPermission(android.net.Uri uri, java.lang.String string, java.lang.String string1, int i, int i1, int i2, java.lang.String string2)
   void enforceUriPermission1(
@@ -6800,53 +7073,47 @@ class Context extends jni.JObject {
     int i2,
     jni.JString string2,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_enforceUriPermission1, jni.JniCallType.voidType, [
-      uri.reference,
-      string.reference,
-      string1.reference,
+    _id_enforceUriPermission1(this, const jni.jvoidType(), [
+      uri.reference.pointer,
+      string.reference.pointer,
+      string1.reference.pointer,
       jni.JValueInt(i),
       jni.JValueInt(i1),
       jni.JValueInt(i2),
-      string2.reference
-    ]).check();
+      string2.reference.pointer
+    ]);
   }
 
-  static final _id_revokeSelfPermissionOnKill = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"revokeSelfPermissionOnKill",
-      r"(Ljava/lang/String;)V");
+  static final _id_revokeSelfPermissionOnKill = _class.instanceMethodId(
+    r"revokeSelfPermissionOnKill",
+    r"(Ljava/lang/String;)V",
+  );
 
   /// from: public void revokeSelfPermissionOnKill(java.lang.String string)
   void revokeSelfPermissionOnKill(
     jni.JString string,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_revokeSelfPermissionOnKill,
-        jni.JniCallType.voidType,
-        [string.reference]).check();
+    _id_revokeSelfPermissionOnKill(
+        this, const jni.jvoidType(), [string.reference.pointer]);
   }
 
-  static final _id_revokeSelfPermissionsOnKill = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"revokeSelfPermissionsOnKill",
-          r"(Ljava/util/Collection;)V");
+  static final _id_revokeSelfPermissionsOnKill = _class.instanceMethodId(
+    r"revokeSelfPermissionsOnKill",
+    r"(Ljava/util/Collection;)V",
+  );
 
   /// from: public void revokeSelfPermissionsOnKill(java.util.Collection collection)
   void revokeSelfPermissionsOnKill(
     jni.JObject collection,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_revokeSelfPermissionsOnKill,
-        jni.JniCallType.voidType,
-        [collection.reference]).check();
+    _id_revokeSelfPermissionsOnKill(
+        this, const jni.jvoidType(), [collection.reference.pointer]);
   }
 
-  static final _id_createPackageContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createPackageContext",
-      r"(Ljava/lang/String;I)Landroid/content/Context;");
+  static final _id_createPackageContext = _class.instanceMethodId(
+    r"createPackageContext",
+    r"(Ljava/lang/String;I)Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context createPackageContext(java.lang.String string, int i)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6854,85 +7121,70 @@ class Context extends jni.JObject {
     jni.JString string,
     int i,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createPackageContext,
-        jni.JniCallType.objectType,
-        [string.reference, jni.JValueInt(i)]).object);
+    return _id_createPackageContext(this, const $ContextType(),
+        [string.reference.pointer, jni.JValueInt(i)]);
   }
 
-  static final _id_createContextForSplit = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createContextForSplit",
-      r"(Ljava/lang/String;)Landroid/content/Context;");
+  static final _id_createContextForSplit = _class.instanceMethodId(
+    r"createContextForSplit",
+    r"(Ljava/lang/String;)Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context createContextForSplit(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   Context createContextForSplit(
     jni.JString string,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createContextForSplit,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_createContextForSplit(
+        this, const $ContextType(), [string.reference.pointer]);
   }
 
-  static final _id_createConfigurationContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createConfigurationContext",
-      r"(Landroid/content/res/Configuration;)Landroid/content/Context;");
+  static final _id_createConfigurationContext = _class.instanceMethodId(
+    r"createConfigurationContext",
+    r"(Landroid/content/res/Configuration;)Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context createConfigurationContext(android.content.res.Configuration configuration)
   /// The returned object must be released after use, by calling the [release] method.
   Context createConfigurationContext(
     jni.JObject configuration,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createConfigurationContext,
-        jni.JniCallType.objectType,
-        [configuration.reference]).object);
+    return _id_createConfigurationContext(
+        this, const $ContextType(), [configuration.reference.pointer]);
   }
 
-  static final _id_createDisplayContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createDisplayContext",
-      r"(Landroid/view/Display;)Landroid/content/Context;");
+  static final _id_createDisplayContext = _class.instanceMethodId(
+    r"createDisplayContext",
+    r"(Landroid/view/Display;)Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context createDisplayContext(android.view.Display display)
   /// The returned object must be released after use, by calling the [release] method.
   Context createDisplayContext(
     jni.JObject display,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createDisplayContext,
-        jni.JniCallType.objectType,
-        [display.reference]).object);
+    return _id_createDisplayContext(
+        this, const $ContextType(), [display.reference.pointer]);
   }
 
-  static final _id_createDeviceContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createDeviceContext",
-      r"(I)Landroid/content/Context;");
+  static final _id_createDeviceContext = _class.instanceMethodId(
+    r"createDeviceContext",
+    r"(I)Landroid/content/Context;",
+  );
 
   /// from: public android.content.Context createDeviceContext(int i)
   /// The returned object must be released after use, by calling the [release] method.
   Context createDeviceContext(
     int i,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createDeviceContext,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i)]).object);
+    return _id_createDeviceContext(
+        this, const $ContextType(), [jni.JValueInt(i)]);
   }
 
-  static final _id_createWindowContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createWindowContext",
-      r"(ILandroid/os/Bundle;)Landroid/content/Context;");
+  static final _id_createWindowContext = _class.instanceMethodId(
+    r"createWindowContext",
+    r"(ILandroid/os/Bundle;)Landroid/content/Context;",
+  );
 
   /// from: public android.content.Context createWindowContext(int i, android.os.Bundle bundle)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6940,17 +7192,14 @@ class Context extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createWindowContext,
-        jni.JniCallType.objectType,
-        [jni.JValueInt(i), bundle.reference]).object);
+    return _id_createWindowContext(this, const $ContextType(),
+        [jni.JValueInt(i), bundle.reference.pointer]);
   }
 
-  static final _id_createWindowContext1 = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createWindowContext",
-      r"(Landroid/view/Display;ILandroid/os/Bundle;)Landroid/content/Context;");
+  static final _id_createWindowContext1 = _class.instanceMethodId(
+    r"createWindowContext",
+    r"(Landroid/view/Display;ILandroid/os/Bundle;)Landroid/content/Context;",
+  );
 
   /// from: public android.content.Context createWindowContext(android.view.Display display, int i, android.os.Bundle bundle)
   /// The returned object must be released after use, by calling the [release] method.
@@ -6959,135 +7208,130 @@ class Context extends jni.JObject {
     int i,
     jni.JObject bundle,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createWindowContext1,
-        jni.JniCallType.objectType,
-        [display.reference, jni.JValueInt(i), bundle.reference]).object);
+    return _id_createWindowContext1(this, const $ContextType(), [
+      display.reference.pointer,
+      jni.JValueInt(i),
+      bundle.reference.pointer
+    ]);
   }
 
-  static final _id_createContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createContext",
-      r"(Landroid/content/ContextParams;)Landroid/content/Context;");
+  static final _id_createContext = _class.instanceMethodId(
+    r"createContext",
+    r"(Landroid/content/ContextParams;)Landroid/content/Context;",
+  );
 
   /// from: public android.content.Context createContext(android.content.ContextParams contextParams)
   /// The returned object must be released after use, by calling the [release] method.
   Context createContext(
     jni.JObject contextParams,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createContext,
-        jni.JniCallType.objectType,
-        [contextParams.reference]).object);
+    return _id_createContext(
+        this, const $ContextType(), [contextParams.reference.pointer]);
   }
 
-  static final _id_createAttributionContext = jni.Jni.accessors.getMethodIDOf(
-      _class.reference,
-      r"createAttributionContext",
-      r"(Ljava/lang/String;)Landroid/content/Context;");
+  static final _id_createAttributionContext = _class.instanceMethodId(
+    r"createAttributionContext",
+    r"(Ljava/lang/String;)Landroid/content/Context;",
+  );
 
   /// from: public android.content.Context createAttributionContext(java.lang.String string)
   /// The returned object must be released after use, by calling the [release] method.
   Context createAttributionContext(
     jni.JString string,
   ) {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createAttributionContext,
-        jni.JniCallType.objectType,
-        [string.reference]).object);
+    return _id_createAttributionContext(
+        this, const $ContextType(), [string.reference.pointer]);
   }
 
-  static final _id_createDeviceProtectedStorageContext = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"createDeviceProtectedStorageContext",
-          r"()Landroid/content/Context;");
+  static final _id_createDeviceProtectedStorageContext =
+      _class.instanceMethodId(
+    r"createDeviceProtectedStorageContext",
+    r"()Landroid/content/Context;",
+  );
 
   /// from: public abstract android.content.Context createDeviceProtectedStorageContext()
   /// The returned object must be released after use, by calling the [release] method.
   Context createDeviceProtectedStorageContext() {
-    return const $ContextType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_createDeviceProtectedStorageContext,
-        jni.JniCallType.objectType, []).object);
+    return _id_createDeviceProtectedStorageContext(
+        this, const $ContextType(), []);
   }
 
-  static final _id_getDisplay = jni.Jni.accessors.getMethodIDOf(
-      _class.reference, r"getDisplay", r"()Landroid/view/Display;");
+  static final _id_getDisplay = _class.instanceMethodId(
+    r"getDisplay",
+    r"()Landroid/view/Display;",
+  );
 
   /// from: public android.view.Display getDisplay()
   /// The returned object must be released after use, by calling the [release] method.
   jni.JObject getDisplay() {
-    return const jni.JObjectType().fromRef(jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getDisplay, jni.JniCallType.objectType, []).object);
+    return _id_getDisplay(this, const jni.JObjectType(), []);
   }
 
-  static final _id_getDeviceId =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"getDeviceId", r"()I");
+  static final _id_getDeviceId = _class.instanceMethodId(
+    r"getDeviceId",
+    r"()I",
+  );
 
   /// from: public int getDeviceId()
   int getDeviceId() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_getDeviceId, jni.JniCallType.intType, []).integer;
+    return _id_getDeviceId(this, const jni.jintType(), []);
   }
 
-  static final _id_registerDeviceIdChangeListener = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"registerDeviceIdChangeListener",
-          r"(Ljava/util/concurrent/Executor;Ljava/util/function/IntConsumer;)V");
+  static final _id_registerDeviceIdChangeListener = _class.instanceMethodId(
+    r"registerDeviceIdChangeListener",
+    r"(Ljava/util/concurrent/Executor;Ljava/util/function/IntConsumer;)V",
+  );
 
   /// from: public void registerDeviceIdChangeListener(java.util.concurrent.Executor executor, java.util.function.IntConsumer intConsumer)
   void registerDeviceIdChangeListener(
     jni.JObject executor,
     jni.JObject intConsumer,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_registerDeviceIdChangeListener,
-        jni.JniCallType.voidType,
-        [executor.reference, intConsumer.reference]).check();
+    _id_registerDeviceIdChangeListener(this, const jni.jvoidType(),
+        [executor.reference.pointer, intConsumer.reference.pointer]);
   }
 
-  static final _id_unregisterDeviceIdChangeListener = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"unregisterDeviceIdChangeListener",
-          r"(Ljava/util/function/IntConsumer;)V");
+  static final _id_unregisterDeviceIdChangeListener = _class.instanceMethodId(
+    r"unregisterDeviceIdChangeListener",
+    r"(Ljava/util/function/IntConsumer;)V",
+  );
 
   /// from: public void unregisterDeviceIdChangeListener(java.util.function.IntConsumer intConsumer)
   void unregisterDeviceIdChangeListener(
     jni.JObject intConsumer,
   ) {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference,
-        _id_unregisterDeviceIdChangeListener,
-        jni.JniCallType.voidType,
-        [intConsumer.reference]).check();
+    _id_unregisterDeviceIdChangeListener(
+        this, const jni.jvoidType(), [intConsumer.reference.pointer]);
   }
 
-  static final _id_isRestricted = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isRestricted", r"()Z");
+  static final _id_isRestricted = _class.instanceMethodId(
+    r"isRestricted",
+    r"()Z",
+  );
 
   /// from: public boolean isRestricted()
   bool isRestricted() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isRestricted, jni.JniCallType.booleanType, []).boolean;
+    return _id_isRestricted(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_isDeviceProtectedStorage = jni.Jni.accessors
-      .getMethodIDOf(_class.reference, r"isDeviceProtectedStorage", r"()Z");
+  static final _id_isDeviceProtectedStorage = _class.instanceMethodId(
+    r"isDeviceProtectedStorage",
+    r"()Z",
+  );
 
   /// from: public abstract boolean isDeviceProtectedStorage()
   bool isDeviceProtectedStorage() {
-    return jni.Jni.accessors.callMethodWithArgs(reference,
-        _id_isDeviceProtectedStorage, jni.JniCallType.booleanType, []).boolean;
+    return _id_isDeviceProtectedStorage(this, const jni.jbooleanType(), []);
   }
 
-  static final _id_isUiContext =
-      jni.Jni.accessors.getMethodIDOf(_class.reference, r"isUiContext", r"()Z");
+  static final _id_isUiContext = _class.instanceMethodId(
+    r"isUiContext",
+    r"()Z",
+  );
 
   /// from: public boolean isUiContext()
   bool isUiContext() {
-    return jni.Jni.accessors.callMethodWithArgs(
-        reference, _id_isUiContext, jni.JniCallType.booleanType, []).boolean;
+    return _id_isUiContext(this, const jni.jbooleanType(), []);
   }
 }
 
@@ -7098,7 +7342,8 @@ final class $ContextType extends jni.JObjType<Context> {
   String get signature => r"Landroid/content/Context;";
 
   @override
-  Context fromRef(jni.JObjectPtr ref) => Context.fromRef(ref);
+  Context fromReference(jni.JReference reference) =>
+      Context.fromReference(reference);
 
   @override
   jni.JObjType get superType => const jni.JObjectType();

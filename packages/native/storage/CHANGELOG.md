@@ -1,3 +1,7 @@
+## 0.1.3
+
+- chore: Migrate to jni 0.8.0 to enable isolated Android storage
+
 ## 0.1.2
 
 - feat: Isolated memory storage on web
