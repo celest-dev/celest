@@ -27,6 +27,10 @@ Future<void> runPub({
   exe ??= Sdk.current.dart;
   final process = await processManager.start(
     <String>[exe, 'pub', action.name],
+    environment: {
+      if (Sdk.current.flutterSdkRoot case final flutterSdkRoot?)
+        'FLUTTER_ROOT': flutterSdkRoot,
+    },
     workingDirectory: workingDirectory,
   );
   // Must be sync so that completer only completes once before `finally` block

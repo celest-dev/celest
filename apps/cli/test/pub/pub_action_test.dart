@@ -83,6 +83,49 @@ dependencies:
             ),
           );
         });
+
+        // TODO(dnys1): Should we allow direct dependencies on Flutter?
+        test('works when depending on flutter', () async {
+          tempDir.childFile('pubspec.yaml').writeAsStringSync('''
+name: test_1234
+
+environment:
+  sdk: ^$minSupportedDartSdk
+
+dependencies:
+  flutter:
+    sdk: flutter
+''');
+          await expectLater(
+            runPub(
+              exe: exe,
+              action: action,
+              workingDirectory: tempDir.path,
+            ),
+            completes,
+          );
+        });
+
+        test('works with flutter environment constraint', () async {
+          tempDir.childFile('pubspec.yaml').writeAsStringSync('''
+name: test_1234
+
+environment:
+  sdk: ^$minSupportedDartSdk
+  flutter: ">=3.19.0"
+
+dependencies:
+  path: any
+''');
+          await expectLater(
+            runPub(
+              exe: exe,
+              action: action,
+              workingDirectory: tempDir.path,
+            ),
+            completes,
+          );
+        });
       });
     }
   });
