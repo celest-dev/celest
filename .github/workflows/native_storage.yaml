@@ -19,7 +19,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Get Packages
@@ -38,7 +38,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Get Packages
@@ -73,7 +73,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Get Packages (Example)
@@ -99,7 +99,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Install Build Dependencies
@@ -132,7 +132,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Get Packages
@@ -154,7 +154,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
       - name: Setup Flutter
-        uses: subosito/flutter-action@1c5eb12d812966ca84680edc38353a0851c8fd56 # 2.14.0
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
       - name: Get Packages
