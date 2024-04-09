@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names
-
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:typed_data';
@@ -8,41 +6,27 @@ import 'package:ffi/ffi.dart';
 import 'package:native_storage/native_storage.dart';
 import 'package:native_storage/src/native/windows/windows.dart';
 import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
-import 'package:native_storage/src/util/functional.dart';
 import 'package:win32/win32.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-final class SecureStorageWindows extends NativeSecureStoragePlatform {
+final class SecureStorageWindows extends NativeSecureStoragePlatform
+    with NativeStorageWindows {
   SecureStorageWindows({
     String? namespace,
     super.scope,
-  })  : _namespace = namespace,
+  })  : namespaceOverride = namespace,
         super.base();
 
-  final String? _namespace;
-
   @override
-  String get namespace => _namespace ?? windows.applicationId;
+  final String? namespaceOverride;
 
   WindowsException _windowsException(int hr) =>
       WindowsException(HRESULT_FROM_WIN32(hr));
 
-  late final _registry = lazy(() {
-    final hkcu = Registry.currentUser;
-    var key = hkcu
-        .createKey('SOFTWARE\\Classes\\Local Settings\\Software\\$namespace');
-    if (scope case final scope?) {
-      for (final path in scope.split('/')) {
-        key = key.createKey(path);
-      }
-    }
-    return key;
-  });
-
   @override
   String? read(String key) {
     return using((arena) {
-      final value = _registry.getValueAsString(key);
+      final value = registry.getValueAsString(key);
       if (value == null) {
         return null;
       }
@@ -54,31 +38,11 @@ final class SecureStorageWindows extends NativeSecureStoragePlatform {
   String write(String key, String value) {
     return using((arena) {
       final encrypted = _encrypt(value, arena);
-      _registry.createValue(
+      registry.createValue(
         RegistryValue(key, RegistryValueType.string, encrypted),
       );
       return value;
     });
-  }
-
-  @override
-  String? delete(String key) {
-    final current = read(key);
-    if (current == null) {
-      return null;
-    }
-    _registry.deleteValue(key);
-    return current;
-  }
-
-  @override
-  void clear() {
-    for (final value in List.of(_registry.values)) {
-      _registry.deleteValue(value.name);
-    }
-    for (final subkey in List.of(_registry.subkeyNames)) {
-      _registry.deleteKey(subkey, recursive: true);
-    }
   }
 
   /// A wrapper around [CryptProtectData] for encrypting [Uint8List].

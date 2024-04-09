@@ -2,10 +2,14 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
+import 'package:meta/meta.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:native_storage/src/native_storage_exception.dart';
+import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:native_storage/src/util/functional.dart';
 import 'package:path/path.dart' as p;
 import 'package:win32/win32.dart';
+import 'package:win32_registry/win32_registry.dart';
 import 'package:windows_applicationmodel/windows_applicationmodel.dart';
 
 final windows = WindowsCommon._();
@@ -129,4 +133,90 @@ final class WindowsCommon {
       productName: applicationName,
     );
   });
+}
+
+// ignore: invalid_use_of_visible_for_testing_member
+mixin NativeStorageWindows on NativeStorage implements NativeStorageExtended {
+  @protected
+  abstract final String? namespaceOverride;
+
+  @override
+  late final String namespace = lazy(() {
+    if (namespaceOverride case final namespaceOverride?) {
+      return namespaceOverride;
+    }
+    if (windows.applicationInfo case (:final companyName, :final productName)) {
+      return '$companyName\\$productName';
+    }
+    return windows.applicationId;
+  });
+
+  @protected
+  late final registry = lazy(() {
+    final hkcu = Registry.currentUser;
+    var key = hkcu
+        .createKey('SOFTWARE\\Classes\\Local Settings\\Software\\$namespace');
+    if (scope case final scope?) {
+      for (final path in scope.split('/')) {
+        key = key.createKey(path);
+      }
+    }
+    return key;
+  });
+
+  @override
+  String? delete(String key) {
+    final current = read(key);
+    if (current == null) {
+      return null;
+    }
+    registry.deleteValue(key);
+    return current;
+  }
+
+  @override
+  List<String> get allKeys {
+    final allKeys = <String>[];
+    try {
+      for (final value in List.of(registry.values)) {
+        allKeys.add(value.name);
+      }
+    } on WindowsException catch (e) {
+      if (e.toString().contains('marked for deletion')) {
+        // OK. Will throw if recently cleared/deleted.
+        return const [];
+      }
+      rethrow;
+    }
+    for (final subkey in List.of(registry.subkeyNames)) {
+      try {
+        allKeys.addAll(
+          registry.createKey(subkey).values.map((v) => '$subkey/${v.name}'),
+        );
+      } on WindowsException catch (e) {
+        if (e.toString().contains('marked for deletion')) {
+          // OK. Will throw if recently cleared/deleted.
+          continue;
+        }
+        rethrow;
+      }
+    }
+    return allKeys;
+  }
+
+  @override
+  void clear() {
+    for (final value in List.of(registry.values)) {
+      registry.deleteValue(value.name);
+    }
+    for (final subkey in List.of(registry.subkeyNames)) {
+      registry.deleteKey(subkey, recursive: true);
+    }
+  }
+
+  @override
+  void close() {
+    registry.close();
+    super.close();
+  }
 }

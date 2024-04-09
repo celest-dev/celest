@@ -141,42 +141,52 @@ final class SecureStorageDarwin extends NativeSecureStoragePlatform {
   }
 
   void _clear({required Arena arena}) {
+    for (final key in _allKeys(arena: arena)) {
+      // Use the item's primary key to avoid a bad lookup.
+      final primaryKey = {
+        kSecClass: kSecClassGenericPassword,
+        kSecAttrService: namespace.toCFString(arena),
+        kSecAttrAccount: _scoped(key).toCFString(arena),
+      }.toCFDictionary(arena);
+      _check(() => SecItemDelete(primaryKey), key: key);
+    }
+  }
+
+  @override
+  List<String> get allKeys => using((arena) => _allKeys(arena: arena));
+
+  List<String> _allKeys({required Arena arena}) {
     final query = {
       ..._baseQuery(arena),
       kSecReturnAttributes: kCFBooleanTrue,
-      // Required when `useDataProtection` is disabled.
-      if (!darwin.useDataProtection) kSecMatchLimit: kSecMatchLimitAll,
+      kSecMatchLimit: kSecMatchLimitAll,
     };
-
     final result = arena<CFArrayRef>();
     try {
-      // Find all keys for the namespace.
       _check(
-        () => SecItemCopyMatching(query.toCFDictionary(arena), result.cast()),
+        () => SecItemCopyMatching(
+          query.toCFDictionary(arena),
+          result.cast(),
+        ),
       );
     } on SecureStorageItemNotFoundException {
       // OK. Keychain will throw this error if there are no items.
-      return;
+      return const [];
     }
-
     final items = result.value;
     assert(items != nullptr, 'items should not be null');
+    final allKeys = <String>[];
     for (var i = 0; i < CFArrayGetCount(items); i++) {
       final item = CFArrayGetValueAtIndex(items, i).cast<CFDictionary>();
-      final itemKey = CFDictionaryGetValue(
+      final key = CFDictionaryGetValue(
         item,
         kSecAttrAccount.cast(),
       ).cast<CFString>().toDartString()!;
-      if (scope == null || itemKey.startsWith(_prefix)) {
-        // Use the item's primary key to avoid a bad lookup.
-        final primaryKey = {
-          kSecClass: kSecClassGenericPassword,
-          kSecAttrService: namespace.toCFString(arena),
-          kSecAttrAccount: itemKey.toCFString(arena),
-        }.toCFDictionary(arena);
-        _check(() => SecItemDelete(primaryKey), key: itemKey);
+      if (scope == null || key.startsWith(_prefix)) {
+        allKeys.add(key.substring(_prefix.length));
       }
     }
+    return allKeys;
   }
 
   void _check(

@@ -69,6 +69,17 @@ class NativeStorage extends jni.JObject {
     return _id_getSharedPreferences(this, const jni.JObjectType(), []);
   }
 
+  static final _id_getAllKeys = _class.instanceMethodId(
+    r"getAllKeys",
+    r"()Ljava/util/List;",
+  );
+
+  /// from: public final java.util.List getAllKeys()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JList<jni.JString> getAllKeys() {
+    return _id_getAllKeys(this, const jni.JListType(jni.JStringType()), []);
+  }
+
   static final _id_write = _class.instanceMethodId(
     r"write",
     r"(Ljava/lang/String;Ljava/lang/String;)V",

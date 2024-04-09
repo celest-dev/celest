@@ -169,6 +169,37 @@ final class SecureStorageLinux extends NativeSecureStoragePlatform {
     return value;
   }
 
+  @override
+  List<String> get allKeys => using((arena) {
+        final schema = _schema(arena);
+        final attributes = _attributes(arena: arena);
+        final secrets = _check(
+          (err) => linux.libSecret.secret_password_searchv_sync(
+            schema,
+            attributes,
+            SecretSearchFlags.SECRET_SEARCH_ALL,
+            nullptr,
+            err,
+          ),
+          arena: arena,
+        );
+        if (secrets == nullptr) {
+          return const [];
+        }
+        final count = linux.glib.g_list_length(secrets);
+        final allKeys = <String>[];
+        for (var i = 0; i < count; i++) {
+          final secret =
+              linux.glib.g_list_nth_data(secrets, i).cast<SecretItem>();
+          final label =
+              linux.libSecret.secret_item_get_label(secret).toDartString();
+          if (scope == null || label.startsWith(_prefix)) {
+            allKeys.add(label.substring(_prefix.length));
+          }
+        }
+        return allKeys;
+      });
+
   R _check<R>(
     R Function(Pointer<Pointer<GError>> err) action, {
     required Arena arena,

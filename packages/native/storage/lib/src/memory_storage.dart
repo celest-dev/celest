@@ -1,9 +1,15 @@
 import 'package:native_storage/src/isolated/isolated_storage.dart';
 import 'package:native_storage/src/native_storage.dart';
+import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:native_storage/src/secure/secure_storage.dart';
 
 /// An in-memory implementation of [NativeStorage] and [NativeSecureStorage].
-final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
+final class NativeMemoryStorage
+    implements
+        NativeStorage,
+        NativeSecureStorage,
+        // ignore: invalid_use_of_visible_for_testing_member
+        NativeStorageExtended {
   NativeMemoryStorage({
     String? namespace,
     this.scope,
@@ -37,6 +43,12 @@ final class NativeMemoryStorage implements NativeStorage, NativeSecureStorage {
 
   @override
   String write(String key, String value) => _storage['$_prefix$key'] = value;
+
+  @override
+  List<String> get allKeys => [
+        for (final key in _storage.keys)
+          if (key.startsWith(_prefix)) key.substring(_prefix.length),
+      ];
 
   @override
   void close() {
