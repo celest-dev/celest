@@ -2,12 +2,17 @@ import 'dart:io';
 
 import 'package:meta/meta.dart';
 import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:native_storage/src/secure/secure_storage.android.dart';
 import 'package:native_storage/src/secure/secure_storage.darwin.dart';
 import 'package:native_storage/src/secure/secure_storage.linux.dart';
 import 'package:native_storage/src/secure/secure_storage.windows.dart';
 
-abstract base class NativeSecureStoragePlatform implements NativeSecureStorage {
+abstract base class NativeSecureStoragePlatform
+    implements
+        NativeSecureStorage,
+        // ignore: invalid_use_of_visible_for_testing_member
+        NativeStorageExtended {
   factory NativeSecureStoragePlatform({
     String? namespace,
     String? scope,

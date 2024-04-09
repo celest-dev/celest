@@ -62,4 +62,10 @@ final class LocalStorageLinux extends NativeLocalStoragePlatform {
     _writeData(data);
     return value;
   }
+
+  @override
+  List<String> get allKeys => [
+        for (final key in _readData().keys)
+          if (key.startsWith(_prefix)) key.substring(_prefix.length),
+      ];
 }
