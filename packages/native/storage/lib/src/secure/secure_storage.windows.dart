@@ -9,7 +9,8 @@ import 'package:native_storage/src/secure/secure_storage_platform.vm.dart';
 import 'package:win32/win32.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-final class SecureStorageWindows extends NativeSecureStoragePlatform with NativeStorageWindows {
+final class SecureStorageWindows extends NativeSecureStoragePlatform
+    with NativeStorageWindows {
   SecureStorageWindows({
     String? namespace,
     super.scope,

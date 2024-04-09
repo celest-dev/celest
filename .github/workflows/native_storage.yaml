@@ -123,8 +123,6 @@ jobs:
           export DISPLAY=:99
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           flutter test -d linux integration_test/storage_test.dart
-  # TODO: Re-enable
-  #       Need to fix this: Git error. Command: `git clone --mirror https://github.com/dart-lang/native /c/Users/runneradmin/.pub-cache\git\cache\native-647c69ed8027da6d6def6bc40efa87cf1a2f76aa`
   test_windows:
     runs-on: windows-latest
     timeout-minutes: 15
@@ -138,9 +136,9 @@ jobs:
       - name: Get Packages
         working-directory: packages/native/storage
         run: dart pub get --no-example
-      # - name: Test
-      #   working-directory: packages/native/storage
-      #   run: dart test
+      - name: Test
+        working-directory: packages/native/storage
+        run: dart test
       - name: Get Packages (Example)
         working-directory: packages/native/storage/example
         run: flutter pub get
