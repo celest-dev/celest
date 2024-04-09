@@ -42,4 +42,8 @@ final class SecureStorageAndroid extends NativeSecureStoragePlatform {
     _storage.write(key.toJString(), value.toJString());
     return value;
   }
+
+  @override
+  List<String> get allKeys =>
+      _storage.getAllKeys().map((key) => key.toDartString()).toList();
 }

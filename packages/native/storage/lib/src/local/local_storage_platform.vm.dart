@@ -6,9 +6,14 @@ import 'package:native_storage/src/local/local_storage.android.dart';
 import 'package:native_storage/src/local/local_storage.linux.dart';
 import 'package:native_storage/src/local/local_storage.windows.dart';
 import 'package:native_storage/src/local/local_storage_darwin.dart';
+import 'package:native_storage/src/native_storage_extended.dart';
 
 /// The VM implementation of [NativeLocalStorage].
-abstract base class NativeLocalStoragePlatform implements NativeLocalStorage {
+abstract base class NativeLocalStoragePlatform
+    implements
+        NativeLocalStorage,
+        // ignore: invalid_use_of_visible_for_testing_member
+        NativeStorageExtended {
   factory NativeLocalStoragePlatform({
     String? namespace,
     String? scope,

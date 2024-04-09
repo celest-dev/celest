@@ -27,6 +27,10 @@ sealed class NativeStorage(
     private val editor: SharedPreferences.Editor
         get() = sharedPreferences.edit()
 
+    val allKeys: List<String>
+        get() = sharedPreferences.all.keys.filter { it.startsWith(prefix) }
+            .map { it.substring(prefix.length) }.toList()
+
     fun write(key: String, value: String?) {
         println("Writing: $prefix$key")
         with(editor) {

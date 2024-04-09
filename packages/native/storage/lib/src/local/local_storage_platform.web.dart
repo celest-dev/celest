@@ -1,10 +1,15 @@
 import 'package:native_storage/native_storage.dart';
 import 'package:native_storage/src/isolated/isolated_storage_platform.unsupported.dart'
     as unsupported;
+import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:web/web.dart' as web;
 
 /// The browser implementation of [NativeLocalStorage].
-final class NativeLocalStoragePlatform implements NativeLocalStorage {
+final class NativeLocalStoragePlatform
+    implements
+        NativeLocalStorage,
+        // ignore: invalid_use_of_visible_for_testing_member
+        NativeStorageExtended {
   NativeLocalStoragePlatform({String? namespace, this.scope})
       : namespace = namespace ?? web.window.location.hostname;
 
@@ -20,10 +25,8 @@ final class NativeLocalStoragePlatform implements NativeLocalStorage {
 
   @override
   void clear() {
-    for (final key in _storage.keys) {
-      if (key.startsWith(_prefix)) {
-        _storage.removeItem(key);
-      }
+    for (final key in allKeys) {
+      _storage.removeItem('$_prefix$key');
     }
   }
 
@@ -44,6 +47,12 @@ final class NativeLocalStoragePlatform implements NativeLocalStorage {
     _storage.setItem('$_prefix$key', value);
     return value;
   }
+
+  @override
+  List<String> get allKeys => [
+        for (final key in _storage.keys)
+          if (key.startsWith(_prefix)) key.substring(_prefix.length),
+      ];
 
   @override
   void close() {

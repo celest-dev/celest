@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:native_storage/native_storage.dart';
+import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:test/test.dart';
 
-void sharedTests(String name, NativeStorageFactory factory) {
+void sharedTests(String name, NativeStorageExtendedFactory factory) {
   group(name, () {
     const allowedNamespaces = [null, 'com.domain.myapp'];
     const allowedScopes = [null, 'scope', 'scope1/scope2'];
@@ -29,6 +30,8 @@ void sharedTests(String name, NativeStorageFactory factory) {
               test('writes a new key-value pair to storage', () {
                 storage.write(key, 'value');
                 expect(storage.read(key), 'value');
+
+                expect(storage.allKeys, equals([key]));
               });
 
               test('updates the value for an existing key', () {
@@ -38,12 +41,15 @@ void sharedTests(String name, NativeStorageFactory factory) {
                 storage.write(key, 'update');
                 expect(storage.read(key), 'update',
                     reason: 'Value was updated');
+
+                expect(storage.allKeys, equals([key]));
               });
             });
 
             group('read', () {
               test('can read a non-existent key', () {
                 expect(storage.read(key), isNull);
+                expect(storage.allKeys, isEmpty);
               });
             });
 
@@ -52,9 +58,11 @@ void sharedTests(String name, NativeStorageFactory factory) {
                 storage.write(key, 'delete');
                 expect(storage.read(key), 'delete',
                     reason: 'Value was written');
+                expect(storage.allKeys, equals([key]));
 
                 storage.delete(key);
                 expect(storage.read(key), isNull, reason: 'Value was deleted');
+                expect(storage.allKeys, isEmpty);
               });
 
               test('can delete a non-existent key', () {
@@ -74,6 +82,7 @@ void sharedTests(String name, NativeStorageFactory factory) {
                 storage.write(key2, value2);
                 expect(storage.read(key1), value1);
                 expect(storage.read(key2), value2);
+                expect(storage.allKeys, unorderedEquals([key1, key2]));
 
                 storage.clear();
 
@@ -87,6 +96,7 @@ void sharedTests(String name, NativeStorageFactory factory) {
                   isNull,
                   reason: 'Storage was cleared',
                 );
+                expect(storage.allKeys, isEmpty);
               });
 
               test('does not throw when no items present', () {
@@ -233,10 +243,16 @@ void sharedTests(String name, NativeStorageFactory factory) {
       expect(parent.read('key'), 'parentValue');
       expect(child.read('key'), 'childValue');
 
+      expect(parent.allKeys, unorderedEquals(['key', 'child/key']));
+      expect((child as NativeStorageExtended).allKeys, ['key']);
+
       parent.clear();
 
       expect(parent.read('key'), isNull);
       expect(child.read('key'), isNull);
+
+      expect(parent.allKeys, isEmpty);
+      expect(child.allKeys, isEmpty);
     });
 
     test('child does not clear parent', () {
@@ -249,10 +265,16 @@ void sharedTests(String name, NativeStorageFactory factory) {
       expect(parent.read('key'), 'parentValue');
       expect(child.read('key'), 'childValue');
 
+      expect(parent.allKeys, unorderedEquals(['key', 'child/key']));
+      expect((child as NativeStorageExtended).allKeys, ['key']);
+
       child.clear();
 
       expect(parent.read('key'), 'parentValue');
       expect(child.read('key'), isNull);
+
+      expect(parent.allKeys, ['key']);
+      expect(child.allKeys, isEmpty);
 
       parent.clear();
     });

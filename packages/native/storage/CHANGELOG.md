@@ -1,6 +1,7 @@
 ## 0.1.3
 
 - chore: Migrate to jni 0.8.0 to enable isolated Android storage
+- fix: Removal of secure storage values on macOS/iOS in release mode
 
 ## 0.1.2
 
