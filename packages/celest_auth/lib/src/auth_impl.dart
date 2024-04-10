@@ -12,9 +12,8 @@ export 'flows/email_flow.dart';
 final class AuthImpl implements Auth {
   AuthImpl(
     this.celest, {
-    required this.secureStorage,
-    LocalStorage? localStorage,
-  }) : localStorage = localStorage ?? LocalStorage();
+    NativeStorage? storage,
+  }) : _storage = storage ?? NativeStorage(scope: 'celest/auth');
 
   AuthState? _authState;
 
@@ -84,7 +83,7 @@ final class AuthImpl implements Auth {
   @override
   Future<void> signOut() async {
     localStorage.delete('userId');
-    secureStorage.delete('cork');
+    secureStorage.delete('cork').ignore();
     try {
       await protocol.signOut();
     } finally {
@@ -93,8 +92,10 @@ final class AuthImpl implements Auth {
   }
 
   final CelestBase celest;
-  final LocalStorage localStorage;
-  final SecureStorage secureStorage;
+  final NativeStorage _storage;
+
+  NativeStorage get localStorage => _storage;
+  IsolatedNativeStorage get secureStorage => _storage.secure.isolated;
 
   late final AuthClient protocol = AuthClient(celest);
 
@@ -102,5 +103,7 @@ final class AuthImpl implements Auth {
     await _authStateSubscription.cancel();
     await _authFlowSubscription?.cancel();
     await _authStateController.close();
+    localStorage.close();
+    await secureStorage.close();
   }
 }

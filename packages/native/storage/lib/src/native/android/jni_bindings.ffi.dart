@@ -17,8 +17,9 @@
 // ignore_for_file: unused_local_variable
 // ignore_for_file: unused_shown_name
 
-import "dart:isolate" show ReceivePort;
 import "dart:ffi" as ffi;
+import "dart:isolate" show ReceivePort;
+
 import "package:jni/internal_helpers_for_jnigen.dart";
 import "package:jni/jni.dart" as jni;
 
@@ -28,8 +29,8 @@ class NativeStorage extends jni.JObject {
   late final jni.JObjType<NativeStorage> $type = type;
 
   NativeStorage.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class =
       jni.JClass.forName(r"dev/celest/native_storage/NativeStorage");
@@ -184,8 +185,8 @@ class NativeLocalStorage extends NativeStorage {
   late final jni.JObjType<NativeLocalStorage> $type = type;
 
   NativeLocalStorage.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class =
       jni.JClass.forName(r"dev/celest/native_storage/NativeLocalStorage");
@@ -254,8 +255,8 @@ class NativeSecureStorage extends NativeStorage {
   late final jni.JObjType<NativeSecureStorage> $type = type;
 
   NativeSecureStorage.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class =
       jni.JClass.forName(r"dev/celest/native_storage/NativeSecureStorage");
@@ -324,8 +325,8 @@ class Activity_ScreenCaptureCallback extends jni.JObject {
   late final jni.JObjType<Activity_ScreenCaptureCallback> $type = type;
 
   Activity_ScreenCaptureCallback.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class =
       jni.JClass.forName(r"android/app/Activity$ScreenCaptureCallback");
@@ -376,8 +377,8 @@ class Activity extends jni.JObject {
   late final jni.JObjType<Activity> $type = type;
 
   Activity.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class = jni.JClass.forName(r"android/app/Activity");
 
@@ -4034,8 +4035,8 @@ class Context_BindServiceFlags extends jni.JObject {
   late final jni.JObjType<Context_BindServiceFlags> $type = type;
 
   Context_BindServiceFlags.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class =
       jni.JClass.forName(r"android/content/Context$BindServiceFlags");
@@ -4089,8 +4090,8 @@ class Context extends jni.JObject {
   late final jni.JObjType<Context> $type = type;
 
   Context.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    super.reference,
+  ) : super.fromReference();
 
   static final _class = jni.JClass.forName(r"android/content/Context");
 

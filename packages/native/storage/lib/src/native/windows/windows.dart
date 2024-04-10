@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:meta/meta.dart';
 import 'package:native_storage/native_storage.dart';
-import 'package:native_storage/src/native_storage_exception.dart';
 import 'package:native_storage/src/native_storage_extended.dart';
 import 'package:native_storage/src/util/functional.dart';
 import 'package:path/path.dart' as p;
