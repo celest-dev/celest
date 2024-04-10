@@ -7,3 +7,4 @@ celest/
 
 tool/debug
 **/*.dill
+**/*.pkg

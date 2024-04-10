@@ -91,7 +91,9 @@ dependency_overrides:
   corks_cedar:
     path: ../../celest/packages/corks_cedar
   jni:
-    path: ../../services/hub/third_party/jni
+    path: ../../services/hub/third_party/jni-0.8.0
+  native_storage:
+    path: ../../celest/packages/native/storage
   # Use vendored sqlite3 to make use of native-assets
   sqlite3:
     path: ../../packages/sqlite3/sqlite3

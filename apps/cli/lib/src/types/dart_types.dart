@@ -16,6 +16,7 @@ import 'package:celest/celest.dart' as celest;
 import 'package:celest/src/runtime/serve.dart' as celest_runtime;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_core/_internal.dart' as celest_core;
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
 import 'package:code_builder/code_builder.dart';
@@ -603,6 +604,7 @@ class _Celest {
   const _Celest();
 
   static const _url = 'package:celest/celest.dart';
+  static const _coreInternalUrl = 'package:celest_core/_internal.dart';
   static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
 
   /// Creates a [celest.BadRequestException] reference.
@@ -658,6 +660,10 @@ class _Celest {
 
   /// Creates a [celest.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _url);
+
+  /// Creates a [celest_core.NativeStorage] reference.
+  DartTypeReference get nativeStorage =>
+      const DartTypeReference('NativeStorage', _coreInternalUrl);
 
   /// Creates a [celest_core.Serializer] reference.
   TypeReference serializer([Reference? dartType]) => TypeReference(

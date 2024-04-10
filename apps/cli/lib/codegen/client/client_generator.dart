@@ -171,14 +171,16 @@ final class ClientGenerator {
             ..late = true
             ..modifier = FieldModifier.final$
             ..type = refer(
-              'SecureStorage',
+              'NativeStorage',
               'package:celest_core/_internal.dart',
             )
-            ..name = '_secureStorage'
+            ..name = '_storage'
             ..assignment = refer(
-              'SecureStorage',
+              'NativeStorage',
               'package:celest_core/_internal.dart',
-            ).newInstance([]).code,
+            ).newInstance([], {
+              'scope': literalString('celest'),
+            }).code,
         ),
         Field(
           (f) => f
@@ -190,7 +192,7 @@ final class ClientGenerator {
               'CelestHttpClient',
               'package:celest_core/_internal.dart',
             ).newInstance([], {
-              'secureStorage': refer('_secureStorage'),
+              'secureStorage': refer('_storage').property('secure'),
             }).code,
         ),
         Field(
@@ -265,7 +267,7 @@ final class ClientGenerator {
               ..assignment = ClientTypes.authClass.ref.newInstance([
                 refer('this'),
               ], {
-                'secureStorage': refer('_secureStorage'),
+                'storage': refer('_storage'),
               }).code,
           ),
         )

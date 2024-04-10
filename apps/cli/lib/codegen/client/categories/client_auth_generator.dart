@@ -41,9 +41,9 @@ final class ClientAuthGenerator {
           ..optionalParameters.add(
             Parameter(
               (p) => p
-                ..name = 'secureStorage'
+                ..name = 'storage'
                 ..type = refer(
-                  'SecureStorage',
+                  'NativeStorage',
                   'package:celest_core/_internal.dart',
                 )
                 ..named = true
@@ -56,7 +56,7 @@ final class ClientAuthGenerator {
                   _hubClass.newInstance([
                     refer('celest'),
                   ], {
-                    'secureStorage': refer('secureStorage'),
+                    'storage': refer('storage'),
                   }),
                 )
                 .code,

@@ -44,12 +44,12 @@ final baseUri = Uri.parse(
   platform.environment['CELEST_API_URI'] ?? 'https://api-preview.celest.dev',
 );
 DeployClient get deployService => DeployClient(
-      secureStorage: ctx.secureStorage,
+      secureStorage: ctx.storage.secure,
       baseUri: baseUri,
       httpClient: ctx.httpClient,
     );
 ProjectClient get projectService => ProjectClient(
-      secureStorage: ctx.secureStorage,
+      secureStorage: ctx.storage.secure,
       baseUri: baseUri,
       httpClient: ctx.httpClient,
     );
