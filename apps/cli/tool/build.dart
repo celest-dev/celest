@@ -57,7 +57,14 @@ final String outputFilepath = p.canonicalize(
 final String? accessToken = platform.environment['GCP_ACCESS_TOKEN'];
 
 /// The current SHA of the branch being built.
-final String? currentSha = platform.environment['GITHUB_SHA'];
+final String? currentSha = platform.environment.containsKey('CI')
+    ? (processManager.runSync(
+        // <String>['git', 'log', '-1', '--format=format:%H'], ?
+        <String>['git', 'rev-parse', 'HEAD'],
+        stdoutEncoding: utf8,
+      ).stdout as String)
+        .trim()
+    : null;
 
 /// Whether we're running in CI.
 final isCI = platform.environment['CI'] == 'true';
