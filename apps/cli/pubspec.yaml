@@ -45,6 +45,8 @@ dependencies:
   hub:
     path: ../../services/hub
   json_annotation: ^4.8.1
+  lib_openapi:
+    path: ../../packages/lib_openapi
   logging: ^1.2.0
   mason_logger: ^0.2.10
   meta: ^1.10.0
