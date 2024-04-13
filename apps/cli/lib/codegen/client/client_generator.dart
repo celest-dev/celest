@@ -6,7 +6,7 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:celest_proto/ast.dart' as ast;
+import 'package:api_celest/ast.dart' as ast;
 import 'package:code_builder/code_builder.dart';
 
 const kClientHeader = [

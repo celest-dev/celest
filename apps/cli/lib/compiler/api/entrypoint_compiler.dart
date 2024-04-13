@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_proto/ast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 

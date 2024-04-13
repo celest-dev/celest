@@ -6,7 +6,7 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_proto/ast.dart';
+import 'package:api_celest/ast.dart';
 import 'package:checks/checks.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;

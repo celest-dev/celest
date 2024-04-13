@@ -5,7 +5,7 @@ import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
-import 'package:celest_proto/celest_proto.dart';
+import 'package:api_celest/api_celest.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';

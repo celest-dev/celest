@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   analyzer: ^6.3.0
+  api_celest:
+    path: ../../packages/api_celest
   archive: ^3.4.9
   args: ^2.4.2
   async: ^2.11.0
@@ -26,8 +28,6 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  celest_proto:
-    path: ../../packages/celest_proto
   cli_script: ^1.0.0
   code_builder: ^4.8.0
   collection: ^1.18.0
@@ -88,8 +88,8 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  celest_proto:
-    path: ../../packages/celest_proto
+  api_celest:
+    path: ../../packages/api_celest
   corks_cedar:
     path: ../../celest/packages/corks_cedar
   jni:

@@ -1,7 +1,7 @@
 import 'package:cedar/cedar.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_proto/ast.dart';
+import 'package:api_celest/ast.dart';
 import 'package:collection/collection.dart';
 
 extension on AstNode {

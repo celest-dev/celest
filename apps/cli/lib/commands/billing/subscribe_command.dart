@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:api_celest/api_celest.dart';
 import 'package:celest_cli/commands/authenticate.dart';
 import 'package:celest_cli/commands/billing/billing_command.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_proto/celest_proto.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
