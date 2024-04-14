@@ -30,8 +30,11 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
+  late final SecureStorage _secureStorage = SecureStorage();
+
   @override
-  late _$http.Client httpClient = CelestHttpClient();
+  late _$http.Client httpClient =
+      CelestHttpClient(secureStorage: _secureStorage);
 
   late Uri _baseUri;
 

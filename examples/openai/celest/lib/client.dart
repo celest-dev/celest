@@ -16,15 +16,12 @@ import 'src/client/serializers.dart';
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local,
-  production;
+  local;
 
   Uri get baseUri => switch (this) {
         local => kIsWeb || !_$io.Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
-        production =>
-          Uri.parse('https://openai-example-usok-v76lntiq7q-wl.a.run.app'),
       };
 }
 
