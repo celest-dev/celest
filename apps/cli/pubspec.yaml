@@ -17,9 +17,9 @@ dependencies:
   built_collection: ^5.1.1
   built_value: ^8.6.3
   cedar:
-    path: ../../celest/packages/cedar
+    path: ../../cedar/packages/cedar
   cedar_ffi:
-    path: ../../celest/packages/cedar_ffi
+    path: ../../cedar/packages/cedar_ffi
   celest:
     path: ../../celest/packages/celest
   celest_auth:
@@ -75,11 +75,13 @@ dependencies:
   yaml_edit: ^2.1.1
 
 dependency_overrides:
+  api_celest:
+    path: ../../packages/api_celest
   built_value: ^8.9.0
   cedar:
-    path: ../../celest/packages/cedar
+    path: ../../cedar/packages/cedar
   cedar_ffi:
-    path: ../../celest/packages/cedar_ffi
+    path: ../../cedar/packages/cedar_ffi
   celest:
     path: ../../celest/packages/celest
   celest_auth:
@@ -88,8 +90,6 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  api_celest:
-    path: ../../packages/api_celest
   corks_cedar:
     path: ../../celest/packages/corks_cedar
   jni:

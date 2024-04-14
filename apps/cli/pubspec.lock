@@ -203,17 +203,17 @@ packages:
   cedar:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/cedar"
+      path: "../../cedar/packages/cedar"
       relative: true
     source: path
-    version: "0.1.2"
+    version: "0.1.3"
   cedar_ffi:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/cedar_ffi"
+      path: "../../cedar/packages/cedar_ffi"
       relative: true
     source: path
-    version: "0.1.1"
+    version: "0.1.2"
   celest:
     dependency: "direct main"
     description:
