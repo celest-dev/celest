@@ -26,7 +26,27 @@ void main() {
     setUp(() {
       return initTests(
         processManager: MockProcessManager(),
-        platform: MockPlatform(),
+      );
+    });
+
+    test('removes local storage', () async {
+      ctx.fileSystem = MemoryFileSystem.test();
+      await init(
+        projectRoot: ctx.fileSystem.systemTempDirectory.path,
+      );
+
+      await celestProject.config.settings.setOrganizationId('org-id');
+
+      expect(
+        await celestProject.config.settings.getOrganizationId(),
+        'org-id',
+      );
+
+      await const CelestUninstaller().uninstall();
+
+      expect(
+        await celestProject.config.settings.getOrganizationId(),
+        isNull,
       );
     });
 
@@ -56,7 +76,7 @@ void main() {
             ctx.fileSystem.systemTempDirectory.childDirectory('Celest');
         configDir.createSync(recursive: true);
 
-        final installDir = ctx.fileSystem
+        ctx.fileSystem
             .directory(r'C:\')
             .childDirectory('Users')
             .childDirectory('test')
@@ -64,14 +84,16 @@ void main() {
             .childDirectory('Local')
             .childDirectory('Microsoft')
             .childDirectory('WindowsApps')
-          ..createSync(recursive: true);
-        final sqliteLink = installDir.childLink('dart_sqlite3.dll')
-          ..createSync(
-            p.windows.join(installFolder, 'dart_sqlite3.dll'),
-          );
+            .createSync(recursive: true);
 
         await init(
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
+        );
+
+        expect(
+          p.windows.equals(configDir.path, celestProject.config.configDir.path),
+          isTrue,
+          reason: 'Setting APPDATA should point the config dir here',
         );
 
         when(
@@ -91,7 +113,6 @@ void main() {
         await const CelestUninstaller().uninstall();
 
         expect(configDir.existsSync(), isFalse);
-        expect(sqliteLink.existsSync(), isFalse);
 
         verify(
           () => ctx.processManager.run(

@@ -9,6 +9,7 @@ import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:hub/context.dart' show HubMetadata;
@@ -27,6 +28,7 @@ final class CelestProject {
 
   static Future<CelestProject> init({
     required String projectRoot,
+    String? configHome,
     String? outputsDir,
   }) async {
     _logger.finest('Loading celest project at root: "$projectRoot"...');
@@ -38,7 +40,9 @@ final class CelestProject {
       config as CelestConfig,
       analysisOptions as AnalysisOptions,
     ] = await Future.wait([
-      CelestConfig.load(),
+      CelestConfig.load(
+        configHome: configHome?.let(fileSystem.directory),
+      ),
       AnalysisOptions.load(projectPaths.analysisOptionsYaml),
     ]);
     _logger

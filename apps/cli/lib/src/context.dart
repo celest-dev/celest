@@ -1,11 +1,11 @@
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
+import 'package:api_celest/api_celest.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
-import 'package:api_celest/api_celest.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';
@@ -22,10 +22,12 @@ extension PlatformContext on path.Context {
 
 Future<ProjectPaths> init({
   required String projectRoot,
+  String? configHome,
   String? outputsDir,
 }) async {
   celestProject = await CelestProject.init(
     projectRoot: projectRoot,
+    configHome: configHome,
     outputsDir: outputsDir,
   );
   return celestProject.projectPaths;
