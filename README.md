@@ -120,6 +120,16 @@ class MyApp extends StatelessWidget {
 
 You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](https://celest.dev/docs/functions/introduction) to learn more about using Celest Functions.
 
+## Examples
+
+[![Celest](https://github.com/celest-dev/celest/actions/workflows/examples.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/examples.yaml)
+
+| Example                    | Description                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------- |
+| [Gemini](examples/gemini/) | Uses Google's [Gemini](https://ai.google.dev/) API for chat completion.                   |
+| [OpenAI](examples/openai/) | Uses the [OpenAI](https://platform.openai.com/docs/introduction) API for chat completion. |
+| [Todo](examples/todo/)     | A simple todo list application.                                                           |
+
 ## Packages
 
 | Package                                    | Description                                                              | Pub                                                                                                                                | Checks                                                                                                                                                                                |

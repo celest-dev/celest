@@ -1,0 +1,38 @@
+name: examples
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - ".github/workflows/examples.yaml"
+      - "examples/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # 4.1.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
+        with:
+          channel: stable
+          cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
+      - name: Analyze
+        run: melos exec -c 1 --dir-exists=celest -- flutter analyze --fatal-infos --fatal-warnings
+      - name: Format
+        run: melos exec -c 1 --dir-exists=celest -- dart format --set-exit-if-changed .
+      - name: Build Example
+        run: melos exec -c 1 --dir-exists=celest -- flutter build web
