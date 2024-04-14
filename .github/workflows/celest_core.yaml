@@ -22,9 +22,10 @@ jobs:
         uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
       - name: Get Packages
-        working-directory: packages/celest_core
-        run: dart pub get
+        run: melos bootstrap
       - name: Analyze
         working-directory: packages/celest_core
         run: dart analyze
@@ -41,9 +42,10 @@ jobs:
         uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
         with:
           cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
       - name: Get Packages
-        working-directory: packages/celest_core
-        run: dart pub get
+        run: melos bootstrap
       - name: Test
         working-directory: packages/celest_core
         run: dart test

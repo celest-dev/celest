@@ -10,6 +10,18 @@ dependencies:
   celest_core: ^0.2.0
   http: ">=0.13.0 <2.0.0"
 
+dependency_overrides:
+  celest:
+    path: ../../
+  celest_auth:
+    path: ../../../celest_auth
+  celest_core:
+    path: ../../../celest_core
+  corks_cedar:
+    path: ../../../corks_cedar
+  native_storage:
+    path: ../../../native/storage
+
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.0

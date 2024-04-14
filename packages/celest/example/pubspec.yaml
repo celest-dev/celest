@@ -12,6 +12,18 @@ dependencies:
   flutter:
     sdk: flutter
 
+dependency_overrides:
+  celest:
+    path: ../
+  celest_auth:
+    path: ../../celest_auth
+  celest_core:
+    path: ../../celest_core
+  corks_cedar:
+    path: ../../corks_cedar
+  native_storage:
+    path: ../../native/storage
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
