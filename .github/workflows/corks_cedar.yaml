@@ -29,7 +29,7 @@ jobs:
         with:
           submodules: true
       - name: Setup Dart
-        uses: dart-lang/setup-dart@fedb1266e91cf51be2fdb382869461a434b920a3 # main
+        uses: dart-lang/setup-dart@f0ead981b4d9a35b37f30d36160575d60931ec30 # main
       - name: Get Packages
         working-directory: packages/corks_cedar
         run: dart pub get
