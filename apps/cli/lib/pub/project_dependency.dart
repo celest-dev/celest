@@ -26,13 +26,6 @@ final class ProjectDependency {
       version: VersionConstraint.compatibleWith(currentMinorVersion),
     ),
   );
-  static final ProjectDependency celestCore = ProjectDependency._(
-    'celest_core',
-    DependencyType.dependency,
-    HostedDependency(
-      version: VersionConstraint.compatibleWith(currentMinorVersion),
-    ),
-  );
 
   static final ProjectDependency http = ProjectDependency._(
     'http',
@@ -65,8 +58,6 @@ final class ProjectDependency {
 
   static final Map<String, Dependency> dependencies = {
     celest.name: celest.pubDependency,
-    celestCore.name: celestCore.pubDependency,
-    http.name: http.pubDependency,
   };
 
   static final Map<String, Dependency> devDependencies = {

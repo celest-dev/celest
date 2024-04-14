@@ -10,7 +10,6 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cli_common/src/platform/windows_paths.dart';
 import 'package:http/http.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:yaml_edit/yaml_edit.dart';
 
 base mixin Configure on CelestCommand {
   // TODO(dnys1): Move to ProjectPaths. Rename to CelestProject.
@@ -61,7 +60,7 @@ base mixin Configure on CelestCommand {
       await migrateProject();
     }
 
-    await _updateAppPubspec();
+    await _pubUpgrade();
 
     if (platform.isWindows &&
         !DynamicLibrary.process().providesSymbol('cedar_init')) {
@@ -100,30 +99,21 @@ base mixin Configure on CelestCommand {
     }
   }
 
-  /// Ensures app has dependency on celest project
-  Future<void> _updateAppPubspec() async {
-    final appPubspecFile = fileSystem.file(
-      p.join(projectPaths.appRoot, 'pubspec.yaml'),
-    );
-    final appPubspecYaml = await appPubspecFile.readAsString();
-    if (!Pubspec.parse(appPubspecYaml)
-        .dependencies
-        .containsKey(celestProject.packageName)) {
-      final updatedPubspec = YamlEditor(appPubspecYaml)
-        ..update(
-          ['dependencies', celestProject.packageName],
-          {'path': 'celest/'},
-        );
-      await appPubspecFile.writeAsString(updatedPubspec.toString());
-      try {
-        await runPub(
-          exe: 'flutter',
-          action: PubAction.get,
-          workingDirectory: projectPaths.appRoot,
-        );
-      } on Exception catch (e, st) {
-        performance.captureError(e, stackTrace: st);
-      }
-    }
+  // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
+  // the dependencies in the lockfile are already up to date.
+  Future<void> _pubUpgrade() async {
+    final projectRoot = projectPaths.projectRoot;
+    logger.fine('Running pub upgrade in "$projectRoot"...');
+    await Future.wait(eagerError: true, [
+      runPub(
+        action: PubAction.upgrade,
+        workingDirectory: projectRoot,
+      ),
+      runPub(
+        exe: 'flutter',
+        action: PubAction.upgrade,
+        workingDirectory: projectPaths.appRoot,
+      ),
+    ]);
   }
 }

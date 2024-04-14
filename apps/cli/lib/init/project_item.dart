@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
@@ -9,6 +10,7 @@ import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:stream_transform/stream_transform.dart';
+import 'package:yaml_edit/yaml_edit.dart';
 
 sealed class ProjectItem {
   const ProjectItem();
@@ -81,60 +83,88 @@ final class MacOsEntitlements extends ProjectItem {
   }
 }
 
-final class ProjectDependencyUpdater extends ProjectItem {
-  const ProjectDependencyUpdater(this.appRoot);
+final class PubspecUpdater extends ProjectItem {
+  PubspecUpdater(this.appRoot, this.projectName);
 
-  static final _logger = Logger('ProjectDependencyUpdater');
+  static final _logger = Logger('PubspecUpdater');
 
   final String? appRoot;
+  final String? projectName;
+  late final String projectRoot;
 
-  @override
-  Future<void> create(String projectRoot) async {
-    _logger.fine('Updating project dependencies...');
-    final pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
-    final pubspecYaml = await pubspecFile.readAsString();
-    final pubspec = Pubspec.parse(pubspecYaml);
+  late final File pubspecFile;
+  late Pubspec pubspec;
+  late String pubspecYaml;
+
+  // TODO(dnys1): Update project names when we can update all Dart code which
+  /// currently references `celest_backend`.
+  Future<void> _updateProjectName() async {
+    if (pubspec.name.startsWith('api_')) {
+      _logger.fine('Project name is already in the correct format.');
+      return;
+    }
+    if (projectName == null) {
+      // TODO(dnys1): Test and find better strategy. `projectName` should be
+      // nonnull at this point.
+      _logger.fine('Project name unknown. Skipping until DB is current.');
+      return;
+    }
+    final oldPubspecName = pubspec.name;
+    final pubspecName = 'api_${projectName!.snakeCase}';
+    _logger.fine('Updating project name...');
+    pubspec = pubspec.copyWith(name: pubspecName);
+    pubspecYaml = pubspec.toYaml(source: pubspecYaml);
+    await pubspecFile.writeAsString(pubspecYaml);
+
+    if (appRoot case final appRoot?) {
+      final appRootPubspec = fileSystem.file(p.join(appRoot, 'pubspec.yaml'));
+      final appEditor = YamlEditor(await appRootPubspec.readAsString());
+      appEditor
+        ..remove(['dependencies', oldPubspecName])
+        ..update(
+          ['dependencies', pubspecName],
+          {'path': 'celest/'},
+        );
+    }
+  }
+
+  Future<void> _updateDependencies() async {
     final currentSdkVersion = pubspec.environment?['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
     if (ProjectDependency.celest.upToDate(pubspec) &&
-        ProjectDependency.celestCore.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
-    } else {
-      _logger.fine('Updating project dependencies to latest versions...');
-      final updatedPubspec = pubspec.copyWith(
-        environment: {
-          'sdk': PubEnvironment.dartSdkConstraint,
-        },
-        dependencies: {
-          for (final entry in pubspec.dependencies.entries)
-            entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
-        },
-        devDependencies: {
-          for (final entry in pubspec.devDependencies.entries)
-            entry.key:
-                ProjectDependency.devDependencies[entry.key] ?? entry.value,
-        },
-      );
-      await pubspecFile
-          .writeAsString(updatedPubspec.toYaml(source: pubspecYaml));
+      return;
     }
-    _logger.fine('Running pub upgrade in "$projectRoot"...');
-    // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
-    // the dependencies in the lockfile are already up to date.
-    await Future.wait(eagerError: true, [
-      runPub(
-        action: PubAction.upgrade,
-        workingDirectory: projectRoot,
-      ),
-      if (appRoot != null)
-        runPub(
-          exe: 'flutter',
-          action: PubAction.upgrade,
-          workingDirectory: appRoot!,
-        ),
-    ]);
-    _logger.fine('Project dependencies updated');
+    _logger.fine('Updating project dependencies to latest versions...');
+    pubspec = pubspec.copyWith(
+      environment: {
+        'sdk': PubEnvironment.dartSdkConstraint,
+      },
+      dependencies: {
+        for (final entry in pubspec.dependencies.entries)
+          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
+      },
+      devDependencies: {
+        for (final entry in pubspec.devDependencies.entries)
+          entry.key:
+              ProjectDependency.devDependencies[entry.key] ?? entry.value,
+      },
+    );
+    pubspecYaml = pubspec.toYaml(source: pubspecYaml);
+    await pubspecFile.writeAsString(pubspecYaml);
+  }
+
+  @override
+  Future<void> create(String projectRoot) async {
+    _logger.fine('Updating project pubspec...');
+    this.projectRoot = projectRoot;
+    pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
+    pubspecYaml = await pubspecFile.readAsString();
+    pubspec = Pubspec.parse(pubspecYaml);
+    // await _updateProjectName();
+    await _updateDependencies();
+    _logger.fine('Project pubspec updated');
   }
 }
 
@@ -145,7 +175,8 @@ sealed class ProjectFile extends ProjectItem {
 
   const factory ProjectFile.analysisOptions() = _AnalysisOptions;
 
-  const factory ProjectFile.pubspec(String projectName) = _Pubspec;
+  const factory ProjectFile.pubspec(String projectName, String appRoot) =
+      _Pubspec;
 
   /// The relative path of the item from the project root.
   String get relativePath;
@@ -184,25 +215,58 @@ final class _AnalysisOptions extends ProjectFile {
       p.join(projectRoot, relativePath),
       '''
 include: package:lints/recommended.yaml
+
+analyzer:
+  errors:
+    depend_on_referenced_packages: ignore
 ''',
     );
   }
 }
 
 final class _Pubspec extends ProjectFile {
-  const _Pubspec(this.projectName);
+  const _Pubspec(this.projectName, this.appRoot);
 
   final String projectName;
+  final String appRoot;
 
   @override
   String get relativePath => 'pubspec.yaml';
+
+  /// Ensures app has dependency on celest project
+  Future<void> _updateAppPubspec() async {
+    final appPubspecFile = fileSystem.file(
+      p.join(projectPaths.appRoot, 'pubspec.yaml'),
+    );
+    final projectPubspecName = 'api_${projectName.snakeCase}';
+    final appPubspecYaml = await appPubspecFile.readAsString();
+    if (!Pubspec.parse(appPubspecYaml)
+        .dependencies
+        .containsKey(projectPubspecName)) {
+      final updatedPubspec = YamlEditor(appPubspecYaml)
+        ..update(
+          ['dependencies', projectPubspecName],
+          {'path': 'celest/'},
+        );
+      await appPubspecFile.writeAsString(updatedPubspec.toString());
+      try {
+        await runPub(
+          exe: 'flutter',
+          action: PubAction.get,
+          workingDirectory: projectPaths.appRoot,
+        );
+      } on Exception catch (e, st) {
+        performance.captureError(e, stackTrace: st);
+      }
+    }
+  }
 
   @override
   Future<void> create(String projectRoot) async {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
     final pubspec = Pubspec(
-      'celest_backend',
+      'api_${projectName.snakeCase}',
       description: 'The Celest backend for $projectName.',
       publishTo: 'none',
       environment: {
@@ -212,6 +276,7 @@ final class _Pubspec extends ProjectFile {
       devDependencies: ProjectDependency.devDependencies,
     );
     await file.writeAsString(pubspec.toYaml());
+    await _updateAppPubspec();
   }
 }
 

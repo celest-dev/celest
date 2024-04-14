@@ -28,7 +28,7 @@ class ProjectGenerator {
       [
         const ProjectFile.gitIgnore(),
         const ProjectFile.analysisOptions(),
-        ProjectFile.pubspec(projectName),
+        ProjectFile.pubspec(projectName, appRoot),
         ProjectTemplate.hello(projectName),
         MacOsEntitlements(appRoot),
       ].map((item) => item.create(projectRoot)),

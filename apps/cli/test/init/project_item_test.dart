@@ -8,9 +8,10 @@ import 'package:test/test.dart';
 
 import '../analyzer/celest_analyzer_test.dart';
 
-const _projectName = 'test_project';
+const _projectName = 'celest_backend';
 
 String _pubspecYaml({
+  String name = _projectName,
   VersionConstraint? sdk,
   VersionConstraint? celest,
   VersionConstraint? celestCore,
@@ -18,18 +19,15 @@ String _pubspecYaml({
   final sdkConstraint = sdk ?? PubEnvironment.dartSdkConstraint;
   final celestConstraint =
       celest ?? ProjectDependency.celest.pubDependency.version;
-  final celestCoreConstraint =
-      celestCore ?? ProjectDependency.celestCore.pubDependency.version;
 
   return '''
-name: $_projectName
+name: $name
 
 environment:
   sdk: $sdkConstraint
 
 dependencies:
   celest: $celestConstraint
-  celest_core: $celestCoreConstraint
 ''';
 }
 
@@ -49,7 +47,7 @@ void main() {
       }
     });
 
-    test('up-to-date', () async {
+    test('up-to-date constraints', () async {
       final pubspecYaml = _pubspecYaml();
       await newProject(
         name: _projectName,
@@ -57,7 +55,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater(null);
+      final updater = PubspecUpdater(null, null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -75,7 +73,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater(null);
+      final updater = PubspecUpdater(null, null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -97,7 +95,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater(null);
+      final updater = PubspecUpdater(null, null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -105,6 +103,7 @@ void main() {
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
+        reason: 'Updates celest constraint + removes celest_core',
       );
     });
 
@@ -118,7 +117,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater(null);
+      final updater = PubspecUpdater(null, null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -126,6 +125,7 @@ void main() {
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
+        reason: 'Updates celest constraint',
       );
     });
 
@@ -139,7 +139,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      const updater = ProjectDependencyUpdater(null);
+      final updater = PubspecUpdater(null, null);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -147,6 +147,7 @@ void main() {
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
+        reason: 'Adds celest constraint + removes celest_core',
       );
     });
   });
