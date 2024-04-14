@@ -9,14 +9,6 @@ updates:
 
   ### DART ###
   - package-ecosystem: "pub"
-    directory: "packages/cedar"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pub"
-    directory: "packages/cedar_ffi"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pub"
     directory: "packages/celest"
     schedule:
       interval: "weekly"
@@ -29,12 +21,10 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "pub"
-    directory: "packages/corks"
+    directory: "packages/corks_cedar"
     schedule:
       interval: "weekly"
-
-  ## RUST ##
-  - package-ecosystem: "cargo"
-    directory: "packages/cedar_ffi/src"
+  - package-ecosystem: "pub"
+    directory: "packages/native/storage"
     schedule:
       interval: "weekly"
