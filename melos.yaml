@@ -1,0 +1,19 @@
+name: celest_dev
+
+packages:
+  - examples/**
+  - packages/**
+ignore:
+  - "examples/**/celest"
+  - "packages/**/example/celest"
+
+ide:
+  intellij:
+    enabled: false
+
+command:
+  bootstrap:
+    hooks:
+      # To avoid package name conflicts (all Celest backends are named the same currently),
+      # run the pub get step for the backend folders separate from the main bootstrap.
+      post: melos exec --dir-exists=celest -- dart pub get --directory=celest
