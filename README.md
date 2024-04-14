@@ -12,6 +12,7 @@ And to stay up-to-date on the future of Celest, including managed deployments, j
 ## Getting started with Celest
 
 ### Prerequisites
+
 To use Celest in your Flutter app, you need the following prerequisites:
 
 1. Install [Flutter](https://docs.flutter.dev/get-started/install)
@@ -36,7 +37,7 @@ $ cd <flutter_app>
 
 Once you are in your Flutter app directory, run the following command to initialize your Celest project.
 
-```shell    
+```shell
 $ celest start
 ```
 
@@ -118,6 +119,20 @@ class MyApp extends StatelessWidget {
 ```
 
 You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](https://celest.dev/docs/functions/introduction) to learn more about using Celest Functions.
+
+## Packages
+
+| Package                                    | Description                                                              | Pub                                                                                                                                | Checks                                                                                                                                                                                |
+| ------------------------------------------ | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [celest](packages/celest/)                 | The main package for defining Celest backends.                           | <a href="https://pub.dev/packages/celest" target="_blank"> <img src="https://img.shields.io/pub/v/celest.svg"></a>                 | [![Celest](https://github.com/celest-dev/celest/actions/workflows/celest.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest.yaml)                         |
+| [celest_auth](packages/celest_auth/)       | The authentication and authorization runtimes for Celest.                | <a href="https://pub.dev/packages/celest_auth" target="_blank"> <img src="https://img.shields.io/pub/v/celest_auth.svg"></a>       | [![Celest Auth](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml)          |
+| [celest_core](packages/celest_core/)       | Core types and utilities shared between Celest packages.                 | <a href="https://pub.dev/packages/celest_core" target="_blank"> <img src="https://img.shields.io/pub/v/celest_core.svg"></a>       | [![Celest Core](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml)          |
+| [corks_cedar](packages/corks_cedar/)       | An embedded authorization token format, based off Google's macaroons.    | <a href="https://pub.dev/packages/corks_cedar" target="_blank"> <img src="https://img.shields.io/pub/v/corks_cedar.svg"></a>       | [![Corks](https://github.com/celest-dev/celest/actions/workflows/corks_cedar.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/corks_cedar.yaml)                |
+| [native_storage](packages/native/storage/) | A Dart-only package for accessing platform-native storage functionality. | <a href="https://pub.dev/packages/native_storage" target="_blank"> <img src="https://img.shields.io/pub/v/native_storage.svg"></a> | [![Native Storage](https://github.com/celest-dev/celest/actions/workflows/native_storage.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/native_storage.yaml) |
+
+## License
+
+This repo is licensed under the [BSD-2-Clause-Patent](https://spdx.org/licenses/BSD-2-Clause-Patent.html) license. See [LICENSE.md](LICENSE.md) for the full text.
 
 ## Connect with us
 
