@@ -241,8 +241,9 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.3.0",
-    "enabledExperiments": []
+    "sdkVersion": "3.3.3",
+    "enabledExperiments": [],
+    "flutterSdkVersion": "3.19.5"
   },
   "auth": {
     "providers": [
