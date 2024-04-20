@@ -398,10 +398,32 @@ final class CelestFrontend implements Closeable {
   /// Gets or creates a project with the given [projectName] in the authenticated
   /// user's organization.
   Future<String?> _getOrCreateProject({
+    String? projectId,
     required String projectName,
   }) async {
+    if (projectId != null) {
+      logger.finest('Checking project existence in org');
+      try {
+        final GetProjectResponse(:project) =
+            await projectService.getProject(projectId: projectId);
+        if (project != null) {
+          if (project.projectId != projectId) {
+            throw StateError(
+              'Project ID mismatch: $projectId != ${project.projectId}',
+            );
+          }
+          return projectId;
+        }
+      } on Exception catch (e, st) {
+        logger.finest('Error retrieving project', e, st);
+      }
+      logger.finest('Checking ability to deploy to project: $projectId');
+      // TODO(dnys1): Actually check ability to deploy
+    }
+    logger.finest('Getting project ID for: $projectName');
     final GetProjectResponse(:project) =
         await projectService.getProject(projectName: projectName);
+    logger.finest('Found project: $project');
     if (project != null) {
       return project.projectId;
     }
@@ -414,6 +436,7 @@ final class CelestFrontend implements Closeable {
     final quotas = await projectService.precheckProject(
       projectName: projectName,
     );
+    logger.finest('Project Quotas: $quotas');
     final availableProjectTypes = [
       if (quotas.limits.remainingFree > 0) ProjectType.free,
       if (quotas.limits.remainingPremium > 0) ProjectType.premium,
@@ -430,11 +453,13 @@ final class CelestFrontend implements Closeable {
       choices: availableProjectTypes,
       display: (type) => type.displayName,
     );
-    final CreateProjectResponse(:projectId) =
-        await projectService.createProject(
+    logger.finest('Creating project with type: $projectType');
+    final response = await projectService.createProject(
       projectName: projectName,
       projectType: projectType,
     );
+    projectId = response.projectId;
+    logger.finest('Created project: $projectId');
     await _saveProjectId(projectId);
     cliLogger.success('Your project has been created! Starting deployment...');
     return projectId;
@@ -467,7 +492,8 @@ final class CelestFrontend implements Closeable {
             fail(errors);
             await _nextChangeSet();
           case AnalysisSuccessResult(:final project):
-            projectId ??= await _getOrCreateProject(
+            projectId = await _getOrCreateProject(
+              projectId: projectId,
               projectName: project.name,
             );
             if (projectId == null) {
@@ -682,28 +708,40 @@ final class CelestFrontend implements Closeable {
   Future<String?> _loadProjectId() async {
     final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
     if (!pubspecFile.existsSync()) {
-      return null;
+      throw StateError('No pubspec.yaml found');
     }
     final pubspec = YamlEditor(await pubspecFile.readAsString());
     try {
-      return pubspec.parseAt(['celest', 'project', 'id']).value as String?;
+      final projectId =
+          pubspec.parseAt(['celest', 'project', 'id']).value as String?;
+      logger.finer('Loaded project ID from pubspec.yaml: $projectId');
+      return projectId;
     } on Object {
+      logger.finer('No project ID found in pubspec.yaml');
       return null;
     }
   }
 
-  Future<void> _saveProjectId(String projectId) async {
+  Future<void> _saveProjectId(String? projectId) async {
     logger.finer('Saving project ID to pubspec.yaml: $projectId');
     final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
     final pubspec = YamlEditor(await pubspecFile.readAsString());
-    pubspec.update(
-      ['celest'],
-      {
-        'project': {
-          'id': projectId,
+    if (projectId != null) {
+      pubspec.update(
+        ['celest'],
+        {
+          'project': {
+            'id': projectId,
+          },
         },
-      },
-    );
+      );
+    } else {
+      try {
+        pubspec.remove(['celest']);
+      } on Object {
+        // OK
+      }
+    }
     await pubspecFile.writeAsString(pubspec.toString());
   }
 
