@@ -132,11 +132,17 @@ final class PubspecUpdater extends ProjectItem {
     final currentSdkVersion = pubspec.environment?['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
     if (ProjectDependency.celest.upToDate(pubspec) &&
-        currentSdkVersion == requiredSdkVersion) {
+        currentSdkVersion == requiredSdkVersion &&
+        !pubspec.dependencies.containsKey('celest_core')) {
       _logger.fine('Project dependencies are up to date.');
       return;
     }
     _logger.fine('Updating project dependencies to latest versions...');
+    if (pubspec.dependencies.containsKey('celest_core')) {
+      final editor = YamlEditor(pubspecYaml)
+        ..remove(['dependencies', 'celest_core']);
+      pubspecYaml = editor.toString();
+    }
     pubspec = pubspec.copyWith(
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
@@ -144,7 +150,7 @@ final class PubspecUpdater extends ProjectItem {
       dependencies: {
         for (final entry in pubspec.dependencies.entries)
           entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
-      },
+      }..remove('celest_core'),
       devDependencies: {
         for (final entry in pubspec.devDependencies.entries)
           entry.key:

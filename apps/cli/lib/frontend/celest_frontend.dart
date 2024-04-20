@@ -24,7 +24,7 @@ import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/port.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, env;
+import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, context;
 import 'package:hub/user_hub/user_hub_configuration.dart';
 import 'package:hub/user_hub/user_hub_server.dart';
 import 'package:hub/util/email.dart';
@@ -644,7 +644,7 @@ final class CelestFrontend implements Closeable {
         metadata: metadata,
         logDatabaseStatements: false,
       );
-      await env.init(
+      await context.init(
         serverName: 'UserHub',
         config: envConfig,
         emailProvider: EmailPrinter(),
