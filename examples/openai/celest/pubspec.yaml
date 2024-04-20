@@ -6,10 +6,21 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  celest: ^0.3.0
-  celest_core: ^0.3.0
+  celest: ^0.4.0-0
   chat_gpt_sdk: ^2.2.8
   http: ">=0.13.0 <2.0.0"
+
+dependency_overrides:
+  celest:
+    path: ../../../packages/celest
+  celest_auth:
+    path: ../../../packages/celest_auth
+  celest_core:
+    path: ../../../packages/celest_core
+  corks_cedar:
+    path: ../../../packages/corks_cedar
+  native_storage:
+    path: ../../../packages/native/storage
 
 dev_dependencies:
   lints: ^3.0.0
