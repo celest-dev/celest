@@ -4,7 +4,8 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ^3.3.0
+  flutter: ">=3.19.0"
 
 dependencies:
   celest_backend:
@@ -12,10 +13,22 @@ dependencies:
   flutter:
     sdk: flutter
 
+dependency_overrides:
+  celest:
+    path: ../../packages/celest
+  celest_auth:
+    path: ../../packages/celest_auth
+  celest_core:
+    path: ../../packages/celest_core
+  corks_cedar:
+    path: ../../packages/corks_cedar
+  native_storage:
+    path: ../../packages/native/storage
+
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true

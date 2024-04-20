@@ -30,11 +30,11 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final SecureStorage _secureStorage = SecureStorage();
+  late final NativeStorage _storage = NativeStorage(scope: 'celest');
 
   @override
   late _$http.Client httpClient =
-      CelestHttpClient(secureStorage: _secureStorage);
+      CelestHttpClient(secureStorage: _storage.secure);
 
   late Uri _baseUri;
 

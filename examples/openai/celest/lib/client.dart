@@ -16,12 +16,15 @@ import 'src/client/serializers.dart';
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local;
+  local,
+  production;
 
   Uri get baseUri => switch (this) {
         local => kIsWeb || !_$io.Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
+        production =>
+          Uri.parse('https://openai-example-xmfv-v76lntiq7q-wn.a.run.app'),
       };
 }
 
@@ -30,11 +33,11 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final SecureStorage _secureStorage = SecureStorage();
+  late final NativeStorage _storage = NativeStorage(scope: 'celest');
 
   @override
   late _$http.Client httpClient =
-      CelestHttpClient(secureStorage: _secureStorage);
+      CelestHttpClient(secureStorage: _storage.secure);
 
   late Uri _baseUri;
 
