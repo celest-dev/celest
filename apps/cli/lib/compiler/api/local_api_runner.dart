@@ -7,8 +7,9 @@ import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/port.dart';
+import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:vm_service/vm_service.dart';
@@ -50,6 +51,8 @@ final class LocalApiRunner implements Closeable {
     int? port,
     @visibleForTesting StringSink? stdoutPipe,
     @visibleForTesting StringSink? stderrPipe,
+    // Local API should use random port since it's being proxied by the user
+    // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
     final env = <String, String>{};
@@ -68,8 +71,8 @@ final class LocalApiRunner implements Closeable {
     );
     final client = await FrontendServerClient.start(
       p.toUri(path).toString(), // entrypoint
-      path.replaceFirst(RegExp(r'.dart$'), '.dill'), // dill
-      p.toUri(Sdk.current.vmPlatformDill).toString(),
+      p.setExtension(path, '.dill'), // outputDillPath
+      p.toUri(Sdk.current.vmPlatformDill).toString(), // platformKernel
       target: 'vm',
       verbose: verbose,
       packagesJson: packageConfig,
@@ -78,6 +81,8 @@ final class LocalApiRunner implements Closeable {
       additionalSources: additionalSources,
       additionalArgs: [
         '--no-support-mirrors', // Since it won't be supported in the cloud.
+        // TODO(dnys1): Re-enable with tests
+        // '--incremental-serialization', // Faster hot reload.
       ],
     );
     _logger.fine('Compiling local API...');
@@ -85,14 +90,7 @@ final class LocalApiRunner implements Closeable {
     final result = await client.compile();
     final dillOutput = client.expectOutput(result);
 
-    if (port == null) {
-      port = await portFinder.findOpenPort();
-    } else {
-      final portIsOpen = await portFinder.checkPort(port);
-      if (!portIsOpen) {
-        port = await portFinder.findOpenPort();
-      }
-    }
+    port = await portFinder.checkOrUpdatePort(port);
     _logger.finer('Starting local API on port $port...');
     final localApiProcess = await processManager.start(
       [
@@ -142,8 +140,17 @@ final class LocalApiRunner implements Closeable {
       isolates = vm.isolates;
     }
     stopwatch.stop();
-    logger.finest('VM started in ${stopwatch.elapsedMilliseconds}ms.');
-    return isolates.single.id!;
+    logger.finest(
+      'VM started in ${stopwatch.elapsedMilliseconds}ms. '
+      'Isolates: $isolates',
+    );
+    var isolate = isolates
+        .firstWhereOrNull((isolate) => isolate.isSystemIsolate ?? false);
+    isolate ??= isolates.singleOrNull;
+    if (isolate == null) {
+      throw StateError('Could not determine main isolate ID.');
+    }
+    return isolate.id!;
   }
 
   Future<void> _init({

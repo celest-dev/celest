@@ -22,7 +22,7 @@ import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/port.dart';
+import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, context;
 import 'package:hub/user_hub/user_hub_configuration.dart';
@@ -681,8 +681,9 @@ final class CelestFrontend implements Closeable {
         ),
         logger: logger,
       );
+      final port = await const DefaultPortFinder().checkOrUpdatePort(proxyPort);
       return UserHubServer.start(
-        port: proxyPort ?? await const DefaultPortFinder().findOpenPort(),
+        port: port,
         userApiUri: Uri.http('localhost:$localApiPort'),
         config: UserHubConfiguration.development(
           rpName: resolvedProject.name,

@@ -13,7 +13,7 @@ import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/port.dart';
+import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
