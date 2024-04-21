@@ -201,6 +201,7 @@ final class _GitIgnore extends ProjectFile {
       '''
 # Dart
 .dart_tool/
+pubspec.lock
 
 # Celest
 **/.env
