@@ -21,6 +21,7 @@ final class CelestUpgrader {
   static final _logger = Logger('CelestUpgrader');
 
   final mason_logger.Logger cliLogger;
+  mason_logger.Progress? _progress;
   final _tempDir = fileSystem.systemTempDirectory.childDirectory('celest_cli_');
 
   late final ReleaseType _releaseType = () {
@@ -68,15 +69,13 @@ final class CelestUpgrader {
   }
 
   Future<void> installRelease(File releasePackage) async {
-    mason_logger.Progress? progress;
     try {
       // Skip on macOS since the permissions prompt will count towards the
       // progress timer.
       // Skip on Linux installer since we shell out to dpkg which conflicts
       // with our CLI spinner.
-      if ((platform.operatingSystem, _releaseType)
-          case ('windows', _) || ('linux', ReleaseType.zip)) {
-        progress = cliLogger.progress('Updating Celest');
+      if (platform.operatingSystem case 'windows' || 'linux') {
+        _progress = cliLogger.progress('Updating Celest');
       } else if (platform.isMacOS) {
         cliLogger.info(
           'Please enter your password in the dialog that appears.',
@@ -93,13 +92,13 @@ final class CelestUpgrader {
           unreachable();
       }
       const successMessage = 'Celest has been updated to the latest version!';
-      if (progress != null) {
+      if (_progress case final progress?) {
         progress.complete(successMessage);
       } else {
         cliLogger.success(successMessage);
       }
     } on Object {
-      progress?.cancel();
+      _progress?.cancel();
       rethrow;
     }
   }
@@ -195,19 +194,51 @@ final class CelestUpgrader {
     if (p.extension(installer.path) != '.deb') {
       throw StateError('Expected zip file but got: $installer');
     }
-    final installOutput = await processManager.start(
-      <String>[
-        'sudo',
-        'dpkg',
-        '-i',
-        installer.path,
-      ],
+    final sudoOutput = await processManager.start(
+      <String>['sudo', '-v'],
       mode: ProcessStartMode.inheritStdio,
     );
-    if (await installOutput.exitCode != 0) {
+    if (await sudoOutput.exitCode != 0) {
       throw CelestException(
         'Failed to upgrade Celest. Please try again later.',
         additionalContext: {
+          'exitCode': sudoOutput.exitCode.toString(),
+        },
+      );
+    }
+    final updateOutput = await processManager.run(
+      <String>['sudo', 'apt-get', 'update'],
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
+    if (updateOutput.exitCode != 0) {
+      throw CelestException(
+        'Failed to upgrade Celest. Please try again later.',
+        additionalContext: {
+          'stdout': updateOutput.stdout.toString(),
+          'stderr': updateOutput.stderr.toString(),
+          'exitCode': updateOutput.exitCode.toString(),
+        },
+      );
+    }
+    final installOutput = await processManager.run(
+      <String>[
+        'sudo',
+        'apt-get',
+        'install',
+        '-y',
+        '--fix-broken',
+        installer.path,
+      ],
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
+    if (installOutput.exitCode != 0) {
+      throw CelestException(
+        'Failed to upgrade Celest. Please try again later.',
+        additionalContext: {
+          'stdout': updateOutput.stdout.toString(),
+          'stderr': updateOutput.stderr.toString(),
           'exitCode': installOutput.exitCode.toString(),
         },
       );
