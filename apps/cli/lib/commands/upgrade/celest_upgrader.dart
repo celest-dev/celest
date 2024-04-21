@@ -100,6 +100,8 @@ final class CelestUpgrader {
     } on Object {
       _progress?.cancel();
       rethrow;
+    } finally {
+      _progress = null;
     }
   }
 
