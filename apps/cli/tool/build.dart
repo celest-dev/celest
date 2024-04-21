@@ -39,7 +39,7 @@ final http.Client httpClient = http.Client();
 final Abi osArch = Abi.current();
 
 /// The current version of the CLI.
-const String version = packageVersion;
+final String version = packageVersion;
 
 /// The bundler to use for the current platform.
 final Bundler bundler = Bundler();
@@ -80,7 +80,8 @@ Future<void> main() async {
     'dart',
     [
       '--enable-experiment=native-assets',
-      if (currentSha case final currentSha?) '-DgitSha=$currentSha',
+      if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
+      '--define=version=$version',
       'build',
       '--output=$buildPath',
       'bin/celest.dart',

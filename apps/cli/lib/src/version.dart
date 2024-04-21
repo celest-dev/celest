@@ -1,2 +1,13 @@
-// Generated code. Do not modify.
-const packageVersion = '0.4.0-dev.3';
+import 'package:celest_cli/src/utils/run.dart';
+import 'package:pub_semver/pub_semver.dart';
+
+const String _version = '0.4.0-dev.3';
+
+final String packageVersion = run(() {
+  const override = String.fromEnvironment('celest.version');
+  if (override.isEmpty) {
+    return _version;
+  }
+  Version.parse(override); // Trigger a format exception if invalid.
+  return override;
+});
