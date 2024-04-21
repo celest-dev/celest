@@ -112,6 +112,7 @@ dev_dependencies:
   chunked_stream: ^1.4.2
   drift_dev: ^2.14.1
   gcloud: ^0.8.12
+  # Required for the `gcloud` package
   googleapis: ^12.0.0
   googleapis_auth: ^1.4.1
   json_serializable: ^6.7.1
