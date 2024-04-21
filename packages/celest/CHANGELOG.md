@@ -1,3 +1,7 @@
+## 0.4.0-dev.2
+
+- Migrate to `package:native_storage`
+
 ## 0.4.0-dev.1
 
 ## 0.3.1
