@@ -19,5 +19,10 @@ final class HelloProjectTest extends Test {
         .expectLater('Starting Celest')
         .expectNext('Celest is running')
         .run();
+    print('Resetting git repo');
+    await runCommand(
+      ['git', 'reset', '--hard', 'HEAD'],
+      workingDirectory: helloExample,
+    );
   }
 }

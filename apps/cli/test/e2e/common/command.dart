@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -5,6 +6,8 @@ import 'package:async/async.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:checks/checks.dart';
 import 'package:logging/logging.dart';
+import 'package:mason_logger/mason_logger.dart' show red;
+import 'package:stack_trace/stack_trace.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 
@@ -75,28 +78,88 @@ final class Command {
   }
 }
 
+extension FlatMap<T> on Stream<T> {
+  Stream<S> flatMap<S>(S? Function(T) mapper) => transform(
+        StreamTransformer.fromHandlers(
+          handleData: (value, sink) {
+            if (mapper(value) case final value?) {
+              sink.add(value);
+            }
+          },
+        ),
+      );
+}
+
+final _logger = Logger('InteractiveCommand');
+Never _fail(String method, Object e, StackTrace st) => fail('$e\n$st');
+void _error(String message) {
+  final output = ansiColorsEnabled ? red.wrap(message) ?? message : message;
+  stderr.writeln(output);
+}
+
+extension<T> on Future<T> {
+  Future<void> trace(String methodName, [Duration? timeout]) {
+    final fut = Chain.capture(() => this, errorZone: false)
+        .then((_) => _logger.fine('$methodName completed'))
+        .onError<Object>(
+          (e, st) => _fail(
+            methodName,
+            e,
+            Chain([Trace.from(st), Trace.current()]),
+          ),
+        );
+    if (timeout != null) {
+      return fut.timeout(
+        timeout,
+        onTimeout: () => _fail(
+          '$methodName Timed out',
+          TimeoutException(null, timeout),
+          Chain.current(),
+        ),
+      );
+    }
+    return fut;
+  }
+}
+
+extension on Subject<Future<LogMessage>> {
+  Future<void> contains(String text) => this.completes(
+        (it) => it.has((log) => log.message, 'message').contains(text),
+      );
+}
+
 final class InteractiveCommand {
   InteractiveCommand._(Future<Process> process) {
-    process.then((process) => _process = process);
+    process.then((process) {
+      _process = process;
+      process.exitCode.then((exitCode) {
+        if (_pendingTasks != null) {
+          throw StateError('InteractiveCommand has pending tasks');
+        }
+      });
+    });
     _logs = StreamQueue(
       Stream.fromFuture(process).asyncExpand(
-        (process) => StreamGroup.merge([process.stdout, process.stderr])
+        (process) => process.stdout
             .transform(utf8.decoder)
-            // Transforming with line splitter would mean values are only
-            // emitted after a line break, but prompts for example, are
-            // printed without a line break. This allows values to be
-            // emitted correctly in both cases.
-            .expand(LineSplitter.split)
+            .transform(const LineSplitter())
             .where((line) => line.isNotEmpty)
+            .map((line) {
+              try {
+                return jsonDecode(line) as Map<String, dynamic>;
+              } on FormatException {
+                _error('Failed to parse log message: $line');
+                rethrow;
+              }
+            })
+            .map(LogMessage.fromJson)
             .tap(print),
       ),
     );
   }
 
-  Never _fail(String method, Object e, StackTrace st) => fail('$e\n$st');
-
   late final Process _process;
-  late final StreamQueue<String> _logs;
+  late final StreamQueue<LogMessage> _logs;
 
   Future<void>? _pendingTasks;
   Future<void> get _currentTasks => _pendingTasks ?? Future.value();
@@ -106,108 +169,79 @@ final class InteractiveCommand {
     return pendingTasks;
   }
 
+  InteractiveCommand _addTask(
+    String methodName,
+    FutureOr<void> Function() task, {
+    Duration? timeout,
+  }) {
+    _pendingTasks = _currentTasks.then((_) {
+      _logger.fine('$methodName started');
+      return Future.value(task()).trace(methodName, timeout);
+    });
+    return this;
+  }
+
   static const _defaultTimeout = Duration(seconds: 60);
-  static final _logger = Logger('InteractiveCommand');
 
   InteractiveCommand writeLine(String line) {
-    _pendingTasks = _currentTasks.then((_) {
-      _logger.fine('writeLine writing: $line');
-      return _process.stdin.writeln(line);
-    }).onError<Object>((e, st) => _fail('writeLine', e, st));
-    return this;
+    return _addTask(
+      'writeLine($line)',
+      () => _process.stdin.writeln(line),
+    );
   }
 
   InteractiveCommand expectNext(
     String text, {
     Duration timeout = _defaultTimeout,
   }) {
-    _pendingTasks = _currentTasks.then((_) {
-      _logger.fine('expectNext expecting next: $text');
-      return check(_logs.next)
-          .completes((it) => it.contains(text))
-          .then((_) => _logger.fine('expectNext Completed'))
-          .timeout(
-            timeout,
-            onTimeout: () =>
-                fail('expectNext Timed out waiting for $text to be printed'),
-          );
-    });
-    return this;
+    return _addTask(
+      'expectNext($text)',
+      timeout: timeout,
+      () => check(_logs.next).contains(text),
+    );
   }
 
   InteractiveCommand expectLater(
     String text, {
     Duration timeout = _defaultTimeout,
   }) {
-    skipWhere((line) {
+    skipWhere('contains($text)', (line) {
       _logger.fine('Testing $line contains $text');
       return !line.contains(text);
     });
-    _pendingTasks = _currentTasks.then((_) {
-      _logger.fine('expectLater expecting next: $text');
-      return check(_logs.next)
-          .completes((it) => it.contains(text))
-          .then((_) => _logger.fine('expectLater Completed'))
-          .timeout(
-            timeout,
-            onTimeout: () =>
-                fail('expectLater Timed out waiting for $text to be printed'),
-          );
-    });
-    return this;
+    return expectNext(text, timeout: timeout);
   }
 
   InteractiveCommand skip({
     int lines = 1,
     Duration timeout = _defaultTimeout,
   }) {
-    _pendingTasks = _currentTasks.then((_) {
-      _logger.fine('skip $lines lines');
-      return _logs
-          .take(lines)
-          .then((_) => _logger.fine('skip Skipped $lines lines'))
-          .onError<Object>((e, st) => _fail('skip', e, st))
-          .timeout(
-            timeout,
-            onTimeout: () => fail(
-              'Timed out waiting for $lines lines to be printed',
-            ),
-          );
-    });
-    return this;
+    return _addTask('skip', timeout: timeout, () => _logs.take(lines));
   }
 
   InteractiveCommand skipWhere(
+    String description,
     bool Function(String) test, {
     Duration timeout = _defaultTimeout,
   }) {
-    _pendingTasks = _currentTasks.then((_) {
-      _logger.fine('skipWhere Starting', null, StackTrace.current);
-      return _logs
-          .withTransaction((logs) async {
-            while (await logs.hasNext) {
-              _logger.fine('skipWhere Waiting for next line');
-              final line = await logs.peek;
-              _logger.fine('skipWhere Got line: $line');
-              if (test(line)) {
-                _logger.fine('skipWhere Skipping line: $line');
-                await logs.next;
-                continue;
-              }
-              return true;
-            }
-            fail('skipWhere Process closed without matching');
-          })
-          .then((_) => _logger.fine('skipWhere Completed'))
-          .onError<Object>((e, st) => _fail('skipWhere', e, st))
-          .timeout(
-            timeout,
-            onTimeout: () => fail(
-              'skipWhere Timed out waiting for matching line to be printed',
-            ),
-          );
+    final label = 'skipWhere $description';
+    return _addTask(label, timeout: timeout, () async {
+      await _logs.withTransaction((logs) async {
+        while (await logs.hasNext) {
+          _logger.fine('$label: Waiting for next line');
+          final line = await logs.peek;
+          final message = line.message;
+          _logger.fine('$label: Got message: $message');
+          if (test(message)) {
+            _logger.fine('$label: Skipping line: $line');
+            await logs.next;
+            continue;
+          }
+          return true;
+        }
+        fail('$label: Process closed without matching');
+      });
     });
-    return this;
   }
 
   InteractiveCommand hotReload() {
@@ -215,21 +249,15 @@ final class InteractiveCommand {
     if (platform.isWindows) {
       return this;
     }
-    _pendingTasks = _currentTasks
-        .then((_) {
-          _logger.fine('hotReload triggering SIGUSR1');
-          check(_process.kill(ProcessSignal.sigusr1)).isTrue();
-        })
-        .then((_) => _logger.fine('hotReload triggered'))
-        .onError<Object>((e, st) => _fail('hotReload', e, st));
-    return this;
+    return _addTask(
+      'hotReload',
+      () => check(_process.kill(ProcessSignal.sigusr1)).isTrue(),
+    );
   }
 
   Future<void> run() async {
     _logger.fine('Running to completion');
-    await flush()
-        .onError<Object>((e, st) => _fail('run', e, st))
-        .whenComplete(() {
+    await flush().trace('run').whenComplete(() {
       _logger.fine('Killing process and draining logs');
       _process.kill();
       return _logs.rest.drain();
@@ -240,7 +268,7 @@ final class InteractiveCommand {
 
   Future<void> expectSuccess() async {
     try {
-      await flush().onError<Object>((e, st) => _fail('expectSuccess', e, st));
+      await flush().trace('expectSuccess');
       await check(_process.exitCode).completes((it) => it.equals(0));
     } finally {
       _process.kill();

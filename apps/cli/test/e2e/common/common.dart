@@ -131,6 +131,7 @@ mixin TestHelpers {
         [
           ...target.executable,
           command,
+          '--json',
           ...args,
         ],
         workingDirectory: workingDirectory,
@@ -140,12 +141,6 @@ mixin TestHelpers {
         },
       );
 
-  Command command(
-    String command, [
-    List<String> args = const [],
-  ]) =>
-      Command([command, ...args]);
-
   Command celestCommand(
     String command, [
     List<String> args = const [],
@@ -153,6 +148,7 @@ mixin TestHelpers {
       Command([
         ...target.executable,
         command,
+        '--json',
         ...args,
       ]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
