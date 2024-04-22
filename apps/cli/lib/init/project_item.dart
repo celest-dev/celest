@@ -245,7 +245,8 @@ final class _Pubspec extends ProjectFile {
     final appPubspecFile = fileSystem.file(
       p.join(projectPaths.appRoot, 'pubspec.yaml'),
     );
-    final projectPubspecName = 'api_${projectName.snakeCase}';
+    const projectPubspecName = 'celest_backend';
+    // final projectPubspecName = 'api_${projectName.snakeCase}';
     final appPubspecYaml = await appPubspecFile.readAsString();
     if (!Pubspec.parse(appPubspecYaml)
         .dependencies
@@ -273,7 +274,8 @@ final class _Pubspec extends ProjectFile {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
     final pubspec = Pubspec(
-      'api_${projectName.snakeCase}',
+      'celest_backend',
+      // 'api_${projectName.snakeCase}',
       description: 'The Celest backend for $projectName.',
       publishTo: 'none',
       environment: {
