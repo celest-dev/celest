@@ -1,3 +1,5 @@
+import 'package:process/src/interface/common.dart';
+
 import '../common/common.dart';
 
 final class InstalledTarget extends TestTarget {
@@ -8,5 +10,7 @@ final class InstalledTarget extends TestTarget {
   List<String> get tags => const ['e2e-installed'];
 
   @override
-  List<String> get executable => const ['celest'];
+  List<String> get executable => [
+        getExecutablePath('celest', null, throwOnFailure: true)!,
+      ];
 }

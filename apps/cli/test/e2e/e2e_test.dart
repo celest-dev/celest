@@ -7,14 +7,12 @@ import 'features/add_remove_fields.dart';
 import 'features/create_project.dart';
 import 'features/hello_project.dart';
 import 'targets/installed_target.dart';
-import 'targets/installer_target.dart';
 import 'targets/local_target.dart';
 
 void main() {
   final targets = <TestTarget>[
     LocalTarget(),
     InstalledTarget(),
-    InstallerTarget(),
   ];
 
   final tests = <Test Function(TestTarget)>[

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'dart:io' show ProcessException, stderr, stdout;
 
 import 'package:archive/archive_io.dart';
+import 'package:args/args.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
@@ -73,7 +74,40 @@ final isCI = platform.environment['CI'] == 'true';
 ///
 /// This script is used by the GitHub workflow `apps_cli_release.yaml` to create
 /// a zip of the CLI and its dependencies for the current platform.
-Future<void> main() async {
+Future<void> main(List<String> args) async {
+  final argParser = ArgParser()
+    ..addFlag('build', negatable: false)
+    ..addFlag('release', negatable: false);
+  final argResult = argParser.parse(args);
+
+  var needsBuild = argResult['build'] as bool?;
+  var needsRelease = argResult['release'] as bool?;
+  if (isCI) {
+    if (needsBuild == null && needsRelease == null) {
+      throw StateError('Either --build or --release must be specified');
+    }
+    needsBuild ??= false;
+    needsRelease ??= false;
+  } else {
+    needsBuild ??= true;
+    needsRelease ??= false;
+  }
+
+  if (needsBuild) {
+    await _build();
+    if (platform.environment['GITHUB_OUTPUT'] case final ciOutput?) {
+      fileSystem.file(ciOutput).writeAsStringSync(
+            'installer=$outputFilepath',
+            mode: FileMode.append,
+          );
+    }
+  }
+  if (needsRelease) {
+    await _release();
+  }
+}
+
+Future<void> _build() async {
   print('Bundling CLI version $version for $osArch...');
 
   await _runProcess(
@@ -105,7 +139,9 @@ Future<void> main() async {
   await bundler.bundle();
 
   print('Successfully wrote $outputFilepath');
+}
 
+Future<void> _release() async {
   if (!isCI) {
     return;
   }
