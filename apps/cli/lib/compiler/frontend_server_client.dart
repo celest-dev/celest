@@ -339,7 +339,7 @@ class FrontendServerClient {
     if (_verbose) {
       final lines = const LineSplitter().convert(command);
       for (final line in lines) {
-        print('>> $line');
+        _logger.finest('>> $line');
       }
     }
     _feServer.stdin.writeln(command);
@@ -348,7 +348,7 @@ class FrontendServerClient {
   /// Reads a line from [_feServerStdoutLines] and logs it if [_verbose].
   Future<String> _nextInputLine() async {
     final line = await _feServerStdoutLines.next;
-    if (_verbose) print('<< $line');
+    if (_verbose) _logger.finest('<< $line');
     return line;
   }
 }
