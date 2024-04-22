@@ -160,14 +160,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
-  build_version:
-    dependency: "direct dev"
-    description:
-      name: build_version
-      sha256: "4e8eafbf722eac3bd60c8d38f108c04bd69b80100f8792b32be3407725c7fa6a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   built_collection:
     dependency: "direct main"
     description:
@@ -716,8 +708,16 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  native_assets_builder:
+    dependency: "direct main"
+    description:
+      name: native_assets_builder
+      sha256: "32beacac1b465c63554eee65e5f1379bd0c7b98f5dcf8a9ac86f014ce450a832"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.1"
   native_assets_cli:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: native_assets_cli
       sha256: "9c1b67ccf85ec9282f34e5348ae78dcb7da2c7dc965c0265306477d977853a0d"

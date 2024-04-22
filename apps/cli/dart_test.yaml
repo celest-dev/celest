@@ -1,8 +1,7 @@
 tags:
   e2e:
-    timeout: 4m
+    timeout: 15m
   e2e-installed:
+    timeout: 5m
   e2e-local:
-  # E2E tests which involve modifications of the file system (e.g. installing/uninstalling Celest).
-  # These should generally only be run in CI.
-  e2e-installer:
+    timeout: 15m

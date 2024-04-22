@@ -130,14 +130,23 @@ extension on Subject<Future<LogMessage>> {
 
 final class InteractiveCommand {
   InteractiveCommand._(Future<Process> process) {
-    process.then((process) {
+    process = process.then((process) {
       _process = process;
+      process.stderr
+          .transform(utf8.decoder)
+          .transform(const LineSplitter())
+          .forEach(_error);
       process.exitCode.then((exitCode) {
         if (_pendingTasks != null) {
-          throw StateError('InteractiveCommand has pending tasks');
+          _fail(
+            'start',
+            'Command exited with code $exitCode while tasks were pending',
+            StackTrace.current,
+          );
         }
       });
-    });
+      return process;
+    }).onError<Object>((e, st) => _fail('start', e, st));
     _logs = StreamQueue(
       Stream.fromFuture(process).asyncExpand(
         (process) => process.stdout
