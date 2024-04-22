@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:cedar/cedar.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -63,7 +64,10 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
-  Future<EntrypointResult> compile(NodeId id, String entrypointPath) async {
+  Future<EntrypointResult> compile(
+    CedarEntityId id,
+    String entrypointPath,
+  ) async {
     logger.fine('Compiling entrypoint: $entrypointPath');
     if (!fileSystem.isFileSync(entrypointPath)) {
       throw StateError(

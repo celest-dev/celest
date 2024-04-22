@@ -1,76 +1,48 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
-import 'package:pub_semver/pub_semver.dart';
 
 final class ResidentCompiler {
   ResidentCompiler._(this.infoFile);
 
   static final Logger logger = Logger('ResidentCompiler');
 
-  static String get _infoFilePath => p.join(
-        projectPaths.celestConfig,
-        'resident-compiler-info',
-      );
-  static String get _versionFilePath => p.join(
-        projectPaths.celestConfig,
-        'resident-compiler-version',
-      );
+  static String get infoFilePath {
+    final infoFileDir = fileSystem.directory(
+      p.join(projectPaths.celestConfig, Sdk.current.version),
+    );
+    infoFileDir.createSync(recursive: true);
+    return infoFileDir.childFile('resident-compiler-info').path;
+  }
 
   final File infoFile;
 
   static Future<ResidentCompiler?> ensureRunning() async {
-    final infoFile = fileSystem.file(_infoFilePath);
-    final versionFile = fileSystem.file(_versionFilePath);
-    var running = false;
+    final infoFile = fileSystem.file(infoFilePath);
     Socket? socket;
-    try {
-      // Try to connect to the resident compiler server.
-      final info = await infoFile.readAsString();
-      final version = await versionFile.readAsString();
-      final [address, port] =
-          info.trim().split(' ').map((part) => part.split(':')[1]).toList();
-      logger.finest('Connecting to resident compiler server at $address:$port');
-      socket = await Socket.connect(address, int.parse(port));
-      if (Version.parse(version) == Version.parse(Runtime.current.version)) {
-        running = true;
-      } else {
-        logger.fine(
-          'Resident compiler server version mismatch '
-          '($version != ${Runtime.current.version}). '
-          'Restarting resident compiler server...',
-        );
-        socket.writeln(jsonEncode({'command': 'shutdown'}));
-        final response = jsonDecode(utf8.decode(await socket.first));
-        switch (response) {
-          case {'shutdown': true}:
-            logger.finest('Resident compiler server shutdown.');
-          case final unknownResponse:
-            logger.finest(
-              'Unknown response from resident compiler server: '
-              '$unknownResponse',
-            );
-        }
-      }
-    } catch (_) {
-      // The resident compiler server is not running but an info files exist.
-      // Ensure the info files are deleted before restarting.
+    if (infoFile.existsSync()) {
       try {
-        await Future.wait([
-          infoFile.delete(),
-          versionFile.delete(),
-        ]);
-      } catch (_) {}
-    } finally {
-      await socket?.close();
-    }
-    if (running) {
-      logger.finer('Resident compiler server already running.');
-      return ResidentCompiler._(infoFile);
+        // Try to connect to the resident compiler server.
+        final info = await infoFile.readAsString();
+        final [address, port] =
+            info.trim().split(' ').map((part) => part.split(':')[1]).toList();
+        logger
+            .finest('Connecting to resident compiler server at $address:$port');
+        socket = await Socket.connect(address, int.parse(port));
+        logger.finer('Resident compiler server already running.');
+        return ResidentCompiler._(infoFile);
+      } catch (_) {
+        // The resident compiler server is not running but an info files exist.
+        // Ensure the info files are deleted before restarting.
+        try {
+          await infoFile.delete();
+        } catch (_) {}
+      } finally {
+        await socket?.close();
+      }
     }
     logger.fine('Starting resident compiler server...');
     final frontendServerProcess = await processManager.start(
@@ -91,9 +63,6 @@ final class ResidentCompiler {
       );
       return null;
     }
-    await fileSystem
-        .file(_versionFilePath)
-        .writeAsString(Runtime.current.version.toString());
     return ResidentCompiler._(infoFile);
   }
 }

@@ -81,6 +81,8 @@ final class LocalApiRunner implements Closeable {
       additionalSources: additionalSources,
       additionalArgs: [
         '--no-support-mirrors', // Since it won't be supported in the cloud.
+        // TODO(dnys1): Would this help? It wants exclusive control over the info file...
+        // '--resident-info-file-name=${residentCompiler.infoFile.path}',
         // TODO(dnys1): Re-enable with tests
         // '--incremental-serialization', // Faster hot reload.
       ],

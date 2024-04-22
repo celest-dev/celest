@@ -18,7 +18,6 @@ import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/database.dart';
-import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -282,7 +281,6 @@ final class CelestFrontend implements Closeable {
   /// performing a hot reload (SIGUSR1) and a full restart (SIGUSR2).
   StreamQueue<ProcessSignal>? _reloadStream;
 
-  ResidentCompiler? _residentCompiler;
   LocalApiRunner? _localApiRunner;
   UserHubServer? _userHub;
   var _didFirstCompile = false;
@@ -301,7 +299,6 @@ final class CelestFrontend implements Closeable {
         if (_didFirstCompile) {
           currentProgress = cliLogger.progress('Reloading Celest');
         }
-        _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
           currentProgress.fail(
@@ -474,7 +471,6 @@ final class CelestFrontend implements Closeable {
         if (projectId != null) {
           currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
         }
-        _residentCompiler ??= await ResidentCompiler.ensureRunning();
 
         void fail(List<AnalysisError> errors) {
           currentProgress!.fail(

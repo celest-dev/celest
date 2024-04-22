@@ -347,7 +347,12 @@ class FrontendServerClient {
 
   /// Reads a line from [_feServerStdoutLines] and logs it if [_verbose].
   Future<String> _nextInputLine() async {
-    final line = await _feServerStdoutLines.next;
+    var line = await _feServerStdoutLines.next;
+    if (line.startsWith('The Resident Frontend Compiler is listening at')) {
+      // This is a message from the frontend server, not a response to a
+      // command.
+      line = await _nextInputLine();
+    }
     if (_verbose) _logger.finest('<< $line');
     return line;
   }

@@ -10,10 +10,8 @@ import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
-import 'package:celest_cli/frontend/resident_compiler.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -73,7 +71,6 @@ class TestRunner {
 
   late Client client;
   late final analyzer = CelestAnalyzer();
-  ResidentCompiler? residentCompiler;
 
   void run() {
     group(testName, () {
@@ -94,7 +91,6 @@ class TestRunner {
         }
         goldensDir.createSync();
         client = Client();
-        residentCompiler ??= (await ResidentCompiler.ensureRunning())!;
       });
 
       tearDownAll(() {
@@ -267,7 +263,6 @@ class TestRunner {
           verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,
-          portFinder: const RandomPortFinder(),
         );
         apiUri = Uri.parse('http://localhost:${apiRunner.port}');
 
