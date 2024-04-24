@@ -212,14 +212,14 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "0.4.0-dev.1"
+    version: "0.4.0-dev.2"
   celest_auth:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "0.4.0-dev.1"
+    version: "0.4.0-dev.2"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -233,7 +233,7 @@ packages:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "0.4.0-dev.1"
+    version: "0.4.0-dev.2"
   celest_lints:
     dependency: "direct dev"
     description:
