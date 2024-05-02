@@ -1,3 +1,7 @@
+## 0.1.4
+
+- fix: Lower Android min API to 21 ([#121](https://github.com/celest-dev/celest/issues/121))
+
 ## 0.1.3
 
 - chore: Migrate to jni 0.8.0 to enable isolated Android storage

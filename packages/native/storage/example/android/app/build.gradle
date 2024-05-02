@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "dev.celest.platform_storage_example"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -84,12 +84,20 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Test (Android)
+      - name: Test (API 31)
         uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
         with:
           # Matches `package:jni` compileSdkVersion
           # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
           api-level: 31
+          arch: x86_64
+          script: cd packages/native/storage/example && flutter test -d emulator integration_test/storage_test.dart
+      - name: Test (API 21)
+        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # 2.30.1
+        with:
+          # Minimum supported API level
+          # Should match build.gradle: https://github.com/celest-dev/celest/blob/main/packages/native/storage/android/build.gradle#L49
+          api-level: 21
           arch: x86_64
           script: cd packages/native/storage/example && flutter test -d emulator integration_test/storage_test.dart
   test_linux:
