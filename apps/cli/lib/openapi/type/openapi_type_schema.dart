@@ -2,10 +2,24 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/json_object.dart';
 import 'package:celest_cli/openapi/model/openapi_v3.dart';
-import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/openapi/type/openapi_type_visitor.dart';
 
 part 'openapi_type_schema.g.dart';
+
+class OpenApiPrimitive extends EnumClass {
+  const OpenApiPrimitive._(super.name);
+
+  static const OpenApiPrimitive any = _$any;
+  static const OpenApiPrimitive object = _$object;
+  static const OpenApiPrimitive string = _$string;
+  static const OpenApiPrimitive number = _$number;
+  static const OpenApiPrimitive integer = _$integer;
+  static const OpenApiPrimitive boolean = _$boolean;
+  static const OpenApiPrimitive null$ = _$null$;
+
+  static BuiltSet<OpenApiPrimitive> get values => _$values;
+  static OpenApiPrimitive valueOf(String name) => _$valueOf(name);
+}
 
 /// The Schema Object allows the definition of input and output data types.
 ///

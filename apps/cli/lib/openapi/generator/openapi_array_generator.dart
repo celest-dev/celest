@@ -1,5 +1,7 @@
+import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class OpenApiArrayGenerator {
@@ -24,7 +26,7 @@ final class OpenApiArrayGenerator {
         ..modifier = ClassModifier.final$
         ..name = name
         ..extend = itemTypeRef
-        ..constructors.add(
+        ..constructors.addAll([
           Constructor(
             (c) => c
               ..requiredParameters.add(
@@ -35,7 +37,35 @@ final class OpenApiArrayGenerator {
                 ),
               ),
           ),
-        ),
+          Constructor(
+            (c) => c
+              ..factory = true
+              ..name = 'fromJson'
+              ..requiredParameters.add(
+                Parameter(
+                  (p) => p
+                    ..name = 'json'
+                    ..type = DartTypes.core.list(
+                      DartTypes.core.object.nullable,
+                    ),
+                ),
+              )
+              ..body = refer(name).newInstance([
+                OpenApiJsonGenerator()
+                    .fromJson(type.primitiveType, refer('json')),
+              ]).code,
+          ),
+        ])
+        ..methods.addAll([
+          Method(
+            (m) => m
+              ..name = 'toJson'
+              ..returns = DartTypes.core.list(DartTypes.core.object)
+              ..body = OpenApiJsonGenerator()
+                  .toJson(type.primitiveType, refer('this'))
+                  .code,
+          ),
+        ]),
     );
   }
 }

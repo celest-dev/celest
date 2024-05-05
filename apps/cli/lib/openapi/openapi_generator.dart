@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:aws_common/aws_common.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/openapi/generator/openapi_client_generator.dart';
 import 'package:celest_cli/openapi/model/openapi_schema_linker.dart';
 import 'package:celest_cli/openapi/model/openapi_schema_transformer.dart';
@@ -52,9 +55,7 @@ final class OpenApiGenerator {
       context: context,
       registerSpec: context._registerSpec,
     ).link();
-    for (final callback in context._callbacks) {
-      callback();
-    }
+    context.finish();
     final clientGenerator = OpenApiClientGenerator(
       context: context,
       service: service,
@@ -101,32 +102,39 @@ final class OpenApiGeneratorContext {
     );
   }
 
-  final _callbacks = <void Function()>[];
-  void after(void Function() callback) {
-    _callbacks.add(callback);
+  void finish() {
+    _implements.build().forEachKey((name, toImplement) {
+      final spec = _schemaSpecs[name];
+      if (spec is! Class) {
+        return;
+      }
+      _schemaSpecs[name] = spec.rebuild((class_) {
+        // TODO: Better way to do this? Should work across libraries.
+        final allImplements = HashSet<Reference>(
+          equals: (a, b) => a.symbol == b.symbol,
+          hashCode: (ref) => ref.symbol.hashCode,
+        )
+          ..addAll(toImplement)
+          ..addAll(spec.implements);
+        class_.implements
+          ..clear()
+          ..addAll(allImplements);
+      });
+    });
   }
 
-  Spec updateDefinition(
-    String name, {
-    void Function(ClassBuilder class_)? updateClass,
-    void Function(ExtensionTypeBuilder class_)? updateExtensionType,
-  }) {
-    return _schemaSpecs.update(
-      name,
-      (value) {
-        return switch (value) {
-          Class() => value.rebuild(updateClass!),
-          // ExtensionType() => value.rebuild(updateExtensionType!),
-          _ => fail('Unsupported spec type: $value'),
-        } as Spec;
-      },
-      ifAbsent: () => fail(
-        'Definition not found: $name',
-        additionalContext: {
-          'available': _schemaSpecs.keys.join(', '),
-        },
-      ),
-    );
+  final _implements = SetMultimapBuilder<String, Reference>();
+
+  void implement(String name, Reference type) {
+    // if (!_schemaSpecs.containsKey(name)) {
+    //   fail(
+    //     'Definition not found: $name',
+    //     additionalContext: {
+    //       'available': _schemaSpecs.keys.join(', '),
+    //     },
+    //   );
+    // }
+    _implements.add(name, type);
   }
 
   String dartNameOf(OpenApiType type) {

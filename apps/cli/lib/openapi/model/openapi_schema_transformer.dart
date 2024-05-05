@@ -514,17 +514,6 @@ final class OpenApiSchemaTransformer {
     final readOnly = schema.readOnly;
     final writeOnly = schema.writeOnly;
 
-    final discriminator = schema.hasDiscriminator()
-        ? OpenApiDiscriminator(
-            propertyName: schema.discriminator.propertyName,
-            mapping: {
-              for (final mapping
-                  in schema.discriminator.mapping.additionalProperties)
-                mapping.name: mapping.value,
-            },
-          )
-        : null;
-
     return _cachedSchemas[schema] = _transformTypeSchema(schema).rebuild((b) {
       b
         ..ref = ref
@@ -537,9 +526,6 @@ final class OpenApiSchemaTransformer {
         ..writeOnly = writeOnly
         ..extensions.replace(extensions)
         ..required.addAll(schema.required);
-      if (discriminator != null) {
-        b.discriminator.replace(discriminator);
-      }
     });
   }
 
@@ -560,6 +546,7 @@ final class OpenApiSchemaTransformer {
     return _transformSchema(schema);
   }
 
+  /// Merges `allOf` shapes into a single shape with merged properties.
   v3.Schema _mergeAllOf(v3.Schema schema) {
     final schemas = schema.allOf.map((schemaOrRef) {
       if (schemaOrRef.hasSchema()) {
@@ -665,6 +652,17 @@ final class OpenApiSchemaTransformer {
       isNullable = schema.nullable;
     }
 
+    final discriminator = schema.hasDiscriminator()
+        ? OpenApiDiscriminator(
+            propertyName: schema.discriminator.propertyName,
+            mapping: {
+              for (final mapping
+                  in schema.discriminator.mapping.additionalProperties)
+                mapping.name: mapping.value,
+            },
+          )
+        : null;
+
     if (schema.allOf.isNotEmpty) {
       if (schema.allOf.length == 1) {
         final typeSchema = _transformTypeSchema(
@@ -683,18 +681,18 @@ final class OpenApiSchemaTransformer {
             .withNullability(isNullable ?? typeSchema.isNullableOrFalse);
       }
       final types = schema.anyOf.map(_transformSchemaOrRef).toList();
-      // TODO: Needed? When?
-      // if (discriminator == null) {
-      //   return OpenApiSumTypeSchema(
-      //     types: types,
-      //     discriminator: null,
-      //     isNullable: isNullable,
-      //   );
-      // }
+      if (discriminator == null) {
+        return OpenApiSumTypeSchema(
+          types: types,
+          discriminator: null,
+          isNullable: isNullable,
+        );
+      }
       // APIs like Stripe (mistakenly) use anyOf + discriminator for sealed
       // types instead of `oneOf` which would be more accurate.
       return OpenApiDisjointUnionTypeSchema(
         types: types,
+        discriminator: discriminator,
         isNullable: isNullable,
       );
     }
@@ -709,6 +707,7 @@ final class OpenApiSchemaTransformer {
       final types = schema.oneOf.map(_transformSchemaOrRef).toList();
       return OpenApiDisjointUnionTypeSchema(
         types: types,
+        discriminator: discriminator,
         isNullable: isNullable,
       );
     }

@@ -202,7 +202,7 @@ abstract class ServicePathParameter
     implements Built<ServicePathParameter, ServicePathParameterBuilder> {
   factory ServicePathParameter({
     required String variableName,
-    required TypeReference type,
+    required OpenApiType type,
     bool inherited = false,
   }) {
     return _$ServicePathParameter._(
@@ -219,7 +219,7 @@ abstract class ServicePathParameter
   ServicePathParameter._();
 
   String get variableName;
-  TypeReference get type;
+  OpenApiType get type;
   bool get inherited;
 }
 
@@ -316,5 +316,5 @@ abstract class HeaderOrQueryParameter
 
   String get rawName;
   String get variableName;
-  TypeReference get type;
+  OpenApiType get type;
 }

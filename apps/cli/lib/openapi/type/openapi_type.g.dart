@@ -6,57 +6,262 @@ part of 'openapi_type.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const OpenApiPrimitive _$any = const OpenApiPrimitive._('any');
-const OpenApiPrimitive _$object = const OpenApiPrimitive._('object');
-const OpenApiPrimitive _$string = const OpenApiPrimitive._('string');
-const OpenApiPrimitive _$number = const OpenApiPrimitive._('number');
-const OpenApiPrimitive _$integer = const OpenApiPrimitive._('integer');
-const OpenApiPrimitive _$boolean = const OpenApiPrimitive._('boolean');
-const OpenApiPrimitive _$null$ = const OpenApiPrimitive._('null\$');
+abstract mixin class DiscriminatorBuilder {
+  void replace(Discriminator other);
+  void update(void Function(DiscriminatorBuilder) updates);
+}
 
-OpenApiPrimitive _$valueOf(String name) {
-  switch (name) {
-    case 'any':
-      return _$any;
-    case 'object':
-      return _$object;
-    case 'string':
-      return _$string;
-    case 'number':
-      return _$number;
-    case 'integer':
-      return _$integer;
-    case 'boolean':
-      return _$boolean;
-    case 'null\$':
-      return _$null$;
-    default:
-      throw new ArgumentError(name);
+class _$FieldDiscriminator extends FieldDiscriminator {
+  @override
+  final String wireName;
+  @override
+  final String dartName;
+  @override
+  final BuiltMap<String, OpenApiType> mapping;
+
+  factory _$FieldDiscriminator(
+          [void Function(FieldDiscriminatorBuilder)? updates]) =>
+      (new FieldDiscriminatorBuilder()..update(updates))._build();
+
+  _$FieldDiscriminator._(
+      {required this.wireName, required this.dartName, required this.mapping})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        wireName, r'FieldDiscriminator', 'wireName');
+    BuiltValueNullFieldError.checkNotNull(
+        dartName, r'FieldDiscriminator', 'dartName');
+    BuiltValueNullFieldError.checkNotNull(
+        mapping, r'FieldDiscriminator', 'mapping');
+  }
+
+  @override
+  FieldDiscriminator rebuild(
+          void Function(FieldDiscriminatorBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  FieldDiscriminatorBuilder toBuilder() =>
+      new FieldDiscriminatorBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is FieldDiscriminator &&
+        wireName == other.wireName &&
+        dartName == other.dartName &&
+        mapping == other.mapping;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, wireName.hashCode);
+    _$hash = $jc(_$hash, dartName.hashCode);
+    _$hash = $jc(_$hash, mapping.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'FieldDiscriminator')
+          ..add('wireName', wireName)
+          ..add('dartName', dartName)
+          ..add('mapping', mapping))
+        .toString();
   }
 }
 
-final BuiltSet<OpenApiPrimitive> _$values =
-    new BuiltSet<OpenApiPrimitive>(const <OpenApiPrimitive>[
-  _$any,
-  _$object,
-  _$string,
-  _$number,
-  _$integer,
-  _$boolean,
-  _$null$,
-]);
+class FieldDiscriminatorBuilder
+    implements
+        Builder<FieldDiscriminator, FieldDiscriminatorBuilder>,
+        DiscriminatorBuilder {
+  _$FieldDiscriminator? _$v;
+
+  String? _wireName;
+  String? get wireName => _$this._wireName;
+  set wireName(covariant String? wireName) => _$this._wireName = wireName;
+
+  String? _dartName;
+  String? get dartName => _$this._dartName;
+  set dartName(covariant String? dartName) => _$this._dartName = dartName;
+
+  MapBuilder<String, OpenApiType>? _mapping;
+  MapBuilder<String, OpenApiType> get mapping =>
+      _$this._mapping ??= new MapBuilder<String, OpenApiType>();
+  set mapping(covariant MapBuilder<String, OpenApiType>? mapping) =>
+      _$this._mapping = mapping;
+
+  FieldDiscriminatorBuilder();
+
+  FieldDiscriminatorBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _wireName = $v.wireName;
+      _dartName = $v.dartName;
+      _mapping = $v.mapping.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant FieldDiscriminator other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$FieldDiscriminator;
+  }
+
+  @override
+  void update(void Function(FieldDiscriminatorBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  FieldDiscriminator build() => _build();
+
+  _$FieldDiscriminator _build() {
+    _$FieldDiscriminator _$result;
+    try {
+      _$result = _$v ??
+          new _$FieldDiscriminator._(
+              wireName: BuiltValueNullFieldError.checkNotNull(
+                  wireName, r'FieldDiscriminator', 'wireName'),
+              dartName: BuiltValueNullFieldError.checkNotNull(
+                  dartName, r'FieldDiscriminator', 'dartName'),
+              mapping: mapping.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'mapping';
+        mapping.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'FieldDiscriminator', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TypeDiscriminator extends TypeDiscriminator {
+  @override
+  final BuiltMap<Expression, OpenApiType> mapping;
+
+  factory _$TypeDiscriminator(
+          [void Function(TypeDiscriminatorBuilder)? updates]) =>
+      (new TypeDiscriminatorBuilder()..update(updates))._build();
+
+  _$TypeDiscriminator._({required this.mapping}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        mapping, r'TypeDiscriminator', 'mapping');
+  }
+
+  @override
+  TypeDiscriminator rebuild(void Function(TypeDiscriminatorBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TypeDiscriminatorBuilder toBuilder() =>
+      new TypeDiscriminatorBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TypeDiscriminator && mapping == other.mapping;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, mapping.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'TypeDiscriminator')
+          ..add('mapping', mapping))
+        .toString();
+  }
+}
+
+class TypeDiscriminatorBuilder
+    implements
+        Builder<TypeDiscriminator, TypeDiscriminatorBuilder>,
+        DiscriminatorBuilder {
+  _$TypeDiscriminator? _$v;
+
+  MapBuilder<Expression, OpenApiType>? _mapping;
+  MapBuilder<Expression, OpenApiType> get mapping =>
+      _$this._mapping ??= new MapBuilder<Expression, OpenApiType>();
+  set mapping(covariant MapBuilder<Expression, OpenApiType>? mapping) =>
+      _$this._mapping = mapping;
+
+  TypeDiscriminatorBuilder();
+
+  TypeDiscriminatorBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _mapping = $v.mapping.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant TypeDiscriminator other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$TypeDiscriminator;
+  }
+
+  @override
+  void update(void Function(TypeDiscriminatorBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  TypeDiscriminator build() => _build();
+
+  _$TypeDiscriminator _build() {
+    _$TypeDiscriminator _$result;
+    try {
+      _$result = _$v ?? new _$TypeDiscriminator._(mapping: mapping.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'mapping';
+        mapping.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'TypeDiscriminator', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
 
 class _$OpenApiTypeReference extends OpenApiTypeReference {
   @override
   final bool isNullable;
   @override
+  final OpenApiType? primitiveType;
+  @override
   final TypeReference typeReference;
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiTypeReference(
           [void Function(OpenApiTypeReferenceBuilder)? updates]) =>
@@ -64,10 +269,13 @@ class _$OpenApiTypeReference extends OpenApiTypeReference {
 
   _$OpenApiTypeReference._(
       {required this.isNullable,
+      this.primitiveType,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiTypeReference', 'isNullable');
@@ -91,20 +299,26 @@ class _$OpenApiTypeReference extends OpenApiTypeReference {
     if (identical(other, this)) return true;
     return other is OpenApiTypeReference &&
         isNullable == other.isNullable &&
+        primitiveType == other.primitiveType &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, isNullable.hashCode);
+    _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -113,10 +327,13 @@ class _$OpenApiTypeReference extends OpenApiTypeReference {
   String toString() {
     return (newBuiltValueToStringHelper(r'OpenApiTypeReference')
           ..add('isNullable', isNullable)
+          ..add('primitiveType', primitiveType)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -131,6 +348,11 @@ class OpenApiTypeReferenceBuilder
   bool? get isNullable => _$this._isNullable;
   set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
+  OpenApiType? _primitiveType;
+  OpenApiType? get primitiveType => _$this._primitiveType;
+  set primitiveType(covariant OpenApiType? primitiveType) =>
+      _$this._primitiveType = primitiveType;
+
   TypeReferenceBuilder? _typeReference;
   TypeReferenceBuilder get typeReference =>
       _$this._typeReference ??= new TypeReferenceBuilder();
@@ -141,6 +363,12 @@ class OpenApiTypeReferenceBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -149,16 +377,24 @@ class OpenApiTypeReferenceBuilder
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
 
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
+
   OpenApiTypeReferenceBuilder();
 
   OpenApiTypeReferenceBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _isNullable = $v.isNullable;
+      _primitiveType = $v.primitiveType;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -185,16 +421,22 @@ class OpenApiTypeReferenceBuilder
           new _$OpenApiTypeReference._(
               isNullable: BuiltValueNullFieldError.checkNotNull(
                   isNullable, r'OpenApiTypeReference', 'isNullable'),
+              primitiveType: primitiveType,
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiTypeReference', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiTypeReference', _$failedField, e.toString());
@@ -210,15 +452,17 @@ class _$OpenApiIterableType extends OpenApiIterableType {
   @override
   final bool isNullable;
   @override
-  final OpenApiPrimitive? primitiveType;
-  @override
   final TypeReference typeReference;
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
   @override
   final OpenApiType itemType;
 
@@ -228,11 +472,12 @@ class _$OpenApiIterableType extends OpenApiIterableType {
 
   _$OpenApiIterableType._(
       {required this.isNullable,
-      this.primitiveType,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
       this.deprecated,
+      this.defaultValue,
       required this.itemType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -259,11 +504,12 @@ class _$OpenApiIterableType extends OpenApiIterableType {
     if (identical(other, this)) return true;
     return other is OpenApiIterableType &&
         isNullable == other.isNullable &&
-        primitiveType == other.primitiveType &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
         deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
         itemType == other.itemType;
   }
 
@@ -271,11 +517,12 @@ class _$OpenApiIterableType extends OpenApiIterableType {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, isNullable.hashCode);
-    _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, itemType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -285,11 +532,12 @@ class _$OpenApiIterableType extends OpenApiIterableType {
   String toString() {
     return (newBuiltValueToStringHelper(r'OpenApiIterableType')
           ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
           ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
           ..add('itemType', itemType))
         .toString();
   }
@@ -305,11 +553,6 @@ class OpenApiIterableTypeBuilder
   bool? get isNullable => _$this._isNullable;
   set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
-  OpenApiPrimitive? _primitiveType;
-  OpenApiPrimitive? get primitiveType => _$this._primitiveType;
-  set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
-      _$this._primitiveType = primitiveType;
-
   TypeReferenceBuilder? _typeReference;
   TypeReferenceBuilder get typeReference =>
       _$this._typeReference ??= new TypeReferenceBuilder();
@@ -320,6 +563,12 @@ class OpenApiIterableTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -327,6 +576,11 @@ class OpenApiIterableTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiType? _itemType;
   OpenApiType? get itemType => _$this._itemType;
@@ -338,11 +592,12 @@ class OpenApiIterableTypeBuilder
     final $v = _$v;
     if ($v != null) {
       _isNullable = $v.isNullable;
-      _primitiveType = $v.primitiveType;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _itemType = $v.itemType;
       _$v = null;
     }
@@ -370,12 +625,13 @@ class OpenApiIterableTypeBuilder
           new _$OpenApiIterableType._(
               isNullable: BuiltValueNullFieldError.checkNotNull(
                   isNullable, r'OpenApiIterableType', 'isNullable'),
-              primitiveType: primitiveType,
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiIterableType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
               deprecated: deprecated,
+              defaultValue: defaultValue,
               itemType: BuiltValueNullFieldError.checkNotNull(
                   itemType, r'OpenApiIterableType', 'itemType'));
     } catch (_) {
@@ -383,6 +639,9 @@ class OpenApiIterableTypeBuilder
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiIterableType', _$failedField, e.toString());
@@ -398,15 +657,17 @@ class _$OpenApiListType extends OpenApiListType {
   @override
   final bool isNullable;
   @override
-  final OpenApiPrimitive? primitiveType;
-  @override
   final TypeReference typeReference;
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
   @override
   final OpenApiType itemType;
 
@@ -415,11 +676,12 @@ class _$OpenApiListType extends OpenApiListType {
 
   _$OpenApiListType._(
       {required this.isNullable,
-      this.primitiveType,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
       this.deprecated,
+      this.defaultValue,
       required this.itemType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -444,11 +706,12 @@ class _$OpenApiListType extends OpenApiListType {
     if (identical(other, this)) return true;
     return other is OpenApiListType &&
         isNullable == other.isNullable &&
-        primitiveType == other.primitiveType &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
         deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
         itemType == other.itemType;
   }
 
@@ -456,11 +719,12 @@ class _$OpenApiListType extends OpenApiListType {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, isNullable.hashCode);
-    _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, itemType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -470,11 +734,12 @@ class _$OpenApiListType extends OpenApiListType {
   String toString() {
     return (newBuiltValueToStringHelper(r'OpenApiListType')
           ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
           ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
           ..add('itemType', itemType))
         .toString();
   }
@@ -490,11 +755,6 @@ class OpenApiListTypeBuilder
   bool? get isNullable => _$this._isNullable;
   set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
-  OpenApiPrimitive? _primitiveType;
-  OpenApiPrimitive? get primitiveType => _$this._primitiveType;
-  set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
-      _$this._primitiveType = primitiveType;
-
   TypeReferenceBuilder? _typeReference;
   TypeReferenceBuilder get typeReference =>
       _$this._typeReference ??= new TypeReferenceBuilder();
@@ -505,6 +765,12 @@ class OpenApiListTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -512,6 +778,11 @@ class OpenApiListTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiType? _itemType;
   OpenApiType? get itemType => _$this._itemType;
@@ -523,11 +794,12 @@ class OpenApiListTypeBuilder
     final $v = _$v;
     if ($v != null) {
       _isNullable = $v.isNullable;
-      _primitiveType = $v.primitiveType;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _itemType = $v.itemType;
       _$v = null;
     }
@@ -555,12 +827,13 @@ class OpenApiListTypeBuilder
           new _$OpenApiListType._(
               isNullable: BuiltValueNullFieldError.checkNotNull(
                   isNullable, r'OpenApiListType', 'isNullable'),
-              primitiveType: primitiveType,
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiListType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
               deprecated: deprecated,
+              defaultValue: defaultValue,
               itemType: BuiltValueNullFieldError.checkNotNull(
                   itemType, r'OpenApiListType', 'itemType'));
     } catch (_) {
@@ -568,6 +841,9 @@ class OpenApiListTypeBuilder
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiListType', _$failedField, e.toString());
@@ -583,15 +859,17 @@ class _$OpenApiSetType extends OpenApiSetType {
   @override
   final bool isNullable;
   @override
-  final OpenApiPrimitive? primitiveType;
-  @override
   final TypeReference typeReference;
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
   @override
   final OpenApiType itemType;
 
@@ -600,11 +878,12 @@ class _$OpenApiSetType extends OpenApiSetType {
 
   _$OpenApiSetType._(
       {required this.isNullable,
-      this.primitiveType,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
       this.deprecated,
+      this.defaultValue,
       required this.itemType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -629,11 +908,12 @@ class _$OpenApiSetType extends OpenApiSetType {
     if (identical(other, this)) return true;
     return other is OpenApiSetType &&
         isNullable == other.isNullable &&
-        primitiveType == other.primitiveType &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
         deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
         itemType == other.itemType;
   }
 
@@ -641,11 +921,12 @@ class _$OpenApiSetType extends OpenApiSetType {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, isNullable.hashCode);
-    _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, itemType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -655,11 +936,12 @@ class _$OpenApiSetType extends OpenApiSetType {
   String toString() {
     return (newBuiltValueToStringHelper(r'OpenApiSetType')
           ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
           ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
           ..add('itemType', itemType))
         .toString();
   }
@@ -675,11 +957,6 @@ class OpenApiSetTypeBuilder
   bool? get isNullable => _$this._isNullable;
   set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
-  OpenApiPrimitive? _primitiveType;
-  OpenApiPrimitive? get primitiveType => _$this._primitiveType;
-  set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
-      _$this._primitiveType = primitiveType;
-
   TypeReferenceBuilder? _typeReference;
   TypeReferenceBuilder get typeReference =>
       _$this._typeReference ??= new TypeReferenceBuilder();
@@ -690,6 +967,12 @@ class OpenApiSetTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -697,6 +980,11 @@ class OpenApiSetTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiType? _itemType;
   OpenApiType? get itemType => _$this._itemType;
@@ -708,11 +996,12 @@ class OpenApiSetTypeBuilder
     final $v = _$v;
     if ($v != null) {
       _isNullable = $v.isNullable;
-      _primitiveType = $v.primitiveType;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _itemType = $v.itemType;
       _$v = null;
     }
@@ -740,12 +1029,13 @@ class OpenApiSetTypeBuilder
           new _$OpenApiSetType._(
               isNullable: BuiltValueNullFieldError.checkNotNull(
                   isNullable, r'OpenApiSetType', 'isNullable'),
-              primitiveType: primitiveType,
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiSetType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
               deprecated: deprecated,
+              defaultValue: defaultValue,
               itemType: BuiltValueNullFieldError.checkNotNull(
                   itemType, r'OpenApiSetType', 'itemType'));
     } catch (_) {
@@ -753,6 +1043,9 @@ class OpenApiSetTypeBuilder
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiSetType', _$failedField, e.toString());
@@ -772,9 +1065,13 @@ class _$OpenApiBooleanType extends OpenApiBooleanType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiBooleanType(
           [void Function(OpenApiBooleanTypeBuilder)? updates]) =>
@@ -784,8 +1081,10 @@ class _$OpenApiBooleanType extends OpenApiBooleanType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiBooleanType', 'isNullable');
@@ -811,8 +1110,10 @@ class _$OpenApiBooleanType extends OpenApiBooleanType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -821,8 +1122,10 @@ class _$OpenApiBooleanType extends OpenApiBooleanType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -833,8 +1136,10 @@ class _$OpenApiBooleanType extends OpenApiBooleanType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -859,6 +1164,12 @@ class OpenApiBooleanTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -866,6 +1177,11 @@ class OpenApiBooleanTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiBooleanTypeBuilder();
 
@@ -875,8 +1191,10 @@ class OpenApiBooleanTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -906,13 +1224,18 @@ class OpenApiBooleanTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiBooleanType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiBooleanType', _$failedField, e.toString());
@@ -932,9 +1255,13 @@ class _$OpenApiNumberType extends OpenApiNumberType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiNumberType(
           [void Function(OpenApiNumberTypeBuilder)? updates]) =>
@@ -944,8 +1271,10 @@ class _$OpenApiNumberType extends OpenApiNumberType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiNumberType', 'isNullable');
@@ -970,8 +1299,10 @@ class _$OpenApiNumberType extends OpenApiNumberType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -980,8 +1311,10 @@ class _$OpenApiNumberType extends OpenApiNumberType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -992,8 +1325,10 @@ class _$OpenApiNumberType extends OpenApiNumberType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -1018,6 +1353,12 @@ class OpenApiNumberTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1025,6 +1366,11 @@ class OpenApiNumberTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiNumberTypeBuilder();
 
@@ -1034,8 +1380,10 @@ class OpenApiNumberTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -1065,13 +1413,18 @@ class OpenApiNumberTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiNumberType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiNumberType', _$failedField, e.toString());
@@ -1091,9 +1444,13 @@ class _$OpenApiIntegerType extends OpenApiIntegerType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiIntegerType(
           [void Function(OpenApiIntegerTypeBuilder)? updates]) =>
@@ -1103,8 +1460,10 @@ class _$OpenApiIntegerType extends OpenApiIntegerType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiIntegerType', 'isNullable');
@@ -1130,8 +1489,10 @@ class _$OpenApiIntegerType extends OpenApiIntegerType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -1140,8 +1501,10 @@ class _$OpenApiIntegerType extends OpenApiIntegerType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1152,8 +1515,10 @@ class _$OpenApiIntegerType extends OpenApiIntegerType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -1178,6 +1543,12 @@ class OpenApiIntegerTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1185,6 +1556,11 @@ class OpenApiIntegerTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiIntegerTypeBuilder();
 
@@ -1194,8 +1570,10 @@ class OpenApiIntegerTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -1225,13 +1603,18 @@ class OpenApiIntegerTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiIntegerType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiIntegerType', _$failedField, e.toString());
@@ -1251,9 +1634,13 @@ class _$OpenApiDoubleType extends OpenApiDoubleType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
   @override
   final OpenApiInterfaceType? superType;
 
@@ -1265,8 +1652,10 @@ class _$OpenApiDoubleType extends OpenApiDoubleType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
       this.deprecated,
+      this.defaultValue,
       this.superType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -1292,8 +1681,10 @@ class _$OpenApiDoubleType extends OpenApiDoubleType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
         deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
         superType == other.superType;
   }
 
@@ -1303,8 +1694,10 @@ class _$OpenApiDoubleType extends OpenApiDoubleType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, superType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1316,8 +1709,10 @@ class _$OpenApiDoubleType extends OpenApiDoubleType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
           ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
           ..add('superType', superType))
         .toString();
   }
@@ -1343,6 +1738,12 @@ class OpenApiDoubleTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1350,6 +1751,11 @@ class OpenApiDoubleTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiInterfaceType? _superType;
   OpenApiInterfaceType? get superType => _$this._superType;
@@ -1364,8 +1770,10 @@ class OpenApiDoubleTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _superType = $v.superType;
       _$v = null;
     }
@@ -1396,14 +1804,19 @@ class OpenApiDoubleTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiDoubleType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
               deprecated: deprecated,
+              defaultValue: defaultValue,
               superType: superType);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiDoubleType', _$failedField, e.toString());
@@ -1423,9 +1836,13 @@ class _$OpenApiStringType extends OpenApiStringType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiStringType(
           [void Function(OpenApiStringTypeBuilder)? updates]) =>
@@ -1435,8 +1852,10 @@ class _$OpenApiStringType extends OpenApiStringType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiStringType', 'isNullable');
@@ -1461,8 +1880,10 @@ class _$OpenApiStringType extends OpenApiStringType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -1471,8 +1892,10 @@ class _$OpenApiStringType extends OpenApiStringType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1483,8 +1906,10 @@ class _$OpenApiStringType extends OpenApiStringType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -1509,6 +1934,12 @@ class OpenApiStringTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1516,6 +1947,11 @@ class OpenApiStringTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiStringTypeBuilder();
 
@@ -1525,8 +1961,10 @@ class OpenApiStringTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -1556,13 +1994,18 @@ class OpenApiStringTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiStringType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiStringType', _$failedField, e.toString());
@@ -1582,9 +2025,13 @@ class _$OpenApiEmptyType extends OpenApiEmptyType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiEmptyType(
           [void Function(OpenApiEmptyTypeBuilder)? updates]) =>
@@ -1594,8 +2041,10 @@ class _$OpenApiEmptyType extends OpenApiEmptyType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiEmptyType', 'isNullable');
@@ -1620,8 +2069,10 @@ class _$OpenApiEmptyType extends OpenApiEmptyType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -1630,8 +2081,10 @@ class _$OpenApiEmptyType extends OpenApiEmptyType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1642,8 +2095,10 @@ class _$OpenApiEmptyType extends OpenApiEmptyType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -1668,6 +2123,12 @@ class OpenApiEmptyTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1675,6 +2136,11 @@ class OpenApiEmptyTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiEmptyTypeBuilder();
 
@@ -1684,8 +2150,10 @@ class OpenApiEmptyTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -1715,13 +2183,18 @@ class OpenApiEmptyTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiEmptyType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiEmptyType', _$failedField, e.toString());
@@ -1743,9 +2216,13 @@ class _$OpenApiRecordType extends OpenApiRecordType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiRecordType(
           [void Function(OpenApiRecordTypeBuilder)? updates]) =>
@@ -1756,8 +2233,10 @@ class _$OpenApiRecordType extends OpenApiRecordType {
       required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         valueType, r'OpenApiRecordType', 'valueType');
@@ -1785,8 +2264,10 @@ class _$OpenApiRecordType extends OpenApiRecordType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -1796,8 +2277,10 @@ class _$OpenApiRecordType extends OpenApiRecordType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1809,8 +2292,10 @@ class _$OpenApiRecordType extends OpenApiRecordType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -1840,6 +2325,12 @@ class OpenApiRecordTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -1847,6 +2338,11 @@ class OpenApiRecordTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiRecordTypeBuilder();
 
@@ -1857,8 +2353,10 @@ class OpenApiRecordTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -1890,13 +2388,18 @@ class OpenApiRecordTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiRecordType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiRecordType', _$failedField, e.toString());
@@ -2023,9 +2526,11 @@ class OpenApiFieldBuilder
 
 class _$OpenApiStructType extends OpenApiStructType {
   @override
-  final OpenApiDiscriminator? discriminator;
+  final Discriminator? discriminator;
   @override
   final BuiltMap<String, OpenApiField> fields;
+  @override
+  final BuiltList<TypeReference> implements;
   @override
   final OpenApiInterfaceType superType;
   @override
@@ -2038,6 +2543,8 @@ class _$OpenApiStructType extends OpenApiStructType {
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiStructType(
           [void Function(OpenApiStructTypeBuilder)? updates]) =>
@@ -2046,15 +2553,19 @@ class _$OpenApiStructType extends OpenApiStructType {
   _$OpenApiStructType._(
       {this.discriminator,
       required this.fields,
+      required this.implements,
       required this.superType,
       required this.isNullable,
       required this.typeReference,
       required this.schema,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         fields, r'OpenApiStructType', 'fields');
+    BuiltValueNullFieldError.checkNotNull(
+        implements, r'OpenApiStructType', 'implements');
     BuiltValueNullFieldError.checkNotNull(
         superType, r'OpenApiStructType', 'superType');
     BuiltValueNullFieldError.checkNotNull(
@@ -2079,12 +2590,14 @@ class _$OpenApiStructType extends OpenApiStructType {
     return other is OpenApiStructType &&
         discriminator == other.discriminator &&
         fields == other.fields &&
+        implements == other.implements &&
         superType == other.superType &&
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -2092,12 +2605,14 @@ class _$OpenApiStructType extends OpenApiStructType {
     var _$hash = 0;
     _$hash = $jc(_$hash, discriminator.hashCode);
     _$hash = $jc(_$hash, fields.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, superType.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -2107,12 +2622,14 @@ class _$OpenApiStructType extends OpenApiStructType {
     return (newBuiltValueToStringHelper(r'OpenApiStructType')
           ..add('discriminator', discriminator)
           ..add('fields', fields)
+          ..add('implements', implements)
           ..add('superType', superType)
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -2123,10 +2640,9 @@ class OpenApiStructTypeBuilder
         OpenApiTypeBuilder {
   _$OpenApiStructType? _$v;
 
-  OpenApiDiscriminatorBuilder? _discriminator;
-  OpenApiDiscriminatorBuilder get discriminator =>
-      _$this._discriminator ??= new OpenApiDiscriminatorBuilder();
-  set discriminator(covariant OpenApiDiscriminatorBuilder? discriminator) =>
+  Discriminator? _discriminator;
+  Discriminator? get discriminator => _$this._discriminator;
+  set discriminator(covariant Discriminator? discriminator) =>
       _$this._discriminator = discriminator;
 
   MapBuilder<String, OpenApiField>? _fields;
@@ -2134,6 +2650,12 @@ class OpenApiStructTypeBuilder
       _$this._fields ??= new MapBuilder<String, OpenApiField>();
   set fields(covariant MapBuilder<String, OpenApiField>? fields) =>
       _$this._fields = fields;
+
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
 
   OpenApiInterfaceType? _superType;
   OpenApiInterfaceType? get superType => _$this._superType;
@@ -2162,19 +2684,26 @@ class OpenApiStructTypeBuilder
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
 
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
+
   OpenApiStructTypeBuilder();
 
   OpenApiStructTypeBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _discriminator = $v.discriminator?.toBuilder();
+      _discriminator = $v.discriminator;
       _fields = $v.fields.toBuilder();
+      _implements = $v.implements.toBuilder();
       _superType = $v.superType;
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -2199,8 +2728,9 @@ class OpenApiStructTypeBuilder
     try {
       _$result = _$v ??
           new _$OpenApiStructType._(
-              discriminator: _discriminator?.build(),
+              discriminator: discriminator,
               fields: fields.build(),
+              implements: implements.build(),
               superType: BuiltValueNullFieldError.checkNotNull(
                   superType, r'OpenApiStructType', 'superType'),
               isNullable: BuiltValueNullFieldError.checkNotNull(
@@ -2209,14 +2739,15 @@ class OpenApiStructTypeBuilder
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiStructType', 'schema'),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'discriminator';
-        _discriminator?.build();
         _$failedField = 'fields';
         fields.build();
+        _$failedField = 'implements';
+        implements.build();
 
         _$failedField = 'typeReference';
         typeReference.build();
@@ -2334,7 +2865,7 @@ class OpenApiSealedBranchBuilder
 
 class _$OpenApiSealedType extends OpenApiSealedType {
   @override
-  final OpenApiDiscriminator? discriminator;
+  final Discriminator discriminator;
   @override
   final BuiltList<OpenApiSealedBranch> branches;
   @override
@@ -2344,23 +2875,31 @@ class _$OpenApiSealedType extends OpenApiSealedType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiSealedType(
           [void Function(OpenApiSealedTypeBuilder)? updates]) =>
       (new OpenApiSealedTypeBuilder()..update(updates))._build();
 
   _$OpenApiSealedType._(
-      {this.discriminator,
+      {required this.discriminator,
       required this.branches,
       required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        discriminator, r'OpenApiSealedType', 'discriminator');
     BuiltValueNullFieldError.checkNotNull(
         branches, r'OpenApiSealedType', 'branches');
     BuiltValueNullFieldError.checkNotNull(
@@ -2388,8 +2927,10 @@ class _$OpenApiSealedType extends OpenApiSealedType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -2400,8 +2941,10 @@ class _$OpenApiSealedType extends OpenApiSealedType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -2414,8 +2957,10 @@ class _$OpenApiSealedType extends OpenApiSealedType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -2426,10 +2971,9 @@ class OpenApiSealedTypeBuilder
         OpenApiTypeBuilder {
   _$OpenApiSealedType? _$v;
 
-  OpenApiDiscriminatorBuilder? _discriminator;
-  OpenApiDiscriminatorBuilder get discriminator =>
-      _$this._discriminator ??= new OpenApiDiscriminatorBuilder();
-  set discriminator(covariant OpenApiDiscriminatorBuilder? discriminator) =>
+  Discriminator? _discriminator;
+  Discriminator? get discriminator => _$this._discriminator;
+  set discriminator(covariant Discriminator? discriminator) =>
       _$this._discriminator = discriminator;
 
   ListBuilder<OpenApiSealedBranch>? _branches;
@@ -2452,6 +2996,12 @@ class OpenApiSealedTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -2460,18 +3010,25 @@ class OpenApiSealedTypeBuilder
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
 
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
+
   OpenApiSealedTypeBuilder();
 
   OpenApiSealedTypeBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _discriminator = $v.discriminator?.toBuilder();
+      _discriminator = $v.discriminator;
       _branches = $v.branches.toBuilder();
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -2496,25 +3053,29 @@ class OpenApiSealedTypeBuilder
     try {
       _$result = _$v ??
           new _$OpenApiSealedType._(
-              discriminator: _discriminator?.build(),
+              discriminator: BuiltValueNullFieldError.checkNotNull(
+                  discriminator, r'OpenApiSealedType', 'discriminator'),
               branches: branches.build(),
               isNullable: BuiltValueNullFieldError.checkNotNull(
                   isNullable, r'OpenApiSealedType', 'isNullable'),
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiSealedType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'discriminator';
-        _discriminator?.build();
         _$failedField = 'branches';
         branches.build();
 
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiSealedType', _$failedField, e.toString());
@@ -2534,9 +3095,13 @@ class _$OpenApiNullType extends OpenApiNullType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiNullType([void Function(OpenApiNullTypeBuilder)? updates]) =>
       (new OpenApiNullTypeBuilder()..update(updates))._build();
@@ -2545,8 +3110,10 @@ class _$OpenApiNullType extends OpenApiNullType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiNullType', 'isNullable');
@@ -2570,8 +3137,10 @@ class _$OpenApiNullType extends OpenApiNullType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -2580,8 +3149,10 @@ class _$OpenApiNullType extends OpenApiNullType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -2592,8 +3163,10 @@ class _$OpenApiNullType extends OpenApiNullType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -2618,6 +3191,12 @@ class OpenApiNullTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -2625,6 +3204,11 @@ class OpenApiNullTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiNullTypeBuilder();
 
@@ -2634,8 +3218,10 @@ class OpenApiNullTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -2665,13 +3251,18 @@ class OpenApiNullTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiNullType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiNullType', _$failedField, e.toString());
@@ -2695,9 +3286,13 @@ class _$OpenApiSingleValueType extends OpenApiSingleValueType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiSingleValueType(
           [void Function(OpenApiSingleValueTypeBuilder)? updates]) =>
@@ -2709,8 +3304,10 @@ class _$OpenApiSingleValueType extends OpenApiSingleValueType {
       required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         baseType, r'OpenApiSingleValueType', 'baseType');
@@ -2742,8 +3339,10 @@ class _$OpenApiSingleValueType extends OpenApiSingleValueType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -2754,8 +3353,10 @@ class _$OpenApiSingleValueType extends OpenApiSingleValueType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -2768,8 +3369,10 @@ class _$OpenApiSingleValueType extends OpenApiSingleValueType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -2803,6 +3406,12 @@ class OpenApiSingleValueTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -2810,6 +3419,11 @@ class OpenApiSingleValueTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiSingleValueTypeBuilder();
 
@@ -2821,8 +3435,10 @@ class OpenApiSingleValueTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -2856,13 +3472,18 @@ class OpenApiSingleValueTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiSingleValueType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiSingleValueType', _$failedField, e.toString());
@@ -2882,15 +3503,19 @@ class _$OpenApiEnumType extends OpenApiEnumType {
   @override
   final bool isNullable;
   @override
-  final OpenApiPrimitive? primitiveType;
+  final OpenApiType? primitiveType;
   @override
   final TypeReference typeReference;
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
   @override
   final OpenApiInterfaceType? superType;
 
@@ -2904,8 +3529,10 @@ class _$OpenApiEnumType extends OpenApiEnumType {
       this.primitiveType,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
       this.deprecated,
+      this.defaultValue,
       this.superType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -2936,8 +3563,10 @@ class _$OpenApiEnumType extends OpenApiEnumType {
         primitiveType == other.primitiveType &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
         deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
         superType == other.superType;
   }
 
@@ -2950,8 +3579,10 @@ class _$OpenApiEnumType extends OpenApiEnumType {
     _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, superType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2966,8 +3597,10 @@ class _$OpenApiEnumType extends OpenApiEnumType {
           ..add('primitiveType', primitiveType)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
           ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
           ..add('superType', superType))
         .toString();
   }
@@ -2993,9 +3626,9 @@ class OpenApiEnumTypeBuilder
   bool? get isNullable => _$this._isNullable;
   set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
-  OpenApiPrimitive? _primitiveType;
-  OpenApiPrimitive? get primitiveType => _$this._primitiveType;
-  set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
+  OpenApiType? _primitiveType;
+  OpenApiType? get primitiveType => _$this._primitiveType;
+  set primitiveType(covariant OpenApiType? primitiveType) =>
       _$this._primitiveType = primitiveType;
 
   TypeReferenceBuilder? _typeReference;
@@ -3008,6 +3641,12 @@ class OpenApiEnumTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -3015,6 +3654,11 @@ class OpenApiEnumTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiInterfaceType? _superType;
   OpenApiInterfaceType? get superType => _$this._superType;
@@ -3032,8 +3676,10 @@ class OpenApiEnumTypeBuilder
       _primitiveType = $v.primitiveType;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _superType = $v.superType;
       _$v = null;
     }
@@ -3068,8 +3714,10 @@ class OpenApiEnumTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiEnumType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
               deprecated: deprecated,
+              defaultValue: defaultValue,
               superType: superType);
     } catch (_) {
       late String _$failedField;
@@ -3079,6 +3727,9 @@ class OpenApiEnumTypeBuilder
 
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiEnumType', _$failedField, e.toString());
@@ -3098,9 +3749,13 @@ class _$OpenApiAnyType extends OpenApiAnyType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiAnyType([void Function(OpenApiAnyTypeBuilder)? updates]) =>
       (new OpenApiAnyTypeBuilder()..update(updates))._build();
@@ -3109,8 +3764,10 @@ class _$OpenApiAnyType extends OpenApiAnyType {
       {required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         isNullable, r'OpenApiAnyType', 'isNullable');
@@ -3134,8 +3791,10 @@ class _$OpenApiAnyType extends OpenApiAnyType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -3144,8 +3803,10 @@ class _$OpenApiAnyType extends OpenApiAnyType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -3156,8 +3817,10 @@ class _$OpenApiAnyType extends OpenApiAnyType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -3182,6 +3845,12 @@ class OpenApiAnyTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -3189,6 +3858,11 @@ class OpenApiAnyTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiAnyTypeBuilder();
 
@@ -3198,8 +3872,10 @@ class OpenApiAnyTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -3229,13 +3905,18 @@ class OpenApiAnyTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiAnyType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiAnyType', _$failedField, e.toString());
@@ -3249,7 +3930,7 @@ class OpenApiAnyTypeBuilder
 
 class _$OpenApiDateType extends OpenApiDateType {
   @override
-  final OpenApiPrimitive primitiveType;
+  final OpenApiPrimitiveType primitiveType;
   @override
   final bool isNullable;
   @override
@@ -3257,9 +3938,13 @@ class _$OpenApiDateType extends OpenApiDateType {
   @override
   final OpenApiTypeSchema schema;
   @override
+  final BuiltList<TypeReference>? implements;
+  @override
   final String? docs;
   @override
   final bool? deprecated;
+  @override
+  final Object? defaultValue;
 
   factory _$OpenApiDateType([void Function(OpenApiDateTypeBuilder)? updates]) =>
       (new OpenApiDateTypeBuilder()..update(updates))._build();
@@ -3269,8 +3954,10 @@ class _$OpenApiDateType extends OpenApiDateType {
       required this.isNullable,
       required this.typeReference,
       required this.schema,
+      this.implements,
       this.docs,
-      this.deprecated})
+      this.deprecated,
+      this.defaultValue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         primitiveType, r'OpenApiDateType', 'primitiveType');
@@ -3297,8 +3984,10 @@ class _$OpenApiDateType extends OpenApiDateType {
         isNullable == other.isNullable &&
         typeReference == other.typeReference &&
         schema == other.schema &&
+        implements == other.implements &&
         docs == other.docs &&
-        deprecated == other.deprecated;
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue;
   }
 
   @override
@@ -3308,8 +3997,10 @@ class _$OpenApiDateType extends OpenApiDateType {
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, typeReference.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, implements.hashCode);
     _$hash = $jc(_$hash, docs.hashCode);
     _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -3321,8 +4012,10 @@ class _$OpenApiDateType extends OpenApiDateType {
           ..add('isNullable', isNullable)
           ..add('typeReference', typeReference)
           ..add('schema', schema)
+          ..add('implements', implements)
           ..add('docs', docs)
-          ..add('deprecated', deprecated))
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue))
         .toString();
   }
 }
@@ -3333,9 +4026,9 @@ class OpenApiDateTypeBuilder
         OpenApiTypeBuilder {
   _$OpenApiDateType? _$v;
 
-  OpenApiPrimitive? _primitiveType;
-  OpenApiPrimitive? get primitiveType => _$this._primitiveType;
-  set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
+  OpenApiPrimitiveType? _primitiveType;
+  OpenApiPrimitiveType? get primitiveType => _$this._primitiveType;
+  set primitiveType(covariant OpenApiPrimitiveType? primitiveType) =>
       _$this._primitiveType = primitiveType;
 
   bool? _isNullable;
@@ -3352,6 +4045,12 @@ class OpenApiDateTypeBuilder
   OpenApiTypeSchema? get schema => _$this._schema;
   set schema(covariant OpenApiTypeSchema? schema) => _$this._schema = schema;
 
+  ListBuilder<TypeReference>? _implements;
+  ListBuilder<TypeReference> get implements =>
+      _$this._implements ??= new ListBuilder<TypeReference>();
+  set implements(covariant ListBuilder<TypeReference>? implements) =>
+      _$this._implements = implements;
+
   String? _docs;
   String? get docs => _$this._docs;
   set docs(covariant String? docs) => _$this._docs = docs;
@@ -3359,6 +4058,11 @@ class OpenApiDateTypeBuilder
   bool? _deprecated;
   bool? get deprecated => _$this._deprecated;
   set deprecated(covariant bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(covariant Object? defaultValue) =>
+      _$this._defaultValue = defaultValue;
 
   OpenApiDateTypeBuilder();
 
@@ -3369,8 +4073,10 @@ class OpenApiDateTypeBuilder
       _isNullable = $v.isNullable;
       _typeReference = $v.typeReference.toBuilder();
       _schema = $v.schema;
+      _implements = $v.implements?.toBuilder();
       _docs = $v.docs;
       _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
       _$v = null;
     }
     return this;
@@ -3402,13 +4108,18 @@ class OpenApiDateTypeBuilder
               typeReference: typeReference.build(),
               schema: BuiltValueNullFieldError.checkNotNull(
                   schema, r'OpenApiDateType', 'schema'),
+              implements: _implements?.build(),
               docs: docs,
-              deprecated: deprecated);
+              deprecated: deprecated,
+              defaultValue: defaultValue);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'typeReference';
         typeReference.build();
+
+        _$failedField = 'implements';
+        _implements?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'OpenApiDateType', _$failedField, e.toString());

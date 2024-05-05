@@ -5,6 +5,7 @@ import 'package:celest_cli/openapi/model/openapi_v3.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
@@ -15,27 +16,6 @@ extension type const OpenApiContentType(String _) implements String {
   static const json = OpenApiContentType('application/json');
   static const xml = OpenApiContentType('application/xml');
 }
-
-// static ParameterLocation? from(String in$, String name) {
-//     switch (in$) {
-//       case 'query':
-//         return query;
-//       case 'header':
-//         // Ignore these according to spec:
-//         // https://spec.openapis.org/oas/v3.1.0#fixed-fields-9
-//         if (name.toLowerCase()
-//             case 'accept' || 'content-type' || 'authorization') {
-//           return null;
-//         }
-//         return header;
-//       case 'path':
-//         return path;
-//       case 'cookie':
-//         return cookie;
-//       default:
-//         throw ArgumentError('Unsupported parameter location: $name');
-//     }
-//   }
 
 final class OpenApiClientGenerator {
   OpenApiClientGenerator({
@@ -262,7 +242,7 @@ final class OpenApiClientGenerator {
         Field(
           (b) => b
             ..modifier = FieldModifier.final$
-            ..type = parameter.type
+            ..type = parameter.type.typeReference
             ..name = parameter.variableName,
           // ..docs.addAll([
           //   if (parameter.description case final description?)
@@ -275,7 +255,7 @@ final class OpenApiClientGenerator {
           (p) => p
             ..named = true
             ..toThis = true
-            ..required = !parameter.type.isNullableOrFalse
+            ..required = !parameter.type.isNullable
             ..name = parameter.variableName,
         ),
       );
@@ -311,8 +291,8 @@ final class OpenApiClientGenerator {
                 Parameter(
                   (p) => p
                     ..named = true
-                    ..type = parameter.type
-                    ..required = !parameter.type.isNullableOrFalse
+                    ..type = parameter.type.typeReference
+                    ..required = !parameter.type.isNullable
                     ..name = parameter.variableName,
                 ),
               );
@@ -347,9 +327,9 @@ final class OpenApiClientGenerator {
       ])
       ..modifier = MethodModifier.async
       ..docs.addAll([
-        if (operation.summary case final summary?) formatDocs(summary),
-        if (operation.description case final description?)
-          formatDocs(description),
+        if (docsFromParts(operation.summary, operation.description)
+            case final docs?)
+          docs,
         // if (operation.hasExternalDocs() && operation.externalDocs.hasUrl())
         //   '/// ${operation.externalDocs.hasDescription() ? operation.externalDocs.description : 'See'}: '
         //       '${operation.externalDocs.url}',
@@ -359,8 +339,8 @@ final class OpenApiClientGenerator {
           Parameter(
             (p) => p
               ..named = true
-              ..type = parameter.type
-              ..required = !parameter.type.isNullableOrFalse
+              ..type = parameter.type.typeReference
+              ..required = !parameter.type.isNullable
               ..name = parameter.variableName,
           ),
         for (final parameter
@@ -368,8 +348,8 @@ final class OpenApiClientGenerator {
           Parameter(
             (p) => p
               ..named = true
-              ..type = parameter.type
-              ..required = !parameter.type.isNullableOrFalse
+              ..type = parameter.type.typeReference
+              ..required = !parameter.type.isNullable
               ..name = parameter.variableName,
           ),
       ]);
@@ -388,19 +368,30 @@ final class OpenApiClientGenerator {
         final queryMap = refer(r'$queryParameters');
         body.addExpression(
           declareFinal(r'$queryParameters').assign(
-            literalMap({}, DartTypes.core.string, DartTypes.core.string),
+            literalMap({}, DartTypes.core.string, DartTypes.core.object),
           ),
         );
         for (final queryParameter in operation.queryParameters) {
-          final addParam = queryMap
-              .index(literalString(queryParameter.rawName))
-              .assign(queryParameter.stringifiedValue);
-          body.statements.add(
-            addParam.wrapWithBlockIf(
-              refer(queryParameter.variableName).notEqualTo(literalNull),
-              queryParameter.type.isNullableOrFalse,
-            ),
-          );
+          final defaultValue = queryParameter.type.defaultValue;
+          if (defaultValue == null) {
+            final addParam = queryMap
+                .index(literalString(queryParameter.rawName))
+                .assign(queryParameter.assignmentExpression(false));
+            body.statements.add(
+              addParam.wrapWithBlockIf(
+                refer(queryParameter.variableName).notEqualTo(literalNull),
+                queryParameter.type.isNullable,
+              ),
+            );
+          } else {
+            final addParam =
+                queryMap.index(literalString(queryParameter.rawName)).assign(
+                      queryParameter
+                          .assignmentExpression(true)
+                          .ifNullThen(literal(defaultValue)),
+                    );
+            body.addExpression(addParam);
+          }
         }
         resolvedUri = resolvedUri.property('replace').call(
           [],
@@ -427,16 +418,29 @@ final class OpenApiClientGenerator {
             .assign(literalString('application/json')),
       );
       for (final header in operation.headers) {
-        final addHeader = request
-            .property('headers')
-            .index(literalString(header.rawName))
-            .assign(header.stringifiedValue);
-        body.statements.add(
-          addHeader.wrapWithBlockIf(
-            refer(header.variableName).notEqualTo(literalNull),
-            header.type.isNullableOrFalse,
-          ),
-        );
+        final defaultValue = header.type.defaultValue;
+        if (defaultValue == null) {
+          final addHeader = request
+              .property('headers')
+              .index(literalString(header.rawName))
+              .assign(header.assignmentExpression(false));
+          body.statements.add(
+            addHeader.wrapWithBlockIf(
+              refer(header.variableName).notEqualTo(literalNull),
+              header.type.isNullable,
+            ),
+          );
+        } else {
+          final addHeader = request
+              .property('headers')
+              .index(literalString(header.rawName))
+              .assign(
+                header
+                    .assignmentExpression(true)
+                    .ifNullThen(literal(defaultValue)),
+              );
+          body.addExpression(addHeader);
+        }
       }
     }
 
@@ -649,10 +653,23 @@ typedef MappedUri = ({
 });
 
 extension on HeaderOrQueryParameter {
-  Expression get stringifiedValue => switch (type) {
-        Reference(symbol: 'String', url: null || 'dart:core') =>
-          refer(variableName),
-        _ => refer(variableName).property('toString').call([]),
+  Expression assignmentExpression(bool isNullable) => switch (type) {
+        OpenApiSingleValueType(:final value) => switch (value) {
+            final String value => literalString(value, raw: true),
+            final List<Object?> values => literalList(values.cast<String>()),
+            _ => literal(value).nullableProperty('toList', isNullable).call([]),
+          },
+        OpenApiDateType(:final primitiveType) => switch (primitiveType) {
+            OpenApiIntegerType() => refer(variableName)
+                .nullableProperty('millisecondsSinceEpoch', isNullable)
+                .property('toString')
+                .call([]),
+            OpenApiStringType() => refer(variableName),
+            _ => unreachable('Unexpected date type: $primitiveType'),
+          },
+        OpenApiStringType() || OpenApiListType() => refer(variableName),
+        _ =>
+          refer(variableName).nullableProperty('toString', isNullable).call([]),
       };
 }
 

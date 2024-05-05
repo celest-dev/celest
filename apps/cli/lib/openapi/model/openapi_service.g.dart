@@ -1099,7 +1099,7 @@ class _$ServicePathParameter extends ServicePathParameter {
   @override
   final String variableName;
   @override
-  final TypeReference type;
+  final OpenApiType type;
   @override
   final bool inherited;
 
@@ -1164,9 +1164,9 @@ class ServicePathParameterBuilder
   String? get variableName => _$this._variableName;
   set variableName(String? variableName) => _$this._variableName = variableName;
 
-  TypeReferenceBuilder? _type;
-  TypeReferenceBuilder get type => _$this._type ??= new TypeReferenceBuilder();
-  set type(TypeReferenceBuilder? type) => _$this._type = type;
+  OpenApiType? _type;
+  OpenApiType? get type => _$this._type;
+  set type(OpenApiType? type) => _$this._type = type;
 
   bool? _inherited;
   bool? get inherited => _$this._inherited;
@@ -1178,7 +1178,7 @@ class ServicePathParameterBuilder
     final $v = _$v;
     if ($v != null) {
       _variableName = $v.variableName;
-      _type = $v.type.toBuilder();
+      _type = $v.type;
       _inherited = $v.inherited;
       _$v = null;
     }
@@ -1200,26 +1200,14 @@ class ServicePathParameterBuilder
   ServicePathParameter build() => _build();
 
   _$ServicePathParameter _build() {
-    _$ServicePathParameter _$result;
-    try {
-      _$result = _$v ??
-          new _$ServicePathParameter._(
-              variableName: BuiltValueNullFieldError.checkNotNull(
-                  variableName, r'ServicePathParameter', 'variableName'),
-              type: type.build(),
-              inherited: BuiltValueNullFieldError.checkNotNull(
-                  inherited, r'ServicePathParameter', 'inherited'));
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'type';
-        type.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'ServicePathParameter', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$ServicePathParameter._(
+            variableName: BuiltValueNullFieldError.checkNotNull(
+                variableName, r'ServicePathParameter', 'variableName'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ServicePathParameter', 'type'),
+            inherited: BuiltValueNullFieldError.checkNotNull(
+                inherited, r'ServicePathParameter', 'inherited'));
     replace(_$result);
     return _$result;
   }
@@ -1618,7 +1606,7 @@ class _$HeaderOrQueryParameter extends HeaderOrQueryParameter {
   @override
   final String variableName;
   @override
-  final TypeReference type;
+  final OpenApiType type;
 
   factory _$HeaderOrQueryParameter(
           [void Function(HeaderOrQueryParameterBuilder)? updates]) =>
@@ -1685,9 +1673,9 @@ class HeaderOrQueryParameterBuilder
   String? get variableName => _$this._variableName;
   set variableName(String? variableName) => _$this._variableName = variableName;
 
-  TypeReferenceBuilder? _type;
-  TypeReferenceBuilder get type => _$this._type ??= new TypeReferenceBuilder();
-  set type(TypeReferenceBuilder? type) => _$this._type = type;
+  OpenApiType? _type;
+  OpenApiType? get type => _$this._type;
+  set type(OpenApiType? type) => _$this._type = type;
 
   HeaderOrQueryParameterBuilder();
 
@@ -1696,7 +1684,7 @@ class HeaderOrQueryParameterBuilder
     if ($v != null) {
       _rawName = $v.rawName;
       _variableName = $v.variableName;
-      _type = $v.type.toBuilder();
+      _type = $v.type;
       _$v = null;
     }
     return this;
@@ -1717,26 +1705,14 @@ class HeaderOrQueryParameterBuilder
   HeaderOrQueryParameter build() => _build();
 
   _$HeaderOrQueryParameter _build() {
-    _$HeaderOrQueryParameter _$result;
-    try {
-      _$result = _$v ??
-          new _$HeaderOrQueryParameter._(
-              rawName: BuiltValueNullFieldError.checkNotNull(
-                  rawName, r'HeaderOrQueryParameter', 'rawName'),
-              variableName: BuiltValueNullFieldError.checkNotNull(
-                  variableName, r'HeaderOrQueryParameter', 'variableName'),
-              type: type.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'type';
-        type.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'HeaderOrQueryParameter', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$HeaderOrQueryParameter._(
+            rawName: BuiltValueNullFieldError.checkNotNull(
+                rawName, r'HeaderOrQueryParameter', 'rawName'),
+            variableName: BuiltValueNullFieldError.checkNotNull(
+                variableName, r'HeaderOrQueryParameter', 'variableName'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'HeaderOrQueryParameter', 'type'));
     replace(_$result);
     return _$result;
   }

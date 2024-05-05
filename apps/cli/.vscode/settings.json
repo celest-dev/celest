@@ -2,5 +2,8 @@
   // -- Dart --
   "dart.vmAdditionalArgs": ["--enable-experiment=native-assets"],
   "dart.cliAdditionalArgs": ["--enable-experiment=native-assets"],
-  "dart.buildRunnerAdditionalArgs": ["--enable-experiment=native-assets"]
+  "dart.buildRunnerAdditionalArgs": ["--enable-experiment=native-assets"],
+  "dart.analysisExcludedFolders": [
+    "test/openapi/goldens",
+  ]
 }

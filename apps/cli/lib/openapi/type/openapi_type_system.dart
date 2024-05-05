@@ -367,10 +367,10 @@ final class OpenApiTypeSystem {
           T1_discriminator != T2_discriminator) {
         throw StateError('Cannot resolve two structs with discriminators');
       }
-      final discriminator = T1_discriminator ?? T2_discriminator;
+      // final discriminator = T1_discriminator ?? T2_discriminator;
       final schema = OpenApiStructTypeSchema(
         fields: mergedFields,
-        discriminator: discriminator,
+        // discriminator: discriminator,
         isNullable: false,
       );
       return schema.accept(resolver);
@@ -597,8 +597,8 @@ final class OpenApiTypeSystem {
       });
       final schema = OpenApiStructTypeSchema(
         fields: mergedFields,
-        discriminator:
-            T1.discriminator == T2.discriminator ? T1.discriminator : null,
+        // discriminator:
+        //     T1.discriminator == T2.discriminator ? T1.discriminator : null,
         isNullable: false,
       );
       return schema.accept(resolver);

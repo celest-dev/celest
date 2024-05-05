@@ -88,33 +88,6 @@ abstract class OpenApiDocument
   OpenApiComponents get components;
 }
 
-// abstract class OpenApiReference
-//     implements Built<OpenApiReference, OpenApiReferenceBuilder>, OpenApiRef {
-//   factory OpenApiReference({
-//     required String ref,
-//     String? summary,
-//     String? description,
-//   }) {
-//     return _$OpenApiReference._(
-//       ref: ref,
-//       summary: summary,
-//       description: description,
-//     );
-//   }
-
-//   factory OpenApiReference.build(
-//     void Function(OpenApiReferenceBuilder) updates,
-//   ) = _$OpenApiReference;
-
-//   OpenApiReference._();
-
-//   @override
-//   String get ref;
-
-//   String? get summary;
-//   String? get description;
-// }
-
 abstract class OpenApiInfo implements Built<OpenApiInfo, OpenApiInfoBuilder> {
   factory OpenApiInfo({
     String? title,

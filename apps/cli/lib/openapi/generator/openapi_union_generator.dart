@@ -1,7 +1,7 @@
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:logging/logging.dart';
 
@@ -26,47 +26,126 @@ final class OpenApiUnionGenerator {
       c
         ..name = name
         ..sealed = true
-        ..constructors.add(
+        ..constructors.addAll([
           Constructor((c) => c..constant = true),
-        );
-      if (type.discriminator case final discriminator?) {
-        c.methods.add(
+          Constructor(
+            (c) => c
+              ..factory = true
+              ..name = 'fromJson'
+              ..requiredParameters.add(
+                Parameter(
+                  (p) => p
+                    ..name = 'json'
+                    ..type = DartTypes.core.map(
+                      DartTypes.core.string,
+                      DartTypes.core.object.nullable,
+                    ),
+                ),
+              )
+              ..body = Block((b) {
+                switch (type.discriminator) {
+                  case FieldDiscriminator(:final wireName):
+                    b.addExpression(
+                      declareFinal('type').assign(
+                        refer('json')
+                            .index(literalString(wireName))
+                            .asA(DartTypes.core.string),
+                      ),
+                    );
+                    b.addExpression(
+                      declareFinal('factory')
+                          .assign(refer(r'$mapping').index(refer('type'))),
+                    );
+                    b.statements.add(
+                      DartTypes.core.argumentError
+                          .newInstance([
+                            CodeExpression(
+                              Code('\'Unknown type of $name: "\$type"\''),
+                            ),
+                          ])
+                          .thrown
+                          .wrapWithBlockIf(
+                            refer('factory').equalTo(literalNull),
+                          ),
+                    );
+                    b.addExpression(
+                      refer('factory').call([refer('json')]).returned,
+                    );
+                  case TypeDiscriminator(:final mapping):
+                    // b.statements.add(
+                    //   refer('json')
+                    //       .property(type.discriminator.propertyName.camelCase)
+                    //       .switch_(
+                    //     type.branches.map((branch) {
+                    //       final branchType = branch.type.typeReference;
+                    //       return Code(
+                    //         'case ${literal(branch.name)}: return ${branchType.symbol}.fromJson(json);',
+                    //       );
+                    //     }),
+                    //     defaultCase: const Code(
+                    //       'throw UnsupportedError(\'Unknown discriminator\');',
+                    //     ),
+                    //   ),
+                    // );
+                    b.addExpression(DartTypes.core.unimplementedError.thrown);
+                }
+              }),
+          ),
+        ])
+        ..methods.addAll([
+          if (type.discriminator case FieldDiscriminator(:final dartName))
+            Method(
+              (m) => m
+                ..type = MethodType.getter
+                ..returns = DartTypes.core.string
+                ..name = dartName,
+            ),
           Method(
             (m) => m
-              ..type = MethodType.getter
-              ..returns = DartTypes.core.string
-              ..name = discriminator.propertyName.camelCase,
+              ..name = 'toJson'
+              ..returns = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.object.nullable,
+              ),
           ),
+        ]);
+      if (type.discriminator case FieldDiscriminator(:final mapping)) {
+        final mappingField = Field(
+          (f) => f
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..name = r'$mapping'
+            ..type = DartTypes.core.map(
+              DartTypes.core.string,
+              FunctionType(
+                (f) => f
+                  ..returnType = refer(name)
+                  ..requiredParameters.add(
+                    DartTypes.core.map(
+                      DartTypes.core.string,
+                      DartTypes.core.object.nullable,
+                    ),
+                  ),
+              ),
+            )
+            ..assignment = literalConstMap(
+              mapping
+                  .map(
+                    (value, subtype) => MapEntry(
+                      literalString(value),
+                      subtype.typeReference.nonNullable.property('fromJson'),
+                    ),
+                  )
+                  .toMap(),
+            ).code,
         );
-      }
-      for (final branch in type.branches) {
-        if (branch.type.typeReference.url == 'dart:core') {
-          continue;
-        }
-        // context.after(() {
-        //   context.updateDefinition(
-        //     branch.type.typeReference.symbol,
-        //     updateClass: (class_) {
-        //       class_.implements.add(refer(name));
-        //       c.constructors.add(
-        //         Constructor(
-        //           (c) => c
-        //             ..factory = true
-        //             ..name = branch.name.camelCase
-        //             ..requiredParameters.add(
-        //               Parameter(
-        //                 (p) => p
-        //                   ..type = branch.type.typeReference
-        //                   ..name = branch.name.camelCase,
-        //               ),
-        //             )
-        //             ..lambda = true
-        //             ..body = refer(branch.name.camelCase).code,
-        //         ),
-        //       );
-        //     },
-        //   );
-        // });
+        c.fields.add(mappingField);
+        mapping.forEach((_, subtype) {
+          context.implement(
+            subtype.schema.name ?? subtype.typeReference.symbol,
+            refer(name),
+          );
+        });
       }
     });
     return baseClass;

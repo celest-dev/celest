@@ -19,6 +19,7 @@ import 'fixtures.dart';
 
 void main() {
   final cliDir = Directory.current;
+  final fixturesRoot = cliDir.uri.resolve('test/openapi/fixtures/');
   final baseOutputRoot = cliDir.uri.resolve('test/openapi/goldens/');
 
   group('stripe', skip: false, () {
@@ -27,6 +28,47 @@ void main() {
       ..createSync(recursive: true);
 
     final document = generateOpenApiV3(jsonEncode(stripeSpecV3SdkJson));
+    final typeSystem = OpenApiTypeSystem();
+
+    test('can resolve', () {
+      final resolver = OpenApiSchemaTransformer(
+        document: document,
+        typeSystem: typeSystem,
+      );
+      check(resolver.resolve).returnsNormally();
+    });
+
+    test('can generate', () {
+      final outputs = OpenApiGenerator.fromProto(document).generate();
+      outputs.forEach((key, value) {
+        print('emitting "$key"');
+
+        final outputFile = File.fromUri(outputDir.uri.resolve(key));
+        final code = CodeGenerator.emit(
+          value,
+          forFile: 'client.dart',
+          pathStrategy: PathStrategy.robust,
+        );
+
+        print('writing ${outputFile.path}');
+        outputFile
+          ..createSync(recursive: true)
+          ..writeAsStringSync(code);
+      });
+    });
+  });
+
+  group('discord', skip: true, () {
+    final outputRoot = baseOutputRoot.resolve('discord/');
+    final outputDir = fileSystem.directory(outputRoot)
+      ..createSync(recursive: true);
+
+    final document = generateOpenApiV3(
+      fileSystem
+          .directory(fixturesRoot)
+          .childFile('discord.json')
+          .readAsStringSync(),
+    );
     final typeSystem = OpenApiTypeSystem();
 
     test('can resolve', () {

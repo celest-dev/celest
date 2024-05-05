@@ -6,6 +6,46 @@ part of 'openapi_type_schema.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const OpenApiPrimitive _$any = const OpenApiPrimitive._('any');
+const OpenApiPrimitive _$object = const OpenApiPrimitive._('object');
+const OpenApiPrimitive _$string = const OpenApiPrimitive._('string');
+const OpenApiPrimitive _$number = const OpenApiPrimitive._('number');
+const OpenApiPrimitive _$integer = const OpenApiPrimitive._('integer');
+const OpenApiPrimitive _$boolean = const OpenApiPrimitive._('boolean');
+const OpenApiPrimitive _$null$ = const OpenApiPrimitive._('null\$');
+
+OpenApiPrimitive _$valueOf(String name) {
+  switch (name) {
+    case 'any':
+      return _$any;
+    case 'object':
+      return _$object;
+    case 'string':
+      return _$string;
+    case 'number':
+      return _$number;
+    case 'integer':
+      return _$integer;
+    case 'boolean':
+      return _$boolean;
+    case 'null\$':
+      return _$null$;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<OpenApiPrimitive> _$values =
+    new BuiltSet<OpenApiPrimitive>(const <OpenApiPrimitive>[
+  _$any,
+  _$object,
+  _$string,
+  _$number,
+  _$integer,
+  _$boolean,
+  _$null$,
+]);
+
 class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
   @override
   final String name;
@@ -30,9 +70,9 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
   @override
   final BuiltMap<String, JsonObject> extensions;
   @override
-  final bool? isNullable;
-  @override
   final OpenApiPrimitive? primitiveType;
+  @override
+  final bool? isNullable;
 
   factory _$OpenApiTypeSchemaReference(
           [void Function(OpenApiTypeSchemaReferenceBuilder)? updates]) =>
@@ -50,8 +90,8 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
       required this.writeOnly,
       required this.required,
       required this.extensions,
-      this.isNullable,
-      this.primitiveType})
+      this.primitiveType,
+      this.isNullable})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         name, r'OpenApiTypeSchemaReference', 'name');
@@ -93,8 +133,8 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
         writeOnly == other.writeOnly &&
         required == other.required &&
         extensions == other.extensions &&
-        isNullable == other.isNullable &&
-        primitiveType == other.primitiveType;
+        primitiveType == other.primitiveType &&
+        isNullable == other.isNullable;
   }
 
   @override
@@ -111,8 +151,8 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, extensions.hashCode);
-    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
+    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -131,8 +171,8 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
           ..add('writeOnly', writeOnly)
           ..add('required', required)
           ..add('extensions', extensions)
-          ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType))
+          ..add('primitiveType', primitiveType)
+          ..add('isNullable', isNullable))
         .toString();
   }
 }
@@ -196,14 +236,14 @@ class OpenApiTypeSchemaReferenceBuilder
   set extensions(covariant MapBuilder<String, JsonObject>? extensions) =>
       _$this._extensions = extensions;
 
-  bool? _isNullable;
-  bool? get isNullable => _$this._isNullable;
-  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
-
   OpenApiPrimitive? _primitiveType;
   OpenApiPrimitive? get primitiveType => _$this._primitiveType;
   set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
       _$this._primitiveType = primitiveType;
+
+  bool? _isNullable;
+  bool? get isNullable => _$this._isNullable;
+  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
   OpenApiTypeSchemaReferenceBuilder();
 
@@ -221,8 +261,8 @@ class OpenApiTypeSchemaReferenceBuilder
       _writeOnly = $v.writeOnly;
       _required = $v.required.toBuilder();
       _extensions = $v.extensions.toBuilder();
-      _isNullable = $v.isNullable;
       _primitiveType = $v.primitiveType;
+      _isNullable = $v.isNullable;
       _$v = null;
     }
     return this;
@@ -264,8 +304,8 @@ class OpenApiTypeSchemaReferenceBuilder
                   writeOnly, r'OpenApiTypeSchemaReference', 'writeOnly'),
               required: required.build(),
               extensions: extensions.build(),
-              isNullable: isNullable,
-              primitiveType: primitiveType);
+              primitiveType: primitiveType,
+              isNullable: isNullable);
     } catch (_) {
       late String _$failedField;
       try {
@@ -3455,9 +3495,9 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
   @override
   final BuiltMap<String, JsonObject> extensions;
   @override
-  final bool? isNullable;
-  @override
   final OpenApiPrimitive? primitiveType;
+  @override
+  final bool? isNullable;
 
   factory _$OpenApiSumTypeSchema(
           [void Function(OpenApiSumTypeSchemaBuilder)? updates]) =>
@@ -3476,8 +3516,8 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
       required this.writeOnly,
       required this.required,
       required this.extensions,
-      this.isNullable,
-      this.primitiveType})
+      this.primitiveType,
+      this.isNullable})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         types, r'OpenApiSumTypeSchema', 'types');
@@ -3518,8 +3558,8 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
         writeOnly == other.writeOnly &&
         required == other.required &&
         extensions == other.extensions &&
-        isNullable == other.isNullable &&
-        primitiveType == other.primitiveType;
+        primitiveType == other.primitiveType &&
+        isNullable == other.isNullable;
   }
 
   @override
@@ -3537,8 +3577,8 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, extensions.hashCode);
-    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
+    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -3558,8 +3598,8 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
           ..add('writeOnly', writeOnly)
           ..add('required', required)
           ..add('extensions', extensions)
-          ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType))
+          ..add('primitiveType', primitiveType)
+          ..add('isNullable', isNullable))
         .toString();
   }
 }
@@ -3629,14 +3669,14 @@ class OpenApiSumTypeSchemaBuilder
   set extensions(covariant MapBuilder<String, JsonObject>? extensions) =>
       _$this._extensions = extensions;
 
-  bool? _isNullable;
-  bool? get isNullable => _$this._isNullable;
-  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
-
   OpenApiPrimitive? _primitiveType;
   OpenApiPrimitive? get primitiveType => _$this._primitiveType;
   set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
       _$this._primitiveType = primitiveType;
+
+  bool? _isNullable;
+  bool? get isNullable => _$this._isNullable;
+  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
   OpenApiSumTypeSchemaBuilder();
 
@@ -3655,8 +3695,8 @@ class OpenApiSumTypeSchemaBuilder
       _writeOnly = $v.writeOnly;
       _required = $v.required.toBuilder();
       _extensions = $v.extensions.toBuilder();
-      _isNullable = $v.isNullable;
       _primitiveType = $v.primitiveType;
+      _isNullable = $v.isNullable;
       _$v = null;
     }
     return this;
@@ -3696,8 +3736,8 @@ class OpenApiSumTypeSchemaBuilder
                   writeOnly, r'OpenApiSumTypeSchema', 'writeOnly'),
               required: required.build(),
               extensions: extensions.build(),
-              isNullable: isNullable,
-              primitiveType: primitiveType);
+              primitiveType: primitiveType,
+              isNullable: isNullable);
     } catch (_) {
       late String _$failedField;
       try {
@@ -3747,9 +3787,9 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
   @override
   final BuiltMap<String, JsonObject> extensions;
   @override
-  final bool? isNullable;
-  @override
   final OpenApiPrimitive? primitiveType;
+  @override
+  final bool? isNullable;
 
   factory _$OpenApiDisjointUnionTypeSchema(
           [void Function(OpenApiDisjointUnionTypeSchemaBuilder)? updates]) =>
@@ -3768,8 +3808,8 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
       required this.writeOnly,
       required this.required,
       required this.extensions,
-      this.isNullable,
-      this.primitiveType})
+      this.primitiveType,
+      this.isNullable})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         types, r'OpenApiDisjointUnionTypeSchema', 'types');
@@ -3810,8 +3850,8 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
         writeOnly == other.writeOnly &&
         required == other.required &&
         extensions == other.extensions &&
-        isNullable == other.isNullable &&
-        primitiveType == other.primitiveType;
+        primitiveType == other.primitiveType &&
+        isNullable == other.isNullable;
   }
 
   @override
@@ -3829,8 +3869,8 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, extensions.hashCode);
-    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
+    _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -3850,8 +3890,8 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
           ..add('writeOnly', writeOnly)
           ..add('required', required)
           ..add('extensions', extensions)
-          ..add('isNullable', isNullable)
-          ..add('primitiveType', primitiveType))
+          ..add('primitiveType', primitiveType)
+          ..add('isNullable', isNullable))
         .toString();
   }
 }
@@ -3922,14 +3962,14 @@ class OpenApiDisjointUnionTypeSchemaBuilder
   set extensions(covariant MapBuilder<String, JsonObject>? extensions) =>
       _$this._extensions = extensions;
 
-  bool? _isNullable;
-  bool? get isNullable => _$this._isNullable;
-  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
-
   OpenApiPrimitive? _primitiveType;
   OpenApiPrimitive? get primitiveType => _$this._primitiveType;
   set primitiveType(covariant OpenApiPrimitive? primitiveType) =>
       _$this._primitiveType = primitiveType;
+
+  bool? _isNullable;
+  bool? get isNullable => _$this._isNullable;
+  set isNullable(covariant bool? isNullable) => _$this._isNullable = isNullable;
 
   OpenApiDisjointUnionTypeSchemaBuilder();
 
@@ -3948,8 +3988,8 @@ class OpenApiDisjointUnionTypeSchemaBuilder
       _writeOnly = $v.writeOnly;
       _required = $v.required.toBuilder();
       _extensions = $v.extensions.toBuilder();
-      _isNullable = $v.isNullable;
       _primitiveType = $v.primitiveType;
+      _isNullable = $v.isNullable;
       _$v = null;
     }
     return this;
@@ -3989,8 +4029,8 @@ class OpenApiDisjointUnionTypeSchemaBuilder
                   writeOnly, r'OpenApiDisjointUnionTypeSchema', 'writeOnly'),
               required: required.build(),
               extensions: extensions.build(),
-              isNullable: isNullable,
-              primitiveType: primitiveType);
+              primitiveType: primitiveType,
+              isNullable: isNullable);
     } catch (_) {
       late String _$failedField;
       try {

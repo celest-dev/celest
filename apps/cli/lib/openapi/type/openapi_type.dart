@@ -1,6 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:celest_cli/openapi/model/openapi_v3.dart';
 import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
 import 'package:celest_cli/openapi/type/openapi_type_visitor.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -9,21 +8,6 @@ import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 
 part 'openapi_type.g.dart';
-
-class OpenApiPrimitive extends EnumClass {
-  const OpenApiPrimitive._(super.name);
-
-  static const OpenApiPrimitive any = _$any;
-  static const OpenApiPrimitive object = _$object;
-  static const OpenApiPrimitive string = _$string;
-  static const OpenApiPrimitive number = _$number;
-  static const OpenApiPrimitive integer = _$integer;
-  static const OpenApiPrimitive boolean = _$boolean;
-  static const OpenApiPrimitive null$ = _$null$;
-
-  static BuiltSet<OpenApiPrimitive> get values => _$values;
-  static OpenApiPrimitive valueOf(String name) => _$valueOf(name);
-}
 
 final OpenApiAnyType _anyType = OpenApiAnyType(
   schema: OpenApiAnyTypeSchema(isNullable: false),
@@ -48,27 +32,80 @@ abstract mixin class OpenApiTypeBuilder {
   set deprecated(bool? deprecated);
 }
 
-abstract class OpenApiTypeOrSchema {}
-
 @immutable
 @BuiltValue(instantiable: false)
-sealed class OpenApiType implements OpenApiTypeOrSchema {
+sealed class OpenApiType {
   /// Whether the type is nullable in the schema.
   bool get isNullable;
 
-  OpenApiPrimitive? get primitiveType;
+  OpenApiType? get primitiveType;
 
   TypeReference get typeReference;
   OpenApiTypeSchema get schema;
+  BuiltList<TypeReference>? get implements;
 
   String? get docs;
   bool? get deprecated;
+  Object? get defaultValue;
 
   OpenApiType withNullability(bool isNullable);
 
   R accept<R>(OpenApiTypeVisitor<R> visitor);
   OpenApiTypeBuilder toBuilder();
   OpenApiType rebuild(void Function(OpenApiTypeBuilder b) updates);
+}
+
+@immutable
+@BuiltValue(instantiable: false)
+sealed class Discriminator {}
+
+abstract class FieldDiscriminator
+    implements
+        Built<FieldDiscriminator, FieldDiscriminatorBuilder>,
+        Discriminator {
+  factory FieldDiscriminator({
+    required String wireName,
+    required String dartName,
+    required Map<String, OpenApiType> mapping,
+  }) {
+    return _$FieldDiscriminator._(
+      wireName: wireName,
+      dartName: dartName,
+      mapping: mapping.build(),
+    );
+  }
+
+  factory FieldDiscriminator.build([
+    void Function(FieldDiscriminatorBuilder b) updates,
+  ]) = _$FieldDiscriminator;
+
+  FieldDiscriminator._();
+
+  String get wireName;
+  String get dartName;
+  BuiltMap<String, OpenApiType> get mapping;
+}
+
+abstract class TypeDiscriminator
+    implements
+        Built<TypeDiscriminator, TypeDiscriminatorBuilder>,
+        Discriminator {
+  factory TypeDiscriminator({
+    required Map<Expression, OpenApiType> mapping,
+  }) {
+    return _$TypeDiscriminator._(
+      mapping: mapping.build(),
+    );
+  }
+
+  factory TypeDiscriminator.build([
+    void Function(TypeDiscriminatorBuilder b) updates,
+  ]) = _$TypeDiscriminator;
+
+  TypeDiscriminator._();
+
+  // TODO: Jsonpath
+  BuiltMap<Expression, OpenApiType> get mapping;
 }
 
 abstract class OpenApiTypeReference
@@ -79,10 +116,13 @@ abstract class OpenApiTypeReference
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    OpenApiType? primitiveType,
+    Object? defaultValue,
   }) {
     return _$OpenApiTypeReference._(
       typeReference: typeReference,
       schema: schema,
+      primitiveType: primitiveType,
       isNullable: isNullable,
     );
   }
@@ -94,13 +134,11 @@ abstract class OpenApiTypeReference
   OpenApiTypeReference._();
 
   @override
-  OpenApiPrimitive? get primitiveType => null;
-
-  @override
   OpenApiTypeReference withNullability(bool isNullable) {
     return _$OpenApiTypeReference._(
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
+      primitiveType: primitiveType,
       isNullable: isNullable,
     );
   }
@@ -120,7 +158,7 @@ sealed class OpenApiPrimitiveType implements OpenApiType {
   bool get isNullable;
 
   @override
-  OpenApiPrimitive get primitiveType;
+  OpenApiPrimitiveType get primitiveType;
 
   @override
   OpenApiPrimitiveType withNullability(bool isNullable);
@@ -156,6 +194,9 @@ extension OpenApiInterfaceTypeHelpers on OpenApiInterfaceType {
 sealed class OpenApiIterableInterface implements OpenApiInterfaceType {
   /// The items schema for this array.
   OpenApiType get itemType;
+
+  @override
+  OpenApiType get primitiveType;
 }
 
 abstract class OpenApiIterableType
@@ -168,12 +209,14 @@ abstract class OpenApiIterableType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiIterableType._(
       itemType: itemType,
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -182,6 +225,16 @@ abstract class OpenApiIterableType
   ]) = _$OpenApiIterableType;
 
   OpenApiIterableType._();
+
+  @override
+  OpenApiType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core
+              .iterable(itemType.typeReference)
+              .withNullability(isNullable)
+              .toTypeReference,
+        ),
+      );
 
   @override
   OpenApiInterfaceType? get superType => null;
@@ -193,6 +246,7 @@ abstract class OpenApiIterableType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -210,12 +264,14 @@ abstract class OpenApiListType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiListType._(
       itemType: itemType,
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -229,12 +285,23 @@ abstract class OpenApiListType
   OpenApiInterfaceType? get superType => null;
 
   @override
+  OpenApiType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core
+              .list(itemType.typeReference)
+              .withNullability(isNullable)
+              .toTypeReference,
+        ),
+      );
+
+  @override
   OpenApiListType withNullability(bool isNullable) {
     return _$OpenApiListType._(
       itemType: itemType,
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -253,12 +320,14 @@ abstract class OpenApiSetType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiSetType._(
       itemType: itemType,
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -272,12 +341,23 @@ abstract class OpenApiSetType
   OpenApiInterfaceType? get superType => null;
 
   @override
+  OpenApiType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core
+              .set(itemType.typeReference)
+              .withNullability(isNullable)
+              .toTypeReference,
+        ),
+      );
+
+  @override
   OpenApiSetType withNullability(bool isNullable) {
     return _$OpenApiSetType._(
       itemType: itemType,
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -295,11 +375,13 @@ abstract class OpenApiBooleanType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiBooleanType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -310,7 +392,11 @@ abstract class OpenApiBooleanType
   OpenApiBooleanType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.boolean;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.bool.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiInterfaceType get superType => _anyType;
@@ -321,6 +407,7 @@ abstract class OpenApiBooleanType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -339,11 +426,13 @@ abstract class OpenApiNumberType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiNumberType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -354,7 +443,11 @@ abstract class OpenApiNumberType
   OpenApiNumberType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.number;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiNumberType withNullability(bool isNullable) {
@@ -362,6 +455,7 @@ abstract class OpenApiNumberType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -389,11 +483,13 @@ abstract class OpenApiIntegerType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiIntegerType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -404,7 +500,11 @@ abstract class OpenApiIntegerType
   OpenApiIntegerType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.integer;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiIntegerType withNullability(bool isNullable) {
@@ -412,6 +512,7 @@ abstract class OpenApiIntegerType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -439,11 +540,13 @@ abstract class OpenApiDoubleType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiDoubleType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -454,7 +557,11 @@ abstract class OpenApiDoubleType
   OpenApiDoubleType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.number;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiDoubleType withNullability(bool isNullable) {
@@ -462,6 +569,7 @@ abstract class OpenApiDoubleType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -560,11 +668,13 @@ abstract class OpenApiStringType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiStringType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -575,7 +685,11 @@ abstract class OpenApiStringType
   OpenApiStringType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.string;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.string.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiInterfaceType get superType => _anyType;
@@ -586,6 +700,7 @@ abstract class OpenApiStringType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -619,7 +734,7 @@ abstract class OpenApiEmptyType
   );
 
   @override
-  OpenApiPrimitive? get primitiveType => null;
+  OpenApiPrimitiveType? get primitiveType => null;
 
   @override
   OpenApiEmptyType withNullability(bool isNullable) {
@@ -641,12 +756,14 @@ abstract class OpenApiRecordType
     required OpenApiTypeSchema schema,
     required OpenApiType valueType,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiRecordType._(
       typeReference: typeReference,
       schema: schema,
       valueType: valueType,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -663,7 +780,14 @@ abstract class OpenApiRecordType
   OpenApiInterfaceType get superType => _anyType;
 
   @override
-  OpenApiPrimitive? get primitiveType => null;
+  OpenApiType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core
+              .map(DartTypes.core.string, valueType.typeReference)
+              .withNullability(isNullable)
+              .toTypeReference,
+        ),
+      );
 
   @override
   OpenApiRecordType withNullability(bool isNullable) {
@@ -672,6 +796,7 @@ abstract class OpenApiRecordType
       schema: schema,
       valueType: valueType,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -685,6 +810,7 @@ abstract class OpenApiField
     required String name,
     required String dartName,
     required OpenApiType type,
+    Object? defaultValue,
   }) {
     return _$OpenApiField._(
       name: name,
@@ -716,19 +842,23 @@ abstract class OpenApiStructType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required Map<String, OpenApiField> fields,
+    required Iterable<TypeReference> implements,
     OpenApiInterfaceType? superType,
-    OpenApiDiscriminator? discriminator,
+    Discriminator? discriminator,
     required bool isNullable,
     String? docs,
+    Object? defaultValue,
   }) {
     return _$OpenApiStructType._(
       typeReference: typeReference,
       schema: schema,
       fields: fields.build(),
+      implements: implements.toBuiltList(),
       superType: superType ?? _anyType,
       discriminator: discriminator,
       isNullable: isNullable,
       docs: docs,
+      defaultValue: defaultValue,
     );
   }
 
@@ -739,16 +869,25 @@ abstract class OpenApiStructType
   OpenApiStructType._();
 
   /// If non-null, this represents the base class of a sealed hierarchy.
-  OpenApiDiscriminator? get discriminator;
+  Discriminator? get discriminator;
 
   /// The properties for this struct.
   BuiltMap<String, OpenApiField> get fields;
+
+  Iterable<OpenApiField> get serializableFields sync* {
+    for (final field in fields.values) {
+      if (field.type is! OpenApiSingleValueType) yield field;
+    }
+  }
+
+  @override
+  BuiltList<TypeReference> get implements;
 
   @override
   OpenApiInterfaceType get superType;
 
   @override
-  OpenApiPrimitive? get primitiveType => null;
+  OpenApiPrimitiveType? get primitiveType => null;
 
   @override
   OpenApiStructType withNullability(bool isNullable) {
@@ -756,10 +895,12 @@ abstract class OpenApiStructType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       fields: fields,
+      implements: implements,
       superType: superType.withNullability(isNullable),
       discriminator: discriminator,
       isNullable: isNullable,
       docs: docs,
+      defaultValue: defaultValue,
     );
   }
 
@@ -799,8 +940,9 @@ abstract class OpenApiSealedType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required Iterable<OpenApiSealedBranch> branches,
-    required OpenApiDiscriminator? discriminator,
+    required Discriminator discriminator,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     assert(branches.isNotEmpty, 'must have at least one case');
     return _$OpenApiSealedType._(
@@ -809,6 +951,7 @@ abstract class OpenApiSealedType
       branches: branches.toBuiltList(),
       discriminator: discriminator,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -818,7 +961,7 @@ abstract class OpenApiSealedType
 
   OpenApiSealedType._();
 
-  OpenApiDiscriminator? get discriminator;
+  Discriminator get discriminator;
 
   BuiltList<OpenApiSealedBranch> get branches;
 
@@ -826,7 +969,7 @@ abstract class OpenApiSealedType
   OpenApiInterfaceType get superType => _anyType;
 
   @override
-  OpenApiPrimitive? get primitiveType => null;
+  OpenApiPrimitiveType? get primitiveType => null;
 
   @override
   OpenApiSealedType withNullability(bool isNullable) {
@@ -836,6 +979,7 @@ abstract class OpenApiSealedType
       discriminator: discriminator,
       branches: branches,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -862,7 +1006,7 @@ abstract class OpenApiNullType
   );
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.null$;
+  OpenApiPrimitiveType get primitiveType => this;
 
   @override
   OpenApiNullType withNullability(bool isNullable) {
@@ -917,7 +1061,7 @@ abstract class OpenApiSingleValueType
   OpenApiInterfaceType get superType => _anyType;
 
   @override
-  OpenApiPrimitive get primitiveType => baseType.primitiveType;
+  OpenApiPrimitiveType get primitiveType => baseType;
 
   @override
   OpenApiSingleValueType withNullability(bool isNullable) {
@@ -945,6 +1089,7 @@ abstract class OpenApiEnumType
     required OpenApiPrimitiveType baseType,
     required Iterable<Object> values,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiEnumType._(
       typeReference: typeReference,
@@ -952,6 +1097,7 @@ abstract class OpenApiEnumType
       baseType: baseType,
       values: values.toBuiltList(),
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -975,6 +1121,7 @@ abstract class OpenApiEnumType
       baseType: baseType.withNullability(isNullable),
       values: values,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -992,11 +1139,13 @@ abstract class OpenApiAnyType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
+    Object? defaultValue,
   }) {
     return _$OpenApiAnyType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -1007,7 +1156,11 @@ abstract class OpenApiAnyType
   OpenApiAnyType._();
 
   @override
-  OpenApiPrimitive get primitiveType => OpenApiPrimitive.any;
+  OpenApiPrimitiveType get primitiveType => rebuild(
+        (t) => t.typeReference.replace(
+          DartTypes.core.object.withNullability(isNullable).toTypeReference,
+        ),
+      );
 
   @override
   OpenApiInterfaceType? get superType =>
@@ -1019,6 +1172,7 @@ abstract class OpenApiAnyType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -1036,13 +1190,15 @@ abstract class OpenApiDateType
     required TypeReference typeReference,
     required OpenApiTypeSchema schema,
     required bool isNullable,
-    required OpenApiPrimitive primitiveType,
+    required OpenApiPrimitiveType primitiveType,
+    Object? defaultValue,
   }) {
     return _$OpenApiDateType._(
       typeReference: typeReference,
       schema: schema,
       isNullable: isNullable,
       primitiveType: primitiveType,
+      defaultValue: defaultValue,
     );
   }
 
@@ -1053,7 +1209,7 @@ abstract class OpenApiDateType
   OpenApiDateType._();
 
   @override
-  OpenApiPrimitive get primitiveType;
+  OpenApiPrimitiveType get primitiveType;
 
   @override
   OpenApiInterfaceType get superType => _anyType;
@@ -1064,7 +1220,8 @@ abstract class OpenApiDateType
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
       schema: schema,
       isNullable: isNullable,
-      primitiveType: primitiveType,
+      primitiveType: primitiveType.withNullability(isNullable),
+      defaultValue: defaultValue,
     );
   }
 
