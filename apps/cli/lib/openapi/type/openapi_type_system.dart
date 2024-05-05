@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-import 'package:celest_cli/openapi/model/openapi_schema_linker.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
+import 'package:celest_cli/openapi/type/openapi_type_schema_resolver.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 

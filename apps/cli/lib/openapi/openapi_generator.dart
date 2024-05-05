@@ -1,14 +1,27 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:celest_cli/openapi/generator/openapi_array_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_client_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_enum_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_record_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_union_generator.dart';
 import 'package:celest_cli/openapi/model/openapi_schema_linker.dart';
 import 'package:celest_cli/openapi/model/openapi_schema_transformer.dart';
 import 'package:celest_cli/openapi/model/openapi_service.dart';
 import 'package:celest_cli/openapi/model/openapi_v3.dart';
+import 'package:celest_cli/openapi/stripe/stripe_generator_context.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
+import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
+import 'package:celest_cli/openapi/type/openapi_type_schema_resolver.dart';
 import 'package:celest_cli/openapi/type/openapi_type_system.dart';
+import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:lib_openapi/lib_openapi.dart';
@@ -37,7 +50,7 @@ final class OpenApiGenerator {
       typeSystem: OpenApiTypeSystem(),
     );
     final resolved = resolver.resolve();
-    final context = OpenApiGeneratorContext(
+    final context = StripeOpenApiGeneratorContext(
       apiName: apiName,
       document: resolved,
     );
@@ -52,8 +65,7 @@ final class OpenApiGenerator {
 
   Map<String, Library> generate() {
     final service = OpenApiSchemaLinker(
-      context: context,
-      registerSpec: context._registerSpec,
+      context: context as StripeOpenApiGeneratorContext,
     ).link();
     context.finish();
     final clientGenerator = OpenApiClientGenerator(
@@ -85,7 +97,7 @@ final class OpenApiGenerator {
   }
 }
 
-final class OpenApiGeneratorContext {
+class OpenApiGeneratorContext {
   OpenApiGeneratorContext({
     String? apiName,
     required this.document,
@@ -97,6 +109,10 @@ final class OpenApiGeneratorContext {
   final OpenApiDocument document;
   late final OpenApiService service;
   final OpenApiTypeSystem typeSystem = OpenApiTypeSystem();
+  final OpenApiJsonGenerator jsonGenerator = OpenApiJsonGenerator();
+
+  late final OpenApiTypeSchemaResolver typeResolver =
+      OpenApiTypeSchemaResolver(context: this);
 
   late final String apiName = run(() {
     if (_apiName != null) {
@@ -108,11 +124,95 @@ final class OpenApiGeneratorContext {
     return '';
   });
 
-  final Map<OpenApiType, String> _dartNames = {};
-  final Map<String, Spec> _schemaSpecs = {};
+  final dartNames = <String, String>{};
+  final dartRefs = <String, Reference>{};
+  final _schemaSpecs = <String, Spec>{};
   final _schemasByUrl = SetMultimapBuilder<String, String>();
 
-  Spec _registerSpec(
+  Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {
+    return const [];
+  }
+
+  Spec generateSpec(
+    String name,
+    String? key,
+    OpenApiType type, {
+    required String url,
+    bool? structuralEnum,
+  }) {
+    final schema = type.schema.withNullability(false);
+    return registerSpec(
+      key ?? name,
+      url,
+      () => switch (type) {
+        OpenApiPrimitiveType(:final typeReference) => ExtensionType(
+            (t) => t
+              // ..name = typeReference.symbol == name ? '$name\$' : name
+              ..name = name
+              ..constant = true
+              ..constructors.addAll([
+                Constructor(
+                  (c) => c
+                    ..constant = true
+                    ..name = 'fromJson'
+                    ..requiredParameters.add(
+                      Parameter(
+                        (p) => p
+                          ..type = DartTypes.core.object.nullable
+                          ..name = 'json',
+                      ),
+                    )
+                    ..initializers.add(
+                      refer('_').assign(refer('json').asA(typeReference)).code,
+                    ),
+                ),
+              ])
+              ..representationDeclaration = RepresentationDeclaration(
+                (r) => r
+                  ..name = '_'
+                  ..declaredRepresentationType = typeReference,
+              )
+              ..implements.add(typeReference)
+              ..methods.add(
+                Method(
+                  (m) => m
+                    ..name = 'toJson'
+                    ..returns = typeReference
+                    ..lambda = true
+                    ..body = refer('_').code,
+                ),
+              ),
+          ),
+        OpenApiIterableInterface() => OpenApiArrayGenerator(
+            name: reserveName(name, schema),
+            type: type,
+          ).generate(),
+        OpenApiEnumType() => OpenApiEnumGenerator(
+            name: reserveName(name, schema),
+            structuralEnum: false, // structuralEnum!,
+            type: type,
+          ).generate(),
+        OpenApiStructType() => OpenApiStructGenerator(
+            name: reserveName(name, schema),
+            type: type,
+          ).generate(),
+        OpenApiSealedType() => OpenApiUnionGenerator(
+            name: reserveName(name, schema),
+            context: this,
+            type: type,
+          ).generate(),
+        OpenApiRecordType() => OpenApiRecordGenerator(
+            name: reserveName(name, schema),
+            type: type,
+          ).generate(),
+        _ => unreachable('$type'),
+      } as Spec,
+    );
+  }
+
+  String? urlOf(String dartName) => null;
+
+  Spec registerSpec(
     String name,
     String url,
     Spec Function() builder,
@@ -149,6 +249,128 @@ final class OpenApiGeneratorContext {
     });
   }
 
+  TypeReference _wrapper(String name, OpenApiType baseType) {
+    registerSpec(name, 'models.dart', () {
+      return Class((c) {
+        c
+          ..name = name
+          ..modifier = ClassModifier.final$
+          ..constructors.addAll([
+            Constructor(
+              (ctor) {
+                ctor.constant = true;
+                if (identical(baseType, OpenApiEmptyType.instance)) {
+                  ctor.name = '_';
+                }
+                if (!identical(baseType, OpenApiEmptyType.instance)) {
+                  ctor.requiredParameters.add(
+                    Parameter(
+                      (b) => b
+                        ..name = 'value'
+                        ..toThis = true,
+                    ),
+                  );
+                }
+              },
+            ),
+            if (!identical(baseType, OpenApiEmptyType.instance))
+              Constructor(
+                (ctor) => ctor
+                  ..factory = true
+                  ..name = 'fromJson'
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) => p
+                        ..name = 'json'
+                        ..type = DartTypes.core.object.nullable,
+                    ),
+                  )
+                  ..lambda = true
+                  ..body = refer(name).newInstance([
+                    OpenApiJsonGenerator()
+                        .fromJson(baseType.primitiveType!, refer('json')),
+                  ]).code,
+              ),
+          ])
+          ..fields.addAll([
+            if (!identical(baseType, OpenApiEmptyType.instance))
+              Field(
+                (f) => f
+                  ..modifier = FieldModifier.final$
+                  ..type = baseType.typeReference
+                  ..name = 'value',
+              ),
+          ])
+          ..methods.addAll([
+            if (!identical(baseType, OpenApiEmptyType.instance))
+              Method(
+                (m) => m
+                  ..name = 'toJson'
+                  ..returns = baseType.primitiveType!.typeReference.nonNullable
+                  ..lambda = true
+                  ..body = OpenApiJsonGenerator()
+                      .toJson(baseType.primitiveType!, refer('value'))
+                      .code,
+              ),
+          ]);
+      });
+    });
+    return refer(name, 'models.dart').toTypeReference;
+  }
+
+  late final TypeReference emptyType = _wrapper(
+    r'Empty$',
+    OpenApiEmptyType.instance,
+  );
+  late final TypeReference stringType = _wrapper(
+    r'String$',
+    OpenApiStringType(
+      schema: OpenApiStringTypeSchema(),
+      typeReference: DartTypes.core.string.toTypeReference,
+      isNullable: false,
+    ),
+  );
+  late final TypeReference intType = _wrapper(
+    r'Integer$',
+    OpenApiIntegerType(
+      schema: OpenApiIntegerTypeSchema(),
+      typeReference: DartTypes.core.int.toTypeReference,
+      isNullable: false,
+    ),
+  );
+  late final TypeReference doubleType = _wrapper(
+    r'Double$',
+    OpenApiDoubleType(
+      schema: OpenApiNumberTypeSchema(),
+      typeReference: DartTypes.core.double.toTypeReference,
+      isNullable: false,
+    ),
+  );
+  // late final TypeReference _numType = _wrapper(
+  //   r'Number$',
+  //   OpenApiNumberType(
+  //     schema: OpenApiNumberTypeSchema(),
+  //     typeReference: DartTypes.core.num.toTypeReference,
+  //     isNullable: false,
+  //   ),
+  // );
+  late final TypeReference boolType = _wrapper(
+    r'Boolean$',
+    OpenApiBooleanType(
+      schema: OpenApiBooleanTypeSchema(),
+      typeReference: DartTypes.core.bool.toTypeReference,
+      isNullable: false,
+    ),
+  );
+  late final TypeReference anyType = _wrapper(
+    r'Any$',
+    OpenApiAnyType(
+      schema: OpenApiAnyTypeSchema(),
+      typeReference: DartTypes.core.object.toTypeReference,
+      isNullable: false,
+    ),
+  );
+
   final _implements = SetMultimapBuilder<String, Reference>();
 
   void implement(String name, Reference type) {
@@ -163,14 +385,27 @@ final class OpenApiGeneratorContext {
     _implements.add(name, type);
   }
 
-  String dartNameOf(OpenApiType type) {
-    return _dartNames[type] ??
+  final _reservedNames = <String, OpenApiTypeSchema?>{};
+  String reserveName(String name, [OpenApiTypeSchema? reservedBy]) {
+    if (_reservedNames.containsKey(name)) {
+      final existing = _reservedNames[name];
+      if (existing != reservedBy) {
         fail(
-          'Dart name not reserved for type',
+          'Could not reserve "$name". Name already reserved by another type.',
           additionalContext: {
-            'schema': type,
+            'existing': //
+                // existing,
+                LineSplitter.split(existing.toString()).take(10).join('\n'),
+            'reservedBy': //
+                // reservedBy,
+                LineSplitter.split(reservedBy.toString()).take(10).join('\n'),
+            'reservedNames': _reservedNames.keys.join(', '),
           },
         );
+      }
+    }
+    _reservedNames[name] = reservedBy;
+    return name;
   }
 
   Never fail(
