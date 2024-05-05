@@ -1,9 +1,9 @@
+import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/code_outputs.dart';
 import 'package:celest_cli/project/celest_project.dart';
-import 'package:api_celest/ast.dart' as ast;
 
 final class ClientCodeGenerator {
   ClientCodeGenerator({

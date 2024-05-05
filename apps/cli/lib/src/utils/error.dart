@@ -11,4 +11,4 @@ Never unreachable([String message = 'Unreachable code reached']) =>
     throw _UnreachableError(message);
 
 // ignore: non_constant_identifier_names
-Never TODO() => throw UnimplementedError();
+Never TODO([String? message]) => throw UnimplementedError(message);

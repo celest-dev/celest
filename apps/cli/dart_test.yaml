@@ -5,3 +5,5 @@ tags:
     timeout: 5m
   e2e-local:
     timeout: 15m
+  openapi:
+    timeout: 5m

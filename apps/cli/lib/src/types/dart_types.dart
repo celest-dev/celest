@@ -20,6 +20,7 @@ import 'package:celest_core/_internal.dart' as celest_core;
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart' as collection;
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart' as meta;
@@ -102,6 +103,9 @@ abstract class DartTypes {
 
   /// `package:celest` types.
   static const celest = _Celest();
+
+  /// `package:collection` types.
+  static const collection = _Collection();
 
   /// `dart:convert` types.
   static const convert = _Convert();
@@ -362,7 +366,7 @@ class _Core {
       );
 
   /// Creates a `void` reference.
-  DartTypeReference get void$ => const DartTypeReference('void');
+  DartTypeReference get void$ => const DartTypeReference('void', _url);
 }
 
 /// `dart:async` types
@@ -694,6 +698,37 @@ class _Celest {
       const DartTypeReference('CloudFunctionTarget', _runtimeUrl);
 }
 
+class _Collection {
+  const _Collection();
+
+  static const _url = 'package:collection/collection.dart';
+
+  /// Creates a [collection.DelegatingList] reference.
+  TypeReference delegatingList(TypeReference elementType) => TypeReference(
+        (t) => t
+          ..symbol = 'DelegatingList'
+          ..url = _url
+          ..types.add(elementType),
+      );
+
+  /// Creates a [collection.DelegatingMap] reference.
+  TypeReference delegatingMap(Reference keyType, Reference valueType) =>
+      TypeReference(
+        (t) => t
+          ..symbol = 'DelegatingMap'
+          ..url = _url
+          ..types.addAll([keyType, valueType]),
+      );
+
+  /// Creates a [collection.DelegatingSet] reference.
+  TypeReference delegatingSet(TypeReference elementType) => TypeReference(
+        (t) => t
+          ..symbol = 'DelegatingSet'
+          ..url = _url
+          ..types.add(elementType),
+      );
+}
+
 /// `dart:convert` types
 class _Convert {
   const _Convert();
@@ -707,6 +742,9 @@ class _Convert {
   /// Creates a [convert.base64Encode] reference.
   DartTypeReference get base64Encode =>
       const DartTypeReference('base64Encode', _url);
+
+  /// Creates a [convert.json] reference.
+  DartTypeReference get json => const DartTypeReference('json', _url);
 
   /// Creates a [convert.jsonEncode] reference.
   DartTypeReference get jsonEncode =>
@@ -755,6 +793,20 @@ class _Http {
   /// Creates a [http.BaseResponse] reference.
   DartTypeReference get baseResponse =>
       const DartTypeReference('BaseResponse', _url);
+
+  /// Creates a [http.Request] reference.
+  DartTypeReference get request => const DartTypeReference('Request', _url);
+
+  /// Creates a [http.Response] reference.
+  DartTypeReference get response => const DartTypeReference('Response', _url);
+
+  /// Creates a [http.StreamedRequest] reference.
+  DartTypeReference get streamedRequest =>
+      const DartTypeReference('StreamedRequest', _url);
+
+  /// Creates a [http.StreamedResponse] reference.
+  DartTypeReference get streamedResponse =>
+      const DartTypeReference('StreamedResponse', _url);
 }
 
 /// `dart:io` types

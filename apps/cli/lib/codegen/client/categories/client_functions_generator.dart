@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:analyzer/dart/element/element.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' hide RecordType;
+import 'package:api_celest/ast.dart' as ast;
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/client/client_generator.dart';
@@ -13,7 +14,6 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:api_celest/ast.dart' as ast;
 import 'package:code_builder/code_builder.dart';
 
 final class ClientFunctionsGenerator {

@@ -20,7 +20,7 @@
       "program": "test/analyzer/analyzer_test.dart",
       "vmAdditionalArgs": [
         "--enable-experiment=native-assets",
-      ]
+      ],
     }
   ]
 }

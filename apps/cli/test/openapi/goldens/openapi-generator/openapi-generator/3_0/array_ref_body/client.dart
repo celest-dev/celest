@@ -1,0 +1,92 @@
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:convert' as _i2;
+
+import 'package:celest/celest.dart' as _i3;
+import 'package:http/http.dart' as _i1;
+
+extension type Servers(Uri _) implements Uri {
+  static final Servers defaultServer = server0;
+
+  static final Servers server0 = Servers(Uri.parse(r'/'));
+}
+
+class Examples {
+  Examples({
+    required _i1.Client httpClient,
+    required Uri baseUri,
+  })  : _httpClient = httpClient,
+        _baseUri = baseUri;
+
+  final _i1.Client _httpClient;
+
+  /// The base URI for the API
+  final Uri _baseUri;
+
+  /// Get a list of transactions
+  Future<GetFilteredTransactionsResponse> getFilteredTransactions(
+      {List<Input>? body}) async {
+    final $uri = Uri.parse('$_baseUri/examples');
+    final $request = _i1.Request(
+      'POST',
+      $uri,
+    );
+    $request.headers['accept'] = 'application/json';
+    if (body != null) {
+      $request.body = _i2.jsonEncode(body);
+    }
+    final $response = await _httpClient.send($request);
+    final $contentType = $response.headers['content-type'];
+    switch ($response.statusCode) {
+      /// successful operation
+      default:
+        return const Empty$._();
+    }
+  }
+
+  Future<T> _decodeJson<T>(_i1.StreamedResponse $response) async {
+    final $body = await $response.stream.bytesToString();
+    final $json = _i2.jsonDecode($body);
+    return _i3.Serializers.instance.deserialize<T>($json);
+  }
+}
+
+final class Client {
+  Client({
+    _i1.Client? httpClient,
+    Uri? baseUri,
+  })  : _httpClient = httpClient ?? _i1.Client(),
+        _baseUri = baseUri ?? Servers.defaultServer;
+
+  final _i1.Client _httpClient;
+
+  /// The base URI for the API
+  final Uri _baseUri;
+
+  Examples get examples => Examples(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
+}
+
+final class Input {
+  Input({
+    this.id,
+    this.age,
+    this.dt,
+  });
+
+  final String? id;
+
+  final int? age;
+
+  final DateTime? dt;
+}
+
+final class Empty$ {
+  const Empty$._();
+}
+
+/// Response type for [Examples.getFilteredTransactions].
+typedef GetFilteredTransactionsResponse = Empty$;
