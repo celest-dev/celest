@@ -4,6 +4,7 @@ import 'package:celest_cli/openapi/model/openapi_v3.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:http_parser/http_parser.dart';
 
 part 'openapi_service.g.dart';
 
@@ -35,7 +36,18 @@ abstract class OpenApiService
 
   /// The root path (`/`) operations which are flattened into the client class.
   ServicePath get rootPath;
+
+  /// The authorization modes for the service.
+  // BuiltSet<ServiceAuth> get authModes;
 }
+
+// class ServiceAuth extends EnumClass {
+//   const ServiceAuth._(super.name);
+//   static const ServiceAuth bearer = _$bearer;
+
+//   static BuiltSet<ServiceAuth> get values => _$ServiceAuthValues;
+//   static ServiceAuth valueOf(String name) => _$ServiceAuthValueOf(name);
+// }
 
 abstract class ServiceModel
     implements Built<ServiceModel, ServiceModelBuilder> {
@@ -279,11 +291,42 @@ abstract class ServiceMethod
   BuiltList<HeaderOrQueryParameter> get queryParameters;
   BuiltList<HeaderOrQueryParameter> get headers;
 
-  OpenApiType? get bodyType;
+  BuiltMap<String, ServiceMethodRequest> get requestBody;
 
   OpenApiType get responseType;
   ServiceMethodResponse? get defaultResponse;
   BuiltMap<int, ServiceMethodResponse> get responseCases;
+}
+
+abstract class ServiceMethodRequest
+    implements Built<ServiceMethodRequest, ServiceMethodRequestBuilder> {
+  factory ServiceMethodRequest({
+    required MediaType contentType,
+    required OpenApiType? type,
+    Map<String, OpenApiEncoding> encoding = const {},
+  }) {
+    return _$ServiceMethodRequest._(
+      contentType: contentType,
+      type: type,
+      encoding: encoding.build(),
+    );
+  }
+
+  factory ServiceMethodRequest.build([
+    void Function(ServiceMethodRequestBuilder) updates,
+  ]) = _$ServiceMethodRequest;
+
+  ServiceMethodRequest._();
+
+  MediaType get contentType;
+  OpenApiType? get type;
+
+  /// A map between a property name and its encoding information.
+  ///
+  /// The key, being the property name, MUST exist in the schema as a property.
+  /// The encoding object SHALL only apply to [OpenApiOperation.requestBody]
+  /// objects when the media type is `multipart` or `application/x-www-form-urlencoded`.
+  BuiltMap<String, OpenApiEncoding> get encoding;
 }
 
 abstract class ServiceMethodResponse

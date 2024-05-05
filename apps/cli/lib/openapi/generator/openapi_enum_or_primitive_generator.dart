@@ -96,7 +96,7 @@ final class OpenApiEnumOrPrimitiveGenerator {
                       .constInstanceNamed('_', [literal(enumValue)]).code,
               ),
           ])
-          ..methods.add(
+          ..methods.addAll([
             Method(
               (m) => m
                 ..name = 'toJson'
@@ -104,8 +104,28 @@ final class OpenApiEnumOrPrimitiveGenerator {
                 ..lambda = true
                 ..body = refer('_value').code,
             ),
-          );
+            _encodeMethod,
+          ]);
       },
     );
+  }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        )
+        ..lambda = true
+        ..body =
+            refer('container').property('write').call([refer('_value')]).code;
+    });
   }
 }

@@ -23,6 +23,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' as collection;
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as http_parser;
 import 'package:meta/meta.dart' as meta;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
@@ -110,6 +111,9 @@ abstract class DartTypes {
   /// `dart:convert` types.
   static const convert = _Convert();
 
+  /// `package:cross_file` types.
+  static const crossFile = _XFile();
+
   /// `package:fixnum` types.
   static const fixNum = FixNum();
 
@@ -121,6 +125,9 @@ abstract class DartTypes {
 
   /// `package:http` types.
   static const http = _Http();
+
+  /// `package:http_parser` types.
+  static const httpParser = _HttpParser();
 
   /// `dart:io` types.
   static const io = _Io();
@@ -794,6 +801,14 @@ class _Http {
   DartTypeReference get baseResponse =>
       const DartTypeReference('BaseResponse', _url);
 
+  /// Creates a [http.MultipartFile] reference.
+  DartTypeReference get multipartFile =>
+      const DartTypeReference('MultipartFile', _url);
+
+  /// Creates a [http.MultipartRequest] reference.
+  DartTypeReference get multipartRequest =>
+      const DartTypeReference('MultipartRequest', _url);
+
   /// Creates a [http.Request] reference.
   DartTypeReference get request => const DartTypeReference('Request', _url);
 
@@ -807,6 +822,15 @@ class _Http {
   /// Creates a [http.StreamedResponse] reference.
   DartTypeReference get streamedResponse =>
       const DartTypeReference('StreamedResponse', _url);
+}
+
+class _HttpParser {
+  const _HttpParser();
+
+  static const _url = 'package:http_parser/http_parser.dart';
+
+  /// Creates a [http_parser.MediaType] reference.
+  DartTypeReference get mediaType => const DartTypeReference('MediaType', _url);
 }
 
 /// `dart:io` types
@@ -920,4 +944,13 @@ class _TypedData {
         _url,
         DartTypes.core.string,
       );
+}
+
+class _XFile {
+  const _XFile();
+
+  static const _url = 'package:cross_file/cross_file.dart';
+
+  /// Creates a [cross_file.XFile] reference.
+  DartTypeReference get xFile => const DartTypeReference('XFile', _url);
 }

@@ -1,3 +1,4 @@
+import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -11,6 +12,7 @@ final class OpenApiStructGenerator {
   OpenApiStructGenerator({
     required this.name,
     required this.type,
+    this.mimeType,
   });
 
   static final Logger logger = Logger('OpenApiSchemaGenerator');
@@ -42,11 +44,21 @@ final class OpenApiStructGenerator {
 
   final String name;
   final OpenApiStructType type;
+  final String? mimeType;
   late final ClassBuilder _class = ClassBuilder()
     ..modifier = ClassModifier.final$
     ..name = name
     ..docs.addAll([if (type.docs case final docs? when docs.isNotEmpty) docs])
     ..implements.addAll(type.implements);
+
+  bool get includeFormData {
+    final mimeType = this.mimeType;
+    if (mimeType == null) {
+      return false;
+    }
+    return mimeType.startsWith('multipart') ||
+        mimeType.endsWith('x-www-form-urlencoded');
+  }
 
   Class generate() {
     logger.finest('Generating schema: $name');
@@ -86,8 +98,15 @@ final class OpenApiStructGenerator {
       );
     }
     _class
-      ..constructors.addAll([ctor.build(), _fromJsonMethod])
-      ..methods.addAll([_toJsonMethod]);
+      ..constructors.addAll([
+        ctor.build(),
+        _fromJsonMethod,
+      ])
+      ..methods.addAll([
+        _toJsonMethod,
+        _encodeMethod,
+        _toString,
+      ]);
     return _class.build();
   }
 
@@ -107,15 +126,16 @@ final class OpenApiStructGenerator {
         ..body = Block((b) {
           final fields = <String, Expression>{};
           final map = declareFinal('map').assign(
-            refer('json').asA(
-              DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
-            ),
+            refer('json')
+                .asA(DartTypes.core.map())
+                .property('cast')
+                .call([], {}, [
+              DartTypes.core.string,
+              DartTypes.core.object.nullable,
+            ]),
           );
           b.addExpression(map);
-          for (final field in type.serializableFields) {
+          for (final field in type.deserializableFields) {
             final ref = refer('map').index(literalString(field.name));
             fields[field.dartName] = jsonGenerator.fromJson(
               field.type,
@@ -129,6 +149,51 @@ final class OpenApiStructGenerator {
     });
   }
 
+  Method get _toString {
+    return Method((m) {
+      m
+        ..name = 'toString'
+        ..returns = DartTypes.core.string
+        ..annotations.add(DartTypes.core.override)
+        ..lambda = false
+        ..body = Block((b) {
+          final buf = refer(r'$buf');
+          b.addExpression(
+            declareFinal(r'$buf').assign(
+              DartTypes.core.stringBuffer.newInstance([
+                literalString('$name(', raw: name.contains(r'$')),
+              ]),
+            ),
+          );
+          for (final field in type.fields.values) {
+            final fieldRef = refer(field.dartName);
+            final writeField = buf
+                .cascade('write')
+                .call([
+                  literalString('  ${field.name}: '),
+                ])
+                .cascade('writeln')
+                .call([
+                  switch (field.type) {
+                    OpenApiStringType() => fieldRef,
+                    _ => fieldRef.property('toString').call([]),
+                  },
+                ]);
+            b.statements.add(
+              writeField.wrapWithBlockIf(
+                refer(field.dartName).notEqualTo(literalNull),
+                field.type.isNullable,
+              ),
+            );
+          }
+          b.addExpression(buf.property('write').call([literalString(')')]));
+          b.addExpression(
+            buf.property('toString').call([]).returned,
+          );
+        });
+    });
+  }
+
   Method get _toJsonMethod {
     return Method((m) {
       m
@@ -137,17 +202,81 @@ final class OpenApiStructGenerator {
           DartTypes.core.string,
           DartTypes.core.object.nullable,
         )
-        ..lambda = true;
+        ..lambda = false
+        ..body = Block((b) {
+          final container = refer(r'$container');
+          b.addExpression(
+            declareFinal(r'$container').assign(
+              refer('jsonEncoder', '../encoding/json.dart')
+                  .property('container')
+                  .call([]),
+            ),
+          );
+          b.addExpression(
+            refer('encode').call([container]),
+          );
+          b.addExpression(
+            container
+                .property('value')
+                .asA(
+                  DartTypes.core.map(
+                    DartTypes.core.string,
+                    DartTypes.core.object.nullable,
+                  ),
+                )
+                .returned,
+          );
+        });
+    });
+  }
 
-      final serialized = <Expression, Expression>{};
-      for (final field in type.fields.values) {
-        serialized[literalString(field.name)] = jsonGenerator.toJson(
-          field.type,
-          refer(field.dartName),
-        );
-      }
-
-      m.body = literalMap(serialized).code;
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        )
+        ..lambda = false
+        ..body = refer('container')
+            .property('writeMap')
+            .call([
+              Method(
+                (m) => m
+                  ..requiredParameters
+                      .add(Parameter((p) => p.name = 'container'))
+                  ..body = Block((b) {
+                    final container = refer('container');
+                    for (final field in type.serializableFields) {
+                      Expression fieldRef = refer(field.dartName);
+                      if (field.type.isNullable) {
+                        fieldRef = fieldRef.nullChecked;
+                      }
+                      final fieldType = field.type;
+                      final encodeField = openApiEncoder.encode(
+                        type: fieldType.withNullability(false),
+                        ref: fieldRef,
+                        container: container,
+                        key: literalString(field.name),
+                      );
+                      b.statements.add(
+                        encodeField.wrapWithBlockIf(
+                          refer(field.dartName).notEqualTo(literalNull),
+                          field.type.isNullable,
+                        ),
+                      );
+                    }
+                  }),
+              ).closure,
+            ])
+            .returned
+            .statement;
     });
   }
 }

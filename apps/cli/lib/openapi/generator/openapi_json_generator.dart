@@ -32,6 +32,8 @@ final class OpenApiJsonGenerator {
               typeReference: TypeReference(url: == 'dart:core'),
             ):
         return ref;
+      case OpenApiBinaryType(): // XFile
+        return ref.property('path');
       case OpenApiIterableInterface(
           typeReference: TypeReference(url: == 'dart:core'),
           :final itemType,
@@ -135,11 +137,20 @@ final class OpenApiJsonGenerator {
             .asA(DartTypes.core.num.withNullability(type.isNullable))
             .nullableProperty('toInt', type.isNullable)
             .call([]);
+      case OpenApiNumberInterface(
+          typeReference: TypeReference(url: == 'dart:core')
+        ):
+        return ref
+            .asA(DartTypes.core.num.withNullability(type.isNullable))
+            .nullableProperty('toDouble', type.isNullable)
+            .call([]);
       case OpenApiPrimitiveType(
           typeReference:
               TypeReference(url: == 'dart:core') && final typeReference
         ):
         return ref.asA(typeReference);
+      case OpenApiBinaryType(:final typeReference): // XFile
+        return typeReference.newInstance([ref.asA(DartTypes.core.string)]);
       case OpenApiIterableInterface(
           typeReference: TypeReference(url: == 'dart:core'),
           :final itemType
@@ -172,11 +183,15 @@ final class OpenApiJsonGenerator {
           OpenApiIterableType() => mapped,
         };
       case OpenApiRecordType(:final valueType):
-        ref = ref.asA(
-          DartTypes.core
-              .map(DartTypes.core.string, DartTypes.core.object.nullable)
-              .withNullability(type.isNullable),
-        );
+        ref = ref
+            .asA(
+              DartTypes.core.map().withNullability(type.isNullable),
+            )
+            .nullableProperty('cast', type.isNullable)
+            .call([], {}, [
+          DartTypes.core.string,
+          DartTypes.core.object.nullable,
+        ]);
         final value = refer('value');
         final serializedValue = fromJson(valueType, value);
         if (value == serializedValue) {

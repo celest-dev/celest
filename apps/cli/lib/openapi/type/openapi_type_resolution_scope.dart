@@ -3,6 +3,7 @@ final class OpenApiTypeResolutionScope {
     required this.typeName,
     required this.url,
     this.sealedParent,
+    this.mimeType,
     this.needsWrapper = false,
     this.isNullable,
   });
@@ -11,7 +12,10 @@ final class OpenApiTypeResolutionScope {
   final String url;
   final String? sealedParent;
   final bool needsWrapper;
+  final String? mimeType;
   final bool? isNullable;
+
+  bool get isFile => mimeType != null && mimeType!.startsWith('multipart');
 
   /// If `true`, generate a proper `enum`.
   /// If `false` generate an enum-like extension type.
@@ -29,6 +33,7 @@ final class OpenApiTypeResolutionScope {
         typeName: '$typeName$name',
         url: url,
         sealedParent: sealedParent,
+        mimeType: mimeType,
         needsWrapper: false, // Only top-level types need wrappers.
         isNullable: isNullable,
       );

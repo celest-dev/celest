@@ -19,8 +19,13 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   /// A map from path -> contextual operation name.
   final stripeOperationNames = <(String, OpenApiOperationType), String>{};
 
+  final stripeOperationResourceName = <(String, OpenApiOperationType),
+      ({String className, String? inPackage})>{};
+
   /// Dart names of Stripe event types.
   final stripeEventTypes = <String>{};
+
+  final stripeResources = <String, TypeReference>{};
 
   @override
   Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {
@@ -73,7 +78,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
                 ..name = 'id',
             ),
           ])
-          ..methods.add(
+          ..methods.addAll([
             Method(
               (m) => m
                 ..returns = DartTypes.core.map(
@@ -84,7 +89,33 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
                 ..lambda = true
                 ..body = literalMap({'id': refer('id')}).code,
             ),
-          ),
+            Method((m) {
+              m
+                ..name = 'encode'
+                ..returns = DartTypes.core.void$
+                ..annotations.add(DartTypes.meta.internal)
+                ..requiredParameters.add(
+                  Parameter(
+                    (p) => p
+                      ..type =
+                          refer('EncodingContainer', '../encoding/encoder.dart')
+                      ..name = 'container',
+                  ),
+                )
+                ..lambda = true
+                ..body = refer('container').property('writeMap').call([
+                  Method(
+                    (m) => m
+                      ..requiredParameters
+                          .add(Parameter((p) => p.name = 'container'))
+                      ..lambda = true
+                      ..body = refer('container')
+                          .property('writeString')
+                          .call([literalString('id'), refer('id')]).code,
+                  ).closure,
+                ]).code;
+            }),
+          ]),
       ),
     );
     return refer(reserveName('StripeResource'), 'models.dart').toTypeReference;

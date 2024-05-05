@@ -67,6 +67,13 @@ final class OpenApiClientGenerator {
           ..optionalParameters.addAll([
             Parameter(
               (p) => p
+                ..type = DartTypes.core.string
+                ..name = 'apiKey'
+                ..named = true
+                ..required = true,
+            ),
+            Parameter(
+              (p) => p
                 ..required = false
                 ..named = true
                 ..type = DartTypes.http.client.nullable
@@ -77,9 +84,11 @@ final class OpenApiClientGenerator {
           ..initializers.addAll([
             refer('_httpClient')
                 .assign(
-                  refer('httpClient').ifNullThen(
-                    DartTypes.http.client.newInstance([]),
-                  ),
+                  refer('StripeHttpClient', '../http/stripe_http_client.dart')
+                      .newInstance([], {
+                    'apiKey': refer('apiKey'),
+                    'baseClient': refer('httpClient'),
+                  }),
                 )
                 .code,
             refer('_baseUri')
@@ -109,7 +118,7 @@ final class OpenApiClientGenerator {
       );
       return (parameter, null);
     }
-    if (servers case [Uri(isAbsolute: true) && final single]) {
+    if (servers.values.toList() case [Uri(isAbsolute: true) && final single]) {
       final parameter = Parameter(
         (p) => p
           ..required = false
@@ -300,21 +309,21 @@ final class OpenApiClientGenerator {
       class_.methods.add(
         Method((m) {
           m.returns = refer(subpath.className!);
-          if (subpath.pathParameters.isEmpty) {
-            m.type = MethodType.getter;
-          } else {
-            for (final parameter in subpath.pathParameters.values) {
-              m.optionalParameters.add(
-                Parameter(
-                  (p) => p
-                    ..named = true
-                    ..type = parameter.type.typeReference
-                    ..required = !parameter.type.isNullable
-                    ..name = parameter.variableName,
-                ),
-              );
-            }
-          }
+          // if (subpath.pathParameters.isEmpty) {
+          m.type = MethodType.getter;
+          // } else {
+          //   for (final parameter in subpath.pathParameters.values) {
+          //     m.optionalParameters.add(
+          //       Parameter(
+          //         (p) => p
+          //           ..named = true
+          //           ..type = parameter.type.typeReference
+          //           ..required = !parameter.type.isNullable
+          //           ..name = parameter.variableName,
+          //       ),
+          //     );
+          //   }
+          // }
           m.name = subpath.variableName;
           m.lambda = true;
           m.body = refer(subpath.className!).newInstance([], {
@@ -327,7 +336,7 @@ final class OpenApiClientGenerator {
       );
     }
 
-    _library(path.libraryPath ?? 'client.dart').body.add(class_.build());
+    _library(path.libraryPath ?? 'client.dart').body.insert(0, class_.build());
   }
 
   /// Genereates a method for the given operation (path/verb combination).
@@ -390,10 +399,12 @@ final class OpenApiClientGenerator {
         );
         for (final queryParameter in operation.queryParameters) {
           final defaultValue = queryParameter.type.defaultValue;
+          final variable = refer(queryParameter.variableName);
           if (defaultValue == null) {
-            final addParam = queryMap
-                .index(literalString(queryParameter.rawName))
-                .assign(queryParameter.assignmentExpression(false));
+            final addParam =
+                queryMap.index(literalString(queryParameter.rawName)).assign(
+                      queryParameter.type.stringifiedValue(variable, false),
+                    );
             body.statements.add(
               addParam.wrapWithBlockIf(
                 refer(queryParameter.variableName).notEqualTo(literalNull),
@@ -403,8 +414,8 @@ final class OpenApiClientGenerator {
           } else {
             final addParam =
                 queryMap.index(literalString(queryParameter.rawName)).assign(
-                      queryParameter
-                          .assignmentExpression(true)
+                      queryParameter.type
+                          .stringifiedValue(variable, true)
                           .ifNullThen(literal(defaultValue)),
                     );
             body.addExpression(addParam);
@@ -418,29 +429,180 @@ final class OpenApiClientGenerator {
       body.addExpression(declareFinal(r'$uri').assign(resolvedUri));
     }
 
-    // Build the request.
     final request = refer(r'$request');
-    {
-      final requestImpl = DartTypes.http.request.newInstance([
-        literalString(operation.methodType.name.toUpperCase()),
-        uri,
-      ]);
-      body.addExpression(
-        declareFinal(r'$request').assign(requestImpl),
+
+    final requestBody = operation.requestBody.values.singleOrNull;
+    final requestContentType = requestBody?.contentType.mimeType;
+    final requestImpl = switch (requestContentType) {
+      'multipart/form-data' => DartTypes.http.multipartRequest.newInstance([
+          literalString(operation.methodType.name.toUpperCase()),
+          uri,
+        ]),
+      _ => DartTypes.http.request.newInstance([
+          literalString(operation.methodType.name.toUpperCase()),
+          uri,
+        ]),
+    };
+    body.addExpression(declareFinal(r'$request').assign(requestImpl));
+
+    if (requestBody case ServiceMethodRequest(type: final bodyType?)) {
+      m.optionalParameters.add(
+        Parameter(
+          (p) => p
+            ..type = bodyType.typeReference
+            ..required = !bodyType.isNullable
+            ..named = true
+            ..name = 'request',
+        ),
       );
+      switch (requestBody.contentType.mimeType) {
+        case 'application/json':
+          final encoded = DartTypes.convert.jsonEncode.call([
+            refer('request').property('toJson').call([]),
+          ]);
+          body.statements.add(
+            request.property('body').assign(encoded).wrapWithBlockIf(
+                  refer('request').notEqualTo(literalNull),
+                  bodyType.isNullable,
+                ),
+          );
+        case 'application/x-www-form-urlencoded':
+          if (bodyType is! OpenApiStructType) {
+            unreachable('Unexpected form body type: $bodyType');
+          }
+
+          final encoded = Block((b) {
+            final container = refer(r'$container');
+            b.addExpression(
+              declareFinal(r'$container').assign(
+                refer('formFieldEncoder', '../encoding/form_fields.dart')
+                    .property('container')
+                    .call([]),
+              ),
+            );
+            b.addExpression(
+              refer('request').property('encode').call([container]),
+            );
+            b.addExpression(
+              request.property('bodyFields').assign(
+                    container.property('value').asA(
+                          DartTypes.core.map(
+                            DartTypes.core.string,
+                            DartTypes.core.string,
+                          ),
+                        ),
+                  ),
+            );
+          });
+
+          body.statements.add(
+            encoded.wrapWithBlockIf(
+              refer('request').notEqualTo(literalNull),
+              bodyType.isNullable,
+            ),
+          );
+        case 'multipart/form-data':
+          if (bodyType is! OpenApiStructType) {
+            unreachable('Unexpected multipart type: $bodyType');
+          }
+          final files = <OpenApiField>[];
+          final fields = <OpenApiField>[];
+          for (final field in bodyType.fields.values) {
+            if (field.type is OpenApiBinaryType) {
+              files.add(field);
+            } else {
+              fields.add(field);
+            }
+          }
+          final encoded = Block((b) {
+            for (final field in files) {
+              final fieldRef = refer('request').property(field.dartName);
+              final addFile = request.property('files').property('add').call([
+                DartTypes.http.multipartFile.newInstance([
+                  literalString(field.name),
+                  fieldRef.property('openRead').call([]),
+                  fieldRef.property('length').call([]).awaited,
+                ], {
+                  'filename': fieldRef.property('name'),
+                  'contentType': fieldRef
+                      .property('mimeType')
+                      .equalTo(literalNull)
+                      .conditional(
+                        literalNull,
+                        DartTypes.httpParser.mediaType.property('parse').call([
+                          fieldRef.property('mimeType').nullChecked,
+                        ]),
+                      ),
+                }),
+              ]);
+              body.statements.add(
+                addFile.wrapWithBlockIf(
+                  fieldRef.notEqualTo(literalNull),
+                  bodyType.isNullable,
+                ),
+              );
+            }
+            if (fields.isNotEmpty) {
+              final container = refer(r'$container');
+              b.addExpression(
+                declareFinal(r'$container').assign(
+                  refer('formFieldEncoder', '../encoding/form_fields.dart')
+                      .property('container')
+                      .call([]),
+                ),
+              );
+              b.addExpression(
+                refer('request').property('encode').call([container]),
+              );
+              b.addExpression(
+                request.property('fields').property('addAll').call([
+                  container.property('value').asA(
+                        DartTypes.core.map(
+                          DartTypes.core.string,
+                          DartTypes.core.string,
+                        ),
+                      ),
+                ]),
+              );
+            }
+          });
+          body.statements.add(
+            encoded.wrapWithBlockIf(
+              refer('request').notEqualTo(literalNull),
+              bodyType.isNullable,
+            ),
+          );
+        default:
+          unreachable(
+            'Unknown request content type: ${requestBody.contentType}',
+          );
+      }
+    }
+
+    // Build the request.
+    {
+      if (requestContentType != null) {
+        body.addExpression(
+          request
+              .property('headers')
+              .index(literalString('Content-Type'))
+              .assign(literalString(requestContentType)),
+        );
+      }
       body.addExpression(
         request
             .property('headers')
-            .index(literalString('accept'))
+            .index(literalString('Accept'))
             .assign(literalString('application/json')),
       );
       for (final header in operation.headers) {
         final defaultValue = header.type.defaultValue;
+        final variable = refer(header.variableName);
         if (defaultValue == null) {
           final addHeader = request
               .property('headers')
               .index(literalString(header.rawName))
-              .assign(header.assignmentExpression(false));
+              .assign(header.type.stringifiedValue(variable, false));
           body.statements.add(
             addHeader.wrapWithBlockIf(
               refer(header.variableName).notEqualTo(literalNull),
@@ -452,34 +614,13 @@ final class OpenApiClientGenerator {
               .property('headers')
               .index(literalString(header.rawName))
               .assign(
-                header
-                    .assignmentExpression(true)
+                header.type
+                    .stringifiedValue(variable, true)
                     .ifNullThen(literal(defaultValue)),
               );
           body.addExpression(addHeader);
         }
       }
-    }
-
-    if (operation.bodyType case final bodyType?) {
-      m.optionalParameters.add(
-        Parameter(
-          (p) => p
-            ..type = bodyType.typeReference
-            ..required = !bodyType.typeReference.isNullableOrFalse
-            ..named = true
-            ..name = 'body',
-        ),
-      );
-      body.statements.add(
-        request
-            .property('body')
-            .assign(DartTypes.convert.jsonEncode.call([refer('body')]))
-            .wrapWithBlockIf(
-              refer('body').notEqualTo(literalNull),
-              bodyType.isNullable,
-            ),
-      );
     }
 
     // Send the HTTP request.
@@ -490,12 +631,12 @@ final class OpenApiClientGenerator {
         declareFinal(r'$response').assign(responseCode.awaited),
       );
       {
-        final decodeJson = refer(r'$response')
+        final bodyBytes = refer(r'$response')
             .property('stream')
-            .property('bytesToString')
+            .property('toBytes')
             .call([]).awaited;
         body.addExpression(
-          declareFinal(r'$body').assign(decodeJson),
+          declareFinal(r'$body').assign(bodyBytes),
         );
       }
     }
@@ -567,15 +708,22 @@ final class OpenApiClientGenerator {
         return;
       }
 
-      final decoded = DartTypes.convert.jsonDecode.call([refer(r'$body')]);
-      caseBuilder.addExpression(declareFinal(r'$json').assign(decoded));
-      final instance = OpenApiJsonGenerator().fromJson(
-        responseType,
-        refer(r'$json'),
-      );
-      caseBuilder.addExpression(
-        response.isError ? instance.thrown : instance.returned,
-      );
+      switch (response.type) {
+        case OpenApiBinaryType():
+          caseBuilder.addExpression(refer(r'$body').returned);
+        default:
+          final decoded = DartTypes.convert.jsonDecode.call([
+            DartTypes.convert.utf8.property('decode').call([refer(r'$body')]),
+          ]);
+          caseBuilder.addExpression(declareFinal(r'$json').assign(decoded));
+          final instance = OpenApiJsonGenerator().fromJson(
+            responseType,
+            refer(r'$json'),
+          );
+          caseBuilder.addExpression(
+            response.isError ? instance.thrown : instance.returned,
+          );
+      }
     }
 
     // Attach description to the case statement, if available.
@@ -630,24 +778,30 @@ typedef MappedUri = ({
   List<HeaderOrQueryParameter> headers,
 });
 
-extension on HeaderOrQueryParameter {
-  Expression assignmentExpression(bool isNullable) => switch (type) {
+extension on OpenApiType {
+  Expression stringifiedValue(
+    Expression variable,
+    bool isNullable,
+  ) =>
+      switch (this) {
         OpenApiSingleValueType(:final value) => switch (value) {
             final String value => literalString(value, raw: true),
             final List<Object?> values => literalList(values.cast<String>()),
             _ => literal(value).nullableProperty('toList', isNullable).call([]),
           },
         OpenApiDateType(:final primitiveType) => switch (primitiveType) {
-            OpenApiIntegerType() => refer(variableName)
+            OpenApiIntegerType() => variable
                 .nullableProperty('millisecondsSinceEpoch', isNullable)
                 .property('toString')
                 .call([]),
-            OpenApiStringType() => refer(variableName),
+            OpenApiStringType() => variable,
             _ => unreachable('Unexpected date type: $primitiveType'),
           },
-        OpenApiStringType() || OpenApiListType() => refer(variableName),
-        _ =>
-          refer(variableName).nullableProperty('toString', isNullable).call([]),
+        OpenApiStringType() ||
+        OpenApiEnumType() ||
+        OpenApiListType() =>
+          variable,
+        _ => variable.nullableProperty('toString', isNullable).call([]),
       };
 }
 

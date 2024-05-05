@@ -15,6 +15,7 @@ abstract class OpenApiTypeVisitor<R> {
 
   // Transposed primitive types
   R visitDate(OpenApiDateType type);
+  R visitBinary(OpenApiBinaryType type);
 
   // Simple wrapper types
   R visitSingleValue(OpenApiSingleValueType type);

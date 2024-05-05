@@ -138,6 +138,7 @@ class OpenApiGeneratorContext {
     String? key,
     OpenApiType type, {
     required String url,
+    String? mimeType,
     bool? structuralEnum,
   }) {
     final schema = type.schema.withNullability(false);
@@ -173,7 +174,7 @@ class OpenApiGeneratorContext {
                   ..declaredRepresentationType = typeReference,
               )
               ..implements.add(typeReference)
-              ..methods.add(
+              ..methods.addAll([
                 Method(
                   (m) => m
                     ..name = 'toJson'
@@ -181,7 +182,26 @@ class OpenApiGeneratorContext {
                     ..lambda = true
                     ..body = refer('_').code,
                 ),
-              ),
+                Method(
+                  (m) => m
+                    ..name = 'encode'
+                    ..returns = DartTypes.core.void$
+                    ..annotations.add(DartTypes.meta.internal)
+                    ..requiredParameters.add(
+                      Parameter(
+                        (p) => p
+                          ..type = refer(
+                            'EncodingContainer',
+                            '../encoding/encoder.dart',
+                          )
+                          ..name = 'container',
+                      ),
+                    )
+                    ..body = refer('container')
+                        .property('write')
+                        .call([refer('_')]).code,
+                ),
+              ]),
           ),
         OpenApiIterableInterface() => OpenApiArrayGenerator(
             name: reserveName(name, schema),
@@ -195,6 +215,7 @@ class OpenApiGeneratorContext {
         OpenApiStructType() => OpenApiStructGenerator(
             name: reserveName(name, schema),
             type: type,
+            mimeType: mimeType,
           ).generate(),
         OpenApiSealedType() => OpenApiUnionGenerator(
             name: reserveName(name, schema),
@@ -302,7 +323,7 @@ class OpenApiGeneratorContext {
               ),
           ])
           ..methods.addAll([
-            if (!identical(baseType, OpenApiEmptyType.instance))
+            if (!identical(baseType, OpenApiEmptyType.instance)) ...[
               Method(
                 (m) => m
                   ..name = 'toJson'
@@ -312,6 +333,15 @@ class OpenApiGeneratorContext {
                       .toJson(baseType.primitiveType!, refer('value'))
                       .code,
               ),
+              Method(
+                (m) => m
+                  ..name = 'toString'
+                  ..annotations.add(DartTypes.core.override)
+                  ..returns = DartTypes.core.string
+                  ..lambda = true
+                  ..body = refer('value').property('toString').call([]).code,
+              ),
+            ],
           ]);
       });
     });

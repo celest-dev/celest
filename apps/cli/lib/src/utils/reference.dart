@@ -125,7 +125,11 @@ extension ExpressionUtil on Expression {
         isNullable ? '?' : '',
       );
 
-  Expression wrapWithInlineNullCheck(Expression check) {
+  Expression wrapWithInlineNullCheck(
+    Expression check, [
+    bool isNullable = true,
+  ]) {
+    if (!isNullable) return this;
     return check.equalTo(literalNull).conditional(literalNull, nullChecked);
   }
 

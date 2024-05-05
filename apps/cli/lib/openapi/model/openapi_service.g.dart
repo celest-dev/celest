@@ -1245,7 +1245,7 @@ class _$ServiceMethod extends ServiceMethod {
   @override
   final BuiltList<HeaderOrQueryParameter> headers;
   @override
-  final OpenApiType? bodyType;
+  final BuiltMap<String, ServiceMethodRequest> requestBody;
   @override
   final OpenApiType responseType;
   @override
@@ -1266,7 +1266,7 @@ class _$ServiceMethod extends ServiceMethod {
       required this.pathParameters,
       required this.queryParameters,
       required this.headers,
-      this.bodyType,
+      required this.requestBody,
       required this.responseType,
       this.defaultResponse,
       required this.responseCases})
@@ -1284,6 +1284,8 @@ class _$ServiceMethod extends ServiceMethod {
     BuiltValueNullFieldError.checkNotNull(
         queryParameters, r'ServiceMethod', 'queryParameters');
     BuiltValueNullFieldError.checkNotNull(headers, r'ServiceMethod', 'headers');
+    BuiltValueNullFieldError.checkNotNull(
+        requestBody, r'ServiceMethod', 'requestBody');
     BuiltValueNullFieldError.checkNotNull(
         responseType, r'ServiceMethod', 'responseType');
     BuiltValueNullFieldError.checkNotNull(
@@ -1310,7 +1312,7 @@ class _$ServiceMethod extends ServiceMethod {
         pathParameters == other.pathParameters &&
         queryParameters == other.queryParameters &&
         headers == other.headers &&
-        bodyType == other.bodyType &&
+        requestBody == other.requestBody &&
         responseType == other.responseType &&
         defaultResponse == other.defaultResponse &&
         responseCases == other.responseCases;
@@ -1328,7 +1330,7 @@ class _$ServiceMethod extends ServiceMethod {
     _$hash = $jc(_$hash, pathParameters.hashCode);
     _$hash = $jc(_$hash, queryParameters.hashCode);
     _$hash = $jc(_$hash, headers.hashCode);
-    _$hash = $jc(_$hash, bodyType.hashCode);
+    _$hash = $jc(_$hash, requestBody.hashCode);
     _$hash = $jc(_$hash, responseType.hashCode);
     _$hash = $jc(_$hash, defaultResponse.hashCode);
     _$hash = $jc(_$hash, responseCases.hashCode);
@@ -1348,7 +1350,7 @@ class _$ServiceMethod extends ServiceMethod {
           ..add('pathParameters', pathParameters)
           ..add('queryParameters', queryParameters)
           ..add('headers', headers)
-          ..add('bodyType', bodyType)
+          ..add('requestBody', requestBody)
           ..add('responseType', responseType)
           ..add('defaultResponse', defaultResponse)
           ..add('responseCases', responseCases))
@@ -1403,9 +1405,11 @@ class ServiceMethodBuilder
   set headers(ListBuilder<HeaderOrQueryParameter>? headers) =>
       _$this._headers = headers;
 
-  OpenApiType? _bodyType;
-  OpenApiType? get bodyType => _$this._bodyType;
-  set bodyType(OpenApiType? bodyType) => _$this._bodyType = bodyType;
+  MapBuilder<String, ServiceMethodRequest>? _requestBody;
+  MapBuilder<String, ServiceMethodRequest> get requestBody =>
+      _$this._requestBody ??= new MapBuilder<String, ServiceMethodRequest>();
+  set requestBody(MapBuilder<String, ServiceMethodRequest>? requestBody) =>
+      _$this._requestBody = requestBody;
 
   OpenApiType? _responseType;
   OpenApiType? get responseType => _$this._responseType;
@@ -1438,7 +1442,7 @@ class ServiceMethodBuilder
       _pathParameters = $v.pathParameters.toBuilder();
       _queryParameters = $v.queryParameters.toBuilder();
       _headers = $v.headers.toBuilder();
-      _bodyType = $v.bodyType;
+      _requestBody = $v.requestBody.toBuilder();
       _responseType = $v.responseType;
       _defaultResponse = $v.defaultResponse?.toBuilder();
       _responseCases = $v.responseCases.toBuilder();
@@ -1479,7 +1483,7 @@ class ServiceMethodBuilder
               pathParameters: pathParameters.build(),
               queryParameters: queryParameters.build(),
               headers: headers.build(),
-              bodyType: bodyType,
+              requestBody: requestBody.build(),
               responseType: BuiltValueNullFieldError.checkNotNull(
                   responseType, r'ServiceMethod', 'responseType'),
               defaultResponse: _defaultResponse?.build(),
@@ -1493,6 +1497,8 @@ class ServiceMethodBuilder
         queryParameters.build();
         _$failedField = 'headers';
         headers.build();
+        _$failedField = 'requestBody';
+        requestBody.build();
 
         _$failedField = 'defaultResponse';
         _defaultResponse?.build();
@@ -1501,6 +1507,135 @@ class ServiceMethodBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ServiceMethod', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ServiceMethodRequest extends ServiceMethodRequest {
+  @override
+  final MediaType contentType;
+  @override
+  final OpenApiType? type;
+  @override
+  final BuiltMap<String, OpenApiEncoding> encoding;
+
+  factory _$ServiceMethodRequest(
+          [void Function(ServiceMethodRequestBuilder)? updates]) =>
+      (new ServiceMethodRequestBuilder()..update(updates))._build();
+
+  _$ServiceMethodRequest._(
+      {required this.contentType, this.type, required this.encoding})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        contentType, r'ServiceMethodRequest', 'contentType');
+    BuiltValueNullFieldError.checkNotNull(
+        encoding, r'ServiceMethodRequest', 'encoding');
+  }
+
+  @override
+  ServiceMethodRequest rebuild(
+          void Function(ServiceMethodRequestBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ServiceMethodRequestBuilder toBuilder() =>
+      new ServiceMethodRequestBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ServiceMethodRequest &&
+        contentType == other.contentType &&
+        type == other.type &&
+        encoding == other.encoding;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, contentType.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, encoding.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ServiceMethodRequest')
+          ..add('contentType', contentType)
+          ..add('type', type)
+          ..add('encoding', encoding))
+        .toString();
+  }
+}
+
+class ServiceMethodRequestBuilder
+    implements Builder<ServiceMethodRequest, ServiceMethodRequestBuilder> {
+  _$ServiceMethodRequest? _$v;
+
+  MediaType? _contentType;
+  MediaType? get contentType => _$this._contentType;
+  set contentType(MediaType? contentType) => _$this._contentType = contentType;
+
+  OpenApiType? _type;
+  OpenApiType? get type => _$this._type;
+  set type(OpenApiType? type) => _$this._type = type;
+
+  MapBuilder<String, OpenApiEncoding>? _encoding;
+  MapBuilder<String, OpenApiEncoding> get encoding =>
+      _$this._encoding ??= new MapBuilder<String, OpenApiEncoding>();
+  set encoding(MapBuilder<String, OpenApiEncoding>? encoding) =>
+      _$this._encoding = encoding;
+
+  ServiceMethodRequestBuilder();
+
+  ServiceMethodRequestBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _contentType = $v.contentType;
+      _type = $v.type;
+      _encoding = $v.encoding.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ServiceMethodRequest other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ServiceMethodRequest;
+  }
+
+  @override
+  void update(void Function(ServiceMethodRequestBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ServiceMethodRequest build() => _build();
+
+  _$ServiceMethodRequest _build() {
+    _$ServiceMethodRequest _$result;
+    try {
+      _$result = _$v ??
+          new _$ServiceMethodRequest._(
+              contentType: BuiltValueNullFieldError.checkNotNull(
+                  contentType, r'ServiceMethodRequest', 'contentType'),
+              type: type,
+              encoding: encoding.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'encoding';
+        encoding.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ServiceMethodRequest', _$failedField, e.toString());
       }
       rethrow;
     }

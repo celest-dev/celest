@@ -99,7 +99,7 @@ final class OpenApiEnumGenerator {
           ),
         );
 
-        b.methods.add(
+        b.methods.addAll([
           Method(
             (m) => m
               ..name = 'toJson'
@@ -107,7 +107,8 @@ final class OpenApiEnumGenerator {
               ..lambda = true
               ..body = refer('_').code,
           ),
-        );
+          _encodeMethod,
+        ]);
         b.representationDeclaration = RepresentationDeclaration(
           (d) => d
             ..name = '_'
@@ -129,5 +130,23 @@ final class OpenApiEnumGenerator {
         }
       },
     );
+  }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        )
+        ..body =
+            refer('container').property('writeString').call([refer('_')]).code;
+    });
   }
 }

@@ -31,6 +31,7 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:yaml/yaml.dart';
 
 /// Fully resolves an [OpenApiDocument], preparing the API into a structure
@@ -64,19 +65,16 @@ final class OpenApiSchemaLinker {
       var name = schema.key.pascalCase;
 
       // Stripe
+      ({String className, String? inPackage})? stripeResource;
       switch (schema.value.extensions.toMap()) {
-        case {'x-stripeResource': final YamlMap _}:
-          // TODO: Stripe's class_name cannot be trusted to be unique...
-          // switch (stripeResource) {
-          //   case {
-          //       'in_package': final String packageName,
-          //       'class_name': final String className
-          //     }:
-          //     name = '$packageName$className';
-          //   case {'class_name': final String className}:
-          //     name = className;
-          // }
-          break;
+        case {'x-stripeResource': final YamlMap resourceJson}:
+          switch (resourceJson) {
+            case {'class_name': final String className}:
+              stripeResource = (
+                className: className,
+                inPackage: resourceJson['in_package'] as String?,
+              );
+          }
         case {
             'x-stripeEvent': JsonObject(value: {'type': final String eventType})
           }:
@@ -105,6 +103,10 @@ final class OpenApiSchemaLinker {
           );
           final methodName = operationData['method_name'] as String;
           context.stripeOperationNames[(path, methodType)] = methodName;
+          if (stripeResource != null) {
+            context.stripeOperationResourceName[(path, methodType)] =
+                stripeResource;
+          }
         }
       }
     }
@@ -118,6 +120,10 @@ final class OpenApiSchemaLinker {
         context.typeResolver,
         OpenApiTypeResolutionScope(typeName: name, url: url),
       );
+      if (schema.value.extensions['x-resourceId']?.value
+          case final String resourceId) {
+        context.stripeResources[resourceId] = type.typeReference;
+      }
       _service.models[name] = ServiceModel(
         spec: context.generateSpec(
           name,
@@ -296,11 +302,12 @@ final class OpenApiSchemaLinker {
         final parameterType = context.typeResolver.resolveRef(
           parameter.schema ?? parameter.content!.$2.schema,
           OpenApiTypeResolutionScope(
-            typeName: variableName.pascalCase,
+            typeName:
+                '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
             isNullable: !parameter.required,
             url: 'models.dart',
           ),
-          '_$variableName',
+          null,
         );
         path.pathParameters[variableName] = ServicePathParameter.build((b) {
           b
@@ -337,11 +344,12 @@ final class OpenApiSchemaLinker {
                 .resolveRef(
                   parameter.schema ?? parameter.content!.$2.schema,
                   OpenApiTypeResolutionScope(
-                    typeName: variableName.pascalCase,
+                    typeName:
+                        '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
                     isNullable: !parameter.required,
                     url: 'models.dart',
                   ),
-                  '_$variableName',
+                  null,
                 )
                 .withNullability(!parameter.required);
             switch (parameter.location) {
@@ -387,31 +395,56 @@ final class OpenApiSchemaLinker {
           method.mappedPath = operationPath;
 
           if (operation.requestBody case final requestBody?) {
-            final bodyMediaType = requestBody.content.values.firstWhere(
-              (el) =>
-                  el.contentType.subtype == '*' ||
-                  el.contentType.subtype == 'json',
-              // TODO: Stripe requires more types;
-              orElse: () => requestBody.content.values.first,
-            );
-            final bodyType = context.typeResolver
-                .resolveRef(
-                  bodyMediaType.schema,
-                  OpenApiTypeResolutionScope(
-                    typeName: '${methodName.pascalCase}Body',
-                    isNullable: !requestBody.required,
-                    url: 'models.dart',
-                  ),
-                  null,
-                )
-                .withNullability(!requestBody.required);
-            // .rebuild((t) {
-            //   if (requestBody.description case final description?) {
-            //     t.docs ??= formatDocs(description);
-            //   }
-            // });
-            if (bodyType is! OpenApiEmptyType) {
-              method.bodyType = bodyType;
+            // final bodyMediaType = requestBody.content.values.firstWhere(
+            //   (el) =>
+            //       el.contentType.subtype == '*' ||
+            //       el.contentType.subtype == 'json',
+            //   // `TODO`: Stripe requires more types;
+            //   orElse: () => requestBody.content.values.first,
+            // );
+            final bodyMediaType = requestBody.content.values.firstOrNull;
+            if (bodyMediaType != null) {
+              if (requestBody.content.length > 1) {
+                throw ArgumentError(
+                  'Multiple request body media types: '
+                  '${requestBody.content.keys.join(', ')}',
+                );
+              }
+              final stripeOperationType = context
+                      .stripeOperationNames[(pathItem.path, operation.type)] ??
+                  '';
+              final requestTypeName = switch (
+                  context.stripeOperationResourceName[(
+                operation.path,
+                operation.type
+              )]) {
+                (:final className, :final inPackage) =>
+                  '${stripeOperationType.pascalCase}${(inPackage ?? '').pascalCase}${className.pascalCase}Request',
+                _ => '${methodName.pascalCase}Request',
+              };
+              final bodyType = context.typeResolver
+                  .resolveRef(
+                    bodyMediaType.schema,
+                    OpenApiTypeResolutionScope(
+                      typeName: requestTypeName,
+                      isNullable: !requestBody.required,
+                      mimeType: bodyMediaType.contentType.mimeType,
+                      url: 'models.dart',
+                    ),
+                    null,
+                  )
+                  .withNullability(!requestBody.required)
+                  .rebuild((t) {
+                if (requestBody.description case final description?) {
+                  t.docs ??= formatDocs(description);
+                }
+              });
+              method.requestBody[bodyMediaType.contentType.mimeType] =
+                  ServiceMethodRequest(
+                contentType: bodyMediaType.contentType,
+                type: bodyType is OpenApiEmptyType ? null : bodyType,
+                encoding: bodyMediaType.encoding.toMap(),
+              );
             }
           }
 
@@ -575,10 +608,14 @@ final class OpenApiSchemaLinker {
       );
     }
 
-    final responseMediaType = response.content.values.firstWhere(
-      (el) => el.contentType.subtype == '*' || el.contentType.subtype == 'json',
-      orElse: () => response.content.values.first,
-    );
+    // final responseMediaType = response.content.values.firstWhere(
+    //   (el) => el.contentType.subtype == '*' || el.contentType.subtype == 'json',
+    //   orElse: () => response.content.values.first,
+    // );
+    final responseMediaType = response.content.values.singleOrNull ??
+        (throw ArgumentError(
+          'Multiple response media types: ${response.content}',
+        ));
     final responseType = context.typeResolver.resolveRef(
       responseMediaType.schema,
       OpenApiTypeResolutionScope(

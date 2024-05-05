@@ -502,7 +502,7 @@ abstract class OpenApiIntegerType
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
         (t) => t.typeReference.replace(
-          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+          DartTypes.core.int.withNullability(isNullable).toTypeReference,
         ),
       );
 
@@ -559,7 +559,7 @@ abstract class OpenApiDoubleType
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
         (t) => t.typeReference.replace(
-          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+          DartTypes.core.double.withNullability(isNullable).toTypeReference,
         ),
       );
 
@@ -874,9 +874,23 @@ abstract class OpenApiStructType
   /// The properties for this struct.
   BuiltMap<String, OpenApiField> get fields;
 
+  Iterable<OpenApiField> get deserializableFields sync* {
+    for (final field in fields.values) {
+      // TODO: Some binary types should be encoded
+      if (field.type case OpenApiSingleValueType() || OpenApiBinaryType()) {
+        continue;
+      }
+      yield field;
+    }
+  }
+
   Iterable<OpenApiField> get serializableFields sync* {
     for (final field in fields.values) {
-      if (field.type is! OpenApiSingleValueType) yield field;
+      // TODO: Some binary types should be encoded
+      if (field.type case OpenApiBinaryType()) {
+        continue;
+      }
+      yield field;
     }
   }
 
@@ -1114,6 +1128,9 @@ abstract class OpenApiEnumType
   BuiltList<Object> get values;
 
   @override
+  OpenApiPrimitiveType get primitiveType => baseType;
+
+  @override
   OpenApiEnumType withNullability(bool isNullable) {
     return _$OpenApiEnumType._(
       typeReference: typeReference.withNullability(isNullable).toTypeReference,
@@ -1227,4 +1244,53 @@ abstract class OpenApiDateType
 
   @override
   R accept<R>(OpenApiTypeVisitor<R> visitor) => visitor.visitDate(this);
+}
+
+abstract class OpenApiBinaryType
+    implements
+        Built<OpenApiBinaryType, OpenApiBinaryTypeBuilder>,
+        OpenApiType,
+        OpenApiPrimitiveType,
+        OpenApiInterfaceType {
+  factory OpenApiBinaryType({
+    required TypeReference typeReference,
+    required OpenApiTypeSchema schema,
+    required bool isNullable,
+    required OpenApiPrimitiveType primitiveType,
+    Object? defaultValue,
+  }) {
+    return _$OpenApiBinaryType._(
+      typeReference: typeReference,
+      schema: schema,
+      isNullable: isNullable,
+      primitiveType: primitiveType,
+      defaultValue: defaultValue,
+    );
+  }
+
+  factory OpenApiBinaryType.build([
+    void Function(OpenApiBinaryTypeBuilder b) updates,
+  ]) = _$OpenApiBinaryType;
+
+  OpenApiBinaryType._();
+
+  @override
+  OpenApiPrimitiveType get primitiveType;
+
+  @override
+  OpenApiInterfaceType get superType => _anyType;
+
+  @override
+  OpenApiBinaryType withNullability(bool isNullable) {
+    return _$OpenApiBinaryType._(
+      typeReference: typeReference.withNullability(isNullable).toTypeReference,
+      schema: schema,
+      isNullable: isNullable,
+      primitiveType: primitiveType.withNullability(isNullable),
+      defaultValue: defaultValue,
+    );
+  }
+
+  @override
+  R accept<R>(OpenApiTypeVisitor<R> visitor) => visitor.visitBinary(this);
 }

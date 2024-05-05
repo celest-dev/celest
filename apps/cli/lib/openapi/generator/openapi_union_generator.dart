@@ -41,12 +41,13 @@ final class OpenApiUnionGenerator {
               )
               ..body = Block((b) {
                 final map = declareFinal('map').assign(
-                  refer('json').asA(
-                    DartTypes.core.map(
-                      DartTypes.core.string,
-                      DartTypes.core.object.nullable,
-                    ),
-                  ),
+                  refer('json')
+                      .asA(DartTypes.core.map())
+                      .property('cast')
+                      .call([], {}, [
+                    DartTypes.core.string,
+                    DartTypes.core.object.nullable,
+                  ]),
                 );
                 b.addExpression(map);
                 switch (type.discriminator) {
@@ -77,7 +78,7 @@ final class OpenApiUnionGenerator {
                     b.addExpression(
                       refer('factory').call([refer('map')]).returned,
                     );
-                  case TypeDiscriminator(:final mapping):
+                  case TypeDiscriminator():
                     // b.statements.add(
                     //   refer('json')
                     //       .property(type.discriminator.propertyName.camelCase)
@@ -93,7 +94,9 @@ final class OpenApiUnionGenerator {
                     //     ),
                     //   ),
                     // );
-                    b.addExpression(DartTypes.core.unimplementedError.thrown);
+                    b.addExpression(
+                      DartTypes.core.unimplementedError.newInstance([]).thrown,
+                    );
                 }
               }),
           ),
@@ -114,6 +117,7 @@ final class OpenApiUnionGenerator {
                 DartTypes.core.object.nullable,
               ),
           ),
+          _encodeMethod,
         ]);
       if (type.discriminator case FieldDiscriminator(:final mapping)) {
         final mappingField = Field(
@@ -153,4 +157,39 @@ final class OpenApiUnionGenerator {
     });
     return baseClass;
   }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        );
+    });
+  }
+
+  // // Method get _encodeMethod {
+  // //   return Method((m) {
+  // //     m
+  // //       ..name = 'encode'
+  // ..annotations.add(DartTypes.meta.internal)
+  // //       ..returns = DartTypes.core.map(
+  // //         DartTypes.core.string,
+  // //         DartTypes.core.object.nullable,
+  // //       )
+  // //       ..requiredParameters.add(
+  // //         Parameter(
+  // //           (p) => p
+  // //             ..type = refer('Encoder', '../encoding/encoder.dart')
+  // //             ..name = 'encoder',
+  // //         ),
+  // //       );
+  // //   });
+  // }
 }

@@ -1,3 +1,4 @@
+import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -46,10 +47,24 @@ final class OpenApiRecordGenerator {
                     ),
                 ),
               )
-              ..body = refer(name).newInstance([
-                OpenApiJsonGenerator()
-                    .fromJson(type.primitiveType, refer('json')),
-              ]).code,
+              ..body = Block((b) {
+                final map = declareFinal('map').assign(
+                  refer('json')
+                      .asA(DartTypes.core.map())
+                      .property('cast')
+                      .call([], {}, [
+                    DartTypes.core.string,
+                    DartTypes.core.object.nullable,
+                  ]),
+                );
+                b.addExpression(map);
+                b.addExpression(
+                  refer(name).newInstance([
+                    OpenApiJsonGenerator()
+                        .fromJson(type.primitiveType, refer('map')),
+                  ]).returned,
+                );
+              }),
           ),
         ])
         ..methods.addAll([
@@ -61,7 +76,32 @@ final class OpenApiRecordGenerator {
                   .toJson(type.primitiveType, refer('this'))
                   .code,
           ),
+          _encodeMethod,
         ]),
     );
+  }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        )
+        ..body = openApiEncoder
+            .encode(
+              type: type,
+              ref: refer('this'),
+              container: refer('container'),
+              key: null,
+            )
+            .code;
+    });
   }
 }

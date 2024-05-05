@@ -1,3 +1,4 @@
+import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -45,15 +46,24 @@ final class OpenApiArrayGenerator {
                 Parameter(
                   (p) => p
                     ..name = 'json'
-                    ..type = DartTypes.core.list(
-                      DartTypes.core.object.nullable,
-                    ),
+                    ..type = DartTypes.core.object.nullable,
                 ),
               )
-              ..body = refer(name).newInstance([
-                OpenApiJsonGenerator()
-                    .fromJson(type.primitiveType, refer('json')),
-              ]).code,
+              ..body = Block((b) {
+                b.addExpression(
+                  declareFinal('list').assign(
+                    refer('json').asA(
+                      DartTypes.core.list(DartTypes.core.object.nullable),
+                    ),
+                  ),
+                );
+                b.addExpression(
+                  refer(name).newInstance([
+                    OpenApiJsonGenerator()
+                        .fromJson(type.primitiveType, refer('list')),
+                  ]).returned,
+                );
+              }),
           ),
         ])
         ..methods.addAll([
@@ -65,7 +75,32 @@ final class OpenApiArrayGenerator {
                   .toJson(type.primitiveType, refer('this'))
                   .code,
           ),
+          _encodeMethod,
         ]),
     );
+  }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
+        )
+        ..body = openApiEncoder
+            .encode(
+              type: type,
+              ref: refer('this'),
+              container: refer('container'),
+              key: null,
+            )
+            .code;
+    });
   }
 }

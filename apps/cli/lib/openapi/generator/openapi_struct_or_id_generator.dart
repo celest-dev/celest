@@ -37,7 +37,7 @@ final class OpenApiStructOrIdGenerator {
         }),
       )
       ..constructors.addAll([_fromJsonMethod])
-      ..methods.addAll([_toJsonMethod]);
+      ..methods.addAll([_toJsonMethod, _encodeMethod]);
     return _class.build();
   }
 
@@ -55,31 +55,20 @@ final class OpenApiStructOrIdGenerator {
         )
         ..lambda = false
         ..body = Block((b) {
-          final map = declareFinal('map').assign(
-            refer('json').asA(
-              DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
-            ),
-          );
-          b.addExpression(map);
           final idOnly = refer('StripeResource')
               .newInstance([], {
-                'id': refer('map')
-                    .index(literalString('id'))
-                    .asA(DartTypes.core.string),
+                'id': refer('json'),
               })
               .returned
               .statement;
           b.statements.add(
             idOnly.wrapWithBlockIf(
-              refer('map').property('length').equalTo(literalNum(1)),
+              refer('json').isA(DartTypes.core.string),
             ),
           );
           b.addExpression(
             baseType.typeReference
-                .newInstanceNamed('fromJson', [refer('map')]).returned,
+                .newInstanceNamed('fromJson', [refer('json')]).returned,
           );
         });
     });
@@ -92,6 +81,22 @@ final class OpenApiStructOrIdGenerator {
         ..returns = DartTypes.core.map(
           DartTypes.core.string,
           DartTypes.core.object.nullable,
+        );
+    });
+  }
+
+  Method get _encodeMethod {
+    return Method((m) {
+      m
+        ..name = 'encode'
+        ..returns = DartTypes.core.void$
+        ..annotations.add(DartTypes.meta.internal)
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..name = 'container',
+          ),
         );
     });
   }
