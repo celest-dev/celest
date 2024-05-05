@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/openapi/model/openapi_v3.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
@@ -5,6 +6,29 @@ import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
+
+final class StripeOperation {
+  StripeOperation({
+    required this.path,
+    required this.type,
+    required this.qualifiedMethodName,
+    required this.idField,
+  });
+
+  final String path;
+  final StripeOperationType type;
+  final String qualifiedMethodName;
+  final String? idField;
+}
+
+enum StripeOperationType {
+  retrieve,
+  list,
+  create,
+  update,
+  delete,
+  custom,
+}
 
 final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   StripeOpenApiGeneratorContext({
@@ -26,6 +50,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   final stripeEventTypes = <String>{};
 
   final stripeResources = <String, TypeReference>{};
+  final stripeOperations = ListMultimapBuilder<String, StripeOperation>();
 
   @override
   Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {

@@ -56,8 +56,8 @@ final class OpenApiStructGenerator {
     if (mimeType == null) {
       return false;
     }
-    return mimeType.startsWith('multipart') ||
-        mimeType.endsWith('x-www-form-urlencoded');
+    return mimeType.startsWith('multipart');
+    // ||    mimeType.endsWith('x-www-form-urlencoded');
   }
 
   Class generate() {
@@ -100,10 +100,10 @@ final class OpenApiStructGenerator {
     _class
       ..constructors.addAll([
         ctor.build(),
-        _fromJsonMethod,
+        if (!includeFormData) _fromJsonMethod,
       ])
       ..methods.addAll([
-        _toJsonMethod,
+        if (!includeFormData) _toJsonMethod,
         _encodeMethod,
         _toString,
       ]);

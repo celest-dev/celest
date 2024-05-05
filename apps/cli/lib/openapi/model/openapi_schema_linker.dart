@@ -95,6 +95,8 @@ final class OpenApiSchemaLinker {
 
       if (schema.value.extensions['x-stripeOperations']
           case JsonObject(value: final List<Object?> operations)) {
+        final stripeResourceId =
+            schema.value.extensions['x-resourceId']?.value as String?;
         for (final operation in operations) {
           final operationData = (operation as Map).cast<String, Object?>();
           final path = operationData['path'] as String;
@@ -106,6 +108,35 @@ final class OpenApiSchemaLinker {
           if (stripeResource != null) {
             context.stripeOperationResourceName[(path, methodType)] =
                 stripeResource;
+          }
+          if (stripeResourceId != null) {
+            final templates = <String>[];
+            final qualifiedMethodName = path
+                .split('/')
+                .map((it) {
+                  if (it.startsWith('{')) {
+                    final template = it.substring(1, it.length - 1).camelCase;
+                    templates.add(template);
+                    return '';
+                  }
+                  return it.camelCase;
+                })
+                .followedBy([methodName])
+                .where((it) => it.isNotEmpty)
+                .join('.');
+            if (templates.length <= 1) {
+              context.stripeOperations.add(
+                stripeResourceId,
+                StripeOperation(
+                  path: path,
+                  type: StripeOperationType.values.byName(
+                    operationData['method_type'] as String,
+                  ),
+                  qualifiedMethodName: qualifiedMethodName,
+                  idField: templates.singleOrNull,
+                ),
+              );
+            }
           }
         }
       }
