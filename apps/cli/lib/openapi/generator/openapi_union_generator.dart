@@ -36,18 +36,24 @@ final class OpenApiUnionGenerator {
                 Parameter(
                   (p) => p
                     ..name = 'json'
-                    ..type = DartTypes.core.map(
-                      DartTypes.core.string,
-                      DartTypes.core.object.nullable,
-                    ),
+                    ..type = DartTypes.core.object.nullable,
                 ),
               )
               ..body = Block((b) {
+                final map = declareFinal('map').assign(
+                  refer('json').asA(
+                    DartTypes.core.map(
+                      DartTypes.core.string,
+                      DartTypes.core.object.nullable,
+                    ),
+                  ),
+                );
+                b.addExpression(map);
                 switch (type.discriminator) {
                   case FieldDiscriminator(:final wireName):
                     b.addExpression(
                       declareFinal('type').assign(
-                        refer('json')
+                        refer('map')
                             .index(literalString(wireName))
                             .asA(DartTypes.core.string),
                       ),
@@ -69,7 +75,7 @@ final class OpenApiUnionGenerator {
                           ),
                     );
                     b.addExpression(
-                      refer('factory').call([refer('json')]).returned,
+                      refer('factory').call([refer('map')]).returned,
                     );
                   case TypeDiscriminator(:final mapping):
                     // b.statements.add(
@@ -121,10 +127,7 @@ final class OpenApiUnionGenerator {
                 (f) => f
                   ..returnType = refer(name)
                   ..requiredParameters.add(
-                    DartTypes.core.map(
-                      DartTypes.core.string,
-                      DartTypes.core.object.nullable,
-                    ),
+                    DartTypes.core.object.nullable,
                   ),
               ),
             )

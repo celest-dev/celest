@@ -185,6 +185,9 @@ abstract class ServicePath implements Built<ServicePath, ServicePathBuilder> {
   /// Will be `null` for the root path.
   String? get className;
 
+  /// The path in `lib` which contains this path's class.
+  String? get libraryPath;
+
   /// The Dart variable name to use on the parent.
   ///
   /// Will be `null` for the root path.
@@ -287,10 +290,12 @@ abstract class ServiceMethodResponse
     implements Built<ServiceMethodResponse, ServiceMethodResponseBuilder> {
   factory ServiceMethodResponse({
     required String description,
+    required bool isError,
     required OpenApiType type,
   }) {
     return _$ServiceMethodResponse._(
       description: description,
+      isError: isError,
       type: type,
     );
   }
@@ -302,6 +307,7 @@ abstract class ServiceMethodResponse
   ServiceMethodResponse._();
 
   String get description;
+  bool get isError;
   OpenApiType get type;
   // TODO: Headers
 }

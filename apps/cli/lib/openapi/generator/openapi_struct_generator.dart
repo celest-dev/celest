@@ -100,24 +100,32 @@ final class OpenApiStructGenerator {
           Parameter(
             (p) => p
               ..name = 'json'
-              ..type = DartTypes.core.map(
+              ..type = DartTypes.core.object.nullable,
+          ),
+        )
+        ..lambda = false
+        ..body = Block((b) {
+          final fields = <String, Expression>{};
+          final map = declareFinal('map').assign(
+            refer('json').asA(
+              DartTypes.core.map(
                 DartTypes.core.string,
                 DartTypes.core.object.nullable,
               ),
-          ),
-        )
-        ..lambda = false;
-
-      final fields = <String, Expression>{};
-      for (final field in type.serializableFields) {
-        final ref = refer('json').index(literalString(field.name));
-        fields[field.dartName] = jsonGenerator.fromJson(
-          field.type,
-          ref,
-        );
-      }
-
-      m.body = type.typeReference.newInstance([], fields).returned.statement;
+            ),
+          );
+          b.addExpression(map);
+          for (final field in type.serializableFields) {
+            final ref = refer('map').index(literalString(field.name));
+            fields[field.dartName] = jsonGenerator.fromJson(
+              field.type,
+              ref,
+            );
+          }
+          b.addExpression(
+            type.typeReference.newInstance([], fields).returned,
+          );
+        });
     });
   }
 

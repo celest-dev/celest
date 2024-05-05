@@ -1,12 +1,14 @@
 final class OpenApiTypeResolutionScope {
   const OpenApiTypeResolutionScope({
     required this.typeName,
+    required this.url,
     this.sealedParent,
     this.needsWrapper = false,
     this.isNullable,
   });
 
   final String typeName;
+  final String url;
   final String? sealedParent;
   final bool needsWrapper;
   final bool? isNullable;
@@ -25,6 +27,7 @@ final class OpenApiTypeResolutionScope {
   }) =>
       OpenApiTypeResolutionScope(
         typeName: '$typeName$name',
+        url: url,
         sealedParent: sealedParent,
         needsWrapper: false, // Only top-level types need wrappers.
         isNullable: isNullable,

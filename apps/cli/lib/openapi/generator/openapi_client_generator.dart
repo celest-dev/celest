@@ -1,4 +1,6 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/codegen/doc_comments.dart';
+import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/model/dart_name.dart';
 import 'package:celest_cli/openapi/model/openapi_service.dart';
 import 'package:celest_cli/openapi/model/openapi_v3.dart';
@@ -39,16 +41,21 @@ final class OpenApiClientGenerator {
 
   late final String clientClassName = service.clientClassName;
   late final Reference clientClassType = refer(clientClassName);
-  late final LibraryBuilder _library = LibraryBuilder();
   late final ClassBuilder _client = ClassBuilder()
     ..name = clientClassName
     ..modifier = ClassModifier.final$;
 
-  Library get library => _library.build();
+  final _libraries = MapBuilder<String, LibraryBuilder>();
 
-  Library generate() {
+  LibraryBuilder _library(String path) =>
+      _libraries.putIfAbsent(path, LibraryBuilder.new);
+
+  Map<String, Library> generate() {
     _generateClientClass();
-    return library;
+    return _libraries
+        .build()
+        .map((path, lib) => MapEntry(path, lib.build()))
+        .toMap();
   }
 
   void _generateClientClass() {
@@ -102,6 +109,21 @@ final class OpenApiClientGenerator {
       );
       return (parameter, null);
     }
+    if (servers case [Uri(isAbsolute: true) && final single]) {
+      final parameter = Parameter(
+        (p) => p
+          ..required = false
+          ..named = true
+          ..type = DartTypes.core.uri.nullable
+          ..name = 'baseUri',
+      );
+      return (
+        parameter,
+        DartTypes.core.uri
+            .property('parse')
+            .call([literalString(single.toString())])
+      );
+    }
     final serverInfoClassName = service.info.extensionTypeName;
     final serverInfoType = refer(serverInfoClassName);
     final serverInfo = ExtensionTypeBuilder()
@@ -141,7 +163,7 @@ final class OpenApiClientGenerator {
             .map((el) => (el.key, el.value))
             .toList(),
       );
-      _library.body.add(vars.spec);
+      _library('client.dart').body.add(vars.spec);
       serverInfo.methods.add(
         Method((m) {
           m
@@ -178,7 +200,7 @@ final class OpenApiClientGenerator {
       ),
     );
 
-    _library.body.add(serverInfo.build());
+    _library('client.dart').body.add(serverInfo.build());
     final parameter = Parameter(
       (p) => p
         ..required = false
@@ -273,11 +295,6 @@ final class OpenApiClientGenerator {
       );
     }
 
-    if (path.methods.isNotEmpty) {
-      // Generate content type decoders.
-      _addDecodeJsonMethod(class_);
-    }
-
     for (final subpath in path.subpaths.values) {
       _generatePath(subpath);
       class_.methods.add(
@@ -310,7 +327,7 @@ final class OpenApiClientGenerator {
       );
     }
 
-    _library.body.add(class_.build());
+    _library(path.libraryPath ?? 'client.dart').body.add(class_.build());
   }
 
   /// Genereates a method for the given operation (path/verb combination).
@@ -466,23 +483,31 @@ final class OpenApiClientGenerator {
     }
 
     // Send the HTTP request.
-    final response = refer(r'$response');
     {
       final responseCode =
           refer('_httpClient').property('send').call([request]);
       body.addExpression(
         declareFinal(r'$response').assign(responseCode.awaited),
       );
+      {
+        final decodeJson = refer(r'$response')
+            .property('stream')
+            .property('bytesToString')
+            .call([]).awaited;
+        body.addExpression(
+          declareFinal(r'$body').assign(decodeJson),
+        );
+      }
     }
 
     // Extract the content type.
-    {
-      final contentType =
-          response.property('headers').index(literalString('content-type'));
-      body.addExpression(
-        declareFinal(r'$contentType').assign(contentType),
-      );
-    }
+    // {
+    //   final contentType =
+    //       response.property('headers').index(literalString('content-type'));
+    //   body.addExpression(
+    //     declareFinal(r'$contentType').assign(contentType),
+    //   );
+    // }
 
     final switchStatement = <Code>[
       const Code(r'switch ($response.statusCode) {'),
@@ -516,55 +541,6 @@ final class OpenApiClientGenerator {
     return m.build();
   }
 
-  void _addDecodeJsonMethod(ClassBuilder class_) {
-    final decodeJson = Method((m) {
-      m
-        ..returns = DartTypes.core.future(refer('T'))
-        ..name = '_decodeJson'
-        ..types.add(refer('T'))
-        ..modifier = MethodModifier.async
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..type = DartTypes.http.streamedResponse
-              ..name = r'$response',
-          ),
-        );
-
-      final decodeJsonBody = BlockBuilder();
-      final jsonBody = refer(r'$body');
-      {
-        final decodeJson = refer(r'$response')
-            .property('stream')
-            .property('bytesToString')
-            .call([]).awaited;
-        decodeJsonBody.addExpression(
-          declareFinal(r'$body').assign(decodeJson),
-        );
-      }
-      final jsonResponse = refer(r'$json');
-      {
-        decodeJsonBody.addExpression(
-          declareFinal(r'$json').assign(
-            DartTypes.convert.jsonDecode.call([jsonBody]),
-          ),
-        );
-      }
-      final decoded = DartTypes.celest.serializers
-          .property('instance')
-          .property('deserialize')
-          .call(
-        [jsonResponse],
-        {},
-        [refer('T')],
-      );
-      decodeJsonBody.addExpression(decoded.returned);
-
-      m.body = decodeJsonBody.build();
-    });
-    class_.methods.add(decodeJson);
-  }
-
   Code _generateResponseCase(
     int? statusCode,
     ServiceMethod operation,
@@ -591,12 +567,14 @@ final class OpenApiClientGenerator {
         return;
       }
 
+      final decoded = DartTypes.convert.jsonDecode.call([refer(r'$body')]);
+      caseBuilder.addExpression(declareFinal(r'$json').assign(decoded));
+      final instance = OpenApiJsonGenerator().fromJson(
+        responseType,
+        refer(r'$json'),
+      );
       caseBuilder.addExpression(
-        refer('_decodeJson').call(
-          [refer(r'$response')],
-          {},
-          [responseType.typeReference],
-        ).returned,
+        response.isError ? instance.thrown : instance.returned,
       );
     }
 

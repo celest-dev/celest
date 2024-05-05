@@ -882,12 +882,14 @@ abstract class OpenApiEncoding
 abstract class OpenApiResponse
     implements Built<OpenApiResponse, OpenApiResponseBuilder> {
   factory OpenApiResponse({
+    required int? statusCode,
     required String description,
     Map<String, OpenApiHeader>? headers,
     Map<MediaType, OpenApiMediaType>? content,
     // Map<String, OpenApiLink> links = const {},
   }) {
     return _$OpenApiResponse._(
+      statusCode: statusCode,
       description: description,
       headers: (headers ?? const {}).build(),
       content: (content ?? const {}).build(),
@@ -900,6 +902,8 @@ abstract class OpenApiResponse
   ) = _$OpenApiResponse;
 
   OpenApiResponse._();
+
+  int? get statusCode;
 
   /// REQUIRED. A short description of the response.
   ///

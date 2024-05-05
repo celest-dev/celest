@@ -940,6 +940,8 @@ class _$ServicePath extends ServicePath {
   @override
   final String? className;
   @override
+  final String? libraryPath;
+  @override
   final String? variableName;
   @override
   final BuiltMap<String, ServicePathParameter> pathParameters;
@@ -953,6 +955,7 @@ class _$ServicePath extends ServicePath {
 
   _$ServicePath._(
       {this.className,
+      this.libraryPath,
       this.variableName,
       required this.pathParameters,
       required this.methods,
@@ -976,6 +979,7 @@ class _$ServicePath extends ServicePath {
     if (identical(other, this)) return true;
     return other is ServicePath &&
         className == other.className &&
+        libraryPath == other.libraryPath &&
         variableName == other.variableName &&
         pathParameters == other.pathParameters &&
         methods == other.methods &&
@@ -986,6 +990,7 @@ class _$ServicePath extends ServicePath {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, className.hashCode);
+    _$hash = $jc(_$hash, libraryPath.hashCode);
     _$hash = $jc(_$hash, variableName.hashCode);
     _$hash = $jc(_$hash, pathParameters.hashCode);
     _$hash = $jc(_$hash, methods.hashCode);
@@ -998,6 +1003,7 @@ class _$ServicePath extends ServicePath {
   String toString() {
     return (newBuiltValueToStringHelper(r'ServicePath')
           ..add('className', className)
+          ..add('libraryPath', libraryPath)
           ..add('variableName', variableName)
           ..add('pathParameters', pathParameters)
           ..add('methods', methods)
@@ -1012,6 +1018,10 @@ class ServicePathBuilder implements Builder<ServicePath, ServicePathBuilder> {
   String? _className;
   String? get className => _$this._className;
   set className(String? className) => _$this._className = className;
+
+  String? _libraryPath;
+  String? get libraryPath => _$this._libraryPath;
+  set libraryPath(String? libraryPath) => _$this._libraryPath = libraryPath;
 
   String? _variableName;
   String? get variableName => _$this._variableName;
@@ -1042,6 +1052,7 @@ class ServicePathBuilder implements Builder<ServicePath, ServicePathBuilder> {
     final $v = _$v;
     if ($v != null) {
       _className = $v.className;
+      _libraryPath = $v.libraryPath;
       _variableName = $v.variableName;
       _pathParameters = $v.pathParameters.toBuilder();
       _methods = $v.methods.toBuilder();
@@ -1071,6 +1082,7 @@ class ServicePathBuilder implements Builder<ServicePath, ServicePathBuilder> {
       _$result = _$v ??
           new _$ServicePath._(
               className: className,
+              libraryPath: libraryPath,
               variableName: variableName,
               pathParameters: pathParameters.build(),
               methods: methods.build(),
@@ -1501,16 +1513,21 @@ class _$ServiceMethodResponse extends ServiceMethodResponse {
   @override
   final String description;
   @override
+  final bool isError;
+  @override
   final OpenApiType type;
 
   factory _$ServiceMethodResponse(
           [void Function(ServiceMethodResponseBuilder)? updates]) =>
       (new ServiceMethodResponseBuilder()..update(updates))._build();
 
-  _$ServiceMethodResponse._({required this.description, required this.type})
+  _$ServiceMethodResponse._(
+      {required this.description, required this.isError, required this.type})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         description, r'ServiceMethodResponse', 'description');
+    BuiltValueNullFieldError.checkNotNull(
+        isError, r'ServiceMethodResponse', 'isError');
     BuiltValueNullFieldError.checkNotNull(
         type, r'ServiceMethodResponse', 'type');
   }
@@ -1529,6 +1546,7 @@ class _$ServiceMethodResponse extends ServiceMethodResponse {
     if (identical(other, this)) return true;
     return other is ServiceMethodResponse &&
         description == other.description &&
+        isError == other.isError &&
         type == other.type;
   }
 
@@ -1536,6 +1554,7 @@ class _$ServiceMethodResponse extends ServiceMethodResponse {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, isError.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1545,6 +1564,7 @@ class _$ServiceMethodResponse extends ServiceMethodResponse {
   String toString() {
     return (newBuiltValueToStringHelper(r'ServiceMethodResponse')
           ..add('description', description)
+          ..add('isError', isError)
           ..add('type', type))
         .toString();
   }
@@ -1558,6 +1578,10 @@ class ServiceMethodResponseBuilder
   String? get description => _$this._description;
   set description(String? description) => _$this._description = description;
 
+  bool? _isError;
+  bool? get isError => _$this._isError;
+  set isError(bool? isError) => _$this._isError = isError;
+
   OpenApiType? _type;
   OpenApiType? get type => _$this._type;
   set type(OpenApiType? type) => _$this._type = type;
@@ -1568,6 +1592,7 @@ class ServiceMethodResponseBuilder
     final $v = _$v;
     if ($v != null) {
       _description = $v.description;
+      _isError = $v.isError;
       _type = $v.type;
       _$v = null;
     }
@@ -1593,6 +1618,8 @@ class ServiceMethodResponseBuilder
         new _$ServiceMethodResponse._(
             description: BuiltValueNullFieldError.checkNotNull(
                 description, r'ServiceMethodResponse', 'description'),
+            isError: BuiltValueNullFieldError.checkNotNull(
+                isError, r'ServiceMethodResponse', 'isError'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'ServiceMethodResponse', 'type'));
     replace(_$result);

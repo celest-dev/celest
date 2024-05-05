@@ -1778,6 +1778,8 @@ class OpenApiEncodingBuilder
 
 class _$OpenApiResponse extends OpenApiResponse {
   @override
+  final int? statusCode;
+  @override
   final String description;
   @override
   final BuiltMap<String, OpenApiHeader> headers;
@@ -1788,7 +1790,10 @@ class _$OpenApiResponse extends OpenApiResponse {
       (new OpenApiResponseBuilder()..update(updates))._build();
 
   _$OpenApiResponse._(
-      {required this.description, required this.headers, required this.content})
+      {this.statusCode,
+      required this.description,
+      required this.headers,
+      required this.content})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         description, r'OpenApiResponse', 'description');
@@ -1810,6 +1815,7 @@ class _$OpenApiResponse extends OpenApiResponse {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiResponse &&
+        statusCode == other.statusCode &&
         description == other.description &&
         headers == other.headers &&
         content == other.content;
@@ -1818,6 +1824,7 @@ class _$OpenApiResponse extends OpenApiResponse {
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, statusCode.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, headers.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
@@ -1828,6 +1835,7 @@ class _$OpenApiResponse extends OpenApiResponse {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'OpenApiResponse')
+          ..add('statusCode', statusCode)
           ..add('description', description)
           ..add('headers', headers)
           ..add('content', content))
@@ -1838,6 +1846,10 @@ class _$OpenApiResponse extends OpenApiResponse {
 class OpenApiResponseBuilder
     implements Builder<OpenApiResponse, OpenApiResponseBuilder> {
   _$OpenApiResponse? _$v;
+
+  int? _statusCode;
+  int? get statusCode => _$this._statusCode;
+  set statusCode(int? statusCode) => _$this._statusCode = statusCode;
 
   String? _description;
   String? get description => _$this._description;
@@ -1860,6 +1872,7 @@ class OpenApiResponseBuilder
   OpenApiResponseBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _statusCode = $v.statusCode;
       _description = $v.description;
       _headers = $v.headers.toBuilder();
       _content = $v.content.toBuilder();
@@ -1887,6 +1900,7 @@ class OpenApiResponseBuilder
     try {
       _$result = _$v ??
           new _$OpenApiResponse._(
+              statusCode: statusCode,
               description: BuiltValueNullFieldError.checkNotNull(
                   description, r'OpenApiResponse', 'description'),
               headers: headers.build(),

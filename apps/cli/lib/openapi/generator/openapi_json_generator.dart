@@ -204,8 +204,6 @@ final class OpenApiJsonGenerator {
         ]);
       // case OpenApiTypeReference(:final primitiveType?):
       //   return _fromJson(primitiveType, ref);
-      case OpenApiPrimitiveType(:final typeReference):
-        return typeReference.property('fromJson').call([ref]);
       case OpenApiIterableInterface(:final typeReference):
         ref = ref.asA(
           DartTypes.core
@@ -213,16 +211,11 @@ final class OpenApiJsonGenerator {
               .withNullability(type.isNullable),
         );
         return typeReference.property('fromJson').call([ref]);
+      case OpenApiPrimitiveType(:final typeReference):
       case OpenApiEnumType(:final typeReference):
-        return typeReference.property('fromJson').call([ref]);
       case OpenApiStructType(:final typeReference):
       case OpenApiSealedType(:final typeReference):
       case OpenApiTypeReference(:final typeReference):
-        ref = ref.asA(
-          DartTypes.core
-              .map(DartTypes.core.string, DartTypes.core.object.nullable)
-              .withNullability(type.isNullable),
-        );
         return typeReference.property('fromJson').call([ref]);
       case OpenApiEmptyType():
         return ref;

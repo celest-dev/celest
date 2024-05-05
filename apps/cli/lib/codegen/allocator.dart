@@ -6,7 +6,12 @@ import 'package:path/path.dart' as path;
 
 enum PrefixingStrategy {
   indexed,
-  none;
+  none,
+
+  /// Useful for generating part of libraries.
+  ///
+  /// In this mode, all imports must be manually managed.
+  noImports;
 }
 
 enum PathStrategy {
@@ -51,7 +56,7 @@ final class CelestAllocator implements Allocator {
     }
     // Fix `file://` and root-relative paths to match expected `pathStrategy`.
     var uri = Uri.parse(url);
-    const supportedSchemes = ['file', 'project', 'package', 'dart'];
+    const supportedSchemes = ['', 'file', 'project', 'package', 'dart'];
     if (!supportedSchemes.contains(uri.scheme)) {
       final fileUri = p.toUri(url);
       if (!supportedSchemes.contains(fileUri.scheme)) {
@@ -60,7 +65,7 @@ final class CelestAllocator implements Allocator {
       uri = fileUri;
     }
     switch (uri.scheme) {
-      case 'file':
+      case '' || 'file':
         final urlPath = p.fromUri(uri);
         if (p.equals(urlPath, forFile)) {
           return symbol;
@@ -100,6 +105,8 @@ final class CelestAllocator implements Allocator {
           final import? => '$import.$symbol',
           null => symbol,
         };
+      case PrefixingStrategy.noImports:
+        return symbol;
     }
   }
 

@@ -9,6 +9,7 @@ import 'package:celest_cli/codegen/doc_comments.dart';
 import 'package:celest_cli/codegen/reserved_words.dart';
 import 'package:celest_cli/openapi/generator/openapi_array_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_enum_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_enum_or_primitive_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_record_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
@@ -51,7 +52,8 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
 
   final OpenApiGeneratorContext context;
   final OpenApiTypeSystem typeSystem = OpenApiTypeSystem();
-  final Spec Function(String name, Spec Function() build) registerSpec;
+  final Spec Function(String name, String url, Spec Function() build)
+      registerSpec;
 
   OpenApiDocument get document => context.document;
 
@@ -59,6 +61,13 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
 
   final _reservedNames = <String, OpenApiTypeSchema?>{};
   final _dartNames = <String, String>{};
+  final _dartRefs = <String, Reference>{};
+
+  /// A map from path -> contextual operation name.
+  final _stripeOperationNames = <(String, OpenApiOperationType), String>{};
+
+  /// Dart names of Stripe event types.
+  final _stripeEventTypes = <String>{};
 
   String _reserveName(String name, [OpenApiTypeSchema? reservedBy]) {
     if (_reservedNames.containsKey(name)) {
@@ -86,7 +95,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
   }
 
   TypeReference _wrapper(String name, OpenApiType baseType) {
-    registerSpec(name, () {
+    registerSpec(name, 'models.dart', () {
       return Class((c) {
         c
           ..name = name
@@ -151,7 +160,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           ]);
       });
     });
-    return refer(name, 'client.dart').toTypeReference;
+    return refer(name, 'models.dart').toTypeReference;
   }
 
   late final TypeReference emptyType = _wrapper(
@@ -210,6 +219,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
   late final TypeReference _stripeResource = run(() {
     registerSpec(
       'StripeResource',
+      'models.dart',
       () => Class(
         (c) => c
           ..modifier = ClassModifier.final$
@@ -255,18 +265,19 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           ),
       ),
     );
-    return refer(_reserveName('StripeResource')).toTypeReference;
+    return refer(_reserveName('StripeResource'), 'models.dart').toTypeReference;
   });
   late final TypeReference _stripeEvent = run(() {
     registerSpec(
       'StripeEvent',
+      'events.dart',
       () => Class(
         (c) => c
           ..sealed = true
           ..name = 'StripeEvent',
       ),
     );
-    return refer(_reserveName('StripeEvent')).toTypeReference;
+    return refer(_reserveName('StripeEvent'), 'events.dart').toTypeReference;
   });
 
   OpenApiType _resolveRef(
@@ -285,6 +296,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
                     'dartNames': _dartNames,
                   },
                 ),
+            url: _dartRefs[name]!.url!,
           ),
         ),
       OpenApiTypeSchema() => schemaOrRef.accept(
@@ -298,11 +310,13 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     String name,
     String? key,
     OpenApiType type, {
+    required String url,
     bool? structuralEnum,
   }) {
     final schema = type.schema.withNullability(false);
     return registerSpec(
       key ?? name,
+      url,
       () => switch (type) {
         OpenApiPrimitiveType(:final typeReference) => ExtensionType(
             (t) => t
@@ -409,21 +423,43 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           // Since event types have dot separators, we can leverage that for
           // uniqueness.
           name = '${eventType.pascalCase}Event';
+          _dartRefs[schema.key] = refer(name, 'events.dart');
+          _stripeEventTypes.add(name);
       }
 
       _dartNames[schema.key] = name;
+      _dartRefs[schema.key] ??= refer(name, 'models.dart');
+
+      if (schema.value.extensions['x-stripeOperations']
+          case JsonObject(value: final List<Object?> operations)) {
+        for (final operation in operations) {
+          final operationData = (operation as Map).cast<String, Object?>();
+          final path = operationData['path'] as String;
+          final methodType = OpenApiOperationType.valueOf(
+            operationData['operation'] as String,
+          );
+          final methodName = operationData['method_name'] as String;
+          _stripeOperationNames[(path, methodType)] = methodName;
+        }
+      }
     }
 
     // Second pass to resolve type.
     for (final schema in document.components.schemas.entries) {
       final name = _dartNames[schema.key]!;
       final typeSchema = schema.value;
+      final url = _dartRefs[schema.key]!.url!;
       final type = typeSchema.accept(
         this,
-        OpenApiTypeResolutionScope(typeName: name),
+        OpenApiTypeResolutionScope(typeName: name, url: url),
       );
       _service.models[name] = ServiceModel(
-        spec: _generateSpec(name, schema.key, type),
+        spec: _generateSpec(
+          name,
+          schema.key,
+          type,
+          url: url,
+        ),
         type: type,
       );
     }
@@ -567,6 +603,10 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           ifAbsent: () {
             return ServicePath.build((b) {
               b
+                // TODO: Need to handle lots of pathing if we do this
+                // ..libraryPath = path.className == null
+                //     ? 'src/apis/${pathSegment.snakeCase}.dart'
+                //     : '${path.libraryPath!.replaceFirst(RegExp(r'.dart$'), '')}/${pathSegment.snakeCase}.dart'
                 ..className = _reserveName(
                   '${className}_$pathSegment'.pascalCase,
                 )
@@ -593,6 +633,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           OpenApiTypeResolutionScope(
             typeName: variableName.pascalCase,
             isNullable: !parameter.required,
+            url: 'models.dart',
           ),
           '_$variableName',
         );
@@ -616,7 +657,9 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
             '${operation.type.name}_${operation.path}'.camelCase;
         path.methods[methodName] = ServiceMethod.build((method) {
           method
-            ..methodName = methodName
+            ..methodName =
+                _stripeOperationNames[(pathItem.path, operation.type)] ??
+                    methodName
             ..methodType = operation.type
             ..deprecated = operation.deprecated
             ..summary = operation.summary
@@ -630,6 +673,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
               OpenApiTypeResolutionScope(
                 typeName: variableName.pascalCase,
                 isNullable: !parameter.required,
+                url: 'models.dart',
               ),
               '_$variableName',
             ).withNullability(!parameter.required);
@@ -688,6 +732,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
               OpenApiTypeResolutionScope(
                 typeName: '${methodName.pascalCase}Body',
                 isNullable: !requestBody.required,
+                url: 'models.dart',
               ),
               null,
             ).withNullability(!requestBody.required);
@@ -701,90 +746,140 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
             }
           }
 
-          final allResponseTypes = <OpenApiType>{};
-          if (operation.defaultResponse case final defaultResponse?) {
-            final responseType = _linkResponse(
-              methodName,
-              null,
+          final allResponses = <OpenApiResponse>[
+            if (operation.defaultResponse case final defaultResponse?)
               defaultResponse,
-            );
-            allResponseTypes.add(responseType.type);
-            method.defaultResponse.replace(responseType);
+            ...operation.responses.values,
+          ];
+
+          final [successResponses, errorResponses] = switch (allResponses) {
+            [] => const [<OpenApiResponse>[], <OpenApiResponse>[]],
+            [
+              OpenApiResponse(statusCode: null || (>= 200 && <= 300)) &&
+                  final singleResponse
+            ] =>
+              [
+                [singleResponse],
+                const <OpenApiResponse>[],
+              ],
+            _ => [
+                allResponses.where((it) {
+                  final statusCode = it.statusCode;
+                  return statusCode != null &&
+                      (statusCode >= 200 && statusCode <= 300);
+                }).toList(),
+                allResponses.where((it) {
+                  final statusCode = it.statusCode;
+                  return statusCode == null || statusCode >= 300;
+                }).toList(),
+              ],
+          };
+
+          assert(
+            successResponses.length + errorResponses.length ==
+                allResponses.length,
+          );
+
+          switch (successResponses) {
+            case [final singleSuccess]:
+              final statusCode = singleSuccess.statusCode;
+              final successResponse = _linkResponse(
+                methodName,
+                statusCode,
+                singleSuccess,
+                isError: false,
+                name: '${methodName.pascalCase}Response',
+                needsWrapper: false,
+              );
+              if (statusCode == null) {
+                method.defaultResponse.replace(successResponse);
+              } else {
+                method.responseCases[statusCode] = successResponse;
+              }
+              method.responseType = successResponse.type;
+            default:
+              final allResponseTypes = <OpenApiType>{};
+              for (final response in successResponses) {
+                final statusCode = response.statusCode;
+                final successResponse = _linkResponse(
+                  methodName,
+                  statusCode,
+                  response,
+                  name: '${methodName.pascalCase}Response_$statusCode',
+                  isError: false,
+                  needsWrapper: true,
+                );
+                if (statusCode == null) {
+                  method.defaultResponse.replace(successResponse);
+                } else {
+                  method.responseCases[statusCode] = successResponse;
+                }
+                allResponseTypes.add(successResponse.type);
+              }
+
+              final responseInterfaceName = _reserveName(
+                '${methodName.pascalCase}Response',
+              );
+              registerSpec(
+                responseInterfaceName,
+                'models.dart',
+                () => Class(
+                  (c) => c
+                    ..sealed = true
+                    ..name = responseInterfaceName
+                    ..docs.addAll([
+                      '/// Response type for [$className.$methodName].',
+                      '///',
+                      '/// This is a marker interface implemented by all response types:',
+                      for (final responseType in allResponseTypes)
+                        '/// - [${responseType.typeReference.symbol}]',
+                    ]),
+                ),
+              );
+
+              for (final responseType in allResponseTypes) {
+                context.implement(
+                  responseType.schema.name ?? responseType.typeReference.symbol,
+                  refer(responseInterfaceName, 'models.dart'),
+                );
+              }
+
+              method.responseType = OpenApiSealedType(
+                typeReference:
+                    refer(responseInterfaceName, 'models.dart').toTypeReference,
+                schema: OpenApiAnyTypeSchema(),
+                branches: [
+                  for (final responseType in allResponseTypes)
+                    OpenApiSealedBranch(
+                      name: responseType.typeReference.symbol,
+                      type: responseType,
+                    ),
+                ],
+                discriminator: TypeDiscriminator(mapping: {}), // TODO
+                isNullable: allResponseTypes.any((type) => type.isNullable),
+              );
           }
 
-          for (final response in operation.responses.entries) {
-            final statusCode = response.key;
+          for (final errorResponse in errorResponses) {
+            final statusCode = errorResponse.statusCode;
             final responseType = _linkResponse(
               methodName,
               statusCode,
-              response.value,
+              errorResponse,
+              isError: true,
+              needsWrapper: true,
             );
-            allResponseTypes.add(responseType.type);
-            method.responseCases[statusCode] = responseType;
-          }
-
-          final responseInterfaceName = _reserveName(
-            '${methodName.pascalCase}Response',
-          );
-          if (allResponseTypes.isEmpty || allResponseTypes.length == 1) {
-            final responseType =
-                allResponseTypes.singleOrNull ?? OpenApiEmptyType.instance;
-            registerSpec(
-              responseInterfaceName,
-              () => TypeDef(
-                (t) => t
-                  ..name = responseInterfaceName
-                  ..definition = responseType.typeReference
-                  ..docs.add(
-                    '/// Response type for [$className.$methodName].',
-                  ),
-              ),
-            );
-            method.responseType = responseType.rebuild(
-              (type) => type.typeReference =
-                  refer(responseInterfaceName).toTypeReference.toBuilder(),
-            );
-            return;
-          }
-
-          registerSpec(
-            responseInterfaceName,
-            () => Class(
-              (c) => c
-                ..sealed = true
-                ..name = responseInterfaceName
-                ..docs.addAll([
-                  '/// Response type for [$className.$methodName].',
-                  '///',
-                  '/// This is a marker interface implemented by all response types:',
-                  for (final responseType in allResponseTypes)
-                    '/// - [${responseType.typeReference.symbol}]',
-                ]),
-            ),
-          );
-
-          for (final responseType in allResponseTypes) {
-            if (responseType.typeReference.url != 'dart:core') {
-              context.implement(
-                responseType.schema.name ?? responseType.typeReference.symbol,
-                refer(responseInterfaceName),
-              );
+            if (statusCode == null) {
+              method.defaultResponse.replace(responseType);
+            } else {
+              method.responseCases[statusCode] = responseType;
             }
+            context.implement(
+              responseType.type.schema.name ??
+                  responseType.type.typeReference.symbol,
+              DartTypes.core.exception,
+            );
           }
-
-          method.responseType = OpenApiSealedType(
-            typeReference: refer(responseInterfaceName).toTypeReference,
-            schema: OpenApiAnyTypeSchema(),
-            branches: [
-              for (final responseType in allResponseTypes)
-                OpenApiSealedBranch(
-                  name: responseType.typeReference.symbol,
-                  type: responseType,
-                ),
-            ],
-            discriminator: TypeDiscriminator(mapping: {}), // TODO
-            isNullable: allResponseTypes.any((type) => type.isNullable),
-          );
         });
       }
     });
@@ -793,14 +888,19 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
   ServiceMethodResponse _linkResponse(
     String methodName,
     int? statusCode,
-    OpenApiResponse response,
-  ) {
+    OpenApiResponse response, {
+    String? name,
+    required bool isError,
+    required bool needsWrapper,
+  }) {
     if (response.content.isEmpty) {
       return ServiceMethodResponse(
         description: response.description,
+        isError: isError,
         type: OpenApiEmptyType(
           schema: OpenApiEmptyTypeSchema.instance,
-          typeReference: emptyType,
+          typeReference:
+              needsWrapper ? emptyType : DartTypes.core.void$.toTypeReference,
         ),
       );
     }
@@ -812,13 +912,16 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     final responseType = _resolveRef(
       responseMediaType.schema,
       OpenApiTypeResolutionScope(
-        typeName: '${methodName.pascalCase}Response_${statusCode ?? 'default'}',
-        needsWrapper: true,
+        typeName: name ??
+            '${methodName.pascalCase}Response_${statusCode ?? 'default'}',
+        needsWrapper: needsWrapper,
+        url: 'models.dart',
       ),
       null,
     );
     return ServiceMethodResponse(
       description: response.description,
+      isError: isError,
       type: responseType,
     );
   }
@@ -831,7 +934,8 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     final name = scope!.typeName;
     final isNullable = scope.isNullable ?? schema.isNullableOrFalse;
     return OpenApiTypeReference(
-      typeReference: refer(_dartNames[name] ?? name)
+      typeReference: (_dartRefs[name] ?? refer(name))
+          .toTypeReference
           .withNullability(isNullable)
           .toTypeReference,
       // TODO: Needed for typedefs
@@ -879,7 +983,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
         ? OpenApiSetType(
             schema: schema,
             typeReference: needsWrapper
-                ? refer(name, 'client.dart').toTypeReference
+                ? refer(name, scope.url).toTypeReference
                 : DartTypes.core.set(itemType.typeReference).toTypeReference,
             itemType: itemType,
             isNullable: isNullable,
@@ -888,14 +992,14 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
         : OpenApiListType(
             schema: schema,
             typeReference: needsWrapper
-                ? refer(name, 'client.dart').toTypeReference
+                ? refer(name, scope.url).toTypeReference
                 : DartTypes.core.list(itemType.typeReference).toTypeReference,
             itemType: itemType,
             isNullable: isNullable,
             defaultValue: schema.defaultValue?.value,
           );
     if (needsWrapper) {
-      _generateSpec(name, schema.name, type);
+      _generateSpec(name, schema.name, type, url: scope.url);
     }
     return type;
   }
@@ -928,7 +1032,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
       b.schema = schema;
       b.typeReference
         ..symbol = baseName
-        ..url = 'client.dart'
+        ..url = scope.url
         ..isNullable = isNullable;
       b.isNullable = isNullable;
 
@@ -939,15 +1043,23 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
           dartName: sanitizeVariableName(discriminator.propertyName.camelCase),
           mapping: mapping.map((value, ref) {
             final schemaName = ref.split('/').last;
-            final typeSchema = document.components.schemas[schemaName]
-                as OpenApiStructTypeSchema;
-            final discriminatorField = typeSchema
-                .fields[discriminator.propertyName]!
-                .schema as OpenApiSingleValueTypeSchema;
+            final typeSchema = document.components.schemas[schemaName]!;
+            if (typeSchema.extensions['x-resourceId'] case final resourceId?) {
+              value = resourceId.asString;
+            } else if (typeSchema is OpenApiStructTypeSchema) {
+              final discriminatorField =
+                  typeSchema.fields[discriminator.propertyName];
+              if (discriminatorField?.schema
+                  case OpenApiSingleValueTypeSchema(
+                    value: final discriminatorValue
+                  )) {
+                value = discriminatorValue.asString;
+              }
+            }
             return MapEntry(
-              discriminatorField.value.asString,
+              value,
               OpenApiTypeReference(
-                typeReference: refer(_dartNames[schemaName]!).toTypeReference,
+                typeReference: _dartRefs[schemaName]!.toTypeReference,
                 schema: OpenApiTypeSchemaReference(
                   name: schemaName,
                   ref: ref,
@@ -976,7 +1088,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
         );
       }
     });
-    _generateSpec(baseName, schema.name, type);
+    _generateSpec(baseName, schema.name, type, url: scope.url);
     return type;
   }
 
@@ -1003,7 +1115,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     final isNullable = scope.isNullable ?? schema.isNullableOrFalse;
     final type = OpenApiEnumType(
       schema: schema,
-      typeReference: refer(name).toTypeReference,
+      typeReference: refer(name, scope.url).toTypeReference,
       baseType: baseType as OpenApiPrimitiveType,
       values: schema.values.map((it) => it.value),
       isNullable: isNullable,
@@ -1014,6 +1126,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
       schema.name,
       type,
       structuralEnum: scope.structuralEnums,
+      url: scope.url,
     );
     return type;
   }
@@ -1091,7 +1204,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     final type = OpenApiRecordType(
       schema: schema,
       typeReference: needsWrapper
-          ? refer(name, 'client.dart').toTypeReference
+          ? refer(name, scope.url).toTypeReference
           : DartTypes.core
               .map(DartTypes.core.string, valueType.typeReference)
               .toTypeReference,
@@ -1100,7 +1213,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
       defaultValue: schema.defaultValue?.value,
     );
     if (needsWrapper) {
-      _generateSpec(name, schema.name, type);
+      _generateSpec(name, schema.name, type, url: scope.url);
     }
     return type;
   }
@@ -1160,15 +1273,16 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
   ]) {
     final isNullable = scope?.isNullable ?? schema.isNullableOrFalse;
     final name = scope!.typeName;
+    final url = _stripeEventTypes.contains(name) ? 'events.dart' : scope.url;
     final type = OpenApiStructType(
       schema: schema,
-      typeReference: refer(name, 'client.dart').toTypeReference,
+      typeReference: refer(name, url).toTypeReference,
       docs: docsFromParts(schema.title, schema.description),
       implements: {
         if (schema.extensions['x-stripeResource']?.value
             case {'polymorphic_groups': final List<Object?> polymorphicGroups})
           ...polymorphicGroups.map(
-            (group) => refer(_dartNames[group]!).toTypeReference,
+            (group) => _dartRefs[group]!.toTypeReference,
           ),
         if (schema.extensions['x-stripeEvent'] != null) _stripeEvent,
       },
@@ -1201,7 +1315,7 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
     );
-    _generateSpec(name, schema.name, type);
+    _generateSpec(name, schema.name, type, url: url);
     return type;
   }
 
@@ -1238,59 +1352,145 @@ final class OpenApiSchemaLinker implements OpenApiTypeSchemaResolver {
     OpenApiTypeResolutionScope? scope,
   ]) {
     final isNullable = scope?.isNullable ?? schema.isNullableOrFalse;
+    final types = schema.types.toList();
 
     // First, flatten known `anyOf` patterns into simpler shapes.
-    final types = schema.types.toList();
+
+    // 1. Some value or the empty string.
+    // Convert it to a nullable type with a default value of the empty string.
+    final emptySv = types.singleWhereOrNull(
+      (type) => type is OpenApiSingleValueTypeSchema && type.value.value == '',
+    );
+    if (emptySv != null) {
+      schema = schema.rebuild(
+        (schema) => schema
+          ..types.remove(emptySv)
+          ..defaultValue = JsonObject(''),
+      );
+      return schema.accept(this, scope).withNullability(true);
+    }
+
     switch (types) {
+      // 2. A single type
+      case [final singleType]:
+        return singleType
+            .rebuild(
+              (t) => t
+                ..description = schema.description
+                ..defaultValue = schema.defaultValue,
+            )
+            .withNullability(isNullable)
+            .accept(this, scope);
+
+      // 3. A sealed type or ID.
+      case [...final typeReferences, final OpenApiStringTypeSchema idSchema] ||
+              [final OpenApiStringTypeSchema idSchema, ...final typeReferences]
+          when typeReferences
+                  .every((type) => type is OpenApiTypeSchemaReference) &&
+              schema.extensions.containsKey('x-expansionResources'):
+        switch (typeReferences.cast<OpenApiTypeSchemaReference>()) {
+          case [final typeReference]:
+            final typeName = _dartNames[typeReference.name]!;
+            final wrapperName = '${typeName}OrId';
+            final flattenedType = typeReference.accept(
+              this,
+              OpenApiTypeResolutionScope(
+                typeName: typeName,
+                sealedParent: wrapperName,
+                url: 'models.dart',
+              ),
+            ) as OpenApiTypeReference;
+            registerSpec(
+              _reserveName(wrapperName),
+              'models.dart',
+              () => OpenApiStructOrIdGenerator(
+                name: wrapperName,
+                baseType: flattenedType,
+              ).generate(),
+            );
+            final wrapperRef = refer(wrapperName, 'models.dart');
+            context.implement('StripeResource', wrapperRef);
+            context.implement(typeReference.name, wrapperRef);
+            context.implement(typeName, wrapperRef);
+            return OpenApiTypeReference(
+              typeReference: refer(wrapperName).toTypeReference,
+              schema: schema,
+              isNullable: isNullable,
+            );
+          default:
+            return OpenApiSumTypeSchema(
+              types: [
+                idSchema,
+                schema.rebuild((b) => b.types.remove(idSchema)),
+              ],
+              isNullable: schema.isNullable,
+            ).accept(this, scope);
+        }
+
+      // 4. A union over two primitive types, one being an enum.
       case [
-                final OpenApiTypeSchemaReference typeReference,
-                OpenApiStringTypeSchema()
-              ] ||
-              [
-                OpenApiStringTypeSchema(),
-                final OpenApiTypeSchemaReference typeReference
-              ]
-          when schema.extensions.containsKey('x-expansionResources'):
-        final typeName = _dartNames[typeReference.name]!;
-        final wrapperName = '${typeName}OrId';
-        final flattenedType = typeReference.accept(
-          this,
-          OpenApiTypeResolutionScope(
-            typeName: typeName,
-            sealedParent: wrapperName,
-          ),
-        ) as OpenApiTypeReference;
+              final OpenApiEnumTypeSchema enumSchema,
+              OpenApiTypeSchema(primitiveType: != null) &&
+                  final primitiveSchema,
+            ] ||
+            [
+              OpenApiTypeSchema(primitiveType: != null) &&
+                  final primitiveSchema,
+              final OpenApiEnumTypeSchema enumSchema,
+            ]:
+        final primitiveType = primitiveSchema.accept(this);
+        final wrapperName = scope!.typeName;
         registerSpec(
           _reserveName(wrapperName),
-          () => OpenApiStructOrIdGenerator(
+          'models.dart',
+          () => OpenApiEnumOrPrimitiveGenerator(
             name: wrapperName,
-            baseType: flattenedType,
+            enumValues: enumSchema.values.map((it) => it.value).toList(),
+            primitiveType: primitiveType as OpenApiPrimitiveType,
           ).generate(),
         );
-        context.implement('StripeResource', refer(wrapperName));
-        context.implement(typeReference.name, refer(wrapperName));
-        context.implement(typeName, refer(wrapperName));
         return OpenApiTypeReference(
-          typeReference: refer(wrapperName).toTypeReference,
+          typeReference: refer(wrapperName, 'models.dart').toTypeReference,
           schema: schema,
           isNullable: isNullable,
         );
+
+      // Same as above but a single-valued "enum".
       case [
-              final other,
-              OpenApiSingleValueTypeSchema(value: JsonObject(value: ''))
+              final OpenApiSingleValueTypeSchema singleValueSchema,
+              OpenApiTypeSchema(primitiveType: != null) &&
+                  final primitiveSchema,
             ] ||
             [
-              OpenApiSingleValueTypeSchema(value: JsonObject(value: '')),
-              final other
+              OpenApiTypeSchema(primitiveType: != null) &&
+                  final primitiveSchema,
+              final OpenApiSingleValueTypeSchema singleValueSchema,
             ]:
-        return other
-            .withNullability(other.primitiveType is! OpenApiStringType)
-            .rebuild((b) => b..defaultValue = JsonObject(''))
-            .accept(this, scope);
+        final primitiveType = primitiveSchema.accept(this);
+        final wrapperName = scope!.typeName;
+        registerSpec(
+          _reserveName(wrapperName),
+          'models.dart',
+          () => OpenApiEnumOrPrimitiveGenerator(
+            name: wrapperName,
+            enumValues: [singleValueSchema.value.value],
+            primitiveType: primitiveType as OpenApiPrimitiveType,
+          ).generate(),
+        );
+        return OpenApiTypeReference(
+          typeReference: refer(wrapperName, 'models.dart').toTypeReference,
+          schema: schema,
+          isNullable: isNullable,
+        );
     }
+
     var discriminator = schema.discriminator;
-    if (types.every((schema) => schema is OpenApiTypeSchemaReference) &&
-        schema.extensions.containsKey('x-stripeResource')) {
+    if (types.every(
+      (schema) =>
+          schema is OpenApiTypeSchemaReference &&
+          document.components.schemas[schema.name]!.extensions
+              .containsKey('x-stripeResource'),
+    )) {
       discriminator = OpenApiDiscriminator(
         propertyName: 'object',
         mapping: {

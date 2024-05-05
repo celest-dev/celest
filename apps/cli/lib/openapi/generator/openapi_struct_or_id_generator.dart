@@ -50,17 +50,23 @@ final class OpenApiStructOrIdGenerator {
           Parameter(
             (p) => p
               ..name = 'json'
-              ..type = DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
+              ..type = DartTypes.core.object.nullable,
           ),
         )
         ..lambda = false
         ..body = Block((b) {
+          final map = declareFinal('map').assign(
+            refer('json').asA(
+              DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.object.nullable,
+              ),
+            ),
+          );
+          b.addExpression(map);
           final idOnly = refer('StripeResource')
               .newInstance([], {
-                'id': refer('json')
+                'id': refer('map')
                     .index(literalString('id'))
                     .asA(DartTypes.core.string),
               })
@@ -68,12 +74,12 @@ final class OpenApiStructOrIdGenerator {
               .statement;
           b.statements.add(
             idOnly.wrapWithBlockIf(
-              refer('json').property('length').equalTo(literalNum(1)),
+              refer('map').property('length').equalTo(literalNum(1)),
             ),
           );
           b.addExpression(
             baseType.typeReference
-                .newInstanceNamed('fromJson', [refer('json')]).returned,
+                .newInstanceNamed('fromJson', [refer('map')]).returned,
           );
         });
     });

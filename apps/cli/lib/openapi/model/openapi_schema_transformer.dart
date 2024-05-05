@@ -146,6 +146,7 @@ final class OpenApiSchemaTransformer {
       final responseValue = response.value;
       _builder.components.responses[responseName] = _transformResponse(
         _resolveResponse(responseValue),
+        null,
       );
     }
     for (final header in document.components.headers.additionalProperties) {
@@ -345,13 +346,13 @@ final class OpenApiSchemaTransformer {
         if (operation.responses.hasDefault_1()) {
           final response = _resolveResponse(operation.responses.default_1);
           b.defaultResponse.replace(
-            _transformResponse(response),
+            _transformResponse(response, null),
           );
         }
         for (final responseOrRef in operation.responses.responseOrReference) {
           final statusCode = int.parse(responseOrRef.name);
           final response = _resolveResponse(responseOrRef.value);
-          final value = _transformResponse(response);
+          final value = _transformResponse(response, statusCode);
           b.responses[statusCode] = value;
         }
       }
@@ -458,8 +459,9 @@ final class OpenApiSchemaTransformer {
     });
   }
 
-  OpenApiResponse _transformResponse(v3.Response response) {
+  OpenApiResponse _transformResponse(v3.Response response, int? statusCode) {
     return OpenApiResponse.build((b) {
+      b.statusCode = statusCode;
       b.description = response.description;
       if (response.hasHeaders()) {
         for (final headerOrRef in response.headers.additionalProperties) {

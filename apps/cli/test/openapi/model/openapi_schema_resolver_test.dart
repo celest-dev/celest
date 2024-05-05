@@ -27,7 +27,7 @@ void main() {
       print(resolvedSchema);
       final linker = OpenApiSchemaLinker(
         context: OpenApiGeneratorContext(document: resolvedSchema),
-        registerSpec: (name, builder) {
+        registerSpec: (name, url, builder) {
           print('Registering spec "$name"');
           final spec = builder();
           print(spec);

@@ -46,8 +46,12 @@ void main() {
         final outputFile = File.fromUri(outputDir.uri.resolve(key));
         final code = CodeGenerator.emit(
           value,
-          forFile: 'client.dart',
-          pathStrategy: PathStrategy.robust,
+          forFile: key,
+          pathStrategy: PathStrategy.pretty,
+          prefixingStrategy: switch (key) {
+            'models.dart' || 'events.dart' => PrefixingStrategy.noImports,
+            _ => PrefixingStrategy.none,
+          },
         );
 
         print('writing ${outputFile.path}');
@@ -58,46 +62,46 @@ void main() {
     });
   });
 
-  group('discord', skip: true, () {
-    final outputRoot = baseOutputRoot.resolve('discord/');
-    final outputDir = fileSystem.directory(outputRoot)
-      ..createSync(recursive: true);
+  // group('discord', skip: true, () {
+  //   final outputRoot = baseOutputRoot.resolve('discord/');
+  //   final outputDir = fileSystem.directory(outputRoot)
+  //     ..createSync(recursive: true);
 
-    final document = generateOpenApiV3(
-      fileSystem
-          .directory(fixturesRoot)
-          .childFile('discord.json')
-          .readAsStringSync(),
-    );
-    final typeSystem = OpenApiTypeSystem();
+  //   final document = generateOpenApiV3(
+  //     fileSystem
+  //         .directory(fixturesRoot)
+  //         .childFile('discord.json')
+  //         .readAsStringSync(),
+  //   );
+  //   final typeSystem = OpenApiTypeSystem();
 
-    test('can resolve', () {
-      final resolver = OpenApiSchemaTransformer(
-        document: document,
-        typeSystem: typeSystem,
-      );
-      check(resolver.resolve).returnsNormally();
-    });
+  //   test('can resolve', () {
+  //     final resolver = OpenApiSchemaTransformer(
+  //       document: document,
+  //       typeSystem: typeSystem,
+  //     );
+  //     check(resolver.resolve).returnsNormally();
+  //   });
 
-    test('can generate', () {
-      final outputs = OpenApiGenerator.fromProto(document).generate();
-      outputs.forEach((key, value) {
-        print('emitting "$key"');
+  //   test('can generate', () {
+  //     final outputs = OpenApiGenerator.fromProto(document).generate();
+  //     outputs.forEach((key, value) {
+  //       print('emitting "$key"');
 
-        final outputFile = File.fromUri(outputDir.uri.resolve(key));
-        final code = CodeGenerator.emit(
-          value,
-          forFile: 'client.dart',
-          pathStrategy: PathStrategy.robust,
-        );
+  //       final outputFile = File.fromUri(outputDir.uri.resolve(key));
+  //       final code = CodeGenerator.emit(
+  //         value,
+  //         forFile: 'client.dart',
+  //         pathStrategy: PathStrategy.robust,
+  //       );
 
-        print('writing ${outputFile.path}');
-        outputFile
-          ..createSync(recursive: true)
-          ..writeAsStringSync(code);
-      });
-    });
-  });
+  //       print('writing ${outputFile.path}');
+  //       outputFile
+  //         ..createSync(recursive: true)
+  //         ..writeAsStringSync(code);
+  //     });
+  //   });
+  // });
 
   group('openapi-generator', skip: true, () {
     final outputRoot = baseOutputRoot.resolve('openapi-generator/');

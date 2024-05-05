@@ -61,9 +61,26 @@ final class OpenApiGenerator {
       service: service,
     );
     return {
-      'client.dart': clientGenerator
-          .generate()
-          .rebuild((lib) => lib.body.addAll(context._schemaSpecs.values)),
+      ...clientGenerator.generate(),
+      ...context._schemasByUrl.build().toMap().map((url, schemas) {
+        return MapEntry(
+          url,
+          Library((b) {
+            switch (url) {
+              case 'models.dart':
+                b.directives.add(Directive.part('events.dart'));
+              case 'events.dart':
+                b.directives.add(Directive.partOf('models.dart'));
+            }
+            b.body.addAll(
+              schemas.map((schema) {
+                return context._schemaSpecs[schema] ??
+                    context.fail('Schema not found: $schema');
+              }),
+            );
+          }),
+        );
+      }),
     };
   }
 }
@@ -93,8 +110,14 @@ final class OpenApiGeneratorContext {
 
   final Map<OpenApiType, String> _dartNames = {};
   final Map<String, Spec> _schemaSpecs = {};
+  final _schemasByUrl = SetMultimapBuilder<String, String>();
 
-  Spec _registerSpec(String name, Spec Function() builder) {
+  Spec _registerSpec(
+    String name,
+    String url,
+    Spec Function() builder,
+  ) {
+    _schemasByUrl.add(url, name);
     return _schemaSpecs.update(
       name,
       (value) => value,
@@ -118,7 +141,10 @@ final class OpenApiGeneratorContext {
           ..addAll(spec.implements);
         class_.implements
           ..clear()
-          ..addAll(allImplements);
+          ..addAll(
+            allImplements.toList()
+              ..sort((a, b) => a.symbol!.compareTo(b.symbol!)),
+          );
       });
     });
   }
