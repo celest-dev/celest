@@ -18,7 +18,7 @@ platforms:
 
 dependencies:
   ffi: ^2.1.2
-  jni: ^0.8.0
+  jni: ">=0.8.0 <0.10.0"
   logging: ^1.2.0
   meta: ^1.11.0
   path: ^1.9.0
