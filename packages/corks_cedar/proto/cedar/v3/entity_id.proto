@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package cedar.v3;
-
-message EntityId {
-  string type = 1;
-  string id = 2;
-}
