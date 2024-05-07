@@ -21,10 +21,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "pub"
-    directory: "packages/corks_cedar"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pub"
     directory: "packages/native/storage"
     schedule:
       interval: "weekly"
