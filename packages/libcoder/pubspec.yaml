@@ -1,4 +1,4 @@
-name: coder
+name: libcoder
 description: A general-purpose serialization framework for Dart.
 repository: https://github.com/celest-dev/celest/tree/main/packages/coder
 version: 0.0.1
