@@ -104,7 +104,7 @@ final class OpenApiIdGenerator {
           ),
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ])
@@ -233,7 +233,7 @@ final class OpenApiStructOrIdGenerator {
         ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ]);
@@ -255,7 +255,7 @@ final class OpenApiStructOrIdGenerator {
           ),
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ])

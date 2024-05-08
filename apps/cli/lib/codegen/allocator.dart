@@ -123,7 +123,7 @@ final class CelestAllocator implements Allocator {
           //
           // This is also required so that, for example, clients can define
           // their own types with the same name as core lib types.
-          pathSegments: ['celest' || 'celest_core' || 'meta' || 'codable', ...]
+          pathSegments: ['celest' || 'celest_core' || 'meta' || 'libcoder', ...]
         )) {
       return null;
     }

@@ -454,42 +454,63 @@ class OpenApiTypeSchemaResolver
       typeReference: refer(name, url).toTypeReference,
       docs: docsFromParts(schema.title, schema.description),
       implements: context.structImplements(schema),
-      fields: schema.fields.toMap().map((fieldName, field) {
-        final fieldType = resolveRef(
-          field.schema,
-          scope.subscope(
-            nameResolver: () sync* {
-              final parentNames = [
-                if (scope.nameContext case final nameContext?) nameContext,
-                name,
-              ];
-              final fieldTypeName = fieldName.pascalCase;
-              for (final parentName in parentNames) {
-                if (fieldTypeName.startsWith(parentName)) {
-                  yield fieldTypeName;
-                } else {
-                  yield '$parentName$fieldTypeName';
+      fields: {
+        ...schema.fields.toMap().map((fieldName, field) {
+          final fieldType = resolveRef(
+            field.schema,
+            scope.subscope(
+              nameResolver: () sync* {
+                final parentNames = [
+                  if (scope.nameContext case final nameContext?) nameContext,
+                  name,
+                ];
+                final fieldTypeName = fieldName.pascalCase;
+                for (final parentName in parentNames) {
+                  if (fieldTypeName.startsWith(parentName)) {
+                    yield fieldTypeName;
+                  } else {
+                    yield '$parentName$fieldTypeName';
+                  }
                 }
-              }
-            },
-          ),
-        );
-        return MapEntry(
-          fieldName,
-          OpenApiField(
-            name: fieldName,
-            dartName: sanitizeVariableName(fieldName.camelCase),
-            type: fieldType.withNullability(
-              !schema.required.contains(fieldName) || fieldType.isNullable,
-            )..rebuild(
-                (t) => t.docs = docsFromParts(
-                  field.schema.title,
-                  field.schema.description,
+              },
+            ),
+          );
+          return MapEntry(
+            fieldName,
+            OpenApiField(
+              name: fieldName,
+              dartName: sanitizeVariableName(fieldName.camelCase),
+              type: fieldType.withNullability(
+                !schema.required.contains(fieldName) || fieldType.isNullable,
+              )..rebuild(
+                  (t) => t.docs = docsFromParts(
+                    field.schema.title,
+                    field.schema.description,
+                  ),
                 ),
+            ),
+          );
+        }),
+        if (schema.extensions['x-stripeEvent']?.value
+            case {'type': final String eventType})
+          'type': OpenApiField(
+            name: 'type',
+            dartName: 'type',
+            type: OpenApiSingleValueType(
+              schema: OpenApiSingleValueTypeSchema(
+                value: JsonObject(eventType),
+                baseType: OpenApiStringTypeSchema(),
               ),
+              baseType: OpenApiStringType(
+                schema: OpenApiStringTypeSchema(),
+                typeReference: DartTypes.core.string.toTypeReference,
+                isNullable: false,
+              ),
+              value: eventType,
+              isNullable: false,
+            ),
           ),
-        );
-      }),
+      },
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
     );

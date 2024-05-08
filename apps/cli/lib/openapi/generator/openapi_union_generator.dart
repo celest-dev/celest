@@ -169,7 +169,7 @@ final class OpenApiUnionGenerator {
         ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ]);
@@ -191,7 +191,7 @@ final class OpenApiUnionGenerator {
           ),
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ])

@@ -212,7 +212,7 @@ final class OpenApiStructGenerator {
             refer('encode')
                 .call([
                   refer('this'),
-                  DartTypes.codable.codable$
+                  DartTypes.libcoder.coder$
                       .property('json')
                       .property('encoder'),
                 ])
@@ -272,7 +272,7 @@ Method encodeMethod(String name, Code body) {
         ),
         Parameter(
           (p) => p
-            ..type = DartTypes.codable.encoder(refer('V'))
+            ..type = DartTypes.libcoder.encoder(refer('V'))
             ..name = 'encoder',
         ),
       ])
@@ -333,7 +333,7 @@ Method get encodeWithMethod {
       ..requiredParameters.addAll([
         Parameter(
           (p) => p
-            ..type = DartTypes.codable.encoder(refer('V'))
+            ..type = DartTypes.libcoder.encoder(refer('V'))
             ..name = 'encoder',
         ),
       ])

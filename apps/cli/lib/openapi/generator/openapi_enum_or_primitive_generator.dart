@@ -128,7 +128,7 @@ final class OpenApiEnumOrPrimitiveGenerator {
           ),
           Parameter(
             (p) => p
-              ..type = DartTypes.codable.encoder(refer('V'))
+              ..type = DartTypes.libcoder.encoder(refer('V'))
               ..name = 'encoder',
           ),
         ])

@@ -47,8 +47,8 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   final stripeOperationResourceName = <(String, OpenApiOperationType),
       ({String className, String? inPackage})>{};
 
-  /// Dart names of Stripe event types.
-  final stripeEventTypes = <String>{};
+  /// Dart names of Stripe event types, wire name -> dart name.
+  final stripeEventTypes = <String, String>{};
 
   final stripeResources = <String, TypeReference>{};
   final stripeOperations = ListMultimapBuilder<String, StripeOperation>();
@@ -68,7 +68,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
 
   @override
   String? urlOf(String dartName) =>
-      stripeEventTypes.contains(dartName) ? 'events.dart' : null;
+      stripeEventTypes.values.contains(dartName) ? 'events.dart' : null;
 
   late final TypeReference stripeResource = run(() {
     registerSpec(
@@ -101,27 +101,6 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
     return refer(reserveName('StripeResource'), 'models.dart').toTypeReference;
   });
 
-  late final TypeReference stripeEvent = run(() {
-    registerSpec(
-      'StripeEvent',
-      'events.dart',
-      () => Class(
-        (c) => c
-          ..sealed = true
-          ..name = 'StripeEvent'
-          ..methods.addAll([
-            Method(
-              (m) => m
-                ..returns = DartTypes.core.map(
-                  DartTypes.core.string,
-                  DartTypes.core.object.nullable,
-                )
-                ..name = 'toJson',
-            ),
-            encodeWithMethod.rebuild((m) => m.body = null),
-          ]),
-      ),
-    );
-    return refer(reserveName('StripeEvent'), 'events.dart').toTypeReference;
-  });
+  late final TypeReference stripeEvent =
+      refer(reserveName('StripeEvent'), 'events.dart').toTypeReference;
 }

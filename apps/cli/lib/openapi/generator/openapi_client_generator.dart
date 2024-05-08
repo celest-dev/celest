@@ -487,7 +487,7 @@ final class OpenApiClientGenerator {
         case 'application/x-www-form-urlencoded':
           final encoded = refer('options').property('encodeWith').call([
             // TODO: refer('codable', 'models.dart')
-            DartTypes.codable.codable$.property('formData').property('encoder'),
+            DartTypes.libcoder.coder$.property('formData').property('encoder'),
           ]);
           body.statements.add(
             request.property('body').assign(encoded).wrapWithBlockIf(
@@ -538,9 +538,9 @@ final class OpenApiClientGenerator {
             }
             if (fields.isNotEmpty) {
               final encoded = refer('options').property('encodeWith').call([
-                DartTypes.codable.formFieldsEncoder.newInstance([], {
+                DartTypes.libcoder.formFieldsEncoder.newInstance([], {
                   // TODO: refer('codable', 'models.dart')
-                  'codable': DartTypes.codable.codable$,
+                  'coder': DartTypes.libcoder.coder$,
                   'fields': request.property('fields'),
                 }),
               ]);

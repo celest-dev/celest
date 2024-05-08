@@ -19,12 +19,12 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_core/_internal.dart' as celest_core;
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
-import 'package:codable/codable.dart' as codable;
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' as collection;
 import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as http_parser;
+import 'package:libcoder/libcoder.dart' as libcoder;
 import 'package:meta/meta.dart' as meta;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
@@ -109,9 +109,6 @@ abstract class DartTypes {
   /// `package:collection` types.
   static const collection = _Collection();
 
-  /// `package:codable` types.
-  static const codable = _Codable();
-
   /// `dart:convert` types.
   static const convert = _Convert();
 
@@ -138,6 +135,9 @@ abstract class DartTypes {
 
   /// `dart:isolate` types.
   static const isolate = _Isolate();
+
+  /// `package:libcoder` types.
+  static const libcoder = _Libcoder();
 
   /// `package:meta` types.
   static const meta = _Meta();
@@ -769,20 +769,20 @@ class _Convert {
   DartTypeReference get utf8 => const DartTypeReference('utf8', _url);
 }
 
-/// `dart:convert` types
-class _Codable {
-  const _Codable();
+/// `package:libcoder` types
+class _Libcoder {
+  const _Libcoder();
 
-  static const _url = 'package:codable/codable.dart';
+  static const _url = 'package:libcoder/libcoder.dart';
 
-  /// Creates a [codable.codable] reference.
-  TypeReference get codable$ => TypeReference(
+  /// Creates a [libcoder.coder] reference.
+  TypeReference get coder$ => TypeReference(
         (t) => t
-          ..symbol = 'codable'
+          ..symbol = 'coder'
           ..url = _url,
       );
 
-  /// Creates a [codable.Decoder] reference.
+  /// Creates a [libcoder.Decoder] reference.
   TypeReference decoder([Reference? valueType]) => TypeReference(
         (t) => t
           ..symbol = 'Decoder'
@@ -790,7 +790,7 @@ class _Codable {
           ..types.addAll([if (valueType != null) valueType]),
       );
 
-  /// Creates a [codable.Encoder] reference.
+  /// Creates a [libcoder.Encoder] reference.
   TypeReference encoder([Reference? valueType]) => TypeReference(
         (t) => t
           ..symbol = 'Encoder'
@@ -798,37 +798,37 @@ class _Codable {
           ..types.addAll([if (valueType != null) valueType]),
       );
 
-  /// Creates a [codable.CodableRegistry] reference.
-  TypeReference get codableRegistry => TypeReference(
+  /// Creates a [libcoder.GlobalCoder] reference.
+  TypeReference get globalCoder => TypeReference(
         (t) => t
-          ..symbol = 'CodableRegistry'
+          ..symbol = 'GlobalCoder'
           ..url = _url,
       );
 
-  /// Creates a [codable.CodableConfig] reference.
-  TypeReference codableConfig([Reference? valueType]) => TypeReference(
+  /// Creates a [libcoder.CoderConfig] reference.
+  TypeReference coderConfig([Reference? valueType]) => TypeReference(
         (t) => t
-          ..symbol = 'CodableConfig'
+          ..symbol = 'CoderConfig'
           ..url = _url
           ..types.addAll([if (valueType != null) valueType]),
       );
 
-  /// Creates a [codable.CodableProtocol] reference.
-  TypeReference codableProtocol([Reference? valueType]) => TypeReference(
+  /// Creates a [libcoder.Coder] reference.
+  TypeReference coderProtocol([Reference? valueType]) => TypeReference(
         (t) => t
-          ..symbol = 'CodableProtocol'
+          ..symbol = 'Coder'
           ..url = _url
           ..types.addAll([if (valueType != null) valueType]),
       );
 
-  /// Creates a [codable.FormFieldsEncoder] reference.
+  /// Creates a [libcoder.FormFieldsEncoder] reference.
   TypeReference get formFieldsEncoder => TypeReference(
         (t) => t
           ..symbol = 'FormFieldsEncoder'
           ..url = _url,
       );
 
-  /// Creates a [codable.Typeref] reference.
+  /// Creates a [libcoder.Typeref] reference.
   TypeReference typeref([Reference? valueType]) => TypeReference(
         (t) => t
           ..symbol = 'Typeref'

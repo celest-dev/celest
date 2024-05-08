@@ -91,7 +91,7 @@ final class OpenApiSchemaLinker {
           // uniqueness.
           name = '${eventType.pascalCase}Event';
           context.dartRefs[schema.key] = refer(name, 'events.dart');
-          context.stripeEventTypes.add(name);
+          context.stripeEventTypes[eventType] = name;
       }
 
       context.dartNames[schema.key] = context.reserveName(name, schema.value);
@@ -174,6 +174,39 @@ final class OpenApiSchemaLinker {
         type: type,
       );
     }
+
+    // Generate StripeEvent union
+    final stripeEventSchema = OpenApiSealedType(
+      typeReference: context.stripeEvent,
+      schema: OpenApiDisjointUnionTypeSchema(types: []),
+      branches: [
+        for (final MapEntry(key: schemaName, value: dartName)
+            in context.stripeEventTypes.entries)
+          OpenApiSealedBranch(
+            name: dartName,
+            type: context.typeSchemaRefs[
+                context.document.components.schemas[schemaName]!]!,
+          ),
+      ],
+      discriminator: FieldDiscriminator(
+        dartName: 'type',
+        wireName: 'type',
+        mapping: {
+          for (final MapEntry(key: schemaName, value: _)
+              in context.stripeEventTypes.entries)
+            schemaName: context.typeSchemaRefs[
+                context.document.components.schemas[schemaName]!]!,
+        },
+      ),
+      isNullable: false,
+    );
+    final stripeEventUnion = OpenApiUnionGenerator(
+      name: 'StripeEvent',
+      context: context,
+      type: stripeEventSchema,
+    ).generate();
+    context.schemaSpecs['StripeEvent'] = stripeEventUnion;
+    context.schemasByUrl.add('events.dart', 'StripeEvent');
 
     for (final pathItem in context.document.paths.entries) {
       _linkPathItem(pathItem.key, pathItem.value);

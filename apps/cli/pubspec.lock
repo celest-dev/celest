@@ -305,13 +305,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  codable:
-    dependency: "direct main"
-    description:
-      path: "../../packages/codable"
-      relative: true
-    source: path
-    version: "0.0.1"
   code_builder:
     dependency: "direct main"
     description:
@@ -659,6 +652,14 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  libcoder:
+    dependency: "direct main"
+    description:
+      name: libcoder
+      sha256: "48d13cf43b94cb179e9a8da97fb2345b22bc12ce39e72a2d869f59d6607e6ccb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   lints:
     dependency: transitive
     description:

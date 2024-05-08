@@ -29,8 +29,6 @@ dependencies:
   celest_core:
     path: ../../celest/packages/celest_core
   cli_script: ^1.0.0
-  codable:
-    path: ../../packages/codable
   code_builder: ^4.8.0
   collection: ^1.18.0
   convert: ^3.1.1
@@ -51,6 +49,7 @@ dependencies:
   json_annotation: ^4.8.1
   lib_openapi:
     path: ../../packages/lib_openapi
+  libcoder: ^0.0.1
   logging: ^1.2.0
   mason_logger: ^0.2.10
   meta: ^1.10.0
@@ -97,8 +96,6 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  codable:
-    path: ../../packages/codable
   corks_cedar:
     path: ../../celest/packages/corks_cedar
   jni:

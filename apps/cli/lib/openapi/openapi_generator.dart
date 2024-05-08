@@ -75,7 +75,7 @@ final class OpenApiGenerator {
     );
     return {
       ...clientGenerator.generate(),
-      ...context._schemasByUrl.build().toMap().map((url, schemas) {
+      ...context.schemasByUrl.build().toMap().map((url, schemas) {
         return MapEntry(
           url,
           Library((b) {
@@ -153,7 +153,7 @@ class OpenApiGeneratorContext {
     hashCode: (ref) => ref.withNullability(false).hashCode,
   );
   final schemaSpecs = <String, Spec>{};
-  final _schemasByUrl = SetMultimapBuilder<String, String>();
+  final schemasByUrl = SetMultimapBuilder<String, String>();
   final _codableTypes = <String>{};
 
   Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {
@@ -233,7 +233,7 @@ class OpenApiGeneratorContext {
                         ),
                         Parameter(
                           (p) => p
-                            ..type = DartTypes.codable.encoder(refer('V'))
+                            ..type = DartTypes.libcoder.encoder(refer('V'))
                             ..name = 'encoder',
                         ),
                       ])
@@ -298,7 +298,7 @@ class OpenApiGeneratorContext {
     String url,
     Spec Function() builder,
   ) {
-    _schemasByUrl.add(url, name);
+    schemasByUrl.add(url, name);
     return schemaSpecs.update(
       name,
       (value) => value,
