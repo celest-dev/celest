@@ -20,7 +20,3 @@ updates:
     directory: "packages/celest_core"
     schedule:
       interval: "weekly"
-  - package-ecosystem: "pub"
-    directory: "packages/native/storage"
-    schedule:
-      interval: "weekly"
