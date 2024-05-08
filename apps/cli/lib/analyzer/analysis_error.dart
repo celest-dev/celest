@@ -13,8 +13,8 @@ enum AnalysisErrorSeverity {
   info,
 }
 
-final class AnalysisError {
-  const AnalysisError({
+final class CelestAnalysisError {
+  const CelestAnalysisError({
     AnalysisErrorSeverity? severity,
     required this.message,
     required this.location,

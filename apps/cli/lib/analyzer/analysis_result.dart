@@ -6,7 +6,7 @@ sealed class CelestAnalysisResult {
 
   factory CelestAnalysisResult.from({
     ast.Project? project,
-    List<AnalysisError> errors = const [],
+    List<CelestAnalysisError> errors = const [],
   }) {
     if (project == null) {
       return AnalysisFailureResult(errors);
@@ -19,14 +19,14 @@ sealed class CelestAnalysisResult {
 
   factory CelestAnalysisResult.success({
     required ast.Project project,
-    List<AnalysisError> errors,
+    List<CelestAnalysisError> errors,
   }) = AnalysisSuccessResult;
 
-  factory CelestAnalysisResult.failure(List<AnalysisError> errors) =
+  factory CelestAnalysisResult.failure(List<CelestAnalysisError> errors) =
       AnalysisFailureResult;
 
   ast.Project? get project;
-  List<AnalysisError> get errors;
+  List<CelestAnalysisError> get errors;
 }
 
 final class AnalysisSuccessResult implements CelestAnalysisResult {
@@ -39,7 +39,7 @@ final class AnalysisSuccessResult implements CelestAnalysisResult {
   final ast.Project project;
 
   @override
-  final List<AnalysisError> errors;
+  final List<CelestAnalysisError> errors;
 }
 
 final class AnalysisFailureResult implements CelestAnalysisResult {
@@ -53,5 +53,5 @@ final class AnalysisFailureResult implements CelestAnalysisResult {
   ast.Project? get project => null;
 
   @override
-  final List<AnalysisError> errors;
+  final List<CelestAnalysisError> errors;
 }

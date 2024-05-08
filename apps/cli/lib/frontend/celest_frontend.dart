@@ -71,7 +71,7 @@ final class CelestFrontend implements Closeable {
   static final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer = CelestAnalyzer();
 
-  int _logErrors(List<AnalysisError> errors) {
+  int _logErrors(List<CelestAnalysisError> errors) {
     for (final error in errors) {
       logger.severe(error.toString());
     }
@@ -300,7 +300,7 @@ final class CelestFrontend implements Closeable {
           currentProgress = cliLogger.progress('Reloading Celest');
         }
 
-        void fail(List<AnalysisError> errors) {
+        void fail(List<CelestAnalysisError> errors) {
           currentProgress.fail(
             'Project has errors. Please fix them and save the '
             'corresponding files.',
@@ -472,7 +472,7 @@ final class CelestFrontend implements Closeable {
           currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
         }
 
-        void fail(List<AnalysisError> errors) {
+        void fail(List<CelestAnalysisError> errors) {
           currentProgress!.fail(
             'Project has errors. Please fix them and save the '
             'corresponding files, then run `celest deploy` again.',

@@ -41,7 +41,7 @@ final class EnvParser {
   final Map<String, FileSpan> spans = {};
 
   // TODO(dnys1): Record errors parsing instead of returning null.
-  final List<AnalysisError> errors = [];
+  final List<CelestAnalysisError> errors = [];
 
   /// Creates a [Map](dart:core).
   /// Duplicate keys are silently discarded.
@@ -62,7 +62,7 @@ final class EnvParser {
           key,
           (_) {
             errors.add(
-              AnalysisError(
+              CelestAnalysisError(
                 message: 'Duplicate key: $key',
                 location: span,
               ),
