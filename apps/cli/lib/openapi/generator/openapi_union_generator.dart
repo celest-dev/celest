@@ -1,3 +1,4 @@
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -118,6 +119,7 @@ final class OpenApiUnionGenerator {
               ),
           ),
           _encodeMethod,
+          _encodeWithMethod,
         ]);
       if (type.discriminator case FieldDiscriminator(:final mapping)) {
         final mappingField = Field(
@@ -154,41 +156,52 @@ final class OpenApiUnionGenerator {
           );
         });
       }
+      c.fields.add(codableTypeField(name));
     });
     return baseClass;
+  }
+
+  Method get _encodeWithMethod {
+    return Method((m) {
+      m
+        ..name = 'encodeWith'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ]);
+    });
   }
 
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(name)
+              ..name = 'instance',
           ),
-        );
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = refer('instance')
+            .property('encodeWith')
+            .call([refer('encoder')])
+            .returned
+            .statement;
     });
   }
-
-  // // Method get _encodeMethod {
-  // //   return Method((m) {
-  // //     m
-  // //       ..name = 'encodeInto'
-  //
-  // //       ..returns = DartTypes.core.map(
-  // //         DartTypes.core.string,
-  // //         DartTypes.core.object.nullable,
-  // //       )
-  // //       ..requiredParameters.add(
-  // //         Parameter(
-  // //           (p) => p
-  // //             ..type = refer('Encoder', 'src/encoding/encoder.dart')
-  // //             ..name = 'encoder',
-  // //         ),
-  // //       );
-  // //   });
-  // }
 }

@@ -11,26 +11,85 @@ final class OpenApiEncoder {
     required Expression container,
     required Expression? key,
   }) {
+    final encoded = _encode(
+      type: type,
+      ref: ref,
+      container: container,
+      key: key,
+    );
+
+    if (!type.isNullable) {
+      return encoded;
+    }
+    return ref.equalTo(literalNull).conditional(
+          container.property('encodeNull').call([]),
+          encoded,
+        );
+  }
+
+  Expression _encode({
+    required OpenApiType type,
+    required Expression ref,
+    required Expression container,
+    required Expression? key,
+  }) {
+    assert(!type.isNullable);
     switch (type) {
       case OpenApiDateType():
         return container
-            .property('writeDateTime')
+            .property('encodeDateTime')
             .call([if (key != null) key, ref]);
       case OpenApiSingleValueType(:final value):
-        return container
-            .property('write')
-            .call([if (key != null) key, literal(value)]);
-      case OpenApiPrimitiveType(
+        return encode(
+          type: type.primitiveType,
+          ref: literal(value),
+          container: container,
+          key: key,
+        );
+      case OpenApiStringType(
               typeReference: TypeReference(url: == 'dart:core'),
             ) ||
             OpenApiEnumType(
               typeReference: TypeReference(url: == 'dart:core'),
             ):
-        return container.property('write').call([if (key != null) key, ref]);
+        return container
+            .property('encodeString')
+            .call([if (key != null) key, ref]);
+      case OpenApiIntegerType(
+          typeReference: TypeReference(url: == 'dart:core'),
+        ):
+        return container
+            .property('encodeInt')
+            .call([if (key != null) key, ref]);
+      case OpenApiDoubleType(
+          typeReference: TypeReference(url: == 'dart:core'),
+        ):
+        return container
+            .property('encodeDouble')
+            .call([if (key != null) key, ref]);
+      case OpenApiNumberType(
+          typeReference: TypeReference(url: == 'dart:core'),
+        ):
+        return container
+            .property('encodeDouble')
+            .call([if (key != null) key, ref]);
+      case OpenApiBooleanType(
+          typeReference: TypeReference(url: == 'dart:core'),
+        ):
+        return container
+            .property('encodeBool')
+            .call([if (key != null) key, ref]);
+      case OpenApiAnyType(
+          typeReference: TypeReference(url: == 'dart:core'),
+        ):
+        return container
+            .property('encodePrimitive')
+            .call([if (key != null) key, ref]);
       case OpenApiBinaryType(): // XFile
         return container
-            .property('writeString')
+            .property('encodeString')
             .call([if (key != null) key, ref.property('path')]);
+
       case OpenApiIterableInterface(:final itemType):
         final element = refer('el');
         final serializedElement = encode(
@@ -39,7 +98,7 @@ final class OpenApiEncoder {
           container: refer('container'),
           key: null,
         );
-        return container.property('writeList').call([
+        return container.property('encodeList').call([
           if (key != null) key,
           Method(
             (m) => m
@@ -61,7 +120,7 @@ final class OpenApiEncoder {
           container: refer('container'),
           key: refer('key'),
         );
-        return container.property('writeMap').call([
+        return container.property('encodeMap').call([
           if (key != null) key,
           Method(
             (m) => m
@@ -93,13 +152,16 @@ final class OpenApiEncoder {
           container: container,
           key: key,
         );
-      case OpenApiStructType():
-      case OpenApiSealedType():
-      case OpenApiTypeReference():
-        return container.property('writeValue').call([
-          if (key != null) key,
-          ref.property('encodeInto'),
-        ]);
+      case OpenApiStructType(:final typeReference):
+      case OpenApiSealedType(:final typeReference):
+      case OpenApiTypeReference(:final typeReference):
+        return container.property('encode').call(
+          [
+            if (key != null) key,
+            ref,
+          ],
+          {'as': typeReference.property('codableType')},
+        );
       case OpenApiEmptyType():
         unreachable('Empty type');
     }

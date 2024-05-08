@@ -470,36 +470,14 @@ final class OpenApiClientGenerator {
           if (bodyType is! OpenApiStructType) {
             unreachable('Unexpected form body type: $bodyType');
           }
-
-          final encoded = Block((b) {
-            final container = refer(r'$container');
-            b.addExpression(
-              declareFinal(r'$container').assign(
-                refer('formFieldEncoder', 'src/encoding/form_fields.dart')
-                    .property('container')
-                    .call([]),
-              ),
-            );
-            b.addExpression(
-              refer('request').property('encodeInto').call([container]),
-            );
-            b.addExpression(
-              request.property('bodyFields').assign(
-                    container.property('value').asA(
-                          DartTypes.core.map(
-                            DartTypes.core.string,
-                            DartTypes.core.string,
-                          ),
-                        ),
-                  ),
-            );
-          });
-
+          final encoded = refer('request').property('encodeWith').call([
+            DartTypes.codable.codable.property('formData').property('encoder'),
+          ]);
           body.statements.add(
-            encoded.wrapWithBlockIf(
-              refer('request').notEqualTo(literalNull),
-              bodyType.isNullable,
-            ),
+            request.property('body').assign(encoded).wrapWithBlockIf(
+                  refer('request').notEqualTo(literalNull),
+                  bodyType.isNullable,
+                ),
           );
         case 'multipart/form-data':
           if (bodyType is! OpenApiStructType) {
@@ -543,26 +521,24 @@ final class OpenApiClientGenerator {
               );
             }
             if (fields.isNotEmpty) {
-              final container = refer(r'$container');
-              b.addExpression(
-                declareFinal(r'$container').assign(
-                  refer('formFieldEncoder', 'src/encoding/form_fields.dart')
-                      .property('container')
-                      .call([]),
+              final encoded = refer('request').property('encodeWith').call([
+                DartTypes.codable.codable
+                    .property('formFields')
+                    .property('encoder'),
+              ]).asA(
+                DartTypes.core.map(
+                  DartTypes.core.string,
+                  DartTypes.core.string,
                 ),
               );
-              b.addExpression(
-                refer('request').property('encodeInto').call([container]),
-              );
-              b.addExpression(
-                request.property('fields').property('addAll').call([
-                  container.property('value').asA(
-                        DartTypes.core.map(
-                          DartTypes.core.string,
-                          DartTypes.core.string,
-                        ),
-                      ),
-                ]),
+              body.statements.add(
+                request
+                    .property('fields')
+                    .property('addAll')
+                    .call([encoded]).wrapWithBlockIf(
+                  refer('request').notEqualTo(literalNull),
+                  bodyType.isNullable,
+                ),
               );
             }
           });

@@ -5,6 +5,7 @@ import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/openapi/generator/openapi_array_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_client_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_encoder.dart';
 import 'package:celest_cli/openapi/generator/openapi_enum_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_record_generator.dart';
@@ -141,92 +142,121 @@ class OpenApiGeneratorContext {
     String? mimeType,
     bool? structuralEnum,
   }) {
-    final schema = type.schema.withNullability(false);
     return registerSpec(
       key ?? name,
       url,
-      () => switch (type) {
-        OpenApiPrimitiveType(:final typeReference) => ExtensionType(
-            (t) => t
-              // ..name = typeReference.symbol == name ? '$name\$' : name
-              ..name = name
-              ..constant = true
-              ..constructors.addAll([
-                Constructor(
-                  (c) => c
-                    ..constant = true
-                    ..name = 'fromJson'
-                    ..requiredParameters.add(
-                      Parameter(
-                        (p) => p
-                          ..type = DartTypes.core.object.nullable
-                          ..name = 'json',
+      () {
+        final schema = type.schema.withNullability(false);
+        final className = reserveName(name, schema);
+        return switch (type) {
+          OpenApiPrimitiveType(:final typeReference) => ExtensionType(
+              (t) => t
+                // ..name = typeReference.symbol == name ? '$name\$' : name
+                ..name = className
+                ..constant = true
+                ..constructors.addAll([
+                  Constructor(
+                    (c) => c
+                      ..constant = true
+                      ..name = 'fromJson'
+                      ..requiredParameters.add(
+                        Parameter(
+                          (p) => p
+                            ..type = DartTypes.core.object.nullable
+                            ..name = 'json',
+                        ),
+                      )
+                      ..initializers.add(
+                        refer('_')
+                            .assign(refer('json').asA(typeReference))
+                            .code,
                       ),
-                    )
-                    ..initializers.add(
-                      refer('_').assign(refer('json').asA(typeReference)).code,
-                    ),
-                ),
-              ])
-              ..representationDeclaration = RepresentationDeclaration(
-                (r) => r
-                  ..name = '_'
-                  ..declaredRepresentationType = typeReference,
-              )
-              ..implements.add(typeReference)
-              ..methods.addAll([
-                Method(
-                  (m) => m
-                    ..name = 'toJson'
-                    ..returns = typeReference
-                    ..lambda = true
-                    ..body = refer('_').code,
-                ),
-                Method(
-                  (m) => m
-                    ..name = 'encodeInto'
-                    ..returns = DartTypes.core.void$
-                    ..requiredParameters.add(
-                      Parameter(
-                        (p) => p
-                          ..type = refer(
-                            'EncodingContainer',
-                            'src/encoding/encoder.dart',
-                          )
-                          ..name = 'container',
-                      ),
-                    )
-                    ..body = refer('container')
-                        .property('write')
-                        .call([refer('_')]).code,
-                ),
-              ]),
-          ),
-        OpenApiIterableInterface() => OpenApiArrayGenerator(
-            name: reserveName(name, schema),
-            type: type,
-          ).generate(),
-        OpenApiEnumType() => OpenApiEnumGenerator(
-            name: reserveName(name, schema),
-            structuralEnum: false, // structuralEnum!,
-            type: type,
-          ).generate(),
-        OpenApiStructType() => OpenApiStructGenerator(
-            name: reserveName(name, schema),
-            type: type,
-            mimeType: mimeType,
-          ).generate(),
-        OpenApiSealedType() => OpenApiUnionGenerator(
-            name: reserveName(name, schema),
-            context: this,
-            type: type,
-          ).generate(),
-        OpenApiRecordType() => OpenApiRecordGenerator(
-            name: reserveName(name, schema),
-            type: type,
-          ).generate(),
-        _ => unreachable('$type'),
-      } as Spec,
+                  ),
+                ])
+                ..representationDeclaration = RepresentationDeclaration(
+                  (r) => r
+                    ..name = '_'
+                    ..declaredRepresentationType = typeReference,
+                )
+                ..implements.add(typeReference)
+                ..fields.add(codableExtensionTypeField(name))
+                ..methods.addAll([
+                  Method(
+                    (m) => m
+                      ..name = 'toJson'
+                      ..returns = typeReference
+                      ..lambda = true
+                      ..body = refer('_').code,
+                  ),
+                  Method((m) {
+                    m
+                      ..static = true
+                      ..name = 'encode'
+                      ..types.add(refer('V'))
+                      ..returns = refer('V')
+                      ..requiredParameters.addAll([
+                        Parameter(
+                          (p) => p
+                            ..type = refer(name)
+                            ..name = 'instance',
+                        ),
+                        Parameter(
+                          (p) => p
+                            ..type = DartTypes.codable.encoder(refer('V'))
+                            ..name = 'encoder',
+                        ),
+                      ])
+                      ..lambda = false
+                      ..body = Block((b) {
+                        b.addExpression(
+                          declareFinal('container').assign(
+                            refer('encoder')
+                                .property('singleValueContainer')
+                                .call([]),
+                          ),
+                        );
+                        b.addExpression(
+                          openApiEncoder.encode(
+                            type: type,
+                            ref: refer('instance'),
+                            container: refer('container'),
+                            key: null,
+                          ),
+                        );
+                        b.addExpression(
+                          refer('container').property('value').returned,
+                        );
+                      });
+                  }),
+                  encodeWithMethod,
+                ]),
+            ),
+          OpenApiIterableInterface() => OpenApiArrayGenerator(
+              name: className,
+              type: type,
+            ).generate(),
+          OpenApiEnumType() => OpenApiEnumGenerator(
+              name: className,
+              structuralEnum: false, // structuralEnum!,
+              type: type,
+            ).generate(),
+          OpenApiStructType() => OpenApiStructGenerator(
+              name: className,
+              type: type,
+              mimeType: mimeType,
+            ).generate(),
+          OpenApiSealedType() => OpenApiUnionGenerator(
+              name: className,
+              context: this,
+              type: type,
+            ).generate(),
+          OpenApiRecordType() => OpenApiRecordGenerator(
+              name: className,
+              type: type,
+            ).generate(),
+          _ => unreachable('$type'),
+        } as Spec;
+      },
     );
   }
 

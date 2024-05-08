@@ -1,5 +1,6 @@
-import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_encoder.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -77,30 +78,22 @@ final class OpenApiRecordGenerator {
                   .code,
           ),
           _encodeMethod,
+          encodeWithMethod,
         ]),
     );
   }
 
   Method get _encodeMethod {
-    return Method((m) {
-      m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
-          ),
-        )
-        ..body = openApiEncoder
-            .encode(
-              type: type,
-              ref: refer('this'),
-              container: refer('container'),
-              key: null,
-            )
-            .code;
-    });
+    return encodeMethod(
+      name,
+      openApiEncoder
+          .encode(
+            type: type,
+            ref: refer('instance'),
+            container: refer('container'),
+            key: null,
+          )
+          .code,
+    );
   }
 }

@@ -1,5 +1,6 @@
-import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_encoder.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -66,6 +67,7 @@ final class OpenApiArrayGenerator {
               }),
           ),
         ])
+        ..fields.add(codableTypeField(name))
         ..methods.addAll([
           Method(
             (m) => m
@@ -76,6 +78,7 @@ final class OpenApiArrayGenerator {
                   .code,
           ),
           _encodeMethod,
+          encodeWithMethod,
         ]),
     );
   }
@@ -83,23 +86,62 @@ final class OpenApiArrayGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(name)
+              ..name = 'instance',
           ),
-        )
-        ..body = openApiEncoder
-            .encode(
-              type: type,
-              ref: refer('this'),
-              container: refer('container'),
-              key: null,
-            )
-            .code;
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = Block((b) {
+          b.addExpression(
+            declareFinal('container').assign(
+              refer('encoder').property('unkeyedContainer').call(
+                [],
+                {},
+                [DartTypes.core.string],
+              ),
+            ),
+          );
+          b.addExpression(
+            refer('instance').property('forEach').call(
+              [
+                Method(
+                  (m) => m
+                    ..requiredParameters.add(
+                      Parameter(
+                        (p) => p
+                          ..name = 'el'
+                          ..type = type.itemType.typeReference,
+                      ),
+                    )
+                    ..lambda = true
+                    ..body = Block((b) {
+                      b.addExpression(
+                        openApiEncoder.encode(
+                          type: type.itemType,
+                          ref: refer('el'),
+                          container: refer('container'),
+                          key: null,
+                        ),
+                      );
+                    }),
+                ).closure,
+              ],
+            ),
+          );
+          b.addExpression(refer('container').property('value').returned);
+        });
     });
   }
 }

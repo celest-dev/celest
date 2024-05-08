@@ -1,5 +1,6 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/codegen/reserved_words.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -108,6 +109,7 @@ final class OpenApiEnumGenerator {
               ..body = refer('_').code,
           ),
           _encodeMethod,
+          encodeWithMethod,
         ]);
         b.representationDeclaration = RepresentationDeclaration(
           (d) => d
@@ -115,6 +117,7 @@ final class OpenApiEnumGenerator {
             ..declaredRepresentationType = repType,
         );
         b.implements.add(repType);
+        b.fields.add(codableExtensionTypeField(name));
         for (final value in type.values) {
           b.fields.add(
             Field(
@@ -135,17 +138,28 @@ final class OpenApiEnumGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(name)
+              ..name = 'instance',
           ),
-        )
-        ..body =
-            refer('container').property('writeString').call([refer('_')]).code;
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = refer('encoder')
+            .property('encodeString')
+            .call([refer('instance')])
+            .returned
+            .statement;
     });
   }
 }

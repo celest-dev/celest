@@ -445,7 +445,7 @@ abstract class OpenApiNumberType
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
         (t) => t.typeReference.replace(
-          DartTypes.core.num.withNullability(isNullable).toTypeReference,
+          DartTypes.core.double.withNullability(isNullable).toTypeReference,
         ),
       );
 

@@ -1,3 +1,4 @@
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
@@ -54,7 +55,8 @@ final class OpenApiIdGenerator {
           },
         ),
       ])
-      ..methods.addAll([_toJsonMethod, _encodeMethod]);
+      ..methods.addAll([_toJsonMethod, _encodeMethod, encodeWithMethod])
+      ..fields.addAll([codableTypeField(className)]);
     return _class.build();
   }
 
@@ -90,29 +92,48 @@ final class OpenApiIdGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(className)
+              ..name = 'instance',
           ),
-        )
-        ..lambda = true
-        ..body = idIsNullable
-            ? refer('id')
-                .equalTo(literalNull)
-                .conditional(
-                  refer('container').property('writeNull').call([]),
-                  refer('container')
-                      .property('writeString')
-                      .call([refer('id').nullChecked]),
-                )
-                .code
-            : refer('container')
-                .property('writeString')
-                .call([refer('id')]).code;
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = Block((b) {
+          b.addExpression(
+            declareFinal('container').assign(
+              refer('encoder').property('singleValueContainer').call([]),
+            ),
+          );
+          final id = refer('instance').property('id');
+          if (idIsNullable) {
+            b.addExpression(
+              id.equalTo(literalNull).conditional(
+                    refer('container').property('encodeNull').call([]),
+                    refer('container')
+                        .property('encodeString')
+                        .call([id.nullChecked]),
+                  ),
+            );
+          } else {
+            b.addExpression(
+              refer('container').property('encodeString').call([id]),
+            );
+          }
+          b.addExpression(
+            refer('container').property('value').returned,
+          );
+        });
     });
   }
 }
@@ -157,7 +178,8 @@ final class OpenApiStructOrIdGenerator {
         }),
       )
       ..constructors.addAll([_fromJsonMethod])
-      ..methods.addAll([_toJsonMethod, _encodeMethod]);
+      ..methods.addAll([_toJsonMethod, _encodeMethod, _encodeWithMethod])
+      ..fields.addAll([codableTypeField(className)]);
     return _class.build();
   }
 
@@ -202,18 +224,47 @@ final class OpenApiStructOrIdGenerator {
     });
   }
 
+  Method get _encodeWithMethod {
+    return Method((m) {
+      m
+        ..name = 'encodeWith'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ]);
+    });
+  }
+
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(className)
+              ..name = 'instance',
           ),
-        );
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = refer('instance')
+            .property('encodeWith')
+            .call([refer('encoder')])
+            .returned
+            .statement;
     });
   }
 }

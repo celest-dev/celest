@@ -108,6 +108,9 @@ abstract class DartTypes {
   /// `package:collection` types.
   static const collection = _Collection();
 
+  /// `package:codable` types.
+  static const codable = _Codable();
+
   /// `dart:convert` types.
   static const convert = _Convert();
 
@@ -763,6 +766,56 @@ class _Convert {
 
   /// Creates a [convert.utf8] reference.
   DartTypeReference get utf8 => const DartTypeReference('utf8', _url);
+}
+
+/// `dart:convert` types
+class _Codable {
+  const _Codable();
+
+  static const _url = 'package:codable/codable.dart';
+
+  /// Creates a [codable.codable] reference.
+  DartTypeReference get codable => const DartTypeReference('codable', _url);
+
+  /// Creates a [codable.Decoder] reference.
+  TypeReference decoder([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'Decoder'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
+
+  /// Creates a [codable.Encoder] reference.
+  TypeReference encoder([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'Encoder'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
+
+  /// Creates a [codable.CodableType] reference.
+  TypeReference codableType([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'CodableType'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
+
+  /// Creates a [codable.CodableExtensionType] reference.
+  TypeReference codableExtensionType([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'CodableExtensionType'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
+
+  /// Creates a [codable.CodableProtocol] reference.
+  TypeReference codableProtocol([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'CodableProtocol'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
 }
 
 /// `package:fixnum` types

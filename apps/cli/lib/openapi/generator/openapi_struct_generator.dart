@@ -1,4 +1,4 @@
-import 'package:celest_cli/openapi/generator/openapi_encode_generator.dart';
+import 'package:celest_cli/openapi/generator/openapi_encoder.dart';
 import 'package:celest_cli/openapi/generator/openapi_json_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -102,9 +102,11 @@ final class OpenApiStructGenerator {
         ctor.build(),
         if (!includeFormData) _fromJsonMethod,
       ])
+      ..fields.addAll([codableTypeField(name)])
       ..methods.addAll([
         if (!includeFormData) _toJsonMethod,
         _encodeMethod,
+        encodeWithMethod,
         _toString,
       ]);
     return _class.build();
@@ -202,80 +204,134 @@ final class OpenApiStructGenerator {
           DartTypes.core.string,
           DartTypes.core.object.nullable,
         )
-        ..lambda = false
-        ..body = Block((b) {
-          final container = refer(r'$container');
-          b.addExpression(
-            declareFinal(r'$container').assign(
-              refer('jsonEncoder', 'src/encoding/json.dart')
-                  .property('container')
-                  .call([]),
-            ),
-          );
-          b.addExpression(
-            refer('encodeInto').call([container]),
-          );
-          b.addExpression(
-            container
-                .property('value')
-                .asA(
-                  DartTypes.core.map(
-                    DartTypes.core.string,
-                    DartTypes.core.object.nullable,
-                  ),
-                )
-                .returned,
-          );
-        });
+        ..lambda = true
+        ..body = DartTypes.codable.codable
+            .property('json')
+            .property('encode')
+            .call([refer('this')], {'as': refer('codableType')})
+            .asA(
+              DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.object.nullable,
+              ),
+            )
+            .code;
     });
   }
 
   Method get _encodeMethod {
-    return Method((m) {
-      m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
-          ),
-        )
-        ..lambda = false
-        ..body = refer('container')
-            .property('writeMap')
-            .call([
-              Method(
-                (m) => m
-                  ..requiredParameters
-                      .add(Parameter((p) => p.name = 'container'))
-                  ..body = Block((b) {
-                    final container = refer('container');
-                    for (final field in type.serializableFields) {
-                      Expression fieldRef = refer(field.dartName);
-                      if (field.type.isNullable) {
-                        fieldRef = fieldRef.nullChecked;
-                      }
-                      final fieldType = field.type;
-                      final encodeField = openApiEncoder.encode(
-                        type: fieldType.withNullability(false),
-                        ref: fieldRef,
-                        container: container,
-                        key: literalString(field.name),
-                      );
-                      b.statements.add(
-                        encodeField.wrapWithBlockIf(
-                          refer(field.dartName).notEqualTo(literalNull),
-                          field.type.isNullable,
-                        ),
-                      );
-                    }
-                  }),
-              ).closure,
-            ])
-            .returned
-            .statement;
-    });
+    return encodeMethod(
+      name,
+      Block((b) {
+        final container = refer('container');
+        for (final field in type.serializableFields) {
+          var fieldRef = refer('instance').property(field.dartName);
+          if (field.type.isNullable) {
+            fieldRef = fieldRef.nullChecked;
+          }
+          final fieldType = field.type;
+          final encodeField = openApiEncoder.encode(
+            type: fieldType.withNullability(false),
+            ref: fieldRef,
+            container: container,
+            key: literalString(field.name),
+          );
+          b.statements.add(
+            encodeField.wrapWithBlockIf(
+              refer('instance')
+                  .property(field.dartName)
+                  .notEqualTo(literalNull),
+              field.type.isNullable,
+            ),
+          );
+        }
+      }),
+    );
   }
+}
+
+Method encodeMethod(String name, Code body) {
+  return Method((m) {
+    m
+      ..static = true
+      ..name = 'encode'
+      ..types.add(refer('V'))
+      ..returns = refer('V')
+      ..requiredParameters.addAll([
+        Parameter(
+          (p) => p
+            ..type = refer(name)
+            ..name = 'instance',
+        ),
+        Parameter(
+          (p) => p
+            ..type = DartTypes.codable.encoder(refer('V'))
+            ..name = 'encoder',
+        ),
+      ])
+      ..lambda = false
+      ..body = Block((b) {
+        b.addExpression(
+          declareFinal('container').assign(
+            refer('encoder').property('container').call(
+              [],
+              {},
+              [DartTypes.core.string],
+            ),
+          ),
+        );
+        b.statements.add(body);
+        b.addExpression(
+          refer('container').property('value').returned,
+        );
+      });
+  });
+}
+
+Field codableTypeField(String className) {
+  return Field((f) {
+    f
+      ..static = true
+      ..modifier = FieldModifier.constant
+      ..name = 'codableType'
+      ..type = DartTypes.codable.codableType(refer(className))
+      ..assignment = DartTypes.codable.codableType().constInstance([], {
+        'typeName': literalString(className),
+        'encode': refer(className).property('encode'),
+      }).code;
+  });
+}
+
+Field codableExtensionTypeField(String className) {
+  return Field((f) {
+    f
+      ..static = true
+      ..modifier = FieldModifier.constant
+      ..name = 'codableType'
+      ..type = DartTypes.codable.codableType(refer(className))
+      ..assignment =
+          DartTypes.codable.codableExtensionType().constInstance([], {
+        'typeName': literalString(className),
+        'encode': refer(className).property('encode'),
+      }).code;
+  });
+}
+
+Method get encodeWithMethod {
+  return Method((m) {
+    m
+      ..name = 'encodeWith'
+      ..types.add(refer('V'))
+      ..returns = refer('V')
+      ..requiredParameters.addAll([
+        Parameter(
+          (p) => p
+            ..type = DartTypes.codable.encoder(refer('V'))
+            ..name = 'encoder',
+        ),
+      ])
+      ..body = refer('encoder')
+          .property('encode')
+          .call([refer('this')], {'as': refer('codableType')}).code;
+  });
 }

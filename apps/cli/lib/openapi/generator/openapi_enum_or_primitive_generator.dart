@@ -1,5 +1,6 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/codegen/reserved_words.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -84,6 +85,7 @@ final class OpenApiEnumOrPrimitiveGenerator {
             ),
           ])
           ..fields.addAll([
+            codableExtensionTypeField(name),
             for (final enumValue in enumValues)
               Field(
                 (f) => f
@@ -105,6 +107,7 @@ final class OpenApiEnumOrPrimitiveGenerator {
                 ..body = refer('_value').code,
             ),
             _encodeMethod,
+            encodeWithMethod,
           ]);
       },
     );
@@ -113,18 +116,28 @@ final class OpenApiEnumOrPrimitiveGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encodeInto'
-        ..returns = DartTypes.core.void$
-        ..requiredParameters.add(
+        ..static = true
+        ..name = 'encode'
+        ..types.add(refer('V'))
+        ..returns = refer('V')
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
-              ..name = 'container',
+              ..type = refer(name)
+              ..name = 'instance',
           ),
-        )
-        ..lambda = true
-        ..body =
-            refer('container').property('write').call([refer('_value')]).code;
+          Parameter(
+            (p) => p
+              ..type = DartTypes.codable.encoder(refer('V'))
+              ..name = 'encoder',
+          ),
+        ])
+        ..lambda = false
+        ..body = refer('encoder')
+            .property('encodePrimitive')
+            .call([refer('instance')])
+            .returned
+            .statement;
     });
   }
 }

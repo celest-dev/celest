@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/model/openapi_v3.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
@@ -93,21 +94,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
                 ..returns = DartTypes.core.object.nullable
                 ..name = 'toJson',
             ),
-            Method((m) {
-              m
-                ..name = 'encodeInto'
-                ..returns = DartTypes.core.void$
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p
-                      ..type = refer(
-                        'EncodingContainer',
-                        'src/encoding/encoder.dart',
-                      )
-                      ..name = 'container',
-                  ),
-                );
-            }),
+            encodeWithMethod.rebuild((m) => m.body = null),
           ]),
       ),
     );
@@ -131,21 +118,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
                 )
                 ..name = 'toJson',
             ),
-            Method((m) {
-              m
-                ..name = 'encodeInto'
-                ..returns = DartTypes.core.void$
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p
-                      ..type = refer(
-                        'EncodingContainer',
-                        'src/encoding/encoder.dart',
-                      )
-                      ..name = 'container',
-                  ),
-                );
-            }),
+            encodeWithMethod.rebuild((m) => m.body = null),
           ]),
       ),
     );

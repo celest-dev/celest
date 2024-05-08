@@ -34,14 +34,6 @@ final class OpenApiTypeSystem {
   late final OpenApiTypeSchema integerTypeSchema = OpenApiIntegerTypeSchema(
     format: 'int64',
   );
-  late final OpenApiType doubleType = OpenApiDoubleType(
-    schema: doubleTypeSchema,
-    typeReference: DartTypes.core.double.toTypeReference,
-    isNullable: false,
-  );
-  late final OpenApiTypeSchema doubleTypeSchema = OpenApiNumberTypeSchema(
-    format: 'double',
-  );
 
   /// Return `true` for any type which is in the equivalence class of `Object`.
   bool _isObject(OpenApiType type) {
