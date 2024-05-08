@@ -526,8 +526,15 @@ final class OpenApiSchemaTransformer {
         ..defaultValue = defaultValue?.let(JsonObject.new)
         ..readOnly = readOnly
         ..writeOnly = writeOnly
-        ..extensions.replace(extensions)
-        ..required.addAll(schema.required);
+        ..extensions.replace(extensions);
+
+      final required = {
+        ...b.required.build(),
+        ...schema.required,
+      };
+      b.required
+        ..clear()
+        ..addAll(required);
     });
   }
 

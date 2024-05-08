@@ -67,7 +67,11 @@ final class OpenApiSchemaLinker {
       // Stripe
       ({String className, String? inPackage})? stripeResource;
       switch (schema.value.extensions.toMap()) {
-        case {'x-stripeResource': final YamlMap resourceJson}:
+        case {
+            'x-stripeResource': JsonObject(
+              value: final Map<Object?, Object?> resourceJson
+            )
+          }:
           switch (resourceJson) {
             case {'class_name': final String className}:
               stripeResource = (
@@ -90,7 +94,7 @@ final class OpenApiSchemaLinker {
           context.stripeEventTypes.add(name);
       }
 
-      context.dartNames[schema.key] = name;
+      context.dartNames[schema.key] = context.reserveName(name, schema.value);
       context.dartRefs[schema.key] ??= refer(name, 'models.dart');
 
       if (schema.value.extensions['x-stripeOperations']
@@ -149,19 +153,24 @@ final class OpenApiSchemaLinker {
       final url = context.dartRefs[schema.key]!.url!;
       final type = typeSchema.accept(
         context.typeResolver,
-        OpenApiTypeResolutionScope(typeName: name, url: url),
+        OpenApiTypeResolutionScope(
+          global: true,
+          nameResolver: () => [name],
+          url: url,
+        ),
       );
       if (schema.value.extensions['x-resourceId']?.value
           case final String resourceId) {
         context.stripeResources[resourceId] = type.typeReference;
       }
       _service.models[name] = ServiceModel(
-        spec: context.generateSpec(
-          name,
-          schema.key,
-          type,
-          url: url,
-        ),
+        spec: context.schemaSpecs[name] ??
+            context.generateSpec(
+              name,
+              schema.key,
+              type,
+              url: url,
+            ),
         type: type,
       );
     }
@@ -333,12 +342,12 @@ final class OpenApiSchemaLinker {
         final parameterType = context.typeResolver.resolveRef(
           parameter.schema ?? parameter.content!.$2.schema,
           OpenApiTypeResolutionScope(
-            typeName:
-                '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+            nameResolver: () => [
+              '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+            ],
             isNullable: !parameter.required,
             url: 'models.dart',
           ),
-          null,
         );
         path.pathParameters[variableName] = ServicePathParameter.build((b) {
           b
@@ -375,12 +384,12 @@ final class OpenApiSchemaLinker {
                 .resolveRef(
                   parameter.schema ?? parameter.content!.$2.schema,
                   OpenApiTypeResolutionScope(
-                    typeName:
-                        '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+                    nameResolver: () => [
+                      '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+                    ],
                     isNullable: !parameter.required,
                     url: 'models.dart',
                   ),
-                  null,
                 )
                 .withNullability(!parameter.required);
             switch (parameter.location) {
@@ -441,28 +450,34 @@ final class OpenApiSchemaLinker {
                   '${requestBody.content.keys.join(', ')}',
                 );
               }
-              final stripeOperationType = context
-                      .stripeOperationNames[(pathItem.path, operation.type)] ??
-                  '';
-              final requestTypeName = switch (
-                  context.stripeOperationResourceName[(
+              final stripeOperationName = context.stripeOperationResourceName[(
                 operation.path,
                 operation.type
-              )]) {
-                (:final className, :final inPackage) =>
-                  '${stripeOperationType.pascalCase}${(inPackage ?? '').pascalCase}${className.pascalCase}Request',
-                _ => '${methodName.pascalCase}Request',
-              };
+              )];
               final bodyType = context.typeResolver
                   .resolveRef(
                     bodyMediaType.schema,
                     OpenApiTypeResolutionScope(
-                      typeName: requestTypeName,
+                      nameContext: stripeOperationName?.className,
+                      nameResolver: () sync* {
+                        final stripeOperationType =
+                            context.stripeOperationNames[(
+                                  pathItem.path,
+                                  operation.type
+                                )] ??
+                                '';
+
+                        if (stripeOperationName
+                            case (:final className, :final inPackage)) {
+                          // e.g. FileCreateOptions for (className=File, operationType=create)
+                          yield '${(inPackage ?? '').pascalCase}${className.pascalCase}${stripeOperationType.pascalCase}Options';
+                        }
+                        yield '${methodName.pascalCase}Options';
+                      },
                       isNullable: !requestBody.required,
                       mimeType: bodyMediaType.contentType.mimeType,
                       url: 'models.dart',
                     ),
-                    null,
                   )
                   .withNullability(!requestBody.required)
                   .rebuild((t) {
@@ -572,7 +587,7 @@ final class OpenApiSchemaLinker {
 
               for (final responseType in allResponseTypes) {
                 context.implement(
-                  responseType.schema.name ?? responseType.typeReference.symbol,
+                  responseType.typeReference.symbol,
                   refer(responseInterfaceName, 'models.dart'),
                 );
               }
@@ -608,8 +623,7 @@ final class OpenApiSchemaLinker {
               method.responseCases[statusCode] = responseType;
             }
             context.implement(
-              responseType.type.schema.name ??
-                  responseType.type.typeReference.symbol,
+              responseType.type.typeReference.symbol,
               DartTypes.core.exception,
             );
           }
@@ -650,12 +664,14 @@ final class OpenApiSchemaLinker {
     final responseType = context.typeResolver.resolveRef(
       responseMediaType.schema,
       OpenApiTypeResolutionScope(
-        typeName: name ??
-            '${methodName.pascalCase}Response_${statusCode ?? 'default'}',
+        nameResolver: () sync* {
+          final responseName = '${methodName.pascalCase}Response';
+          yield responseName;
+          yield '${responseName}_${statusCode ?? 'default'}';
+        },
         needsWrapper: needsWrapper,
         url: 'models.dart',
       ),
-      null,
     );
     return ServiceMethodResponse(
       description: response.description,

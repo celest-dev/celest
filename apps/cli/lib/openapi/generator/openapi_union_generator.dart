@@ -150,7 +150,7 @@ final class OpenApiUnionGenerator {
         c.fields.add(mappingField);
         mapping.forEach((_, subtype) {
           context.implement(
-            subtype.schema.name ?? subtype.typeReference.symbol,
+            subtype.typeReference.symbol,
             refer(name),
           );
         });

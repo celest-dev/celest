@@ -38,7 +38,10 @@ class OpenApiPrimitive extends EnumClass {
 /// https://spec.openapis.org/oas/v3.1.0#schema-object
 @BuiltValue(instantiable: false)
 sealed class OpenApiTypeSchema {
+  @BuiltValueField(compare: false)
   String? get name;
+
+  @BuiltValueField(compare: false)
   String? get ref;
 
   /// Adds support for polymorphism.
@@ -57,12 +60,15 @@ sealed class OpenApiTypeSchema {
   /// about the purpose of the instance described by this schema.
   ///
   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-title-and-description
+  @BuiltValueField(compare: false)
   String? get title;
 
   /// CommonMark syntax MAY be used for rich text representation.
+  @BuiltValueField(compare: false)
   String? get description;
 
   /// Specifies that a schema is deprecated and SHOULD be transitioned out of usage.
+  @BuiltValueField(compare: false)
   bool get isDeprecated;
 
   /// This keyword can be used to supply a default JSON value associated with a
@@ -72,6 +78,7 @@ sealed class OpenApiTypeSchema {
   /// schema.
   ///
   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-default
+  @BuiltValueField(compare: false)
   JsonObject? get defaultValue;
 
   /// If "readOnly" has a value of boolean true, it indicates that the value of
@@ -124,6 +131,8 @@ sealed class OpenApiTypeSchema {
   ///
   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-required
   BuiltList<String> get required;
+
+  @BuiltValueField(compare: false)
   BuiltMap<String, JsonObject> get extensions;
 
   OpenApiPrimitive? get primitiveType;
@@ -711,6 +720,7 @@ abstract class OpenApiStructTypeSchema
   /// If name is null, this is an anonymous/inline struct and codegen is
   /// responsible for assigning a name based on the context of its usage.
   @override
+  @BuiltValueField(compare: false)
   String? get name;
 
   /// The list of required fields, if any.

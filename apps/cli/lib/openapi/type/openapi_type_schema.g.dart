@@ -125,14 +125,9 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
         name == other.name &&
         ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         primitiveType == other.primitiveType &&
         isNullable == other.isNullable;
   }
@@ -143,14 +138,9 @@ class _$OpenApiTypeSchemaReference extends OpenApiTypeSchemaReference {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
@@ -408,17 +398,10 @@ class _$OpenApiArrayTypeSchema extends OpenApiArrayTypeSchema {
     return other is OpenApiArrayTypeSchema &&
         uniqueItems == other.uniqueItems &&
         itemType == other.itemType &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -427,17 +410,10 @@ class _$OpenApiArrayTypeSchema extends OpenApiArrayTypeSchema {
     var _$hash = 0;
     _$hash = $jc(_$hash, uniqueItems.hashCode);
     _$hash = $jc(_$hash, itemType.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -689,34 +665,20 @@ class _$OpenApiBooleanTypeSchema extends OpenApiBooleanTypeSchema {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiBooleanTypeSchema &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -954,17 +916,10 @@ class _$OpenApiIntegerTypeSchema extends OpenApiIntegerTypeSchema {
     if (identical(other, this)) return true;
     return other is OpenApiIntegerTypeSchema &&
         format == other.format &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -972,17 +927,10 @@ class _$OpenApiIntegerTypeSchema extends OpenApiIntegerTypeSchema {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, format.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1227,17 +1175,10 @@ class _$OpenApiNumberTypeSchema extends OpenApiNumberTypeSchema {
     if (identical(other, this)) return true;
     return other is OpenApiNumberTypeSchema &&
         format == other.format &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -1245,17 +1186,10 @@ class _$OpenApiNumberTypeSchema extends OpenApiNumberTypeSchema {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, format.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1500,17 +1434,10 @@ class _$OpenApiStringTypeSchema extends OpenApiStringTypeSchema {
     if (identical(other, this)) return true;
     return other is OpenApiStringTypeSchema &&
         format == other.format &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -1518,17 +1445,10 @@ class _$OpenApiStringTypeSchema extends OpenApiStringTypeSchema {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, format.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1769,34 +1689,20 @@ class _$OpenApiEmptyTypeSchema extends OpenApiEmptyTypeSchema {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiEmptyTypeSchema &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2036,17 +1942,10 @@ class _$OpenApiRecordTypeSchema extends OpenApiRecordTypeSchema {
     if (identical(other, this)) return true;
     return other is OpenApiRecordTypeSchema &&
         valueType == other.valueType &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -2054,17 +1953,10 @@ class _$OpenApiRecordTypeSchema extends OpenApiRecordTypeSchema {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, valueType.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2414,36 +2306,22 @@ class _$OpenApiStructTypeSchema extends OpenApiStructTypeSchema {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiStructTypeSchema &&
-        name == other.name &&
         required == other.required &&
         fields == other.fields &&
         discriminator == other.discriminator &&
-        ref == other.ref &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
     _$hash = $jc(_$hash, fields.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2688,34 +2566,20 @@ class _$OpenApiNullTypeSchema extends OpenApiNullTypeSchema {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiNullTypeSchema &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2961,17 +2825,10 @@ class _$OpenApiSingleValueTypeSchema extends OpenApiSingleValueTypeSchema {
     return other is OpenApiSingleValueTypeSchema &&
         baseType == other.baseType &&
         value == other.value &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -2980,17 +2837,10 @@ class _$OpenApiSingleValueTypeSchema extends OpenApiSingleValueTypeSchema {
     var _$hash = 0;
     _$hash = $jc(_$hash, baseType.hashCode);
     _$hash = $jc(_$hash, value.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -3254,17 +3104,10 @@ class _$OpenApiEnumTypeSchema extends OpenApiEnumTypeSchema {
     return other is OpenApiEnumTypeSchema &&
         baseType == other.baseType &&
         values == other.values &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
@@ -3273,17 +3116,10 @@ class _$OpenApiEnumTypeSchema extends OpenApiEnumTypeSchema {
     var _$hash = 0;
     _$hash = $jc(_$hash, baseType.hashCode);
     _$hash = $jc(_$hash, values.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -3548,16 +3384,9 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
     return other is OpenApiSumTypeSchema &&
         discriminator == other.discriminator &&
         types == other.types &&
-        name == other.name &&
-        ref == other.ref &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         primitiveType == other.primitiveType &&
         isNullable == other.isNullable;
   }
@@ -3567,16 +3396,9 @@ class _$OpenApiSumTypeSchema extends OpenApiSumTypeSchema {
     var _$hash = 0;
     _$hash = $jc(_$hash, discriminator.hashCode);
     _$hash = $jc(_$hash, types.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
@@ -3840,16 +3662,9 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
     return other is OpenApiDisjointUnionTypeSchema &&
         types == other.types &&
         discriminator == other.discriminator &&
-        name == other.name &&
-        ref == other.ref &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         primitiveType == other.primitiveType &&
         isNullable == other.isNullable;
   }
@@ -3859,16 +3674,9 @@ class _$OpenApiDisjointUnionTypeSchema extends OpenApiDisjointUnionTypeSchema {
     var _$hash = 0;
     _$hash = $jc(_$hash, types.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, primitiveType.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
@@ -4123,34 +3931,20 @@ class _$OpenApiAnyTypeSchema extends OpenApiAnyTypeSchema {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OpenApiAnyTypeSchema &&
-        name == other.name &&
-        ref == other.ref &&
         discriminator == other.discriminator &&
-        title == other.title &&
-        description == other.description &&
-        isDeprecated == other.isDeprecated &&
-        defaultValue == other.defaultValue &&
         readOnly == other.readOnly &&
         writeOnly == other.writeOnly &&
         required == other.required &&
-        extensions == other.extensions &&
         isNullable == other.isNullable;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, ref.hashCode);
     _$hash = $jc(_$hash, discriminator.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jc(_$hash, description.hashCode);
-    _$hash = $jc(_$hash, isDeprecated.hashCode);
-    _$hash = $jc(_$hash, defaultValue.hashCode);
     _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jc(_$hash, writeOnly.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
-    _$hash = $jc(_$hash, extensions.hashCode);
     _$hash = $jc(_$hash, isNullable.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;

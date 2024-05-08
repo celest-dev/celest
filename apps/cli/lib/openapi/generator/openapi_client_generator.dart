@@ -470,31 +470,28 @@ final class OpenApiClientGenerator {
             ..type = bodyType.typeReference
             ..required = !bodyType.isNullable
             ..named = true
-            ..name = 'request',
+            ..name = 'options',
         ),
       );
       switch (requestBody.contentType.mimeType) {
         case 'application/json':
           final encoded = DartTypes.convert.jsonEncode.call([
-            refer('request').property('toJson').call([]),
+            refer('options').property('toJson').call([]),
           ]);
           body.statements.add(
             request.property('body').assign(encoded).wrapWithBlockIf(
-                  refer('request').notEqualTo(literalNull),
+                  refer('options').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),
           );
         case 'application/x-www-form-urlencoded':
-          if (bodyType is! OpenApiStructType) {
-            unreachable('Unexpected form body type: $bodyType');
-          }
-          final encoded = refer('request').property('encodeWith').call([
+          final encoded = refer('options').property('encodeWith').call([
             // TODO: refer('codable', 'models.dart')
             DartTypes.codable.codable$.property('formData').property('encoder'),
           ]);
           body.statements.add(
             request.property('body').assign(encoded).wrapWithBlockIf(
-                  refer('request').notEqualTo(literalNull),
+                  refer('options').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),
           );
@@ -513,7 +510,7 @@ final class OpenApiClientGenerator {
           }
           final encoded = Block((b) {
             for (final field in files) {
-              final fieldRef = refer('request').property(field.dartName);
+              final fieldRef = refer('options').property(field.dartName);
               final addFile = request.property('files').property('add').call([
                 DartTypes.http.multipartFile.newInstance([
                   literalString(field.name),
@@ -540,7 +537,7 @@ final class OpenApiClientGenerator {
               );
             }
             if (fields.isNotEmpty) {
-              final encoded = refer('request').property('encodeWith').call([
+              final encoded = refer('options').property('encodeWith').call([
                 DartTypes.codable.formFieldsEncoder.newInstance([], {
                   // TODO: refer('codable', 'models.dart')
                   'codable': DartTypes.codable.codable$,
@@ -549,7 +546,7 @@ final class OpenApiClientGenerator {
               ]);
               body.statements.add(
                 encoded.wrapWithBlockIf(
-                  refer('request').notEqualTo(literalNull),
+                  refer('options').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),
               );
@@ -557,7 +554,7 @@ final class OpenApiClientGenerator {
           });
           body.statements.add(
             encoded.wrapWithBlockIf(
-              refer('request').notEqualTo(literalNull),
+              refer('options').notEqualTo(literalNull),
               bodyType.isNullable,
             ),
           );

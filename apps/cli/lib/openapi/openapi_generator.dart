@@ -81,7 +81,7 @@ final class OpenApiGenerator {
           Library((b) {
             b.body.addAll(
               schemas.map((schema) {
-                return context._schemaSpecs[schema] ??
+                return context.schemaSpecs[schema] ??
                     context.fail('Schema not found: $schema');
               }),
             );
@@ -148,7 +148,11 @@ class OpenApiGeneratorContext {
 
   final dartNames = <String, String>{};
   final dartRefs = <String, Reference>{};
-  final _schemaSpecs = <String, Spec>{};
+  final typeSchemaRefs = HashMap<OpenApiTypeSchema, OpenApiTypeReference>(
+    equals: (a, b) => a.withNullability(false) == b.withNullability(false),
+    hashCode: (ref) => ref.withNullability(false).hashCode,
+  );
+  final schemaSpecs = <String, Spec>{};
   final _schemasByUrl = SetMultimapBuilder<String, String>();
   final _codableTypes = <String>{};
 
@@ -165,12 +169,16 @@ class OpenApiGeneratorContext {
     bool? structuralEnum,
   }) {
     return registerSpec(
-      key ?? name,
+      name,
       url,
       () {
-        final schema = type.schema.withNullability(false);
-        final className = reserveName(name, schema);
+        final className = reserveName(name, type.schema);
         _codableTypes.add(className);
+        typeSchemaRefs[type.schema] = OpenApiTypeReference(
+          typeReference: refer(name, 'models.dart').toTypeReference,
+          schema: type.schema,
+          isNullable: false,
+        );
         return switch (type) {
           OpenApiPrimitiveType(:final typeReference) => ExtensionType(
               (t) => t
@@ -291,7 +299,7 @@ class OpenApiGeneratorContext {
     Spec Function() builder,
   ) {
     _schemasByUrl.add(url, name);
-    return _schemaSpecs.update(
+    return schemaSpecs.update(
       name,
       (value) => value,
       ifAbsent: () => builder(),
@@ -300,11 +308,11 @@ class OpenApiGeneratorContext {
 
   void finish() {
     _implements.build().forEachKey((name, toImplement) {
-      final spec = _schemaSpecs[name];
+      final spec = schemaSpecs[name];
       if (spec is! Class) {
         return;
       }
-      _schemaSpecs[name] = spec.rebuild((class_) {
+      schemaSpecs[name] = spec.rebuild((class_) {
         // TODO: Better way to do this? Should work across libraries.
         final allImplements = HashSet<Reference>(
           equals: (a, b) => a.symbol == b.symbol,
@@ -467,10 +475,13 @@ class OpenApiGeneratorContext {
     _implements.add(name, type);
   }
 
-  final _reservedNames = <String, OpenApiTypeSchema?>{};
+  final reservedNames = <String, OpenApiTypeSchema?>{};
   String reserveName(String name, [OpenApiTypeSchema? reservedBy]) {
-    if (_reservedNames.containsKey(name)) {
-      final existing = _reservedNames[name];
+    if (reservedBy?.ref != null) {
+      return name;
+    }
+    if (reservedNames.containsKey(name)) {
+      final existing = reservedNames[name];
       if (existing != reservedBy) {
         fail(
           'Could not reserve "$name". Name already reserved by another type.',
@@ -481,13 +492,23 @@ class OpenApiGeneratorContext {
             'reservedBy': //
                 // reservedBy,
                 LineSplitter.split(reservedBy.toString()).take(10).join('\n'),
-            'reservedNames': _reservedNames.keys.join(', '),
+            'reservedNames': reservedNames.keys.join(', '),
           },
         );
       }
     }
-    _reservedNames[name] = reservedBy;
+    reservedNames[name] = reservedBy;
     return name;
+  }
+
+  String? tryReserveName(String name, [OpenApiTypeSchema? reservedBy]) {
+    if (reservedNames[name] case final reserved?) {
+      if (reserved == reservedBy) {
+        return name;
+      }
+      return null;
+    }
+    return reserveName(name, reservedBy);
   }
 
   Never fail(
