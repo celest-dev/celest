@@ -19,8 +19,6 @@ dependency_overrides:
     path: ../../celest_auth
   celest_core:
     path: ../../celest_core
-  native_storage:
-    path: ../../native/storage
 
 dev_dependencies:
   flutter_test:

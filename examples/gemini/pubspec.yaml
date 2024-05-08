@@ -20,8 +20,6 @@ dependency_overrides:
     path: ../../packages/celest_auth
   celest_core:
     path: ../../packages/celest_core
-  native_storage:
-    path: ../../packages/native/storage
 
 dev_dependencies:
   flutter_lints: ^3.0.0

@@ -17,8 +17,6 @@ dependency_overrides:
     path: ../../
   celest_core:
     path: ../../../celest_core
-  native_storage:
-    path: ../../../native/storage
 
 dev_dependencies:
   lints: ^3.0.0
