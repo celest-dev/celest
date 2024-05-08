@@ -1,4 +1,4 @@
-import 'package:coder/coder.dart';
+import 'package:libcoder/libcoder.dart';
 
 final class JsonCoder with Coder<Object?> {
   JsonCoder({

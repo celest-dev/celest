@@ -1,9 +1,9 @@
-name: coder
+name: libcoder
 on:
   pull_request:
     paths:
-      - ".github/workflows/coder.yaml"
-      - "packages/coder/**"
+      - ".github/workflows/libcoder.yaml"
+      - "packages/libcoder/**"
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
@@ -23,14 +23,14 @@ jobs:
         with:
           cache: true
       - name: Get Packages
-        working-directory: packages/coder
+        working-directory: packages/libcoder
         run: dart pub get
       - name: Analyze
-        working-directory: packages/coder
+        working-directory: packages/libcoder
         run: dart analyze
       - name: Format
-        working-directory: packages/coder
+        working-directory: packages/libcoder
         run: dart format --set-exit-if-changed .
       - name: Test
-        working-directory: packages/coder
+        working-directory: packages/libcoder
         run: dart test

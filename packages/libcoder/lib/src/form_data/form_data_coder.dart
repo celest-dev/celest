@@ -1,5 +1,5 @@
-import 'package:coder/coder.dart';
-import 'package:coder/src/form_data/form_data_encoder.dart';
+import 'package:libcoder/libcoder.dart';
+import 'package:libcoder/src/form_data/form_data_encoder.dart';
 
 final class FormDataCoder with Coder<String> {
   FormDataCoder({

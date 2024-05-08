@@ -2,12 +2,12 @@ library;
 
 import 'dart:collection';
 
-import 'package:coder/src/decoder.dart';
-import 'package:coder/src/encoder.dart';
-import 'package:coder/src/form_data/form_data_coder.dart';
-import 'package:coder/src/form_fields/form_fields_coder.dart';
-import 'package:coder/src/json/json_coder.dart';
-import 'package:coder/src/typeref.dart';
+import 'package:libcoder/src/decoder.dart';
+import 'package:libcoder/src/encoder.dart';
+import 'package:libcoder/src/form_data/form_data_coder.dart';
+import 'package:libcoder/src/form_fields/form_fields_coder.dart';
+import 'package:libcoder/src/json/json_coder.dart';
+import 'package:libcoder/src/typeref.dart';
 
 export 'src/coder.dart';
 export 'src/decoder.dart';

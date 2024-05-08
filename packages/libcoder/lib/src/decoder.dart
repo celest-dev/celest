@@ -1,4 +1,4 @@
-import 'package:coder/coder.dart';
+import 'package:libcoder/libcoder.dart';
 
 abstract mixin class Decoder<V extends Object?> {
   const Decoder();
