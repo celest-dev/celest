@@ -16,7 +16,7 @@ import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-import '../common.dart';
+import '../../common.dart';
 import 'types.dart';
 
 final hubTestsDir =
@@ -34,7 +34,7 @@ void main() {
     );
   }
 
-  final testDir = p.join(Directory.current.path, 'test', 'fixtures');
+  final testDir = p.join(Directory.current.path, 'test', 'fixtures', 'legacy');
   final allTests = Directory(testDir)
       .listSync()
       .whereType<Directory>()
