@@ -84,7 +84,7 @@ final class OpenApiClientGenerator {
           ..initializers.addAll([
             refer('_httpClient')
                 .assign(
-                  refer('StripeHttpClient', '../http/stripe_http_client.dart')
+                  refer('StripeHttpClient', 'src/http/stripe_http_client.dart')
                       .newInstance([], {
                     'apiKey': refer('apiKey'),
                     'baseClient': refer('httpClient'),
@@ -475,13 +475,13 @@ final class OpenApiClientGenerator {
             final container = refer(r'$container');
             b.addExpression(
               declareFinal(r'$container').assign(
-                refer('formFieldEncoder', '../encoding/form_fields.dart')
+                refer('formFieldEncoder', 'src/encoding/form_fields.dart')
                     .property('container')
                     .call([]),
               ),
             );
             b.addExpression(
-              refer('request').property('encode').call([container]),
+              refer('request').property('encodeInto').call([container]),
             );
             b.addExpression(
               request.property('bodyFields').assign(
@@ -546,13 +546,13 @@ final class OpenApiClientGenerator {
               final container = refer(r'$container');
               b.addExpression(
                 declareFinal(r'$container').assign(
-                  refer('formFieldEncoder', '../encoding/form_fields.dart')
+                  refer('formFieldEncoder', 'src/encoding/form_fields.dart')
                       .property('container')
                       .call([]),
                 ),
               );
               b.addExpression(
-                refer('request').property('encode').call([container]),
+                refer('request').property('encodeInto').call([container]),
               );
               b.addExpression(
                 request.property('fields').property('addAll').call([

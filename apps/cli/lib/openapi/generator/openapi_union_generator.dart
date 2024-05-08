@@ -161,13 +161,12 @@ final class OpenApiUnionGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encode'
+        ..name = 'encodeInto'
         ..returns = DartTypes.core.void$
-        ..annotations.add(DartTypes.meta.internal)
         ..requiredParameters.add(
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
               ..name = 'container',
           ),
         );
@@ -177,8 +176,8 @@ final class OpenApiUnionGenerator {
   // // Method get _encodeMethod {
   // //   return Method((m) {
   // //     m
-  // //       ..name = 'encode'
-  // ..annotations.add(DartTypes.meta.internal)
+  // //       ..name = 'encodeInto'
+  //
   // //       ..returns = DartTypes.core.map(
   // //         DartTypes.core.string,
   // //         DartTypes.core.object.nullable,
@@ -186,7 +185,7 @@ final class OpenApiUnionGenerator {
   // //       ..requiredParameters.add(
   // //         Parameter(
   // //           (p) => p
-  // //             ..type = refer('Encoder', '../encoding/encoder.dart')
+  // //             ..type = refer('Encoder', 'src/encoding/encoder.dart')
   // //             ..name = 'encoder',
   // //         ),
   // //       );

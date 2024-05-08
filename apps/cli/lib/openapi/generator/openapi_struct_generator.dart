@@ -207,13 +207,13 @@ final class OpenApiStructGenerator {
           final container = refer(r'$container');
           b.addExpression(
             declareFinal(r'$container').assign(
-              refer('jsonEncoder', '../encoding/json.dart')
+              refer('jsonEncoder', 'src/encoding/json.dart')
                   .property('container')
                   .call([]),
             ),
           );
           b.addExpression(
-            refer('encode').call([container]),
+            refer('encodeInto').call([container]),
           );
           b.addExpression(
             container
@@ -233,13 +233,12 @@ final class OpenApiStructGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encode'
+        ..name = 'encodeInto'
         ..returns = DartTypes.core.void$
-        ..annotations.add(DartTypes.meta.internal)
         ..requiredParameters.add(
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
               ..name = 'container',
           ),
         )

@@ -83,13 +83,12 @@ final class OpenApiArrayGenerator {
   Method get _encodeMethod {
     return Method((m) {
       m
-        ..name = 'encode'
+        ..name = 'encodeInto'
         ..returns = DartTypes.core.void$
-        ..annotations.add(DartTypes.meta.internal)
         ..requiredParameters.add(
           Parameter(
             (p) => p
-              ..type = refer('EncodingContainer', '../encoding/encoder.dart')
+              ..type = refer('EncodingContainer', 'src/encoding/encoder.dart')
               ..name = 'container',
           ),
         )

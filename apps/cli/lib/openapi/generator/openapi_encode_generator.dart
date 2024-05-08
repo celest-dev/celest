@@ -98,7 +98,7 @@ final class OpenApiEncoder {
       case OpenApiTypeReference():
         return container.property('writeValue').call([
           if (key != null) key,
-          ref.property('encode'),
+          ref.property('encodeInto'),
         ]);
       case OpenApiEmptyType():
         unreachable('Empty type');

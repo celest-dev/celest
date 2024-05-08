@@ -61,6 +61,7 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
           (group) => dartRefs[group]!.toTypeReference,
         ),
       if (schema.extensions['x-stripeEvent'] != null) stripeEvent,
+      if (schema.extensions['x-resourceId']?.value is String) stripeResource,
     };
   }
 
@@ -74,71 +75,38 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
       'models.dart',
       () => Class(
         (c) => c
-          ..modifier = ClassModifier.final$
+          ..abstract = true
+          ..modifier = ClassModifier.interface
           ..name = 'StripeResource'
-          ..constructors.add(
-            Constructor(
-              (ctor) {
-                ctor
-                  ..constant = true
-                  ..optionalParameters.add(
-                    Parameter(
-                      (p) => p
-                        ..name = 'id'
-                        ..named = true
-                        ..required = true
-                        ..toThis = true,
-                    ),
-                  );
-              },
-            ),
-          )
-          ..fields.addAll([
-            Field(
-              (f) => f
-                ..modifier = FieldModifier.final$
-                // TODO: Should be non-null but `invoice` is nullable for some reason...
-                // May cause problems with invoices
-                ..type = DartTypes.core.string
-                ..name = 'id',
-            ),
-          ])
           ..methods.addAll([
+            Method((b) {
+              b
+                ..name = 'object'
+                ..type = MethodType.getter
+                ..returns = DartTypes.core.string
+                ..docs.addAll([
+                  '/// The resource\'s type.',
+                ]);
+            }),
             Method(
               (m) => m
-                ..returns = DartTypes.core.map(
-                  DartTypes.core.string,
-                  DartTypes.core.object.nullable,
-                )
-                ..name = 'toJson'
-                ..lambda = true
-                ..body = literalMap({'id': refer('id')}).code,
+                ..returns = DartTypes.core.object.nullable
+                ..name = 'toJson',
             ),
             Method((m) {
               m
-                ..name = 'encode'
+                ..name = 'encodeInto'
                 ..returns = DartTypes.core.void$
-                ..annotations.add(DartTypes.meta.internal)
                 ..requiredParameters.add(
                   Parameter(
                     (p) => p
-                      ..type =
-                          refer('EncodingContainer', '../encoding/encoder.dart')
+                      ..type = refer(
+                        'EncodingContainer',
+                        'src/encoding/encoder.dart',
+                      )
                       ..name = 'container',
                   ),
-                )
-                ..lambda = true
-                ..body = refer('container').property('writeMap').call([
-                  Method(
-                    (m) => m
-                      ..requiredParameters
-                          .add(Parameter((p) => p.name = 'container'))
-                      ..lambda = true
-                      ..body = refer('container')
-                          .property('writeString')
-                          .call([literalString('id'), refer('id')]).code,
-                  ).closure,
-                ]).code;
+                );
             }),
           ]),
       ),
@@ -153,7 +121,32 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
       () => Class(
         (c) => c
           ..sealed = true
-          ..name = 'StripeEvent',
+          ..name = 'StripeEvent'
+          ..methods.addAll([
+            Method(
+              (m) => m
+                ..returns = DartTypes.core.map(
+                  DartTypes.core.string,
+                  DartTypes.core.object.nullable,
+                )
+                ..name = 'toJson',
+            ),
+            Method((m) {
+              m
+                ..name = 'encodeInto'
+                ..returns = DartTypes.core.void$
+                ..requiredParameters.add(
+                  Parameter(
+                    (p) => p
+                      ..type = refer(
+                        'EncodingContainer',
+                        'src/encoding/encoder.dart',
+                      )
+                      ..name = 'container',
+                  ),
+                );
+            }),
+          ]),
       ),
     );
     return refer(reserveName('StripeEvent'), 'events.dart').toTypeReference;

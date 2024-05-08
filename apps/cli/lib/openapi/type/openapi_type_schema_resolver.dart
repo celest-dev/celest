@@ -433,11 +433,7 @@ class OpenApiTypeSchemaResolver
             name: fieldName,
             dartName: sanitizeVariableName(fieldName.camelCase),
             type: fieldType.withNullability(
-              schema.extensions.containsKey('x-stripeResource') &&
-                      fieldName == 'id'
-                  ? false // work around `invoice` issue
-                  : !schema.required.contains(fieldName) ||
-                      fieldType.isNullable,
+              !schema.required.contains(fieldName) || fieldType.isNullable,
             )..rebuild(
                 (t) => t.docs = docsFromParts(
                   field.schema.title,
@@ -488,34 +484,58 @@ class OpenApiTypeSchemaResolver
     return resolved.withNullability(isNullable);
   }
 
+  bool _idIsNullable(OpenApiTypeSchema schemaOrRef) {
+    if (schemaOrRef is OpenApiTypeSchemaReference) {
+      final schema = context.document.components.schemas[schemaOrRef.name]!;
+      return _idIsNullable(schema);
+    }
+    final schema = schemaOrRef;
+    if (schema is OpenApiStructTypeSchema) {
+      return schema.fields['id']?.schema.isNullable ??
+          !schema.required.contains('id');
+    } else if (schema is OpenApiSumTypeSchema) {
+      return schema.types.any(_idIsNullable);
+    }
+    return false;
+  }
+
   OpenApiType _structOrId({
     String? schemaName,
     required String typeName,
     required OpenApiTypeSchema schema,
     required bool isNullable,
   }) {
-    final wrapperName = '${typeName}OrId';
-    final flattenedType = OpenApiTypeReference(
-      schema: schema,
-      typeReference: refer(typeName, 'models.dart').toTypeReference,
-      isNullable: isNullable,
-    );
+    final idClassName = '${typeName}Id';
+    final idIsNullable = _idIsNullable(schema);
     context.registerSpec(
-      context.reserveName(wrapperName),
+      context.reserveName(idClassName),
       'models.dart',
-      () => OpenApiStructOrIdGenerator(
-        name: wrapperName,
-        baseType: flattenedType,
+      () => OpenApiIdGenerator(
+        className: idClassName,
+        typeName: typeName,
+        idIsNullable: idIsNullable,
       ).generate(),
     );
-    final wrapperRef = refer(wrapperName, 'models.dart');
-    context.implement('StripeResource', wrapperRef);
+
+    final typeOrIdClassName = '${typeName}OrId';
+    context.registerSpec(
+      context.reserveName(typeOrIdClassName),
+      'models.dart',
+      () => OpenApiStructOrIdGenerator(
+        className: typeOrIdClassName,
+        typeName: typeName,
+        idOnlyName: idClassName,
+        idIsNullable: idIsNullable,
+      ).generate(),
+    );
+    final wrapperRef = refer(typeOrIdClassName, 'models.dart');
+    context.implement(idClassName, wrapperRef);
     if (schemaName != null) {
       context.implement(schemaName, wrapperRef);
     }
     context.implement(typeName, wrapperRef);
     return OpenApiTypeReference(
-      typeReference: refer(wrapperName).toTypeReference,
+      typeReference: refer(typeOrIdClassName).toTypeReference,
       schema: schema,
       isNullable: isNullable,
     );
