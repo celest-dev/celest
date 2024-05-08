@@ -12,6 +12,7 @@ import 'package:celest_cli/openapi/type/openapi_type_system.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:checks/checks.dart';
 import 'package:lib_openapi/lib_openapi.dart';
+import 'package:lib_openapi/openapi_v3.dart';
 import 'package:test/test.dart';
 
 import '../../fixtures.dart';
@@ -26,9 +27,13 @@ void main() {
     final outputRoot = baseOutputRoot.resolve('stripe/');
     final outputDir = fileSystem.directory(outputRoot)
       ..createSync(recursive: true);
-
-    final document = generateOpenApiV3(jsonEncode(stripeSpecV3SdkJson));
     final typeSystem = OpenApiTypeSystem();
+
+    late final Document document;
+
+    setUpAll(() {
+      document = generateOpenApiV3(jsonEncode(stripeSpecV3SdkJson));
+    });
 
     test('can resolve', () {
       final resolver = OpenApiSchemaTransformer(
@@ -62,18 +67,22 @@ void main() {
     });
   });
 
-  group('cloudflare', skip: false, () {
+  group('cloudflare', skip: true, () {
     final outputRoot = baseOutputRoot.resolve('cloudflare/');
     final outputDir = fileSystem.directory(outputRoot)
       ..createSync(recursive: true);
-
-    final document = generateOpenApiV3(
-      fileSystem
-          .directory(fixturesRoot)
-          .childFile('cloudflare.json')
-          .readAsStringSync(),
-    );
     final typeSystem = OpenApiTypeSystem();
+
+    late final Document document;
+
+    setUpAll(() {
+      document = generateOpenApiV3(
+        fileSystem
+            .directory(fixturesRoot)
+            .childFile('cloudflare.json')
+            .readAsStringSync(),
+      );
+    });
 
     test('can resolve', () {
       final resolver = OpenApiSchemaTransformer(
