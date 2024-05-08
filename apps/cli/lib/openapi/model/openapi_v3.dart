@@ -4,8 +4,16 @@ import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:yaml/yaml.dart';
 
+part 'openapi_reference.dart';
 part 'openapi_v3.g.dart';
+
+sealed class OpenApiComponent<T extends OpenApiComponent<T>>
+    implements OpenApiComponentOrReference<T> {
+  String? get ref;
+  YamlNode? get node;
+}
 
 /// This is the root object of the OpenAPI document.
 ///
@@ -235,7 +243,9 @@ final class OpenApiOperationType extends EnumClass {
 ///
 /// https://spec.openapis.org/oas/v3.1.0#path-item-object
 abstract class OpenApiPathItem
-    implements Built<OpenApiPathItem, OpenApiPathItemBuilder> {
+    implements
+        Built<OpenApiPathItem, OpenApiPathItemBuilder>,
+        OpenApiComponent<OpenApiPathItem> {
   factory OpenApiPathItem({
     required String path,
     String? summary,
@@ -293,6 +303,9 @@ abstract class OpenApiPathItem
   ///
   /// https://spec.openapis.org/oas/v3.1.0#path-item-object
   BuiltList<OpenApiParameter> get parameters;
+
+  @override
+  OpenApiPathItem resolve(OpenApiComponents components) => this;
 }
 
 /// Describes a single API operation on a path.
@@ -545,7 +558,9 @@ final class OpenApiParameterStyle extends EnumClass {
 ///
 /// https://spec.openapis.org/oas/v3.1.0#parameter-object
 abstract class OpenApiParameter
-    implements Built<OpenApiParameter, OpenApiParameterBuilder> {
+    implements
+        Built<OpenApiParameter, OpenApiParameterBuilder>,
+        OpenApiComponent<OpenApiParameter> {
   factory OpenApiParameter({
     required String name,
     required OpenApiParameterLocation location,
@@ -695,6 +710,9 @@ abstract class OpenApiParameter
   ///
   /// https://spec.openapis.org/oas/v3.1.0#parameter-object
   (MediaType, OpenApiMediaType)? get content;
+
+  @override
+  OpenApiParameter resolve(OpenApiComponents components) => this;
 }
 
 /// Each Media Type Object provides schema and examples for the media type identified by its key.
@@ -747,7 +765,9 @@ abstract class OpenApiMediaType
 ///
 /// https://spec.openapis.org/oas/v3.1.0#request-body-object
 abstract class OpenApiRequestBody
-    implements Built<OpenApiRequestBody, OpenApiRequestBodyBuilder> {
+    implements
+        Built<OpenApiRequestBody, OpenApiRequestBodyBuilder>,
+        OpenApiComponent<OpenApiRequestBody> {
   factory OpenApiRequestBody({
     required Map<MediaType, OpenApiMediaType> content,
     String? description,
@@ -797,6 +817,9 @@ abstract class OpenApiRequestBody
   ///
   /// Defaults to `false`.
   bool get required;
+
+  @override
+  OpenApiRequestBody resolve(OpenApiComponents components) => this;
 }
 
 /// A single encoding definition applied to a single schema property.
@@ -880,7 +903,9 @@ abstract class OpenApiEncoding
 ///
 /// https://spec.openapis.org/oas/v3.1.0#responses-object
 abstract class OpenApiResponse
-    implements Built<OpenApiResponse, OpenApiResponseBuilder> {
+    implements
+        Built<OpenApiResponse, OpenApiResponseBuilder>,
+        OpenApiComponent<OpenApiResponse> {
   factory OpenApiResponse({
     required int? statusCode,
     required String description,
@@ -902,6 +927,9 @@ abstract class OpenApiResponse
   ) = _$OpenApiResponse;
 
   OpenApiResponse._();
+
+  @override
+  OpenApiResponse resolve(OpenApiComponents components) => this;
 
   int? get statusCode;
 
@@ -945,7 +973,9 @@ abstract class OpenApiResponse
 ///
 /// https://spec.openapis.org/oas/v3.1.0#header-object
 abstract class OpenApiHeader
-    implements Built<OpenApiHeader, OpenApiHeaderBuilder> {
+    implements
+        Built<OpenApiHeader, OpenApiHeaderBuilder>,
+        OpenApiComponent<OpenApiHeader> {
   factory OpenApiHeader({
     required OpenApiTypeSchema schema,
     String? description,
@@ -955,6 +985,7 @@ abstract class OpenApiHeader
     OpenApiParameterStyle? style,
     bool? explode,
     bool? allowReserved,
+    (MediaType, OpenApiMediaType)? content,
   }) {
     return _$OpenApiHeader._(
       schema: schema,
@@ -965,6 +996,7 @@ abstract class OpenApiHeader
       style: style,
       explode: explode,
       allowReserved: allowReserved,
+      content: content,
     );
   }
 
@@ -973,6 +1005,9 @@ abstract class OpenApiHeader
   ) = _$OpenApiHeader;
 
   OpenApiHeader._();
+
+  @override
+  OpenApiHeader resolve(OpenApiComponents components) => this;
 
   @BuiltValueHook(finalizeBuilder: true)
   static void _validate(OpenApiHeaderBuilder b) {
@@ -1039,6 +1074,14 @@ abstract class OpenApiHeader
   ///
   /// https://spec.openapis.org/oas/v3.1.0#parameter-object
   bool? get allowReserved;
+
+  /// A map containing the representations for the parameter.
+  ///
+  /// The key is the media type and the value describes it. The map MUST only
+  /// contain one entry.
+  ///
+  /// https://spec.openapis.org/oas/v3.1.0#parameter-object
+  (MediaType, OpenApiMediaType)? get content;
 }
 
 /// Holds a set of reusable objects for different aspects of the OAS.
@@ -1131,151 +1174,149 @@ abstract class OpenApiComponents
 /// OpenAPI document.
 ///
 /// https://spec.openapis.org/oas/v3.1.0#schema-object
-// abstract class OpenApiSchema
-//     implements Built<OpenApiSchema, OpenApiSchemaBuilder> {
-//   factory OpenApiSchema({
-//     String? ref,
-//     String? name,
-//     required OpenApiTypeSchema typeSchema,
-//     String? title,
-//     String? description,
-//     bool deprecated = false,
-//     bool readOnly = false,
-//     bool writeOnly = false,
-//     Iterable<String> required = const [],
-//     Map<String, Object?> extensions = const {},
-//   }) {
-//     return _$OpenApiSchema._(
-//       ref: ref,
-//       name: name,
-//       typeSchema: typeSchema,
-//       title: title,
-//       description: description,
-//       deprecated: deprecated,
-//       readOnly: readOnly,
-//       writeOnly: writeOnly,
-//       required: required.toBuiltSet(),
-//       extensions: extensions.build(),
-//     );
-//   }
+abstract class OpenApiSchema
+    implements
+        Built<OpenApiSchema, OpenApiSchemaBuilder>,
+        OpenApiComponent<OpenApiSchema> {
+  factory OpenApiSchema({
+    String? ref,
+    String? name,
+    String? title,
+    String? description,
+    bool deprecated = false,
+    bool readOnly = false,
+    bool writeOnly = false,
+    Iterable<String> required = const [],
+    Map<String, Object?> extensions = const {},
+  }) {
+    return _$OpenApiSchema._(
+      ref: ref,
+      name: name,
+      title: title,
+      description: description,
+      deprecated: deprecated,
+      readOnly: readOnly,
+      writeOnly: writeOnly,
+      required: required.toBuiltSet(),
+      extensions: extensions.build(),
+    );
+  }
 
-//   factory OpenApiSchema.build(
-//     void Function(OpenApiSchemaBuilder) updates,
-//   ) = _$OpenApiSchema;
+  factory OpenApiSchema.build(
+    void Function(OpenApiSchemaBuilder) updates,
+  ) = _$OpenApiSchema;
 
-//   OpenApiSchema._();
+  OpenApiSchema._();
 
-//   @BuiltValueHook(finalizeBuilder: true)
-//   static void _validate(OpenApiSchemaBuilder b) {
-//     b.deprecated ??= false;
-//     b.readOnly ??= false;
-//     b.writeOnly ??= false;
-//   }
+  @BuiltValueHook(finalizeBuilder: true)
+  static void _validate(OpenApiSchemaBuilder b) {
+    b.deprecated ??= false;
+    b.readOnly ??= false;
+    b.writeOnly ??= false;
+  }
 
-//   /// The intrinsic name of the type, if any.
-//   ///
-//   /// This is the exact value from the source YAML and is not suitable for use
-//   /// in Dart representations, unlike [name].
-//   String? get ref;
+  @override
+  OpenApiSchema resolve(OpenApiComponents components) => this;
 
-//   String? get name;
+  /// The intrinsic name of the type, if any.
+  ///
+  /// This is the exact value from the source YAML and is not suitable for use
+  /// in Dart representations, unlike [name].
+  @override
+  String? get ref;
 
-//   /// The resolved type of the schema.
-//   ///
-//   /// This combines the structural elements of the source schema into a suitable
-//   /// Dart type representation.
-//   OpenApiTypeSchema get typeSchema;
+  String? get name;
 
-//   /// Adds support for polymorphism.
-//   ///
-//   /// The discriminator is an object name that is used to differentiate between
-//   /// other schemas which may satisfy the payload description.
-//   ///
-//   /// See Composition and Inheritance for more details.
-//   ///
-//   /// https://spec.openapis.org/oas/v3.1.0#schema-object
-//   OpenApiDiscriminator? get discriminator;
+  /// Adds support for polymorphism.
+  ///
+  /// The discriminator is an object name that is used to differentiate between
+  /// other schemas which may satisfy the payload description.
+  ///
+  /// See Composition and Inheritance for more details.
+  ///
+  /// https://spec.openapis.org/oas/v3.1.0#schema-object
+  OpenApiDiscriminator? get discriminator;
 
-//   // xml
-//   // externalDocs
-//   // example
+  // xml
+  // externalDocs
+  // example
 
-//   /// Both [title] and [description] can be used to decorate a user interface
-//   /// with information about the data produced by this user interface. A title
-//   /// will preferably be short, whereas a description will provide explanation
-//   /// about the purpose of the instance described by this schema.
-//   ///
-//   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-title-and-description
-//   String? get title;
+  /// Both [title] and [description] can be used to decorate a user interface
+  /// with information about the data produced by this user interface. A title
+  /// will preferably be short, whereas a description will provide explanation
+  /// about the purpose of the instance described by this schema.
+  ///
+  /// https://json-schema.org/draft/2020-12/json-schema-validation#name-title-and-description
+  String? get title;
 
-//   /// CommonMark syntax MAY be used for rich text representation.
-//   String? get description;
+  /// CommonMark syntax MAY be used for rich text representation.
+  String? get description;
 
-//   /// Specifies that a schema is deprecated and SHOULD be transitioned out of usage.
-//   bool get deprecated;
+  /// Specifies that a schema is deprecated and SHOULD be transitioned out of usage.
+  bool get deprecated;
 
-//   /// This keyword can be used to supply a default JSON value associated with a
-//   /// particular schema.
-//   ///
-//   /// It is RECOMMENDED that a default value be valid against the associated
-//   /// schema.
-//   ///
-//   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-default
-//   Expression? get defaultValue;
+  /// This keyword can be used to supply a default JSON value associated with a
+  /// particular schema.
+  ///
+  /// It is RECOMMENDED that a default value be valid against the associated
+  /// schema.
+  ///
+  /// https://json-schema.org/draft/2020-12/json-schema-validation#name-default
+  Object? get defaultValue;
 
-//   /// If "readOnly" has a value of boolean true, it indicates that the value of
-//   /// the instance is managed exclusively by the owning authority, and attempts
-//   /// by an application to modify the value of this property are expected to be
-//   /// ignored or rejected by that owning authority.
-//   ///
-//   /// An instance document that is marked as "readOnly" for the entire document
-//   /// MAY be ignored if sent to the owning authority, or MAY result in an error,
-//   /// at the authority's discretion.
-//   ///
-//   /// These keywords can be used to assist in user interface instance
-//   /// generation. In particular, an application MAY choose to use a widget that
-//   /// hides input values as they are typed for write-only fields.
-//   ///
-//   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-readonly-and-writeonly
-//   bool get readOnly;
+  /// If "readOnly" has a value of boolean true, it indicates that the value of
+  /// the instance is managed exclusively by the owning authority, and attempts
+  /// by an application to modify the value of this property are expected to be
+  /// ignored or rejected by that owning authority.
+  ///
+  /// An instance document that is marked as "readOnly" for the entire document
+  /// MAY be ignored if sent to the owning authority, or MAY result in an error,
+  /// at the authority's discretion.
+  ///
+  /// These keywords can be used to assist in user interface instance
+  /// generation. In particular, an application MAY choose to use a widget that
+  /// hides input values as they are typed for write-only fields.
+  ///
+  /// https://json-schema.org/draft/2020-12/json-schema-validation#name-readonly-and-writeonly
+  bool get readOnly;
 
-//   /// If "writeOnly" has a value of boolean true, it indicates that the value is
-//   /// never present when the instance is retrieved from the owning authority. It
-//   /// can be present when sent to the owning authority to update or create the
-//   /// document (or the resource it represents), but it will not be included in
-//   /// any updated or newly created version of the instance.
-//   ///
-//   /// An instance document that is marked as "writeOnly" for the entire document
-//   /// MAY be returned as a blank document of some sort, or MAY produce an error
-//   /// upon retrieval, or have the retrieval request ignored, at the authority's
-//   /// discretion.
-//   ///
-//   /// For example, "readOnly" would be used to mark a database-generated serial
-//   /// number as read-only, while "writeOnly" would be used to mark a password
-//   /// input field.
-//   ///
-//   /// These keywords can be used to assist in user interface instance
-//   /// generation. In particular, an application MAY choose to use a widget that
-//   /// hides input values as they are typed for write-only fields.
-//   ///
-//   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-readonly-and-writeonly
-//   bool get writeOnly;
+  /// If "writeOnly" has a value of boolean true, it indicates that the value is
+  /// never present when the instance is retrieved from the owning authority. It
+  /// can be present when sent to the owning authority to update or create the
+  /// document (or the resource it represents), but it will not be included in
+  /// any updated or newly created version of the instance.
+  ///
+  /// An instance document that is marked as "writeOnly" for the entire document
+  /// MAY be returned as a blank document of some sort, or MAY produce an error
+  /// upon retrieval, or have the retrieval request ignored, at the authority's
+  /// discretion.
+  ///
+  /// For example, "readOnly" would be used to mark a database-generated serial
+  /// number as read-only, while "writeOnly" would be used to mark a password
+  /// input field.
+  ///
+  /// These keywords can be used to assist in user interface instance
+  /// generation. In particular, an application MAY choose to use a widget that
+  /// hides input values as they are typed for write-only fields.
+  ///
+  /// https://json-schema.org/draft/2020-12/json-schema-validation#name-readonly-and-writeonly
+  bool get writeOnly;
 
-//   /// The list of required properties, if any.
-//   ///
-//   /// The value of this keyword MUST be an array. Elements of this array, if
-//   /// any, MUST be strings, and MUST be unique.
-//   ///
-//   /// An object instance is valid against this keyword if every item in the
-//   /// array is the name of a property in the instance.
-//   ///
-//   /// Omitting this keyword has the same behavior as an empty array.
-//   ///
-//   /// https://json-schema.org/draft/2020-12/json-schema-validation#name-required
-//   BuiltSet<String> get required;
+  /// The list of required properties, if any.
+  ///
+  /// The value of this keyword MUST be an array. Elements of this array, if
+  /// any, MUST be strings, and MUST be unique.
+  ///
+  /// An object instance is valid against this keyword if every item in the
+  /// array is the name of a property in the instance.
+  ///
+  /// Omitting this keyword has the same behavior as an empty array.
+  ///
+  /// https://json-schema.org/draft/2020-12/json-schema-validation#name-required
+  BuiltSet<String> get required;
 
-//   BuiltMap<String, Object?> get extensions;
-// }
+  BuiltMap<String, Object?> get extensions;
+}
 
 /// When request bodies or response payloads may be one of a number of different
 /// schemas, a discriminator object can be used to aid in serialization,

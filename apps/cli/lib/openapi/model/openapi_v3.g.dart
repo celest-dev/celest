@@ -687,6 +687,10 @@ class _$OpenApiPathItem extends OpenApiPathItem {
   final BuiltList<OpenApiServer>? servers;
   @override
   final BuiltList<OpenApiParameter> parameters;
+  @override
+  final String? ref;
+  @override
+  final YamlNode? node;
 
   factory _$OpenApiPathItem([void Function(OpenApiPathItemBuilder)? updates]) =>
       (new OpenApiPathItemBuilder()..update(updates))._build();
@@ -697,7 +701,9 @@ class _$OpenApiPathItem extends OpenApiPathItem {
       this.description,
       required this.operations,
       this.servers,
-      required this.parameters})
+      required this.parameters,
+      this.ref,
+      this.node})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(path, r'OpenApiPathItem', 'path');
     BuiltValueNullFieldError.checkNotNull(
@@ -723,7 +729,9 @@ class _$OpenApiPathItem extends OpenApiPathItem {
         description == other.description &&
         operations == other.operations &&
         servers == other.servers &&
-        parameters == other.parameters;
+        parameters == other.parameters &&
+        ref == other.ref &&
+        node == other.node;
   }
 
   @override
@@ -735,6 +743,8 @@ class _$OpenApiPathItem extends OpenApiPathItem {
     _$hash = $jc(_$hash, operations.hashCode);
     _$hash = $jc(_$hash, servers.hashCode);
     _$hash = $jc(_$hash, parameters.hashCode);
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -747,7 +757,9 @@ class _$OpenApiPathItem extends OpenApiPathItem {
           ..add('description', description)
           ..add('operations', operations)
           ..add('servers', servers)
-          ..add('parameters', parameters))
+          ..add('parameters', parameters)
+          ..add('ref', ref)
+          ..add('node', node))
         .toString();
   }
 }
@@ -787,6 +799,14 @@ class OpenApiPathItemBuilder
   set parameters(ListBuilder<OpenApiParameter>? parameters) =>
       _$this._parameters = parameters;
 
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
   OpenApiPathItemBuilder();
 
   OpenApiPathItemBuilder get _$this {
@@ -798,6 +818,8 @@ class OpenApiPathItemBuilder
       _operations = $v.operations.toBuilder();
       _servers = $v.servers?.toBuilder();
       _parameters = $v.parameters.toBuilder();
+      _ref = $v.ref;
+      _node = $v.node;
       _$v = null;
     }
     return this;
@@ -828,7 +850,9 @@ class OpenApiPathItemBuilder
               description: description,
               operations: operations.build(),
               servers: _servers?.build(),
-              parameters: parameters.build());
+              parameters: parameters.build(),
+              ref: ref,
+              node: node);
     } catch (_) {
       late String _$failedField;
       try {
@@ -1151,6 +1175,10 @@ class _$OpenApiParameter extends OpenApiParameter {
   final OpenApiTypeSchema? schema;
   @override
   final (MediaType, OpenApiMediaType)? content;
+  @override
+  final String? ref;
+  @override
+  final YamlNode? node;
 
   factory _$OpenApiParameter(
           [void Function(OpenApiParameterBuilder)? updates]) =>
@@ -1167,7 +1195,9 @@ class _$OpenApiParameter extends OpenApiParameter {
       this.explode,
       this.allowReserved,
       this.schema,
-      this.content})
+      this.content,
+      this.ref,
+      this.node})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'OpenApiParameter', 'name');
     BuiltValueNullFieldError.checkNotNull(
@@ -1203,7 +1233,9 @@ class _$OpenApiParameter extends OpenApiParameter {
         explode == other.explode &&
         allowReserved == other.allowReserved &&
         schema == other.schema &&
-        content == _$dynamicOther.content;
+        content == _$dynamicOther.content &&
+        ref == other.ref &&
+        node == other.node;
   }
 
   @override
@@ -1220,6 +1252,8 @@ class _$OpenApiParameter extends OpenApiParameter {
     _$hash = $jc(_$hash, allowReserved.hashCode);
     _$hash = $jc(_$hash, schema.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1237,7 +1271,9 @@ class _$OpenApiParameter extends OpenApiParameter {
           ..add('explode', explode)
           ..add('allowReserved', allowReserved)
           ..add('schema', schema)
-          ..add('content', content))
+          ..add('content', content)
+          ..add('ref', ref)
+          ..add('node', node))
         .toString();
   }
 }
@@ -1294,6 +1330,14 @@ class OpenApiParameterBuilder
   set content((MediaType, OpenApiMediaType)? content) =>
       _$this._content = content;
 
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
   OpenApiParameterBuilder();
 
   OpenApiParameterBuilder get _$this {
@@ -1310,6 +1354,8 @@ class OpenApiParameterBuilder
       _allowReserved = $v.allowReserved;
       _schema = $v.schema;
       _content = $v.content;
+      _ref = $v.ref;
+      _node = $v.node;
       _$v = null;
     }
     return this;
@@ -1348,7 +1394,9 @@ class OpenApiParameterBuilder
             explode: explode,
             allowReserved: allowReserved,
             schema: schema,
-            content: content);
+            content: content,
+            ref: ref,
+            node: node);
     replace(_$result);
     return _$result;
   }
@@ -1492,13 +1540,21 @@ class _$OpenApiRequestBody extends OpenApiRequestBody {
   final String? description;
   @override
   final bool required;
+  @override
+  final String? ref;
+  @override
+  final YamlNode? node;
 
   factory _$OpenApiRequestBody(
           [void Function(OpenApiRequestBodyBuilder)? updates]) =>
       (new OpenApiRequestBodyBuilder()..update(updates))._build();
 
   _$OpenApiRequestBody._(
-      {required this.content, this.description, required this.required})
+      {required this.content,
+      this.description,
+      required this.required,
+      this.ref,
+      this.node})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         content, r'OpenApiRequestBody', 'content');
@@ -1521,7 +1577,9 @@ class _$OpenApiRequestBody extends OpenApiRequestBody {
     return other is OpenApiRequestBody &&
         content == other.content &&
         description == other.description &&
-        required == other.required;
+        required == other.required &&
+        ref == other.ref &&
+        node == other.node;
   }
 
   @override
@@ -1530,6 +1588,8 @@ class _$OpenApiRequestBody extends OpenApiRequestBody {
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1539,7 +1599,9 @@ class _$OpenApiRequestBody extends OpenApiRequestBody {
     return (newBuiltValueToStringHelper(r'OpenApiRequestBody')
           ..add('content', content)
           ..add('description', description)
-          ..add('required', required))
+          ..add('required', required)
+          ..add('ref', ref)
+          ..add('node', node))
         .toString();
   }
 }
@@ -1562,6 +1624,14 @@ class OpenApiRequestBodyBuilder
   bool? get required => _$this._required;
   set required(bool? required) => _$this._required = required;
 
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
   OpenApiRequestBodyBuilder();
 
   OpenApiRequestBodyBuilder get _$this {
@@ -1570,6 +1640,8 @@ class OpenApiRequestBodyBuilder
       _content = $v.content.toBuilder();
       _description = $v.description;
       _required = $v.required;
+      _ref = $v.ref;
+      _node = $v.node;
       _$v = null;
     }
     return this;
@@ -1598,7 +1670,9 @@ class OpenApiRequestBodyBuilder
               content: content.build(),
               description: description,
               required: BuiltValueNullFieldError.checkNotNull(
-                  required, r'OpenApiRequestBody', 'required'));
+                  required, r'OpenApiRequestBody', 'required'),
+              ref: ref,
+              node: node);
     } catch (_) {
       late String _$failedField;
       try {
@@ -1785,6 +1859,10 @@ class _$OpenApiResponse extends OpenApiResponse {
   final BuiltMap<String, OpenApiHeader> headers;
   @override
   final BuiltMap<MediaType, OpenApiMediaType> content;
+  @override
+  final String? ref;
+  @override
+  final YamlNode? node;
 
   factory _$OpenApiResponse([void Function(OpenApiResponseBuilder)? updates]) =>
       (new OpenApiResponseBuilder()..update(updates))._build();
@@ -1793,7 +1871,9 @@ class _$OpenApiResponse extends OpenApiResponse {
       {this.statusCode,
       required this.description,
       required this.headers,
-      required this.content})
+      required this.content,
+      this.ref,
+      this.node})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         description, r'OpenApiResponse', 'description');
@@ -1818,7 +1898,9 @@ class _$OpenApiResponse extends OpenApiResponse {
         statusCode == other.statusCode &&
         description == other.description &&
         headers == other.headers &&
-        content == other.content;
+        content == other.content &&
+        ref == other.ref &&
+        node == other.node;
   }
 
   @override
@@ -1828,6 +1910,8 @@ class _$OpenApiResponse extends OpenApiResponse {
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, headers.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1838,7 +1922,9 @@ class _$OpenApiResponse extends OpenApiResponse {
           ..add('statusCode', statusCode)
           ..add('description', description)
           ..add('headers', headers)
-          ..add('content', content))
+          ..add('content', content)
+          ..add('ref', ref)
+          ..add('node', node))
         .toString();
   }
 }
@@ -1867,6 +1953,14 @@ class OpenApiResponseBuilder
   set content(MapBuilder<MediaType, OpenApiMediaType>? content) =>
       _$this._content = content;
 
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
   OpenApiResponseBuilder();
 
   OpenApiResponseBuilder get _$this {
@@ -1876,6 +1970,8 @@ class OpenApiResponseBuilder
       _description = $v.description;
       _headers = $v.headers.toBuilder();
       _content = $v.content.toBuilder();
+      _ref = $v.ref;
+      _node = $v.node;
       _$v = null;
     }
     return this;
@@ -1904,7 +2000,9 @@ class OpenApiResponseBuilder
               description: BuiltValueNullFieldError.checkNotNull(
                   description, r'OpenApiResponse', 'description'),
               headers: headers.build(),
-              content: content.build());
+              content: content.build(),
+              ref: ref,
+              node: node);
     } catch (_) {
       late String _$failedField;
       try {
@@ -1940,6 +2038,12 @@ class _$OpenApiHeader extends OpenApiHeader {
   final bool? explode;
   @override
   final bool? allowReserved;
+  @override
+  final (MediaType, OpenApiMediaType)? content;
+  @override
+  final String? ref;
+  @override
+  final YamlNode? node;
 
   factory _$OpenApiHeader([void Function(OpenApiHeaderBuilder)? updates]) =>
       (new OpenApiHeaderBuilder()..update(updates))._build();
@@ -1952,7 +2056,10 @@ class _$OpenApiHeader extends OpenApiHeader {
       required this.allowEmptyValue,
       this.style,
       this.explode,
-      this.allowReserved})
+      this.allowReserved,
+      this.content,
+      this.ref,
+      this.node})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(schema, r'OpenApiHeader', 'schema');
     BuiltValueNullFieldError.checkNotNull(
@@ -1973,6 +2080,7 @@ class _$OpenApiHeader extends OpenApiHeader {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
     return other is OpenApiHeader &&
         schema == other.schema &&
         description == other.description &&
@@ -1981,7 +2089,10 @@ class _$OpenApiHeader extends OpenApiHeader {
         allowEmptyValue == other.allowEmptyValue &&
         style == other.style &&
         explode == other.explode &&
-        allowReserved == other.allowReserved;
+        allowReserved == other.allowReserved &&
+        content == _$dynamicOther.content &&
+        ref == other.ref &&
+        node == other.node;
   }
 
   @override
@@ -1995,6 +2106,9 @@ class _$OpenApiHeader extends OpenApiHeader {
     _$hash = $jc(_$hash, style.hashCode);
     _$hash = $jc(_$hash, explode.hashCode);
     _$hash = $jc(_$hash, allowReserved.hashCode);
+    _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -2009,7 +2123,10 @@ class _$OpenApiHeader extends OpenApiHeader {
           ..add('allowEmptyValue', allowEmptyValue)
           ..add('style', style)
           ..add('explode', explode)
-          ..add('allowReserved', allowReserved))
+          ..add('allowReserved', allowReserved)
+          ..add('content', content)
+          ..add('ref', ref)
+          ..add('node', node))
         .toString();
   }
 }
@@ -2052,6 +2169,19 @@ class OpenApiHeaderBuilder
   set allowReserved(bool? allowReserved) =>
       _$this._allowReserved = allowReserved;
 
+  (MediaType, OpenApiMediaType)? _content;
+  (MediaType, OpenApiMediaType)? get content => _$this._content;
+  set content((MediaType, OpenApiMediaType)? content) =>
+      _$this._content = content;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
   OpenApiHeaderBuilder();
 
   OpenApiHeaderBuilder get _$this {
@@ -2065,6 +2195,9 @@ class OpenApiHeaderBuilder
       _style = $v.style;
       _explode = $v.explode;
       _allowReserved = $v.allowReserved;
+      _content = $v.content;
+      _ref = $v.ref;
+      _node = $v.node;
       _$v = null;
     }
     return this;
@@ -2099,7 +2232,10 @@ class OpenApiHeaderBuilder
                 allowEmptyValue, r'OpenApiHeader', 'allowEmptyValue'),
             style: style,
             explode: explode,
-            allowReserved: allowReserved);
+            allowReserved: allowReserved,
+            content: content,
+            ref: ref,
+            node: node);
     replace(_$result);
     return _$result;
   }
@@ -2297,6 +2433,259 @@ class OpenApiComponentsBuilder
   }
 }
 
+class _$OpenApiSchema extends OpenApiSchema {
+  @override
+  final String? ref;
+  @override
+  final String? name;
+  @override
+  final OpenApiDiscriminator? discriminator;
+  @override
+  final String? title;
+  @override
+  final String? description;
+  @override
+  final bool deprecated;
+  @override
+  final Object? defaultValue;
+  @override
+  final bool readOnly;
+  @override
+  final bool writeOnly;
+  @override
+  final BuiltSet<String> required;
+  @override
+  final BuiltMap<String, Object?> extensions;
+  @override
+  final YamlNode? node;
+
+  factory _$OpenApiSchema([void Function(OpenApiSchemaBuilder)? updates]) =>
+      (new OpenApiSchemaBuilder()..update(updates))._build();
+
+  _$OpenApiSchema._(
+      {this.ref,
+      this.name,
+      this.discriminator,
+      this.title,
+      this.description,
+      required this.deprecated,
+      this.defaultValue,
+      required this.readOnly,
+      required this.writeOnly,
+      required this.required,
+      required this.extensions,
+      this.node})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        deprecated, r'OpenApiSchema', 'deprecated');
+    BuiltValueNullFieldError.checkNotNull(
+        readOnly, r'OpenApiSchema', 'readOnly');
+    BuiltValueNullFieldError.checkNotNull(
+        writeOnly, r'OpenApiSchema', 'writeOnly');
+    BuiltValueNullFieldError.checkNotNull(
+        required, r'OpenApiSchema', 'required');
+    BuiltValueNullFieldError.checkNotNull(
+        extensions, r'OpenApiSchema', 'extensions');
+  }
+
+  @override
+  OpenApiSchema rebuild(void Function(OpenApiSchemaBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiSchemaBuilder toBuilder() => new OpenApiSchemaBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiSchema &&
+        ref == other.ref &&
+        name == other.name &&
+        discriminator == other.discriminator &&
+        title == other.title &&
+        description == other.description &&
+        deprecated == other.deprecated &&
+        defaultValue == other.defaultValue &&
+        readOnly == other.readOnly &&
+        writeOnly == other.writeOnly &&
+        required == other.required &&
+        extensions == other.extensions &&
+        node == other.node;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, discriminator.hashCode);
+    _$hash = $jc(_$hash, title.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, deprecated.hashCode);
+    _$hash = $jc(_$hash, defaultValue.hashCode);
+    _$hash = $jc(_$hash, readOnly.hashCode);
+    _$hash = $jc(_$hash, writeOnly.hashCode);
+    _$hash = $jc(_$hash, required.hashCode);
+    _$hash = $jc(_$hash, extensions.hashCode);
+    _$hash = $jc(_$hash, node.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiSchema')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('discriminator', discriminator)
+          ..add('title', title)
+          ..add('description', description)
+          ..add('deprecated', deprecated)
+          ..add('defaultValue', defaultValue)
+          ..add('readOnly', readOnly)
+          ..add('writeOnly', writeOnly)
+          ..add('required', required)
+          ..add('extensions', extensions)
+          ..add('node', node))
+        .toString();
+  }
+}
+
+class OpenApiSchemaBuilder
+    implements Builder<OpenApiSchema, OpenApiSchemaBuilder> {
+  _$OpenApiSchema? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  OpenApiDiscriminatorBuilder? _discriminator;
+  OpenApiDiscriminatorBuilder get discriminator =>
+      _$this._discriminator ??= new OpenApiDiscriminatorBuilder();
+  set discriminator(OpenApiDiscriminatorBuilder? discriminator) =>
+      _$this._discriminator = discriminator;
+
+  String? _title;
+  String? get title => _$this._title;
+  set title(String? title) => _$this._title = title;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  bool? _deprecated;
+  bool? get deprecated => _$this._deprecated;
+  set deprecated(bool? deprecated) => _$this._deprecated = deprecated;
+
+  Object? _defaultValue;
+  Object? get defaultValue => _$this._defaultValue;
+  set defaultValue(Object? defaultValue) => _$this._defaultValue = defaultValue;
+
+  bool? _readOnly;
+  bool? get readOnly => _$this._readOnly;
+  set readOnly(bool? readOnly) => _$this._readOnly = readOnly;
+
+  bool? _writeOnly;
+  bool? get writeOnly => _$this._writeOnly;
+  set writeOnly(bool? writeOnly) => _$this._writeOnly = writeOnly;
+
+  SetBuilder<String>? _required;
+  SetBuilder<String> get required =>
+      _$this._required ??= new SetBuilder<String>();
+  set required(SetBuilder<String>? required) => _$this._required = required;
+
+  MapBuilder<String, Object?>? _extensions;
+  MapBuilder<String, Object?> get extensions =>
+      _$this._extensions ??= new MapBuilder<String, Object?>();
+  set extensions(MapBuilder<String, Object?>? extensions) =>
+      _$this._extensions = extensions;
+
+  YamlNode? _node;
+  YamlNode? get node => _$this._node;
+  set node(YamlNode? node) => _$this._node = node;
+
+  OpenApiSchemaBuilder();
+
+  OpenApiSchemaBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _discriminator = $v.discriminator?.toBuilder();
+      _title = $v.title;
+      _description = $v.description;
+      _deprecated = $v.deprecated;
+      _defaultValue = $v.defaultValue;
+      _readOnly = $v.readOnly;
+      _writeOnly = $v.writeOnly;
+      _required = $v.required.toBuilder();
+      _extensions = $v.extensions.toBuilder();
+      _node = $v.node;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiSchema other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiSchema;
+  }
+
+  @override
+  void update(void Function(OpenApiSchemaBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiSchema build() => _build();
+
+  _$OpenApiSchema _build() {
+    OpenApiSchema._validate(this);
+    _$OpenApiSchema _$result;
+    try {
+      _$result = _$v ??
+          new _$OpenApiSchema._(
+              ref: ref,
+              name: name,
+              discriminator: _discriminator?.build(),
+              title: title,
+              description: description,
+              deprecated: BuiltValueNullFieldError.checkNotNull(
+                  deprecated, r'OpenApiSchema', 'deprecated'),
+              defaultValue: defaultValue,
+              readOnly: BuiltValueNullFieldError.checkNotNull(
+                  readOnly, r'OpenApiSchema', 'readOnly'),
+              writeOnly: BuiltValueNullFieldError.checkNotNull(
+                  writeOnly, r'OpenApiSchema', 'writeOnly'),
+              required: required.build(),
+              extensions: extensions.build(),
+              node: node);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'discriminator';
+        _discriminator?.build();
+
+        _$failedField = 'required';
+        required.build();
+        _$failedField = 'extensions';
+        extensions.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'OpenApiSchema', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$OpenApiDiscriminator extends OpenApiDiscriminator {
   @override
   final String propertyName;
@@ -2406,6 +2795,640 @@ class OpenApiDiscriminatorBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$OpenApiHeaderReference extends OpenApiHeaderReference {
+  @override
+  final String ref;
+  @override
+  final String name;
+  @override
+  final String? summary;
+  @override
+  final String? description;
+
+  factory _$OpenApiHeaderReference(
+          [void Function(OpenApiHeaderReferenceBuilder)? updates]) =>
+      (new OpenApiHeaderReferenceBuilder()..update(updates))._build();
+
+  _$OpenApiHeaderReference._(
+      {required this.ref, required this.name, this.summary, this.description})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        ref, r'OpenApiHeaderReference', 'ref');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'OpenApiHeaderReference', 'name');
+  }
+
+  @override
+  OpenApiHeaderReference rebuild(
+          void Function(OpenApiHeaderReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiHeaderReferenceBuilder toBuilder() =>
+      new OpenApiHeaderReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiHeaderReference &&
+        ref == other.ref &&
+        name == other.name &&
+        summary == other.summary &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiHeaderReference')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('summary', summary)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class OpenApiHeaderReferenceBuilder
+    implements Builder<OpenApiHeaderReference, OpenApiHeaderReferenceBuilder> {
+  _$OpenApiHeaderReference? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  OpenApiHeaderReferenceBuilder();
+
+  OpenApiHeaderReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _summary = $v.summary;
+      _description = $v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiHeaderReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiHeaderReference;
+  }
+
+  @override
+  void update(void Function(OpenApiHeaderReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiHeaderReference build() => _build();
+
+  _$OpenApiHeaderReference _build() {
+    final _$result = _$v ??
+        new _$OpenApiHeaderReference._(
+            ref: BuiltValueNullFieldError.checkNotNull(
+                ref, r'OpenApiHeaderReference', 'ref'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'OpenApiHeaderReference', 'name'),
+            summary: summary,
+            description: description);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$OpenApiSchemaReference extends OpenApiSchemaReference {
+  @override
+  final String ref;
+  @override
+  final String name;
+  @override
+  final String? summary;
+  @override
+  final String? description;
+
+  factory _$OpenApiSchemaReference(
+          [void Function(OpenApiSchemaReferenceBuilder)? updates]) =>
+      (new OpenApiSchemaReferenceBuilder()..update(updates))._build();
+
+  _$OpenApiSchemaReference._(
+      {required this.ref, required this.name, this.summary, this.description})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        ref, r'OpenApiSchemaReference', 'ref');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'OpenApiSchemaReference', 'name');
+  }
+
+  @override
+  OpenApiSchemaReference rebuild(
+          void Function(OpenApiSchemaReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiSchemaReferenceBuilder toBuilder() =>
+      new OpenApiSchemaReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiSchemaReference &&
+        ref == other.ref &&
+        name == other.name &&
+        summary == other.summary &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiSchemaReference')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('summary', summary)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class OpenApiSchemaReferenceBuilder
+    implements Builder<OpenApiSchemaReference, OpenApiSchemaReferenceBuilder> {
+  _$OpenApiSchemaReference? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  OpenApiSchemaReferenceBuilder();
+
+  OpenApiSchemaReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _summary = $v.summary;
+      _description = $v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiSchemaReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiSchemaReference;
+  }
+
+  @override
+  void update(void Function(OpenApiSchemaReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiSchemaReference build() => _build();
+
+  _$OpenApiSchemaReference _build() {
+    final _$result = _$v ??
+        new _$OpenApiSchemaReference._(
+            ref: BuiltValueNullFieldError.checkNotNull(
+                ref, r'OpenApiSchemaReference', 'ref'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'OpenApiSchemaReference', 'name'),
+            summary: summary,
+            description: description);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$OpenApiParameterReference extends OpenApiParameterReference {
+  @override
+  final String ref;
+  @override
+  final String name;
+  @override
+  final String? summary;
+  @override
+  final String? description;
+
+  factory _$OpenApiParameterReference(
+          [void Function(OpenApiParameterReferenceBuilder)? updates]) =>
+      (new OpenApiParameterReferenceBuilder()..update(updates))._build();
+
+  _$OpenApiParameterReference._(
+      {required this.ref, required this.name, this.summary, this.description})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        ref, r'OpenApiParameterReference', 'ref');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'OpenApiParameterReference', 'name');
+  }
+
+  @override
+  OpenApiParameterReference rebuild(
+          void Function(OpenApiParameterReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiParameterReferenceBuilder toBuilder() =>
+      new OpenApiParameterReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiParameterReference &&
+        ref == other.ref &&
+        name == other.name &&
+        summary == other.summary &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiParameterReference')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('summary', summary)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class OpenApiParameterReferenceBuilder
+    implements
+        Builder<OpenApiParameterReference, OpenApiParameterReferenceBuilder> {
+  _$OpenApiParameterReference? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  OpenApiParameterReferenceBuilder();
+
+  OpenApiParameterReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _summary = $v.summary;
+      _description = $v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiParameterReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiParameterReference;
+  }
+
+  @override
+  void update(void Function(OpenApiParameterReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiParameterReference build() => _build();
+
+  _$OpenApiParameterReference _build() {
+    final _$result = _$v ??
+        new _$OpenApiParameterReference._(
+            ref: BuiltValueNullFieldError.checkNotNull(
+                ref, r'OpenApiParameterReference', 'ref'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'OpenApiParameterReference', 'name'),
+            summary: summary,
+            description: description);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$OpenApiRequestBodyReference extends OpenApiRequestBodyReference {
+  @override
+  final String ref;
+  @override
+  final String name;
+  @override
+  final String? summary;
+  @override
+  final String? description;
+
+  factory _$OpenApiRequestBodyReference(
+          [void Function(OpenApiRequestBodyReferenceBuilder)? updates]) =>
+      (new OpenApiRequestBodyReferenceBuilder()..update(updates))._build();
+
+  _$OpenApiRequestBodyReference._(
+      {required this.ref, required this.name, this.summary, this.description})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        ref, r'OpenApiRequestBodyReference', 'ref');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'OpenApiRequestBodyReference', 'name');
+  }
+
+  @override
+  OpenApiRequestBodyReference rebuild(
+          void Function(OpenApiRequestBodyReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiRequestBodyReferenceBuilder toBuilder() =>
+      new OpenApiRequestBodyReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiRequestBodyReference &&
+        ref == other.ref &&
+        name == other.name &&
+        summary == other.summary &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiRequestBodyReference')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('summary', summary)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class OpenApiRequestBodyReferenceBuilder
+    implements
+        Builder<OpenApiRequestBodyReference,
+            OpenApiRequestBodyReferenceBuilder> {
+  _$OpenApiRequestBodyReference? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  OpenApiRequestBodyReferenceBuilder();
+
+  OpenApiRequestBodyReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _summary = $v.summary;
+      _description = $v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiRequestBodyReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiRequestBodyReference;
+  }
+
+  @override
+  void update(void Function(OpenApiRequestBodyReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiRequestBodyReference build() => _build();
+
+  _$OpenApiRequestBodyReference _build() {
+    final _$result = _$v ??
+        new _$OpenApiRequestBodyReference._(
+            ref: BuiltValueNullFieldError.checkNotNull(
+                ref, r'OpenApiRequestBodyReference', 'ref'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'OpenApiRequestBodyReference', 'name'),
+            summary: summary,
+            description: description);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$OpenApiResponseReference extends OpenApiResponseReference {
+  @override
+  final String ref;
+  @override
+  final String name;
+  @override
+  final String? summary;
+  @override
+  final String? description;
+
+  factory _$OpenApiResponseReference(
+          [void Function(OpenApiResponseReferenceBuilder)? updates]) =>
+      (new OpenApiResponseReferenceBuilder()..update(updates))._build();
+
+  _$OpenApiResponseReference._(
+      {required this.ref, required this.name, this.summary, this.description})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        ref, r'OpenApiResponseReference', 'ref');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'OpenApiResponseReference', 'name');
+  }
+
+  @override
+  OpenApiResponseReference rebuild(
+          void Function(OpenApiResponseReferenceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  OpenApiResponseReferenceBuilder toBuilder() =>
+      new OpenApiResponseReferenceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is OpenApiResponseReference &&
+        ref == other.ref &&
+        name == other.name &&
+        summary == other.summary &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, ref.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'OpenApiResponseReference')
+          ..add('ref', ref)
+          ..add('name', name)
+          ..add('summary', summary)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class OpenApiResponseReferenceBuilder
+    implements
+        Builder<OpenApiResponseReference, OpenApiResponseReferenceBuilder> {
+  _$OpenApiResponseReference? _$v;
+
+  String? _ref;
+  String? get ref => _$this._ref;
+  set ref(String? ref) => _$this._ref = ref;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  OpenApiResponseReferenceBuilder();
+
+  OpenApiResponseReferenceBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _ref = $v.ref;
+      _name = $v.name;
+      _summary = $v.summary;
+      _description = $v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(OpenApiResponseReference other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$OpenApiResponseReference;
+  }
+
+  @override
+  void update(void Function(OpenApiResponseReferenceBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  OpenApiResponseReference build() => _build();
+
+  _$OpenApiResponseReference _build() {
+    final _$result = _$v ??
+        new _$OpenApiResponseReference._(
+            ref: BuiltValueNullFieldError.checkNotNull(
+                ref, r'OpenApiResponseReference', 'ref'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'OpenApiResponseReference', 'name'),
+            summary: summary,
+            description: description);
     replace(_$result);
     return _$result;
   }
