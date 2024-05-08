@@ -85,7 +85,7 @@ final class OpenApiEnumOrPrimitiveGenerator {
             ),
           ])
           ..fields.addAll([
-            codableExtensionTypeField(name),
+            // extensionTypeSelfField(name),
             for (final enumValue in enumValues)
               Field(
                 (f) => f

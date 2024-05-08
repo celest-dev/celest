@@ -43,12 +43,28 @@ final class OpenApiClientGenerator {
   late final Reference clientClassType = refer(clientClassName);
   late final ClassBuilder _client = ClassBuilder()
     ..name = clientClassName
-    ..modifier = ClassModifier.final$;
+    ..modifier = ClassModifier.final$
+    ..fields.addAll([
+      if (context.document.info.apiVersion case final apiVersion?)
+        Field(
+          (f) => f
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..name = 'version'
+            ..type = DartTypes.core.string
+            ..assignment = literalString(apiVersion).code,
+        ),
+    ]);
 
   final _libraries = MapBuilder<String, LibraryBuilder>();
 
-  LibraryBuilder _library(String path) =>
-      _libraries.putIfAbsent(path, LibraryBuilder.new);
+  LibraryBuilder _library(String path) => _libraries.putIfAbsent(
+        path,
+        LibraryBuilder.new,
+        // Need extension methods in scope
+        // TODO: adding this dups if already imported
+        // ..directives.add(Directive.import('package:codable/codable.dart')),
+      );
 
   Map<String, Library> generate() {
     _generateClientClass();
@@ -88,6 +104,8 @@ final class OpenApiClientGenerator {
                       .newInstance([], {
                     'apiKey': refer('apiKey'),
                     'baseClient': refer('httpClient'),
+                    if (context.document.info.apiVersion != null)
+                      'version': refer('version'),
                   }),
                 )
                 .code,
@@ -471,7 +489,8 @@ final class OpenApiClientGenerator {
             unreachable('Unexpected form body type: $bodyType');
           }
           final encoded = refer('request').property('encodeWith').call([
-            DartTypes.codable.codable.property('formData').property('encoder'),
+            // TODO: refer('codable', 'models.dart')
+            DartTypes.codable.codable$.property('formData').property('encoder'),
           ]);
           body.statements.add(
             request.property('body').assign(encoded).wrapWithBlockIf(
@@ -522,20 +541,14 @@ final class OpenApiClientGenerator {
             }
             if (fields.isNotEmpty) {
               final encoded = refer('request').property('encodeWith').call([
-                DartTypes.codable.codable
-                    .property('formFields')
-                    .property('encoder'),
-              ]).asA(
-                DartTypes.core.map(
-                  DartTypes.core.string,
-                  DartTypes.core.string,
-                ),
-              );
+                DartTypes.codable.formFieldsEncoder.newInstance([], {
+                  // TODO: refer('codable', 'models.dart')
+                  'codable': DartTypes.codable.codable$,
+                  'fields': request.property('fields'),
+                }),
+              ]);
               body.statements.add(
-                request
-                    .property('fields')
-                    .property('addAll')
-                    .call([encoded]).wrapWithBlockIf(
+                encoded.wrapWithBlockIf(
                   refer('request').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),

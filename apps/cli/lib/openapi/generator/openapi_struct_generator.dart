@@ -102,7 +102,7 @@ final class OpenApiStructGenerator {
         ctor.build(),
         if (!includeFormData) _fromJsonMethod,
       ])
-      ..fields.addAll([codableTypeField(name)])
+      // ..fields.addAll([selfField(name)])
       ..methods.addAll([
         if (!includeFormData) _toJsonMethod,
         _encodeMethod,
@@ -162,25 +162,27 @@ final class OpenApiStructGenerator {
           final buf = refer(r'$buf');
           b.addExpression(
             declareFinal(r'$buf').assign(
-              DartTypes.core.stringBuffer.newInstance([
-                literalString('$name(', raw: name.contains(r'$')),
-              ]),
+              DartTypes.core.stringBuffer
+                  .newInstance([])
+                  .cascade('writeln')
+                  .call([
+                    literalString('$name(', raw: name.contains(r'$')),
+                  ]),
             ),
           );
           for (final field in type.fields.values) {
             final fieldRef = refer(field.dartName);
             final writeField = buf
+                .cascade('writeln')
+                .call([])
                 .cascade('write')
                 .call([
                   literalString('  ${field.name}: '),
                 ])
-                .cascade('writeln')
-                .call([
-                  switch (field.type) {
-                    OpenApiStringType() => fieldRef,
-                    _ => fieldRef.property('toString').call([]),
-                  },
-                ]);
+                .cascade('write')
+                .call([fieldRef])
+                .cascade('write')
+                .call([literalString(',')]);
             b.statements.add(
               writeField.wrapWithBlockIf(
                 refer(field.dartName).notEqualTo(literalNull),
@@ -205,17 +207,22 @@ final class OpenApiStructGenerator {
           DartTypes.core.object.nullable,
         )
         ..lambda = true
-        ..body = DartTypes.codable.codable
-            .property('json')
-            .property('encode')
-            .call([refer('this')], {'as': refer('codableType')})
-            .asA(
-              DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
-            )
-            .code;
+        ..body =
+            // TODO: refer('codable', 'models.dart')
+            refer('encode')
+                .call([
+                  refer('this'),
+                  DartTypes.codable.codable$
+                      .property('json')
+                      .property('encoder'),
+                ])
+                .asA(
+                  DartTypes.core.map(
+                    DartTypes.core.string,
+                    DartTypes.core.object.nullable,
+                  ),
+                )
+                .code;
     });
   }
 
@@ -288,34 +295,34 @@ Method encodeMethod(String name, Code body) {
   });
 }
 
-Field codableTypeField(String className) {
-  return Field((f) {
-    f
-      ..static = true
-      ..modifier = FieldModifier.constant
-      ..name = 'codableType'
-      ..type = DartTypes.codable.codableType(refer(className))
-      ..assignment = DartTypes.codable.codableType().constInstance([], {
-        'typeName': literalString(className),
-        'encode': refer(className).property('encode'),
-      }).code;
-  });
-}
+// TODO: Enable when resolved
+// https://github.com/dart-lang/sdk/issues/55666
 
-Field codableExtensionTypeField(String className) {
-  return Field((f) {
-    f
-      ..static = true
-      ..modifier = FieldModifier.constant
-      ..name = 'codableType'
-      ..type = DartTypes.codable.codableType(refer(className))
-      ..assignment =
-          DartTypes.codable.codableExtensionType().constInstance([], {
-        'typeName': literalString(className),
-        'encode': refer(className).property('encode'),
-      }).code;
-  });
-}
+// Field selfField(String className) {
+//   return Field((f) {
+//     f
+//       ..static = true
+//       ..modifier = FieldModifier.constant
+//       ..name = 'self'
+//       ..assignment = DartTypes.codable
+//           .typeref(refer(className))
+//           .constInstance([], {}).code;
+//   });
+// }
+
+// Field extensionTypeSelfField(String className) {
+//   return Field((f) {
+//     f
+//       ..static = true
+//       ..modifier = FieldModifier.constant
+//       ..name = 'self'
+//       ..assignment = DartTypes.codable
+//           .typeref(refer(className))
+//           .constInstanceNamed('extensionType', [], {
+//         'typeName': literalString(className),
+//       }).code;
+//   });
+// }
 
 Method get encodeWithMethod {
   return Method((m) {
@@ -330,8 +337,6 @@ Method get encodeWithMethod {
             ..name = 'encoder',
         ),
       ])
-      ..body = refer('encoder')
-          .property('encode')
-          .call([refer('this')], {'as': refer('codableType')}).code;
+      ..body = refer('encode').call([refer('this'), refer('encoder')]).code;
   });
 }

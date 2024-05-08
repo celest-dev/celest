@@ -155,13 +155,20 @@ final class OpenApiEncoder {
       case OpenApiStructType(:final typeReference):
       case OpenApiSealedType(:final typeReference):
       case OpenApiTypeReference(:final typeReference):
-        return container.property('encode').call(
-          [
-            if (key != null) key,
-            ref,
-          ],
-          {'as': typeReference.property('codableType')},
-        );
+        return typeReference.property('encode').call([
+          ref,
+          container
+              .property('nestedSingleValueContainer')
+              .call([if (key != null) key]).property('encoder'),
+        ]);
+      // TODO: Enable when const map issue is resolved
+      // return container.property('encode').call(
+      //   [
+      //     if (key != null) key,
+      //     ref,
+      //   ],
+      //   {'as': typeReference.property('self')},
+      // );
       case OpenApiEmptyType():
         unreachable('Empty type');
     }

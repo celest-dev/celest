@@ -1,4 +1,3 @@
-import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/openapi_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -156,7 +155,7 @@ final class OpenApiUnionGenerator {
           );
         });
       }
-      c.fields.add(codableTypeField(name));
+      // c.fields.add(selfField(name));
     });
     return baseClass;
   }

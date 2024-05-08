@@ -67,7 +67,7 @@ final class OpenApiArrayGenerator {
               }),
           ),
         ])
-        ..fields.add(codableTypeField(name))
+        // ..fields.add(selfField(name))
         ..methods.addAll([
           Method(
             (m) => m

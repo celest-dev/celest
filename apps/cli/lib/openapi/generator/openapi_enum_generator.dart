@@ -32,10 +32,13 @@ final class OpenApiEnumGenerator {
 
   String _sanitizeEnumName(String name) {
     if (name.isEmpty) {
-      return r'$empty';
+      return r'empty$';
     }
     if (name.codeUnits.first >= 48 && name.codeUnits.first <= 57) {
       return '\$$name';
+    }
+    if (name == 'self') {
+      return r'self$';
     }
     return sanitizeVariableName(name);
   }
@@ -117,7 +120,7 @@ final class OpenApiEnumGenerator {
             ..declaredRepresentationType = repType,
         );
         b.implements.add(repType);
-        b.fields.add(codableExtensionTypeField(name));
+        // b.fields.add(extensionTypeSelfField(name));
         for (final value in type.values) {
           b.fields.add(
             Field(

@@ -886,9 +886,9 @@ abstract class OpenApiStructType
   Iterable<OpenApiField> get serializableFields sync* {
     for (final field in fields.values) {
       // // `TODO`: Some binary types should be encoded
-      // if (field.type case OpenApiBinaryType()) {
-      //   continue;
-      // }
+      if (field.type case OpenApiBinaryType()) {
+        continue;
+      }
       yield field;
     }
   }

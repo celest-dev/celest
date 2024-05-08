@@ -19,6 +19,7 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_core/_internal.dart' as celest_core;
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
+import 'package:codable/codable.dart' as codable;
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' as collection;
 import 'package:fixnum/fixnum.dart';
@@ -775,7 +776,11 @@ class _Codable {
   static const _url = 'package:codable/codable.dart';
 
   /// Creates a [codable.codable] reference.
-  DartTypeReference get codable => const DartTypeReference('codable', _url);
+  TypeReference get codable$ => TypeReference(
+        (t) => t
+          ..symbol = 'codable'
+          ..url = _url,
+      );
 
   /// Creates a [codable.Decoder] reference.
   TypeReference decoder([Reference? valueType]) => TypeReference(
@@ -793,18 +798,17 @@ class _Codable {
           ..types.addAll([if (valueType != null) valueType]),
       );
 
-  /// Creates a [codable.CodableType] reference.
-  TypeReference codableType([Reference? valueType]) => TypeReference(
+  /// Creates a [codable.CodableRegistry] reference.
+  TypeReference get codableRegistry => TypeReference(
         (t) => t
-          ..symbol = 'CodableType'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+          ..symbol = 'CodableRegistry'
+          ..url = _url,
       );
 
-  /// Creates a [codable.CodableExtensionType] reference.
-  TypeReference codableExtensionType([Reference? valueType]) => TypeReference(
+  /// Creates a [codable.CodableConfig] reference.
+  TypeReference codableConfig([Reference? valueType]) => TypeReference(
         (t) => t
-          ..symbol = 'CodableExtensionType'
+          ..symbol = 'CodableConfig'
           ..url = _url
           ..types.addAll([if (valueType != null) valueType]),
       );
@@ -813,6 +817,21 @@ class _Codable {
   TypeReference codableProtocol([Reference? valueType]) => TypeReference(
         (t) => t
           ..symbol = 'CodableProtocol'
+          ..url = _url
+          ..types.addAll([if (valueType != null) valueType]),
+      );
+
+  /// Creates a [codable.FormFieldsEncoder] reference.
+  TypeReference get formFieldsEncoder => TypeReference(
+        (t) => t
+          ..symbol = 'FormFieldsEncoder'
+          ..url = _url,
+      );
+
+  /// Creates a [codable.Typeref] reference.
+  TypeReference typeref([Reference? valueType]) => TypeReference(
+        (t) => t
+          ..symbol = 'Typeref'
           ..url = _url
           ..types.addAll([if (valueType != null) valueType]),
       );

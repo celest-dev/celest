@@ -55,8 +55,8 @@ final class OpenApiIdGenerator {
           },
         ),
       ])
-      ..methods.addAll([_toJsonMethod, _encodeMethod, encodeWithMethod])
-      ..fields.addAll([codableTypeField(className)]);
+      ..methods.addAll([_toJsonMethod, _encodeMethod, encodeWithMethod]);
+    // ..fields.addAll([selfField(className)]);
     return _class.build();
   }
 
@@ -178,8 +178,8 @@ final class OpenApiStructOrIdGenerator {
         }),
       )
       ..constructors.addAll([_fromJsonMethod])
-      ..methods.addAll([_toJsonMethod, _encodeMethod, _encodeWithMethod])
-      ..fields.addAll([codableTypeField(className)]);
+      ..methods.addAll([_toJsonMethod, _encodeMethod, _encodeWithMethod]);
+    // ..fields.addAll([selfField(className)]);
     return _class.build();
   }
 

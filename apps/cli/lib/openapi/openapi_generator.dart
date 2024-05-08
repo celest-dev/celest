@@ -79,18 +79,39 @@ final class OpenApiGenerator {
         return MapEntry(
           url,
           Library((b) {
-            switch (url) {
-              case 'models.dart':
-                b.directives.add(Directive.part('events.dart'));
-              case 'events.dart':
-                b.directives.add(Directive.partOf('models.dart'));
-            }
             b.body.addAll(
               schemas.map((schema) {
                 return context._schemaSpecs[schema] ??
                     context.fail('Schema not found: $schema');
               }),
             );
+            switch (url) {
+              case 'models.dart':
+                b.directives.add(Directive.part('events.dart'));
+              // TODO: Enable when const map issue is resolved
+              // b.body.add(
+              //   Field(
+              //     (f) => f
+              //       ..type = DartTypes.codable.codableRegistry
+              //       ..modifier = FieldModifier.constant
+              //       ..name = 'codable'
+              //       ..assignment = DartTypes.codable.codableRegistry
+              //           .constInstanceNamed('static', [
+              //         literalConstMap({
+              //           for (final codableType in context._codableTypes)
+              //             refer(codableType).property('self'): DartTypes
+              //                 .codable
+              //                 .codableConfig(refer(codableType))
+              //                 .constInstance([], {
+              //               'encode': refer(codableType).property('encode'),
+              //             }),
+              //         }),
+              //       ]).code,
+              //   ),
+              // );
+              case 'events.dart':
+                b.directives.add(Directive.partOf('models.dart'));
+            }
           }),
         );
       }),
@@ -129,6 +150,7 @@ class OpenApiGeneratorContext {
   final dartRefs = <String, Reference>{};
   final _schemaSpecs = <String, Spec>{};
   final _schemasByUrl = SetMultimapBuilder<String, String>();
+  final _codableTypes = <String>{};
 
   Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {
     return const [];
@@ -148,6 +170,7 @@ class OpenApiGeneratorContext {
       () {
         final schema = type.schema.withNullability(false);
         final className = reserveName(name, schema);
+        _codableTypes.add(className);
         return switch (type) {
           OpenApiPrimitiveType(:final typeReference) => ExtensionType(
               (t) => t
@@ -179,7 +202,7 @@ class OpenApiGeneratorContext {
                     ..declaredRepresentationType = typeReference,
                 )
                 ..implements.add(typeReference)
-                ..fields.add(codableExtensionTypeField(name))
+                // ..fields.add(extensionTypeSelfField(name))
                 ..methods.addAll([
                   Method(
                     (m) => m
