@@ -227,6 +227,7 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
 
 abstract class _$CelestDatabase extends GeneratedDatabase {
   _$CelestDatabase(QueryExecutor e) : super(e);
+  _$CelestDatabaseManager get managers => _$CelestDatabaseManager(this);
   late final $ProjectsTable projects = $ProjectsTable(this);
   late final Index name = Index('name', 'CREATE INDEX name ON projects (name)');
   late final Index path =
@@ -236,4 +237,120 @@ abstract class _$CelestDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [projects, name, path];
+}
+
+typedef $$ProjectsTableInsertCompanionBuilder = ProjectsCompanion Function({
+  Value<String> id,
+  required String name,
+  required String path,
+  Value<int> rowid,
+});
+typedef $$ProjectsTableUpdateCompanionBuilder = ProjectsCompanion Function({
+  Value<String> id,
+  Value<String> name,
+  Value<String> path,
+  Value<int> rowid,
+});
+
+class $$ProjectsTableTableManager extends RootTableManager<
+    _$CelestDatabase,
+    $ProjectsTable,
+    Project,
+    $$ProjectsTableFilterComposer,
+    $$ProjectsTableOrderingComposer,
+    $$ProjectsTableProcessedTableManager,
+    $$ProjectsTableInsertCompanionBuilder,
+    $$ProjectsTableUpdateCompanionBuilder> {
+  $$ProjectsTableTableManager(_$CelestDatabase db, $ProjectsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ProjectsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ProjectsTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$ProjectsTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> path = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProjectsCompanion(
+            id: id,
+            name: name,
+            path: path,
+            rowid: rowid,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<String> id = const Value.absent(),
+            required String name,
+            required String path,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProjectsCompanion.insert(
+            id: id,
+            name: name,
+            path: path,
+            rowid: rowid,
+          ),
+        ));
+}
+
+class $$ProjectsTableProcessedTableManager extends ProcessedTableManager<
+    _$CelestDatabase,
+    $ProjectsTable,
+    Project,
+    $$ProjectsTableFilterComposer,
+    $$ProjectsTableOrderingComposer,
+    $$ProjectsTableProcessedTableManager,
+    $$ProjectsTableInsertCompanionBuilder,
+    $$ProjectsTableUpdateCompanionBuilder> {
+  $$ProjectsTableProcessedTableManager(super.$state);
+}
+
+class $$ProjectsTableFilterComposer
+    extends FilterComposer<_$CelestDatabase, $ProjectsTable> {
+  $$ProjectsTableFilterComposer(super.$state);
+  ColumnFilters<String> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get path => $state.composableBuilder(
+      column: $state.table.path,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$ProjectsTableOrderingComposer
+    extends OrderingComposer<_$CelestDatabase, $ProjectsTable> {
+  $$ProjectsTableOrderingComposer(super.$state);
+  ColumnOrderings<String> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get path => $state.composableBuilder(
+      column: $state.table.path,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+class _$CelestDatabaseManager {
+  final _$CelestDatabase _db;
+  _$CelestDatabaseManager(this._db);
+  $$ProjectsTableTableManager get projects =>
+      $$ProjectsTableTableManager(_db, _db.projects);
 }

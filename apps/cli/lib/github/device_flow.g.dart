@@ -22,8 +22,8 @@ DeviceFlow _$DeviceFlowFromJson(Map<String, dynamic> json) => DeviceFlow(
       deviceCode: json['device_code'] as String,
       userCode: json['user_code'] as String,
       verificationUri: Uri.parse(json['verification_uri'] as String),
-      expiresIn: json['expires_in'] as int,
-      interval: json['interval'] as int,
+      expiresIn: (json['expires_in'] as num).toInt(),
+      interval: (json['interval'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DeviceFlowToJson(DeviceFlow instance) =>

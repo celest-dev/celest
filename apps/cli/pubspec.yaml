@@ -46,7 +46,7 @@ dependencies:
   http_parser: ^4.0.2
   hub:
     path: ../../services/hub
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   lib_openapi:
     path: ../../packages/lib_openapi
   libcoder: ^0.0.1
@@ -100,6 +100,11 @@ dependency_overrides:
     path: ../../celest/packages/corks_cedar
   jni:
     path: ../../services/hub/third_party/jni-0.8.0
+  
+  # TODO: Remove aws_common dependency
+  json_annotation: ^4.9.0
+  json_serializable: ^6.8.0
+  
   native_storage:
     path: ../../celest/packages/native/storage
   # Use vendored sqlite3 to make use of native-assets
@@ -120,7 +125,7 @@ dev_dependencies:
   # Required for the `gcloud` package
   googleapis: ^12.0.0
   googleapis_auth: ^1.4.1
-  json_serializable: ^6.7.1
+  json_serializable: ^6.8.0
   mocktail: ^1.0.2
   mustache_template: ^2.0.0
   test: ^1.24.9
