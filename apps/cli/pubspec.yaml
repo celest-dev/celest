@@ -4,7 +4,7 @@ version: 0.4.0-dev.3
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.4.0
 
 dependencies:
   # TODO: Bump when type_helper alias can be mitigated
@@ -101,11 +101,11 @@ dependency_overrides:
     path: ../../celest/packages/corks_cedar
   jni:
     path: ../../services/hub/third_party/jni-0.8.0
-  
+
   # TODO: Remove aws_common dependency
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
-  
+
   native_storage:
     path: ../../celest/packages/native/storage
   # Use vendored sqlite3 to make use of native-assets
