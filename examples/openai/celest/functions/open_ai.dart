@@ -8,7 +8,7 @@ import 'package:celest_backend/models.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:chat_gpt_sdk/src/model/chat_complete/response/chat_choice.dart';
 
-import '../resources.dart';
+import '../generated/resources.dart';
 
 /// Creates an instance of the OpenAI client.
 OpenAI _createOpenAI(String token) => OpenAI.instance.build(
@@ -18,6 +18,7 @@ OpenAI _createOpenAI(String token) => OpenAI.instance.build(
     );
 
 /// Returns a list of available models.
+@cloud
 Future<List<String>> availableModels() async => _availableModels;
 
 /// The list of available models.
@@ -32,11 +33,12 @@ const _availableModels = [
 /// Prompts the GPT [model] with the given [prompt] and [parameters].
 ///
 /// Returns the generated text.
+@cloud
 Future<String> openAIRequest({
   required String model,
   required String prompt,
   ModelParameters parameters = const ModelParameters(),
-  @Env.openAiToken required String openAiToken,
+  @env.openAiToken required String openAiToken,
 }) async {
   final openAI = _createOpenAI(openAiToken);
 
@@ -63,7 +65,7 @@ Future<String> openAIRequest({
     case ChatCTResponse(choices: [ChatChoice(:final message?), ...]):
       return message.content.trim();
     default:
-      throw InternalServerException(
+      throw InternalServerError(
         "Couldn't complete request. Please try again later.",
       );
   }

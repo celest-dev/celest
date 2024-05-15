@@ -1,14 +1,17 @@
+import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart';
 import 'package:celest_backend/models.dart';
 import 'package:uuid/uuid.dart';
 
 Map<String, Task> tasks = {};
 
+@cloud
 Future<Map<String, Task>> listAllTasks() async {
   print('fetching tasks');
   return tasks;
 }
 
+@cloud
 Future<void> addTask({
   required String title,
   required Importance importance,
@@ -26,11 +29,13 @@ Future<void> addTask({
   tasks[newTask.id] = newTask;
 }
 
+@cloud
 Future<void> deleteTask({required String id}) async {
   print('removing task $id');
   tasks.remove(id);
 }
 
+@cloud
 Future<void> markAsCompleted({required String id}) async {
   print('marking as completed');
   final task = tasks[id];
@@ -40,6 +45,7 @@ Future<void> markAsCompleted({required String id}) async {
   tasks[id] = task.copyWith(isCompleted: true);
 }
 
+@cloud
 Future<void> markAsIncomplete({required String id}) async {
   print('marking as incomplete');
   final task = tasks[id];

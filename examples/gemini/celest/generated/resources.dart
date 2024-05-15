@@ -6,9 +6,9 @@ library;
 
 import 'package:celest/celest.dart';
 
-@Deprecated('Use `Env` instead.')
-typedef env = Env;
+@Deprecated('Use `env` instead.')
+typedef Env = env;
 
-abstract final class Env {
+abstract final class env {
   static const geminiApiKey = EnvironmentVariable(name: r'GEMINI_API_KEY');
 }

@@ -20,7 +20,13 @@ class BadRequestException implements CloudException {
   String toString() => 'BadRequestException: $message';
 }
 
-final class UnauthorizedException implements CloudException {
+/// {@template celest_core.exception.unauthorized_exception}
+/// An exception thrown by a Cloud Function when a request is not authorized.
+/// {@endtemplate}
+class UnauthorizedException implements CloudException {
+  /// Creates a [UnauthorizedException] with the given [message].
+  ///
+  /// {@macro celest_core.exception.unauthorized_exception}
   const UnauthorizedException([this.message = 'Unauthorized']);
 
   @override
@@ -30,19 +36,23 @@ final class UnauthorizedException implements CloudException {
   String toString() => 'UnauthorizedException: $message';
 }
 
-/// {@template celest_core.exception.internal_server_exception}
+/// {@macro celest_core.exception.internal_server_error}
+@Deprecated('Use InternalServerError instead.')
+typedef InternalServerException = InternalServerError;
+
+/// {@template celest_core.exception.internal_server_error}
 /// An exception thrown by a Cloud Function when an unrecoverable internal error
 /// occurs.
 /// {@endtemplate}
-class InternalServerException implements CloudException {
-  /// Creates a [InternalServerException] with the given [message].
+class InternalServerError extends Error implements CloudException {
+  /// Creates a [InternalServerError] with the given [message].
   ///
-  /// {@macro celest_core_exception_internal_server_exception}
-  const InternalServerException(this.message);
+  /// {@macro celest_core.exception.internal_server_error}
+  InternalServerError(this.message);
 
   @override
   final String message;
 
   @override
-  String toString() => 'InternalServerException: $message';
+  String toString() => 'InternalServerError: $message';
 }

@@ -20,7 +20,7 @@ Future<void> serve({
 }) async {
   final router = Router()..get('/_health', (_) => Response.ok('OK'));
   for (final MapEntry(key: route, value: target) in targets.entries) {
-    router.post(route, target._handler);
+    target._apply(router, route);
   }
   final pipeline = const Pipeline()
       .addMiddleware(_heartbeatMiddleware)
@@ -36,6 +36,7 @@ Future<void> serve({
     pipeline,
     InternetAddress.anyIPv4,
     port,
+    shared: true,
   );
   print('Serving on http://localhost:$port');
   await StreamGroup.merge([
@@ -73,10 +74,12 @@ abstract base class CloudFunctionTarget {
       }
     });
     final response = await runZoned(
-      () => handle({
-        r'$context': context,
-        ...bodyJson,
-      }),
+      () => handle(
+        bodyJson,
+        context: context,
+        headers: request.headersAll,
+        queryParameters: request.url.queryParametersAll,
+      ),
       zoneSpecification: ZoneSpecification(
         print: (self, parent, zone, message) {
           parent.print(zone, '[$name] $message');
@@ -95,13 +98,25 @@ abstract base class CloudFunctionTarget {
   /// The name of the [CloudFunction] this class targets.
   String get name;
 
+  /// The HTTP method of the [CloudFunction] this class targets.
+  String get method => 'POST';
+
+  void _apply(Router router, String route) {
+    router.add(method, route, _handler);
+  }
+
   /// Initializes this target.
   ///
   /// This is called once when the target is instantiated.
   void init() {}
 
   /// Handles a JSON [request] to this target.
-  Future<CelestResponse> handle(Map<String, Object?> request);
+  Future<CelestResponse> handle(
+    Map<String, Object?> request, {
+    required Map<String, String> context,
+    required Map<String, List<String>> headers,
+    required Map<String, List<String>> queryParameters,
+  });
 }
 
 Handler _heartbeatMiddleware(Handler inner) {

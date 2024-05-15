@@ -6,9 +6,10 @@ import 'dart:convert';
 import 'package:celest/celest.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../resources.dart';
+import '../generated/resources.dart';
 
 /// Returns a list of available models.
+@cloud
 Future<List<String>> availableModels() async => _availableModels;
 
 /// The list of available models.
@@ -22,10 +23,11 @@ const _availableModels = [
 /// Prompts the Gemini [modelName] with the given [prompt] and [parameters].
 ///
 /// Returns the generated text.
+@cloud
 Future<String> generateContent({
   required String modelName,
   required String prompt,
-  @Env.geminiApiKey required String apiKey,
+  @env.geminiApiKey required String apiKey,
 }) async {
   if (!_availableModels.contains(modelName)) {
     throw BadRequestException('Invalid model: $modelName');
@@ -45,7 +47,7 @@ Future<String> generateContent({
       print('Selected answer: $text');
       return text;
     case _:
-      throw InternalServerException('Failed to generate content');
+      throw InternalServerError('Failed to generate content');
   }
 }
 
