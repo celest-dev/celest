@@ -34,8 +34,7 @@ dependencies:
   code_builder: ^4.8.0
   collection: ^1.18.0
   convert: ^3.1.1
-  corks_cedar:
-    path: ../../celest/packages/corks_cedar
+  corks_cedar: ^0.1.0
   crypto: ^3.0.3
   dart_style: ^2.3.4
   drift: ^2.16.0
@@ -98,17 +97,13 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  corks_cedar:
-    path: ../../celest/packages/corks_cedar
   jni:
-    path: ../../services/hub/third_party/jni-0.8.0
+    path: ../../services/hub/third_party/jni-0.9.2
 
   # TODO: Remove aws_common dependency
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
 
-  native_storage:
-    path: ../../celest/packages/native/storage
   # Use vendored sqlite3 to make use of native-assets
   sqlite3:
     path: ../../packages/sqlite3/sqlite3
