@@ -237,7 +237,7 @@ final class TypeHelper {
     return const Iterable.empty();
   }
 
-  final Map<InterfaceElement, List<InterfaceType>> subtypes = {};
+  final Map<InterfaceElement, List<InterfaceType>> subtypes = Map.identity();
 
   /// Maps 3p types to their extension type overrides.
   final Map<InterfaceType, InterfaceType> overrides = Map.identity();

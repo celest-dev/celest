@@ -40,12 +40,17 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
 
   static final _apiNamespaceCache =
       <(LibraryElement, bool recursive), Set<InterfaceElement>>{};
+  static final Map<LibraryElement, List<InterfaceElement>>
+      _libraryNamespaceCache = Map.identity();
 
   Set<InterfaceElement> namespaceForLibrary(
     LibraryElement library, {
     bool recursive = false,
   }) {
-    final visited = <LibraryElement>{};
+    if (_apiNamespaceCache[(library, recursive)] case final cached?) {
+      return cached;
+    }
+    final visited = Set<LibraryElement>.identity();
 
     Iterable<InterfaceElement> forNamespace(Namespace namespace) sync* {
       yield* namespace.definedNames.values.whereType();
@@ -64,11 +69,12 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         return;
       }
       for (final importedLibrary in library.importedLibraries) {
-        yield* search(importedLibrary);
+        yield* _libraryNamespaceCache[importedLibrary] ??=
+            search(importedLibrary).toList();
       }
     }
 
-    return _apiNamespaceCache[(library, recursive)] ??= search(library).toSet();
+    return _apiNamespaceCache[(library, recursive)] = search(library).toSet();
   }
 
   Future<ResolvedLibraryResult> resolveLibrary(String path) async {

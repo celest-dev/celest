@@ -11,6 +11,7 @@ import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/project/project_resolver.dart';
+import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
@@ -79,13 +80,10 @@ class TestRunner {
           projectRoot: projectRoot,
           outputsDir: goldensDir.path,
         );
-        final res = await Process.start(
-          Platform.executable,
-          ['pub', 'get'],
-          mode: ProcessStartMode.inheritStdio,
+        await runPub(
+          action: PubAction.get,
           workingDirectory: projectRoot,
         ).timeout(const Duration(seconds: 10));
-        await expectLater(res.exitCode, completion(0));
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }

@@ -63,6 +63,7 @@ final class CelestAnalyzer
   Future<void> init() async {
     _errors.clear();
     if (_lastAnalyzed != projectPaths.projectRoot) {
+      _initFuture = null;
       _lastAnalyzed = projectPaths.projectRoot;
       _logger.finest('Analyzing new project. Clearing caches.');
       typeHelper.reset();

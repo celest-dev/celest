@@ -198,13 +198,14 @@ final class LocalApiRunner implements Closeable {
         .listen(stderrPipe.writeln);
 
     try {
+      const vmServiceTimeout = Duration(seconds: 15);
       _logger.finer('Waiting for local API to report VM URI...');
       _vmService = await vmServiceCompleter.future.timeout(
-        const Duration(seconds: 15),
+        vmServiceTimeout,
         onTimeout: () {
           throw TimeoutException(
             'Could not connect to local API VM service.',
-            const Duration(seconds: 15),
+            vmServiceTimeout,
           );
         },
       );

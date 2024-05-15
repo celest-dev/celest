@@ -7,7 +7,8 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
-  # TODO: Bump when type_helper alias can be mitigated
+  # TODO: Cannot use latest because type system uses `identical` in subtype checks instead of `==`
+  # https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
   analyzer: <6.5.0
   api_celest:
     path: ../../packages/api_celest
@@ -113,6 +114,7 @@ dependency_overrides:
     path: ../../packages/sqlite3/sqlite3
 
 dev_dependencies:
+  benchmark_harness: ^2.2.2
   build: ^2.4.1
   build_runner: ^2.4.7
   build_test: ^2.2.1

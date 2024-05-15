@@ -287,6 +287,8 @@ extension DartTypeHelper on DartType {
       // final classes can still reopen types and introduce new classes with
       // new identities.
       ClassElement(isFinal: true) => const [],
+      // TODO(dnys1): This should work but reports errors for sealed types.
+      // ClassElementImpl() => element.allSubtypes ?? const [],
       _ => await element.collectSubtypes(),
     };
     for (final subtype in subtypes) {

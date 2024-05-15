@@ -71,7 +71,9 @@ final class CelestProject {
 
   /// The [AnalysisContext] for the current project.
   late final DriverBasedAnalysisContext analysisContext =
-      _analysisContextCollection.contexts.single;
+      _analysisContextCollection.contextFor(
+    p.join(projectPaths.projectRoot, 'project.dart'),
+  );
 
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
