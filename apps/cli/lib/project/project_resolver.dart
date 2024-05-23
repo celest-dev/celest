@@ -195,7 +195,7 @@ final class ProjectResolver extends AstVisitorWithArg<void, AstNode> {
   @override
   void visitEnvironmentVariable(EnvironmentVariable variable, Project context) {
     final envName = variable.envName;
-    final envValue = projectPaths.envManager.get(envName);
+    final envValue = celestProject.envManager.cachedValueFor(envName);
     if (envValue == null) {
       unreachable('Should have been caught before this');
     }

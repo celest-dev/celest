@@ -274,7 +274,8 @@ class TestRunner {
         );
         apiRunner = await LocalApiRunner.start(
           path: entrypoint,
-          envVars: projectPaths.envManager.env.keys,
+          envVars:
+              (await celestProject.envManager.envVars).map((el) => el.envName),
           verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,

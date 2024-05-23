@@ -351,7 +351,9 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                proxyPort: secureStorage.getLocalUri(project.name).port,
+                proxyPort:
+                    (await isolatedSecureStorage.getLocalUri(project.name))
+                        .port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -364,11 +366,12 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: secureStorage.setLocalUri(
+                localUri: await isolatedSecureStorage.setLocalUri(
                   project.name,
                   Uri.http('localhost:${projectOutputs.port}'),
                 ),
-                productionUri: secureStorage.getProductionUri(project.name),
+                productionUri:
+                    await isolatedSecureStorage.getProductionUri(project.name),
               ),
             );
 
@@ -537,8 +540,8 @@ final class CelestFrontend implements Closeable {
             await _generateClientCode(
               project: project,
               projectUris: (
-                localUri: secureStorage.getLocalUri(project.name),
-                productionUri: secureStorage.setProductionUri(
+                localUri: await isolatedSecureStorage.getLocalUri(project.name),
+                productionUri: await isolatedSecureStorage.setProductionUri(
                   project.name,
                   projectOutputs.baseUri,
                 ),
@@ -683,8 +686,12 @@ final class CelestFrontend implements Closeable {
           celestProject.config.configDir.childDirectory(resolvedProject.name);
       await dbDir.create();
 
-      final metadata = storage.getMetadata(resolvedProject.name) ??
-          storage.setMetadata(resolvedProject.name, HubMetadata.test());
+      final metadata =
+          await isolatedSecureStorage.getMetadata(resolvedProject.name) ??
+              await isolatedSecureStorage.setMetadata(
+                resolvedProject.name,
+                HubMetadata.test(),
+              );
       final envConfig = EnvironmentConfig(
         dbDir: dbDir.path,
         metadata: metadata,

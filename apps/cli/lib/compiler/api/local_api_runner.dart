@@ -58,8 +58,8 @@ final class LocalApiRunner implements Closeable {
   }) async {
     final env = <String, String>{};
     for (final envVar in envVars) {
-      final value =
-          Platform.environment[envVar] ?? projectPaths.envManager.get(envVar);
+      final value = Platform.environment[envVar] ??
+          await celestProject.envManager.valueFor(envVar);
       if (value == null) {
         throw StateError('Missing value for environment variable: $envVar');
       }

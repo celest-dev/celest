@@ -244,7 +244,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   @override
   Future<Iterable<ast.EnvironmentVariable>>
       resolveEnvironmentVariables() async {
-    return projectPaths.envManager.reload();
+    return celestProject.envManager.envVars;
   }
 
   (List<ast.ApiMetadata>, bool isCloud) _collectApiMetadata(

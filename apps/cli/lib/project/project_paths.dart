@@ -1,4 +1,3 @@
-import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 
@@ -40,8 +39,6 @@ final class ProjectPaths {
   late final String exceptionsDir = p.join(projectRoot, 'lib', 'exceptions');
   late final String exceptionsDart =
       p.join(projectRoot, 'lib', 'exceptions.dart');
-
-  late final EnvManager envManager = EnvManager(envFile);
 
   late final String authDart = p.join(projectRoot, 'auth.dart');
   late final String legacyAuthDart = p.join(projectRoot, 'auth', 'auth.dart');

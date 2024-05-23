@@ -8,6 +8,7 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/database.dart';
+import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -22,6 +23,7 @@ final class CelestProject {
     required this.projectPaths,
     required AnalysisOptions analysisOptions,
     required this.config,
+    required this.envManager,
   }) : _analysisOptions = analysisOptions;
 
   static final _logger = Logger('CelestProject');
@@ -48,10 +50,15 @@ final class CelestProject {
     _logger
       ..finest('Loaded analysis options: $analysisOptions')
       ..finest('Loaded Celest config: $config');
+    final envManager = EnvManager(projectPaths.envFile);
+    await envManager.spawn();
+    envManager.envVars.ignore();
+    _logger.finest('Spawned env manager');
     final project = CelestProject._(
       projectPaths: projectPaths,
       analysisOptions: analysisOptions,
       config: config,
+      envManager: envManager,
     );
     return project;
   }
@@ -68,6 +75,8 @@ final class CelestProject {
     // Needed for collecting subtypes.
     enableIndex: true,
   );
+
+  final EnvManager envManager;
 
   /// The [AnalysisContext] for the current project.
   late final DriverBasedAnalysisContext analysisContext =
@@ -117,32 +126,34 @@ typedef CelestProjectUris = ({
   Uri? productionUri,
 });
 
-extension CelestProjectUriStorage on NativeStorage {
-  Uri? getUri(String key) => switch (read(key)) {
+extension CelestProjectUriStorage on IsolatedNativeStorage {
+  Future<Uri?> getUri(String key) async => switch (await read(key)) {
         final uri? => Uri.parse(uri),
         _ => null,
       };
 
-  Uri? getProductionUri(String projectName) =>
+  Future<Uri?> getProductionUri(String projectName) =>
       getUri('$projectName.productionUri');
-  Uri setProductionUri(String projectName, Uri uri) {
-    write('$projectName.productionUri', uri.toString());
+  Future<Uri> setProductionUri(String projectName, Uri uri) async {
+    await write('$projectName.productionUri', uri.toString());
     return uri;
   }
 
-  Uri getLocalUri(String projectName) {
-    final uri = getUri('$projectName.localUri');
+  Future<Uri> getLocalUri(String projectName) async {
+    final uri = await getUri('$projectName.localUri');
     return uri ?? Uri.parse('http://localhost:$defaultCelestPort');
   }
 
-  Uri setLocalUri(String projectName, Uri uri) {
-    write('$projectName.localUri', uri.toString());
+  Future<Uri> setLocalUri(String projectName, Uri uri) async {
+    await write('$projectName.localUri', uri.toString());
     return uri;
   }
 
-  HubMetadata? getMetadata(String projectName) {
-    final keyId = read('$projectName.keyId');
-    final key = read('$projectName.key');
+  Future<HubMetadata?> getMetadata(String projectName) async {
+    final (keyId, key) = await (
+      read('$projectName.keyId'),
+      read('$projectName.key'),
+    ).wait;
     if (keyId != null && key != null) {
       return HubMetadata(
         keyId: base64Decode(keyId),
@@ -152,9 +163,14 @@ extension CelestProjectUriStorage on NativeStorage {
     return null;
   }
 
-  HubMetadata setMetadata(String projectName, HubMetadata metadata) {
-    write('$projectName.keyId', base64Encode(metadata.keyId));
-    write('$projectName.key', base64Encode(metadata.key!));
+  Future<HubMetadata> setMetadata(
+    String projectName,
+    HubMetadata metadata,
+  ) async {
+    await (
+      write('$projectName.keyId', base64Encode(metadata.keyId)),
+      write('$projectName.key', base64Encode(metadata.key!)),
+    ).wait;
     return metadata;
   }
 }
