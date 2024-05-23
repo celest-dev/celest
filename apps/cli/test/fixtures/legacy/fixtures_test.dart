@@ -279,7 +279,7 @@ class TestRunner {
           verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,
-          vmServiceTimeout: const Duration(seconds: -1), // No timeout
+          vmServiceTimeout: const Duration(seconds: 30),
         );
         apiUri = Uri.parse('http://localhost:${apiRunner.port}');
 

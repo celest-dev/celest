@@ -41,5 +41,6 @@ Future<String> transformPackageConfig({
   return toRootDir
       .childDirectory('.dart_tool')
       .childFile(packageConfigFileName)
-      .path;
+      .uri
+      .toString();
 }

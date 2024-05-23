@@ -101,6 +101,8 @@ final class LocalApiRunner implements Closeable {
         'run',
         // Start VM service on a random port.
         '--enable-vm-service=0',
+        '--pause-isolates-on-start',
+        '--warn-on-pause-with-no-debugger',
         '--enable-asserts',
         '--packages',
         packageConfig,
@@ -129,8 +131,14 @@ final class LocalApiRunner implements Closeable {
     return runner;
   }
 
-  /// Waits for the main Isolate to be available then returns its ID.
-  static Future<String> _waitForIsolate(
+  static final _vmServicePattern =
+      RegExp(r'The Dart VM service is listening on ([^\s]+)');
+
+  static final _warnOnNoDebuggerPattern =
+      RegExp(r'Connect to the Dart VM service at ([^\s]+) to debug.');
+
+  /// Waits for the main Isolate to be available, resume it, then return its ID.
+  static Future<String> _waitForIsolatesAndResume(
     VmService vmService,
     Logger logger,
   ) async {
@@ -138,6 +146,7 @@ final class LocalApiRunner implements Closeable {
     var isolates = vm.isolates;
     final stopwatch = Stopwatch()..start();
     const timeout = Duration(seconds: 10);
+    _logger.finest('Waiting for VM service to report isolates...');
     while (isolates == null || isolates.isEmpty) {
       if (stopwatch.elapsed > timeout) {
         throw TimeoutException('Timed out waiting for VM to start.');
@@ -151,13 +160,33 @@ final class LocalApiRunner implements Closeable {
       'VM started in ${stopwatch.elapsedMilliseconds}ms. '
       'Isolates: $isolates',
     );
-    var isolate = isolates
+    var isolateRef = isolates
         .firstWhereOrNull((isolate) => isolate.isSystemIsolate ?? false);
-    isolate ??= isolates.singleOrNull;
-    if (isolate == null) {
+    isolateRef ??= isolates.singleOrNull;
+    if (isolateRef == null) {
       throw StateError('Could not determine main isolate ID.');
     }
-    return isolate.id!;
+    _logger.finest('Resuming isolates...');
+    // TODO(dnys1): Test resuming multiple isolates.
+    await Future.wait([
+      for (final isolate in isolates) _resumeIsolate(vmService, isolate.id!),
+    ]);
+    _logger.finest('All isolates resumed');
+    return isolateRef.id!;
+  }
+
+  static Future<void> _resumeIsolate(
+    VmService vmService,
+    String isolateId,
+  ) async {
+    _logger.finest('[Isolate $isolateId] Waiting for pause on start event...');
+    var isolate = await vmService.getIsolate(isolateId);
+    while (isolate.pauseEvent?.kind != EventKind.kPauseStart) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      isolate = await vmService.getIsolate(isolateId);
+    }
+    _logger.finest('Resuming main isolate...');
+    await vmService.resume(isolateId);
   }
 
   Future<void> _init({
@@ -169,20 +198,26 @@ final class LocalApiRunner implements Closeable {
     stderrPipe ??= stderr;
 
     final vmServiceCompleter = Completer<VmService>();
+    void completeVmService(String rawObservatoryUrl) {
+      final observatoryUri =
+          '${rawObservatoryUrl.replaceFirst('http', 'ws')}ws';
+      _logger.finer('Connecting to local API at: $observatoryUri');
+      vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
+    }
+
     final serverStartedCompleter = Completer<void>();
     _stdoutSub = _localApiProcess.stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen((line) {
-      _logger.finest('PROCESS: $line');
-      if (line.startsWith(
-        'The Dart DevTools debugger and profiler is available at:',
-      )) {
-        final observatoryUri =
-            '${line.split(' ').last.replaceFirst('http', 'ws')}ws';
-        _logger.finer('Connecting to local API at: $observatoryUri');
-        vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
-      } else if (line.startsWith('The Dart VM service is listening on')) {
+      _logger.finest('[stdout] $line');
+      if (!vmServiceCompleter.isCompleted) {
+        final vmServiceInfo = _vmServicePattern.firstMatch(line)?.group(1);
+        if (vmServiceInfo != null) {
+          return completeVmService(vmServiceInfo);
+        }
+      }
+      if (line.startsWith('The Dart') || line.startsWith('vm-service')) {
         // Ignore
       } else if (line.startsWith('Serving on')) {
         if (!serverStartedCompleter.isCompleted) {
@@ -202,7 +237,21 @@ final class LocalApiRunner implements Closeable {
     _stderrSub = _localApiProcess.stderr
         .transform(utf8.decoder)
         .transform(const LineSplitter())
-        .listen(stderrPipe.writeln);
+        .listen((line) {
+      _logger.finest('[stderr] $line');
+      if (!vmServiceCompleter.isCompleted) {
+        final vmServiceInfo =
+            _warnOnNoDebuggerPattern.firstMatch(line)?.group(1);
+        if (vmServiceInfo != null) {
+          return completeVmService(vmServiceInfo);
+        }
+      }
+      if (line.startsWith('vm-service')) {
+        // Ignore
+      } else {
+        stderrPipe!.writeln(line);
+      }
+    });
 
     try {
       vmServiceTimeout ??= const Duration(seconds: 10);
@@ -221,7 +270,7 @@ final class LocalApiRunner implements Closeable {
       }
       _vmService = await vmService;
 
-      _vmIsolateId = await _waitForIsolate(_vmService!, _logger);
+      _vmIsolateId = await _waitForIsolatesAndResume(_vmService!, _logger);
 
       await serverStartedCompleter.future;
       _logger.fine('Connected to local API.');

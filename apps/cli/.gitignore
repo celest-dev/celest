@@ -8,3 +8,4 @@ celest/
 tool/debug
 **/*.dill
 **/*.pkg
+vm_service_info.json
