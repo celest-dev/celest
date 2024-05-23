@@ -3,8 +3,9 @@ library;
 
 import 'package:celest/celest.dart';
 
+@cloud
 Future<void> sayHello({
-  @Context.user User? user,
+  @principal User? user,
 }) async {
   print('Hello, world!');
 }

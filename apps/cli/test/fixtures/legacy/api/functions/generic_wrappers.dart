@@ -4,13 +4,17 @@
 /// underlying types to JSON (Object Function(T) toJsonT).
 library;
 
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models/generic_wrappers.dart';
 import 'package:celest_backend/models/parameter_types.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
+@cloud
 GenericWrappers genericWrappers(GenericWrappers value) => value;
+@cloud
 Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async =>
     value;
+@cloud
 GenericWrappers genericWrapperParameters({
   required IList<String> listOfString,
   required IList<Uri> listOfUri,

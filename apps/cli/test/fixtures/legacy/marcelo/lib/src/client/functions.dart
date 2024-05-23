@@ -246,6 +246,16 @@ class CelestFunctionsModels {
       case r'UserException_ShowInConsole':
         throw Serializers.instance
             .deserialize<_$overrides.UserException_ShowInConsole>($details);
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:

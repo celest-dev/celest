@@ -29,15 +29,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 184,
+              "offset": 249,
               "uri": "external.dart",
-              "line": 6,
+              "line": 11,
               "column": 5
             },
             "end": {
-              "offset": 210,
+              "offset": 275,
               "uri": "external.dart",
-              "line": 6,
+              "line": 11,
               "column": 31
             },
             "text": "callsThrowsCommonException"
@@ -62,15 +62,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 257,
+              "offset": 350,
               "uri": "external.dart",
-              "line": 10,
+              "line": 19,
               "column": 5
             },
             "end": {
-              "offset": 283,
+              "offset": 376,
               "uri": "external.dart",
-              "line": 10,
+              "line": 19,
               "column": 31
             },
             "text": "callsThrowsCustomException"
@@ -82,6 +82,30 @@
         "/// recursive imports and serialized correctly."
       ],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CustomException",
@@ -140,15 +164,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 119,
+              "offset": 184,
               "uri": "nonthrowing.dart",
-              "line": 5,
+              "line": 10,
               "column": 5
             },
             "end": {
-              "offset": 141,
+              "offset": 206,
               "uri": "nonthrowing.dart",
-              "line": 5,
+              "line": 10,
               "column": 27
             },
             "text": "callsThrowsCustomError"
@@ -173,15 +197,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 177,
+              "offset": 270,
               "uri": "nonthrowing.dart",
-              "line": 9,
+              "line": 18,
               "column": 5
             },
             "end": {
-              "offset": 197,
+              "offset": 290,
               "uri": "nonthrowing.dart",
-              "line": 9,
+              "line": 18,
               "column": 25
             },
             "text": "callsThrowsBaseError"
@@ -206,15 +230,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 231,
+              "offset": 352,
               "uri": "nonthrowing.dart",
-              "line": 13,
+              "line": 26,
               "column": 5
             },
             "end": {
-              "offset": 257,
+              "offset": 378,
               "uri": "nonthrowing.dart",
-              "line": 13,
+              "line": 26,
               "column": 31
             },
             "text": "callsThrowsCustomException"
@@ -239,15 +263,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 297,
+              "offset": 446,
               "uri": "nonthrowing.dart",
-              "line": 17,
+              "line": 34,
               "column": 5
             },
             "end": {
-              "offset": 321,
+              "offset": 470,
               "uri": "nonthrowing.dart",
-              "line": 17,
+              "line": 34,
               "column": 29
             },
             "text": "callsThrowsBaseException"
@@ -258,6 +282,30 @@
         "/// A library with methods that do not through but call methods that do throw."
       ],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "BaseException",
@@ -322,15 +370,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 66,
+              "offset": 131,
               "uri": "throwing.dart",
-              "line": 2,
+              "line": 7,
               "column": 5
             },
             "end": {
-              "offset": 83,
+              "offset": 148,
               "uri": "throwing.dart",
-              "line": 2,
+              "line": 7,
               "column": 22
             },
             "text": "throwsCustomError"
@@ -355,15 +403,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 128,
+              "offset": 221,
               "uri": "throwing.dart",
-              "line": 6,
+              "line": 15,
               "column": 5
             },
             "end": {
-              "offset": 143,
+              "offset": 236,
               "uri": "throwing.dart",
-              "line": 6,
+              "line": 15,
               "column": 20
             },
             "text": "throwsBaseError"
@@ -388,15 +436,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 186,
+              "offset": 307,
               "uri": "throwing.dart",
-              "line": 10,
+              "line": 23,
               "column": 5
             },
             "end": {
-              "offset": 207,
+              "offset": 328,
               "uri": "throwing.dart",
-              "line": 10,
+              "line": 23,
               "column": 26
             },
             "text": "throwsCustomException"
@@ -421,15 +469,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 256,
+              "offset": 405,
               "uri": "throwing.dart",
-              "line": 14,
+              "line": 31,
               "column": 5
             },
             "end": {
-              "offset": 275,
+              "offset": 424,
               "uri": "throwing.dart",
-              "line": 14,
+              "line": 31,
               "column": 24
             },
             "text": "throwsBaseException"
@@ -438,6 +486,30 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "BaseException",

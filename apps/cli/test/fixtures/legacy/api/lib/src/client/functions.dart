@@ -9,10 +9,12 @@ import 'dart:typed_data' as _$typed_data;
 
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
+import 'package:celest_backend/exceptions/demo.dart' as _$demo;
 import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
 import 'package:celest_backend/exceptions/overrides.dart' as _$overrides;
 import 'package:celest_backend/models/classes.dart' as _$classes;
 import 'package:celest_backend/models/cycles.dart' as _$cycles;
+import 'package:celest_backend/models/demo.dart' as _$demo;
 import 'package:celest_backend/models/exceptions.dart' as _$exceptions;
 import 'package:celest_backend/models/extension_types.dart'
     as _$extension_types;
@@ -47,6 +49,8 @@ class CelestFunctions {
   /// Tests that some cycles are allowed, e.g. when there is at least one level
   /// of indirection.
   final cycles = CelestFunctionsCycles();
+
+  final demo = CelestFunctionsDemo();
 
   final exceptions = CelestFunctionsExceptions();
 
@@ -93,6 +97,16 @@ class CelestFunctionsAsserts {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -132,6 +146,16 @@ class CelestFunctionsClasses {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -950,6 +974,16 @@ class CelestFunctionsCycles {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -1048,6 +1082,58 @@ class CelestFunctionsCycles {
   }
 }
 
+class CelestFunctionsDemo {
+  Never _throwError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
+      case r'BadNameException':
+        throw Serializers.instance
+            .deserialize<_$demo.BadNameException>($details);
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  /// Says hello to a [person].
+  Future<String> sayHello({required _$demo.Person person}) async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/demo/say-hello'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      body: _$convert.jsonEncode(
+          {r'person': Serializers.instance.serialize<_$demo.Person>(person)}),
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return ($body['response'] as String);
+  }
+}
+
 class CelestFunctionsExceptions {
   Never _throwError({
     required int $statusCode,
@@ -1057,6 +1143,16 @@ class CelestFunctionsExceptions {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case r'CustomException':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomException>($details);
@@ -1072,16 +1168,6 @@ class CelestFunctionsExceptions {
       case r'CustomErrorWithStackTrace':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomErrorWithStackTrace>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'UnauthorizedException':
-        throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case r'SerializationException':
-        throw Serializers.instance
-            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -2491,6 +2577,16 @@ class CelestFunctionsMetadata {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -3264,6 +3360,16 @@ class CelestFunctionsOverrides {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case r'CustomException':
         throw Serializers.instance
             .deserialize<_$_common.CustomException>($details);
@@ -4220,6 +4326,16 @@ class CelestFunctionsParameters {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -4334,6 +4450,16 @@ class CelestFunctionsRecords {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -5648,6 +5774,16 @@ class CelestFunctionsSealedClasses {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case r'CustomException':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomException>($details);
@@ -5663,16 +5799,6 @@ class CelestFunctionsSealedClasses {
       case r'CustomErrorWithStackTrace':
         throw Serializers.instance
             .deserialize<_$exceptions.CustomErrorWithStackTrace>($details);
-      case r'BadRequestException':
-        throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'UnauthorizedException':
-        throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
-      case r'SerializationException':
-        throw Serializers.instance
-            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:
@@ -6192,6 +6318,16 @@ class CelestFunctionsTypedefs {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerException':
+        throw Serializers.instance
+            .deserialize<InternalServerException>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case _:
         switch ($statusCode) {
           case 400:

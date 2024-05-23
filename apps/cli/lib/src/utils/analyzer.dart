@@ -32,6 +32,15 @@ extension LibraryElementHelper on LibraryElement {
   bool get isCelestApi => isPackageCelest && name == 'api';
 }
 
+extension ElementAnnotationHelper on ElementAnnotation {
+  bool get isCustomOverride => switch (element) {
+        final PropertyAccessorElement propertyAccessor =>
+          propertyAccessor.name == 'customOverride' &&
+              propertyAccessor.library.isPackageCelest,
+        _ => false,
+      };
+}
+
 extension DartTypeHelper on DartType {
   DartType get flattened {
     switch (this) {
@@ -116,6 +125,36 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isHttpConfig => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'http' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isHttpError => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'httpError' && library.isPackageCelest,
+        _ => false,
+      };
+
+  // bool get isHttpLabel => switch (element) {
+  //       ClassElement(:final name, :final library) =>
+  //         name == 'httpLabel' && library.isPackageCelest,
+  //       _ => false,
+  //     };
+
+  bool get isHttpQuery => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'httpQuery' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isHttpHeader => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'httpHeader' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isEnvironmentVariable => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'EnvironmentVariable' && library.isPackageCelest,
@@ -125,6 +164,12 @@ extension DartTypeHelper on DartType {
   bool get isUserContext => switch (element) {
         ClassElement(:final name, :final library) =>
           name == '_UserContext' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isCloud => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_Cloud' && library.isPackageCelest,
         _ => false,
       };
 

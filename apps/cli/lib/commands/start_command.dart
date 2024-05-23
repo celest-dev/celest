@@ -88,7 +88,7 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
       performance.captureError(e, stackTrace: st);
     }
 
-    await configure(
+    final needsMigration = await configure(
       createProject: _createProject,
       migrateProject: migrateProject,
     );
@@ -98,6 +98,7 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
 
     // Start the Celest Frontend Loop
     return CelestFrontend().run(
+      migrateProject: needsMigration,
       currentProgress: _currentProgress!,
     );
   }

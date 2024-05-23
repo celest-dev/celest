@@ -18,8 +18,8 @@ final supportedDartSdkType = TypeChecker.any([
 
 final Map<DartType, Reference> builtInTypes = {
   typeHelper.coreTypes.coreBigIntType: DartTypes.core.bigInt,
-  typeHelper.coreTypes.coreDateTimeType: DartTypes.core.dateTime,
-  typeHelper.coreTypes.coreDurationType: DartTypes.core.duration,
+  typeHelper.coreTypes.dateTimeType: DartTypes.core.dateTime,
+  typeHelper.coreTypes.durationType: DartTypes.core.duration,
   typeHelper.coreTypes.coreRegExpType: DartTypes.core.regExp,
   typeHelper.coreTypes.coreStackTraceType: DartTypes.core.stackTrace,
   typeHelper.coreTypes.coreUriType: DartTypes.core.uri,

@@ -6,10 +6,10 @@ library;
 
 import 'package:celest/celest.dart';
 
-@Deprecated('Use `Env` instead.')
-typedef env = Env;
+@Deprecated('Use `env` instead.')
+typedef Env = env;
 
-abstract final class Env {
+abstract final class env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
 
   static const myAge = EnvironmentVariable(name: r'MY_AGE');

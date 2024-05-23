@@ -112,7 +112,10 @@ class TestRunner {
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(updateResources: false);
+          await analyzer.analyzeProject(
+        migrateProject: updateGoldens,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
@@ -135,7 +138,10 @@ class TestRunner {
   void testCodegen() {
     test('codegen', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(updateResources: false);
+          await analyzer.analyzeProject(
+        migrateProject: updateGoldens,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
@@ -162,12 +168,15 @@ class TestRunner {
   void testResolve() {
     test('resolve', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(updateResources: false);
+          await analyzer.analyzeProject(
+        migrateProject: updateGoldens,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
       final projectResolver = ProjectResolver();
-      project!.accept(projectResolver);
+      project!.acceptWithArg(projectResolver, project);
       final resolvedAstFile = File(
         p.join(projectPaths.outputsDir, 'ast.resolved.json'),
       );
@@ -189,7 +198,10 @@ class TestRunner {
   void testClient() {
     test('client', () async {
       final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(updateResources: false);
+          await analyzer.analyzeProject(
+        migrateProject: updateGoldens,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
@@ -261,6 +273,7 @@ class TestRunner {
           verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,
+          vmServiceTimeout: const Duration(seconds: -1), // No timeout
         );
         apiUri = Uri.parse('http://localhost:${apiRunner.port}');
 

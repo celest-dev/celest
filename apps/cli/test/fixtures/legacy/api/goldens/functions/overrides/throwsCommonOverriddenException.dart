@@ -5,6 +5,8 @@ import 'package:_common/_common.dart' as _i5;
 import 'package:celest/celest.dart' as _i4;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/exceptions/overrides.dart' as _i3;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i7;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i6;
 
 import '../../../functions/overrides.dart' as _i2;
 
@@ -58,6 +60,62 @@ final class ThrowsCommonOverriddenExceptionTarget
           }
         }
       );
+    } on _i6.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i6.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
+            'details': error,
+          }
+        }
+      );
     }
   }
 
@@ -83,6 +141,39 @@ final class ThrowsCommonOverriddenExceptionTarget
       deserialize: ($serialized) {
         return (_i5.OverriddenException(($serialized[r'message'] as String))
             as _i3.OverriddenException);
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i7.BadRequestException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.BadRequestException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i7.InternalServerException, Map<String, Object?>>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.InternalServerException(($serialized[r'message'] as String));
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i7.UnauthorizedException, Map<String, Object?>?>(
+      serialize: ($value) => {r'message': $value.message},
+      deserialize: ($serialized) {
+        return _i7.UnauthorizedException(
+            (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.SerializationException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'offset': $value.offset,
+        r'source': $value.source,
+      },
+      deserialize: ($serialized) {
+        return _i6.SerializationException(($serialized[r'message'] as String));
       },
     ));
   }

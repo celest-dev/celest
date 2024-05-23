@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
+import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:source_span/source_span.dart';
 
 abstract interface class CelestErrorReporter {
@@ -11,7 +12,15 @@ abstract interface class CelestErrorReporter {
   });
 }
 
-abstract interface class CelestProjectResolver {
+abstract base class CelestProjectResolver with CelestAnalysisHelpers {
+  CelestProjectResolver({
+    required this.migrateProject,
+  });
+
+  final bool migrateProject;
+
+  Future<void> resolveCustomTypes();
+
   /// Finds the project in the current workspace.
   Future<ast.Project?> resolveProject({
     required ResolvedLibraryResult projectLibrary,
@@ -37,29 +46,3 @@ abstract interface class CelestProjectResolver {
     required Iterable<ast.EnvironmentVariable> environmentVariables,
   });
 }
-
-// final class CelestProjectResolverImpl extends CelestProjectResolver {
-//   static final _logger = Logger('CelestProjectResolver');
-
-//   @override
-//   Future<ProjectBuilder?> findProject() {
-//     throw UnimplementedError();
-//   }
-
-//   @override
-//   Future<Iterable<EnvironmentVariable>> collectEnvironmentVariables(
-//     ProjectBuilder project,
-//   ) async {
-//     throw UnimplementedError();
-//   }
-
-//   @override
-//   Future<bool> collectAuth(ProjectBuilder project) {
-//     throw UnimplementedError();
-//   }
-
-//   @override
-//   Future<void> collectApis(ProjectBuilder project, {required bool hasAuth}) {
-//     throw UnimplementedError();
-//   }
-// }

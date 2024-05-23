@@ -1,6 +1,8 @@
+import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions/exceptions.dart';
 import 'package:celest_backend/models/exceptions.dart';
 
+@cloud
 void throwsException({
   required SupportedExceptionType type,
 }) {
@@ -12,6 +14,7 @@ void throwsException({
   }
 }
 
+@cloud
 void throwsError({
   required SupportedErrorType type,
 }) {
@@ -23,22 +26,27 @@ void throwsError({
   }
 }
 
+@cloud
 void throwsCustomException() {
   throw CustomException();
 }
 
+@cloud
 void throwsCustomExceptionToFromJson() {
   throw CustomExceptionToFromJson();
 }
 
+@cloud
 void throwsCustomError() {
   throw CustomError();
 }
 
+@cloud
 void throwsCustomErrorToFromJson() {
   throw CustomErrorToFromJson();
 }
 
+@cloud
 void throwsCustomErrorWithStackTrace() {
   throw CustomErrorWithStackTrace();
 }

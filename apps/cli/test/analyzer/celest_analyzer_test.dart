@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:api_celest/ast.dart';
+import 'package:celest/http.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:api_celest/ast.dart';
 import 'package:checks/checks.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
@@ -84,13 +85,13 @@ dependencies:
 ''',
     ),
     d.file('project.dart', projectDart),
-    if (resourcesDart != null) d.file('resources.dart', resourcesDart),
-    d.dir('auth', [
-      if (authDart != null) d.file('auth.dart', '''
+    if (authDart != null) d.file('auth.dart', '''
 import 'package:celest/celest.dart';
 
 $authDart
 '''),
+    d.dir('generated', [
+      if (resourcesDart != null) d.file('resources.dart', resourcesDart),
     ]),
     if (apis.isNotEmpty)
       d.dir('functions', [
@@ -100,6 +101,7 @@ $authDart
             contents.startsWith('@')
                 ? contents
                 : '''
+import 'package:celest/celest.dart';
 import 'package:$name/exceptions.dart';
 import 'package:$name/models.dart';
 
@@ -245,6 +247,7 @@ class Test {}
           'test.dart': '''
 import 'package:can_resolve_part_files/models/test.dart';
 
+@cloud
 Test test() => Test();
 ''',
         },
@@ -284,6 +287,7 @@ mixin _NotSerializable on NotSerializable {
           'test.dart': '''
 import 'package:can_define_to_json_in_part_files/models/test.dart';
 
+@cloud
 NotSerializable test() => NotSerializable();
 ''',
         },
@@ -322,6 +326,9 @@ const project = Project(name: '');
         name: 'simple_api',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -331,6 +338,9 @@ String sayHello() => 'Hello, World!';
         name: 'bad_file_name',
         apis: {
           'greeting.dev.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -343,6 +353,9 @@ String sayHello() => 'Hello, World!';
         name: 'bad_file_name_underscore',
         apis: {
           '_greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello() => 'Hello, World!';
 ''',
         },
@@ -355,6 +368,9 @@ String sayHello() => 'Hello, World!';
         name: 'bad_parameter_types_core',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello({
   required Enum myEnum,
   required List<Enum> listOfEnum,
@@ -419,6 +435,9 @@ void sayHello({
         name: 'bad_parameter_extension_types_core',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello({
   required EnumX myEnum,
   required ListOfEnumX listOfEnum,
@@ -525,6 +544,9 @@ extension type StreamX(Stream _) {}
         name: 'bad_return_types_core',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ReturnTypes sayHello() => throw UnimplementedError();
 ''',
         },
@@ -598,6 +620,9 @@ typedef ReturnTypes = ({
         name: 'bad_return_extension_types_core',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ReturnTypes sayHello() => throw UnimplementedError();
 ''',
         },
@@ -706,7 +731,12 @@ typedef ReturnTypes = ({
         name: 'extension_type_primitives',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 StringX string(StringX s) => s;
+
+@cloud
 StringXString stringString(StringXString s) => s;
 ''',
         },
@@ -720,8 +750,15 @@ extension type StringXString(String s) implements String {}
         name: 'allows_map_string_dynamic_object',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 Map<String, dynamic> mapStringDynamic(Map<String, dynamic> map) => map;
+
+@cloud
 Map<String, Object> mapStringObject(Map<String, Object> map) => map;
+
+@cloud
 Map<String, Object?> mapStringObjectNullable(Map<String, Object?> map) => map;
 ''',
         },
@@ -731,8 +768,15 @@ Map<String, Object?> mapStringObjectNullable(Map<String, Object?> map) => map;
         name: 'disallows_list_dynamic_object',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 List<dynamic> listDynamic() => [];
+
+@cloud
 List<Object> listObject() => [];
+
+@cloud
 List<Object?> listObjectNullable() => [];
 ''',
         },
@@ -747,6 +791,9 @@ List<Object?> listObjectNullable() => [];
         name: 'bad_json_parameter',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello(NotJsonable _) => 'Hello, World!';
 ''',
         },
@@ -764,6 +811,9 @@ abstract class NotJsonable {}
         name: 'positional_record_fields',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 (String positionalField,) sayHello((String positionalField,) _) => ('Hello, World!',);
 ''',
         },
@@ -777,6 +827,9 @@ abstract class NotJsonable {}
         name: 'positional_record_fields_aliased',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 PositionalFields sayHello(PositionalFields _) => ('Hello, World!',);
 ''',
         },
@@ -793,6 +846,9 @@ typedef PositionalFields = (String positionalField);
         name: 'parameter_with_subtypes',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello(Base _) => 'Hello, World!';
 ''',
         },
@@ -809,6 +865,9 @@ final class Actual extends Base {}
         name: 'return_type_with_subtypes',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 Base sayHello() => Base();
 ''',
         },
@@ -825,6 +884,9 @@ final class Actual extends Base {}
         name: 'valid_jsonable',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ValidJsonable sayHello(ValidJsonable param) => param;
 ''',
         },
@@ -837,6 +899,9 @@ class ValidJsonable {}
         name: 'valid_custom_json',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ValidCustomJson sayHello(ValidCustomJson param) => param;
 ''',
         },
@@ -877,6 +942,7 @@ mixin _NotSerializable on NotSerializable {
           'test.dart': '''
 import 'package:custom_json_in_mixin/models/test.dart';
 
+@cloud
 NotSerializable test() => NotSerializable();
 ''',
         },
@@ -886,6 +952,9 @@ NotSerializable test() => NotSerializable();
         name: 'valid_static_fromJson',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ValidFromJsonStatic sayHello(ValidFromJsonStatic param) => param;
 ''',
         },
@@ -901,6 +970,9 @@ class ValidFromJsonStatic {
         name: 'invalid_static_fromJson',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello(ValidFromJsonStatic param) {}
 ''',
         },
@@ -920,6 +992,9 @@ class ValidFromJsonStatic {
         name: 'direct_cycle',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello(ValidJsonable param) => param;
 ''',
         },
@@ -939,6 +1014,9 @@ class ValidJsonable {
         name: 'indirect_cycle',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello(ValidJsonable param) => param;
 ''',
         },
@@ -963,6 +1041,9 @@ class ValidJsonableWrapper {
         name: 'bad_json_return',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 NotJsonable sayHello() => throw UnimplementedError();
 ''',
         },
@@ -982,6 +1063,9 @@ class NotJsonable {
         name: 'non_map_from_json',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 NonMapFromJson nonMayFromJson(NonMapFromJson value) => value;
 ''',
         },
@@ -1006,6 +1090,9 @@ class NonMapFromJson {
         name: 'from_json_optional_parameter',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 FromJson fromJson(FromJson value) => value;
 ''',
         },
@@ -1031,6 +1118,9 @@ class FromJson {
         name: 'bad_parameter_names',
         apis: {
           'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello(String $param) => 'Hello, World!';
 ''',
         },
@@ -1043,6 +1133,9 @@ String sayHello(String $param) => 'Hello, World!';
         name: 'private_parameter_type',
         apis: {
           'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
 String sayHello(Private privateAliased) => 'Hello, World!';
 ''',
         },
@@ -1062,6 +1155,9 @@ typedef Private = _Private;
         name: 'sealed_via_mixins',
         apis: {
           'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
 void sealedViaMixins(Base base) {}
 ''',
         },
@@ -1092,6 +1188,9 @@ final class Leaf with BaseMixin {}
         name: 'sealed_with_conflicting_wire_types',
         apis: {
           'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
 List<Base> takesLeaves(LeafA a, LeafB b) => [a, b];
 ''',
         },
@@ -1115,6 +1214,9 @@ final class LeafB extends Base {
         name: 'valid_def_locations',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 ValidJsonable sayHello(ValidJsonable param) => throw ValidException();
 ''',
         },
@@ -1130,7 +1232,11 @@ class ValidException implements Exception {}
         name: 'invalid_return_def_location',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
 class ValidJsonable {}
+
+@cloud
 ValidJsonable sayHello() => throw UnimplementedError();
 ''',
         },
@@ -1144,7 +1250,11 @@ ValidJsonable sayHello() => throw UnimplementedError();
         name: 'invalid_param_def_location',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
 class ValidJsonable {}
+
+@cloud
 void sayHello(ValidJsonable param) => print(param);
 ''',
         },
@@ -1158,8 +1268,10 @@ void sayHello(ValidJsonable param) => print(param);
         name: 'invalid_model_def_location_in_lib',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
 import 'package:invalid_model_def_location_in_lib/valid_jsonable.dart';
 
+@cloud
 void sayHello(ValidJsonable param) => print(param);
 ''',
         },
@@ -1178,8 +1290,11 @@ class ValidJsonable {}
         name: 'invalid_exception_def_location',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
 class ValidException implements Exception {}
 
+@cloud
 void sayHello() => throw ValidException();
 ''',
         },
@@ -1193,8 +1308,10 @@ void sayHello() => throw ValidException();
         name: 'invalid_exception_def_location_in_lib',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
 import 'package:invalid_exception_def_location_in_lib/valid_exception.dart';
 
+@cloud
 void sayHello() => throw ValidException();
 ''',
         },
@@ -1213,7 +1330,12 @@ class ValidException implements Exception {}
         name: 'function_with_same_name',
         apis: {
           'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
 void sayHello() {}
+
+@cloud
 void sayHello() {}
 ''',
         },
@@ -1227,252 +1349,588 @@ const auth = Auth(
         ],
       );
 
-      testNoErrors(
-        name: 'api_authenticated',
-        apis: {
-          'greeting.dart': '''
+      group('auth', () {
+        testNoErrors(
+          name: 'api_authenticated',
+          apis: {
+            'greeting.dart': '''
 @authenticated
 library;
 
 import 'package:celest/celest.dart';
 
+@cloud
 String sayHello() => 'Hello, World!';
 ''',
-        },
-        authDart: '''
+          },
+          authDart: '''
 const auth = Auth(
   providers: [AuthProvider.email()],
 );
 ''',
-      );
+        );
 
-      testNoErrors(
-        name: 'api_public',
-        apis: {
-          'greeting.dart': '''
+        testNoErrors(
+          name: 'api_public',
+          apis: {
+            'greeting.dart': '''
 @public
 library;
 
 import 'package:celest/celest.dart';
 
+@cloud
 String sayHello() => 'Hello, World!';
 ''',
-        },
-        authDart: '''
+          },
+          authDart: '''
 const auth = Auth(
   providers: [AuthProvider.email()],
 );
 ''',
-      );
+        );
 
+        testErrors(
+          name: 'multiple_api_auth',
+          apis: {
+            'greeting.dart': '''
+@public
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+          errors: [
+            'Only one `@authenticated` or `@public` annotation may be '
+                'specified on the same function or API library',
+          ],
+        );
+
+        testErrors(
+          name: 'multiple_api_auth_same_type',
+          apis: {
+            'greeting.dart': '''
+@authenticated
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+          errors: [
+            'Only one `@authenticated` or `@public` annotation may be '
+                'specified on the same function or API library',
+          ],
+        );
+
+        testNoErrors(
+          name: 'function_authenticated',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        );
+
+        testNoErrors(
+          name: 'function_public',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        );
+
+        testNoErrors(
+          name: 'function_public_no_auth',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+          },
+        );
+
+        testErrors(
+          name: 'function_authenticated_no_auth',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+          },
+          errors: [
+            'The `@authenticated` annotation may only be used in '
+                'projects with authentication enabled.',
+          ],
+        );
+
+        testErrors(
+          name: 'multiple_function_auth',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+          errors: [
+            'Only one `@authenticated` or `@public` annotation may be '
+                'specified on the same function or API library',
+          ],
+        );
+
+        testErrors(
+          name: 'multiple_function_auth_same_type',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+          errors: [
+            'Only one `@authenticated` or `@public` annotation may be '
+                'specified on the same function or API library',
+          ],
+        );
+
+        testNoErrors(
+          name: 'api_public_no_auth',
+          apis: {
+            'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+          },
+        );
+
+        testErrors(
+          name: 'api_authenticated_no_auth',
+          apis: {
+            'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+          },
+          errors: [
+            'The `@authenticated` annotation may only be used in '
+                'projects with authentication enabled.',
+          ],
+        );
+
+        testErrors(
+          name: 'conflicting_auth',
+          apis: {
+            'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+          },
+          authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+          errors: [
+            '`@public` has no effect when `@authenticated` is applied at the '
+                'API level. It is recommended to move the `@public` method to '
+                'another API.',
+          ],
+        );
+      });
+
+      group('http', () {
+        testNoErrors(
+          name: 'http_method',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(method: HttpMethod.get)
+String sayHello() => 'Hello, World!';
+''',
+          },
+          expectProject: (project) {
+            final function = project.apis.values.single.functions.values.single;
+            check(function.metadata.single)
+                .isA<ApiHttpConfig>()
+                .has((it) => it.method, 'method')
+                .equals(HttpMethod.get);
+          },
+        );
+
+        testNoErrors(
+          name: 'http_status_valid',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(statusCode: HttpStatus.created)
+String sayHello() => 'Hello, World!';
+''',
+          },
+          expectProject: (project) {
+            final function = project.apis.values.single.functions.values.single;
+            check(function.metadata.single)
+                .isA<ApiHttpConfig>()
+                .has((it) => it.statusCode, 'statusCode')
+                .equals(HttpStatus.created);
+          },
+        );
+
+        testErrors(
+          name: 'http_status_invalid',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(statusCode: HttpStatus(600))
+String sayHello() => 'Hello, World!';
+''',
+          },
+          errors: [
+            'Invalid HTTP status code',
+          ],
+        );
+
+        testNoErrors(
+          name: 'http_errors_valid',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+import 'package:http_errors_valid/exceptions.dart';
+
+@cloud
+@httpError(HttpStatus.unauthorized, UnauthorizedException, ForbiddenException)
+@httpError(HttpStatus.notFound, NotFoundException)
+String sayHello() => 'Hello, World!';
+''',
+          },
+          exceptions: '''
+class ForbiddenException implements Exception {}
+class NotFoundException implements Exception {}
+''',
+          expectProject: (project) {
+            final function = project.apis.values.single.functions.values.single;
+
+            hasErrorType(String type, int statusCode) =>
+                (Subject<ApiMetadata> it) => it.isA<ApiHttpError>()
+                  ..has((it) => it.type.symbol, 'symbol').equals(type)
+                  ..has((it) => it.statusCode, 'statusCode').equals(statusCode);
+
+            check(function.metadata).containsInOrder([
+              hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
+              hasErrorType('ForbiddenException', HttpStatus.unauthorized),
+              hasErrorType('NotFoundException', HttpStatus.notFound),
+            ]);
+          },
+        );
+
+        testNoErrors(
+          name: 'http_header_valid',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+String sayHello({
+  @httpHeader('x-custom-string') required String customString,
+  @httpHeader('x-custom-bool') required bool customBool,
+  @httpHeader('x-custom-int') required int customInt,
+  @httpHeader('x-custom-num') required num customNum,
+  @httpHeader('x-custom-double') required double customDouble,
+  @httpHeader('x-custom-datetime') required DateTime customDateTime,
+  @httpHeader('x-custom-nullable-string') String? customNullableString,
+  @httpHeader('x-custom-nullable-bool') bool? customNullableBool,
+  @httpHeader('x-custom-nullable-int') int? customNullableInt,
+  @httpHeader('x-custom-nullable-num') num? customNullableNum,
+  @httpHeader('x-custom-nullable-double') double? customNullableDouble,
+  @httpHeader('x-custom-nullable-datetime') DateTime? customNullableDateTime,
+  @httpHeader('x-custom-list-string') required List<String> customListString,
+  @httpHeader('x-custom-list-bool') required List<bool> customListBool,
+  @httpHeader('x-custom-list-int') required List<int> customListInt,
+  @httpHeader('x-custom-list-num') required List<num> customListNum,
+  @httpHeader('x-custom-list-double') required List<double> customListDouble,
+  @httpHeader('x-custom-list-datetime') required List<DateTime> customListDateTime,
+  @httpHeader('x-custom-nullable-list-string')  List<String>? customNullableListString,
+  @httpHeader('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
+  @httpHeader('x-custom-nullable-list-int')  List<int>? customNullableListInt,
+  @httpHeader('x-custom-nullable-list-num')  List<num>? customNullableListNum,
+  @httpHeader('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
+  @httpHeader('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
+  @httpHeader('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
+  @httpHeader('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
+  @httpHeader('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
+  @httpHeader('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
+  @httpHeader('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
+  @httpHeader('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
+}) => 'Hello, World!';
+''',
+          },
+          expectProject: (project) {
+            final parameters =
+                project.apis.values.single.functions.values.single.parameters;
+            hasHeader(String name) => (Subject<CloudFunctionParameter> it) =>
+                it.has((it) => it.references, 'references').isA<NodeReference>()
+                  ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
+                  ..has((it) => it.name, 'name').equals(name);
+            check(parameters).containsInOrder([
+              hasHeader('x-custom-string'),
+              hasHeader('x-custom-bool'),
+              hasHeader('x-custom-int'),
+              hasHeader('x-custom-num'),
+              hasHeader('x-custom-double'),
+              hasHeader('x-custom-datetime'),
+              hasHeader('x-custom-nullable-string'),
+              hasHeader('x-custom-nullable-bool'),
+              hasHeader('x-custom-nullable-int'),
+              hasHeader('x-custom-nullable-num'),
+              hasHeader('x-custom-nullable-double'),
+              hasHeader('x-custom-nullable-datetime'),
+              hasHeader('x-custom-list-string'),
+              hasHeader('x-custom-list-bool'),
+              hasHeader('x-custom-list-int'),
+              hasHeader('x-custom-list-num'),
+              hasHeader('x-custom-list-double'),
+              hasHeader('x-custom-list-datetime'),
+              hasHeader('x-custom-nullable-list-string'),
+              hasHeader('x-custom-nullable-list-bool'),
+              hasHeader('x-custom-nullable-list-int'),
+              hasHeader('x-custom-nullable-list-num'),
+              hasHeader('x-custom-nullable-list-double'),
+              hasHeader('x-custom-nullable-list-datetime'),
+              hasHeader('x-custom-nullable-list-nullable-string'),
+              hasHeader('x-custom-nullable-list-nullable-bool'),
+              hasHeader('x-custom-nullable-list-nullable-int'),
+              hasHeader('x-custom-nullable-list-nullable-num'),
+              hasHeader('x-custom-nullable-list-nullable-double'),
+              hasHeader('x-custom-nullable-list-nullable-datetime'),
+            ]);
+          },
+        );
+
+        testNoErrors(
+          name: 'http_query_valid',
+          apis: {
+            'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+String sayHello({
+  @httpQuery('x-custom-string') required String customString,
+  @httpQuery('x-custom-bool') required bool customBool,
+  @httpQuery('x-custom-int') required int customInt,
+  @httpQuery('x-custom-num') required num customNum,
+  @httpQuery('x-custom-double') required double customDouble,
+  @httpQuery('x-custom-datetime') required DateTime customDateTime,
+  @httpQuery('x-custom-nullable-string') String? customNullableString,
+  @httpQuery('x-custom-nullable-bool') bool? customNullableBool,
+  @httpQuery('x-custom-nullable-int') int? customNullableInt,
+  @httpQuery('x-custom-nullable-num') num? customNullableNum,
+  @httpQuery('x-custom-nullable-double') double? customNullableDouble,
+  @httpQuery('x-custom-nullable-datetime') DateTime? customNullableDateTime,
+  @httpQuery('x-custom-list-string') required List<String> customListString,
+  @httpQuery('x-custom-list-bool') required List<bool> customListBool,
+  @httpQuery('x-custom-list-int') required List<int> customListInt,
+  @httpQuery('x-custom-list-num') required List<num> customListNum,
+  @httpQuery('x-custom-list-double') required List<double> customListDouble,
+  @httpQuery('x-custom-list-datetime') required List<DateTime> customListDateTime,
+  @httpQuery('x-custom-nullable-list-string')  List<String>? customNullableListString,
+  @httpQuery('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
+  @httpQuery('x-custom-nullable-list-int')  List<int>? customNullableListInt,
+  @httpQuery('x-custom-nullable-list-num')  List<num>? customNullableListNum,
+  @httpQuery('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
+  @httpQuery('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
+  @httpQuery('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
+  @httpQuery('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
+  @httpQuery('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
+  @httpQuery('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
+  @httpQuery('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
+  @httpQuery('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
+}) => 'Hello, World!';
+''',
+          },
+          expectProject: (project) {
+            final parameters =
+                project.apis.values.single.functions.values.single.parameters;
+            hasQuery(String name) => (Subject<CloudFunctionParameter> it) =>
+                it.has((it) => it.references, 'references').isA<NodeReference>()
+                  ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
+                  ..has((it) => it.name, 'name').equals(name);
+            check(parameters).containsInOrder([
+              hasQuery('x-custom-string'),
+              hasQuery('x-custom-bool'),
+              hasQuery('x-custom-int'),
+              hasQuery('x-custom-num'),
+              hasQuery('x-custom-double'),
+              hasQuery('x-custom-datetime'),
+              hasQuery('x-custom-nullable-string'),
+              hasQuery('x-custom-nullable-bool'),
+              hasQuery('x-custom-nullable-int'),
+              hasQuery('x-custom-nullable-num'),
+              hasQuery('x-custom-nullable-double'),
+              hasQuery('x-custom-nullable-datetime'),
+              hasQuery('x-custom-list-string'),
+              hasQuery('x-custom-list-bool'),
+              hasQuery('x-custom-list-int'),
+              hasQuery('x-custom-list-num'),
+              hasQuery('x-custom-list-double'),
+              hasQuery('x-custom-list-datetime'),
+              hasQuery('x-custom-nullable-list-string'),
+              hasQuery('x-custom-nullable-list-bool'),
+              hasQuery('x-custom-nullable-list-int'),
+              hasQuery('x-custom-nullable-list-num'),
+              hasQuery('x-custom-nullable-list-double'),
+              hasQuery('x-custom-nullable-list-datetime'),
+              hasQuery('x-custom-nullable-list-nullable-string'),
+              hasQuery('x-custom-nullable-list-nullable-bool'),
+              hasQuery('x-custom-nullable-list-nullable-int'),
+              hasQuery('x-custom-nullable-list-nullable-num'),
+              hasQuery('x-custom-nullable-list-nullable-double'),
+              hasQuery('x-custom-nullable-list-nullable-datetime'),
+            ]);
+          },
+        );
+      });
+
+      // Valid types but invalid to target with `@httpHeader`
       testErrors(
-        name: 'multiple_api_auth',
+        name: 'http_header_invalid',
         apis: {
           'greeting.dart': '''
-@public
-@authenticated
-library;
-
 import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
 
-String sayHello() => 'Hello, World!';
+@cloud
+String sayHello({
+  @httpHeader('x-custom-regexp') required RegExp customRegex,
+  @httpHeader('x-custom-bigint') required BigInt customBigInt,
+  @httpHeader('x-custom-uri') required Uri customUri,
+  @httpHeader('x-custom-list-regexp') required List<RegExp> customListRegex,
+  @httpHeader('x-custom-list-bigint') required List<BigInt> customListBigInt,
+  @httpHeader('x-custom-list-uri') required List<Uri> customListUri,
+}) => 'Hello, World!';
 ''',
         },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
         errors: [
-          'Only one `@authenticated` or `@public` annotation may be '
-              'specified on the same function or API library',
+          'Invalid HTTP header type', // RegExp
+          'Invalid HTTP header type', // BigInt
+          'Invalid HTTP header type', // Uri
+          'Invalid HTTP header type', // List<RegExp>
+          'Invalid HTTP header type', // List<BigInt>
+          'Invalid HTTP header type', // List<Uri>
         ],
       );
 
+      // Valid types but invalid to target with `@httpHeader`
       testErrors(
-        name: 'multiple_api_auth_same_type',
-        apis: {
-          'greeting.dart': '''
-@authenticated
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        errors: [
-          'Only one `@authenticated` or `@public` annotation may be '
-              'specified on the same function or API library',
-        ],
-      );
-
-      testNoErrors(
-        name: 'function_authenticated',
+        name: 'http_query_invalid',
         apis: {
           'greeting.dart': '''
 import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
 
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-      );
-
-      testNoErrors(
-        name: 'function_public',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@public
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-      );
-
-      testNoErrors(
-        name: 'function_public_no_auth',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@public
-String sayHello() => 'Hello, World!';
-''',
-        },
-      );
-
-      testErrors(
-        name: 'function_authenticated_no_auth',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@authenticated
-String sayHello() => 'Hello, World!';
+@cloud
+String sayHello({
+  @httpQuery('x-custom-regexp') required RegExp customRegex,
+  @httpQuery('x-custom-bigint') required BigInt customBigInt,
+  @httpQuery('x-custom-uri') required Uri customUri,
+  @httpQuery('x-custom-list-regexp') required List<RegExp> customListRegex,
+  @httpQuery('x-custom-list-bigint') required List<BigInt> customListBigInt,
+  @httpQuery('x-custom-list-uri') required List<Uri> customListUri,
+}) => 'Hello, World!';
 ''',
         },
         errors: [
-          'The `@authenticated` annotation may only be used in '
-              'projects with authentication enabled.',
-        ],
-      );
-
-      testErrors(
-        name: 'multiple_function_auth',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@public
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        errors: [
-          'Only one `@authenticated` or `@public` annotation may be '
-              'specified on the same function or API library',
-        ],
-      );
-
-      testErrors(
-        name: 'multiple_function_auth_same_type',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@authenticated
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        errors: [
-          'Only one `@authenticated` or `@public` annotation may be '
-              'specified on the same function or API library',
-        ],
-      );
-
-      testNoErrors(
-        name: 'api_public_no_auth',
-        apis: {
-          'greeting.dart': '''
-@public
-library;
-
-import 'package:celest/celest.dart';
-
-String sayHello() => 'Hello, World!';
-''',
-        },
-      );
-
-      testErrors(
-        name: 'api_authenticated_no_auth',
-        apis: {
-          'greeting.dart': '''
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-String sayHello() => 'Hello, World!';
-''',
-        },
-        errors: [
-          'The `@authenticated` annotation may only be used in '
-              'projects with authentication enabled.',
-        ],
-      );
-
-      testErrors(
-        name: 'conflicting_auth',
-        apis: {
-          'greeting.dart': '''
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@public
-String sayHello() => 'Hello, World!';
-''',
-        },
-        authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        errors: [
-          '`@public` has no effect when `@authenticated` is applied at the '
-              'API level. It is recommended to move the `@public` method to '
-              'another API.',
+          'Invalid HTTP query type', // RegExp
+          'Invalid HTTP query type', // BigInt
+          'Invalid HTTP query type', // Uri
+          'Invalid HTTP query type', // List<RegExp>
+          'Invalid HTTP query type', // List<BigInt>
+          'Invalid HTTP query type', // List<Uri>
         ],
       );
     });
@@ -1484,9 +1942,10 @@ const auth = Auth(
           'greeting.dart': '''
 import 'package:celest/celest.dart';
 
+@cloud
 @authenticated
 String sayHello({
-  @Context.user required User user,
+  @principal required User user,
 }) => 'Hello, World!';
 ''',
         },
@@ -1515,9 +1974,10 @@ const auth = Auth(
           'greeting.dart': '''
 import 'package:celest/celest.dart';
 
+@cloud
 @public
 String sayHello({
-  @Context.user User? user,
+  @principal User? user,
 }) => 'Hello, World!';
 ''',
         },
@@ -1549,8 +2009,9 @@ library;
 
 import 'package:celest/celest.dart';
 
+@cloud
 String sayHello({
-  @Context.user required User user,
+  @principal required User user,
 }) => 'Hello, World!';
 ''',
         },
@@ -1582,8 +2043,9 @@ library;
 
 import 'package:celest/celest.dart';
 
+@cloud
 String sayHello({
-  @Context.user User? user,
+  @principal User? user,
 }) => 'Hello, World!';
 ''',
         },
@@ -1619,7 +2081,7 @@ MY_AGE=28
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class Env {
+abstract final class env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
   static const myAge = EnvironmentVariable(name: r'MY_AGE');
 }
@@ -1628,16 +2090,18 @@ abstract final class Env {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../resources.dart' as resources;
+import '../generated/resources.dart';
 
+@cloud
 void sayHelloPositional(
-  @resources.Env.myName String name,
-  @resources.Env.myAge int age,
+  @env.myName String name,
+  @env.myAge int age,
 ) => 'Hello, $name. I am $age years old.';
 
+@cloud
 void sayHelloNamed({
-  @resources.Env.myName required String name,
-  @resources.Env.myAge required int age,  
+  @env.myName required String name,
+  @env.myAge required int age,  
 }) => 'Hello, $name. I am $age years old.';
 ''',
         },
@@ -1688,7 +2152,7 @@ MY_NAME=Celest
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class Env {
+abstract final class env {
   static const myName = EnvironmentVariable(name: r'MY_NAME');
 }
 ''',
@@ -1696,9 +2160,10 @@ abstract final class Env {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../resources.dart' as resources;
+import '../generated/resources.dart';
 
-void sayHello(@resources.Env.myName List<String> name) => 'Hello, $name';
+@cloud
+void sayHello(@env.myName List<String> name) => 'Hello, $name';
 ''',
         },
         errors: [
@@ -1717,7 +2182,7 @@ PORT=8080
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class Env {
+abstract final class env {
   static const port = EnvironmentVariable(name: r'PORT');
 }
 ''',
@@ -1725,9 +2190,10 @@ abstract final class Env {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../resources.dart' as resources;
+import '../generated/resources.dart';
 
-void sayHello(@resources.Env.port int port) => 'Hello, $port';
+@cloud
+void sayHello(@env.port int port) => 'Hello, $port';
 ''',
         },
         errors: [
@@ -1745,7 +2211,7 @@ PORT=8080
         resourcesDart: '''
 import 'package:celest/celest.dart';
 
-abstract final class Env {
+abstract final class env {
   static const port = EnvironmentVariable(name: r'PORT');
 }
 ''',
@@ -1753,11 +2219,12 @@ abstract final class Env {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../resources.dart' as resources;
+import '../generated/resources.dart';
 
+@cloud
 void sayHello(
-  @resources.Env.port
-  @resources.Env.port
+  @env.port
+  @env.port
     int port,
 ) => 'Hello, $port';
 ''',

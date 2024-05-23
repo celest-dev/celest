@@ -19,13 +19,14 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart' as codegen;
 
-final class CoreTypes {
+final class CoreTypes implements TypeProvider {
   CoreTypes({
+    required TypeProvider typeProvider,
     required this.coreExceptionType,
     required this.coreErrorType,
     required this.coreBigIntType,
-    required this.coreDateTimeType,
-    required this.coreDurationType,
+    required this.dateTimeType,
+    required this.durationType,
     required this.coreRegExpType,
     required this.coreStackTraceType,
     required this.coreUriType,
@@ -34,13 +35,15 @@ final class CoreTypes {
     required this.badRequestExceptionType,
     required this.internalServerExceptionType,
     required this.userType,
-  });
+  }) : _typeProvider = typeProvider;
+
+  final TypeProvider _typeProvider;
 
   final DartType coreExceptionType;
   final DartType coreErrorType;
   final DartType coreBigIntType;
-  final DartType coreDateTimeType;
-  final DartType coreDurationType;
+  final DartType dateTimeType;
+  final DartType durationType;
   final DartType coreRegExpType;
   final DartType coreStackTraceType;
   final DartType coreUriType;
@@ -50,6 +53,190 @@ final class CoreTypes {
   final DartType badRequestExceptionType;
   final DartType internalServerExceptionType;
   final DartType userType;
+
+  @override
+  ClassElement get boolElement => _typeProvider.boolElement;
+
+  @override
+  InterfaceType get boolType => _typeProvider.boolType;
+
+  @override
+  DartType get bottomType => _typeProvider.bottomType;
+
+  @override
+  InterfaceType get deprecatedType => _typeProvider.deprecatedType;
+
+  @override
+  ClassElement get doubleElement => _typeProvider.doubleElement;
+
+  @override
+  InterfaceType get doubleType => _typeProvider.doubleType;
+
+  @override
+  DartType get dynamicType => _typeProvider.dynamicType;
+
+  @override
+  ClassElement? get enumElement => _typeProvider.enumElement;
+
+  @override
+  InterfaceType? get enumType => _typeProvider.enumType;
+
+  @override
+  InterfaceType get functionType => _typeProvider.functionType;
+
+  @override
+  InterfaceType get futureDynamicType => _typeProvider.futureDynamicType;
+
+  @override
+  ClassElement get futureElement => _typeProvider.futureElement;
+
+  @override
+  InterfaceType get futureNullType => _typeProvider.futureNullType;
+
+  @override
+  ClassElement get futureOrElement => _typeProvider.futureOrElement;
+
+  @override
+  InterfaceType get futureOrNullType => _typeProvider.futureOrNullType;
+
+  @override
+  InterfaceType futureOrType(DartType valueType) {
+    return _typeProvider.futureOrType(valueType);
+  }
+
+  @override
+  InterfaceType futureType(DartType valueType) {
+    return _typeProvider.futureType(valueType);
+  }
+
+  @override
+  ClassElement get intElement => _typeProvider.intElement;
+
+  @override
+  InterfaceType get intType => _typeProvider.intType;
+
+  @override
+  bool isNonSubtypableClass(InterfaceElement element) {
+    return _typeProvider.isNonSubtypableClass(element);
+  }
+
+  @override
+  bool isObjectGetter(String id) {
+    return _typeProvider.isObjectGetter(id);
+  }
+
+  @override
+  bool isObjectMember(String id) {
+    return _typeProvider.isObjectMember(id);
+  }
+
+  @override
+  bool isObjectMethod(String id) {
+    return _typeProvider.isObjectMethod(id);
+  }
+
+  @override
+  InterfaceType get iterableDynamicType => _typeProvider.iterableDynamicType;
+
+  @override
+  ClassElement get iterableElement => _typeProvider.iterableElement;
+
+  @override
+  InterfaceType get iterableObjectType => _typeProvider.iterableObjectType;
+
+  @override
+  InterfaceType iterableType(DartType elementType) {
+    return _typeProvider.iterableType(elementType);
+  }
+
+  @override
+  ClassElement get listElement => _typeProvider.listElement;
+
+  @override
+  InterfaceType listType(DartType elementType) {
+    return _typeProvider.listType(elementType);
+  }
+
+  @override
+  ClassElement get mapElement => _typeProvider.mapElement;
+
+  @override
+  InterfaceType get mapObjectObjectType => _typeProvider.mapObjectObjectType;
+
+  @override
+  InterfaceType mapType(DartType keyType, DartType valueType) {
+    return _typeProvider.mapType(keyType, valueType);
+  }
+
+  @override
+  NeverType get neverType => _typeProvider.neverType;
+
+  @override
+  ClassElement get nullElement => _typeProvider.nullElement;
+
+  @override
+  InterfaceType get nullType => _typeProvider.nullType;
+
+  @override
+  ClassElement get numElement => _typeProvider.numElement;
+
+  @override
+  InterfaceType get numType => _typeProvider.numType;
+
+  @override
+  ClassElement get objectElement => _typeProvider.objectElement;
+
+  @override
+  InterfaceType get objectQuestionType => _typeProvider.objectQuestionType;
+
+  @override
+  InterfaceType get objectType => _typeProvider.objectType;
+
+  @override
+  ClassElement get recordElement => _typeProvider.recordElement;
+
+  @override
+  InterfaceType get recordType => _typeProvider.recordType;
+
+  @override
+  ClassElement get setElement => _typeProvider.setElement;
+
+  @override
+  InterfaceType setType(DartType elementType) {
+    return _typeProvider.setType(elementType);
+  }
+
+  @override
+  InterfaceType get stackTraceType => _typeProvider.stackTraceType;
+
+  @override
+  InterfaceType get streamDynamicType => _typeProvider.streamDynamicType;
+
+  @override
+  ClassElement get streamElement => _typeProvider.streamElement;
+
+  @override
+  InterfaceType streamType(DartType elementType) {
+    return _typeProvider.streamType(elementType);
+  }
+
+  @override
+  ClassElement get stringElement => _typeProvider.stringElement;
+
+  @override
+  InterfaceType get stringType => _typeProvider.stringType;
+
+  @override
+  ClassElement get symbolElement => _typeProvider.symbolElement;
+
+  @override
+  InterfaceType get symbolType => _typeProvider.symbolType;
+
+  @override
+  InterfaceType get typeType => _typeProvider.typeType;
+
+  @override
+  VoidType get voidType => _typeProvider.voidType;
 }
 
 final class TypeHelper {

@@ -2,8 +2,10 @@
 /// of indirection.
 library;
 
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models/cycles.dart';
 
+@cloud
 Node createTree() {
   return const Parent(
     'root',
@@ -26,6 +28,7 @@ Node createTree() {
   );
 }
 
+@cloud
 void printTree(Node node) {
   _printTree(node);
 }
@@ -38,6 +41,7 @@ void _printTree(Node node, {int indent = 0}) {
 }
 
 // Test different combinations of nullability and cycles.
+@cloud
 Node combineTrees(
   Node tree1, [
   Parent? tree2,
@@ -57,6 +61,7 @@ Node combineTrees(
 
 /// Tests that self-referencing is allowed when there is a level
 /// of indirection, e.g. nullability, generics, or a wrapper.
+@cloud
 SelfReferencing selfReferencing(SelfReferencing selfReferencing) {
   return selfReferencing;
 }

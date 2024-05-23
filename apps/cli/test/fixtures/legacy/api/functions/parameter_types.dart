@@ -1,7 +1,9 @@
+import 'package:celest/celest.dart';
 import 'dart:typed_data';
 
 import 'package:celest_backend/models/parameter_types.dart';
 
+@cloud
 Future<void> simple(
   String aString,
   int anInt,
@@ -50,6 +52,7 @@ Future<void> simple(
   // TODO: Map<String, Object?> / Map<String, dynamic>
 ) async {}
 
+@cloud
 Future<void> simpleOptional(
   String? aString,
   int? anInt,
@@ -97,6 +100,7 @@ Future<void> simpleOptional(
   Map<String, Uint8List>? aMapOfUint8List,
 ) async {}
 
+@cloud
 Future<void> complex(
   SimpleStruct aSimpleStruct,
   ComplexStruct aComplexStruct,

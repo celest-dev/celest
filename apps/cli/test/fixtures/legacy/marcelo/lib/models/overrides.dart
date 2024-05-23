@@ -1,22 +1,23 @@
+import 'package:celest/celest.dart';
 import 'package:_common/marcelo.dart' as models;
 
-@override
+@customOverride
 extension type AvailableStock(models.AvailableStock _)
     implements models.AvailableStock {}
 
-@override
+@customOverride
 extension type AvailableStocks(models.AvailableStocks _)
     implements models.AvailableStocks {}
 
-@override
+@customOverride
 extension type CashBalance(models.CashBalance _)
     implements models.CashBalance {}
 
-@override
+@customOverride
 extension type Portfolio(models.Portfolio _) implements models.Portfolio {}
 
-@override
+@customOverride
 extension type Stock(models.Stock _) implements models.Stock {}
 
-@override
+@customOverride
 extension type Ui(models.Ui _) implements models.Ui {}

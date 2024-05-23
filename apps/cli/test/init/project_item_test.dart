@@ -1,4 +1,4 @@
-import 'package:celest_cli/init/project_item.dart';
+import 'package:celest_cli/init/project_items/pubspec_updater.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';

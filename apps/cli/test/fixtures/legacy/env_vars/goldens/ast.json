@@ -27,15 +27,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 130,
+                  "offset": 184,
                   "uri": "injected.dart",
-                  "line": 5,
+                  "line": 7,
                   "column": 30
                 },
                 "end": {
-                  "offset": 134,
+                  "offset": 188,
                   "uri": "injected.dart",
-                  "line": 5,
+                  "line": 7,
                   "column": 34
                 },
                 "text": "name"
@@ -57,15 +57,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 162,
+                  "offset": 216,
                   "uri": "injected.dart",
-                  "line": 6,
+                  "line": 8,
                   "column": 26
                 },
                 "end": {
-                  "offset": 165,
+                  "offset": 219,
                   "uri": "injected.dart",
-                  "line": 6,
+                  "line": 8,
                   "column": 29
                 },
                 "text": "age"
@@ -92,15 +92,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 89,
+              "offset": 143,
               "uri": "injected.dart",
-              "line": 4,
+              "line": 6,
               "column": 7
             },
             "end": {
-              "offset": 97,
+              "offset": 151,
               "uri": "injected.dart",
-              "line": 4,
+              "line": 6,
               "column": 15
             },
             "text": "sayHello"
@@ -123,15 +123,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 276,
+                  "offset": 337,
                   "uri": "injected.dart",
-                  "line": 12,
+                  "line": 15,
                   "column": 30
                 },
                 "end": {
-                  "offset": 280,
+                  "offset": 341,
                   "uri": "injected.dart",
-                  "line": 12,
+                  "line": 15,
                   "column": 34
                 },
                 "text": "name"
@@ -153,15 +153,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 308,
+                  "offset": 369,
                   "uri": "injected.dart",
-                  "line": 13,
+                  "line": 16,
                   "column": 26
                 },
                 "end": {
-                  "offset": 311,
+                  "offset": 372,
                   "uri": "injected.dart",
-                  "line": 13,
+                  "line": 16,
                   "column": 29
                 },
                 "text": "age"
@@ -183,15 +183,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 345,
+                  "offset": 406,
                   "uri": "injected.dart",
-                  "line": 14,
+                  "line": 17,
                   "column": 32
                 },
                 "end": {
-                  "offset": 351,
+                  "offset": 412,
                   "uri": "injected.dart",
-                  "line": 14,
+                  "line": 17,
                   "column": 38
                 },
                 "text": "height"
@@ -213,15 +213,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 382,
+                  "offset": 443,
                   "uri": "injected.dart",
-                  "line": 15,
+                  "line": 18,
                   "column": 29
                 },
                 "end": {
-                  "offset": 388,
+                  "offset": 449,
                   "uri": "injected.dart",
-                  "line": 15,
+                  "line": 18,
                   "column": 35
                 },
                 "text": "weight"
@@ -243,15 +243,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 418,
+                  "offset": 479,
                   "uri": "injected.dart",
-                  "line": 16,
+                  "line": 19,
                   "column": 28
                 },
                 "end": {
-                  "offset": 424,
+                  "offset": 485,
                   "uri": "injected.dart",
-                  "line": 16,
+                  "line": 19,
                   "column": 34
                 },
                 "text": "isCool"
@@ -272,15 +272,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 456,
+                  "offset": 517,
                   "uri": "injected.dart",
-                  "line": 17,
+                  "line": 20,
                   "column": 30
                 },
                 "end": {
-                  "offset": 463,
+                  "offset": 524,
                   "uri": "injected.dart",
-                  "line": 17,
+                  "line": 20,
                   "column": 37
                 },
                 "text": "website"
@@ -307,15 +307,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 229,
+              "offset": 290,
               "uri": "injected.dart",
-              "line": 11,
+              "line": 14,
               "column": 7
             },
             "end": {
-              "offset": 243,
+              "offset": 304,
               "uri": "injected.dart",
-              "line": 11,
+              "line": 14,
               "column": 21
             },
             "text": "sayHelloPerson"

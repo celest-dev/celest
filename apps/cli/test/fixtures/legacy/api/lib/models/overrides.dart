@@ -1,10 +1,11 @@
+import 'package:celest/celest.dart';
 import 'package:_common/_common.dart' as common;
 
-@override
+@customOverride
 extension type const NestedParent(common.NestedParent _)
     implements common.NestedParent {}
 
-@override
+@customOverride
 extension type const NestedChild(common.NestedChild _child)
     implements common.NestedChild {
   NestedChild.fromJson(Map<String, Object?> json)

@@ -4,6 +4,8 @@
 import 'package:_common/_common.dart' as _$_common;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions/exceptions.dart' as _$exceptions;
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 void initSerializers() {
   Serializers.instance
@@ -53,6 +55,39 @@ void initSerializers() {
     serialize: ($value) => {r'fault': $value.fault},
     deserialize: ($serialized) {
       return _$exceptions.CustomException(($serialized[r'fault'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return BadRequestException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<InternalServerException, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return InternalServerException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<UnauthorizedException, Map<String, Object?>?>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return UnauthorizedException(
+          (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<SerializationException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'offset': $value.offset,
+      r'source': $value.source,
+    },
+    deserialize: ($serialized) {
+      return SerializationException(($serialized[r'message'] as String));
     },
   ));
 }

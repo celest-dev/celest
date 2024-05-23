@@ -1,177 +1,17 @@
-import 'dart:convert';
-
-import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/init/project_items/add_generated_folder.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:file/file.dart';
-import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:stream_transform/stream_transform.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
-sealed class ProjectItem {
+abstract class ProjectItem {
   const ProjectItem();
 
   /// Creates the item in the given [projectRoot].
   Future<void> create(String projectRoot);
-}
-
-/// Updates the macOS entitlements plist to include the network client
-/// capability.
-final class MacOsEntitlements extends ProjectItem {
-  const MacOsEntitlements(this.appRoot);
-
-  final String appRoot;
-
-  static final _logger = Logger('MacOsEntitlements');
-
-  @override
-  Future<void> create(String projectRoot) async {
-    if (!platform.isMacOS) {
-      return;
-    }
-    final macosDir = fileSystem.directory(appRoot).childDirectory('macos');
-    if (!await macosDir.exists()) {
-      _logger.finest('No macos directory. Skipping entitlements update.');
-      return;
-    }
-    final entitlementFiles = await macosDir
-        .list()
-        .whereType<Directory>()
-        .asyncExpand(
-          (dir) => dir
-              .list()
-              .whereType<File>()
-              .where((file) => p.extension(file.path) == '.entitlements'),
-        )
-        .toList();
-
-    _logger.finest(() {
-      final entitlementFileNames = entitlementFiles
-          .map((e) => p.relative(e.path, from: macosDir.path))
-          .join(', ');
-      return 'Found ${entitlementFiles.length} entitlements files: '
-          '$entitlementFileNames';
-    });
-    for (final entitlements in entitlementFiles) {
-      _logger.fine('Updating entitlements file at ${entitlements.path}...');
-      final add = await processManager.run(
-        [
-          '/usr/libexec/PlistBuddy',
-          '-c',
-          'Add :com.apple.security.network.client bool true',
-          entitlements.path,
-        ],
-        stdoutEncoding: utf8,
-        stderrEncoding: utf8,
-      );
-      if (add.exitCode != 0) {
-        if (add.stderr.toString().contains('Entry Already Exists')) {
-          _logger.fine('Network client entitlement already exists.');
-        } else {
-          performance.captureError(
-            'Failed to add network client entitlement to ${entitlements.path}: '
-            '${add.stdout}\n${add.stderr}',
-          );
-        }
-        continue;
-      }
-    }
-  }
-}
-
-final class PubspecUpdater extends ProjectItem {
-  PubspecUpdater(this.appRoot, this.projectName);
-
-  static final _logger = Logger('PubspecUpdater');
-
-  final String? appRoot;
-  final String? projectName;
-  late final String projectRoot;
-
-  late final File pubspecFile;
-  late Pubspec pubspec;
-  late String pubspecYaml;
-
-  // TODO(dnys1): Update project names when we can update all Dart code which
-  /// currently references `celest_backend`.
-  Future<void> _updateProjectName() async {
-    if (pubspec.name.startsWith('api_')) {
-      _logger.fine('Project name is already in the correct format.');
-      return;
-    }
-    if (projectName == null) {
-      // TODO(dnys1): Test and find better strategy. `projectName` should be
-      // nonnull at this point.
-      _logger.fine('Project name unknown. Skipping until DB is current.');
-      return;
-    }
-    final oldPubspecName = pubspec.name;
-    final pubspecName = 'api_${projectName!.snakeCase}';
-    _logger.fine('Updating project name...');
-    pubspec = pubspec.copyWith(name: pubspecName);
-    pubspecYaml = pubspec.toYaml(source: pubspecYaml);
-    await pubspecFile.writeAsString(pubspecYaml);
-
-    if (appRoot case final appRoot?) {
-      final appRootPubspec = fileSystem.file(p.join(appRoot, 'pubspec.yaml'));
-      final appEditor = YamlEditor(await appRootPubspec.readAsString());
-      appEditor
-        ..remove(['dependencies', oldPubspecName])
-        ..update(
-          ['dependencies', pubspecName],
-          {'path': 'celest/'},
-        );
-    }
-  }
-
-  Future<void> _updateDependencies() async {
-    final currentSdkVersion = pubspec.environment?['sdk'];
-    final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
-    if (ProjectDependency.celest.upToDate(pubspec) &&
-        currentSdkVersion == requiredSdkVersion &&
-        !pubspec.dependencies.containsKey('celest_core')) {
-      _logger.fine('Project dependencies are up to date.');
-      return;
-    }
-    _logger.fine('Updating project dependencies to latest versions...');
-    if (pubspec.dependencies.containsKey('celest_core')) {
-      final editor = YamlEditor(pubspecYaml)
-        ..remove(['dependencies', 'celest_core']);
-      pubspecYaml = editor.toString();
-    }
-    pubspec = pubspec.copyWith(
-      environment: {
-        'sdk': PubEnvironment.dartSdkConstraint,
-      },
-      dependencies: {
-        for (final entry in pubspec.dependencies.entries)
-          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
-      }..remove('celest_core'),
-      devDependencies: {
-        for (final entry in pubspec.devDependencies.entries)
-          entry.key:
-              ProjectDependency.devDependencies[entry.key] ?? entry.value,
-      },
-    );
-    pubspecYaml = pubspec.toYaml(source: pubspecYaml);
-    await pubspecFile.writeAsString(pubspecYaml);
-  }
-
-  @override
-  Future<void> create(String projectRoot) async {
-    _logger.fine('Updating project pubspec...');
-    this.projectRoot = projectRoot;
-    pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
-    pubspecYaml = await pubspecFile.readAsString();
-    pubspec = Pubspec.parse(pubspecYaml);
-    // await _updateProjectName();
-    await _updateDependencies();
-    _logger.fine('Project pubspec updated');
-  }
 }
 
 sealed class ProjectFile extends ProjectItem {
@@ -390,6 +230,24 @@ class BadNameException implements Exception {
 }
 ''',
       ),
+
+      // Generated
+      _createFile(
+        p.join(projectPaths.generatedDir, 'README.md'),
+        generated_README,
+      ),
+//       _createFile(p.join(projectPaths.generatedDir, 'backend.dart'), '''
+// // Generated by Celest CLI. Do not modify.
+
+// abstract class CelestBackend {}
+// '''),
+//       _createFile(p.join(projectPaths.generatedDir, 'api.dart'), '''
+// // Generated by Celest CLI. Do not modify.
+
+// abstract class CelestApi {
+//   late CelestBackend celest;
+// }
+// '''),
     ]);
   }
 }

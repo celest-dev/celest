@@ -27,15 +27,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 284,
+                  "offset": 281,
                   "uri": "exceptions.dart",
-                  "line": 7,
+                  "line": 8,
                   "column": 13
                 },
                 "end": {
-                  "offset": 289,
+                  "offset": 286,
                   "uri": "exceptions.dart",
-                  "line": 7,
+                  "line": 8,
                   "column": 18
                 },
                 "text": "cause"
@@ -56,15 +56,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 249,
+              "offset": 246,
               "uri": "exceptions.dart",
-              "line": 6,
+              "line": 7,
               "column": 5
             },
             "end": {
-              "offset": 268,
+              "offset": 265,
               "uri": "exceptions.dart",
-              "line": 6,
+              "line": 7,
               "column": 24
             },
             "text": "throwsUserException"
@@ -87,15 +87,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 392,
+                  "offset": 396,
                   "uri": "exceptions.dart",
-                  "line": 13,
+                  "line": 15,
                   "column": 13
                 },
                 "end": {
-                  "offset": 397,
+                  "offset": 401,
                   "uri": "exceptions.dart",
-                  "line": 13,
+                  "line": 15,
                   "column": 18
                 },
                 "text": "cause"
@@ -116,15 +116,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 352,
+              "offset": 356,
               "uri": "exceptions.dart",
-              "line": 12,
+              "line": 14,
               "column": 5
             },
             "end": {
-              "offset": 376,
+              "offset": 380,
               "uri": "exceptions.dart",
-              "line": 12,
+              "line": 14,
               "column": 29
             },
             "text": "callsThrowsUserException"
@@ -147,15 +147,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 475,
+                  "offset": 486,
                   "uri": "exceptions.dart",
-                  "line": 19,
+                  "line": 22,
                   "column": 9
                 },
                 "end": {
-                  "offset": 482,
+                  "offset": 493,
                   "uri": "exceptions.dart",
-                  "line": 19,
+                  "line": 22,
                   "column": 16
                 },
                 "text": "message"
@@ -173,15 +173,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 509,
+                  "offset": 520,
                   "uri": "exceptions.dart",
-                  "line": 20,
+                  "line": 23,
                   "column": 13
                 },
                 "end": {
-                  "offset": 514,
+                  "offset": 525,
                   "uri": "exceptions.dart",
-                  "line": 20,
+                  "line": 23,
                   "column": 18
                 },
                 "text": "error"
@@ -202,15 +202,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 449,
+              "offset": 460,
               "uri": "exceptions.dart",
-              "line": 18,
+              "line": 21,
               "column": 5
             },
             "end": {
-              "offset": 463,
+              "offset": 474,
               "uri": "exceptions.dart",
-              "line": 18,
+              "line": 21,
               "column": 19
             },
             "text": "throwsAppError"
@@ -235,15 +235,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 563,
+              "offset": 581,
               "uri": "exceptions.dart",
-              "line": 25,
+              "line": 29,
               "column": 5
             },
             "end": {
-              "offset": 581,
+              "offset": 599,
               "uri": "exceptions.dart",
-              "line": 25,
+              "line": 29,
               "column": 23
             },
             "text": "throwsAppException"
@@ -268,15 +268,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 659,
+              "offset": 684,
               "uri": "exceptions.dart",
-              "line": 29,
+              "line": 34,
               "column": 5
             },
             "end": {
-              "offset": 687,
+              "offset": 712,
               "uri": "exceptions.dart",
-              "line": 29,
+              "line": 34,
               "column": 33
             },
             "text": "throwsNotYetImplementedError"
@@ -301,15 +301,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 743,
+              "offset": 775,
               "uri": "exceptions.dart",
-              "line": 33,
+              "line": 39,
               "column": 5
             },
             "end": {
-              "offset": 762,
+              "offset": 794,
               "uri": "exceptions.dart",
-              "line": 33,
+              "line": 39,
               "column": 24
             },
             "text": "throwsValidateError"
@@ -332,15 +332,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 854,
+                  "offset": 893,
                   "uri": "exceptions.dart",
-                  "line": 38,
+                  "line": 45,
                   "column": 9
                 },
                 "end": {
-                  "offset": 861,
+                  "offset": 900,
                   "uri": "exceptions.dart",
-                  "line": 38,
+                  "line": 45,
                   "column": 16
                 },
                 "text": "message"
@@ -358,15 +358,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 888,
+                  "offset": 927,
                   "uri": "exceptions.dart",
-                  "line": 39,
+                  "line": 46,
                   "column": 13
                 },
                 "end": {
-                  "offset": 893,
+                  "offset": 932,
                   "uri": "exceptions.dart",
-                  "line": 39,
+                  "line": 46,
                   "column": 18
                 },
                 "text": "cause"
@@ -387,15 +387,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 809,
+              "offset": 848,
               "uri": "exceptions.dart",
-              "line": 37,
+              "line": 44,
               "column": 5
             },
             "end": {
-              "offset": 842,
+              "offset": 881,
               "uri": "exceptions.dart",
-              "line": 37,
+              "line": 44,
               "column": 38
             },
             "text": "throwsUserException_ShowInConsole"
@@ -502,15 +502,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 85,
+                  "offset": 129,
                   "uri": "models.dart",
-                  "line": 2,
+                  "line": 4,
                   "column": 45
                 },
                 "end": {
-                  "offset": 99,
+                  "offset": 143,
                   "uri": "models.dart",
-                  "line": 2,
+                  "line": 4,
                   "column": 59
                 },
                 "text": "availableStock"
@@ -533,15 +533,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 55,
+              "offset": 99,
               "uri": "models.dart",
-              "line": 2,
+              "line": 4,
               "column": 15
             },
             "end": {
-              "offset": 69,
+              "offset": 113,
               "uri": "models.dart",
-              "line": 2,
+              "line": 4,
               "column": 29
             },
             "text": "availableStock"
@@ -564,15 +564,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 168,
+                  "offset": 219,
                   "uri": "models.dart",
-                  "line": 3,
+                  "line": 6,
                   "column": 48
                 },
                 "end": {
-                  "offset": 183,
+                  "offset": 234,
                   "uri": "models.dart",
-                  "line": 3,
+                  "line": 6,
                   "column": 63
                 },
                 "text": "availableStocks"
@@ -595,15 +595,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 136,
+              "offset": 187,
               "uri": "models.dart",
-              "line": 3,
+              "line": 6,
               "column": 16
             },
             "end": {
-              "offset": 151,
+              "offset": 202,
               "uri": "models.dart",
-              "line": 3,
+              "line": 6,
               "column": 31
             },
             "text": "availableStocks"
@@ -626,15 +626,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 245,
+                  "offset": 303,
                   "uri": "models.dart",
-                  "line": 5,
+                  "line": 9,
                   "column": 36
                 },
                 "end": {
-                  "offset": 256,
+                  "offset": 314,
                   "uri": "models.dart",
-                  "line": 5,
+                  "line": 9,
                   "column": 47
                 },
                 "text": "cashBalance"
@@ -657,15 +657,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 221,
+              "offset": 279,
               "uri": "models.dart",
-              "line": 5,
+              "line": 9,
               "column": 12
             },
             "end": {
-              "offset": 232,
+              "offset": 290,
               "uri": "models.dart",
-              "line": 5,
+              "line": 9,
               "column": 23
             },
             "text": "cashBalance"
@@ -688,15 +688,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 304,
+                  "offset": 369,
                   "uri": "models.dart",
-                  "line": 6,
+                  "line": 11,
                   "column": 30
                 },
                 "end": {
-                  "offset": 313,
+                  "offset": 378,
                   "uri": "models.dart",
-                  "line": 6,
+                  "line": 11,
                   "column": 39
                 },
                 "text": "portfolio"
@@ -719,15 +719,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 284,
+              "offset": 349,
               "uri": "models.dart",
-              "line": 6,
+              "line": 11,
               "column": 10
             },
             "end": {
-              "offset": 293,
+              "offset": 358,
               "uri": "models.dart",
-              "line": 6,
+              "line": 11,
               "column": 19
             },
             "text": "portfolio"
@@ -750,15 +750,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 347,
+                  "offset": 419,
                   "uri": "models.dart",
-                  "line": 7,
+                  "line": 13,
                   "column": 18
                 },
                 "end": {
-                  "offset": 352,
+                  "offset": 424,
                   "uri": "models.dart",
-                  "line": 7,
+                  "line": 13,
                   "column": 23
                 },
                 "text": "stock"
@@ -781,15 +781,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 335,
+              "offset": 407,
               "uri": "models.dart",
-              "line": 7,
+              "line": 13,
               "column": 6
             },
             "end": {
-              "offset": 340,
+              "offset": 412,
               "uri": "models.dart",
-              "line": 7,
+              "line": 13,
               "column": 11
             },
             "text": "stock"
@@ -812,15 +812,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 373,
+                  "offset": 452,
                   "uri": "models.dart",
-                  "line": 8,
+                  "line": 15,
                   "column": 9
                 },
                 "end": {
-                  "offset": 375,
+                  "offset": 454,
                   "uri": "models.dart",
-                  "line": 8,
+                  "line": 15,
                   "column": 11
                 },
                 "text": "ui"
@@ -843,15 +843,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 367,
+              "offset": 446,
               "uri": "models.dart",
-              "line": 8,
+              "line": 15,
               "column": 3
             },
             "end": {
-              "offset": 369,
+              "offset": 448,
               "uri": "models.dart",
-              "line": 8,
+              "line": 15,
               "column": 5
             },
             "text": "ui"
@@ -894,6 +894,30 @@
           "$": "TypeReference",
           "symbol": "UserException_ShowInConsole",
           "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
           "isNullable": false
         }
       ],

@@ -1,7 +1,7 @@
 import 'package:_common/marcelo.dart' as core;
-import 'package:celest_core/celest_core.dart';
+import 'package:celest/celest.dart';
 
-@override
+@customOverride
 extension type UserException._(core.UserException _ex)
     implements core.UserException {
   UserException({
@@ -13,7 +13,7 @@ extension type UserException._(core.UserException _ex)
   JsonValue? get cause => _ex.cause as JsonValue?;
 }
 
-@override
+@customOverride
 extension type AppError(core.AppError _err) implements core.AppError {
   AppError.fromJson(Map<String, Object?> json)
       : _err = core.AppError(json['msg'], json['error']);
@@ -21,14 +21,14 @@ extension type AppError(core.AppError _err) implements core.AppError {
   Map<String, Object?> toJson() => {'msg': _err.message, 'error': _err.error};
 }
 
-@override
+@customOverride
 extension type AppException(core.AppException _ex)
     implements core.AppException {
   JsonValue? get error => _ex.error as JsonValue?;
   JsonValue? get msg => _ex.msg as JsonValue?;
 }
 
-@override
+@customOverride
 extension type NotYetImplementedError._(core.NotYetImplementedError _err)
     implements core.NotYetImplementedError {
   NotYetImplementedError([JsonValue? message])
@@ -38,7 +38,7 @@ extension type NotYetImplementedError._(core.NotYetImplementedError _err)
   JsonValue? get message => _err.message as JsonValue?;
 }
 
-@override
+@customOverride
 extension type UserException_ShowInConsole._(
         core.UserException_ShowInConsole _ex)
     implements core.UserException_ShowInConsole {

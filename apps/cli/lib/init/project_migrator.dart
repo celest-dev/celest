@@ -1,4 +1,6 @@
-import 'package:celest_cli/init/project_item.dart';
+import 'package:celest_cli/init/project_items/add_generated_folder.dart';
+import 'package:celest_cli/init/project_items/macos_entitlements.dart';
+import 'package:celest_cli/init/project_items/pubspec_updater.dart';
 
 /// Manages the migration of a Celest project to the latest version.
 class ProjectMigrator {
@@ -22,12 +24,14 @@ class ProjectMigrator {
   final String? projectName;
 
   /// Generates a new Celest project.
-  Future<void> migrate() async {
-    await Future.wait(
-      [
-        MacOsEntitlements(appRoot),
-        PubspecUpdater(appRoot, projectName),
-      ].map((item) => item.create(projectRoot)),
-    );
+  ///
+  /// Returns `true` if the project needs further migration by the analyzer.
+  Future<bool> migrate() async {
+    final [_, _, needsMigration] = await Future.wait([
+      MacOsEntitlements(appRoot).create(projectRoot).then((_) => false),
+      GeneratedFolder().create(projectRoot).then((_) => false),
+      PubspecUpdater(appRoot, projectName).create(projectRoot),
+    ]);
+    return needsMigration;
   }
 }

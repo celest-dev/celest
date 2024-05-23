@@ -2,6 +2,7 @@
 /// parsed and transferred to the generated client.
 library;
 
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models/metadata.dart';
 
 /// A function that has doc comments.
@@ -19,17 +20,22 @@ import 'package:celest_backend/models/metadata.dart';
 /// void hasDocComments() {}
 /// ```
 // This should not be copied over.
+@cloud
 void hasDocComments() {}
 
+@cloud
 @deprecated
 void hasDeprecatedAnnotation() {}
 
+@cloud
 @Deprecated('Do not use this function.')
 void hasConstructedDeprecatedAnnotation() {}
 
+@cloud
 @MyAnnotation.create('positional', named: 'named')
 void hasNamedConstructedAnnotation() {}
 
+@cloud
 @Literals(
   string: 'string',
   intValue: 1,
@@ -65,18 +71,21 @@ void hasLiteralsAnnotation(
   required String named,
 }) {}
 
+@cloud
 @exportable
 void hasExportableAnnotation(
   @exportable String value, {
   @exportable String named = 'named',
 }) {}
 
+@cloud
 @Exportable()
 void hasExportableConstructedAnnotation(
   @Exportable() String value, {
   @Exportable() String named = 'named',
 }) {}
 
+@cloud
 @notExportable
 void hasNotExportableAnnotation(
   @notExportable String value, {
@@ -85,6 +94,7 @@ void hasNotExportableAnnotation(
 
 // -- Default values --
 
+@cloud
 void positionalDefaultValues([
   String value = 'value',
   int intValue = 1,
@@ -98,6 +108,7 @@ void positionalDefaultValues([
   ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
 ]) {}
 
+@cloud
 void nullablePositionalDefaultValues([
   String? value = 'value',
   int? intValue = 1,
@@ -111,6 +122,7 @@ void nullablePositionalDefaultValues([
   ({String a, String b, String c})? recordValue = (a: 'a', b: 'b', c: 'c'),
 ]) {}
 
+@cloud
 void namedDefaultValues({
   String value = 'value',
   int intValue = 1,
@@ -124,6 +136,7 @@ void namedDefaultValues({
   ({String a, String b, String c}) recordValue = (a: 'a', b: 'b', c: 'c'),
 }) {}
 
+@cloud
 void nullableNamedDefaultValues({
   String? value = 'value',
   int? intValue = 1,
@@ -151,6 +164,7 @@ const defaultRecord = (a: 'a', b: 'b', c: 'c');
 const defaultExportable = Exportable.instance;
 const defaultSerializable = Serializable.string;
 
+@cloud
 void positionalDefaultValueVars([
   int value = defaultInt,
   double doubleValue = defaultDouble,
@@ -164,6 +178,7 @@ void positionalDefaultValueVars([
   Serializable serializable = defaultSerializable,
 ]) {}
 
+@cloud
 void nullablePositionalDefaultValueVars([
   int? value = defaultInt,
   double? doubleValue = defaultDouble,
@@ -177,6 +192,7 @@ void nullablePositionalDefaultValueVars([
   Serializable? serializable = defaultSerializable,
 ]) {}
 
+@cloud
 void namedDefaultValueVars({
   int value = defaultInt,
   double doubleValue = defaultDouble,
@@ -190,6 +206,7 @@ void namedDefaultValueVars({
   Serializable serializable = defaultSerializable,
 }) {}
 
+@cloud
 void nullableNamedDefaultValueVars({
   int? value = defaultInt,
   double? doubleValue = defaultDouble,
@@ -224,6 +241,7 @@ const _defaultRecord = (a: 'a', b: 'b', c: 'c');
 const _defaultExportable = Exportable.instance;
 const _defaultSerializable = Serializable.string;
 
+@cloud
 void positionalDefaultValueVarsPrivate([
   int value = _defaultInt,
   double doubleValue = _defaultDouble,
@@ -237,6 +255,7 @@ void positionalDefaultValueVarsPrivate([
   Serializable serializable = _defaultSerializable,
 ]) {}
 
+@cloud
 void nullablePositionalDefaultValueVarsPrivate([
   int? value = _defaultInt,
   double? doubleValue = _defaultDouble,
@@ -250,6 +269,7 @@ void nullablePositionalDefaultValueVarsPrivate([
   Serializable? serializable = _defaultSerializable,
 ]) {}
 
+@cloud
 void namedDefaultValueVarsPrivate({
   int value = _defaultInt,
   double doubleValue = _defaultDouble,
@@ -263,6 +283,7 @@ void namedDefaultValueVarsPrivate({
   Serializable serializable = _defaultSerializable,
 }) {}
 
+@cloud
 void nullableNamedDefaultValueVarsPrivate({
   int? value = _defaultInt,
   double? doubleValue = _defaultDouble,

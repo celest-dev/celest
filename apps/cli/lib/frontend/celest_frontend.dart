@@ -292,6 +292,7 @@ final class CelestFrontend implements Closeable {
   ast.Project? currentProject;
 
   Future<int> run({
+    required bool migrateProject,
     required Progress currentProgress,
   }) async {
     try {
@@ -308,7 +309,10 @@ final class CelestFrontend implements Closeable {
           _logErrors(errors);
         }
 
-        final analysisResult = await _analyzeProject();
+        final analysisResult = await _analyzeProject(
+          migrateProject: migrateProject,
+        );
+        migrateProject = false;
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
             fail(errors);
@@ -463,7 +467,9 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Builds the current project for deployment to the cloud.
-  Future<int> build() async {
+  Future<int> build({
+    required bool migrateProject,
+  }) async {
     Progress? currentProgress;
     var projectId = await _loadProjectId();
     try {
@@ -481,7 +487,10 @@ final class CelestFrontend implements Closeable {
           _logErrors(errors);
         }
 
-        final analysisResult = await _analyzeProject();
+        final analysisResult = await _analyzeProject(
+          migrateProject: migrateProject,
+        );
+        migrateProject = false;
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
           case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
@@ -549,10 +558,14 @@ final class CelestFrontend implements Closeable {
   }
 
   /// Analyzes the project and reports if there are any errors.
-  Future<CelestAnalysisResult> _analyzeProject() =>
+  Future<CelestAnalysisResult> _analyzeProject({
+    required bool migrateProject,
+  }) =>
       performance.trace('CelestFrontend', 'analyzeProject', () async {
         logger.fine('Analyzing project...');
-        final result = await analyzer.analyzeProject();
+        final result = await analyzer.analyzeProject(
+          migrateProject: migrateProject,
+        );
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
@@ -595,7 +608,7 @@ final class CelestFrontend implements Closeable {
       performance.trace('CelestFrontend', 'resolveProject', () async {
         logger.fine('Resolving project...');
         final projectResolver = ProjectResolver();
-        project.accept(projectResolver);
+        project.acceptWithArg(projectResolver, project);
         return projectResolver.resolvedProject;
       });
 

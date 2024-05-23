@@ -1,21 +1,24 @@
 import 'package:celest/celest.dart';
 
+@cloud
 @authenticated
 Future<void> sayHelloAuthenticated({
-  @Context.user required User user,
+  @principal required User user,
 }) async {
   print('Hello, world!');
 }
 
+@cloud
 @public
 Future<void> sayHelloPublic({
-  @Context.user User? user,
+  @principal User? user,
 }) async {
   print('Hello, world!');
 }
 
+@cloud
 Future<void> sayHello({
-  @Context.user User? user,
+  @principal User? user,
 }) async {
   print('Hello, world!');
 }

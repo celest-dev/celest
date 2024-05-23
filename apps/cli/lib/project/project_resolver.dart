@@ -1,7 +1,7 @@
+import 'package:api_celest/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:api_celest/ast.dart';
 import 'package:collection/collection.dart';
 
 extension on AstNode {
@@ -78,22 +78,28 @@ extension on ApiAuth {
   }
 }
 
-final class ProjectResolver extends AstVisitor<void> {
+final class ProjectResolver extends AstVisitorWithArg<void, AstNode> {
   final _resolvedProject = ResolvedProjectBuilder();
   ResolvedProject get resolvedProject => _resolvedProject.build();
 
   @override
-  void visitProject(Project project) {
+  void visitProject(Project project, AstNode context) {
     _resolvedProject
       ..name = project.name
       ..sdkInfo.replace(project.sdkInfo);
-    project.apis.values.forEach(visitApi);
-    project.envVars.forEach(visitEnvironmentVariable);
-    project.auth?.accept(this);
+    for (final api in project.apis.values) {
+      visitApi(api, project);
+    }
+    for (final envVar in project.envVars) {
+      visitEnvironmentVariable(envVar, project);
+    }
+    if (project.auth case final auth?) {
+      visitAuth(auth, project);
+    }
   }
 
   @override
-  void visitApi(Api api) {
+  void visitApi(Api api, Project context) {
     _resolvedProject.apis[api.name] = ResolvedApi.build((resolvedApi) {
       resolvedApi.name = api.name;
       final apiAuth = api.metadata.whereType<ApiAuth>().singleOrNull;
@@ -111,20 +117,22 @@ final class ProjectResolver extends AstVisitor<void> {
       }
     });
 
-    api.functions.values.forEach(visitFunction);
+    for (final f in api.functions.values) {
+      visitFunction(f, api);
+    }
   }
 
   @override
-  void visitApiAuthenticated(ApiAuthenticated annotation) {}
+  void visitApiAuthenticated(ApiAuthenticated annotation, AstNode context) {}
 
   @override
-  void visitApiPublic(ApiPublic annotation) {}
+  void visitApiPublic(ApiPublic annotation, AstNode context) {}
 
   @override
-  void visitApiMiddleware(ApiMiddleware annotation) {}
+  void visitApiMiddleware(ApiMiddleware annotation, AstNode context) {}
 
   @override
-  void visitFunction(CloudFunction function) {
+  void visitFunction(CloudFunction function, Api context) {
     _resolvedProject.apis.updateValue(function.apiName, (resolvedApi) {
       return resolvedApi.rebuild((resolvedApi) {
         resolvedApi.functions[function.name] = ResolvedCloudFunction.build(
@@ -148,6 +156,20 @@ final class ProjectResolver extends AstVisitor<void> {
               }
             }
 
+            final funcHttpMetadata = [
+              ...function.metadata.whereType<ApiHttpMetadata>(),
+            ];
+            for (final metadata in funcHttpMetadata) {
+              switch (metadata) {
+                case ApiHttpConfig(:final method, :final statusCode):
+                  resolvedFunction.httpConfig
+                    ..method = method
+                    ..statusCode = statusCode;
+                case ApiHttpError(:final type, :final statusCode):
+                  resolvedFunction.httpConfig.errorStatuses[type] = statusCode;
+              }
+            }
+
             for (final parameter in function.parameters) {
               if (parameter.references
                   case NodeReference(
@@ -164,10 +186,13 @@ final class ProjectResolver extends AstVisitor<void> {
   }
 
   @override
-  void visitParameter(CloudFunctionParameter parameter) {}
+  void visitParameter(
+    CloudFunctionParameter parameter,
+    CloudFunction context,
+  ) {}
 
   @override
-  void visitEnvironmentVariable(EnvironmentVariable variable) {
+  void visitEnvironmentVariable(EnvironmentVariable variable, Project context) {
     final envName = variable.envName;
     final envValue = projectPaths.envManager.get(envName);
     if (envValue == null) {
@@ -182,14 +207,19 @@ final class ProjectResolver extends AstVisitor<void> {
   }
 
   @override
-  void visitAuth(Auth auth) {
-    auth.providers.forEach(visitAuthProvider);
+  void visitAuth(Auth auth, Project context) {
+    for (final authProvider in auth.providers) {
+      visitAuthProvider(authProvider, auth);
+    }
   }
 
   @override
-  void visitAuthProvider(AuthProvider provider) {
+  void visitAuthProvider(AuthProvider provider, Auth context) {
     _resolvedProject.auth.providers.add(
       ResolvedAuthProvider(name: provider.name, type: provider.type),
     );
   }
+
+  @override
+  void visitApiHttpMetadata(ApiHttpMetadata metadata, AstNode context) {}
 }

@@ -1379,6 +1379,17 @@
         }
       }
     },
+    "demo": {
+      "name": "demo",
+      "functions": {
+        "sayHello": {
+          "name": "sayHello",
+          "route": "/demo/say-hello",
+          "apiName": "demo",
+          "envVars": []
+        }
+      }
+    },
     "asserts": {
       "name": "asserts",
       "functions": {

@@ -27,7 +27,10 @@ final class ProjectPaths {
   late final String clientOutputsDir =
       p.join(projectRoot, 'lib', 'src', 'client');
 
-  late final String resourcesDart = p.join(projectRoot, 'resources.dart');
+  // Generated
+  late final String generatedDir = p.join(projectRoot, 'generated');
+  late final String resourcesDart = p.join(generatedDir, 'resources.dart');
+
   late final String apisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
   late final String envFile = p.join(projectRoot, 'config', '.env');
@@ -40,7 +43,8 @@ final class ProjectPaths {
 
   late final EnvManager envManager = EnvManager(envFile);
 
-  late final String authDart = p.join(projectRoot, 'auth', 'auth.dart');
+  late final String authDart = p.join(projectRoot, 'auth.dart');
+  late final String legacyAuthDart = p.join(projectRoot, 'auth', 'auth.dart');
 
   String api(String apiName) => p.join(apisDir, '$apiName.dart');
   String apiOutput(String apiName) => p.join(outputsDir, 'functions', apiName);

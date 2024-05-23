@@ -18,7 +18,7 @@ final class DeployCommand extends CelestCommand
   @override
   Future<int> run() async {
     await super.run();
-    await configure(
+    final needsMigration = await configure(
       createProject: () {
         throw const CelestException(
           'No Celest project found in the current directory. '
@@ -32,6 +32,6 @@ final class DeployCommand extends CelestCommand
       return code;
     }
 
-    return CelestFrontend().build();
+    return CelestFrontend().build(migrateProject: needsMigration);
   }
 }

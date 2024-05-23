@@ -1,4 +1,5 @@
 import 'package:celest_cli/init/project_item.dart';
+import 'package:celest_cli/init/project_items/macos_entitlements.dart';
 
 /// Manages the generation of a new Celest project.
 class ProjectGenerator {

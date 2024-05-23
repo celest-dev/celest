@@ -1,10 +1,10 @@
+import 'package:api_celest/ast.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/project/resources_generator.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:api_celest/ast.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 
@@ -81,6 +81,9 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
   @override
   void visitApiMiddleware(ApiMiddleware annotation) {}
+
+  @override
+  void visitApiHttpMetadata(ApiHttpMetadata metadata) {}
 
   @override
   void visitFunction(CloudFunction function) {}

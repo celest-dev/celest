@@ -55,62 +55,6 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
               .toList()
         }
       );
-    } on _i6.SerializationException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i6.SerializationException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'SerializationException',
-            'details': error,
-          }
-        }
-      );
-    } on _i7.InternalServerException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i7.InternalServerException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'InternalServerException',
-            'details': error,
-          }
-        }
-      );
-    } on _i7.UnauthorizedException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i7.UnauthorizedException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'UnauthorizedException',
-            'details': error,
-          }
-        }
-      );
-    } on _i7.BadRequestException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i7.BadRequestException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'BadRequestException',
-            'details': error,
-          }
-        }
-      );
     } on _i3.CustomErrorWithStackTrace catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
@@ -175,6 +119,62 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
         body: {
           'error': {
             'code': r'CustomException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i6.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
+    } on _i7.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i7.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
             'details': error,
           }
         }

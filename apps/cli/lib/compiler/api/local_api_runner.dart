@@ -49,6 +49,7 @@ final class LocalApiRunner implements Closeable {
     required bool verbose,
     List<String> additionalSources = const [],
     int? port,
+    @visibleForTesting Duration? vmServiceTimeout,
     @visibleForTesting StringSink? stdoutPipe,
     @visibleForTesting StringSink? stderrPipe,
     // Local API should use random port since it's being proxied by the user
@@ -120,7 +121,11 @@ final class LocalApiRunner implements Closeable {
       client: client,
       localApiProcess: localApiProcess,
     );
-    await runner._init(stdoutPipe: stdoutPipe, stderrPipe: stderrPipe);
+    await runner._init(
+      stdoutPipe: stdoutPipe,
+      stderrPipe: stderrPipe,
+      vmServiceTimeout: vmServiceTimeout,
+    );
     return runner;
   }
 
@@ -158,6 +163,7 @@ final class LocalApiRunner implements Closeable {
   Future<void> _init({
     StringSink? stdoutPipe,
     StringSink? stderrPipe,
+    Duration? vmServiceTimeout,
   }) async {
     stdoutPipe ??= stdout;
     stderrPipe ??= stderr;
@@ -198,17 +204,21 @@ final class LocalApiRunner implements Closeable {
         .listen(stderrPipe.writeln);
 
     try {
-      const vmServiceTimeout = Duration(seconds: 15);
+      vmServiceTimeout ??= const Duration(seconds: 10);
       _logger.finer('Waiting for local API to report VM URI...');
-      _vmService = await vmServiceCompleter.future.timeout(
-        vmServiceTimeout,
-        onTimeout: () {
-          throw TimeoutException(
-            'Could not connect to local API VM service.',
-            vmServiceTimeout,
-          );
-        },
-      );
+      var vmService = vmServiceCompleter.future;
+      if (vmServiceTimeout > Duration.zero) {
+        vmService = vmService.timeout(
+          vmServiceTimeout,
+          onTimeout: () {
+            throw TimeoutException(
+              'Could not connect to local API VM service.',
+              vmServiceTimeout,
+            );
+          },
+        );
+      }
+      _vmService = await vmService;
 
       _vmIsolateId = await _waitForIsolate(_vmService!, _logger);
 

@@ -20,11 +20,12 @@ base mixin Configure on CelestCommand {
         'No Celest project found in the current directory.',
       );
 
-  static void _noOp() {}
+  static bool _noOp() => false;
 
-  Future<void> configure({
+  /// Returns true if the project needs to be migrated.
+  Future<bool> configure({
     FutureOr<String> Function() createProject = _throwNoProject,
-    FutureOr<void> Function() migrateProject = _noOp,
+    FutureOr<bool> Function() migrateProject = _noOp,
   }) async {
     final currentDir = Directory.current;
     final pubspecFile = fileSystem.file(
@@ -54,10 +55,11 @@ base mixin Configure on CelestCommand {
       projectRoot: projectRoot,
     );
 
+    var needsMigration = false;
     if (!isExistingProject) {
       await createProject();
     } else {
-      await migrateProject();
+      needsMigration = await migrateProject();
     }
 
     await _pubUpgrade();
@@ -97,6 +99,8 @@ base mixin Configure on CelestCommand {
       }
       DynamicLibrary.open(file.path);
     }
+
+    return needsMigration;
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if

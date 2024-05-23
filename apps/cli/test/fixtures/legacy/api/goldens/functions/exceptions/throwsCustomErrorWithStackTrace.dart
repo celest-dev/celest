@@ -3,9 +3,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/celest.dart' as _i4;
 import 'package:celest/src/runtime/serve.dart' as _i1;
-import 'package:celest_backend/exceptions/exceptions.dart' as _i6;
-import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i3;
+import 'package:celest_backend/exceptions/exceptions.dart' as _i3;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import 'package:celest_core/src/serialization/json_value.dart' as _i7;
 
 import '../../../functions/exceptions.dart' as _i2;
@@ -20,67 +20,11 @@ final class ThrowsCustomErrorWithStackTraceTarget
     try {
       _i2.throwsCustomErrorWithStackTrace();
       return (statusCode: 200, body: {'response': null});
-    } on _i3.SerializationException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i3.SerializationException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'SerializationException',
-            'details': error,
-          }
-        }
-      );
-    } on _i5.InternalServerException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i5.InternalServerException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'InternalServerException',
-            'details': error,
-          }
-        }
-      );
-    } on _i5.UnauthorizedException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i5.UnauthorizedException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'UnauthorizedException',
-            'details': error,
-          }
-        }
-      );
-    } on _i5.BadRequestException catch (e) {
-      const statusCode = 400;
-      print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i5.BadRequestException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'BadRequestException',
-            'details': error,
-          }
-        }
-      );
-    } on _i6.CustomErrorWithStackTrace catch (e) {
+    } on _i3.CustomErrorWithStackTrace catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
       final error =
-          _i4.Serializers.instance.serialize<_i6.CustomErrorWithStackTrace>(e);
+          _i4.Serializers.instance.serialize<_i3.CustomErrorWithStackTrace>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -90,11 +34,11 @@ final class ThrowsCustomErrorWithStackTraceTarget
           }
         }
       );
-    } on _i6.CustomErrorToFromJson catch (e) {
+    } on _i3.CustomErrorToFromJson catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
       final error =
-          _i4.Serializers.instance.serialize<_i6.CustomErrorToFromJson>(e);
+          _i4.Serializers.instance.serialize<_i3.CustomErrorToFromJson>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -104,10 +48,10 @@ final class ThrowsCustomErrorWithStackTraceTarget
           }
         }
       );
-    } on _i6.CustomError catch (e) {
+    } on _i3.CustomError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error = _i4.Serializers.instance.serialize<_i6.CustomError>(e);
+      final error = _i4.Serializers.instance.serialize<_i3.CustomError>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -117,11 +61,11 @@ final class ThrowsCustomErrorWithStackTraceTarget
           }
         }
       );
-    } on _i6.CustomExceptionToFromJson catch (e) {
+    } on _i3.CustomExceptionToFromJson catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
       final error =
-          _i4.Serializers.instance.serialize<_i6.CustomExceptionToFromJson>(e);
+          _i4.Serializers.instance.serialize<_i3.CustomExceptionToFromJson>(e);
       return (
         statusCode: statusCode,
         body: {
@@ -131,15 +75,71 @@ final class ThrowsCustomErrorWithStackTraceTarget
           }
         }
       );
-    } on _i6.CustomException catch (e) {
+    } on _i3.CustomException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error = _i4.Serializers.instance.serialize<_i6.CustomException>(e);
+      final error = _i4.Serializers.instance.serialize<_i3.CustomException>(e);
       return (
         statusCode: statusCode,
         body: {
           'error': {
             'code': r'CustomException',
+            'details': error,
+          }
+        }
+      );
+    } on _i5.SerializationException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i5.SerializationException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'SerializationException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.InternalServerException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i6.InternalServerException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'InternalServerException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.UnauthorizedException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i6.UnauthorizedException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'UnauthorizedException',
+            'details': error,
+          }
+        }
+      );
+    } on _i6.BadRequestException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error =
+          _i4.Serializers.instance.serialize<_i6.BadRequestException>(e);
+      return (
+        statusCode: statusCode,
+        body: {
+          'error': {
+            'code': r'BadRequestException',
             'details': error,
           }
         }
@@ -150,7 +150,7 @@ final class ThrowsCustomErrorWithStackTraceTarget
   @override
   void init() {
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.CustomError, Map<String, Object?>?>(
+        .put(_i4.Serializer.define<_i3.CustomError, Map<String, Object?>?>(
       serialize: ($value) => {
         r'message': $value.message,
         r'additionalInfo': _i4.Serializers.instance.serialize<_i7.JsonMap>(
@@ -159,18 +159,18 @@ final class ThrowsCustomErrorWithStackTraceTarget
         ),
       },
       deserialize: ($serialized) {
-        return _i6.CustomError();
+        return _i3.CustomError();
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.CustomErrorToFromJson, Map<String, Object?>>(
+        _i4.Serializer.define<_i3.CustomErrorToFromJson, Map<String, Object?>>(
       serialize: ($value) => $value.toJson(),
       deserialize: ($serialized) {
-        return _i6.CustomErrorToFromJson.fromJson($serialized);
+        return _i3.CustomErrorToFromJson.fromJson($serialized);
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.CustomErrorWithStackTrace, Map<String, Object?>?>(
+        _i3.CustomErrorWithStackTrace, Map<String, Object?>?>(
       serialize: ($value) => {
         r'stackTrace':
             _i4.Serializers.instance.serialize<StackTrace>($value.stackTrace),
@@ -178,13 +178,13 @@ final class ThrowsCustomErrorWithStackTraceTarget
         r'additionalInfo': $value.additionalInfo,
       },
       deserialize: ($serialized) {
-        return _i6.CustomErrorWithStackTrace(
+        return _i3.CustomErrorWithStackTrace(
             stackTrace: _i4.Serializers.instance
                 .deserialize<StackTrace?>($serialized?[r'stackTrace']));
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.CustomException, Map<String, Object?>?>(
+        .put(_i4.Serializer.define<_i3.CustomException, Map<String, Object?>?>(
       serialize: ($value) => {
         r'message': $value.message,
         r'additionalInfo': _i4.Serializers.instance.serialize<_i7.JsonMap>(
@@ -193,47 +193,47 @@ final class ThrowsCustomErrorWithStackTraceTarget
         ),
       },
       deserialize: ($serialized) {
-        return _i6.CustomException();
+        return _i3.CustomException();
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.CustomExceptionToFromJson, Map<String, Object?>>(
+        _i3.CustomExceptionToFromJson, Map<String, Object?>>(
       serialize: ($value) => $value.toJson(),
       deserialize: ($serialized) {
-        return _i6.CustomExceptionToFromJson.fromJson($serialized);
+        return _i3.CustomExceptionToFromJson.fromJson($serialized);
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
-        return _i5.BadRequestException(($serialized[r'message'] as String));
+        return _i6.BadRequestException(($serialized[r'message'] as String));
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i5.InternalServerException, Map<String, Object?>>(
+        _i6.InternalServerException, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
-        return _i5.InternalServerException(($serialized[r'message'] as String));
+        return _i6.InternalServerException(($serialized[r'message'] as String));
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>?>(
+        _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>?>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
-        return _i5.UnauthorizedException(
+        return _i6.UnauthorizedException(
             (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i3.SerializationException, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.SerializationException, Map<String, Object?>>(
       serialize: ($value) => {
         r'message': $value.message,
         r'offset': $value.offset,
         r'source': $value.source,
       },
       deserialize: ($serialized) {
-        return _i3.SerializationException(($serialized[r'message'] as String));
+        return _i5.SerializationException(($serialized[r'message'] as String));
       },
     ));
     _i4.Serializers.instance.put(

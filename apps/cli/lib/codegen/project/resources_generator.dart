@@ -1,9 +1,9 @@
 import 'dart:collection';
 
+import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:api_celest/ast.dart';
 import 'package:code_builder/code_builder.dart';
 
 const _header = [
@@ -39,7 +39,7 @@ final class ResourcesGenerator {
   });
 
   final _classBuilders = <String, ClassBuilder>{};
-  ClassBuilder _beginClass(String name) {
+  ClassBuilder _beginClass(String name, String? oldName) {
     final cached = _classBuilders[name];
     if (cached != null) {
       return cached;
@@ -47,17 +47,19 @@ final class ResourcesGenerator {
 
     // TODO(dnys1): Remove in 0.3.0
     // Adds a typedef for the old name to avoid breaking changes.
-    final typedef = TypeDef(
-      (b) => b
-        ..annotations.add(
-          DartTypes.core.deprecated.newInstance([
-            literalString('Use `$name` instead.'),
-          ]),
-        )
-        ..name = name.toLowerCase()
-        ..definition = refer(name),
-    );
-    _library.body.add(typedef);
+    if (oldName != null) {
+      final typedef = TypeDef(
+        (b) => b
+          ..annotations.add(
+            DartTypes.core.deprecated.newInstance([
+              literalString('Use `$name` instead.'),
+            ]),
+          )
+          ..name = oldName
+          ..definition = refer(name),
+      );
+      _library.body.add(typedef);
+    }
 
     final builder = ClassBuilder()
       ..name = name
@@ -126,7 +128,7 @@ final class ResourcesGenerator {
   }
 
   void _generateEnv(Iterable<EnvironmentVariable> envVars) {
-    final env = _beginClass('Env');
+    final env = _beginClass('env', 'Env');
     for (final envVar in envVars) {
       final fieldName = envVar.envName.camelCase;
       env.fields.add(
@@ -141,12 +143,12 @@ final class ResourcesGenerator {
             }).code,
         ),
       );
-      _allResources[envVar] = 'Env.$fieldName';
+      _allResources[envVar] = 'env.$fieldName';
     }
   }
 
   void _generateContext() {
-    final context = _beginClass('Context')
+    final context = _beginClass('context', null)
       ..constructors.add(
         Constructor(
           (c) => c

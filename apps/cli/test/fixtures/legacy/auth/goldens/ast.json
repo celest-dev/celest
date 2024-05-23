@@ -27,16 +27,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 120,
-                  "uri": "lib.dart",
-                  "line": 4,
-                  "column": 30
-                },
-                "end": {
                   "offset": 124,
                   "uri": "lib.dart",
-                  "line": 4,
-                  "column": 34
+                  "line": 5,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 128,
+                  "uri": "lib.dart",
+                  "line": 5,
+                  "column": 31
                 },
                 "text": "user"
               },
@@ -69,15 +69,15 @@
               "$": "ApiAuthenticated",
               "location": {
                 "start": {
-                  "offset": 38,
+                  "offset": 45,
                   "uri": "lib.dart",
-                  "line": 2,
+                  "line": 3,
                   "column": 0
                 },
                 "end": {
-                  "offset": 52,
+                  "offset": 59,
                   "uri": "lib.dart",
-                  "line": 2,
+                  "line": 3,
                   "column": 14
                 },
                 "text": "@authenticated"
@@ -87,15 +87,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 66,
+              "offset": 73,
               "uri": "lib.dart",
-              "line": 3,
+              "line": 4,
               "column": 13
             },
             "end": {
-              "offset": 87,
+              "offset": 94,
               "uri": "lib.dart",
-              "line": 3,
+              "line": 4,
               "column": 34
             },
             "text": "sayHelloAuthenticated"
@@ -118,16 +118,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 226,
+                  "offset": 234,
                   "uri": "lib.dart",
-                  "line": 11,
-                  "column": 22
+                  "line": 13,
+                  "column": 19
                 },
                 "end": {
-                  "offset": 230,
+                  "offset": 238,
                   "uri": "lib.dart",
-                  "line": 11,
-                  "column": 26
+                  "line": 13,
+                  "column": 23
                 },
                 "text": "user"
               },
@@ -160,15 +160,15 @@
               "$": "ApiPublic",
               "location": {
                 "start": {
-                  "offset": 166,
+                  "offset": 177,
                   "uri": "lib.dart",
-                  "line": 9,
+                  "line": 11,
                   "column": 0
                 },
                 "end": {
-                  "offset": 173,
+                  "offset": 184,
                   "uri": "lib.dart",
-                  "line": 9,
+                  "line": 11,
                   "column": 7
                 },
                 "text": "@public"
@@ -178,15 +178,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 187,
+              "offset": 198,
               "uri": "lib.dart",
-              "line": 10,
+              "line": 12,
               "column": 13
             },
             "end": {
-              "offset": 201,
+              "offset": 212,
               "uri": "lib.dart",
-              "line": 10,
+              "line": 12,
               "column": 27
             },
             "text": "sayHelloPublic"
@@ -209,16 +209,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 318,
+                  "offset": 330,
                   "uri": "lib.dart",
-                  "line": 17,
-                  "column": 22
+                  "line": 20,
+                  "column": 19
                 },
                 "end": {
-                  "offset": 322,
+                  "offset": 334,
                   "uri": "lib.dart",
-                  "line": 17,
-                  "column": 26
+                  "line": 20,
+                  "column": 23
                 },
                 "text": "user"
               },
@@ -250,15 +250,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 285,
+              "offset": 300,
               "uri": "lib.dart",
-              "line": 16,
+              "line": 19,
               "column": 13
             },
             "end": {
-              "offset": 293,
+              "offset": 308,
               "uri": "lib.dart",
-              "line": 16,
+              "line": 19,
               "column": 21
             },
             "text": "sayHello"
@@ -348,16 +348,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 117,
-                  "uri": "authenticated_lib.dart",
-                  "line": 6,
-                  "column": 30
-                },
-                "end": {
                   "offset": 121,
                   "uri": "authenticated_lib.dart",
-                  "line": 6,
-                  "column": 34
+                  "line": 7,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 125,
+                  "uri": "authenticated_lib.dart",
+                  "line": 7,
+                  "column": 31
                 },
                 "text": "user"
               },
@@ -389,15 +389,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 76,
+              "offset": 83,
               "uri": "authenticated_lib.dart",
-              "line": 5,
+              "line": 6,
               "column": 13
             },
             "end": {
-              "offset": 84,
+              "offset": 91,
               "uri": "authenticated_lib.dart",
-              "line": 5,
+              "line": 6,
               "column": 21
             },
             "text": "sayHello"
@@ -487,16 +487,16 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 102,
-                  "uri": "public_lib.dart",
-                  "line": 6,
-                  "column": 22
-                },
-                "end": {
                   "offset": 106,
                   "uri": "public_lib.dart",
-                  "line": 6,
-                  "column": 26
+                  "line": 7,
+                  "column": 19
+                },
+                "end": {
+                  "offset": 110,
+                  "uri": "public_lib.dart",
+                  "line": 7,
+                  "column": 23
                 },
                 "text": "user"
               },
@@ -528,15 +528,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 69,
+              "offset": 76,
               "uri": "public_lib.dart",
-              "line": 5,
+              "line": 6,
               "column": 13
             },
             "end": {
-              "offset": 77,
+              "offset": 84,
               "uri": "public_lib.dart",
-              "line": 5,
+              "line": 6,
               "column": 21
             },
             "text": "sayHello"

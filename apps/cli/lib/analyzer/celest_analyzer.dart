@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
@@ -18,6 +17,7 @@ import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -38,7 +38,8 @@ final class CelestAnalyzer
   final List<CelestAnalysisError> _errors = [];
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
-  late CelestProjectResolver _resolver;
+  CelestProjectResolver? _resolver;
+  CelestProjectResolver get resolver => _resolver!;
 
   @override
   void reportError(
@@ -60,26 +61,25 @@ final class CelestAnalyzer
     // TODO:
   }
 
-  Future<void> init() async {
+  Future<void> init({required bool migrateProject}) async {
     _errors.clear();
     if (_lastAnalyzed != projectPaths.projectRoot) {
       _initFuture = null;
       _lastAnalyzed = projectPaths.projectRoot;
+      _resolver = null;
       _logger.finest('Analyzing new project. Clearing caches.');
       typeHelper.reset();
       reset();
     }
-    await Future.wait([
-      _initFuture ??= _init(),
-      _initCustomTypes(),
-    ]);
-
-    _resolver = LegacyCelestProjectResolver(
+    _resolver ??= LegacyCelestProjectResolver(
+      migrateProject: migrateProject,
       errorReporter: this,
-      customExceptionTypes: customExceptionTypes,
-      customModelTypes: customModelTypes,
       context: context,
     );
+    await Future.wait([
+      _initFuture ??= _init(),
+      _resolver!.resolveCustomTypes(),
+    ]);
   }
 
   Future<void>? _initFuture;
@@ -92,11 +92,12 @@ final class CelestAnalyzer
             .getLibraryByUri('package:celest_core/celest_core.dart')
         as LibraryElementResult;
     typeHelper.coreTypes = CoreTypes(
+      typeProvider: dartCore.element.typeProvider,
       coreExceptionType: dartCore.getClassType('Exception'),
       coreErrorType: dartCore.getClassType('Error'),
       coreBigIntType: dartCore.getClassType('BigInt'),
-      coreDateTimeType: dartCore.getClassType('DateTime'),
-      coreDurationType: dartCore.getClassType('Duration'),
+      dateTimeType: dartCore.getClassType('DateTime'),
+      durationType: dartCore.getClassType('Duration'),
       coreRegExpType: dartCore.getClassType('RegExp'),
       coreStackTraceType: dartCore.getClassType('StackTrace'),
       coreUriType: dartCore.getClassType('Uri'),
@@ -110,117 +111,20 @@ final class CelestAnalyzer
   }
 
   @override
-  Set<InterfaceElement> customModelTypes = const {};
+  Set<InterfaceElement> get customModelTypes =>
+      _resolver?.customModelTypes ?? const {};
 
   @override
-  Set<InterfaceElement> customExceptionTypes = const {};
-
-  Future<void> _initCustomTypes() async {
-    final [customModelTypes, customExceptionTypes] = await Future.wait([
-      _collectCustomTypes(CustomType.model),
-      _collectCustomTypes(CustomType.exception),
-    ]);
-    this.customModelTypes = customModelTypes;
-    this.customExceptionTypes = customExceptionTypes;
-    typeHelper.overrides.clear();
-    for (final element in customExceptionTypes.followedBy(customModelTypes)) {
-      final isOverride =
-          element.metadata.any((annotation) => annotation.isOverride);
-      if (!isOverride) {
-        continue;
-      }
-      if (element is! ExtensionTypeElement) {
-        reportError(
-          'Only extension types may be marked as overrides',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      final typeErasure = element.typeErasure;
-      if (typeErasure is! InterfaceType) {
-        reportError(
-          'Only interface types may be overridden',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      if (typeErasure.element is ExtensionTypeElement) {
-        reportError(
-          'Extension types may not be overridden',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      final erasureSource = typeErasure.element.library.source.uri;
-      if (erasureSource case Uri(scheme: 'dart', path: 'core')) {
-        reportError(
-          'Overriding types from `dart:core` is not allowed',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      final overridesCustomType = switch (
-          context.currentSession.uriConverter.uriToPath(erasureSource)) {
-        final path? => p.isWithin(projectPaths.projectRoot, path),
-        _ => false,
-      };
-      if (overridesCustomType) {
-        reportError(
-          'Overriding custom types is not allowed',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      if (typeHelper.overrides[typeErasure] case final existing?) {
-        reportError(
-          'The type ${typeErasure.element.name} is already overridden by '
-          '${existing.element.name} (${existing.element.library.source.uri}).',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      // TODO(dnys1): This shouldn't be required but having an `on` clause with
-      // an exttype which doesn't implement the interface causes an error.
-      if (!element.thisType.implementsRepresentationType) {
-        reportError(
-          'Custom overrides must implement their representation type',
-          location: element.sourceLocation,
-        );
-        continue;
-      }
-      typeHelper.overrides[typeErasure] = element.thisType;
-    }
-  }
-
-  Future<Set<InterfaceElement>> _collectCustomTypes(CustomType type) async {
-    final files = <File>[];
-    final dir = fileSystem.directory(type.dir);
-    if (dir.existsSync()) {
-      files.addAll(
-        await dir.list(recursive: true).whereType<File>().toList(),
-      );
-    }
-    final legacyBarrelFile = fileSystem.file(type.legacyPath);
-    if (legacyBarrelFile.existsSync()) {
-      files.add(legacyBarrelFile);
-    }
-    final customTypes = <InterfaceElement>{};
-    await Future.wait([
-      for (final file in files)
-        resolveLibrary(file.path).then((library) {
-          final types = namespaceForLibrary(library.element);
-          customTypes.addAll(types);
-        }),
-    ]);
-    return customTypes;
-  }
+  Set<InterfaceElement> get customExceptionTypes =>
+      _resolver?.customExceptionTypes ?? const {};
 
   String? _lastAnalyzed;
 
   Future<CelestAnalysisResult> analyzeProject({
+    bool migrateProject = false,
     bool updateResources = true,
   }) async {
-    await init();
+    await init(migrateProject: migrateProject);
     if (_errors.isNotEmpty) {
       return CelestAnalysisResult.failure(_errors);
     }
@@ -235,21 +139,30 @@ final class CelestAnalyzer
       errorReporter: reportError,
     );
     _project.envVars.replace(
-      await _resolver.resolveEnvironmentVariables(),
+      await resolver.resolveEnvironmentVariables(),
     );
 
     // Regenerate resources.dart before analyzing remaining project files.
     // TODO(dnys1): Find a better way to do this.
     if (updateResources) {
       _logger.fine('Regenerating resources.dart');
-      await fileSystem.file(projectPaths.resourcesDart).writeAsString(
-            CloudCodeGenerator.generateResourcesDart(_project.build()),
-          );
+      final resourcesDart = fileSystem.file(projectPaths.resourcesDart);
+      if (!resourcesDart.existsSync()) {
+        await resourcesDart.create(recursive: true);
+      }
+      await resourcesDart.writeAsString(
+        CloudCodeGenerator.generateResourcesDart(_project.build()),
+      );
       await celestProject.invalidate({projectPaths.resourcesDart});
     }
 
-    final hasAuth = await _collectAuth();
+    final hasAuth = await _collectAuth(migrateProject: migrateProject);
     await _collectApis(hasAuth: hasAuth);
+
+    if (migrateProject) {
+      await _applyMigrations();
+    }
+
     return CelestAnalysisResult.success(
       project: _project.build(),
       errors: _errors,
@@ -265,6 +178,23 @@ final class CelestAnalyzer
     }
     _logger.finer('Found project file at $projectFilePath');
     final projectLibrary = await resolveLibrary(projectFilePath);
+    final projectErrors = projectLibrary.units
+        .expand((unit) => unit.errors)
+        .where((error) => error.severity == Severity.error)
+        .toList();
+    if (projectErrors.isNotEmpty) {
+      for (final projectError in projectErrors) {
+        reportError(
+          projectError.message,
+          location: projectError.source.toSpan(
+            projectError.problemMessage.offset,
+            projectError.problemMessage.offset +
+                projectError.problemMessage.length,
+          ),
+        );
+      }
+      return null;
+    }
     _logger.finer('Resolved project file');
     typeHelper
       ..typeSystem = projectLibrary.element.typeSystem
@@ -281,7 +211,7 @@ final class CelestAnalyzer
     //     ),
     //   );
     // }
-    return _resolver.resolveProject(projectLibrary: projectLibrary);
+    return resolver.resolveProject(projectLibrary: projectLibrary);
   }
 
   Future<void> _collectApis({
@@ -335,7 +265,7 @@ final class CelestAnalyzer
         }
         continue;
       }
-      final baseApi = await _resolver.resolveApi(
+      final baseApi = await resolver.resolveApi(
         apiFilepath: apiPath,
         apiName: apiName,
         apiLibrary: apiLibraryResult,
@@ -351,11 +281,25 @@ final class CelestAnalyzer
     }
   }
 
-  Future<bool> _collectAuth() async {
+  Future<bool> _collectAuth({required bool migrateProject}) async {
     final authFilepath = projectPaths.authDart;
     final authFile = fileSystem.file(authFilepath);
     if (!authFile.existsSync()) {
-      return false;
+      if (!migrateProject) {
+        return false;
+      }
+      final legacyAuthFile = fileSystem.file(projectPaths.legacyAuthDart);
+      if (!legacyAuthFile.existsSync()) {
+        return false;
+      }
+      await legacyAuthFile.copy(authFilepath);
+      await legacyAuthFile.delete();
+      try {
+        await legacyAuthFile.parent.delete(recursive: false);
+      } on Object {
+        // Do not delete directory if not empty.
+        _logger.finest('Failed to delete legacy auth directory');
+      }
     }
 
     final authLibrary = await resolveLibrary(authFile.path);
@@ -376,7 +320,7 @@ final class CelestAnalyzer
       return false;
     }
 
-    final auth = await _resolver.resolveAuth(
+    final auth = await resolver.resolveAuth(
       authFilepath: authFilepath,
       authLibrary: authLibrary,
     );
@@ -386,6 +330,81 @@ final class CelestAnalyzer
 
     _project.auth.replace(auth);
     return true;
+  }
+
+  Future<void> _applyMigrations() async {
+    if (resolver.pendingEdits.isEmpty) {
+      return;
+    }
+
+    _logger.fine('Applying ${resolver.pendingEdits.length} migrations');
+
+    final fileChanges = <Future<void>>[];
+    for (final entry in resolver.pendingEdits.entries) {
+      final path = entry.key;
+
+      // Sort edits in reserve order to avoid offset changes.
+      final edits = entry.value.sorted((a, b) {
+        return -a.offset.compareTo(b.offset);
+      });
+
+      _logger.finest('Applying migrations to $path: $edits');
+
+      final file = context.currentSession.getFile(path) as FileResult;
+      var source = file.content;
+
+      for (final edit in edits) {
+        source = source.replaceRange(
+          edit.offset,
+          edit.offset + edit.length,
+          edit.replacement,
+        );
+      }
+
+      const celestImport = 'package:celest/celest.dart';
+      if (!source.contains(celestImport)) {
+        var offset = source.indexOf('import ');
+        if (offset == -1) {
+          final libraryOffset = source.indexOf('library');
+          if (libraryOffset != -1) {
+            offset = source.indexOf(';', libraryOffset) + 1;
+          } else {
+            offset = 0;
+          }
+        }
+        source = source.replaceRange(
+          offset,
+          offset,
+          "import '$celestImport';\n",
+        );
+      }
+
+      // Replace resources.dart imports
+      source = source.replaceFirst(
+        "../resources.dart';",
+        "../generated/resources.dart';",
+      );
+
+      fileChanges.add(fileSystem.file(path).writeAsString(source));
+    }
+
+    final oldResources = fileSystem
+        .directory(projectPaths.projectRoot)
+        .childFile('resources.dart');
+    if (oldResources.existsSync()) {
+      fileChanges.add(oldResources.delete());
+    }
+
+    await Future.wait(fileChanges);
+
+    _logger.finest('Applied migrations to disk');
+
+    for (final path in pendingEdits.keys) {
+      context.changeFile(path);
+    }
+    final changes = await context.applyPendingFileChanges();
+
+    _logger.finest('Applied changes in analyzer: $changes');
   }
 }
 

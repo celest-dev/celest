@@ -2,8 +2,10 @@
 /// deserializable.
 library;
 
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models/records.dart';
 
+@cloud
 ({
   String field,
   String anotherField,
@@ -14,6 +16,7 @@ import 'package:celest_backend/models/records.dart';
   }) value,
 }) =>
     value;
+@cloud
 Future<
     ({
       String field,
@@ -26,15 +29,18 @@ Future<
 }) async =>
     value;
 
+@cloud
 NamedFieldsRecord aliasedNamedFields({
   required NamedFieldsRecord value,
 }) =>
     value;
+@cloud
 Future<NamedFieldsRecord> asyncAliasedNamedFields({
   required NamedFieldsRecord value,
 }) async =>
     value;
 
+@cloud
 ({
   ({
     String field,
@@ -52,6 +58,7 @@ Future<NamedFieldsRecord> asyncAliasedNamedFields({
       nonAliased: nonAliased,
       aliased: aliased,
     );
+@cloud
 Future<
     ({
       ({
@@ -71,10 +78,14 @@ Future<
       aliased: aliased,
     );
 
+@cloud
 Nested nested(Nested value) => value;
+@cloud
 Future<Nested> asyncNested(Nested value) async => value;
 
+@cloud
 NullableNested? nullableNested(NullableNested? value) => value;
+@cloud
 Future<NullableNested?> asyncNullableNested(NullableNested? value) async =>
     value;
 

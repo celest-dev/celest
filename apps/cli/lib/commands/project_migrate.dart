@@ -3,17 +3,17 @@ import 'package:celest_cli/init/project_migrator.dart';
 import 'package:celest_cli/src/context.dart';
 
 base mixin Migrate on Configure {
-  Future<void> migrateProject() async {
+  Future<bool> migrateProject() async {
     logger.finest(
       'Migrating project at "${projectPaths.projectRoot}"...',
     );
-    await performance.trace('StartCommand', 'migrateProject', () async {
+    return performance.trace('StartCommand', 'migrateProject', () async {
       // TODO(dnys1): Improve this logic. Save in YAML?
       final project = await celestProject.database.findProjectByPath(
         projectPaths.projectRoot,
       );
       final projectName = project?.name;
-      await ProjectMigrator(
+      return ProjectMigrator(
         appRoot: projectPaths.appRoot,
         projectRoot: projectPaths.projectRoot,
         projectName: projectName,

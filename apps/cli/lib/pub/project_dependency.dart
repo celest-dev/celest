@@ -56,11 +56,11 @@ final class ProjectDependency {
     ),
   );
 
-  static final Map<String, Dependency> dependencies = {
+  static final Map<String, HostedDependency> dependencies = {
     celest.name: celest.pubDependency,
   };
 
-  static final Map<String, Dependency> devDependencies = {
+  static final Map<String, HostedDependency> devDependencies = {
     lints.name: lints.pubDependency,
     test.name: test.pubDependency,
   };
@@ -74,7 +74,16 @@ final class ProjectDependency {
         ),
       _ => unreachable(),
     };
-    return (expected[name] as HostedDependency).version ==
-        (actual[name] as HostedDependency?)?.version;
+    final expectedVersion = expected[name]!.version;
+    return switch (actual[name]) {
+      // Add the dependency
+      null => false,
+
+      // Compare to existing constraint
+      final HostedDependency actual => expectedVersion == actual.version,
+
+      // Don't overwrite path/git dependencies
+      _ => true,
+    };
   }
 }
