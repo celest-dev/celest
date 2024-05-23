@@ -16,7 +16,15 @@ final class AliasedShapeResultsTarget extends _i1.CloudFunctionTarget {
   String get name => 'aliasedShapeResults';
 
   @override
-  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+  String get method => 'POST';
+
+  @override
+  Future<_i1.CelestResponse> handle(
+    Map<String, Object?> request, {
+    required Map<String, String> context,
+    required Map<String, List<String>> headers,
+    required Map<String, List<String>> queryParameters,
+  }) async {
     try {
       final response = _i2.aliasedShapeResults(
           (request[r'shapes'] as Iterable<Object?>)
@@ -113,16 +121,16 @@ final class AliasedShapeResultsTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
-    } on _i7.InternalServerException catch (e) {
-      const statusCode = 400;
+    } on _i7.InternalServerError catch (e) {
+      const statusCode = 500;
       print('$statusCode $e');
       final error =
-          _i3.Serializers.instance.serialize<_i7.InternalServerException>(e);
+          _i3.Serializers.instance.serialize<_i7.InternalServerError>(e);
       return (
         statusCode: statusCode,
         body: {
           'error': {
-            'code': r'InternalServerException',
+            'code': r'InternalServerError',
             'details': error,
           }
         }
@@ -441,11 +449,11 @@ final class AliasedShapeResultsTarget extends _i1.CloudFunctionTarget {
         return _i7.BadRequestException(($serialized[r'message'] as String));
       },
     ));
-    _i3.Serializers.instance.put(_i3.Serializer.define<
-        _i7.InternalServerException, Map<String, Object?>>(
+    _i3.Serializers.instance.put(
+        _i3.Serializer.define<_i7.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
-        return _i7.InternalServerException(($serialized[r'message'] as String));
+        return _i7.InternalServerError(($serialized[r'message'] as String));
       },
     ));
     _i3.Serializers.instance.put(

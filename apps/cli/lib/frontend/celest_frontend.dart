@@ -332,8 +332,11 @@ final class CelestFrontend implements Closeable {
             }
             logger.finest('Performing reload with mode: ${restartMode.name}');
             currentProject = project;
-            final generatedOutputs = await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
+            final generatedOutputs = await _generateBackendCode(
+              project: project,
+              resolvedProject: resolvedProject,
+            );
             final LocalDeployedProject projectOutputs;
             try {
               projectOutputs = await _startLocalApi(
@@ -507,8 +510,11 @@ final class CelestFrontend implements Closeable {
             }
 
             currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
-            await _generateBackendCode(project);
             final resolvedProject = await _resolveProject(project);
+            await _generateBackendCode(
+              project: project,
+              resolvedProject: resolvedProject,
+            );
 
             var iteration = 0;
             final timer = Timer.periodic(const Duration(seconds: 10), (_) {
@@ -575,11 +581,17 @@ final class CelestFrontend implements Closeable {
   /// Generates code for [project] and writes to the output directory.
   ///
   /// Returns the list of paths generated.
-  Future<List<String>> _generateBackendCode(ast.Project project) =>
+  Future<List<String>> _generateBackendCode({
+    required ast.Project project,
+    required ast.ResolvedProject resolvedProject,
+  }) =>
       performance.trace('CelestFrontend', 'generateBackendCode', () async {
         logger.fine('Generating backend code...');
-        final codeGenerator = CloudCodeGenerator();
-        project.accept(codeGenerator);
+        final codeGenerator = CloudCodeGenerator(
+          project: project,
+          resolvedProject: resolvedProject,
+        );
+        final outputs = codeGenerator.generate();
         final outputsDir = Directory(projectPaths.outputsDir);
         if (outputsDir.existsSync() && !_didFirstCompile) {
           await outputsDir.delete(recursive: true);
@@ -588,8 +600,7 @@ final class CelestFrontend implements Closeable {
           throw const CancellationException('Celest was stopped');
         }
         await Future.wait([
-          for (final MapEntry(key: path, value: contents)
-              in codeGenerator.fileOutputs.entries)
+          for (final MapEntry(key: path, value: contents) in outputs.entries)
             Future<void>(() async {
               assert(p.isAbsolute(path));
               final file = fileSystem.file(path);

@@ -14,7 +14,15 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionTarget {
   String get name => 'callsThrowsBaseException';
 
   @override
-  Future<_i1.CelestResponse> handle(Map<String, Object?> request) async {
+  String get method => 'POST';
+
+  @override
+  Future<_i1.CelestResponse> handle(
+    Map<String, Object?> request, {
+    required Map<String, String> context,
+    required Map<String, List<String>> headers,
+    required Map<String, List<String>> queryParameters,
+  }) async {
     try {
       _i2.callsThrowsBaseException();
       return (statusCode: 200, body: {'response': null});
@@ -84,16 +92,16 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionTarget {
           }
         }
       );
-    } on _i6.InternalServerException catch (e) {
-      const statusCode = 400;
+    } on _i6.InternalServerError catch (e) {
+      const statusCode = 500;
       print('$statusCode $e');
       final error =
-          _i4.Serializers.instance.serialize<_i6.InternalServerException>(e);
+          _i4.Serializers.instance.serialize<_i6.InternalServerError>(e);
       return (
         statusCode: statusCode,
         body: {
           'error': {
-            'code': r'InternalServerException',
+            'code': r'InternalServerError',
             'details': error,
           }
         }
@@ -166,11 +174,11 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionTarget {
         return _i6.BadRequestException(($serialized[r'message'] as String));
       },
     ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.InternalServerException, Map<String, Object?>>(
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => {r'message': $value.message},
       deserialize: ($serialized) {
-        return _i6.InternalServerException(($serialized[r'message'] as String));
+        return _i6.InternalServerError(($serialized[r'message'] as String));
       },
     ));
     _i4.Serializers.instance.put(

@@ -1,0 +1,175 @@
+{
+  "name": "api",
+  "apis": {
+    "http_status": {
+      "name": "http_status",
+      "functions": {
+        "ok": {
+          "name": "ok",
+          "route": "/http-status/ok",
+          "apiName": "http_status",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        },
+        "created": {
+          "name": "created",
+          "route": "/http-status/created",
+          "apiName": "http_status",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 201,
+            "errorStatuses": {}
+          }
+        },
+        "accepted": {
+          "name": "accepted",
+          "route": "/http-status/accepted",
+          "apiName": "http_status",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 202,
+            "errorStatuses": {}
+          }
+        },
+        "badRequest": {
+          "name": "badRequest",
+          "route": "/http-status/bad-request",
+          "apiName": "http_status",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 400,
+            "errorStatuses": {}
+          }
+        },
+        "internalServerError": {
+          "name": "internalServerError",
+          "route": "/http-status/internal-server-error",
+          "apiName": "http_status",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 500,
+            "errorStatuses": {}
+          }
+        }
+      }
+    },
+    "http_method": {
+      "name": "http_method",
+      "functions": {
+        "get": {
+          "name": "get",
+          "route": "/http-method/get",
+          "apiName": "http_method",
+          "envVars": [],
+          "httpConfig": {
+            "method": "GET",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        },
+        "post": {
+          "name": "post",
+          "route": "/http-method/post",
+          "apiName": "http_method",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        },
+        "put": {
+          "name": "put",
+          "route": "/http-method/put",
+          "apiName": "http_method",
+          "envVars": [],
+          "httpConfig": {
+            "method": "PUT",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        },
+        "delete": {
+          "name": "delete",
+          "route": "/http-method/delete",
+          "apiName": "http_method",
+          "envVars": [],
+          "httpConfig": {
+            "method": "DELETE",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        },
+        "patch": {
+          "name": "patch",
+          "route": "/http-method/patch",
+          "apiName": "http_method",
+          "envVars": [],
+          "httpConfig": {
+            "method": "PATCH",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        }
+      }
+    },
+    "http_query": {
+      "name": "http_query",
+      "functions": {
+        "query": {
+          "name": "query",
+          "route": "/http-query/query",
+          "apiName": "http_query",
+          "envVars": []
+        }
+      }
+    },
+    "http_errors": {
+      "name": "http_errors",
+      "functions": {
+        "httpErrors": {
+          "name": "httpErrors",
+          "route": "/http-errors/http-errors",
+          "apiName": "http_errors",
+          "envVars": [],
+          "httpConfig": {
+            "method": "POST",
+            "statusCode": 200,
+            "errorStatuses": {
+              "{\"symbol\":\"ForbiddenException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 403,
+              "{\"symbol\":\"CustomBadRequestException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 412,
+              "{\"symbol\":\"UnauthorizedException\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 401,
+              "{\"symbol\":\"NotFoundException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 404,
+              "{\"symbol\":\"InternalServerError\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 404
+            }
+          }
+        }
+      }
+    },
+    "http_header": {
+      "name": "http_header",
+      "functions": {
+        "headers": {
+          "name": "headers",
+          "route": "/http-header/headers",
+          "apiName": "http_header",
+          "envVars": []
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.0",
+    "enabledExperiments": [],
+    "flutterSdkVersion": "3.22.0"
+  }
+}

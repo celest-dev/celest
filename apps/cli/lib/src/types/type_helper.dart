@@ -33,7 +33,7 @@ final class CoreTypes implements TypeProvider {
     required this.coreUriDataType,
     required this.typedDataUint8ListType,
     required this.badRequestExceptionType,
-    required this.internalServerExceptionType,
+    required this.internalServerErrorType,
     required this.userType,
   }) : _typeProvider = typeProvider;
 
@@ -51,7 +51,7 @@ final class CoreTypes implements TypeProvider {
   final DartType typedDataUint8ListType;
 
   final DartType badRequestExceptionType;
-  final DartType internalServerExceptionType;
+  final DartType internalServerErrorType;
   final DartType userType;
 
   @override

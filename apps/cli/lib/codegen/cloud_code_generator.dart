@@ -10,9 +10,13 @@ import 'package:meta/meta.dart';
 
 final class CloudCodeGenerator extends AstVisitor<void> {
   CloudCodeGenerator({
+    required this.project,
+    required this.resolvedProject,
     @visibleForTesting this.pathStrategy = PathStrategy.robust,
   });
 
+  final Project project;
+  final ResolvedProject resolvedProject;
   final PathStrategy pathStrategy;
 
   /// A map of generated files to their contents.
@@ -30,6 +34,11 @@ final class CloudCodeGenerator extends AstVisitor<void> {
       prefixingStrategy: PrefixingStrategy.none,
       pathStrategy: PathStrategy.pretty,
     );
+  }
+
+  Map<String, String> generate() {
+    visitProject(project);
+    return fileOutputs;
   }
 
   @override
@@ -56,6 +65,8 @@ final class CloudCodeGenerator extends AstVisitor<void> {
       final generator = EntrypointGenerator(
         api: api,
         function: function,
+        httpConfig: resolvedProject
+            .apis[api.name]!.functions[function.name]!.httpConfig,
         outputDir: outputDir,
       );
       final entrypoint = generator.generate();

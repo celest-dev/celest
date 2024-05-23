@@ -2,15 +2,16 @@ import 'dart:collection';
 
 import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
+import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/serialization/from_string_generator.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:api_celest/ast.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 
@@ -18,11 +19,13 @@ final class EntrypointGenerator {
   EntrypointGenerator({
     required this.api,
     required this.function,
+    this.httpConfig,
     required this.outputDir,
   });
 
   final Api api;
   final CloudFunction function;
+  final ResolvedHttpConfig? httpConfig;
   final String outputDir;
 
   late final String projectRoot = projectPaths.projectRoot;
@@ -35,6 +38,109 @@ final class EntrypointGenerator {
   );
   final _anonymousRecordTypes = <String, RecordType>{};
 
+  Expression _decodeReference(
+    CloudFunctionParameter param,
+    NodeReference reference,
+  ) {
+    Expression paramExp;
+    switch (reference.type) {
+      case NodeType.environmentVariable:
+        paramExp = DartTypes.io.platform
+            .property('environment')
+            .index(literalString(reference.name, raw: true))
+            .nullChecked;
+        final toType = switch (param.type.symbol) {
+          'int' => DartTypes.core.int,
+          'double' => DartTypes.core.double,
+          'bool' => DartTypes.core.bool,
+          'num' => DartTypes.core.num,
+          'Uri' => DartTypes.core.uri,
+          'String' => null,
+          _ => unreachable(),
+        };
+        if (toType != null) {
+          paramExp = toType.property('parse').call([paramExp]);
+        }
+      case NodeType.userContext:
+        final paramJson = refer('context').index(
+          literalString(raw: true, reference.name.toLowerCase()),
+        );
+        paramExp = DartTypes.convert.jsonDecode.call([
+          paramJson.nullChecked,
+        ]);
+        if (param.type.isNullableOrFalse) {
+          paramExp =
+              paramJson.equalTo(literalNull).conditional(literalNull, paramExp);
+        }
+        paramExp = jsonGenerator.fromJson(
+          typeHelper
+              .toReference(typeHelper.coreTypes.userType)
+              .withNullability(param.type.isNullableOrFalse),
+          paramExp,
+        );
+
+      case NodeType.httpHeader || NodeType.httpQuery:
+        final map = reference.type == NodeType.httpHeader
+            ? 'headers'
+            : 'queryParameters';
+        var fromMap = refer(map).index(literalString(param.name));
+        final isNullable = param.type.isNullableOrFalse;
+        final (toType, isList) = switch (param.type.toTypeReference) {
+          TypeReference(:final types) when types.isNotEmpty => (
+              types.first,
+              true
+            ),
+          final type => (type, false),
+        };
+
+        var serialized = fromMap;
+        if (isList) {
+          serialized = refer('el');
+        } else {
+          serialized = serialized.nullChecked.property('first');
+        }
+        final deserialized = fromString(
+          toType,
+          serialized,
+          defaultValue: param.defaultTo,
+        );
+        if (!isList) {
+          if (isNullable) {
+            return fromMap
+                .equalTo(literalNull)
+                .conditional(literalNull, deserialized);
+          }
+          return deserialized;
+        }
+        if (!isNullable) {
+          fromMap = fromMap.nullChecked;
+        }
+        paramExp = fromMap
+            .nullableProperty('map', isNullable)
+            .call([
+              Method(
+                (m) => m
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) => p
+                        ..name = 'el'
+                        ..type = DartTypes.core.string,
+                    ),
+                  )
+                  ..lambda = true
+                  ..body = deserialized.code,
+              ).closure,
+            ])
+            .property('toList')
+            .call([]);
+      default:
+        unreachable(
+          'Invalid reference type: ${reference.type}',
+        );
+    }
+    return paramExp;
+  }
+
   Library generate() {
     final library = LibraryBuilder();
     // final middleware = [
@@ -46,79 +152,57 @@ final class EntrypointGenerator {
         ..returns = DartTypes.core.future(DartTypes.celest.celestResponse)
         ..name = 'innerHandle'
         ..types.addAll(function.typeParameters)
-        ..requiredParameters.add(
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
               ..type = typeHelper.toReference(jsonMapType)
               ..name = 'request',
           ),
-        )
+        ])
+        ..optionalParameters.addAll([
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.string,
+              )
+              ..name = 'context'
+              ..named = true
+              ..required = true,
+          ),
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.list(DartTypes.core.string),
+              )
+              ..name = 'headers'
+              ..named = true
+              ..required = true,
+          ),
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.list(DartTypes.core.string),
+              )
+              ..name = 'queryParameters'
+              ..named = true
+              ..required = true,
+          ),
+        ])
         ..modifier = MethodModifier.async
         ..body = Block((b) {
           final functionReference = refer(
             function.name,
             function.location.sourceUrl.toString(),
           );
-          if (function.parameters.any((param) => param.isContextKey)) {
-            final contextMapType = DartTypes.core.map(
-              DartTypes.core.string,
-              DartTypes.core.string,
-            );
-            b.addExpression(
-              declareFinal(r'$context').assign(
-                refer('request')
-                    .index(literalString(raw: true, r'$context'))
-                    .asA(contextMapType.nullable)
-                    .ifNullThen(literalConstMap({})),
-              ),
-            );
-          }
           final positionalParams = <Expression>[];
           final namedParams = <String, Expression>{};
           for (final param in function.parameters) {
             Expression paramExp;
             if (param.references case final reference?) {
-              switch (reference.type) {
-                case NodeType.environmentVariable:
-                  paramExp = DartTypes.io.platform
-                      .property('environment')
-                      .index(literalString(reference.name, raw: true))
-                      .nullChecked;
-                  final toType = switch (param.type.symbol) {
-                    'int' => DartTypes.core.int,
-                    'double' => DartTypes.core.double,
-                    'bool' => DartTypes.core.bool,
-                    'num' => DartTypes.core.num,
-                    'Uri' => DartTypes.core.uri,
-                    'String' => null,
-                    _ => unreachable(),
-                  };
-                  if (toType != null) {
-                    paramExp = toType.property('parse').call([paramExp]);
-                  }
-                case NodeType.userContext:
-                  final paramJson = refer(r'$context').index(
-                    literalString(raw: true, reference.name.toLowerCase()),
-                  );
-                  paramExp = DartTypes.convert.jsonDecode.call([
-                    paramJson.nullChecked,
-                  ]);
-                  if (param.type.isNullableOrFalse) {
-                    paramExp = paramJson
-                        .equalTo(literalNull)
-                        .conditional(literalNull, paramExp);
-                  }
-                  paramExp = jsonGenerator.fromJson(
-                    typeHelper
-                        .toReference(typeHelper.coreTypes.userType)
-                        .withNullability(param.type.isNullableOrFalse),
-                    paramExp,
-                  );
-                default:
-                  unreachable(
-                    'Invalid reference type: ${reference.type}',
-                  );
-              }
+              paramExp = _decodeReference(param, reference);
             } else {
               final fromMap = refer('request').index(
                 literalString(param.name, raw: true),
@@ -156,7 +240,7 @@ final class EntrypointGenerator {
               b.addExpression(response);
               b.addExpression(
                 literalRecord([], {
-                  'statusCode': literalNum(200),
+                  'statusCode': literalNum(httpConfig?.statusCode ?? 200),
                   'body': literalMap({
                     'response': literalNull,
                   }),
@@ -172,13 +256,14 @@ final class EntrypointGenerator {
               );
               b.addExpression(
                 literalRecord([], {
-                  'statusCode': literalNum(200),
+                  'statusCode': literalNum(httpConfig?.statusCode ?? 200),
                   'body': literalMap({
                     'response': result,
                   }),
                 }).returned,
               );
           }
+
           final exceptionTypes = List.of(api.exceptionTypes)
             ..sort((a, b) {
               final dtA = typeHelper.fromReference(a);
@@ -188,21 +273,55 @@ final class EntrypointGenerator {
               // catch blocks should come after more specific catch blocks.
               return typeHelper.typeSystem.isSubtypeOf(dtA, dtB) ? -1 : 1;
             });
+
+          final rawStatusCodes = httpConfig?.errorStatuses.toMap().map(
+                (type, status) => MapEntry(
+                  typeHelper.fromReference(type),
+                  status,
+                ),
+              );
+
+          final exceptionCodes = <Reference, int>{};
+          for (final exceptionType in exceptionTypes) {
+            final dartExceptionType = typeHelper.fromReference(exceptionType);
+
+            var statusCode = httpConfig?.errorStatuses[exceptionType];
+            if (statusCode == null && rawStatusCodes != null) {
+              final relevantExceptionCodes =
+                  SplayTreeMap<ast.DartType, int>((a, b) {
+                if (identical(a, b) || a == b) {
+                  return 0;
+                }
+                // We want the most specific type to be first.
+                return typeHelper.typeSystem.isSubtypeOf(a, b) ? -1 : 1;
+              });
+              rawStatusCodes.forEach((type, statusCode) {
+                if (typeHelper.typeSystem
+                    .isSubtypeOf(dartExceptionType, type)) {
+                  relevantExceptionCodes[type] = statusCode;
+                }
+              });
+              statusCode = relevantExceptionCodes.values.firstOrNull;
+            }
+            statusCode ??= typeHelper.typeSystem.isSubtypeOf(
+              dartExceptionType,
+              typeHelper.coreTypes.coreErrorType,
+            )
+                ? 500
+                : 400;
+
+            exceptionCodes[exceptionType] = statusCode;
+          }
+
           for (final exceptionType in exceptionTypes) {
             b.statements.add(
               Code.scope(
                 (alloc) => '} on ${alloc(exceptionType)} catch (e) {',
               ),
             );
+            final statusCode = exceptionCodes[exceptionType]!;
             b.addExpression(
-              declareConst('statusCode').assign(
-                typeHelper.typeSystem.isSubtypeOf(
-                  typeHelper.fromReference(exceptionType),
-                  typeHelper.coreTypes.coreErrorType,
-                )
-                    ? literalNum(500)
-                    : literalNum(400),
-              ),
+              declareConst('statusCode').assign(literalNum(statusCode)),
             );
             b.addExpression(
               refer('print').call([
@@ -237,8 +356,16 @@ final class EntrypointGenerator {
 
     final Code handleBody;
     if (function.typeParameters.isEmpty) {
-      handleBody =
-          refer('innerHandle').call([refer('request')]).returned.statement;
+      handleBody = refer('innerHandle')
+          .call([
+            refer('request'),
+          ], {
+            'context': refer('context'),
+            'headers': refer('headers'),
+            'queryParameters': refer('queryParameters'),
+          })
+          .returned
+          .statement;
     } else {
       handleBody = Block((b) {
         final request = refer('request');
@@ -281,7 +408,11 @@ final class EntrypointGenerator {
             const Code(' => '),
             refer('innerHandle').call(
               [request],
-              {},
+              {
+                'context': refer('context'),
+                'headers': refer('headers'),
+                'queryParameters': refer('queryParameters'),
+              },
               typeParameters.references,
             ).code,
             const Code(','),
@@ -304,13 +435,45 @@ final class EntrypointGenerator {
         ..returns = DartTypes.core.future(DartTypes.celest.celestResponse)
         ..annotations.add(DartTypes.core.override)
         ..name = 'handle'
-        ..requiredParameters.add(
+        ..requiredParameters.addAll([
           Parameter(
             (p) => p
               ..name = 'request'
               ..type = typeHelper.toReference(jsonMapType),
           ),
-        )
+        ])
+        ..optionalParameters.addAll([
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.string,
+              )
+              ..name = 'context'
+              ..named = true
+              ..required = true,
+          ),
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.list(DartTypes.core.string),
+              )
+              ..name = 'headers'
+              ..named = true
+              ..required = true,
+          ),
+          Parameter(
+            (p) => p
+              ..type = DartTypes.core.map(
+                DartTypes.core.string,
+                DartTypes.core.list(DartTypes.core.string),
+              )
+              ..name = 'queryParameters'
+              ..named = true
+              ..required = true,
+          ),
+        ])
         ..modifier = MethodModifier.async
         ..body = handleBody,
     );
@@ -349,6 +512,15 @@ final class EntrypointGenerator {
               ..type = MethodType.getter
               ..lambda = true
               ..body = literalString(function.name).code,
+          ),
+          Method(
+            (m) => m
+              ..name = 'method'
+              ..annotations.add(DartTypes.core.override)
+              ..returns = DartTypes.core.string
+              ..type = MethodType.getter
+              ..lambda = true
+              ..body = literalString(httpConfig?.method ?? 'POST').code,
           ),
           if (function.typeParameters.isEmpty)
             innerHandle.rebuild(

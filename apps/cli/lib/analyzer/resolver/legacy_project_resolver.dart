@@ -356,6 +356,15 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     return (metadata, isCloud);
   }
 
+  String _applicableHttpMethod({
+    required Iterable<ast.ApiMetadata> apiMetadata,
+    required Iterable<ast.ApiMetadata> functionMetadata,
+  }) {
+    return apiMetadata.whereType<ast.ApiHttpConfig>().firstOrNull?.method ??
+        functionMetadata.whereType<ast.ApiHttpConfig>().firstOrNull?.method ??
+        'POST';
+  }
+
   ast.ApiAuth? _applicableAuth({
     required Iterable<ast.ApiMetadata> apiMetadata,
     required Iterable<ast.ApiMetadata> functionMetadata,
@@ -541,8 +550,6 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
 
         final validHeaderType = switch (parameter.type) {
-          InterfaceType(isDartCoreList: true, typeArguments: [final type]) =>
-            _validHeaderQueryTypes.isExactlyType(type),
           final InterfaceType type =>
             _validHeaderQueryTypes.isExactlyType(type),
           _ => false,
@@ -550,7 +557,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         if (!validHeaderType) {
           reportError(
             'Invalid HTTP header type. The type of an HTTP header parameter must be `String`, `bool`, '
-            '`DateTime`, a number, or a `List` of these.',
+            '`DateTime`, or a number type.',
             location: parameter.sourceLocation,
           );
           return null;
@@ -613,7 +620,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         if (!validQueryType) {
           reportError(
             'Invalid HTTP query type. The type of an HTTP query parameter must be `String`, `bool`, '
-            '`DateTime`, a number, or a `List` of these.',
+            '`DateTime`, a number type, or a `List` of these.',
             location: parameter.sourceLocation,
           );
           return null;
@@ -693,6 +700,15 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           apiMetadata: libraryMetdata,
           functionMetadata: functionMetadata,
         );
+        final applicableHttpMethod = _applicableHttpMethod(
+          apiMetadata: libraryMetdata,
+          functionMetadata: functionMetadata,
+        );
+        final hasBody = switch (applicableHttpMethod) {
+          'GET' || 'HEAD' => false,
+          _ => true,
+        };
+
         final returnType = func.returnType;
         final function = ast.CloudFunction(
           name: func.name,
@@ -758,9 +774,14 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 location: parameter.location,
               );
             }
-            if (parameter.type.isFunctionContext) {
-              return parameter;
+            if (!hasBody && parameter.references == null) {
+              reportError(
+                'Parameters must be mapped with an annotation such as `@httpQuery` '
+                'or `@httpHeader` when the function is a GET or HEAD request.',
+                location: parameter.location,
+              );
             }
+
             // Check must happen before `isSerializable`
             final hasAllowedSubtypes = await param.type.hasAllowedSubtypes();
             if (!hasAllowedSubtypes.allowed) {

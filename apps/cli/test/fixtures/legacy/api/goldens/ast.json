@@ -946,7 +946,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -2804,7 +2804,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -7566,7 +7566,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -7925,7 +7925,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -10471,7 +10471,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -10918,7 +10918,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -13613,7 +13613,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -14106,7 +14106,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -16085,7 +16085,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -16418,7 +16418,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -20998,7 +20998,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -21422,7 +21422,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -22218,7 +22218,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -23088,7 +23088,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -23208,7 +23208,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -23299,7 +23299,7 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "InternalServerException",
+          "symbol": "InternalServerError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },

@@ -104,8 +104,7 @@ final class CelestAnalyzer
       coreUriDataType: dartCore.getClassType('UriData'),
       typedDataUint8ListType: dartTypedData.getClassType('Uint8List'),
       badRequestExceptionType: celestCore.getClassType('BadRequestException'),
-      internalServerExceptionType:
-          celestCore.getClassType('InternalServerException'),
+      internalServerErrorType: celestCore.getClassType('InternalServerError'),
       userType: celestCore.getClassType('User'),
     );
   }

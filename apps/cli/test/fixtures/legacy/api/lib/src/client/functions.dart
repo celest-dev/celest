@@ -101,9 +101,8 @@ class CelestFunctionsAsserts {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -150,9 +149,8 @@ class CelestFunctionsClasses {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -782,9 +780,8 @@ class CelestFunctionsCollections {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -978,9 +975,8 @@ class CelestFunctionsCycles {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -1095,9 +1091,8 @@ class CelestFunctionsDemo {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -1147,9 +1142,8 @@ class CelestFunctionsExceptions {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -1317,9 +1311,8 @@ class CelestFunctionsExtensionTypes {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -2424,9 +2417,8 @@ class CelestFunctionsGenericWrappers {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -2581,9 +2573,8 @@ class CelestFunctionsMetadata {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -3364,9 +3355,8 @@ class CelestFunctionsOverrides {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -3576,9 +3566,8 @@ class CelestFunctionsParameterTypes {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -4330,9 +4319,8 @@ class CelestFunctionsParameters {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -4454,9 +4442,8 @@ class CelestFunctionsRecords {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -4721,9 +4708,8 @@ class CelestFunctionsReturnTypes {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -5778,9 +5764,8 @@ class CelestFunctionsSealedClasses {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -6322,9 +6307,8 @@ class CelestFunctionsTypedefs {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);

@@ -18,32 +18,46 @@ class ApiTest {
 sealed class FunctionTest {
   const FunctionTest({
     required this.name,
-    required this.input,
+    this.input = const {},
+    this.method = 'POST',
+    this.headers = const {},
+    this.queryParameters = const {},
     this.logs,
   });
 
   final String name;
+  final String method;
   final Map<String, Object?> input;
+  final Map<String, String> headers;
+  final Map<String, List<String>> queryParameters;
   final List<String>? logs;
 }
 
 class FunctionTestSuccess extends FunctionTest {
   FunctionTestSuccess({
     required super.name,
-    required super.input,
+    super.method,
+    super.input,
+    super.headers,
+    super.queryParameters,
+    this.statusCode = 200,
     required Object? output,
     super.logs,
   }) : output = {
           'response': output,
         };
 
+  final int statusCode;
   final Object? output;
 }
 
 class FunctionTestError extends FunctionTest {
   const FunctionTestError({
     required super.name,
+    super.method,
     required super.input,
+    super.headers,
+    super.queryParameters,
     required this.statusCode,
     required this.output,
     super.logs,

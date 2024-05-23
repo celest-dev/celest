@@ -1,0 +1,58 @@
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+import 'package:celest_backend/models/http_header_query.dart';
+
+@cloud
+Future<HttpQueryParams> query(
+  @httpQuery('aString') String aString,
+  @httpQuery('anInt') int anInt,
+  @httpQuery('aDouble') double aDouble,
+  @httpQuery('aNum') num aNum,
+  @httpQuery('aBool') bool aBool,
+  @httpQuery('aDateTime') DateTime aDateTime,
+  @httpQuery('aNullableString') String? aNullableString,
+  @httpQuery('aNullableInt') int? aNullableInt,
+  @httpQuery('aNullableDouble') double? aNullableDouble,
+  @httpQuery('aNullableNum') num? aNullableNum,
+  @httpQuery('aNullableBool') bool? aNullableBool,
+  @httpQuery('aNullableDateTime') DateTime? aNullableDateTime,
+  @httpQuery('aListOfString') List<String> aListOfString,
+  @httpQuery('aListOfInt') List<int> aListOfInt,
+  @httpQuery('aListOfDouble') List<double> aListOfDouble,
+  @httpQuery('aListOfNum') List<num> aListOfNum,
+  @httpQuery('aListOfBool') List<bool> aListOfBool,
+  @httpQuery('aListOfDateTime') List<DateTime> aListOfDateTime,
+  @httpQuery('aNullableListOfString') List<String>? aNullableListOfString,
+  @httpQuery('aNullableListOfInt') List<int>? aNullableListOfInt,
+  @httpQuery('aNullableListOfDouble') List<double>? aNullableListOfDouble,
+  @httpQuery('aNullableListOfNum') List<num>? aNullableListOfNum,
+  @httpQuery('aNullableListOfBool') List<bool>? aNullableListOfBool,
+  @httpQuery('aNullableListOfDateTime') List<DateTime>? aNullableListOfDateTime,
+) async {
+  return HttpQueryParams(
+    aString: aString,
+    anInt: anInt,
+    aDouble: aDouble,
+    aNum: aNum,
+    aBool: aBool,
+    aDateTime: aDateTime,
+    aListOfString: aListOfString,
+    aListOfInt: aListOfInt,
+    aListOfDouble: aListOfDouble,
+    aListOfNum: aListOfNum,
+    aListOfBool: aListOfBool,
+    aListOfDateTime: aListOfDateTime,
+    aNullableString: aNullableString,
+    aNullableInt: aNullableInt,
+    aNullableDouble: aNullableDouble,
+    aNullableNum: aNullableNum,
+    aNullableBool: aNullableBool,
+    aNullableDateTime: aNullableDateTime,
+    aNullableListOfString: aNullableListOfString,
+    aNullableListOfInt: aNullableListOfInt,
+    aNullableListOfDouble: aNullableListOfDouble,
+    aNullableListOfNum: aNullableListOfNum,
+    aNullableListOfBool: aNullableListOfBool,
+    aNullableListOfDateTime: aNullableListOfDateTime,
+  );
+}

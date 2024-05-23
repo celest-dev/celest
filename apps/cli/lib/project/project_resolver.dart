@@ -157,6 +157,7 @@ final class ProjectResolver extends AstVisitorWithArg<void, AstNode> {
             }
 
             final funcHttpMetadata = [
+              ...context.metadata.whereType<ApiHttpMetadata>(),
               ...function.metadata.whereType<ApiHttpMetadata>(),
             ];
             for (final metadata in funcHttpMetadata) {

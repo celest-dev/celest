@@ -174,6 +174,7 @@ final class LocalApiRunner implements Closeable {
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen((line) {
+      _logger.finest('PROCESS: $line');
       if (line.startsWith(
         'The Dart DevTools debugger and profiler is available at:',
       )) {

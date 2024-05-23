@@ -1728,24 +1728,6 @@ String sayHello({
   @httpHeader('x-custom-nullable-num') num? customNullableNum,
   @httpHeader('x-custom-nullable-double') double? customNullableDouble,
   @httpHeader('x-custom-nullable-datetime') DateTime? customNullableDateTime,
-  @httpHeader('x-custom-list-string') required List<String> customListString,
-  @httpHeader('x-custom-list-bool') required List<bool> customListBool,
-  @httpHeader('x-custom-list-int') required List<int> customListInt,
-  @httpHeader('x-custom-list-num') required List<num> customListNum,
-  @httpHeader('x-custom-list-double') required List<double> customListDouble,
-  @httpHeader('x-custom-list-datetime') required List<DateTime> customListDateTime,
-  @httpHeader('x-custom-nullable-list-string')  List<String>? customNullableListString,
-  @httpHeader('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
-  @httpHeader('x-custom-nullable-list-int')  List<int>? customNullableListInt,
-  @httpHeader('x-custom-nullable-list-num')  List<num>? customNullableListNum,
-  @httpHeader('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
-  @httpHeader('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
-  @httpHeader('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
-  @httpHeader('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
-  @httpHeader('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
-  @httpHeader('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
-  @httpHeader('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
-  @httpHeader('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
 }) => 'Hello, World!';
 ''',
           },
@@ -1769,24 +1751,6 @@ String sayHello({
               hasHeader('x-custom-nullable-num'),
               hasHeader('x-custom-nullable-double'),
               hasHeader('x-custom-nullable-datetime'),
-              hasHeader('x-custom-list-string'),
-              hasHeader('x-custom-list-bool'),
-              hasHeader('x-custom-list-int'),
-              hasHeader('x-custom-list-num'),
-              hasHeader('x-custom-list-double'),
-              hasHeader('x-custom-list-datetime'),
-              hasHeader('x-custom-nullable-list-string'),
-              hasHeader('x-custom-nullable-list-bool'),
-              hasHeader('x-custom-nullable-list-int'),
-              hasHeader('x-custom-nullable-list-num'),
-              hasHeader('x-custom-nullable-list-double'),
-              hasHeader('x-custom-nullable-list-datetime'),
-              hasHeader('x-custom-nullable-list-nullable-string'),
-              hasHeader('x-custom-nullable-list-nullable-bool'),
-              hasHeader('x-custom-nullable-list-nullable-int'),
-              hasHeader('x-custom-nullable-list-nullable-num'),
-              hasHeader('x-custom-nullable-list-nullable-double'),
-              hasHeader('x-custom-nullable-list-nullable-datetime'),
             ]);
           },
         );
@@ -1892,6 +1856,24 @@ String sayHello({
   @httpHeader('x-custom-list-regexp') required List<RegExp> customListRegex,
   @httpHeader('x-custom-list-bigint') required List<BigInt> customListBigInt,
   @httpHeader('x-custom-list-uri') required List<Uri> customListUri,
+  @httpHeader('x-custom-list-string') required List<String> customListString,
+  @httpHeader('x-custom-list-bool') required List<bool> customListBool,
+  @httpHeader('x-custom-list-int') required List<int> customListInt,
+  @httpHeader('x-custom-list-num') required List<num> customListNum,
+  @httpHeader('x-custom-list-double') required List<double> customListDouble,
+  @httpHeader('x-custom-list-datetime') required List<DateTime> customListDateTime,
+  @httpHeader('x-custom-nullable-list-string')  List<String>? customNullableListString,
+  @httpHeader('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
+  @httpHeader('x-custom-nullable-list-int')  List<int>? customNullableListInt,
+  @httpHeader('x-custom-nullable-list-num')  List<num>? customNullableListNum,
+  @httpHeader('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
+  @httpHeader('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
+  @httpHeader('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
+  @httpHeader('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
+  @httpHeader('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
+  @httpHeader('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
+  @httpHeader('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
+  @httpHeader('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
 }) => 'Hello, World!';
 ''',
         },
@@ -1902,6 +1884,24 @@ String sayHello({
           'Invalid HTTP header type', // List<RegExp>
           'Invalid HTTP header type', // List<BigInt>
           'Invalid HTTP header type', // List<Uri>
+          'Invalid HTTP header type', // List<String>
+          'Invalid HTTP header type', // List<bool>
+          'Invalid HTTP header type', // List<int>
+          'Invalid HTTP header type', // List<num>
+          'Invalid HTTP header type', // List<double>
+          'Invalid HTTP header type', // List<DateTime>
+          'Invalid HTTP header type', // List<String?>
+          'Invalid HTTP header type', // List<bool?>
+          'Invalid HTTP header type', // List<int?>
+          'Invalid HTTP header type', // List<num?>
+          'Invalid HTTP header type', // List<double?>
+          'Invalid HTTP header type', // List<DateTime?>
+          'Invalid HTTP header type', // List<String?>?
+          'Invalid HTTP header type', // List<bool?>?
+          'Invalid HTTP header type', // List<int?>?
+          'Invalid HTTP header type', // List<num?>?
+          'Invalid HTTP header type', // List<double?>?
+          'Invalid HTTP header type', // List<DateTime?>?
         ],
       );
 

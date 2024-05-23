@@ -96,8 +96,8 @@ class TestRunner {
       });
 
       testAnalyzer();
-      testCodegen();
       testResolve();
+      testCodegen();
       testClient();
 
       final apisDir = Directory(p.join(projectRoot, 'functions'));
@@ -145,11 +145,16 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
+      final projectResolver = ProjectResolver();
+      project!.acceptWithArg(projectResolver, project);
+
       final codegen = CloudCodeGenerator(
+        project: project,
+        resolvedProject: projectResolver.resolvedProject,
         // Since paths will always be relative, this is okay.
         pathStrategy: PathStrategy.pretty,
       );
-      project!.accept(codegen);
+      project.accept(codegen);
 
       for (final MapEntry(key: path, value: content)
           in codegen.fileOutputs.entries) {
@@ -292,15 +297,18 @@ class TestRunner {
       for (final testCase in tests) {
         test(testCase.name, () async {
           for (final test in tests) {
-            final result = await Result.capture(
-              client.post(
-                apiUri,
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: jsonEncode(test.input),
-              ),
-            );
+            final request = Request(
+              test.method,
+              apiUri.replace(queryParameters: test.queryParameters),
+            )
+              ..headers.addAll({
+                'Content-Type': 'application/json',
+                ...test.headers,
+              })
+              ..body = jsonEncode(test.input);
+            final response = client.send(request);
+
+            final result = await Result.capture(response);
             try {
               switch (test) {
                 case FunctionTestError(:final output):
@@ -309,15 +317,21 @@ class TestRunner {
                       fail('Unexpected error: $e');
                     case ValueResult(value: final resp):
                       expect(resp.statusCode, test.statusCode);
-                      final respJson = jsonDecode(resp.body);
+                      final body = await resp.stream.bytesToString();
+                      final respJson = jsonDecode(body);
                       expect(respJson, output);
                   }
                 case FunctionTestSuccess(:final output):
                   expect(result.isValue, isTrue);
                   final resp = result.asValue!.value;
-                  expect(resp.statusCode, 200, reason: resp.body);
-                  final respJson = jsonDecode(resp.body);
-                  expect(respJson, output);
+                  final body = await resp.stream.bytesToString();
+                  expect(resp.statusCode, test.statusCode, reason: body);
+                  if (test.method == 'HEAD') {
+                    expect(body, isEmpty);
+                  } else {
+                    final respJson = jsonDecode(body);
+                    expect(respJson, output);
+                  }
               }
               if (test.logs case final expectedLogs?) {
                 expect(logs, containsAllInOrder(expectedLogs.map(contains)));
@@ -3661,6 +3675,422 @@ final tests = <String, Test>{
                   },
                 },
               },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'http': Test(
+    apis: {
+      'http_errors': const ApiTest(
+        functionTests: {
+          'httpErrors': [
+            FunctionTestError(
+              name: 'badRequest',
+              statusCode: 400,
+              input: {
+                'type': 'badRequest',
+              },
+              output: {
+                'error': {
+                  'code': 'BadRequestException',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'customBadRequest',
+              statusCode: 412,
+              input: {
+                'type': 'customBadRequest',
+              },
+              output: {
+                'error': {
+                  'code': 'CustomBadRequestException',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'unauthorized',
+              statusCode: 401,
+              input: {
+                'type': 'unauthorized',
+              },
+              output: {
+                'error': {
+                  'code': 'UnauthorizedException',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'forbidden',
+              statusCode: 403,
+              input: {
+                'type': 'forbidden',
+              },
+              output: {
+                'error': {
+                  'code': 'ForbiddenException',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'notFound',
+              statusCode: 404,
+              input: {
+                'type': 'notFound',
+              },
+              output: {
+                'error': {
+                  'code': 'NotFoundException',
+                  'details': <String, Object?>{},
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'anotherNotFound',
+              statusCode: 404,
+              input: {
+                'type': 'anotherNotFound',
+              },
+              output: {
+                'error': {
+                  'code': 'AnotherNotFoundException',
+                  'details': <String, Object?>{},
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'internalServerError',
+              statusCode: 404,
+              input: {
+                'type': 'internalServerError',
+              },
+              output: {
+                'error': {
+                  'code': 'InternalServerError',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+            FunctionTestError(
+              name: 'badGateway',
+              statusCode: 404,
+              input: {
+                'type': 'badGateway',
+              },
+              output: {
+                'error': {
+                  'code': 'BadGatewayError',
+                  'details': {
+                    'message': '',
+                  },
+                },
+              },
+            ),
+          ],
+        },
+      ),
+      'http_header': ApiTest(
+        functionTests: {
+          'headers': [
+            FunctionTestSuccess(
+              name: 'present',
+              headers: {
+                'aString': 'aString',
+                'anInt': '42',
+                'aDouble': '3.14',
+                'aNum': '42',
+                'aBool': 'true',
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+                'aNullableString': 'aNullableString',
+                'aNullableInt': '42',
+                'aNullableDouble': '3.14',
+                'aNullableNum': '42',
+                'aNullableBool': 'true',
+                'aNullableDateTime': '2021-07-01T00:00:00.000Z',
+              },
+              output: {
+                'aString': 'aString',
+                'anInt': 42,
+                'aDouble': 3.14,
+                'aNum': 42,
+                'aBool': true,
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+                'aNullableString': 'aNullableString',
+                'aNullableInt': 42,
+                'aNullableDouble': 3.14,
+                'aNullableNum': 42,
+                'aNullableBool': true,
+                'aNullableDateTime': '2021-07-01T00:00:00.000Z',
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'partial',
+              headers: {
+                'aString': 'aString',
+                'anInt': '42',
+                'aDouble': '3.14',
+                'aNum': '42',
+                'aBool': 'true',
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+              },
+              output: {
+                'aString': 'aString',
+                'anInt': 42,
+                'aDouble': 3.14,
+                'aNum': 42,
+                'aBool': true,
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+                'aNullableString': null,
+                'aNullableInt': null,
+                'aNullableDouble': null,
+                'aNullableNum': null,
+                'aNullableBool': null,
+                'aNullableDateTime': null,
+              },
+            ),
+          ],
+        },
+      ),
+      'http_query': ApiTest(
+        functionTests: {
+          'query': [
+            FunctionTestSuccess(
+              name: 'present',
+              queryParameters: {
+                'aString': ['aString'],
+                'anInt': ['42'],
+                'aDouble': ['3.14'],
+                'aNum': ['42'],
+                'aBool': ['true'],
+                'aDateTime': ['2021-07-01T00:00:00.000Z'],
+                'aNullableString': ['aNullableString'],
+                'aNullableInt': ['42'],
+                'aNullableDouble': ['3.14'],
+                'aNullableNum': ['42'],
+                'aNullableBool': ['true'],
+                'aNullableDateTime': ['2021-07-01T00:00:00.000Z'],
+                'aListOfString': ['a', 'b', 'c'],
+                'aListOfInt': ['1', '2', '3'],
+                'aListOfDouble': ['1.1', '2.2', '3.3'],
+                'aListOfNum': ['1', '2.2', '3'],
+                'aListOfBool': ['true', 'false', 'true'],
+                'aListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+                'aNullableListOfString': ['a', 'b', 'c'],
+                'aNullableListOfInt': ['1', '2', '3'],
+                'aNullableListOfDouble': ['1.1', '2.2', '3.3'],
+                'aNullableListOfNum': ['1', '2.2', '3'],
+                'aNullableListOfBool': ['true', 'false', 'true'],
+                'aNullableListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+              },
+              output: {
+                'aString': 'aString',
+                'anInt': 42,
+                'aDouble': 3.14,
+                'aNum': 42,
+                'aBool': true,
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+                'aNullableString': 'aNullableString',
+                'aNullableInt': 42,
+                'aNullableDouble': 3.14,
+                'aNullableNum': 42,
+                'aNullableBool': true,
+                'aNullableDateTime': '2021-07-01T00:00:00.000Z',
+                'aListOfString': ['a', 'b', 'c'],
+                'aListOfInt': [1, 2, 3],
+                'aListOfDouble': [1.1, 2.2, 3.3],
+                'aListOfNum': [1, 2.2, 3],
+                'aListOfBool': [true, false, true],
+                'aListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+                'aNullableListOfString': ['a', 'b', 'c'],
+                'aNullableListOfInt': [1, 2, 3],
+                'aNullableListOfDouble': [1.1, 2.2, 3.3],
+                'aNullableListOfNum': [1, 2.2, 3],
+                'aNullableListOfBool': [true, false, true],
+                'aNullableListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+              },
+            ),
+            FunctionTestSuccess(
+              name: 'partial',
+              queryParameters: {
+                'aString': ['aString'],
+                'anInt': ['42'],
+                'aDouble': ['3.14'],
+                'aNum': ['42'],
+                'aBool': ['true'],
+                'aDateTime': ['2021-07-01T00:00:00.000Z'],
+                'aListOfString': ['a', 'b', 'c'],
+                'aListOfInt': ['1', '2', '3'],
+                'aListOfDouble': ['1.1', '2.2', '3.3'],
+                'aListOfNum': ['1', '2.2', '3'],
+                'aListOfBool': ['true', 'false', 'true'],
+                'aListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+              },
+              output: {
+                'aString': 'aString',
+                'anInt': 42,
+                'aDouble': 3.14,
+                'aNum': 42,
+                'aBool': true,
+                'aDateTime': '2021-07-01T00:00:00.000Z',
+                'aNullableString': null,
+                'aNullableInt': null,
+                'aNullableDouble': null,
+                'aNullableNum': null,
+                'aNullableBool': null,
+                'aNullableDateTime': null,
+                'aListOfString': ['a', 'b', 'c'],
+                'aListOfInt': [1, 2, 3],
+                'aListOfDouble': [1.1, 2.2, 3.3],
+                'aListOfNum': [1, 2.2, 3],
+                'aListOfBool': [true, false, true],
+                'aListOfDateTime': [
+                  '2021-07-01T00:00:00.000Z',
+                  '2021-07-01T00:00:00.000Z',
+                ],
+                'aNullableListOfString': null,
+                'aNullableListOfInt': null,
+                'aNullableListOfDouble': null,
+                'aNullableListOfNum': null,
+                'aNullableListOfBool': null,
+                'aNullableListOfDateTime': null,
+              },
+            ),
+          ],
+        },
+      ),
+      'http_method': ApiTest(
+        functionTests: {
+          'get': [
+            FunctionTestSuccess(
+              name: 'get',
+              method: 'GET',
+              input: {},
+              output: null,
+            ),
+          ],
+          'post': [
+            FunctionTestSuccess(
+              name: 'post',
+              method: 'POST',
+              input: {},
+              output: null,
+            ),
+          ],
+          'put': [
+            FunctionTestSuccess(
+              name: 'put',
+              method: 'PUT',
+              input: {},
+              output: null,
+            ),
+          ],
+          'delete': [
+            FunctionTestSuccess(
+              name: 'delete',
+              method: 'DELETE',
+              input: {},
+              output: null,
+            ),
+          ],
+          'patch': [
+            FunctionTestSuccess(
+              name: 'patch',
+              method: 'PATCH',
+              input: {},
+              output: null,
+            ),
+          ],
+          // TODO: Needed? Can only really implement when return types can
+          // map to the http headers.
+          // 'head': [
+          //   FunctionTestSuccess(
+          //     name: 'head',
+          //     method: 'HEAD',
+          //     input: {},
+          //     output: null,
+          //   ),
+          // ],
+          // 'trace': [
+          //   FunctionTestSuccess(
+          //     name: 'trace',
+          //     method: 'TRACE',
+          //     input: {},
+          //     output: null,
+          //   ),
+          // ],
+        },
+      ),
+      'http_status': ApiTest(
+        functionTests: {
+          'ok': [
+            FunctionTestSuccess(
+              name: 'ok',
+              statusCode: 200,
+              input: {},
+              output: null,
+            ),
+          ],
+          'created': [
+            FunctionTestSuccess(
+              name: 'created',
+              statusCode: 201,
+              input: {},
+              output: null,
+            ),
+          ],
+          'accepted': [
+            FunctionTestSuccess(
+              name: 'accepted',
+              statusCode: 202,
+              input: {},
+              output: null,
+            ),
+          ],
+          'badRequest': [
+            FunctionTestSuccess(
+              name: 'badRequest',
+              statusCode: 400,
+              input: {},
+              output: null,
+            ),
+          ],
+          'internalServerError': [
+            FunctionTestSuccess(
+              name: 'internalServerError',
+              statusCode: 500,
+              input: {},
+              output: null,
             ),
           ],
         },
