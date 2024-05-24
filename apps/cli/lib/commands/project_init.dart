@@ -2,9 +2,14 @@ import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/commands/project_migrate.dart';
+import 'package:celest_cli/commands/start_command.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cli_common/src/platform/windows_paths.dart';
@@ -17,49 +22,107 @@ base mixin Configure on CelestCommand {
   late final bool isExistingProject;
 
   static Never _throwNoProject() => throw const CelestException(
-        'No Celest project found in the current directory.',
+        'No Celest project found in the current directory. '
+        'To create a new project, run `celest start`.',
       );
 
-  static bool _noOp() => false;
+  String newProjectName({
+    ParentProject? parentProject,
+  }) {
+    if (parentProject != null && parentProject.name.startsWith('celest')) {
+      final parentType = parentProject.type.name.capitalized;
+      throw CelestException(
+        'Your $parentType project cannot be named "celest" or start with "celest". '
+        'Please change it in pubspec.yaml and run `celest start` again.',
+      );
+    }
+
+    final defaultName = parentProject?.name ?? 'hello';
+    return cliLogger
+        .prompt(
+          'Enter a name for your project',
+          defaultValue: defaultName,
+        )
+        .snakeCase;
+  }
 
   /// Returns true if the project needs to be migrated.
-  Future<bool> configure({
-    FutureOr<String> Function() createProject = _throwNoProject,
-    FutureOr<bool> Function() migrateProject = _noOp,
-  }) async {
+  Future<bool> configure() async {
     final currentDir = Directory.current;
     final pubspecFile = fileSystem.file(
       p.join(currentDir.path, 'pubspec.yaml'),
     );
+
+    final String projectRoot;
+    String? projectName;
+    ParentProject? parentProject;
+
     if (!pubspecFile.existsSync()) {
-      throw const CelestException(
-        'No pubspec.yaml file found in the current directory. '
-        'Make sure to run this command from your Flutter project directory.',
+      if (this is! StartCommand) {
+        _throwNoProject();
+      }
+      final createNew = cliLogger.confirm(
+        'No Celest project found in the current directory. '
+        'Would you like to create one?',
       );
+      if (!createNew) {
+        cliLogger.detail('Skipping project creation.');
+        await Future(() => exit(0));
+      }
+      projectName = newProjectName(parentProject: null);
+      isExistingProject = false;
+
+      // Choose where to store the project based on the current directory.
+      if (await currentDir.list().isEmpty) {
+        projectRoot = currentDir.path;
+      } else {
+        projectRoot = p.join(currentDir.path, projectName);
+        final projectDir = fileSystem.directory(projectRoot);
+        if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
+          throw CelestException(
+            'A directory named "$projectName" already exists. '
+            'Please choose a different name, or run this command from a '
+            'different directory.',
+          );
+        }
+      }
+    } else {
+      final pubspecYaml = await pubspecFile.readAsString();
+      pubspec = Pubspec.parse(pubspecYaml);
+
+      final (celestDir, isExistingProject) =
+          switch (pubspec.dependencies.containsKey('celest')) {
+        true => (currentDir, true),
+        false => run(() {
+            final dir = Directory(p.join(currentDir.path, 'celest'));
+            return (dir, dir.existsSync());
+          }),
+      };
+      projectRoot = celestDir.path;
+      parentProject = await ParentProject.load(p.dirname(projectRoot));
+      this.isExistingProject = isExistingProject;
     }
-    final pubspecYaml = await pubspecFile.readAsString();
-    pubspec = Pubspec.parse(pubspecYaml);
 
-    final (celestDir, isExistingProject) =
-        switch (pubspec.dependencies.containsKey('celest')) {
-      true => (currentDir, true),
-      false => () {
-          final dir = Directory(p.join(currentDir.path, 'celest'));
-          return (dir, dir.existsSync());
-        }(),
-    };
-
-    final projectRoot = celestDir.path;
-    this.isExistingProject = isExistingProject;
     await init(
       projectRoot: projectRoot,
+      parentProject: parentProject,
     );
 
     var needsMigration = false;
     if (!isExistingProject) {
-      await createProject();
-    } else {
-      needsMigration = await migrateProject();
+      if (this case final StartCommand projectCreator) {
+        projectName ??= newProjectName(parentProject: parentProject);
+        await projectCreator.createProject(
+          projectName: projectName,
+          parentProject: parentProject,
+        );
+      } else {
+        _throwNoProject();
+      }
+    } else if (this case final Migrate projectMigrator) {
+      needsMigration = await projectMigrator.migrateProject(
+        parentProject: parentProject,
+      );
     }
 
     await _pubUpgrade();
@@ -113,11 +176,12 @@ base mixin Configure on CelestCommand {
         action: PubAction.upgrade,
         workingDirectory: projectRoot,
       ),
-      runPub(
-        exe: 'flutter',
-        action: PubAction.upgrade,
-        workingDirectory: projectPaths.appRoot,
-      ),
+      if (celestProject.parentProject case final parentProject?)
+        runPub(
+          exe: parentProject.type.name,
+          action: PubAction.upgrade,
+          workingDirectory: parentProject.path,
+        ),
     ]);
   }
 }

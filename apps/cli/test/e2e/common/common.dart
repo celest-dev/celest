@@ -2,12 +2,9 @@ import 'dart:io' show Platform, ProcessException, ProcessStartMode;
 import 'dart:math';
 
 import 'package:aws_common/aws_common.dart';
-import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:checks/checks.dart';
 import 'package:file/file.dart';
 import 'package:meta/meta.dart';
-import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import 'command.dart';
 
@@ -34,8 +31,8 @@ abstract base class TestTarget with TestHelpers {
   Future<void> tearDownAll() async {}
 }
 
-abstract base class Test with TestHelpers {
-  Test(this.target);
+abstract base class E2ETest with TestHelpers {
+  E2ETest(this.target);
 
   @override
   final TestTarget target;
@@ -54,38 +51,11 @@ abstract base class Test with TestHelpers {
 
   List<String> get tags => const [];
 
-  late final Directory flutterProjectDir;
-  Directory get celestDir => flutterProjectDir.childDirectory('celest');
-
   static final Random _random = Random();
   final projectName = 'test_project_${_random.nextInt(1 << 20)}';
 
   @mustCallSuper
-  Future<void> setUp() async {
-    final flutterProject = d.dir(projectName, [
-      d.file('pubspec.yaml', '''
-name: hello_project
-
-environment:
-  sdk: ${PubEnvironment.dartSdkConstraint}
-
-dependencies:
-  flutter:
-    sdk: flutter
-'''),
-    ]);
-    await flutterProject.create(tempDir.path);
-    flutterProjectDir = fileSystem.directory(
-      p.join(tempDir.path, projectName),
-    );
-    await check(
-      processManager.run(
-        ['flutter', 'pub', 'get'],
-        workingDirectory: flutterProjectDir.path,
-      ),
-    ).completes((it) => it.has((it) => it.exitCode, 'exitCode').equals(0));
-    print('Running test in ${flutterProjectDir.path}');
-  }
+  Future<void> setUp() async {}
 
   @mustCallSuper
   Future<void> tearDown() async {}

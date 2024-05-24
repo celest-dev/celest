@@ -1,11 +1,12 @@
 import 'package:celest_cli/init/project_item.dart';
 import 'package:celest_cli/init/project_items/macos_entitlements.dart';
+import 'package:celest_cli/project/celest_project.dart';
 
 /// Manages the generation of a new Celest project.
 class ProjectGenerator {
   ProjectGenerator({
     required this.projectName,
-    required this.appRoot,
+    required this.parentProject,
     required this.projectRoot,
   });
 
@@ -18,7 +19,7 @@ class ProjectGenerator {
   /// This will become the parent directory of the initialized
   /// Celest project and the project which receives the generated
   /// Flutter code.
-  final String appRoot;
+  final ParentProject? parentProject;
 
   /// The root directory of the initialized Celest project.
   final String projectRoot;
@@ -29,9 +30,14 @@ class ProjectGenerator {
       [
         const ProjectFile.gitIgnore(),
         const ProjectFile.analysisOptions(),
-        ProjectFile.pubspec(projectName, appRoot),
+        ProjectFile.pubspec(projectName, parentProject),
         ProjectTemplate.hello(projectName),
-        MacOsEntitlements(appRoot),
+        if (parentProject
+            case ParentProject(
+              path: final appRoot,
+              type: ParentProjectType.flutter
+            ))
+          MacOsEntitlements(appRoot),
       ].map((item) => item.create(projectRoot)),
     );
   }

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../common/common.dart';
 
-final class HelloProjectTest extends Test {
+final class HelloProjectTest extends E2ETest {
   HelloProjectTest(super.target);
 
   @override

@@ -4,6 +4,7 @@ import 'package:celest_cli/src/types/type_checker.dart';
 final class ProjectPaths {
   ProjectPaths(
     this.projectRoot, {
+    this.parentAppRoot,
     String? outputsDir,
   }) : outputsDir =
             outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
@@ -11,8 +12,7 @@ final class ProjectPaths {
   final String projectRoot;
   final String outputsDir;
 
-  late final String appRoot =
-      p.canonicalize(p.normalize(p.join(projectRoot, '..')));
+  final String? parentAppRoot;
   String get celestConfig => celestProject.config.configDir.path;
 
   late final String packagesConfig =

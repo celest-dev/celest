@@ -18,15 +18,7 @@ final class DeployCommand extends CelestCommand
   @override
   Future<int> run() async {
     await super.run();
-    final needsMigration = await configure(
-      createProject: () {
-        throw const CelestException(
-          'No Celest project found in the current directory. '
-          'To create a new project, run `celest start`.',
-        );
-      },
-      migrateProject: migrateProject,
-    );
+    final needsMigration = await configure();
 
     if (await authenticate() case final code when code != 0) {
       return code;

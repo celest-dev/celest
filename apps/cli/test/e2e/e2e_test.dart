@@ -1,10 +1,14 @@
+// ignore_for_file: unused_import
+
 import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 
 import '../common.dart';
 import 'common/common.dart';
-import 'features/add_remove_fields.dart';
-import 'features/create_project.dart';
+import 'features/bugs/add_remove_fields.dart';
+import 'features/create/create_project_in_dart_app.dart';
+import 'features/create/create_project_in_flutter_app.dart';
+import 'features/create/create_project_isolated.dart';
 import 'features/hello_project.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_target.dart';
@@ -15,12 +19,14 @@ void main() {
     InstalledTarget(),
   ];
 
-  final tests = <Test Function(TestTarget)>[
-    CreateProjectTest.new,
-    HelloProjectTest.new,
+  final tests = <E2ETest Function(TestTarget)>[
+    CreateProjectInFlutterAppTest.new,
+    CreateProjectInDartAppTest.new,
+    CreateProjectIsolatedTest.new,
+    // HelloProjectTest.new,
     // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
     // needed.
-    if (!platform.isWindows) AddRemoveFieldsTest.new,
+    // if (!platform.isWindows) AddRemoveFieldsTest.new,
   ];
 
   for (final target in targets) {

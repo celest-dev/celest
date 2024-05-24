@@ -1,8 +1,8 @@
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
@@ -25,28 +25,10 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
 
   Progress? _currentProgress;
 
-  Future<String> _createProject() async {
-    if (!pubspec.dependencies.containsKey('flutter')) {
-      throw const CelestException(
-        'Only Flutter projects are supported at this time.',
-      );
-    }
-
-    final appName = pubspec.name.snakeCase;
-    if (appName == 'celest') {
-      throw const CelestException(
-        'Your Flutter project name cannot be "celest". Please change it in '
-        'pubspec.yaml and run `celest start` again.',
-      );
-    }
-
-    final projectName = cliLogger
-        .prompt(
-          'Enter a name for your project',
-          defaultValue: appName,
-        )
-        .snakeCase;
-
+  Future<String> createProject({
+    required String projectName,
+    required ParentProject? parentProject,
+  }) async {
     logger.finest(
       'Generating project for "$projectName" at '
       '"${projectPaths.projectRoot}"...',
@@ -54,7 +36,7 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
     _currentProgress = cliLogger.progress('Generating project');
     await performance.trace('StartCommand', 'createProject', () async {
       await ProjectGenerator(
-        appRoot: projectPaths.appRoot,
+        parentProject: parentProject,
         projectRoot: projectPaths.projectRoot,
         projectName: projectName,
       ).generate();
@@ -88,10 +70,7 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
       performance.captureError(e, stackTrace: st);
     }
 
-    final needsMigration = await configure(
-      createProject: _createProject,
-      migrateProject: migrateProject,
-    );
+    final needsMigration = await configure();
 
     _currentProgress?.complete('Project generated successfully');
     _currentProgress = cliLogger.progress('Starting Celest');

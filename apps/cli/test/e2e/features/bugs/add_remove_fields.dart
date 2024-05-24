@@ -1,9 +1,10 @@
 import 'package:test/test.dart';
 
-import '../common/common.dart';
+import '../../common/common.dart';
+import '../../common/test_projects.dart';
 
 // Repro: https://github.com/celest-dev/celest/issues/25
-final class AddRemoveFieldsTest extends Test {
+final class AddRemoveFieldsTest extends E2ETest with TestFlutterProject {
   AddRemoveFieldsTest(super.target);
 
   @override

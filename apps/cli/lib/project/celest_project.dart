@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
@@ -17,6 +18,46 @@ import 'package:hub/context.dart' show HubMetadata;
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
+enum ParentProjectType { dart, flutter }
+
+final class ParentProject {
+  const ParentProject({
+    required this.name,
+    required this.path,
+    required this.pubspec,
+    required this.pubspecYaml,
+    required this.type,
+  });
+
+  static Future<ParentProject?> load(String path) async {
+    return Isolate.run(() async {
+      final dir = fileSystem.directory(path);
+      final pubspecFile = dir.childFile('pubspec.yaml');
+      if (!pubspecFile.existsSync()) {
+        return null;
+      }
+      final pubspecYaml = await pubspecFile.readAsString();
+      final pubspec = Pubspec.parse(pubspecYaml, sourceUrl: pubspecFile.uri);
+      return ParentProject(
+        name: pubspec.name,
+        path: path,
+        pubspec: pubspec,
+        pubspecYaml: pubspecYaml,
+        type: switch (pubspec.dependencies.containsKey('flutter')) {
+          true => ParentProjectType.flutter,
+          false => ParentProjectType.dart,
+        },
+      );
+    });
+  }
+
+  final String name;
+  final String path;
+  final Pubspec pubspec;
+  final String pubspecYaml;
+  final ParentProjectType type;
+}
+
 /// Static information about the current Celest project.
 final class CelestProject {
   CelestProject._({
@@ -24,18 +65,21 @@ final class CelestProject {
     required AnalysisOptions analysisOptions,
     required this.config,
     required this.envManager,
+    required this.parentProject,
   }) : _analysisOptions = analysisOptions;
 
   static final _logger = Logger('CelestProject');
 
   static Future<CelestProject> init({
     required String projectRoot,
+    ParentProject? parentProject,
     String? configHome,
     String? outputsDir,
   }) async {
     _logger.finest('Loading celest project at root: "$projectRoot"...');
     final projectPaths = ProjectPaths(
       projectRoot,
+      parentAppRoot: parentProject?.path,
       outputsDir: outputsDir,
     );
     final [
@@ -59,6 +103,7 @@ final class CelestProject {
       analysisOptions: analysisOptions,
       config: config,
       envManager: envManager,
+      parentProject: parentProject,
     );
     return project;
   }
@@ -77,6 +122,7 @@ final class CelestProject {
   );
 
   final EnvManager envManager;
+  final ParentProject? parentProject;
 
   /// The [AnalysisContext] for the current project.
   late final DriverBasedAnalysisContext analysisContext =

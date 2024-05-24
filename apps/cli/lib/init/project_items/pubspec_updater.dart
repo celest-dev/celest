@@ -1,5 +1,6 @@
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/init/project_item.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
@@ -12,11 +13,11 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart' hide SourceEdit;
 
 final class PubspecUpdater extends ProjectItem {
-  PubspecUpdater(this.appRoot, this.projectName);
+  PubspecUpdater(this.parentProject, this.projectName);
 
   static final _logger = Logger('PubspecUpdater');
 
-  final String? appRoot;
+  final ParentProject? parentProject;
   final String? projectName;
   late final String projectRoot;
 
@@ -44,7 +45,7 @@ final class PubspecUpdater extends ProjectItem {
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
     await pubspecFile.writeAsString(pubspecYaml);
 
-    if (appRoot case final appRoot?) {
+    if (parentProject?.path case final appRoot?) {
       final appRootPubspec = fileSystem.file(p.join(appRoot, 'pubspec.yaml'));
       final appEditor = YamlEditor(await appRootPubspec.readAsString());
       appEditor
