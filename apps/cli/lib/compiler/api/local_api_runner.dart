@@ -13,7 +13,6 @@ import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:vm_service/vm_service.dart';
-import 'package:vm_service/vm_service_io.dart';
 
 final Logger _logger = Logger('LocalApiRunner');
 
@@ -101,6 +100,7 @@ final class LocalApiRunner implements Closeable {
         'run',
         // Start VM service on a random port.
         '--enable-vm-service=0',
+        '--no-dds',
         '--pause-isolates-on-start',
         '--warn-on-pause-with-no-debugger',
         '--enable-asserts',
@@ -151,7 +151,7 @@ final class LocalApiRunner implements Closeable {
       if (stopwatch.elapsed > timeout) {
         throw TimeoutException('Timed out waiting for VM to start.');
       }
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 50));
       vm = await vmService.getVM();
       isolates = vm.isolates;
     }
@@ -182,10 +182,23 @@ final class LocalApiRunner implements Closeable {
     _logger.finest('[Isolate $isolateId] Waiting for pause on start event...');
     var isolate = await vmService.getIsolate(isolateId);
     while (isolate.pauseEvent?.kind != EventKind.kPauseStart) {
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 50));
       isolate = await vmService.getIsolate(isolateId);
     }
-    _logger.finest('Resuming main isolate...');
+
+    // Only needed if `--observe` is used.
+    // Disable pause-on-exit and pause-on-unhandled-exceptions.
+    //
+    // This must be done here instead of as a flag since the VM service just
+    // exits immediately for some reason.
+    // _logger.finest('[Isolate $isolateId] Disabling pause on exit/exception...');
+    // await vmService.setIsolatePauseMode(
+    //   isolateId,
+    //   exceptionPauseMode: 'None',
+    //   shouldPauseOnExit: false,
+    // );
+
+    _logger.finest('[Isolate $isolateId] Resuming isolate...');
     await vmService.resume(isolateId);
   }
 
@@ -202,7 +215,9 @@ final class LocalApiRunner implements Closeable {
       final observatoryUri =
           '${rawObservatoryUrl.replaceFirst('http', 'ws')}ws';
       _logger.finer('Connecting to local API at: $observatoryUri');
-      vmServiceCompleter.complete(vmServiceConnectUri(observatoryUri));
+      vmServiceCompleter.complete(
+        _vmServiceConnectUri(observatoryUri),
+      );
     }
 
     final serverStartedCompleter = Completer<void>();
@@ -269,7 +284,6 @@ final class LocalApiRunner implements Closeable {
         );
       }
       _vmService = await vmService;
-
       _vmIsolateId = await _waitForIsolatesAndResume(_vmService!, _logger);
 
       await serverStartedCompleter.future;
@@ -357,5 +371,50 @@ extension on CompileResult {
       buffer.writeln('  $source');
     }
     return buffer.toString();
+  }
+}
+
+/// Copied from `package:vm_service/vm_service_io.dart` to provide better
+/// logging and debugging support.
+Future<VmService> _vmServiceConnectUri(String wsUri) async {
+  final socket = await WebSocket.connect(wsUri);
+  final controller = StreamController<dynamic>();
+  final streamClosedCompleter = Completer<void>();
+
+  socket.listen(
+    (data) {
+      controller.add(data);
+      _logger.finest('VM service WS data: $data');
+    },
+    onError: (Object error, StackTrace stackTrace) {
+      _logger.finest('VM service WS error', error, stackTrace);
+    },
+    cancelOnError: true,
+    onDone: () {
+      _logger.finest('VM service WS closed');
+      streamClosedCompleter.complete();
+      controller.close();
+    },
+  );
+
+  return VmService.defaultFactory(
+    inStream: controller.stream,
+    writeMessage: socket.add,
+    log: VmServiceLogs(),
+    disposeHandler: socket.close,
+    streamClosed: streamClosedCompleter.future,
+    wsUri: wsUri,
+  );
+}
+
+final class VmServiceLogs implements Log {
+  @override
+  void severe(String message) {
+    _logger.finest('[vm-service] SEVERE: $message');
+  }
+
+  @override
+  void warning(String message) {
+    _logger.finest('[vm-service] WARNING: $message');
   }
 }
