@@ -21,11 +21,13 @@ extension PlatformContext on path.Context {
 
 Future<ProjectPaths> init({
   required String projectRoot,
+  ParentProject? parentProject,
   String? configHome,
   String? outputsDir,
 }) async {
   celestProject = await CelestProject.init(
     projectRoot: projectRoot,
+    parentProject: parentProject,
     configHome: configHome,
     outputsDir: outputsDir,
   );

@@ -8,7 +8,6 @@ import 'package:checks/checks.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show red;
 import 'package:stack_trace/stack_trace.dart';
-import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 
 import 'common.dart';
@@ -154,6 +153,7 @@ final class InteractiveCommand {
             .transform(const LineSplitter())
             .where((line) => line.isNotEmpty)
             .map((line) {
+              print(line);
               try {
                 return jsonDecode(line) as Map<String, dynamic>;
               } on FormatException {
@@ -162,7 +162,15 @@ final class InteractiveCommand {
               }
             })
             .map(LogMessage.fromJson)
-            .tap(print),
+            .where(
+              (log) => switch (log) {
+                LogMessageProgress(:final progress) =>
+                  // Ignore cancel messages since they will double count
+                  // expectLater/expectNext
+                  progress != ProgressAction.cancel,
+                _ => true,
+              },
+            ),
       ),
     );
   }
@@ -214,10 +222,14 @@ final class InteractiveCommand {
     String text, {
     Duration timeout = _defaultTimeout,
   }) {
-    skipWhere('contains($text)', (line) {
-      _logger.fine('Testing $line contains $text');
-      return !line.contains(text);
-    });
+    skipWhere(
+      'not contains($text)',
+      (line) {
+        _logger.fine('Testing "$line" does not contain "$text"');
+        return !line.contains(text);
+      },
+      timeout: timeout,
+    );
     return expectNext(text, timeout: timeout);
   }
 
@@ -238,14 +250,15 @@ final class InteractiveCommand {
       await _logs.withTransaction((logs) async {
         while (await logs.hasNext) {
           _logger.fine('$label: Waiting for next line');
-          final line = await logs.peek;
-          final message = line.message;
+          final log = await logs.peek;
+          final message = log.message;
           _logger.fine('$label: Got message: $message');
           if (test(message)) {
-            _logger.fine('$label: Skipping line: $line');
+            _logger.fine('$label: Skipping line: "$log"');
             await logs.next;
             continue;
           }
+          _logger.fine('$label: Found matching line: "$log"');
           return true;
         }
         fail('$label: Process closed without matching');
@@ -271,6 +284,7 @@ final class InteractiveCommand {
       _process.kill();
       return _logs.rest.drain();
     });
+    await _process.exitCode;
     _logger.fine('Flushing test logs');
     await [stdout.flush(), stderr.flush()].wait;
   }

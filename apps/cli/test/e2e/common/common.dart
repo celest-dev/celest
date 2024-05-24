@@ -29,6 +29,7 @@ abstract base class TestTarget with TestHelpers {
 
   String get name;
   List<String> get executable;
+  Map<String, String> get environment => const {};
   Future<void> setUpAll() async {}
   Future<void> tearDownAll() async {}
 }
@@ -136,7 +137,9 @@ mixin TestHelpers {
         ],
         workingDirectory: workingDirectory,
         environment: {
+          if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
           ...defaultCliEnvironment,
+          ...target.environment,
           ...?environment,
         },
       );
@@ -152,5 +155,7 @@ mixin TestHelpers {
         ...args,
       ]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
+        ...defaultCliEnvironment,
+        ...target.environment,
       });
 }

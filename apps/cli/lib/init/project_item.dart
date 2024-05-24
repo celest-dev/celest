@@ -113,6 +113,20 @@ final class _Pubspec extends ProjectFile {
   Future<void> create(String projectRoot) async {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
+
+    var celestLocalPath = platform.environment['CELEST_LOCAL_PATH'];
+    if (celestLocalPath != null) {
+      celestLocalPath = p.canonicalize(p.normalize(celestLocalPath));
+      if (fileSystem.directory(celestLocalPath).existsSync()) {
+        logger.finest('Using local Celest at $celestLocalPath');
+      } else {
+        logger.warning(
+          'CELEST_LOCAL_PATH is set to $celestLocalPath, but the directory '
+          'does not exist. Ignoring.',
+        );
+        celestLocalPath = null;
+      }
+    }
     final pubspec = Pubspec(
       'celest_backend',
       // 'api_${projectName.snakeCase}',
@@ -123,6 +137,14 @@ final class _Pubspec extends ProjectFile {
       },
       dependencies: ProjectDependency.dependencies,
       devDependencies: ProjectDependency.devDependencies,
+      dependencyOverrides: switch (celestLocalPath) {
+        null => null,
+        final localPath => {
+            'celest': PathDependency('$localPath/packages/celest'),
+            'celest_core': PathDependency('$localPath/packages/celest_core'),
+            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
+          },
+      },
     );
     await file.writeAsString(pubspec.toYaml());
     await _updateAppPubspec();

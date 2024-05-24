@@ -54,9 +54,7 @@ name: $name
     if (publishTo != null) {
       pubspecYaml.writeln('publish_to: $publishTo');
     }
-    final editor = YamlEditor(
-      source ??
-          '''
+    final yaml = StringBuffer('''
 $pubspecYaml
 environment:
   sdk:
@@ -66,8 +64,13 @@ dependencies:
 
 dev_dependencies:
   test:
-''',
-    );
+''');
+    if (dependencyOverrides.isNotEmpty) {
+      yaml
+        ..writeln()
+        ..writeln('dependency_overrides: {}');
+    }
+    final editor = YamlEditor(source ?? yaml.toString());
     if (environment case final environment?) {
       environment.forEach((key, constraint) {
         editor.update(
@@ -89,6 +92,7 @@ dev_dependencies:
 
     addConstraints(dependencies, DependencyType.dependency);
     addConstraints(devDependencies, DependencyType.devDependency);
+    addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
 
     return editor.toString();
   }

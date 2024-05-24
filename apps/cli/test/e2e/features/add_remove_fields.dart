@@ -10,9 +10,6 @@ final class AddRemoveFieldsTest extends Test {
   String get name => 'add/remove fields in model';
 
   @override
-  List<String> get tags => ['add-remove-fields'];
-
-  @override
   Future<void> run() async {
     final celest = celestCommand('start')
         .workingDirectory(flutterProjectDir.path)

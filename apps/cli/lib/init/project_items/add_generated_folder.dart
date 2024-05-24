@@ -2,17 +2,24 @@
 
 import 'package:celest_cli/init/project_item.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:file/file.dart';
 
 final class GeneratedFolder extends ProjectItem {
   @override
   Future<void> create(String projectRoot) async {
     final generatedDir =
         fileSystem.directory(projectRoot).childDirectory('generated');
-    if (generatedDir.existsSync()) {
-      return;
-    }
-    await generatedDir.create(recursive: true);
-    await generatedDir.childFile('README.md').writeAsString(generated_README);
+    await _createIfNotExists(
+      generatedDir.childFile('README.md'),
+      generated_README,
+    );
+  }
+}
+
+Future<void> _createIfNotExists(File file, String content) async {
+  if (!file.existsSync()) {
+    await file.create(recursive: true);
+    await file.writeAsString(content);
   }
 }
 
