@@ -71,15 +71,11 @@ class TestRunner {
   late final testName = p.basename(projectRoot);
 
   late Client client;
-  late final analyzer = CelestAnalyzer();
+  late CelestAnalyzer analyzer;
 
   void run() {
     group(testName, () {
       setUpAll(() async {
-        await init(
-          projectRoot: projectRoot,
-          outputsDir: goldensDir.path,
-        );
         await runPub(
           action: PubAction.get,
           workingDirectory: projectRoot,
@@ -87,12 +83,19 @@ class TestRunner {
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
+        await init(
+          projectRoot: projectRoot,
+          outputsDir: goldensDir.path,
+        );
+        analyzer = CelestAnalyzer();
         goldensDir.createSync();
         client = Client();
       });
 
-      tearDownAll(() {
+      tearDownAll(() async {
         client.close();
+        analyzer.reset();
+        await celestProject.close();
       });
 
       testAnalyzer();
@@ -276,7 +279,7 @@ class TestRunner {
           path: entrypoint,
           envVars:
               (await celestProject.envManager.envVars).map((el) => el.envName),
-          verbose: false,
+          verbose: true,
           stdoutPipe: logSink,
           stderrPipe: logSink,
           vmServiceTimeout: const Duration(seconds: 30),
@@ -3676,6 +3679,41 @@ final tests = <String, Test>{
                   },
                 },
               },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'flutter': Test(
+    apis: {
+      'dart_ui': ApiTest(
+        functionTests: {
+          'lerpColor': [
+            FunctionTestSuccess(
+              name: 'lerpColor',
+              input: {
+                'a': {
+                  'value': 0xFF000000,
+                },
+                'b': {
+                  'value': 0xFFFFFFFF,
+                },
+                't': 0.5,
+              },
+              output: {
+                'value': 0xFF7F7F7F,
+              },
+            ),
+          ],
+          'addCountryCode': [
+            FunctionTestSuccess(
+              name: 'addCountryCode',
+              input: {
+                'locale': ['en', null],
+                'countryCode': 'US',
+              },
+              output: ['en', 'US'],
             ),
           ],
         },

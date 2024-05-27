@@ -59,16 +59,14 @@ class FrontendServerClient {
     String entrypoint,
     String outputDillPath,
     String platformKernel, {
-    String dartdevcModuleFormat = 'amd',
-    bool debug = false,
+    required String workingDirectory,
     List<String>? enabledExperiments,
-    bool enableHttpUris = false,
-    List<String> fileSystemRoots = const [], // For `fileSystemScheme` uris,
-    String fileSystemScheme =
-        'org-dartlang-root', // Custom scheme for virtual `fileSystemRoots`.
-    String? frontendServerPath, // Defaults to the snapshot in the sdk.
+    // List<String> fileSystemRoots = const [], // For `fileSystemScheme` uris,
+    // String fileSystemScheme =
+    //     'org-dartlang-root', // Custom scheme for virtual `fileSystemRoots`.
+    required String frontendServerPath,
     String packagesJson = '.dart_tool/package_config.json',
-    String? sdkRoot, // Defaults to the current SDK root.
+    required String sdkRoot,
     String target = 'vm', // The kernel target type.
     bool verbose = false, // Verbose logs, including server/client messages
     bool printIncrementalDependencies = true,
@@ -76,38 +74,39 @@ class FrontendServerClient {
     String? nativeAssets,
     List<String> additionalArgs = const [],
   }) async {
-    final feServer = await Process.start(Sdk.current.dartAotRuntime, [
-      if (debug) '--observe',
-      frontendServerPath ?? _feServerPath,
-      '--sdk-root',
-      sdkRoot ?? Sdk.current.sdkPath,
-      '--platform=$platformKernel',
-      '--target=$target',
-      if (target == 'dartdevc')
-        '--dartdevc-module-format=$dartdevcModuleFormat',
-      for (final root in fileSystemRoots) '--filesystem-root=$root',
-      '--filesystem-scheme',
-      fileSystemScheme,
-      '--output-dill',
-      outputDillPath,
-      '--packages=$packagesJson',
-      if (enableHttpUris) '--enable-http-uris',
-      '--incremental',
-      if (verbose) '--verbose',
-      if (!printIncrementalDependencies) '--no-print-incremental-dependencies',
-      if (enabledExperiments != null)
-        for (final experiment in enabledExperiments)
-          '--enable-experiment=$experiment',
-      for (final source in additionalSources) ...[
-        '--source',
-        source,
+    final feServer = await processManager.start(
+      <String>[
+        Sdk.current.dartAotRuntime,
+        frontendServerPath,
+        '--sdk-root',
+        sdkRoot,
+        '--platform=$platformKernel',
+        '--target=$target',
+        // for (final root in fileSystemRoots) '--filesystem-root=$root',
+        // '--filesystem-scheme',
+        // fileSystemScheme,
+        '--output-dill',
+        outputDillPath,
+        '--packages=$packagesJson',
+        '--incremental',
+        if (verbose) '--verbose',
+        if (!printIncrementalDependencies)
+          '--no-print-incremental-dependencies',
+        if (enabledExperiments != null)
+          for (final experiment in enabledExperiments)
+            '--enable-experiment=$experiment',
+        for (final source in additionalSources) ...[
+          '--source',
+          source,
+        ],
+        if (nativeAssets != null) ...[
+          '--native-assets',
+          nativeAssets,
+        ],
+        ...additionalArgs,
       ],
-      if (nativeAssets != null) ...[
-        '--native-assets',
-        nativeAssets,
-      ],
-      ...additionalArgs,
-    ]);
+      workingDirectory: workingDirectory,
+    );
     final feServerStdoutLines = StreamQueue(
       feServer.stdout.transform(utf8.decoder).transform(const LineSplitter()),
     );

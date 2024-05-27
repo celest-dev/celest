@@ -61,14 +61,19 @@ final class CelestAnalyzer
     // TODO:
   }
 
+  @override
+  void reset() {
+    _logger.finest('Clearing analyzer caches...');
+    super.reset();
+    _initFuture = null;
+    _lastAnalyzed = projectPaths.projectRoot;
+    _resolver = null;
+    typeHelper.reset();
+  }
+
   Future<void> init({required bool migrateProject}) async {
     _errors.clear();
     if (_lastAnalyzed != projectPaths.projectRoot) {
-      _initFuture = null;
-      _lastAnalyzed = projectPaths.projectRoot;
-      _resolver = null;
-      _logger.finest('Analyzing new project. Clearing caches.');
-      typeHelper.reset();
       reset();
     }
     _resolver ??= LegacyCelestProjectResolver(

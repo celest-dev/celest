@@ -1,0 +1,28 @@
+{
+  "name": "flutter",
+  "apis": {
+    "dart_ui": {
+      "name": "dart_ui",
+      "functions": {
+        "lerpColor": {
+          "name": "lerpColor",
+          "route": "/dart-ui/lerp-color",
+          "apiName": "dart_ui",
+          "envVars": []
+        },
+        "addCountryCode": {
+          "name": "addCountryCode",
+          "route": "/dart-ui/add-country-code",
+          "apiName": "dart_ui",
+          "envVars": []
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": [],
+    "flutterSdkVersion": "3.22.1"
+  }
+}

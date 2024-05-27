@@ -64,21 +64,68 @@ final class LocalApiRunner implements Closeable {
       }
       env[envVar] = value;
     }
-    final packageConfig = await transformPackageConfig(
+    final packageConfigPath = await transformPackageConfig(
       packageConfigPath: projectPaths.packagesConfig,
       fromRoot: projectPaths.projectRoot,
       toRoot: projectPaths.outputsDir,
     );
+    final (target, platformDill, sdkRoot) = switch (Sdk.current.sdkType) {
+      SdkType.flutter => (
+          'flutter',
+          Sdk.current.flutterPlatformDill!,
+          Sdk.current.flutterPatchedSdk!
+        ),
+      SdkType.dart => ('vm', Sdk.current.vmPlatformDill, Sdk.current.sdkPath),
+    };
+
+    // Create initial kernel file so that it links the platform
+    //
+    // FE server doesn't want to link the platform ever, but we need it for
+    // the initial compilation so that `dart run` can work.
+    //
+    // Incremental compilations do not the need the platform since it will be
+    // loaded into memory already.
+    final outputDill = p.setExtension(path, '.dill');
+    final genKernelRes = await processManager.run(
+      <String>[
+        Sdk.current.dartAotRuntime,
+        Sdk.current.genKernelAotSnapshot,
+        '--no-aot',
+        '--no-support-mirrors',
+        '--target',
+        target,
+        '--link-platform',
+        '--platform',
+        platformDill,
+        '--output',
+        outputDill,
+        '--packages',
+        packageConfigPath,
+        path,
+      ],
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+      workingDirectory: projectPaths.outputsDir,
+    );
+    if (genKernelRes.exitCode != 0) {
+      throw CompilationException(
+        'Error generating initial kernel file: '
+        '${genKernelRes.stdout}\n'
+        '${genKernelRes.stderr}',
+      );
+    }
+
     final client = await FrontendServerClient.start(
-      p.toUri(path).toString(), // entrypoint
-      p.setExtension(path, '.dill'), // outputDillPath
-      p.toUri(Sdk.current.vmPlatformDill).toString(), // platformKernel
-      target: 'vm',
+      path, // entrypoint
+      outputDill, // outputDillPath
+      platformDill, // platformKernel
+      workingDirectory: projectPaths.outputsDir,
+      target: target,
       verbose: verbose,
-      packagesJson: packageConfig,
+      sdkRoot: sdkRoot,
       enabledExperiments: celestProject.analysisOptions.enabledExperiments,
       frontendServerPath: Sdk.current.frontendServerAotSnapshot,
-      additionalSources: additionalSources,
+      // additionalSources: additionalSources,
       additionalArgs: [
         '--no-support-mirrors', // Since it won't be supported in the cloud.
         // TODO(dnys1): Would this help? It wants exclusive control over the info file...
@@ -89,24 +136,20 @@ final class LocalApiRunner implements Closeable {
     );
     _logger.fine('Compiling local API...');
 
-    final result = await client.compile();
-    final dillOutput = client.expectOutput(result);
-
     port = await portFinder.checkOrUpdatePort(port);
     _logger.finer('Starting local API on port $port...');
     final localApiProcess = await processManager.start(
       [
         Sdk.current.dart,
         'run',
-        // Start VM service on a random port.
-        '--enable-vm-service=0',
-        '--no-dds',
+        '--enable-vm-service=0', // Start VM service on a random port.
+        '--no-dds', // We want to talk directly to VM service.
         '--pause-isolates-on-start',
         '--warn-on-pause-with-no-debugger',
         '--enable-asserts',
         '--packages',
-        packageConfig,
-        dillOutput,
+        packageConfigPath,
+        outputDill,
       ],
       workingDirectory: projectPaths.outputsDir,
       environment: {

@@ -1,0 +1,299 @@
+{
+  "name": "flutter",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project:project.dart"
+  },
+  "apis": {
+    "dart_ui": {
+      "name": "dart_ui",
+      "metadata": [],
+      "functions": {
+        "lerpColor": {
+          "name": "lerpColor",
+          "apiName": "dart_ui",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "a",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Color",
+                "url": "dart:ui",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 189,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 190,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 37
+                },
+                "text": "a"
+              }
+            },
+            {
+              "name": "b",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Color",
+                "url": "dart:ui",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 201,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 48
+                },
+                "end": {
+                  "offset": 202,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 49
+                },
+                "text": "b"
+              }
+            },
+            {
+              "name": "t",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "double",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 211,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 58
+                },
+                "end": {
+                  "offset": 212,
+                  "uri": "dart_ui.dart",
+                  "line": 8,
+                  "column": 59
+                },
+                "text": "t"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Color",
+                "url": "dart:ui",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Color",
+            "url": "dart:ui",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 170,
+              "uri": "dart_ui.dart",
+              "line": 8,
+              "column": 17
+            },
+            "end": {
+              "offset": 179,
+              "uri": "dart_ui.dart",
+              "line": 8,
+              "column": 26
+            },
+            "text": "lerpColor"
+          }
+        },
+        "addCountryCode": {
+          "name": "addCountryCode",
+          "apiName": "dart_ui",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "locale",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Locale",
+                "url": "dart:ui",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 309,
+                  "uri": "dart_ui.dart",
+                  "line": 13,
+                  "column": 43
+                },
+                "end": {
+                  "offset": 315,
+                  "uri": "dart_ui.dart",
+                  "line": 13,
+                  "column": 49
+                },
+                "text": "locale"
+              }
+            },
+            {
+              "name": "countryCode",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 324,
+                  "uri": "dart_ui.dart",
+                  "line": 13,
+                  "column": 58
+                },
+                "end": {
+                  "offset": 335,
+                  "uri": "dart_ui.dart",
+                  "line": 13,
+                  "column": 69
+                },
+                "text": "countryCode"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Locale",
+                "url": "dart:ui",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Locale",
+            "url": "dart:ui",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 284,
+              "uri": "dart_ui.dart",
+              "line": 13,
+              "column": 18
+            },
+            "end": {
+              "offset": 298,
+              "uri": "dart_ui.dart",
+              "line": 13,
+              "column": 32
+            },
+            "text": "addCountryCode"
+          }
+        }
+      },
+      "docs": [
+        "/// Tests that dart:ui types can be used as inputs/outputs in functions."
+      ],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "dart_ui.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "dart_ui.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": [],
+    "flutterSdkVersion": "3.22.1"
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
+  }
+}

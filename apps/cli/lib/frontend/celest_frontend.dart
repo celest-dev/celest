@@ -638,7 +638,7 @@ final class CelestFrontend implements Closeable {
         _localApiRunner = await LocalApiRunner.start(
           path: projectPaths.localApiEntrypoint,
           envVars: envVars,
-          verbose: verbose,
+          verbose: true, // TODO(dnys1): Use verbose when confident in Flutter
         );
       });
       _userHub = await _startUserHub(
@@ -660,7 +660,8 @@ final class CelestFrontend implements Closeable {
               path: projectPaths.localApiEntrypoint,
               port: _localApiRunner?.port,
               envVars: envVars,
-              verbose: verbose,
+              // TODO(dnys1): Use verbose when confident in Flutter
+              verbose: true,
             );
           });
       }
