@@ -16,7 +16,23 @@ class LocalApiGenerator {
   Method get _mainMethod => Method(
         (m) => m
           ..name = 'main'
-          ..returns = DartTypes.core.void$
+          ..returns = DartTypes.core.future(DartTypes.core.void$)
+          ..modifier = MethodModifier.async
+          ..body = Code.scope(
+            (alloc) => '''
+await Future.wait([
+  for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
+    ${alloc(DartTypes.isolate.isolate)}.run(start),
+]);
+''',
+          ),
+      );
+
+  Method get _startMethod => Method(
+        (m) => m
+          ..name = 'start'
+          ..returns = DartTypes.core.future(DartTypes.core.void$)
+          ..modifier = MethodModifier.async
           ..body = Block((b) {
             b.addExpression(
               DartTypes.celest.serve.call([], {
@@ -28,12 +44,13 @@ class LocalApiGenerator {
                     );
                   }),
                 ),
-              }),
+              }).awaited,
             );
           }),
       );
 
   Library generate() => Library((library) {
         library.body.add(_mainMethod);
+        library.body.add(_startMethod);
       });
 }

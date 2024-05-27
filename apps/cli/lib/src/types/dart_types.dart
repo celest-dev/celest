@@ -4,7 +4,6 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'dart:io' as io;
-import 'dart:isolate' as isolate;
 import 'dart:typed_data';
 
 import 'package:aws_common/aws_common.dart' as aws_common;
@@ -224,11 +223,11 @@ class _Core {
   DartTypeReference get function => const DartTypeReference('Function', _url);
 
   /// Creates a [Future] reference.
-  Reference future(Reference ref) => TypeReference(
+  Reference future([Reference? ref]) => TypeReference(
         (t) => t
           ..symbol = 'Future'
           ..url = _url
-          ..types.add(ref),
+          ..types.addAll([if (ref != null) ref]),
       );
 
   /// Creates a [IndexError] reference.
@@ -926,6 +925,13 @@ class _Isolate {
   const _Isolate();
 
   static const _url = 'dart:isolate';
+
+  /// Creates an [isolate.Isolate] reference.
+  Reference get isolate => TypeReference(
+        (t) => t
+          ..symbol = 'Isolate'
+          ..url = _url,
+      );
 
   /// Creates a [isolate.SendPort] reference.
   DartTypeReference get sendPort => const DartTypeReference('SendPort', _url);
