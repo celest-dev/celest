@@ -99,8 +99,6 @@ dependency_overrides:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
-  jni:
-    path: ../../services/hub/third_party/jni-0.9.2
 
   # TODO: Remove aws_common dependency
   json_annotation: ^4.9.0

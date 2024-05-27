@@ -640,11 +640,12 @@ packages:
     source: hosted
     version: "1.0.4"
   jni:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../services/hub/third_party/jni-0.9.2"
-      relative: true
-    source: path
+      name: jni
+      sha256: "6f8e04339f96cb32879acb181c60b2c1e2310ff86f3c62bcd1afcfb4b28b665d"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.9.2"
   js:
     dependency: transitive
@@ -1348,4 +1349,3 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=3.4.0 <4.0.0"
-  flutter: ">=3.19.0"
