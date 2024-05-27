@@ -7,6 +7,7 @@ import 'package:celest/celest.dart';
 import 'package:celest_backend/models/_overrides.dart' as _$_overrides;
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
+import 'package:flutter/src/painting/image_provider.dart' as _$image_provider;
 
 void initSerializers() {
   Serializers.instance.put(Serializer.define<_$ui.Color, Map<String, Object?>>(
@@ -53,6 +54,19 @@ void initSerializers() {
     },
     deserialize: ($serialized) {
       return SerializationException(($serialized[r'message'] as String));
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$image_provider.NetworkImageLoadException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'statusCode': $value.statusCode,
+      r'uri': Serializers.instance.serialize<Uri>($value.uri),
+    },
+    deserialize: ($serialized) {
+      return _$image_provider.NetworkImageLoadException(
+        statusCode: ($serialized[r'statusCode'] as num).toInt(),
+        uri: Serializers.instance.deserialize<Uri>($serialized[r'uri']),
+      );
     },
   ));
 }

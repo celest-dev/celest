@@ -80,27 +80,22 @@ final class LocalApiRunner implements Closeable {
 
     // Create initial kernel file so that it links the platform
     //
-    // FE server doesn't want to link the platform ever, but we need it for
-    // the initial compilation so that `dart run` can work.
-    //
     // Incremental compilations do not the need the platform since it will be
     // loaded into memory already.
     final outputDill = p.setExtension(path, '.dill');
     final genKernelRes = await processManager.run(
       <String>[
         Sdk.current.dartAotRuntime,
-        Sdk.current.genKernelAotSnapshot,
-        '--no-aot',
-        '--no-support-mirrors',
+        Sdk.current.frontendServerAotSnapshot,
+        '--sdk-root',
+        sdkRoot,
+        '--link-platform',
         '--target',
         target,
-        '--link-platform',
-        '--platform',
-        platformDill,
-        '--output',
-        outputDill,
         '--packages',
         packageConfigPath,
+        '--output-dill',
+        outputDill,
         path,
       ],
       stdoutEncoding: utf8,
@@ -136,21 +131,40 @@ final class LocalApiRunner implements Closeable {
     );
     _logger.fine('Compiling local API...');
 
+    final command = switch (Sdk.current.sdkType) {
+      SdkType.dart => <String>[
+          Sdk.current.dart,
+          'run',
+          '--enable-vm-service=0', // Start VM service on a random port.
+          '--no-dds', // We want to talk directly to VM service.
+          '--pause-isolates-on-start',
+          '--warn-on-pause-with-no-debugger',
+          '--enable-asserts',
+          '--packages',
+          packageConfigPath,
+          outputDill,
+        ],
+      SdkType.flutter => <String>[
+          Sdk.current.flutterTester,
+          '--non-interactive',
+          // '--run-forever',
+          '--start-paused',
+          '--icu-data-file-path='
+              '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
+          '--packages=$packageConfigPath',
+          '--log-tag=_CELEST',
+          if (verbose) '--verbose-logging',
+          // '--disable-asset-fonts',
+          // '--use-test-fonts',
+          // '--enable-impeller',
+          outputDill,
+        ]
+    };
+
     port = await portFinder.checkOrUpdatePort(port);
     _logger.finer('Starting local API on port $port...');
     final localApiProcess = await processManager.start(
-      [
-        Sdk.current.dart,
-        'run',
-        '--enable-vm-service=0', // Start VM service on a random port.
-        '--no-dds', // We want to talk directly to VM service.
-        '--pause-isolates-on-start',
-        '--warn-on-pause-with-no-debugger',
-        '--enable-asserts',
-        '--packages',
-        packageConfigPath,
-        outputDill,
-      ],
+      command,
       workingDirectory: projectPaths.outputsDir,
       environment: {
         // The HTTP port to serve Celest on.
@@ -275,7 +289,9 @@ final class LocalApiRunner implements Closeable {
           return completeVmService(vmServiceInfo);
         }
       }
-      if (line.startsWith('The Dart') || line.startsWith('vm-service')) {
+      if (line.startsWith('The Dart') ||
+          line.startsWith('vm-service') ||
+          line.contains('_CELEST')) {
         // Ignore
       } else if (line.startsWith('Serving on')) {
         if (!serverStartedCompleter.isCompleted) {

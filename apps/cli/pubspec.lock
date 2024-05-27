@@ -274,7 +274,7 @@ packages:
     source: hosted
     version: "0.3.0"
   chunked_stream:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: chunked_stream
       sha256: b2fde5f81d780f0c1699b8347cae2e413412ae947fc6e64727cc48c6bb54c95c

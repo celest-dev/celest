@@ -30,6 +30,7 @@ dependencies:
     path: ../../packages/celest_cli_common
   celest_core:
     path: ../../celest/packages/celest_core
+  chunked_stream: ^1.4.2
   cli_script: ^1.0.0
   code_builder: ^4.8.0
   collection: ^1.18.0
@@ -118,7 +119,6 @@ dev_dependencies:
   celest_lints:
     path: ../../packages/celest_lints
   checks: ^0.3.0
-  chunked_stream: ^1.4.2
   drift_dev: ^2.14.1
   gcloud: ^0.8.12
   # Required for the `gcloud` package

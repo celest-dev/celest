@@ -5,17 +5,21 @@
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:convert' as _$convert;
+import 'dart:typed_data' as _$typed_data;
 import 'dart:ui' as _$ui;
 
 import 'package:celest/celest.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
+import 'package:flutter/src/painting/image_provider.dart' as _$image_provider;
 
 import '../../client.dart';
 
 class CelestFunctions {
   /// Tests that dart:ui types can be used as inputs/outputs in functions.
   final dartUi = CelestFunctionsDartUi();
+
+  final flutter = CelestFunctionsFlutter();
 }
 
 /// Tests that dart:ui types can be used as inputs/outputs in functions.
@@ -93,5 +97,54 @@ class CelestFunctionsDartUi {
       );
     }
     return Serializers.instance.deserialize<_$ui.Locale>($body['response']);
+  }
+}
+
+class CelestFunctionsFlutter {
+  Never _throwError({
+    required int $statusCode,
+    required Map<String, Object?> $body,
+  }) {
+    final $error = ($body['error'] as Map<String, Object?>);
+    final $code = ($error['code'] as String);
+    final $details = ($error['details'] as Map<String, Object?>?);
+    switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
+      case r'NetworkImageLoadException':
+        throw Serializers.instance
+            .deserialize<_$image_provider.NetworkImageLoadException>($details);
+      case _:
+        switch ($statusCode) {
+          case 400:
+            throw BadRequestException($code);
+          case _:
+            throw InternalServerException($code);
+        }
+    }
+  }
+
+  Future<_$typed_data.Uint8List> paintWidget() async {
+    final $response = await celest.httpClient.post(
+      celest.baseUri.resolve('/flutter/paint-widget'),
+      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+    );
+    final $body =
+        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    if ($response.statusCode != 200) {
+      _throwError(
+        $statusCode: $response.statusCode,
+        $body: $body,
+      );
+    }
+    return Serializers.instance
+        .deserialize<_$typed_data.Uint8List>($body['response']);
   }
 }

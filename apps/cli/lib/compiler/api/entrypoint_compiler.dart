@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:api_celest/ast.dart';
@@ -83,11 +84,17 @@ final class EntrypointCompiler {
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = '$pathWithoutDart.dill';
+    final (target, platformDill) = switch (Sdk.current.sdkType) {
+      SdkType.dart => ('vm', Sdk.current.vmPlatformProductDill),
+      SdkType.flutter => ('flutter', Sdk.current.flutterPlatformProductDill!),
+    };
     final buildArgs = <String>[
       Sdk.current.dartAotRuntime,
       Sdk.current.genKernelAotSnapshot,
       '--aot',
-      '--platform=${Sdk.current.vmPlatformProductDill}',
+      '--target=$target',
+      '--platform=$platformDill',
+      '--link-platform',
       '-Ddart.vm.product=true',
       '--output=$outputPath',
       '--packages=$packageConfig',
@@ -118,8 +125,11 @@ final class EntrypointCompiler {
       );
     }
     logger.finer('Compilation succeeded');
+
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
-    final outputDillSha256 = sha256.convert(outputDill);
+    final outputDillSha256 = await _computeSha256(
+      outputDill.asUnmodifiableView(),
+    );
     return EntrypointResult(
       nodeId: id,
       outputDillPath: outputPath,
@@ -127,4 +137,8 @@ final class EntrypointCompiler {
       outputDillSha256: outputDillSha256,
     );
   }
+}
+
+Future<Digest> _computeSha256(Uint8List data) async {
+  return Isolate.run(() => sha256.convert(data));
 }

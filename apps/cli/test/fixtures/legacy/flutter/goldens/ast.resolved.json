@@ -17,6 +17,17 @@
           "envVars": []
         }
       }
+    },
+    "flutter": {
+      "name": "flutter",
+      "functions": {
+        "paintWidget": {
+          "name": "paintWidget",
+          "route": "/flutter/paint-widget",
+          "apiName": "flutter",
+          "envVars": []
+        }
+      }
     }
   },
   "envVars": [],

@@ -22,6 +22,7 @@ import 'types.dart';
 
 final hubTestsDir =
     Directory.current.uri.resolve('../../services/hub/test/test_data').path;
+final testDir = p.join(Directory.current.path, 'test', 'fixtures', 'legacy');
 
 void main() {
   final updateGoldens = switch (Platform.environment['UPDATE_GOLDENS']) {
@@ -35,7 +36,6 @@ void main() {
     );
   }
 
-  final testDir = p.join(Directory.current.path, 'test', 'fixtures', 'legacy');
   final allTests = Directory(testDir)
       .listSync()
       .whereType<Directory>()
@@ -3714,6 +3714,24 @@ final tests = <String, Test>{
                 'countryCode': 'US',
               },
               output: ['en', 'US'],
+            ),
+          ],
+        },
+      ),
+      'flutter': ApiTest(
+        functionTests: {
+          'paintWidget': [
+            FunctionTestSuccess(
+              name: 'paintImage',
+              input: {},
+              output: base64Encode(
+                fileSystem
+                    .directory(testDir)
+                    .childDirectory('flutter')
+                    .childDirectory('test')
+                    .childFile('golden_image.png')
+                    .readAsBytesSync(),
+              ),
             ),
           ],
         },
