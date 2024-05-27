@@ -7,6 +7,7 @@ import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
+import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -107,6 +108,15 @@ base mixin Configure on CelestCommand {
       projectRoot: projectRoot,
       parentProject: parentProject,
     );
+    try {
+      logger.finest('Hydrating pub cache...');
+      await pubCache.hydate();
+      logger.finest('Fixing pub cache...');
+      await pubCache.fix();
+      logger.finest('Pub cache fixed.');
+    } on Object catch (e, st) {
+      performance.captureError(e, stackTrace: st);
+    }
 
     var needsMigration = false;
     if (!isExistingProject) {
