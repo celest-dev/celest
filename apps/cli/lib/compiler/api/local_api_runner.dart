@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/port_finder.dart';
@@ -69,13 +70,18 @@ final class LocalApiRunner implements Closeable {
       fromRoot: projectPaths.projectRoot,
       toRoot: projectPaths.outputsDir,
     );
-    final (target, platformDill, sdkRoot) = switch (Sdk.current.sdkType) {
-      SdkType.flutter => (
+    final projectType = await celestProject.determineProjectType();
+    final (target, platformDill, sdkRoot) = switch (projectType) {
+      CelestProjectType.flutter => (
           'flutter',
           Sdk.current.flutterPlatformDill!,
           Sdk.current.flutterPatchedSdk!
         ),
-      SdkType.dart => ('vm', Sdk.current.vmPlatformDill, Sdk.current.sdkPath),
+      CelestProjectType.dart => (
+          'vm',
+          Sdk.current.vmPlatformDill,
+          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+        ),
     };
 
     // Create initial kernel file so that it links the platform
@@ -89,6 +95,8 @@ final class LocalApiRunner implements Closeable {
         Sdk.current.frontendServerAotSnapshot,
         '--sdk-root',
         sdkRoot,
+        '--platform',
+        platformDill,
         '--link-platform',
         '--target',
         target,
@@ -131,24 +139,28 @@ final class LocalApiRunner implements Closeable {
     );
     _logger.fine('Compiling local API...');
 
-    final command = switch (Sdk.current.sdkType) {
-      SdkType.dart => <String>[
+    final command = switch (projectType) {
+      CelestProjectType.dart => <String>[
           Sdk.current.dart,
           'run',
           '--enable-vm-service=0', // Start VM service on a random port.
           '--no-dds', // We want to talk directly to VM service.
-          '--pause-isolates-on-start',
-          '--warn-on-pause-with-no-debugger',
+          // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
+          if (platform.isWindows) ...[
+            '--pause-isolates-on-start',
+            '--warn-on-pause-with-no-debugger',
+          ],
           '--enable-asserts',
           '--packages',
           packageConfigPath,
           outputDill,
         ],
-      SdkType.flutter => <String>[
+      CelestProjectType.flutter => <String>[
           Sdk.current.flutterTester,
           '--non-interactive',
           // '--run-forever',
-          '--start-paused',
+          // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
+          if (platform.isWindows) '--start-paused',
           '--icu-data-file-path='
               '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
           '--packages=$packageConfigPath',
@@ -195,10 +207,7 @@ final class LocalApiRunner implements Closeable {
       RegExp(r'Connect to the Dart VM service at ([^\s]+) to debug.');
 
   /// Waits for the main Isolate to be available, resume it, then return its ID.
-  static Future<String> _waitForIsolatesAndResume(
-    VmService vmService,
-    Logger logger,
-  ) async {
+  static Future<String> _waitForIsolatesAndResume(VmService vmService) async {
     var vm = await vmService.getVM();
     var isolates = vm.isolates;
     final stopwatch = Stopwatch()..start();
@@ -213,22 +222,24 @@ final class LocalApiRunner implements Closeable {
       isolates = vm.isolates;
     }
     stopwatch.stop();
-    logger.finest(
+    _logger.finest(
       'VM started in ${stopwatch.elapsedMilliseconds}ms. '
       'Isolates: $isolates',
     );
     var isolateRef = isolates
         .firstWhereOrNull((isolate) => isolate.isSystemIsolate ?? false);
-    isolateRef ??= isolates.singleOrNull;
+    isolateRef ??= isolates.firstOrNull;
     if (isolateRef == null) {
       throw StateError('Could not determine main isolate ID.');
     }
-    _logger.finest('Resuming isolates...');
-    // TODO(dnys1): Test resuming multiple isolates.
-    await Future.wait([
-      for (final isolate in isolates) _resumeIsolate(vmService, isolate.id!),
-    ]);
-    _logger.finest('All isolates resumed');
+    // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
+    if (platform.isWindows) {
+      _logger.finest('Resuming isolates...');
+      await Future.wait([
+        for (final isolate in isolates) _resumeIsolate(vmService, isolate.id!),
+      ]);
+      _logger.finest('All isolates resumed');
+    }
     return isolateRef.id!;
   }
 
@@ -343,9 +354,21 @@ final class LocalApiRunner implements Closeable {
         );
       }
       _vmService = await vmService;
-      _vmIsolateId = await _waitForIsolatesAndResume(_vmService!, _logger);
+      _vmIsolateId = await _waitForIsolatesAndResume(_vmService!);
 
-      await serverStartedCompleter.future;
+      await Future.any([
+        serverStartedCompleter.future.timeout(
+          const Duration(seconds: 5),
+          onTimeout: () {
+            throw TimeoutException('Local API did not start in time.');
+          },
+        ),
+        _localApiProcess.exitCode.then((exitCode) {
+          throw StateError(
+            'Local API process exited before serving (exitCode=$exitCode)',
+          );
+        }),
+      ]);
       _logger.fine('Connected to local API.');
     } on Object catch (e, st) {
       _logger.finer('Failure starting local API runner', e, st);
@@ -373,6 +396,8 @@ final class LocalApiRunner implements Closeable {
     }
     _logger.finest('Killing local process');
     _localApiProcess.kill();
+    _logger.finest('Closing VM service...');
+    await _vmService?.dispose();
     await Future.wait([
       _stdoutSub.cancel().then((_) => _logger.finest('Stdout closed')),
       _stderrSub.cancel().then((_) => _logger.finest('Stderr closed')),

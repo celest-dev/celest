@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:crypto/crypto.dart';
@@ -41,7 +41,7 @@ final class EntrypointResult {
     required this.outputDillSha256,
   });
 
-  final NodeId nodeId;
+  final CedarEntityId nodeId;
   final String outputDillPath;
   final Uint8List outputDill;
   final Digest outputDillSha256;
@@ -84,23 +84,35 @@ final class EntrypointCompiler {
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = '$pathWithoutDart.dill';
-    final (target, platformDill) = switch (Sdk.current.sdkType) {
-      SdkType.dart => ('vm', Sdk.current.vmPlatformProductDill),
-      SdkType.flutter => ('flutter', Sdk.current.flutterPlatformProductDill!),
+    final (target, platformDill, sdkRoot) =
+        switch (await celestProject.determineProjectType()) {
+      CelestProjectType.flutter => (
+          'flutter',
+          Sdk.current.flutterPlatformDill!,
+          Sdk.current.flutterPatchedSdk!
+        ),
+      CelestProjectType.dart => (
+          'vm',
+          Sdk.current.vmPlatformDill,
+          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+        ),
     };
     final buildArgs = <String>[
       Sdk.current.dartAotRuntime,
-      Sdk.current.genKernelAotSnapshot,
+      Sdk.current.frontendServerAotSnapshot,
       '--aot',
-      '--target=$target',
+      '--tfa',
+      '--no-support-mirrors',
+      '--sdk-root=$sdkRoot',
       '--platform=$platformDill',
       '--link-platform',
+      '--target=$target',
       '-Ddart.vm.product=true',
-      '--output=$outputPath',
+      '--output-dill=$outputPath',
       '--packages=$packageConfig',
       if (enabledExperiments.isNotEmpty)
         '--enable-experiment=${enabledExperiments.join(',')}',
-      p.canonicalize(entrypointPath),
+      p.canonicalize(p.normalize(entrypointPath)),
     ];
     logger.finer('Compiling with args: $buildArgs');
     final result = await processManager.run(

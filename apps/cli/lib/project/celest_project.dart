@@ -16,9 +16,12 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:hub/context.dart' show HubMetadata;
 import 'package:logging/logging.dart';
+import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 enum ParentProjectType { dart, flutter }
+
+enum CelestProjectType { dart, flutter }
 
 final class ParentProject {
   const ParentProject({
@@ -120,6 +123,18 @@ final class CelestProject {
     // Needed for collecting subtypes.
     enableIndex: true,
   );
+
+  Future<CelestProjectType> determineProjectType() async {
+    final packageConfig = await loadPackageConfig(
+      fileSystem.file(projectPaths.packagesConfig),
+    );
+    for (final package in packageConfig.packages) {
+      if (package.name == 'flutter' || package.name == 'sky_engine') {
+        return CelestProjectType.flutter;
+      }
+    }
+    return CelestProjectType.dart;
+  }
 
   final EnvManager envManager;
   final ParentProject? parentProject;

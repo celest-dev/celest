@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:cli_script/cli_script.dart';
 
@@ -24,7 +25,7 @@ Future<void> runPub({
   required PubAction action,
   required String workingDirectory,
 }) async {
-  exe ??= Sdk.current.dart;
+  exe ??= (await celestProject.determineProjectType()).name;
   final process = await processManager.start(
     <String>[exe, 'pub', action.name],
     environment: {

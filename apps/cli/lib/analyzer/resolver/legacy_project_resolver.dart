@@ -8,6 +8,7 @@ import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
 import 'package:celest_cli/src/context.dart';
@@ -16,7 +17,6 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -234,7 +234,11 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       ),
       sdkInfo: ast.SdkInfo(
         sdkVersion: Version.parse(Sdk.current.version),
-        flutterSdkVersion: Sdk.current.flutterVersion?.let(Version.parse),
+        flutterSdkVersion: switch (await celestProject.determineProjectType()) {
+          CelestProjectType.flutter =>
+            Version.parse(Sdk.current.flutterVersion!),
+          _ => null,
+        },
         enabledExperiments: celestProject.analysisOptions.enabledExperiments,
       ),
       location: projectDefineLocation,
