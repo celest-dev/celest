@@ -1404,8 +1404,8 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.0",
+    "sdkVersion": "3.4.1",
     "enabledExperiments": [],
-    "flutterSdkVersion": "3.22.0"
+    "flutterSdkVersion": "3.22.1"
   }
 }
