@@ -64,7 +64,12 @@ Future<CelestProject> newProject({
     ),
   ]);
   final packageConfigJson = StringBuffer();
-  PackageConfig.writeString(packageConfig, packageConfigJson);
+  PackageConfig.writeString(
+    packageConfig,
+    packageConfigJson,
+    p.toUri(p.join(d.sandbox, name)),
+  );
+  print(packageConfigJson.toString());
   final project = d.dir(name, [
     d.dir('.dart_tool', [
       d.file('package_config.json', packageConfigJson.toString()),

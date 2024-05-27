@@ -32,7 +32,7 @@ class SdkConstraint {
     // bound <3.0.0 to be have upper bound <4.0.0
     //
     // Only do this rewrite after dart 3.
-    if (Version.parse(Sdk.current.version).major >= 3 &&
+    if (Sdk.current.version.major >= 3 &&
         constraint is VersionRange &&
         LanguageVersion.fromSdkConstraint(constraint) >=
             LanguageVersion.firstVersionWithNullSafety &&

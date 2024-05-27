@@ -12,7 +12,10 @@ final class ResidentCompiler {
 
   static String get infoFilePath {
     final infoFileDir = fileSystem.directory(
-      p.join(projectPaths.celestConfig, Sdk.current.version),
+      p.join(
+        projectPaths.celestConfig,
+        Sdk.current.version.canonicalizedVersion,
+      ),
     );
     infoFileDir.createSync(recursive: true);
     return infoFileDir.childFile('resident-compiler-info').path;

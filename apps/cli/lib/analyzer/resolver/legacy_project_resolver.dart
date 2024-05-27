@@ -23,7 +23,6 @@ import 'package:collection/collection.dart';
 import 'package:file/file.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:logging/logging.dart';
-import 'package:pub_semver/pub_semver.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -233,10 +232,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       ),
       sdkInfo: ast.SdkInfo(
-        sdkVersion: Version.parse(Sdk.current.version),
+        sdkVersion: Sdk.current.version,
         flutterSdkVersion: switch (await celestProject.determineProjectType()) {
-          CelestProjectType.flutter =>
-            Version.parse(Sdk.current.flutterVersion!),
+          CelestProjectType.flutter => Sdk.current.flutterVersion!,
           _ => null,
         },
         enabledExperiments: celestProject.analysisOptions.enabledExperiments,

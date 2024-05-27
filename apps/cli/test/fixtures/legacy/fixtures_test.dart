@@ -76,6 +76,10 @@ class TestRunner {
   void run() {
     group(testName, () {
       setUpAll(() async {
+        await init(
+          projectRoot: projectRoot,
+          outputsDir: goldensDir.path,
+        );
         await runPub(
           action: PubAction.get,
           workingDirectory: projectRoot,
@@ -83,10 +87,6 @@ class TestRunner {
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
-        await init(
-          projectRoot: projectRoot,
-          outputsDir: goldensDir.path,
-        );
         analyzer = CelestAnalyzer();
         goldensDir.createSync();
         client = Client();
