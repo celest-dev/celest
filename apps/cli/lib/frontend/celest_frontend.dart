@@ -325,7 +325,10 @@ final class CelestFrontend implements Closeable {
             if (currentProject case final currentProject?) {
               // Diff the old and new projects to see if anything changed.
               final differ = ProjectDiff(currentProject);
-              project.accept(differ);
+              project.acceptWithArg(
+                differ,
+                (parent: project, old: currentProject),
+              );
               if (differ.requiresRestart) {
                 restartMode = RestartMode.fullRestart;
               }

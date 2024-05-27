@@ -40,7 +40,7 @@ void main() {
       .listSync()
       .whereType<Directory>()
       .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync())
-      .where((dir) => p.basename(dir.path).startsWith('flutter'));
+      .where((dir) => !p.basename(dir.path).startsWith('_'));
   group('Fixture', () {
     setUpAll(initTests);
 

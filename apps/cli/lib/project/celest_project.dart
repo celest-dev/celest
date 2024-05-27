@@ -125,15 +125,24 @@ final class CelestProject {
   );
 
   Future<CelestProjectType> determineProjectType() async {
-    final packageConfig = await loadPackageConfig(
-      fileSystem.file(projectPaths.packagesConfig),
-    );
-    for (final package in packageConfig.packages) {
-      if (package.name == 'flutter' || package.name == 'sky_engine') {
-        return CelestProjectType.flutter;
+    final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);
+    if (packageConfigFile.existsSync()) {
+      final packageConfig = await loadPackageConfig(packageConfigFile);
+      for (final package in packageConfig.packages) {
+        if (package.name == 'flutter' || package.name == 'sky_engine') {
+          return CelestProjectType.flutter;
+        }
       }
+      return CelestProjectType.dart;
     }
-    return CelestProjectType.dart;
+    final pubspec = Pubspec.parse(
+      await fileSystem.file(projectPaths.pubspecYaml).readAsString(),
+      sourceUrl: Uri.file(projectPaths.pubspecYaml),
+    );
+    return switch (pubspec.dependencies.containsKey('flutter')) {
+      true => CelestProjectType.flutter,
+      false => CelestProjectType.dart,
+    };
   }
 
   final EnvManager envManager;

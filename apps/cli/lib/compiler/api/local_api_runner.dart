@@ -377,11 +377,12 @@ final class LocalApiRunner implements Closeable {
   }
 
   Future<void> hotReload(List<String> pathsToInvalidate) async {
-    _logger.fine('Hot reloading local API...');
+    _logger.fine('Recompiling local API...');
     final result = await _client.compile([
       for (final path in pathsToInvalidate) p.toUri(path),
     ]);
     final dillOutput = _client.expectOutput(result);
+    _logger.fine('Hot reloading local API with entrypoint: $dillOutput');
     await _vmService!.reloadSources(
       _vmIsolateId,
       rootLibUri: dillOutput,

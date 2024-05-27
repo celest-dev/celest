@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, flutter_style_todos
 
 import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
@@ -10,6 +10,8 @@ import 'features/create/create_project_in_dart_app.dart';
 import 'features/create/create_project_in_flutter_app.dart';
 import 'features/create/create_project_isolated.dart';
 import 'features/hello_project.dart';
+import 'features/hot_reload/hot_reload_add_auth.dart';
+import 'features/hot_reload/hot_reload_add_model_after_error.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_target.dart';
 
@@ -20,13 +22,22 @@ void main() {
   ];
 
   final tests = <E2ETest Function(TestTarget)>[
+    // Example projects
+    HelloProjectTest.new,
+
+    // Project creation
     CreateProjectInFlutterAppTest.new,
     CreateProjectInDartAppTest.new,
     CreateProjectIsolatedTest.new,
-    // HelloProjectTest.new,
+
+    // Bugs
     // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
     // needed.
-    // if (!platform.isWindows) AddRemoveFieldsTest.new,
+    if (!platform.isWindows) AddRemoveFieldsTest.new,
+
+    // Hot reload
+    HotReloadAddAuthTest.new,
+    HotReloadNonExistentModel.new,
   ];
 
   for (final target in targets) {
