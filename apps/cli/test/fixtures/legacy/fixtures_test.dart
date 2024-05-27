@@ -29,6 +29,7 @@ void main() {
     'true' => true,
     _ => false,
   };
+  final includeTests = Platform.environment['INCLUDE_TESTS']?.split(',');
 
   if (updateGoldens && Platform.isWindows) {
     throw Exception(
@@ -40,7 +41,11 @@ void main() {
       .listSync()
       .whereType<Directory>()
       .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync())
-      .where((dir) => !p.basename(dir.path).startsWith('_'));
+      .where((dir) => !p.basename(dir.path).startsWith('_'))
+      .where(
+        (dir) =>
+            includeTests == null || includeTests.contains(p.basename(dir.path)),
+      );
   group('Fixture', () {
     setUpAll(initTests);
 
@@ -280,7 +285,7 @@ class TestRunner {
           path: entrypoint,
           envVars:
               (await celestProject.envManager.envVars).map((el) => el.envName),
-          verbose: true,
+          verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,
           vmServiceTimeout: const Duration(seconds: 30),

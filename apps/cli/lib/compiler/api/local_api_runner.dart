@@ -89,22 +89,24 @@ final class LocalApiRunner implements Closeable {
     // Incremental compilations do not the need the platform since it will be
     // loaded into memory already.
     final outputDill = p.setExtension(path, '.dill');
+
+    // NOTE: FE server requires file: URIs for *some* paths on Windows.
     final genKernelRes = await processManager.run(
       <String>[
         Sdk.current.dartAotRuntime,
         Sdk.current.frontendServerAotSnapshot,
         '--sdk-root',
-        sdkRoot,
+        sdkRoot, // Must be path
         '--platform',
-        platformDill,
+        Uri.file(platformDill).toString(), // Must be URI
         '--link-platform',
         '--target',
         target,
         '--packages',
-        packageConfigPath,
+        Uri.file(packageConfigPath).toString(),
         '--output-dill',
-        outputDill,
-        path,
+        outputDill, // Must be path
+        Uri.file(path).toString(),
       ],
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
@@ -139,17 +141,22 @@ final class LocalApiRunner implements Closeable {
     );
     _logger.fine('Compiling local API...');
 
+    final flutterCacheDir =
+        await fileSystem.systemTempDirectory.createTemp('celest_');
+
+    // Give the VM service a deterministic port, since allowing to to find one
+    // can lead to a race condition with our random port finder picking the same
+    // port.
+    //
+    // When we check the port below, it's valid because the VM service is not
+    // started yet, but later the API fails because it picked the same port.
+    final vmServicePort = await const RandomPortFinder().findOpenPort(port);
     final command = switch (projectType) {
       CelestProjectType.dart => <String>[
           Sdk.current.dart,
           'run',
-          '--enable-vm-service=0', // Start VM service on a random port.
+          '--enable-vm-service=$vmServicePort', // Start VM service
           '--no-dds', // We want to talk directly to VM service.
-          // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
-          if (platform.isWindows) ...[
-            '--pause-isolates-on-start',
-            '--warn-on-pause-with-no-debugger',
-          ],
           '--enable-asserts',
           '--packages',
           packageConfigPath,
@@ -158,16 +165,16 @@ final class LocalApiRunner implements Closeable {
       CelestProjectType.flutter => <String>[
           Sdk.current.flutterTester,
           '--non-interactive',
-          // '--run-forever',
-          // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
-          if (platform.isWindows) '--start-paused',
+          '--vm-service-port=$vmServicePort',
+          '--run-forever',
           '--icu-data-file-path='
               '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
           '--packages=$packageConfigPath',
           '--log-tag=_CELEST',
           if (verbose) '--verbose-logging',
-          // '--disable-asset-fonts',
-          // '--use-test-fonts',
+          '--enable-platform-isolates',
+          '--force-multithreading',
+          '--cache-dir-path=${flutterCacheDir.absolute.path}',
           // '--enable-impeller',
           outputDill,
         ]
@@ -232,24 +239,26 @@ final class LocalApiRunner implements Closeable {
     if (isolateRef == null) {
       throw StateError('Could not determine main isolate ID.');
     }
-    // TODO(dnys1): Remove when fixed: https://github.com/dart-lang/sdk/issues/55830
-    if (platform.isWindows) {
-      _logger.finest('Resuming isolates...');
-      await Future.wait([
-        for (final isolate in isolates) _resumeIsolate(vmService, isolate.id!),
-      ]);
-      _logger.finest('All isolates resumed');
-    }
     return isolateRef.id!;
   }
 
+  // Doesn't seem that we need pause-on-start anymore, but keeping code around
+  // if needed later.
+  // ignore: unused_element
   static Future<void> _resumeIsolate(
     VmService vmService,
     String isolateId,
   ) async {
     _logger.finest('[Isolate $isolateId] Waiting for pause on start event...');
     var isolate = await vmService.getIsolate(isolateId);
+    final stopwatch = Stopwatch()..start();
+    const timeout = Duration(seconds: 5);
     while (isolate.pauseEvent?.kind != EventKind.kPauseStart) {
+      if (stopwatch.elapsed > timeout) {
+        throw TimeoutException(
+          'Timed out waiting for isolate to report PauseStart event.',
+        );
+      }
       await Future<void>.delayed(const Duration(milliseconds: 50));
       isolate = await vmService.getIsolate(isolateId);
     }
@@ -357,18 +366,18 @@ final class LocalApiRunner implements Closeable {
       _vmIsolateId = await _waitForIsolatesAndResume(_vmService!);
 
       await Future.any([
-        serverStartedCompleter.future.timeout(
-          const Duration(seconds: 5),
-          onTimeout: () {
-            throw TimeoutException('Local API did not start in time.');
-          },
-        ),
+        serverStartedCompleter.future,
         _localApiProcess.exitCode.then((exitCode) {
           throw StateError(
             'Local API process exited before serving (exitCode=$exitCode)',
           );
         }),
-      ]);
+      ]).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          throw TimeoutException('Local API did not start in time.');
+        },
+      );
       _logger.fine('Connected to local API.');
     } on Object catch (e, st) {
       _logger.finer('Failure starting local API runner', e, st);
@@ -389,6 +398,39 @@ final class LocalApiRunner implements Closeable {
     );
   }
 
+  // Copied from `package:flutter_tools/src/run_hot.dart`
+  // ignore: unused_element
+  Future<void> _killIsolates() async {
+    if (_vmService case final vmService?) {
+      final isolateOperations = <Future<void>>[];
+      final isolateRefs = await vmService.getVM().then((vm) => vm.isolates!);
+      final isolateIds = isolateRefs.map((r) => r.id!).toList();
+      _logger.finest('Killing isolates: ${isolateIds.join(', ')}');
+      for (final isolateId in isolateIds) {
+        isolateOperations.add(
+          _vmService!.kill(isolateId).then(
+            (Success success) => _logger.finest('Killed isolate $isolateId'),
+            onError: (Object error, StackTrace st) {
+              if (error is SentinelException ||
+                  (error is RPCError &&
+                      error.code == RPCErrorKind.kIsolateMustBeRunnable.code)) {
+                // Do nothing on a SentinelException since it means the isolate
+                // has already been killed.
+                // Error code 105 indicates the isolate is not yet runnable, and might
+                // be triggered if the tool is attempting to kill the asset parsing
+                // isolate before it has finished starting up.
+                return null;
+              }
+              _logger.finer('Error killing isolate $isolateId', error, st);
+              return Future<Never>.error(error, st);
+            },
+          ),
+        );
+      }
+      await Future.wait(isolateOperations);
+    }
+  }
+
   @override
   Future<void> close() async {
     _logger.finer('Shutting down local API...');
@@ -396,7 +438,9 @@ final class LocalApiRunner implements Closeable {
       _client.kill();
     }
     _logger.finest('Killing local process');
-    _localApiProcess.kill();
+    // flutter_tester requires a gentle nudge when using `--run-forever`.
+    _localApiProcess.kill(ProcessSignal.sigkill);
+
     _logger.finest('Closing VM service...');
     await _vmService?.dispose();
     await Future.wait([
@@ -469,7 +513,9 @@ Future<VmService> _vmServiceConnectUri(String wsUri) async {
   socket.listen(
     (data) {
       controller.add(data);
-      _logger.finest('VM service WS data: $data');
+      if (verbose) {
+        _logger.finest('VM service WS data: $data');
+      }
     },
     onError: (Object error, StackTrace stackTrace) {
       _logger.finest('VM service WS error', error, stackTrace);

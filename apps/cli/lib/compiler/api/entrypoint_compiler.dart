@@ -97,22 +97,24 @@ final class EntrypointCompiler {
           p.join(Sdk.current.sdkPath, 'lib', '_internal'),
         ),
     };
+
+    // NOTE: FE server requires file: URIs for *some* paths on Windows.
     final buildArgs = <String>[
       Sdk.current.dartAotRuntime,
       Sdk.current.frontendServerAotSnapshot,
       '--aot',
       '--tfa',
       '--no-support-mirrors',
-      '--sdk-root=$sdkRoot',
-      '--platform=$platformDill',
+      '--sdk-root=$sdkRoot', // Must be path
+      '--platform=${Uri.file(platformDill)}', // Must be URI
       '--link-platform',
       '--target=$target',
       '-Ddart.vm.product=true',
-      '--output-dill=$outputPath',
-      '--packages=$packageConfig',
+      '--output-dill=$outputPath', // Must be path
+      '--packages=${Uri.file(packageConfig)}',
       if (enabledExperiments.isNotEmpty)
         '--enable-experiment=${enabledExperiments.join(',')}',
-      p.canonicalize(p.normalize(entrypointPath)),
+      Uri.file(p.canonicalize(p.normalize(entrypointPath))).toString(),
     ];
     logger.finer('Compiling with args: $buildArgs');
     final result = await processManager.run(
