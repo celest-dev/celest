@@ -31,11 +31,19 @@ abstract class PortFinder {
     }
   }
 
-  Future<int> checkOrUpdatePort(int? port) async {
+  Future<int> checkOrUpdatePort(int? port, {List<int>? excluding}) async {
     if (port != null && await checkPort(port)) {
-      return port;
+      if (excluding == null || !excluding.contains(port)) {
+        return port;
+      }
     }
-    return findOpenPort(port);
+    port = await findOpenPort(port);
+    if (excluding != null) {
+      while (excluding.contains(port)) {
+        port = await findOpenPort(port! + 1);
+      }
+    }
+    return port!;
   }
 
   Future<int> findOpenPort([int? startingPort]);

@@ -180,7 +180,7 @@ final class LocalApiRunner implements Closeable {
         ]
     };
 
-    port = await portFinder.checkOrUpdatePort(port);
+    port = await portFinder.checkOrUpdatePort(port, excluding: [vmServicePort]);
     _logger.finer('Starting local API on port $port...');
     final localApiProcess = await processManager.start(
       command,

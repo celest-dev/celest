@@ -30,14 +30,14 @@ void main() {
     CreateProjectInDartAppTest.new,
     CreateProjectIsolatedTest.new,
 
-    // Bugs
+    // Hot reload
     // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
     // needed.
-    if (!platform.isWindows) AddRemoveFieldsTest.new,
-
-    // Hot reload
-    HotReloadAddAuthTest.new,
-    HotReloadNonExistentModel.new,
+    if (!platform.isWindows) ...[
+      AddRemoveFieldsTest.new,
+      HotReloadAddAuthTest.new,
+      HotReloadNonExistentModel.new,
+    ],
   ];
 
   for (final target in targets) {
