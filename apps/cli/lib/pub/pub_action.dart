@@ -4,6 +4,7 @@ import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:cli_script/cli_script.dart';
+import 'package:logging/logging.dart';
 
 enum PubAction {
   get,
@@ -21,6 +22,8 @@ Try `dart pub outdated` for more information.$)'''),
       };
 }
 
+final Logger _logger = Logger('pub');
+
 Future<void> runPub({
   String? exe,
   required PubAction action,
@@ -29,6 +32,7 @@ Future<void> runPub({
   exe ??= zDebugMode
       ? platform.resolvedExecutable
       : (await celestProject.determineProjectType()).name;
+  _logger.fine('Running `$exe pub ${action.name}` in "$workingDirectory"...');
   final process = await processManager.start(
     <String>[exe, 'pub', action.name],
     environment: {
@@ -37,6 +41,7 @@ Future<void> runPub({
     },
     workingDirectory: workingDirectory,
   );
+
   // TODO(dnys1): Remove when fixed in pub https://github.com/dart-lang/sdk/issues/55289
   // and we can rely on the exit code taking a reasonable amount of time.
 
@@ -68,6 +73,10 @@ Future<void> runPub({
             '$workingDirectory and try again.',
           );
         }
+        _logger.finer(
+          '`$exe pub ${action.name}` completed successfully in '
+          '"$workingDirectory"',
+        );
       }),
       completer.future,
     ]);

@@ -111,7 +111,7 @@ class CelestFunctionsAsserts {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -159,7 +159,7 @@ class CelestFunctionsClasses {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -790,7 +790,7 @@ class CelestFunctionsCollections {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -985,7 +985,7 @@ class CelestFunctionsCycles {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -1104,7 +1104,7 @@ class CelestFunctionsDemo {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -1167,7 +1167,7 @@ class CelestFunctionsExceptions {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -1321,7 +1321,7 @@ class CelestFunctionsExtensionTypes {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -2427,7 +2427,7 @@ class CelestFunctionsGenericWrappers {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -2583,7 +2583,7 @@ class CelestFunctionsMetadata {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -3374,7 +3374,7 @@ class CelestFunctionsOverrides {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -3576,7 +3576,7 @@ class CelestFunctionsParameterTypes {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -4329,7 +4329,7 @@ class CelestFunctionsParameters {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -4452,7 +4452,7 @@ class CelestFunctionsRecords {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -4718,7 +4718,7 @@ class CelestFunctionsReturnTypes {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -5789,7 +5789,7 @@ class CelestFunctionsSealedClasses {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -6317,7 +6317,7 @@ class CelestFunctionsTypedefs {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

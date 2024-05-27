@@ -294,7 +294,7 @@ final class ClientFunctionsGenerator {
                   .thrown
                   .statement,
               const Code('case _: '),
-              DartTypes.celest.internalServerException
+              DartTypes.celest.internalServerError
                   .newInstance([
                     refer(r'$code'),
                   ])

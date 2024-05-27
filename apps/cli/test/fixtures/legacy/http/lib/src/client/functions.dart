@@ -66,7 +66,7 @@ class CelestFunctionsHttpErrors {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -115,7 +115,7 @@ class CelestFunctionsHttpHeader {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -161,7 +161,7 @@ class CelestFunctionsHttpMethod {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -270,7 +270,7 @@ class CelestFunctionsHttpQuery {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -316,7 +316,7 @@ class CelestFunctionsHttpStatus {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

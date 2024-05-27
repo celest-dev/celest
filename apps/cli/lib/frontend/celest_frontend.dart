@@ -102,6 +102,9 @@ final class CelestFrontend implements Closeable {
     _pendingOperations.clear();
   }
 
+  // TODO(dnys1): If pubspec.yaml changes, we should run pub get and create
+  // a new analysis context.
+
   /// Notifies the watcher that we're listening for filesystem changes.
   Future<void> _nextChangeSet() async {
     logger.finer('Waiting for changes...');

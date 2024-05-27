@@ -46,7 +46,7 @@ class CelestFunctionsDartUi {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -126,7 +126,7 @@ class CelestFunctionsFlutter {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

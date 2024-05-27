@@ -180,7 +180,6 @@ base mixin Configure on CelestCommand {
   // the dependencies in the lockfile are already up to date.
   Future<void> _pubUpgrade() async {
     final projectRoot = projectPaths.projectRoot;
-    logger.fine('Running pub upgrade in "$projectRoot"...');
     await Future.wait(eagerError: true, [
       runPub(
         action: PubAction.upgrade,
@@ -189,7 +188,7 @@ base mixin Configure on CelestCommand {
       if (celestProject.parentProject case final parentProject?)
         runPub(
           exe: parentProject.type.name,
-          action: PubAction.upgrade,
+          action: PubAction.get,
           workingDirectory: parentProject.path,
         ),
     ]);

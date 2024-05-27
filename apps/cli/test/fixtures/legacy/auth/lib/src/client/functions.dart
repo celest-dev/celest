@@ -43,7 +43,7 @@ class CelestFunctionsAuthenticatedLib {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -88,7 +88,7 @@ class CelestFunctionsLib {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -165,7 +165,7 @@ class CelestFunctionsPublicLib {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

@@ -3,7 +3,6 @@ import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/project/celest_project.dart';
-import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/releases/latest_release.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/version.dart';
@@ -41,11 +40,6 @@ final class StartCommand extends CelestCommand with Configure, Migrate {
         projectName: projectName,
       ).generate();
       logger.fine('Project generated successfully');
-      await runPub(
-        action: PubAction.get,
-        workingDirectory: projectPaths.projectRoot,
-      );
-      logger.fine('Successfully ran `pub get` in ${projectPaths.projectRoot}');
     });
     return projectName;
   }

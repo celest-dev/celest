@@ -40,7 +40,7 @@ class CelestFunctionsInjected {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

@@ -121,6 +121,7 @@ final class _Pubspec extends ProjectFile {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
 
+    // TODO(dnys1): Make this work with existing projects too
     var celestLocalPath = platform.environment['CELEST_LOCAL_PATH'];
     if (celestLocalPath != null) {
       celestLocalPath = p.canonicalize(p.normalize(celestLocalPath));

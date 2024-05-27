@@ -671,9 +671,9 @@ class _Celest {
   DartTypeReference get functionContext =>
       const DartTypeReference('FunctionContext', _url);
 
-  /// Creates a [celest.InternalServerException] reference.
-  DartTypeReference get internalServerException =>
-      const DartTypeReference('InternalServerException', _url);
+  /// Creates a [celest.InternalServerError] reference.
+  DartTypeReference get internalServerError =>
+      const DartTypeReference('InternalServerError', _url);
 
   /// Creates a [celest.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _url);

@@ -68,7 +68,7 @@ class CelestFunctionsExceptions {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
@@ -259,7 +259,7 @@ class CelestFunctionsModels {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }
