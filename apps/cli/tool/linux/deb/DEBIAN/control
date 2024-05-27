@@ -1,6 +1,6 @@
 Package: Celest
 Depends: libsecret-1-dev, gnome-keyring
-Version: "{{ version }}"
+Version: {{ version }}
 Maintainer: Teo, Inc.
-Architecture: "{{ arch }}"
+Architecture: {{ arch }}
 Description: The CLI for Celest, the Flutter cloud platform

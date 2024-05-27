@@ -8,13 +8,9 @@ import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_cache.dart';
-import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/run.dart';
-import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_cli_common/src/platform/windows_paths.dart';
-import 'package:http/http.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 base mixin Configure on CelestCommand {
@@ -137,43 +133,26 @@ base mixin Configure on CelestCommand {
 
     await _pubUpgrade();
 
-    if (platform.isWindows &&
-        !DynamicLibrary.process().providesSymbol('cedar_init')) {
-      final appDir = PathProviderWindows().getApplicationSupportPath()!;
-      final file =
-          fileSystem.file(p.join(appDir, packageVersion, 'cedar_ffi.dll'));
-      if (!file.existsSync()) {
-        final downloadProgress =
-            cliLogger.progress('Downloading additional resources');
-        try {
-          // TODO(dnys1): Fix native asset build
-          // final thisRelease = releases.releases[packageVersion];
-          // if (thisRelease == null) {
-          //   throw Exception(
-          //     'Failed to find release information for version $packageVersion.',
-          //   );
-          // }
-          // https://releases.celest.devcelest-latest-windows_x64.appx
-          final dll = CelestReleasesInfo.baseUri.resolve(
-            '${Abi.current()}/latest/cedar_ffi.dll',
-          );
-          logger.finest('Downloading cedar_ffi.dll from $dll');
-          final download = await httpClient.send(Request('GET', dll));
-          if (download.statusCode != 200) {
-            throw Exception('Failed to download cedar_ffi.dll');
-          }
-          await file.create(recursive: true);
-          await download.stream.pipe(file.openWrite());
-          downloadProgress.complete();
-        } on Object {
-          downloadProgress.fail();
-          rethrow;
-        }
-      }
-      DynamicLibrary.open(file.path);
+    final process = DynamicLibrary.process();
+    if (!process.providesSymbol('cedar_init')) {
+      _loadLibrary('cedar_ffi');
+    }
+    if (!process.providesSymbol('sqlite3_open_v2')) {
+      _loadLibrary('dart_sqlite3');
     }
 
     return needsMigration;
+  }
+
+  void _loadLibrary(String name) {
+    final prefix = platform.isWindows ? '' : 'lib';
+    final suffix = platform.isWindows
+        ? '.dll'
+        : platform.isMacOS
+            ? '.dylib'
+            : '.so';
+    final library = p.join(platform.resolvedExecutable, '$prefix$name$suffix');
+    DynamicLibrary.open(library);
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
