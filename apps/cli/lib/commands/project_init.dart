@@ -100,6 +100,14 @@ base mixin Configure on CelestCommand {
       this.isExistingProject = isExistingProject;
     }
 
+    final process = DynamicLibrary.process();
+    if (!process.providesSymbol('cedar_init')) {
+      _loadLibrary('cedar_ffi');
+    }
+    if (!process.providesSymbol('sqlite3_open_v2')) {
+      _loadLibrary('dart_sqlite3');
+    }
+
     await init(
       projectRoot: projectRoot,
       parentProject: parentProject,
@@ -132,14 +140,6 @@ base mixin Configure on CelestCommand {
     }
 
     await _pubUpgrade();
-
-    final process = DynamicLibrary.process();
-    if (!process.providesSymbol('cedar_init')) {
-      _loadLibrary('cedar_ffi');
-    }
-    if (!process.providesSymbol('sqlite3_open_v2')) {
-      _loadLibrary('dart_sqlite3');
-    }
 
     return needsMigration;
   }
