@@ -20,3 +20,6 @@ dependency_overrides:
     path: ../../../../../../celest/packages/celest_auth
   celest_core:
     path: ../../../../../../celest/packages/celest_core
+celest:
+  project:
+    id: project_01hymks1f3faqyz4sgk3ac2y9k

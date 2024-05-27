@@ -21,7 +21,7 @@ import 'functions/http_status/internalServerError.dart' as _i15;
 import 'functions/http_status/ok.dart' as _i16;
 
 Future<void> main() async {
-  await Future.wait([
+  await Future.wait(eagerError: true, [
     for (var i = 0; i < _i1.Platform.numberOfProcessors; i++)
       _i2.Isolate.run(start),
   ]);

@@ -140,8 +140,10 @@ final class LerpColorTarget extends _i1.CloudFunctionTarget {
   }
 }
 
-Future<void> main(List<String> args) async {
-  await _i1.serve(
-    targets: {'/': LerpColorTarget()},
-  );
+Future<void> main() async {
+  return start();
+}
+
+Future<void> start() async {
+  await _i1.serve(targets: {'/': LerpColorTarget()});
 }

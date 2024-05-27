@@ -117,6 +117,9 @@ abstract class DartTypes {
   /// `package:fixnum` types.
   static const fixNum = FixNum();
 
+  /// `package:flutter` types.
+  static const flutter = _Flutter();
+
   /// `package:functions_framework` types.
   static const functionsFramework = _FunctionsFramework();
 
@@ -834,6 +837,26 @@ class _Libcoder {
           ..url = _url
           ..types.addAll([if (valueType != null) valueType]),
       );
+}
+
+/// `package:flutter` types
+class _Flutter {
+  const _Flutter();
+
+  static const _servicesUrl = 'package:flutter/services.dart';
+  static const _dartUiUrl = 'dart:ui';
+
+  /// Creates a [flutter.RootIsolateToken] reference.
+  DartTypeReference get rootIsolateToken =>
+      const DartTypeReference('RootIsolateToken', _dartUiUrl);
+
+  /// Creates a [flutter.ServicesBinding] reference.
+  DartTypeReference get servicesBiding =>
+      const DartTypeReference('ServicesBinding', _servicesUrl);
+
+  /// Creates a [flutter.BackgroundIsolateBinaryMessenger] reference.
+  DartTypeReference get backgroundIsolateBinaryMessenger =>
+      const DartTypeReference('BackgroundIsolateBinaryMessenger', _servicesUrl);
 }
 
 /// `package:fixnum` types

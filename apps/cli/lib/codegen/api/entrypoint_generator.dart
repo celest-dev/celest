@@ -4,6 +4,8 @@ import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/codegen/api/local_api_generator.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/from_string_generator.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
@@ -17,12 +19,14 @@ import 'package:collection/collection.dart';
 
 final class EntrypointGenerator {
   EntrypointGenerator({
+    required this.project,
     required this.api,
     required this.function,
     this.httpConfig,
     required this.outputDir,
   });
 
+  final Project project;
   final Api api;
   final CloudFunction function;
   final ResolvedHttpConfig? httpConfig;
@@ -558,29 +562,15 @@ final class EntrypointGenerator {
         ]),
     );
 
-    final entrypoint = Method(
-      (m) => m
-        ..name = 'main'
-        ..returns = DartTypes.core.future(DartTypes.core.void$)
-        ..modifier = MethodModifier.async
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..name = 'args'
-              ..type = DartTypes.core.list(DartTypes.core.string),
-          ),
-        )
-        ..body = Code.scope(
-          (alloc) => '''
-  await ${alloc(DartTypes.celest.serve)}(
-    targets: {'/': ${target.name}()},
-  );
-''',
-        ),
-    );
+    final entrypoint = LocalApiGenerator(
+      projectType: project.sdkInfo.flutterSdkVersion == null
+          ? CelestProjectType.dart
+          : CelestProjectType.flutter,
+      targets: {'/': refer(targetName)},
+    ).body;
     library.body.addAll([
       target,
-      entrypoint,
+      ...entrypoint,
       ..._anonymousRecordTypes.entries
           .map(
             (recordType) => TypeDef(

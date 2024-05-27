@@ -233,7 +233,7 @@ import 'functions/typedefs/nullableJson.dart' as _i222;
 import 'functions/typedefs/portfolio.dart' as _i223;
 
 Future<void> main() async {
-  await Future.wait([
+  await Future.wait(eagerError: true, [
     for (var i = 0; i < _i1.Platform.numberOfProcessors; i++)
       _i2.Isolate.run(start),
   ]);

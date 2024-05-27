@@ -10,7 +10,7 @@ import 'functions/injected/sayHello.dart' as _i4;
 import 'functions/injected/sayHelloPerson.dart' as _i5;
 
 Future<void> main() async {
-  await Future.wait([
+  await Future.wait(eagerError: true, [
     for (var i = 0; i < _i1.Platform.numberOfProcessors; i++)
       _i2.Isolate.run(start),
   ]);

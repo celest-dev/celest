@@ -4,6 +4,7 @@ import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/project/resources_generator.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
@@ -49,7 +50,13 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
     if (project.apis.isNotEmpty) {
       final localApiFile = projectPaths.localApiEntrypoint;
-      final localApi = LocalApiGenerator(targets: _targets).generate();
+      final localApi = LocalApiGenerator(
+        targets: _targets,
+        // TODO(dnys1): Improve logic
+        projectType: resolvedProject.sdkInfo.flutterSdkVersion == null
+            ? CelestProjectType.dart
+            : CelestProjectType.flutter,
+      ).generate();
       fileOutputs[localApiFile] = CodeGenerator.emit(
         localApi,
         forFile: localApiFile,
@@ -63,6 +70,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
     final outputDir = projectPaths.apiOutput(api.name);
     for (final function in api.functions.values) {
       final generator = EntrypointGenerator(
+        project: project,
         api: api,
         function: function,
         httpConfig: resolvedProject

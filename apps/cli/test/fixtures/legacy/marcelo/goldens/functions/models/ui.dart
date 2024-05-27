@@ -1,6 +1,9 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:io' as _i11;
+import 'dart:isolate' as _i12;
+
 import 'package:_common/src/models/errors_and_exceptions.dart' as _i8;
 import 'package:_common/src/models/ui.dart' as _i4;
 import 'package:celest/celest.dart' as _i3;
@@ -334,8 +337,13 @@ final class UiTarget extends _i1.CloudFunctionTarget {
   }
 }
 
-Future<void> main(List<String> args) async {
-  await _i1.serve(
-    targets: {'/': UiTarget()},
-  );
+Future<void> main() async {
+  await Future.wait(eagerError: true, [
+    for (var i = 0; i < _i11.Platform.numberOfProcessors; i++)
+      _i12.Isolate.run(start),
+  ]);
+}
+
+Future<void> start() async {
+  await _i1.serve(targets: {'/': UiTarget()});
 }

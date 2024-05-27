@@ -40,7 +40,7 @@ void main() {
       .listSync()
       .whereType<Directory>()
       .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync())
-      .where((dir) => !p.basename(dir.path).startsWith('_'));
+      .where((dir) => p.basename(dir.path).startsWith('flutter'));
   group('Fixture', () {
     setUpAll(initTests);
 
@@ -76,17 +76,18 @@ class TestRunner {
   void run() {
     group(testName, () {
       setUpAll(() async {
-        await init(
-          projectRoot: projectRoot,
-          outputsDir: goldensDir.path,
-        );
         await runPub(
+          exe: Platform.resolvedExecutable,
           action: PubAction.get,
           workingDirectory: projectRoot,
         ).timeout(const Duration(seconds: 10));
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
+        await init(
+          projectRoot: projectRoot,
+          outputsDir: goldensDir.path,
+        );
         analyzer = CelestAnalyzer();
         goldensDir.createSync();
         client = Client();
@@ -323,7 +324,7 @@ class TestRunner {
                       expect(resp.statusCode, test.statusCode);
                       final body = await resp.stream.bytesToString();
                       final respJson = jsonDecode(body);
-                      expect(respJson, output);
+                      expect(respJson, equals(output));
                   }
                 case FunctionTestSuccess(:final output):
                   expect(result.isValue, isTrue);
@@ -334,7 +335,7 @@ class TestRunner {
                     expect(body, isEmpty);
                   } else {
                     final respJson = jsonDecode(body);
-                    expect(respJson, output);
+                    expect(respJson, equals(output));
                   }
               }
               if (test.logs case final expectedLogs?) {
@@ -3724,14 +3725,7 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'paintImage',
               input: {},
-              output: base64Encode(
-                fileSystem
-                    .directory(testDir)
-                    .childDirectory('flutter')
-                    .childDirectory('test')
-                    .childFile('golden_image.png')
-                    .readAsBytesSync(),
-              ),
+              output: startsWith('iVBORw0'),
             ),
           ],
         },

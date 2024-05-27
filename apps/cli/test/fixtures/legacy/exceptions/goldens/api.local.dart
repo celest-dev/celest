@@ -18,7 +18,7 @@ import 'functions/throwing/throwsCustomError.dart' as _i12;
 import 'functions/throwing/throwsCustomException.dart' as _i13;
 
 Future<void> main() async {
-  await Future.wait([
+  await Future.wait(eagerError: true, [
     for (var i = 0; i < _i1.Platform.numberOfProcessors; i++)
       _i2.Isolate.run(start),
   ]);
