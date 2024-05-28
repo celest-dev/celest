@@ -31,13 +31,9 @@ void main() {
     CreateProjectIsolatedTest.new,
 
     // Hot reload
-    // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
-    // needed.
-    if (!platform.isWindows) ...[
-      AddRemoveFieldsTest.new,
-      HotReloadAddAuthTest.new,
-      HotReloadNonExistentModel.new,
-    ],
+    AddRemoveFieldsTest.new,
+    HotReloadAddAuthTest.new,
+    HotReloadNonExistentModel.new,
   ];
 
   for (final target in targets) {
@@ -49,7 +45,7 @@ void main() {
       });
 
       for (final t in tests.map((create) => create(target))) {
-        test(t.name, tags: t.tags, () async {
+        test(t.name, tags: t.tags, skip: t.skip, () async {
           try {
             await t.setUp();
             await t.run();

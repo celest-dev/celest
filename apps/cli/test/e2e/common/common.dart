@@ -5,6 +5,7 @@ import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:meta/meta.dart';
+import 'package:process/src/interface/common.dart';
 
 import 'command.dart';
 
@@ -68,7 +69,12 @@ mixin TestHelpers {
   final tempDir = fileSystem.systemTempDirectory.createTempSync('celest_cli_');
 
   TestTarget get target;
+  bool get skip => false;
   File? get logFile;
+
+  bool get hasFlutter {
+    return getExecutablePath('flutter', null) != null;
+  }
 
   Future<void> runCommand(
     List<String> command, {

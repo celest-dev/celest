@@ -11,7 +11,7 @@ final class CreateProjectInFlutterAppTest extends E2ETest
   @override
   Future<void> run() async {
     await celestCommand('start')
-        .workingDirectory(flutterProjectDir.path)
+        .workingDirectory(projectDir.path)
         .start()
         .expectNext('Enter a name for your project')
         .writeLine(projectName)

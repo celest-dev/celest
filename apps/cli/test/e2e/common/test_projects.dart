@@ -8,8 +8,11 @@ import 'package:test_descriptor/test_descriptor.dart' as d;
 import 'common.dart';
 
 base mixin TestFlutterProject on E2ETest {
-  late final Directory flutterProjectDir;
-  Directory get celestDir => flutterProjectDir.childDirectory('celest');
+  late final Directory projectDir;
+  Directory get celestDir => projectDir.childDirectory('celest');
+
+  @override
+  bool get skip => !hasFlutter;
 
   @override
   @mustCallSuper
@@ -28,22 +31,22 @@ dependencies:
 '''),
     ]);
     await flutterProject.create(tempDir.path);
-    flutterProjectDir = fileSystem.directory(
+    projectDir = fileSystem.directory(
       p.join(tempDir.path, projectName),
     );
     await check(
       processManager.run(
         ['flutter', 'pub', 'get'],
-        workingDirectory: flutterProjectDir.path,
+        workingDirectory: projectDir.path,
       ),
     ).completes((it) => it.has((it) => it.exitCode, 'exitCode').equals(0));
-    print('Running test in ${flutterProjectDir.path}');
+    print('Running test in ${projectDir.path}');
   }
 }
 
 base mixin TestDartProject on E2ETest {
-  late final Directory dartProjectDir;
-  Directory get celestDir => dartProjectDir.childDirectory('celest');
+  late final Directory projectDir;
+  Directory get celestDir => projectDir.childDirectory('celest');
 
   @override
   @mustCallSuper
@@ -58,15 +61,15 @@ environment:
 '''),
     ]);
     await dartProject.create(tempDir.path);
-    dartProjectDir = fileSystem.directory(
+    projectDir = fileSystem.directory(
       p.join(tempDir.path, projectName),
     );
     await check(
       processManager.run(
         ['dart', 'pub', 'get'],
-        workingDirectory: dartProjectDir.path,
+        workingDirectory: projectDir.path,
       ),
     ).completes((it) => it.has((it) => it.exitCode, 'exitCode').equals(0));
-    print('Running test in ${dartProjectDir.path}');
+    print('Running test in ${projectDir.path}');
   }
 }

@@ -1,19 +1,25 @@
+import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 
 import '../../common/common.dart';
 import '../../common/test_projects.dart';
 
 // Repro: https://github.com/celest-dev/celest/issues/25
-final class AddRemoveFieldsTest extends E2ETest with TestFlutterProject {
+final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
   AddRemoveFieldsTest(super.target);
 
   @override
   String get name => 'add/remove fields in model';
 
+  // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
+  // needed.
+  @override
+  bool get skip => platform.isWindows;
+
   @override
   Future<void> run() async {
     final celest = celestCommand('start')
-        .workingDirectory(flutterProjectDir.path)
+        .workingDirectory(projectDir.path)
         .start()
         .expectNext('Enter a name for your project')
         .writeLine(projectName);
@@ -26,7 +32,7 @@ final class AddRemoveFieldsTest extends E2ETest with TestFlutterProject {
         .childDirectory('functions')
         .childFile('location.dart')
         .create();
-    final modelsDir = flutterProjectDir
+    final modelsDir = projectDir
         .childDirectory('celest')
         .childDirectory('lib')
         .childDirectory('models');

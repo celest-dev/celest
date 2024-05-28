@@ -9,7 +9,7 @@ final class CreateProjectInDartAppTest extends E2ETest with TestDartProject {
   @override
   Future<void> run() async {
     await celestCommand('start')
-        .workingDirectory(dartProjectDir.path)
+        .workingDirectory(projectDir.path)
         .start()
         .expectNext('Enter a name for your project')
         .writeLine(projectName)
