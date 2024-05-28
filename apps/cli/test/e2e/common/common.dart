@@ -12,7 +12,8 @@ import 'command.dart';
 export 'command.dart';
 
 /// The default environment to use when running CLI processes.
-const defaultCliEnvironment = {
+final defaultCliEnvironment = {
+  ...platform.environment,
   'NO_COLOR': 'true',
 };
 
@@ -87,7 +88,11 @@ mixin TestHelpers {
       command.skip(1).toList(),
       workingDirectory: workingDirectory,
       mode: ProcessStartMode.inheritStdio,
-      environment: environment,
+      environment: {
+        ...platform.environment,
+        ...defaultCliEnvironment,
+        ...?environment,
+      },
       runInShell: platform.isWindows,
     );
     if (await process.exitCode case final exitCode && != 0) {

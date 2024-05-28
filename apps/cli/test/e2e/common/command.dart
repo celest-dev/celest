@@ -27,7 +27,10 @@ final class Command {
       command.first,
       command.skip(1).toList(),
       workingDirectory: _workingDirectory,
-      environment: _environment,
+      environment: {
+        ...platform.environment,
+        ..._environment,
+      },
       runInShell: platform.isWindows,
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
@@ -45,7 +48,10 @@ final class Command {
       command.first,
       command.skip(1).toList(),
       workingDirectory: _workingDirectory,
-      environment: _environment,
+      environment: {
+        ...platform.environment,
+        ..._environment,
+      },
     );
     return InteractiveCommand._(process);
   }
