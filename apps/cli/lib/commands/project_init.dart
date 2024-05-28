@@ -108,6 +108,11 @@ base mixin Configure on CelestCommand {
       if (!process.providesSymbol('sqlite3_open_v2')) {
         _loadLibrary('dart_sqlite3');
       }
+      if (!platform.isWindows) {
+        if (!process.providesSymbol('OPENSSL_malloc')) {
+          _loadLibrary('webcrypto');
+        }
+      }
     }
 
     await init(
