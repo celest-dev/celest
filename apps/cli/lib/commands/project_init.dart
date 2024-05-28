@@ -100,18 +100,10 @@ base mixin Configure on CelestCommand {
       this.isExistingProject = isExistingProject;
     }
 
-    if (zReleaseMode) {
+    if (zReleaseMode && platform.isWindows) {
       final process = DynamicLibrary.process();
       if (!process.providesSymbol('cedar_init')) {
         _loadLibrary('cedar_ffi');
-      }
-      if (!process.providesSymbol('sqlite3_open_v2')) {
-        _loadLibrary('dart_sqlite3');
-      }
-      if (!platform.isWindows) {
-        if (!process.providesSymbol('OPENSSL_malloc')) {
-          _loadLibrary('webcrypto');
-        }
       }
     }
 
