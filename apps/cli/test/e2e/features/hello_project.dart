@@ -9,6 +9,9 @@ final class HelloProjectTest extends E2ETest {
   String get name => 'start (hello project)';
 
   @override
+  bool get skip => !hasFlutter;
+
+  @override
   Future<void> run() async {
     final helloExample = Directory.current.uri
         .resolve('../../celest/packages/celest/example')
