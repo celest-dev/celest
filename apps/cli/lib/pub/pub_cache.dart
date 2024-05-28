@@ -1,3 +1,4 @@
+import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
@@ -46,7 +47,7 @@ final class _PubCache {
   Future<void> hydate() async {
     await Future.wait([
       for (final package in packagesToFix.entries)
-        processManager.run([
+        processManager.start([
           Sdk.current.sdkType.name,
           'pub',
           'cache',
@@ -55,21 +56,30 @@ final class _PubCache {
           '--version',
           package.value,
           '--all',
-        ]),
+        ]).then((process) {
+          process.captureStdout(sink: _logger.finest);
+          process.captureStderr(sink: _logger.severe);
+          return process.exitCode;
+        }),
     ]);
   }
 
   Future<void> fix() async {
     final cachePath = _cachePath ??= _findCachePath();
     if (cachePath == null) {
+      _logger.finest('No pub cache found. Skipping fix.');
       return;
     }
+    _logger.finest('Pub cache found at $cachePath');
     final cacheDir = fileSystem.directory(cachePath);
     if (!cacheDir.existsSync()) {
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
       return;
     }
-    await for (final packageDir in cacheDir.list().whereType<Directory>()) {
+    final hostedPubDevDir =
+        cacheDir.childDirectory('hosted').childDirectory('pub.dev');
+    await for (final packageDir
+        in hostedPubDevDir.list().whereType<Directory>()) {
       var fixPackage = false;
       for (final packageToFix in packagesToFix.keys) {
         if (p.basename(packageDir.path).startsWith('$packageToFix-')) {
