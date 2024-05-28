@@ -24,6 +24,23 @@ Try `dart pub outdated` for more information.$)'''),
 
 final Logger _logger = Logger('pub');
 
+Future<void> dumpPackageConfig() async {
+  try {
+    final packageConfig =
+        await fileSystem.file(projectPaths.packagesConfig).readAsString();
+    _logger.finest('Package config:\n$packageConfig');
+  } on Object catch (e, st) {
+    _logger.finest('Failed to read package config.', e, st);
+  }
+  try {
+    final pubspec =
+        await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+    _logger.finest('Pubspec:\n$pubspec');
+  } on Object catch (e, st) {
+    _logger.finest('Failed to read pubspec.', e, st);
+  }
+}
+
 Future<void> runPub({
   String? exe,
   required PubAction action,
@@ -87,6 +104,8 @@ Future<void> runPub({
     while (!await packageConfig.exists()) {
       await Future<void>.delayed(Duration.zero);
     }
+  } on Object {
+    await dumpPackageConfig();
   } finally {
     unawaited(stdout.cancel());
     unawaited(stderr.cancel());
