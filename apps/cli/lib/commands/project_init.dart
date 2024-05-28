@@ -100,12 +100,14 @@ base mixin Configure on CelestCommand {
       this.isExistingProject = isExistingProject;
     }
 
-    final process = DynamicLibrary.process();
-    if (!process.providesSymbol('cedar_init')) {
-      _loadLibrary('cedar_ffi');
-    }
-    if (!process.providesSymbol('sqlite3_open_v2')) {
-      _loadLibrary('dart_sqlite3');
+    if (zReleaseMode) {
+      final process = DynamicLibrary.process();
+      if (!process.providesSymbol('cedar_init')) {
+        _loadLibrary('cedar_ffi');
+      }
+      if (!process.providesSymbol('sqlite3_open_v2')) {
+        _loadLibrary('dart_sqlite3');
+      }
     }
 
     await init(
@@ -151,7 +153,10 @@ base mixin Configure on CelestCommand {
         : platform.isMacOS
             ? '.dylib'
             : '.so';
-    final library = p.join(platform.resolvedExecutable, '$prefix$name$suffix');
+    final library = p.join(
+      p.dirname(platform.resolvedExecutable),
+      '$prefix$name$suffix',
+    );
     DynamicLibrary.open(library);
   }
 
