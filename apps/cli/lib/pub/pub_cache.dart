@@ -108,7 +108,7 @@ final class _PubCache {
       }
       final needsFix = pubspec.environment?.containsKey('flutter') ?? false;
       if (!needsFix) {
-        return;
+        continue;
       }
       final editor = YamlEditor(pubspecYaml);
       editor.remove(['environment', 'flutter']);
