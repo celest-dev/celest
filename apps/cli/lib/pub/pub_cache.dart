@@ -54,6 +54,7 @@ final class _PubCache {
           package.key,
           '--version',
           package.value,
+          '--all',
         ]),
     ]);
   }
