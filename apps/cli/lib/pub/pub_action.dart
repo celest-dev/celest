@@ -102,7 +102,7 @@ Future<void> runPub({
         .childDirectory('.dart_tool')
         .childFile('package_config.json');
     while (!await packageConfig.exists()) {
-      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(const Duration(milliseconds: 50));
     }
   } on Object {
     await dumpPackageConfig();
