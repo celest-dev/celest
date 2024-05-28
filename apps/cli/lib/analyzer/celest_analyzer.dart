@@ -14,6 +14,7 @@ import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -100,31 +101,8 @@ final class CelestAnalyzer
           .getLibraryByUri('package:celest_core/celest_core.dart'),
     ).wait;
     if (celestCore is! LibraryElementResult) {
-      _logger.finest(
-        'Failed to resolve celest_core',
-        celestCore,
-        StackTrace.current,
-      );
-      final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);
-      if (!packageConfigFile.existsSync()) {
-        final listing = await fileSystem
-            .directory(projectPaths.projectRoot)
-            .list(recursive: true)
-            .map(
-              (entity) => p.relative(
-                entity.path,
-                from: projectPaths.projectRoot,
-              ),
-            )
-            .toList();
-        throw StateError(
-          'package_config.json does not exist. Listing:\n$listing',
-        );
-      }
-      final packageConfig = await packageConfigFile.readAsString();
-      throw StateError(
-        'Failed to resolve celest_core. package_config.json:\n$packageConfig',
-      );
+      await dumpPackageConfig();
+      throw StateError('Failed to resolve celest_core');
     }
     typeHelper.coreTypes = CoreTypes(
       typeProvider: dartCore.element.typeProvider,

@@ -86,7 +86,6 @@ final class _PubCache {
     }
     await for (final packageDir
         in hostedPubDevDir.list().whereType<Directory>()) {
-      _logger.finest('Checking ${packageDir.path}');
       var fixPackage = false;
       for (final packageToFix in packagesToFix.keys) {
         if (p.basename(packageDir.path).startsWith('$packageToFix-')) {

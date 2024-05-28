@@ -49,9 +49,12 @@ Future<void> runPub({
   exe ??= zDebugMode
       ? platform.resolvedExecutable
       : (await celestProject.determineProjectType()).name;
-  _logger.fine('Running `$exe pub ${action.name}` in "$workingDirectory"...');
+
+  final command = <String>[exe, 'pub', action.name];
+  final logger = Logger(command.join(' '));
+  logger.fine('Running `${command.join(' ')}` in "$workingDirectory"...');
   final process = await processManager.start(
-    <String>[exe, 'pub', action.name],
+    command,
     environment: {
       if (Sdk.current.flutterSdkRoot case final flutterSdkRoot?)
         'FLUTTER_ROOT': flutterSdkRoot,
@@ -66,20 +69,28 @@ Future<void> runPub({
   // cancels subscription.
   final completer = Completer<void>.sync();
   final stdout = process.stdout.lines.listen((line) {
+    logger.finest('stdout: $line');
     if (action.matcher.hasMatch(line)) {
+      if (completer.isCompleted) {
+        logger.finest('Got matching line after completion: $line');
+        return;
+      }
       completer.complete();
     }
   });
   final stderr = process.stderr.lines.listen((line) {
-    completer.completeError(
-      CelestException(
-        'Failed to run `pub ${action.name}`. Please run `$exe pub ${action.name}` '
-        'manually in $workingDirectory and try again.',
-        additionalContext: {
-          'error': line,
-        },
-      ),
-    );
+    logger.finest('stderr: $line');
+    if (!completer.isCompleted) {
+      completer.completeError(
+        CelestException(
+          'Failed to run `pub ${action.name}`. Please run `$exe pub ${action.name}` '
+          'manually in $workingDirectory and try again.',
+          additionalContext: {
+            'error': line,
+          },
+        ),
+      );
+    }
   });
   try {
     await Future.any([
