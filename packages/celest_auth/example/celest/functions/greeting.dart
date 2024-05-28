@@ -4,9 +4,10 @@
 import 'package:celest/celest.dart';
 
 /// Says hello to the authenticated [user].
+@cloud
 @authenticated
 Future<String> sayHello({
-  @Context.user required User user,
+  @principal required User user,
 }) async {
   if (!user.emailVerified) {
     throw UnauthorizedException('Email not verified');

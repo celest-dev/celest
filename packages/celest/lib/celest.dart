@@ -11,6 +11,7 @@ export 'src/auth/auth_provider.dart';
 export 'src/config/env.dart';
 
 /// Core
+export 'src/core/annotations.dart';
 export 'src/core/cloud_widget.dart';
 export 'src/core/context.dart';
 export 'src/core/project.dart';

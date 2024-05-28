@@ -10,6 +10,8 @@ import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions/bad_name_exception.dart'
     as _$bad_name_exception;
 import 'package:celest_backend/models/person.dart' as _$person;
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 import '../../client.dart';
 
@@ -26,6 +28,15 @@ class CelestFunctionsGreeting {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case r'BadNameException':
         throw Serializers.instance
             .deserialize<_$bad_name_exception.BadNameException>($details);
@@ -34,7 +45,7 @@ class CelestFunctionsGreeting {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

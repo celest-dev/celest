@@ -6,6 +6,8 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   errors:
+    camel_case_types: ignore
+
     # To prevent issues publishing.
     depend_on_referenced_packages: error
     public_member_api_docs: warning

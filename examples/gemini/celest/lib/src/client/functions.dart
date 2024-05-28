@@ -31,9 +31,8 @@ class CelestFunctionsGemini {
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerException':
-        throw Serializers.instance
-            .deserialize<InternalServerException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
       case r'SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
@@ -56,7 +55,7 @@ class CelestFunctionsGemini {
           case 400:
             throw BadRequestException($code);
           case _:
-            throw InternalServerException($code);
+            throw InternalServerError($code);
         }
     }
   }

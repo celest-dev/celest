@@ -28,10 +28,10 @@ void initSerializers() {
     },
   ));
   Serializers.instance
-      .put(Serializer.define<InternalServerException, Map<String, Object?>>(
+      .put(Serializer.define<InternalServerError, Map<String, Object?>>(
     serialize: ($value) => {r'message': $value.message},
     deserialize: ($serialized) {
-      return InternalServerException(($serialized[r'message'] as String));
+      return InternalServerError(($serialized[r'message'] as String));
     },
   ));
   Serializers.instance

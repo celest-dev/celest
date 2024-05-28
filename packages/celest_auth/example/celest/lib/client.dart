@@ -24,8 +24,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => kIsWeb || !_$io.Platform.isAndroid
-            ? Uri.parse('http://localhost:8888')
-            : Uri.parse('http://10.0.2.2:8888'),
+            ? Uri.parse('http://localhost:7777')
+            : Uri.parse('http://10.0.2.2:7777'),
       };
 }
 
@@ -34,7 +34,7 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final NativeStorage _storage = NativeStorage().scoped('celest');
+  late final NativeStorage _storage = NativeStorage(scope: 'celest');
 
   @override
   late _$http.Client httpClient =

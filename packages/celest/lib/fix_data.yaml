@@ -1,0 +1,13 @@
+version: 1
+transforms:
+  - title: "Change '@Context.user' to '@principal' for accessing user data"
+    date: 2024-05-28
+    element:
+      uris: ["celest.dart"]
+      field: user
+      inClass: Context
+    changes:
+      - kind: replacedBy
+        newElement:
+          uris: ["celest.dart"]
+          variable: principal
