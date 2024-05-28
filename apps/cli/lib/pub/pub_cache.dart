@@ -76,10 +76,14 @@ final class _PubCache {
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
       return;
     }
+    final listing =
+        await cacheDir.list(recursive: true).whereType<Directory>().toList();
+    _logger.finest('Checking paths: \n${listing.join('\n')}');
     final hostedPubDevDir =
         cacheDir.childDirectory('hosted').childDirectory('pub.dev');
     await for (final packageDir
         in hostedPubDevDir.list().whereType<Directory>()) {
+      _logger.finest('Checking ${packageDir.path}');
       var fixPackage = false;
       for (final packageToFix in packagesToFix.keys) {
         if (p.basename(packageDir.path).startsWith('$packageToFix-')) {
