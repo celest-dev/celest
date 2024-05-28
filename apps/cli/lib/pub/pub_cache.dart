@@ -45,23 +45,23 @@ final class _PubCache {
   }
 
   Future<void> hydate() async {
-    await Future.wait([
-      for (final package in packagesToFix.entries)
-        processManager.start([
-          Sdk.current.sdkType.name,
-          'pub',
-          'cache',
-          'add',
-          package.key,
-          '--version',
-          package.value,
-          '--all',
-        ]).then((process) {
-          process.captureStdout(sink: _logger.finest);
-          process.captureStderr(sink: _logger.severe);
-          return process.exitCode;
-        }),
-    ]);
+    for (final package in packagesToFix.entries) {
+      // Run serially to avoid flutter lock
+      await processManager.start([
+        Sdk.current.sdkType.name,
+        'pub',
+        'cache',
+        'add',
+        package.key,
+        '--version',
+        package.value,
+        '--all',
+      ]).then((process) {
+        process.captureStdout(sink: _logger.finest);
+        process.captureStderr(sink: _logger.finest);
+        return process.exitCode;
+      });
+    }
   }
 
   Future<void> fix() async {
