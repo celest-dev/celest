@@ -81,6 +81,7 @@ mixin TestHelpers {
       workingDirectory: workingDirectory,
       mode: ProcessStartMode.inheritStdio,
       environment: environment,
+      runInShell: platform.isWindows,
     );
     if (await process.exitCode case final exitCode && != 0) {
       throw ProcessException(

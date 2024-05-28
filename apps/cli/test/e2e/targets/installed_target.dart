@@ -1,3 +1,5 @@
+import 'package:celest_cli/src/context.dart';
+
 import '../common/common.dart';
 
 final class InstalledTarget extends TestTarget {
@@ -9,7 +11,14 @@ final class InstalledTarget extends TestTarget {
 
   @override
   List<String> get executable => [
-        // getExecutablePath('celest', null, throwOnFailure: true)!,
-        'celest',
+        if (platform.isWindows)
+          p.join(
+            platform.environment['LOCALAPPDATA']!,
+            'Microsoft',
+            'WindowsApps',
+            'celest.exe',
+          )
+        else
+          'celest',
       ];
 }

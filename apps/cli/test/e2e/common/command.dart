@@ -27,6 +27,7 @@ final class Command {
       command,
       workingDirectory: _workingDirectory,
       environment: _environment,
+      runInShell: platform.isWindows,
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );
