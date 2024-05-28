@@ -1,8 +1,15 @@
-## 0.4.0-dev.2
+## 0.4.0
 
-- Migrate to `package:native_storage`
+This release introduces support for HTTP customization, improved ergonomics, and a preview of running Flutter and UI code in the sky! 
+Check out our [blog post](https://celest.dev/blog/fluttering-in-the-sky) for more details.
 
-## 0.4.0-dev.1
+- feat: Add support for HTTP customization
+- feat: Add support for running Flutter and UI code in the cloud
+- chore!: Require `@cloud` annotation for cloud functions
+- chore!: Replace `@Context.user` with `@principal`
+- chore!: Rename generated `Env` annotations to `env`.
+- chore!: Rename `InternalServerException` to `InternalServerError`
+- chore: Migrate to `package:native_storage`
 
 ## 0.3.1
 
