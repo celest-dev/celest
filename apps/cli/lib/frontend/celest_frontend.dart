@@ -699,6 +699,7 @@ final class CelestFrontend implements Closeable {
                 HubMetadata.test(),
               );
       final envConfig = EnvironmentConfig(
+        isRunningInGcp: false,
         dbDir: dbDir.path,
         metadata: metadata,
         logDatabaseStatements: false,
