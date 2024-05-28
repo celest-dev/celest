@@ -1,5 +1,3 @@
-import 'package:process/src/interface/common.dart';
-
 import '../common/common.dart';
 
 final class InstalledTarget extends TestTarget {
@@ -11,6 +9,7 @@ final class InstalledTarget extends TestTarget {
 
   @override
   List<String> get executable => [
-        getExecutablePath('celest', null, throwOnFailure: true)!,
+        // getExecutablePath('celest', null, throwOnFailure: true)!,
+        'celest',
       ];
 }
