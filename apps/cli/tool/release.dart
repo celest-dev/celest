@@ -908,7 +908,7 @@ final class WindowsBundler implements Bundler {
 
 final class LinuxBundler implements Bundler {
   @override
-  String get extension => 'zip';
+  String get extension => 'deb';
 
   @override
   Future<void> bundle() async {
@@ -919,7 +919,10 @@ final class LinuxBundler implements Bundler {
         .copySync(p.join(buildDir.path, 'launcher.sh'));
 
     // Create the ZIP file.
-    await _createZip(fromDir: buildDir, outputPath: outputFilepath);
+    await _createZip(
+      fromDir: buildDir,
+      outputPath: p.setExtension(outputFilepath, '.zip'),
+    );
 
     // Create the DEB installer.
     await _createDeb();
@@ -979,7 +982,7 @@ final class LinuxBundler implements Bundler {
 
     await _runProcess(
       'dpkg-deb',
-      ['--build', debDir.path, '${p.withoutExtension(outputFilepath)}.deb'],
+      ['--build', debDir.path, p.setExtension(outputFilepath, '.deb')],
       workingDirectory: tempDir.path,
     );
   }
