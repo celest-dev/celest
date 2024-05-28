@@ -1,3 +1,4 @@
+import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
@@ -11,10 +12,10 @@ import 'package:yaml_edit/yaml_edit.dart';
 final pubCache = _PubCache();
 
 final class _PubCache {
-  static const packagesToFix = {
+  static final packagesToFix = {
     'native_storage': '^0.1.0',
     'jni': '>=0.8.0',
-    'celest_core': '^0.3.0-0',
+    'celest_core': '>=$currentMinorVersion',
   };
   static final _logger = Logger('PubCache');
 
