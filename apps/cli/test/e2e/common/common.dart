@@ -1,4 +1,4 @@
-import 'dart:io' show Platform, ProcessException, ProcessStartMode;
+import 'dart:io' show Process, Platform, ProcessException, ProcessStartMode;
 import 'dart:math';
 
 import 'package:aws_common/aws_common.dart';
@@ -82,8 +82,9 @@ mixin TestHelpers {
     Map<String, String>? environment,
   }) async {
     print('Running command: ${command.join(' ')}');
-    final process = await processManager.start(
-      command,
+    final process = await Process.start(
+      command.first,
+      command.skip(1).toList(),
       workingDirectory: workingDirectory,
       mode: ProcessStartMode.inheritStdio,
       environment: environment,

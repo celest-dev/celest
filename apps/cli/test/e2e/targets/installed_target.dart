@@ -1,4 +1,5 @@
 import 'package:celest_cli/src/context.dart';
+import 'package:process/src/interface/common.dart';
 
 import '../common/common.dart';
 
@@ -19,6 +20,6 @@ final class InstalledTarget extends TestTarget {
             'celest.exe',
           )
         else
-          'celest',
+          getExecutablePath('celest', null, throwOnFailure: true)!,
       ];
 }

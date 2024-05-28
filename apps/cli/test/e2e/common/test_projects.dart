@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:checks/checks.dart';
@@ -35,8 +37,10 @@ dependencies:
       p.join(tempDir.path, projectName),
     );
     await check(
-      processManager.run(
-        ['flutter', 'pub', 'get'],
+      Process.run(
+        'flutter',
+        ['pub', 'get'],
+        runInShell: platform.isWindows,
         workingDirectory: projectDir.path,
       ),
     ).completes((it) => it.has((it) => it.exitCode, 'exitCode').equals(0));
@@ -65,8 +69,10 @@ environment:
       p.join(tempDir.path, projectName),
     );
     await check(
-      processManager.run(
-        ['dart', 'pub', 'get'],
+      Process.run(
+        'dart',
+        ['pub', 'get'],
+        runInShell: platform.isWindows,
         workingDirectory: projectDir.path,
       ),
     ).completes((it) => it.has((it) => it.exitCode, 'exitCode').equals(0));

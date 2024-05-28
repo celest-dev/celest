@@ -23,8 +23,9 @@ final class Command {
   Matcher? _expectedError;
 
   Future<void> run() async {
-    final result = await processManager.run(
-      command,
+    final result = await Process.run(
+      command.first,
+      command.skip(1).toList(),
       workingDirectory: _workingDirectory,
       environment: _environment,
       runInShell: platform.isWindows,
@@ -40,8 +41,9 @@ final class Command {
   }
 
   InteractiveCommand start() {
-    final process = processManager.start(
-      command,
+    final process = Process.start(
+      command.first,
+      command.skip(1).toList(),
       workingDirectory: _workingDirectory,
       environment: _environment,
     );
