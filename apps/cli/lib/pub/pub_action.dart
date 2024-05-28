@@ -117,6 +117,7 @@ Future<void> runPub({
     }
   } on Object {
     await dumpPackageConfig();
+    rethrow;
   } finally {
     unawaited(stdout.cancel());
     unawaited(stderr.cancel());

@@ -161,17 +161,17 @@ base mixin Configure on CelestCommand {
   // the dependencies in the lockfile are already up to date.
   Future<void> _pubUpgrade() async {
     final projectRoot = projectPaths.projectRoot;
-    await Future.wait(eagerError: true, [
-      runPub(
-        action: PubAction.upgrade,
-        workingDirectory: projectRoot,
-      ),
-      if (celestProject.parentProject case final parentProject?)
-        runPub(
-          exe: parentProject.type.name,
-          action: PubAction.get,
-          workingDirectory: parentProject.path,
-        ),
-    ]);
+    await runPub(
+      action: PubAction.upgrade,
+      workingDirectory: projectRoot,
+    );
+    // Run serially to avoid `flutter pub` locks.
+    if (celestProject.parentProject case final parentProject?) {
+      await runPub(
+        exe: parentProject.type.name,
+        action: PubAction.get,
+        workingDirectory: parentProject.path,
+      );
+    }
   }
 }

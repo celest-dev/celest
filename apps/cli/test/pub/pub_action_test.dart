@@ -11,8 +11,12 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
+
 void main() {
   group('runPub', () {
+    setUpAll(initTests);
+
     final matrix = [
       (PubAction.get, 'flutter'),
       (PubAction.get, Platform.resolvedExecutable),
