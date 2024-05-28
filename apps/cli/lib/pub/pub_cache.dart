@@ -11,7 +11,11 @@ import 'package:yaml_edit/yaml_edit.dart';
 final pubCache = _PubCache();
 
 final class _PubCache {
-  static const packagesToFix = {'native_storage': '^0.1.0', 'jni': '>=0.8.0'};
+  static const packagesToFix = {
+    'native_storage': '^0.1.0',
+    'jni': '>=0.8.0',
+    'celest_core': '^0.3.0-0',
+  };
   static final _logger = Logger('PubCache');
 
   String? _cachePath;
