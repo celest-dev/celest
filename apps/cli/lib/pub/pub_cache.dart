@@ -15,6 +15,8 @@ final class _PubCache {
   static final packagesToFix = {
     'native_storage': '^0.1.0',
     'jni': '>=0.8.0',
+    'celest_auth': '>=$currentMinorVersion',
+    'celest': '>=$currentMinorVersion',
     'celest_core': '>=$currentMinorVersion',
   };
   static final _logger = Logger('PubCache');
