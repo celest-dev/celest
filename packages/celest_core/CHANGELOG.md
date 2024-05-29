@@ -1,3 +1,7 @@
+## 0.4.1
+
+- chore(core): Deserialize errors returned from backend
+
 ## 0.4.0
 
 This release introduces support for HTTP customization, improved ergonomics, and a preview of running Flutter and UI code in the sky! 

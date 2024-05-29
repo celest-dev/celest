@@ -15,6 +15,7 @@ dependencies:
   os_detect: ^2.0.1
   path: ^1.9.0
   native_storage: ^0.1.0
+  http_parser: ^4.0.2
 
 dev_dependencies:
   lints: ^4.0.0

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/base/celest_base.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 mixin BaseProtocol {
   CelestBase get celest;
@@ -40,15 +41,32 @@ mixin BaseProtocol {
         'content-type': 'application/json',
       },
     );
-    if (resp.statusCode == 401) {
-      throw UnauthorizedException();
+    return switch (resp.statusCode) {
+      200 => jsonDecode(resp.body) as Map<String, Object?>,
+      400 => _error(resp, BadRequestException.new),
+      401 => _error(resp, UnauthorizedException.new),
+      500 => _error(resp, InternalServerError.new),
+      _ => throw http.ClientException(
+          '${resp.statusCode}: ${resp.body}',
+          uri,
+        ),
+    };
+  }
+
+  Never _error<T extends Object>(
+    http.Response response,
+    T Function(String message) createError,
+  ) {
+    final mediaType = switch (response.headers['content-type']) {
+      final contentType? => MediaType.parse(contentType),
+      _ => throw createError(response.body),
+    };
+    if (mediaType.mimeType != 'application/json') {
+      throw createError(response.body);
     }
-    if (resp.statusCode != 200) {
-      throw http.ClientException(
-        '${resp.statusCode}: ${resp.body}',
-        uri,
-      );
-    }
-    return jsonDecode(resp.body) as Map<String, Object?>;
+    final json = jsonDecode(response.body) as Map<String, Object?>;
+    final error = json['error'] as Map<String, Object?>?;
+    final message = error?['message'] as String?;
+    throw createError(message ?? response.body);
   }
 }
