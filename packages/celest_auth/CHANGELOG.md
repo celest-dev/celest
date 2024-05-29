@@ -1,3 +1,7 @@
+## 0.4.1
+
+- fix: Pana issues ([dart-lang/pana#1351](https://github.com/dart-lang/pana/issues/1351))
+
 ## 0.4.0
 
 This release introduces support for HTTP customization, improved ergonomics, and a preview of running Flutter and UI code in the sky! 

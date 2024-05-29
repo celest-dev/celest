@@ -6,6 +6,7 @@ repository: https://github.com/celest-dev/celest/tree/main/packages/celest
 
 environment:
   sdk: ^3.3.0
+  flutter: ">=3.19.0"
 
 dependencies:
   async: ^2.11.0
