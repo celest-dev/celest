@@ -60,10 +60,10 @@ packages:
     dependency: "direct main"
     description:
       name: archive
-      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
+      sha256: "6bd38d335f0954f5fad9c79e614604fbf03a0e5b975923dd001b6ea965ef5b4b"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.1"
+    version: "3.6.0"
   args:
     dependency: "direct main"
     description:
@@ -220,14 +220,14 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "0.4.0-dev.2"
+    version: "0.4.1"
   celest_auth:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "0.4.0-dev.2"
+    version: "0.4.1"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -241,7 +241,7 @@ packages:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "0.4.0-dev.2"
+    version: "0.4.1"
   celest_lints:
     dependency: "direct dev"
     description:
@@ -309,10 +309,10 @@ packages:
     dependency: transitive
     description:
       name: client_stripe
-      sha256: "5a49093c982cd88296b53e0c12bfa4cc4ebcd967156418097ecad28d60d8f290"
+      sha256: e64ad6b5927259ccd307a7e1aab053e6cf69260c6e76ba32052ff2a57e633ff1
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.3"
+    version: "0.1.4"
   clock:
     dependency: transitive
     description:
@@ -564,10 +564,10 @@ packages:
     dependency: "direct main"
     description:
       name: html2md
-      sha256: "6f50cec926b0a09816aadb66a59e4cda45c91fd00551e5a8298870069729b508"
+      sha256: "465cf8ffa1b510fe0e97941579bf5b22e2d575f2cecb500a9c0254efe33a8036"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.1"
+    version: "1.3.2"
   http:
     dependency: "direct main"
     description:
@@ -873,10 +873,10 @@ packages:
     dependency: "direct main"
     description:
       name: pubspec_parse
-      sha256: c63b2876e58e194e4b0828fcb080ad0e06d051cb607a6be51a9e084f47cb9367
+      sha256: c799b721d79eb6ee6fa56f00c04b472dcd44a30d258fac2174a6ec57302678f8
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.3.0"
   recase:
     dependency: transitive
     description:
@@ -1144,10 +1144,10 @@ packages:
     dependency: "direct main"
     description:
       name: vm_service
-      sha256: "7475cb4dd713d57b6f7464c0e13f06da0d535d8b2067e188962a59bac2cf280b"
+      sha256: "360c4271613beb44db559547d02f8b0dc044741d0eeb9aa6ccdb47e8ec54c63a"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.2"
+    version: "14.2.3"
   watcher:
     dependency: "direct main"
     description:
