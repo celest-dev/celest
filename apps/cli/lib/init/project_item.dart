@@ -94,7 +94,7 @@ final class _Pubspec extends ProjectFile {
     }
     const projectPubspecName = 'celest_backend';
     // final projectPubspecName = 'api_${projectName.snakeCase}';
-    if (parentProject.pubspec.dependencies.containsKey(projectPubspecName)) {
+    if (!parentProject.pubspec.dependencies.containsKey(projectPubspecName)) {
       final updatedPubspec = YamlEditor(parentProject.pubspecYaml)
         ..update(
           ['dependencies', projectPubspecName],
