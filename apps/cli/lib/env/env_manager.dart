@@ -177,7 +177,7 @@ final class _IsolatedEnvManager {
 
   (Map<String, String> env, Map<String, FileSpan> spans) _load() {
     if (!_envFile.existsSync()) {
-      _envFile.createSync(recursive: true);
+      return const ({}, {});
     }
     _lastModified = _envFile.lastModifiedSync();
     final parser = EnvParser(
