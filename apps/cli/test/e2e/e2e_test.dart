@@ -7,6 +7,7 @@ import '../common.dart';
 import 'common/common.dart';
 import 'features/bugs/add_remove_fields.dart';
 import 'features/create/create_project_in_dart_app.dart';
+import 'features/create/create_project_in_dart_app_no_deps.dart';
 import 'features/create/create_project_in_flutter_app.dart';
 import 'features/create/create_project_isolated.dart';
 import 'features/hello_project.dart';
@@ -28,6 +29,7 @@ void main() {
     // Project creation
     CreateProjectInFlutterAppTest.new,
     CreateProjectInDartAppTest.new,
+    CreateProjectInDartAppNoDepsTest.new,
     CreateProjectIsolatedTest.new,
 
     // Hot reload
