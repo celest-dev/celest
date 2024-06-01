@@ -54,7 +54,8 @@ final class CelestUpgrader {
     if (downloadResp.statusCode != 200) {
       throw CelestException(
         'Failed to download Celest. Please check your internet '
-        'connection and try again.',
+        'connection and try again or download directly from: '
+        'https://celest.dev/download',
         additionalContext: {
           'statusCode': downloadResp.statusCode.toString(),
           'body': await downloadResp.stream.bytesToString(),
@@ -97,9 +98,20 @@ final class CelestUpgrader {
       } else {
         cliLogger.success(successMessage);
       }
-    } on Object {
+    } on Object catch (e, st) {
       _progress?.cancel();
-      rethrow;
+      if (e is CelestException) {
+        rethrow;
+      }
+      performance.captureError(e, stackTrace: st);
+      throw CelestException(
+        'Failed to upgrade Celest. Please install the latest version from '
+        'https://celest.dev/download.',
+        additionalContext: {
+          'error': e.toString(),
+          'stackTrace': st.toString(),
+        },
+      );
     } finally {
       _progress = null;
     }
@@ -116,13 +128,13 @@ final class CelestUpgrader {
       stderrEncoding: utf8,
     );
     if (installOutput.exitCode != 0) {
-      throw CelestException(
-        'Failed to upgrade Celest. Please try again later.',
-        additionalContext: {
-          'exitCode': installOutput.exitCode.toString(),
-          'stdout': installOutput.stdout.toString(),
-          'stderr': installOutput.stderr.toString(),
-        },
+      throw ProcessException(
+        'Add-AppxPackage',
+        [installerAppx.path],
+        'Failed to install Celest:\n'
+            'stdout: ${installOutput.stdout}\n'
+            'stderr: ${installOutput.stderr}',
+        installOutput.exitCode,
       );
     }
   }
@@ -200,12 +212,12 @@ final class CelestUpgrader {
       <String>['sudo', '-v'],
       mode: ProcessStartMode.inheritStdio,
     );
-    if (await sudoOutput.exitCode != 0) {
-      throw CelestException(
-        'Failed to upgrade Celest. Please try again later.',
-        additionalContext: {
-          'exitCode': sudoOutput.exitCode.toString(),
-        },
+    if (await sudoOutput.exitCode case final exitCode && != 0) {
+      throw ProcessException(
+        'sudo',
+        ['-v'],
+        'Failed to check sudo',
+        exitCode,
       );
     }
     final updateOutput = await processManager.run(
@@ -214,13 +226,13 @@ final class CelestUpgrader {
       stderrEncoding: utf8,
     );
     if (updateOutput.exitCode != 0) {
-      throw CelestException(
-        'Failed to upgrade Celest. Please try again later.',
-        additionalContext: {
-          'stdout': updateOutput.stdout.toString(),
-          'stderr': updateOutput.stderr.toString(),
-          'exitCode': updateOutput.exitCode.toString(),
-        },
+      throw ProcessException(
+        'apt-get',
+        ['update'],
+        'Failed to update apt-get:\n'
+            'stdout: ${updateOutput.stdout}\n'
+            'stderr: ${updateOutput.stderr}',
+        updateOutput.exitCode,
       );
     }
     final installOutput = await processManager.run(
@@ -236,13 +248,13 @@ final class CelestUpgrader {
       stderrEncoding: utf8,
     );
     if (installOutput.exitCode != 0) {
-      throw CelestException(
-        'Failed to upgrade Celest. Please try again later.',
-        additionalContext: {
-          'stdout': updateOutput.stdout.toString(),
-          'stderr': updateOutput.stderr.toString(),
-          'exitCode': installOutput.exitCode.toString(),
-        },
+      throw ProcessException(
+        'apt-get',
+        ['install', installer.path],
+        'Failed to install Celest:\n'
+            'stdout: ${installOutput.stdout}\n'
+            'stderr: ${installOutput.stderr}',
+        installOutput.exitCode,
       );
     }
   }
@@ -291,13 +303,13 @@ final class CelestUpgrader {
       '${installOutput.stderr}',
     );
     if (installOutput.exitCode != 0) {
-      throw CelestException(
-        'Failed to upgrade Celest. Please try again later.',
-        additionalContext: {
-          'exitCode': installOutput.exitCode.toString(),
-          'stdout': installOutput.stdout.toString(),
-          'stderr': installOutput.stderr.toString(),
-        },
+      throw ProcessException(
+        'installer',
+        [installerFile],
+        'Failed to install Celest:\n'
+            'stdout: ${installOutput.stdout}\n'
+            'stderr: ${installOutput.stderr}',
+        installOutput.exitCode,
       );
     }
   }
