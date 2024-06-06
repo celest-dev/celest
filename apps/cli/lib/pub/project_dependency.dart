@@ -44,7 +44,7 @@ final class ProjectDependency {
     'lints',
     DependencyType.devDependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('3.0.0')),
+      version: VersionConstraint.compatibleWith(Version.parse('4.0.0')),
     ),
   );
 
@@ -52,7 +52,7 @@ final class ProjectDependency {
     'test',
     DependencyType.devDependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('1.24.0')),
+      version: VersionConstraint.compatibleWith(Version.parse('1.25.0')),
     ),
   );
 
