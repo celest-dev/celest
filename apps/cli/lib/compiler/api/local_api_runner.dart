@@ -8,7 +8,6 @@ import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';

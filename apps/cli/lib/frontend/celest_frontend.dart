@@ -9,6 +9,7 @@ import 'package:api_celest/ast.dart' as ast;
 import 'package:api_celest/ast.dart';
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
@@ -21,7 +22,6 @@ import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/port_finder.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, context;
 import 'package:hub/user_hub/user_hub_configuration.dart';
@@ -715,7 +715,8 @@ final class CelestFrontend implements Closeable {
         ),
         logger: logger,
       );
-      final port = await const DefaultPortFinder().checkOrUpdatePort(proxyPort);
+      final port = await const PortFinder(defaultCelestPort)
+          .checkOrUpdatePort(proxyPort);
       return UserHubServer.start(
         port: port,
         userApiUri: Uri.http('localhost:$localApiPort'),
