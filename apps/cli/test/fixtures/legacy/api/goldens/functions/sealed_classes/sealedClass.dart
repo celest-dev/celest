@@ -14,7 +14,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _i8;
 
 import '../../../functions/sealed_classes.dart' as _i2;
 
-final class SealedClassTarget extends _i1.CloudFunctionTarget {
+final class SealedClassTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'sealedClass';
 

@@ -11,7 +11,7 @@ import 'package:flutter/src/painting/image_provider.dart' as _i5;
 
 import '../../../functions/flutter.dart' as _i2;
 
-final class PaintWidgetTarget extends _i1.CloudFunctionTarget {
+final class PaintWidgetTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'paintWidget';
 

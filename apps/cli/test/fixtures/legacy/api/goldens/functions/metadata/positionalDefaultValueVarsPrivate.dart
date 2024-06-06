@@ -13,7 +13,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import '../../../functions/metadata.dart' as _i2;
 
 final class PositionalDefaultValueVarsPrivateTarget
-    extends _i1.CloudFunctionTarget {
+    extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'positionalDefaultValueVarsPrivate';
 

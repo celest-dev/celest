@@ -19,7 +19,7 @@ import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i12;
 
 import '../../../functions/models.dart' as _i2;
 
-final class PortfolioTarget extends _i1.CloudFunctionTarget {
+final class PortfolioTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'portfolio';
 

@@ -11,7 +11,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i3;
 
 import '../../../functions/http_method.dart' as _i2;
 
-final class GetTarget extends _i1.CloudFunctionTarget {
+final class GetTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'get';
 

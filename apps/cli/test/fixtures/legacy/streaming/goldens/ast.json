@@ -1,0 +1,159 @@
+{
+  "name": "streaming",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project:project.dart"
+  },
+  "apis": {
+    "server_side": {
+      "name": "server_side",
+      "metadata": [],
+      "functions": {
+        "hello": {
+          "name": "hello",
+          "apiName": "server_side",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "names",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "List",
+                "url": "dart:core",
+                "types": [
+                  {
+                    "$": "TypeReference",
+                    "symbol": "String",
+                    "url": "dart:core",
+                    "isNullable": false
+                  }
+                ],
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 141,
+                  "uri": "server_side.dart",
+                  "line": 6,
+                  "column": 34
+                },
+                "end": {
+                  "offset": 146,
+                  "uri": "server_side.dart",
+                  "line": 6,
+                  "column": 39
+                },
+                "text": "names"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 122,
+              "uri": "server_side.dart",
+              "line": 6,
+              "column": 15
+            },
+            "end": {
+              "offset": 127,
+              "uri": "server_side.dart",
+              "line": 6,
+              "column": 20
+            },
+            "text": "hello"
+          },
+          "streamType": "unidirectionalServer"
+        }
+      },
+      "docs": [
+        "/// Tests the ability to use server-side streaming."
+      ],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "server_side.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "server_side.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": []
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
+  }
+}

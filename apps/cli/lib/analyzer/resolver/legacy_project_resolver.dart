@@ -698,12 +698,34 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
         }
 
+        final returnType = func.returnType;
+        final (flattenedReturnType, streaming) = switch (returnType) {
+          final InterfaceType type when type.isDartAsyncStream => (
+              type.typeArguments.first.flattened,
+              true
+            ),
+          _ => (returnType.flattened, false),
+        };
+        final streamType =
+            streaming ? ast.StreamType.unidirectionalServer : null;
+
+        if (streaming) {
+          final httpConfig = functionMetadata.whereType<ast.ApiHttpMetadata>();
+          for (final httpConfig in httpConfig) {
+            reportError(
+              'Functions that return a stream may not customize their HTTP '
+              'configuration',
+              location: httpConfig.location,
+            );
+          }
+        }
+
         final applicableAuth = _applicableAuth(
           apiMetadata: libraryMetdata,
           functionMetadata: functionMetadata,
         );
         final applicableHttpMethod = _applicableHttpMethod(
-          apiMetadata: libraryMetdata,
+          apiMetadata: streaming ? const [] : libraryMetdata,
           functionMetadata: functionMetadata,
         );
         final hasBody = switch (applicableHttpMethod) {
@@ -711,7 +733,6 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           _ => true,
         };
 
-        final returnType = func.returnType;
         final function = ast.CloudFunction(
           name: func.name,
           apiName: apiName,
@@ -813,7 +834,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
             return parameter;
           }),
           returnType: typeHelper.toReference(returnType),
-          flattenedReturnType: typeHelper.toReference(returnType.flattened),
+          flattenedReturnType: typeHelper.toReference(flattenedReturnType),
+          streamType: streamType,
           location: func.sourceLocation,
           metadata: functionMetadata,
           annotations: func.metadata
@@ -823,7 +845,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           docs: func.docLines,
         );
 
-        if (func.returnType.element case final InterfaceElement interface) {
+        if (flattenedReturnType.element case final InterfaceElement interface) {
           ensureClientReferenceable(
             interface,
             func.sourceLocation,
@@ -831,21 +853,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
         }
 
-        var hasContext = false;
-        for (final param in function.parameters) {
-          if (param.type.isFunctionContext) {
-            if (hasContext) {
-              reportError(
-                'A FunctionContext parameter may only be specified once',
-                location: param.location,
-              );
-            }
-            hasContext = true;
-          }
-        }
         // Check must happen before `isSerializable`
         final hasAllowedSubtypes =
-            await returnType.flattened.hasAllowedSubtypes();
+            await flattenedReturnType.hasAllowedSubtypes();
         if (!hasAllowedSubtypes.allowed) {
           final disallowedTypes = hasAllowedSubtypes.disallowedTypes
               .map((type) => type.element.name)
@@ -857,7 +867,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
             location: function.location,
           );
         }
-        final returnTypeVerdict = switch (returnType.flattened) {
+        final returnTypeVerdict = switch (flattenedReturnType) {
           VoidType() => const Verdict.yes(),
           final flattened => typeHelper.isSerializable(flattened),
         };

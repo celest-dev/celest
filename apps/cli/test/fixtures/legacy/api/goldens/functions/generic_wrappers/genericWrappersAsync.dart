@@ -15,7 +15,7 @@ import 'package:fast_immutable_collections/src/imap/imap.dart' as _i9;
 
 import '../../../functions/generic_wrappers.dart' as _i2;
 
-final class GenericWrappersAsyncTarget extends _i1.CloudFunctionTarget {
+final class GenericWrappersAsyncTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'genericWrappersAsync';
 

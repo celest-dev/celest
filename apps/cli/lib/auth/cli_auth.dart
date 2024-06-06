@@ -17,6 +17,9 @@ final class _CliClient with CelestBase {
     secureStorage: ctx.secureStorage,
     baseClient: ctx.httpClient,
   );
+
+  @override
+  NativeStorage get nativeStorage => ctx.secureStorage;
 }
 
 extension type _CliAuth._(AuthImpl _hub) implements Auth {

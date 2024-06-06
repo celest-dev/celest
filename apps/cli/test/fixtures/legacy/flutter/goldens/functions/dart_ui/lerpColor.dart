@@ -10,7 +10,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/dart_ui.dart' as _i2;
 
-final class LerpColorTarget extends _i1.CloudFunctionTarget {
+final class LerpColorTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'lerpColor';
 

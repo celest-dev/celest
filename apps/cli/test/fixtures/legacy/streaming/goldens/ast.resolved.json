@@ -1,0 +1,22 @@
+{
+  "name": "streaming",
+  "apis": {
+    "server_side": {
+      "name": "server_side",
+      "functions": {
+        "hello": {
+          "name": "hello",
+          "route": "/server-side/hello",
+          "apiName": "server_side",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": []
+  }
+}

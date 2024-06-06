@@ -16,7 +16,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _i9;
 
 import '../../../functions/models.dart' as _i2;
 
-final class StockTarget extends _i1.CloudFunctionTarget {
+final class StockTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'stock';
 

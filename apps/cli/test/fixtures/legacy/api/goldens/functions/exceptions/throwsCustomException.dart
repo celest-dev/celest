@@ -13,7 +13,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _i7;
 
 import '../../../functions/exceptions.dart' as _i2;
 
-final class ThrowsCustomExceptionTarget extends _i1.CloudFunctionTarget {
+final class ThrowsCustomExceptionTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'throwsCustomException';
 

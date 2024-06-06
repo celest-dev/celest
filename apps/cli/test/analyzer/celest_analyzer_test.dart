@@ -1940,6 +1940,108 @@ String sayHello({
       );
     });
 
+    group('streaming', () {
+      testNoErrors(
+        name: 'streaming_return_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
+Stream<String> greetings(List<String> names) async* {
+  for (final name in names) {
+    yield 'Hello, $name!';
+  }
+}
+''',
+        },
+      );
+
+      testErrors(
+        name: 'future_of_streaming_return_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
+Future<Stream<String>> greetings(List<String> names) async {
+  return Stream.fromIterable([
+    for (final name in names) 'Hello, $name!'
+  ]);
+}
+''',
+        },
+        errors: [
+          'Stream types are not supported',
+        ],
+      );
+
+      testErrors(
+        name: 'http_config_streaming_return_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(method: HttpMethod.post)
+Stream<String> greetings(List<String> names) async* {
+  for (final name in names) {
+    yield 'Hello, $name!';
+  }
+}
+''',
+        },
+        errors: [
+          'Functions that return a stream may not customize their HTTP '
+              'configuration',
+        ],
+      );
+
+      testErrors(
+        name: 'http_error_config_streaming_return_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@httpError(HttpStatus.unauthorized, Exception)
+Stream<String> greetings(List<String> names) async* {
+  for (final name in names) {
+    yield 'Hello, $name!';
+  }
+}
+''',
+        },
+        errors: [
+          'Functions that return a stream may not customize their HTTP '
+              'configuration',
+        ],
+      );
+
+      testErrors(
+        name: 'streaming_parameter_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
+Future<List<String>> greetings(Stream<String> names) async {
+  final greetings = <String>[];
+  await for (final name in names) {
+    greetings.add('Hello, $name!');
+  }
+  return greetings;
+}
+''',
+        },
+        errors: [
+          'Stream types are not supported',
+        ],
+      );
+    });
+
     group('context', () {
       testNoErrors(
         name: 'function_authenticated_context',

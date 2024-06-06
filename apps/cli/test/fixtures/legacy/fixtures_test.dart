@@ -122,7 +122,7 @@ class TestRunner {
     test('analyzer', timeout: const Timeout.factor(3), () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(
-        migrateProject: updateGoldens,
+        migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
@@ -148,7 +148,7 @@ class TestRunner {
     test('codegen', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(
-        migrateProject: updateGoldens,
+        migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
@@ -183,7 +183,7 @@ class TestRunner {
     test('resolve', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(
-        migrateProject: updateGoldens,
+        migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
@@ -213,7 +213,7 @@ class TestRunner {
     test('client', () async {
       final CelestAnalysisResult(:project, :errors) =
           await analyzer.analyzeProject(
-        migrateProject: updateGoldens,
+        migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
@@ -254,12 +254,16 @@ class TestRunner {
 
   void testApi(String apiName, ApiTest apiTest) {
     group(apiName, () {
-      for (final MapEntry(key: functionName, value: tests)
-          in apiTest.functionTests.entries) {
+      final functions = {
+        ...apiTest.functionTests.keys,
+        ...apiTest.eventTests.keys,
+      };
+      for (final functionName in functions) {
         testFunction(
           apiName,
           functionName,
-          tests,
+          apiTest.functionTests[functionName] ?? const [],
+          apiTest.eventTests[functionName] ?? const [],
         );
       }
     });
@@ -268,7 +272,8 @@ class TestRunner {
   void testFunction(
     String apiName,
     String functionName,
-    List<FunctionTest> tests,
+    List<HttpTest> httpTests,
+    List<EventTest> eventTests,
   ) {
     group(functionName, () {
       late Uri apiUri;
@@ -304,52 +309,76 @@ class TestRunner {
         await apiRunner.close();
       });
 
-      for (final testCase in tests) {
+      for (final testCase in httpTests) {
         test(testCase.name, () async {
-          for (final test in tests) {
-            final request = Request(
-              test.method,
-              apiUri.replace(queryParameters: test.queryParameters),
-            )
-              ..headers.addAll({
-                'Content-Type': 'application/json',
-                ...test.headers,
-              })
-              ..body = jsonEncode(test.input);
-            final response = client.send(request);
-
-            final result = await Result.capture(response);
-            try {
-              switch (test) {
-                case FunctionTestError(:final output):
-                  switch (result) {
-                    case ErrorResult(error: final e):
-                      fail('Unexpected error: $e');
-                    case ValueResult(value: final resp):
-                      expect(resp.statusCode, test.statusCode);
-                      final body = await resp.stream.bytesToString();
-                      final respJson = jsonDecode(body);
-                      expect(respJson, equals(output));
-                  }
-                case FunctionTestSuccess(:final output):
-                  expect(result.isValue, isTrue);
-                  final resp = result.asValue!.value;
-                  final body = await resp.stream.bytesToString();
-                  expect(resp.statusCode, test.statusCode, reason: body);
-                  if (test.method == 'HEAD') {
-                    expect(body, isEmpty);
-                  } else {
+          final request = Request(
+            testCase.method,
+            apiUri.replace(queryParameters: testCase.queryParameters),
+          )
+            ..headers.addAll({
+              'Content-Type': 'application/json',
+              ...testCase.headers,
+            })
+            ..body = jsonEncode(testCase.input);
+          final response = client.send(request);
+          final result = await Result.capture(response);
+          try {
+            switch (testCase) {
+              case FunctionTestError(:final output):
+                switch (result) {
+                  case ErrorResult(error: final e):
+                    fail('Unexpected error: $e');
+                  case ValueResult(value: final resp):
+                    expect(resp.statusCode, testCase.statusCode);
+                    final body = await resp.stream.bytesToString();
                     final respJson = jsonDecode(body);
                     expect(respJson, equals(output));
-                  }
-              }
-              if (test.logs case final expectedLogs?) {
-                expect(logs, containsAllInOrder(expectedLogs.map(contains)));
-              }
-            } on Object {
-              print(logs.join('\n'));
-              rethrow;
+                }
+              case FunctionTestSuccess(:final output):
+                expect(result.isValue, isTrue);
+                final resp = result.asValue!.value;
+                final body = await resp.stream.bytesToString();
+                expect(resp.statusCode, testCase.statusCode, reason: body);
+                if (testCase.method == 'HEAD') {
+                  expect(body, isEmpty);
+                } else {
+                  final respJson = jsonDecode(body);
+                  expect(respJson, equals(output));
+                }
             }
+            if (testCase.logs case final expectedLogs?) {
+              expect(logs, containsAllInOrder(expectedLogs.map(contains)));
+            }
+          } on Object {
+            print(logs.join('\n'));
+            rethrow;
+          }
+        });
+      }
+
+      for (final testCase in eventTests) {
+        test(testCase.name, () async {
+          final socket = await WebSocket.connect(
+            apiUri
+                .replace(
+                  scheme: 'ws',
+                  queryParameters: testCase.queryParameters,
+                )
+                .toString(),
+          );
+          addTearDown(socket.close);
+          socket.add(jsonEncode(testCase.input));
+          try {
+            switch (testCase) {
+              case EventTestSuccess(:final output):
+                await expectLater(socket, output);
+            }
+            if (testCase.logs case final expectedLogs?) {
+              expect(logs, containsAllInOrder(expectedLogs.map(contains)));
+            }
+          } on Object {
+            print(logs.join('\n'));
+            rethrow;
           }
         });
       }
@@ -4522,6 +4551,27 @@ final tests = <String, Test>{
                 'isDarkMode': true,
                 'screenChoice': 'signup',
               },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'streaming': Test(
+    apis: {
+      'server_side': ApiTest(
+        eventTests: {
+          'hello': [
+            EventTestSuccess(
+              name: 'hello',
+              input: {
+                'names': ['Amy', 'Bob', 'Charlie'],
+              },
+              events: [
+                'Hello, Amy!',
+                'Hello, Bob!',
+                'Hello, Charlie!',
+              ],
             ),
           ],
         },

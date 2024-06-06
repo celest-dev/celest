@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:test/test.dart';
+
 /// A description of an e2e test.
 class Test {
   const Test({
@@ -9,10 +13,12 @@ class Test {
 
 class ApiTest {
   const ApiTest({
-    required this.functionTests,
+    this.functionTests = const {},
+    this.eventTests = const {},
   });
 
-  final Map<String, List<FunctionTest>> functionTests;
+  final Map<String, List<HttpTest>> functionTests;
+  final Map<String, List<EventTest>> eventTests;
 }
 
 sealed class FunctionTest {
@@ -33,7 +39,18 @@ sealed class FunctionTest {
   final List<String>? logs;
 }
 
-class FunctionTestSuccess extends FunctionTest {
+sealed class HttpTest extends FunctionTest {
+  const HttpTest({
+    required super.name,
+    super.input,
+    super.method,
+    super.headers,
+    super.queryParameters,
+    super.logs,
+  });
+}
+
+class FunctionTestSuccess extends HttpTest {
   FunctionTestSuccess({
     required super.name,
     super.method,
@@ -51,7 +68,7 @@ class FunctionTestSuccess extends FunctionTest {
   final Object? output;
 }
 
-class FunctionTestError extends FunctionTest {
+class FunctionTestError extends HttpTest {
   const FunctionTestError({
     required super.name,
     super.method,
@@ -64,5 +81,37 @@ class FunctionTestError extends FunctionTest {
   });
 
   final int statusCode;
+  final Object? output;
+}
+
+sealed class EventTest extends FunctionTest {
+  const EventTest({
+    required super.name,
+    super.input,
+    super.method,
+    super.headers,
+    super.queryParameters,
+    super.logs,
+  });
+}
+
+class EventTestSuccess extends EventTest {
+  EventTestSuccess({
+    required super.name,
+    super.method,
+    super.input,
+    super.headers,
+    super.queryParameters,
+    required List<Object>? events,
+    super.logs,
+  }) : output = emitsInOrder([
+          jsonEncode(const {}),
+          for (final event in events ?? const [])
+            jsonEncode({
+              'response': event,
+            }),
+          emitsDone,
+        ]);
+
   final Object? output;
 }

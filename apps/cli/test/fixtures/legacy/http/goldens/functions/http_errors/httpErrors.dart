@@ -13,7 +13,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i6;
 
 import '../../../functions/http_errors.dart' as _i2;
 
-final class HttpErrorsTarget extends _i1.CloudFunctionTarget {
+final class HttpErrorsTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'httpErrors';
 

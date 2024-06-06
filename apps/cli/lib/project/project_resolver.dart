@@ -140,7 +140,8 @@ final class ProjectResolver extends AstVisitorWithArg<void, AstNode> {
             resolvedFunction
               ..name = function.name
               ..route = function.route
-              ..apiName = function.apiName;
+              ..apiName = function.apiName
+              ..streamType = function.streamType;
             final functionAuth =
                 function.metadata.whereType<ApiAuth>().singleOrNull;
             if (functionAuth != null) {

@@ -12,7 +12,8 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/external.dart' as _i2;
 
-final class CallsThrowsCommonExceptionTarget extends _i1.CloudFunctionTarget {
+final class CallsThrowsCommonExceptionTarget
+    extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'callsThrowsCommonException';
 

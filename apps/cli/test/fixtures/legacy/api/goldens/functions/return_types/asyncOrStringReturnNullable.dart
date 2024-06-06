@@ -11,7 +11,8 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i3;
 
 import '../../../functions/return_types.dart' as _i2;
 
-final class AsyncOrStringReturnNullableTarget extends _i1.CloudFunctionTarget {
+final class AsyncOrStringReturnNullableTarget
+    extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'asyncOrStringReturnNullable';
 

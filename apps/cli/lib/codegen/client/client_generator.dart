@@ -168,13 +168,14 @@ final class ClientGenerator {
       if (_hasServer) ...[
         Field(
           (f) => f
+            ..annotations.add(DartTypes.core.override)
             ..late = true
             ..modifier = FieldModifier.final$
             ..type = refer(
               'NativeStorage',
               'package:celest_core/_internal.dart',
             )
-            ..name = '_storage'
+            ..name = 'nativeStorage'
             ..assignment = refer(
               'NativeStorage',
               'package:celest_core/_internal.dart',
@@ -192,7 +193,7 @@ final class ClientGenerator {
               'CelestHttpClient',
               'package:celest_core/_internal.dart',
             ).newInstance([], {
-              'secureStorage': refer('_storage').property('secure'),
+              'secureStorage': refer('nativeStorage').property('secure'),
             }).code,
         ),
         Field(
@@ -267,7 +268,7 @@ final class ClientGenerator {
               ..assignment = ClientTypes.authClass.ref.newInstance([
                 refer('this'),
               ], {
-                'storage': refer('_storage'),
+                'storage': refer('nativeStorage'),
               }).code,
           ),
         )

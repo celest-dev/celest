@@ -12,7 +12,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _i4;
 
 import '../../../functions/extension_types.dart' as _i2;
 
-final class JsonIntTarget extends _i1.CloudFunctionTarget {
+final class JsonIntTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'jsonInt';
 

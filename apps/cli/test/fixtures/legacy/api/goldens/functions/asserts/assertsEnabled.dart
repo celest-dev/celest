@@ -11,7 +11,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i3;
 
 import '../../../functions/asserts.dart' as _i2;
 
-final class AssertsEnabledTarget extends _i1.CloudFunctionTarget {
+final class AssertsEnabledTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'assertsEnabled';
 

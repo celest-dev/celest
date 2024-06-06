@@ -14,7 +14,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _i8;
 
 import '../../../functions/sealed_classes.dart' as _i5;
 
-final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
+final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'multipleGenericResult';
 
@@ -27,7 +27,7 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionTarget {
     required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
-  }) async {
+  }) {
     final $T = (request[r'$T'] as String?);
     final $E = (request[r'$E'] as String?);
     final $types = ($T, $E);

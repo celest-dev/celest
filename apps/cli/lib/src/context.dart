@@ -44,12 +44,12 @@ final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
 
 DeployClient get deployService => DeployClient(
-      secureStorage: ctx.storage.secure,
+      nativeStorage: ctx.storage.secure,
       baseUri: ctx.baseUri,
       httpClient: ctx.httpClient,
     );
 ProjectClient get projectService => ProjectClient(
-      secureStorage: ctx.storage.secure,
+      nativeStorage: ctx.storage.secure,
       baseUri: ctx.baseUri,
       httpClient: ctx.httpClient,
     );

@@ -12,7 +12,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/records.dart' as _i2;
 
-final class AliasedNamedFieldsTarget extends _i1.CloudFunctionTarget {
+final class AliasedNamedFieldsTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'aliasedNamedFields';
 

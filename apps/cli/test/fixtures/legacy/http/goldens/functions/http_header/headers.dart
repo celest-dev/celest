@@ -12,7 +12,7 @@ import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 
 import '../../../functions/http_header.dart' as _i2;
 
-final class HeadersTarget extends _i1.CloudFunctionTarget {
+final class HeadersTarget extends _i1.CloudFunctionHttpTarget {
   @override
   String get name => 'headers';
 
