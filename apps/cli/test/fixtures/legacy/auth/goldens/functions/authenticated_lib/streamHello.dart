@@ -11,83 +11,69 @@ import 'package:celest_core/src/auth/user.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i7;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i6;
 
-import '../../../functions/lib.dart' as _i2;
+import '../../../functions/authenticated_lib.dart' as _i2;
 
-final class SayHelloAuthenticatedTarget extends _i1.CloudFunctionHttpTarget {
+final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
   @override
-  String get name => 'sayHelloAuthenticated';
-
-  @override
-  String get method => 'POST';
+  String get name => 'streamHello';
 
   @override
-  Future<_i1.CelestResponse> handle(
+  Stream<Map<String, Object?>> handle(
     Map<String, Object?> request, {
     required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
-  }) async {
+  }) async* {
     try {
-      final response = await _i2.sayHelloAuthenticated(
+      await for (final response in _i2.streamHello(
           user: _i3.Serializers.instance
-              .deserialize<_i4.User>(_i5.jsonDecode(context[r'$user']!)));
-      return (statusCode: 200, body: {'response': response});
+              .deserialize<_i4.User>(_i5.jsonDecode(context[r'$user']!)))) {
+        yield {'response': response};
+      }
     } on _i6.SerializationException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
       final error =
           _i3.Serializers.instance.serialize<_i6.SerializationException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'SerializationException',
-            'details': error,
-          }
+      yield {
+        'error': {
+          'code': r'SerializationException',
+          'details': error,
         }
-      );
+      };
     } on _i7.InternalServerError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
       final error =
           _i3.Serializers.instance.serialize<_i7.InternalServerError>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'InternalServerError',
-            'details': error,
-          }
+      yield {
+        'error': {
+          'code': r'InternalServerError',
+          'details': error,
         }
-      );
+      };
     } on _i7.UnauthorizedException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
       final error =
           _i3.Serializers.instance.serialize<_i7.UnauthorizedException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'UnauthorizedException',
-            'details': error,
-          }
+      yield {
+        'error': {
+          'code': r'UnauthorizedException',
+          'details': error,
         }
-      );
+      };
     } on _i7.BadRequestException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
       final error =
           _i3.Serializers.instance.serialize<_i7.BadRequestException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'BadRequestException',
-            'details': error,
-          }
+      yield {
+        'error': {
+          'code': r'BadRequestException',
+          'details': error,
         }
-      );
+      };
     }
   }
 
@@ -144,5 +130,5 @@ Future<void> main() async {
 }
 
 Future<void> start() async {
-  await _i1.serve(targets: {'/': SayHelloAuthenticatedTarget()});
+  await _i1.serve(targets: {'/': StreamHelloTarget()});
 }

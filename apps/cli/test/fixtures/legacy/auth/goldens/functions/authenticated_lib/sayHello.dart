@@ -28,10 +28,10 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     required Map<String, List<String>> queryParameters,
   }) async {
     try {
-      await _i2.sayHello(
+      final response = await _i2.sayHello(
           user: _i3.Serializers.instance
               .deserialize<_i4.User>(_i5.jsonDecode(context[r'$user']!)));
-      return (statusCode: 200, body: {'response': null});
+      return (statusCode: 200, body: {'response': response});
     } on _i6.SerializationException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');

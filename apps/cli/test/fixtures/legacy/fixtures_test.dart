@@ -372,6 +372,8 @@ class TestRunner {
             switch (testCase) {
               case EventTestSuccess(:final output):
                 await expectLater(socket, output);
+              case EventTestError(:final error):
+                await expectLater(socket, emitsError(error));
             }
             if (testCase.logs case final expectedLogs?) {
               expect(logs, containsAllInOrder(expectedLogs.map(contains)));
@@ -3515,6 +3517,70 @@ final tests = <String, Test>{
                 'json': complexStruct,
               },
               output: complexStruct,
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'auth': Test(
+    apis: {
+      'lib': ApiTest(
+        functionTests: {
+          'sayHello': [
+            FunctionTestSuccess(
+              name: 'sayHello',
+              input: {},
+              output: 'Hello, anonymous!',
+            ),
+          ],
+          'sayHelloPublic': [
+            FunctionTestSuccess(
+              name: 'sayHelloPublic',
+              input: {},
+              output: 'Hello, anonymous!',
+            ),
+          ],
+        },
+        eventTests: {
+          'streamHello': [
+            EventTestSuccess(
+              name: 'streamHello',
+              input: {},
+              events: [
+                'Hello, anonymous!',
+              ],
+            ),
+          ],
+          'streamHelloPublic': [
+            EventTestSuccess(
+              name: 'streamHelloPublic',
+              input: {},
+              events: [
+                'Hello, anonymous!',
+              ],
+            ),
+          ],
+        },
+      ),
+      'public_lib': ApiTest(
+        functionTests: {
+          'sayHello': [
+            FunctionTestSuccess(
+              name: 'sayHello',
+              input: {},
+              output: 'Hello, anonymous!',
+            ),
+          ],
+        },
+        eventTests: {
+          'streamHello': [
+            EventTestSuccess(
+              name: 'streamHello',
+              input: {},
+              events: [
+                'Hello, anonymous!',
+              ],
             ),
           ],
         },

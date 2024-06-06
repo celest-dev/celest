@@ -4,8 +4,15 @@ library;
 import 'package:celest/celest.dart';
 
 @cloud
-Future<void> sayHello({
+Future<String> sayHello({
   @principal required User user,
 }) async {
-  print('Hello, world!');
+  return 'Hello, user!';
+}
+
+@cloud
+Stream<String> streamHello({
+  @principal required User user,
+}) async* {
+  yield 'Hello, user!';
 }

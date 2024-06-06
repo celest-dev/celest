@@ -2,23 +2,50 @@ import 'package:celest/celest.dart';
 
 @cloud
 @authenticated
-Future<void> sayHelloAuthenticated({
+Future<String> sayHelloAuthenticated({
   @principal required User user,
 }) async {
-  print('Hello, world!');
+  return 'Hello, user!';
+}
+
+@cloud
+@authenticated
+Stream<String> streamHelloAuthenticated({
+  @principal required User user,
+}) async* {
+  yield 'Hello, user!';
 }
 
 @cloud
 @public
-Future<void> sayHelloPublic({
+Future<String> sayHelloPublic({
   @principal User? user,
 }) async {
-  print('Hello, world!');
+  final name = user == null ? 'anonymous' : 'user';
+  return 'Hello, $name!';
 }
 
 @cloud
-Future<void> sayHello({
+@public
+Stream<String> streamHelloPublic({
+  @principal User? user,
+}) async* {
+  final name = user == null ? 'anonymous' : 'user';
+  yield 'Hello, $name!';
+}
+
+@cloud
+Future<String> sayHello({
   @principal User? user,
 }) async {
-  print('Hello, world!');
+  final name = user == null ? 'anonymous' : 'user';
+  return 'Hello, $name!';
+}
+
+@cloud
+Stream<String> streamHello({
+  @principal User? user,
+}) async* {
+  final name = user == null ? 'anonymous' : 'user';
+  yield 'Hello, $name!';
 }

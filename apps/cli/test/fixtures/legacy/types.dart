@@ -115,3 +115,17 @@ class EventTestSuccess extends EventTest {
 
   final Object? output;
 }
+
+class EventTestError extends EventTest {
+  const EventTestError({
+    required super.name,
+    super.method,
+    required super.input,
+    super.headers,
+    super.queryParameters,
+    required this.error,
+    super.logs,
+  });
+
+  final Object? error;
+}

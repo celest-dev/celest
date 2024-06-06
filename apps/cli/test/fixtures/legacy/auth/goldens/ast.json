@@ -27,13 +27,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 124,
+                  "offset": 126,
                   "uri": "lib.dart",
                   "line": 5,
                   "column": 27
                 },
                 "end": {
-                  "offset": 128,
+                  "offset": 130,
                   "uri": "lib.dart",
                   "line": 5,
                   "column": 31
@@ -52,17 +52,19 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
-                "symbol": "void",
-                "url": "dart:core"
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void",
-            "url": "dart:core"
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
           },
           "metadata": [
             {
@@ -87,19 +89,113 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 73,
+              "offset": 75,
               "uri": "lib.dart",
               "line": 4,
-              "column": 13
+              "column": 15
             },
             "end": {
-              "offset": 94,
+              "offset": 96,
               "uri": "lib.dart",
               "line": 4,
-              "column": 34
+              "column": 36
             },
             "text": "sayHelloAuthenticated"
           }
+        },
+        "streamHelloAuthenticated": {
+          "name": "streamHelloAuthenticated",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 262,
+                  "uri": "lib.dart",
+                  "line": 13,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 266,
+                  "uri": "lib.dart",
+                  "line": 13,
+                  "column": 31
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [
+            {
+              "$": "ApiAuthenticated",
+              "location": {
+                "start": {
+                  "offset": 178,
+                  "uri": "lib.dart",
+                  "line": 11,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 192,
+                  "uri": "lib.dart",
+                  "line": 11,
+                  "column": 14
+                },
+                "text": "@authenticated"
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 208,
+              "uri": "lib.dart",
+              "line": 12,
+              "column": 15
+            },
+            "end": {
+              "offset": 232,
+              "uri": "lib.dart",
+              "line": 12,
+              "column": 39
+            },
+            "text": "streamHelloAuthenticated"
+          },
+          "streamType": "unidirectionalServer"
         },
         "sayHelloPublic": {
           "name": "sayHelloPublic",
@@ -118,15 +214,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 234,
+                  "offset": 373,
                   "uri": "lib.dart",
-                  "line": 13,
+                  "line": 21,
                   "column": 19
                 },
                 "end": {
-                  "offset": 238,
+                  "offset": 377,
                   "uri": "lib.dart",
-                  "line": 13,
+                  "line": 21,
                   "column": 23
                 },
                 "text": "user"
@@ -143,32 +239,34 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
-                "symbol": "void",
-                "url": "dart:core"
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void",
-            "url": "dart:core"
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
           },
           "metadata": [
             {
               "$": "ApiPublic",
               "location": {
                 "start": {
-                  "offset": 177,
+                  "offset": 314,
                   "uri": "lib.dart",
-                  "line": 11,
+                  "line": 19,
                   "column": 0
                 },
                 "end": {
-                  "offset": 184,
+                  "offset": 321,
                   "uri": "lib.dart",
-                  "line": 11,
+                  "line": 19,
                   "column": 7
                 },
                 "text": "@public"
@@ -178,19 +276,113 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 198,
+              "offset": 337,
               "uri": "lib.dart",
-              "line": 12,
-              "column": 13
+              "line": 20,
+              "column": 15
             },
             "end": {
-              "offset": 212,
+              "offset": 351,
               "uri": "lib.dart",
-              "line": 12,
-              "column": 27
+              "line": 20,
+              "column": 29
             },
             "text": "sayHelloPublic"
           }
+        },
+        "streamHelloPublic": {
+          "name": "streamHelloPublic",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 540,
+                  "uri": "lib.dart",
+                  "line": 30,
+                  "column": 19
+                },
+                "end": {
+                  "offset": 544,
+                  "uri": "lib.dart",
+                  "line": 30,
+                  "column": 23
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [
+            {
+              "$": "ApiPublic",
+              "location": {
+                "start": {
+                  "offset": 478,
+                  "uri": "lib.dart",
+                  "line": 28,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 485,
+                  "uri": "lib.dart",
+                  "line": 28,
+                  "column": 7
+                },
+                "text": "@public"
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 501,
+              "uri": "lib.dart",
+              "line": 29,
+              "column": 15
+            },
+            "end": {
+              "offset": 518,
+              "uri": "lib.dart",
+              "line": 29,
+              "column": 32
+            },
+            "text": "streamHelloPublic"
+          },
+          "streamType": "unidirectionalServer"
         },
         "sayHello": {
           "name": "sayHello",
@@ -209,15 +401,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 330,
+                  "offset": 690,
                   "uri": "lib.dart",
-                  "line": 20,
+                  "line": 38,
                   "column": 19
                 },
                 "end": {
-                  "offset": 334,
+                  "offset": 694,
                   "uri": "lib.dart",
-                  "line": 20,
+                  "line": 38,
                   "column": 23
                 },
                 "text": "user"
@@ -234,35 +426,112 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
-                "symbol": "void",
-                "url": "dart:core"
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void",
-            "url": "dart:core"
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
           },
           "metadata": [],
           "docs": [],
           "location": {
             "start": {
-              "offset": 300,
+              "offset": 660,
               "uri": "lib.dart",
-              "line": 19,
-              "column": 13
+              "line": 37,
+              "column": 15
             },
             "end": {
-              "offset": 308,
+              "offset": 668,
               "uri": "lib.dart",
-              "line": 19,
-              "column": 21
+              "line": 37,
+              "column": 23
             },
             "text": "sayHello"
           }
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "apiName": "lib",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 843,
+                  "uri": "lib.dart",
+                  "line": 46,
+                  "column": 19
+                },
+                "end": {
+                  "offset": 847,
+                  "uri": "lib.dart",
+                  "line": 46,
+                  "column": 23
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 810,
+              "uri": "lib.dart",
+              "line": 45,
+              "column": 15
+            },
+            "end": {
+              "offset": 821,
+              "uri": "lib.dart",
+              "line": 45,
+              "column": 26
+            },
+            "text": "streamHello"
+          },
+          "streamType": "unidirectionalServer"
         }
       },
       "docs": [],
@@ -348,13 +617,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 121,
+                  "offset": 123,
                   "uri": "authenticated_lib.dart",
                   "line": 7,
                   "column": 27
                 },
                 "end": {
-                  "offset": 125,
+                  "offset": 127,
                   "uri": "authenticated_lib.dart",
                   "line": 7,
                   "column": 31
@@ -373,35 +642,112 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
-                "symbol": "void",
-                "url": "dart:core"
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void",
-            "url": "dart:core"
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
           },
           "metadata": [],
           "docs": [],
           "location": {
             "start": {
-              "offset": 83,
+              "offset": 85,
               "uri": "authenticated_lib.dart",
               "line": 6,
-              "column": 13
+              "column": 15
             },
             "end": {
-              "offset": 91,
+              "offset": 93,
               "uri": "authenticated_lib.dart",
               "line": 6,
-              "column": 21
+              "column": 23
             },
             "text": "sayHello"
           }
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "apiName": "authenticated_lib",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 231,
+                  "uri": "authenticated_lib.dart",
+                  "line": 14,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 235,
+                  "uri": "authenticated_lib.dart",
+                  "line": 14,
+                  "column": 31
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 190,
+              "uri": "authenticated_lib.dart",
+              "line": 13,
+              "column": 15
+            },
+            "end": {
+              "offset": 201,
+              "uri": "authenticated_lib.dart",
+              "line": 13,
+              "column": 26
+            },
+            "text": "streamHello"
+          },
+          "streamType": "unidirectionalServer"
         }
       },
       "docs": [],
@@ -487,13 +833,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 106,
+                  "offset": 108,
                   "uri": "public_lib.dart",
                   "line": 7,
                   "column": 19
                 },
                 "end": {
-                  "offset": 110,
+                  "offset": 112,
                   "uri": "public_lib.dart",
                   "line": 7,
                   "column": 23
@@ -512,35 +858,112 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
-                "symbol": "void",
-                "url": "dart:core"
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
-            "symbol": "void",
-            "url": "dart:core"
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
           },
           "metadata": [],
           "docs": [],
           "location": {
             "start": {
-              "offset": 76,
+              "offset": 78,
               "uri": "public_lib.dart",
               "line": 6,
-              "column": 13
+              "column": 15
             },
             "end": {
-              "offset": 84,
+              "offset": 86,
               "uri": "public_lib.dart",
               "line": 6,
-              "column": 21
+              "column": 23
             },
             "text": "sayHello"
           }
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "apiName": "public_lib",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "User",
+                "url": "package:celest_core/src/auth/user.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "location": {
+                "start": {
+                  "offset": 261,
+                  "uri": "public_lib.dart",
+                  "line": 15,
+                  "column": 19
+                },
+                "end": {
+                  "offset": 265,
+                  "uri": "public_lib.dart",
+                  "line": 15,
+                  "column": 23
+                },
+                "text": "user"
+              },
+              "references": {
+                "name": "$user",
+                "type": "userContext"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "String",
+            "url": "dart:core",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 228,
+              "uri": "public_lib.dart",
+              "line": 14,
+              "column": 15
+            },
+            "end": {
+              "offset": 239,
+              "uri": "public_lib.dart",
+              "line": 14,
+              "column": 26
+            },
+            "text": "streamHello"
+          },
+          "streamType": "unidirectionalServer"
         }
       },
       "docs": [],

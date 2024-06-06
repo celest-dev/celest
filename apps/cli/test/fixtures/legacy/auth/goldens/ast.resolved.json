@@ -80,6 +80,83 @@
             "templates": {}
           }
         },
+        "streamHelloAuthenticated": {
+          "name": "streamHelloAuthenticated",
+          "route": "/lib/stream-hello-authenticated",
+          "apiName": "lib",
+          "envVars": [],
+          "streamType": "unidirectionalServer",
+          "policySet": {
+            "policies": {
+              "Celest::CloudFunction::streamHelloAuthenticated_authenticated_0": {
+                "effect": "permit",
+                "principal": {
+                  "op": "in",
+                  "entity": {
+                    "type": "Celest::Role",
+                    "id": "$authenticated"
+                  }
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.streamHelloAuthenticated"
+                  }
+                },
+                "conditions": []
+              },
+              "Celest::CloudFunction::streamHelloAuthenticated_authenticated_1": {
+                "effect": "forbid",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.streamHelloAuthenticated"
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "unless",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "Var": "principal"
+                        },
+                        "right": {
+                          "Value": {
+                            "__entity": {
+                              "type": "Celest::Role",
+                              "id": "$authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templates": {}
+          }
+        },
         "sayHelloPublic": {
           "name": "sayHelloPublic",
           "route": "/lib/say-hello-public",
@@ -112,11 +189,51 @@
             "templates": {}
           }
         },
+        "streamHelloPublic": {
+          "name": "streamHelloPublic",
+          "route": "/lib/stream-hello-public",
+          "apiName": "lib",
+          "envVars": [],
+          "streamType": "unidirectionalServer",
+          "policySet": {
+            "policies": {
+              "Celest::CloudFunction::streamHelloPublic_public_0": {
+                "effect": "permit",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "lib.streamHelloPublic"
+                  }
+                },
+                "conditions": []
+              }
+            },
+            "templates": {}
+          }
+        },
         "sayHello": {
           "name": "sayHello",
           "route": "/lib/say-hello",
           "apiName": "lib",
           "envVars": []
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "route": "/lib/stream-hello",
+          "apiName": "lib",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
         }
       }
     },
@@ -128,6 +245,13 @@
           "route": "/authenticated-lib/say-hello",
           "apiName": "authenticated_lib",
           "envVars": []
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "route": "/authenticated-lib/stream-hello",
+          "apiName": "authenticated_lib",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
         }
       },
       "policySet": {
@@ -209,6 +333,13 @@
           "route": "/public-lib/say-hello",
           "apiName": "public_lib",
           "envVars": []
+        },
+        "streamHello": {
+          "name": "streamHello",
+          "route": "/public-lib/stream-hello",
+          "apiName": "public_lib",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
         }
       },
       "policySet": {
