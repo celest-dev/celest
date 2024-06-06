@@ -1,4 +1,4 @@
-import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/serialization/serialization_verdict.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';

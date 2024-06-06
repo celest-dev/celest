@@ -10,6 +10,7 @@ import 'package:analyzer/dart/element/type_visitor.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/serialization/serialization_verdict.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';

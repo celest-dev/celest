@@ -10,7 +10,7 @@ import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
-import 'package:celest_cli/serialization/is_serializable.dart';
+import 'package:celest_cli/serialization/serialization_verdict.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
