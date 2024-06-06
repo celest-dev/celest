@@ -54,7 +54,7 @@ class CelestFunctionsGreeting {
   Future<String> sayHello({required _$person.Person person}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/greeting/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
           {r'person': Serializers.instance.serialize<_$person.Person>(person)}),
     );
@@ -67,5 +67,18 @@ class CelestFunctionsGreeting {
       );
     }
     return ($body['response'] as String);
+  }
+
+  /// Says hello to many [people] and streams the output.
+  Stream<String> sayHelloMany({required List<String> people}) {
+    final $channel = celest.eventClient.connect(celest.baseUri
+        .resolve('/greeting/say-hello-many')
+        .replace(queryParameters: {r'to': people}));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 }

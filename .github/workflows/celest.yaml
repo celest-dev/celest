@@ -33,3 +33,12 @@ jobs:
       - name: Format
         working-directory: packages/celest
         run: dart format --set-exit-if-changed .
+      - name: Test
+        working-directory: packages/celest
+        run: dart test
+      - name: Test (dart2js)
+        working-directory: packages/celest
+        run: dart test -p chrome
+      - name: Test (dart2wasm)
+        working-directory: packages/celest
+        run: dart test -p chrome -c dart2wasm

@@ -9,13 +9,19 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
+  async: ^2.11.0
   collection: ^1.18.0
-  http: ">=0.13.0 <2.0.0"
+  http: ^1.0.0
+  http_parser: ^4.0.2
+  logging: ^1.2.0
   meta: ^1.10.0
+  native_storage: ^0.1.0
   os_detect: ^2.0.1
   path: ^1.9.0
-  native_storage: ^0.1.0
-  http_parser: ^4.0.2
+  stream_channel: ^2.1.2
+  web: ^0.5.0
+  web_socket: ^0.1.0
+  web_socket_channel: ^3.0.0
 
 dev_dependencies:
   lints: ^4.0.0

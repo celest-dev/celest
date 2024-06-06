@@ -9,6 +9,8 @@ import 'dart:convert' as _$convert;
 import 'package:celest/celest.dart';
 import 'package:celest_backend/exceptions.dart' as _$exceptions;
 import 'package:celest_backend/models.dart' as _$models;
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 
 import '../../client.dart';
 
@@ -25,6 +27,15 @@ class CelestFunctionsTasks {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'BadRequestException':
+        throw Serializers.instance.deserialize<BadRequestException>($details);
+      case r'UnauthorizedException':
+        throw Serializers.instance.deserialize<UnauthorizedException>($details);
+      case r'InternalServerError':
+        throw Serializers.instance.deserialize<InternalServerError>($details);
+      case r'SerializationException':
+        throw Serializers.instance
+            .deserialize<SerializationException>($details);
       case r'ServerException':
         throw Serializers.instance
             .deserialize<_$exceptions.ServerException>($details);
