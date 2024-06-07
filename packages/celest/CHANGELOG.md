@@ -1,3 +1,7 @@
+## 0.4.2
+
+- feat: Add support for event streaming via SSE/WebSockets
+
 ## 0.4.1
 
 - fix: Pana issues ([dart-lang/pana#1351](https://github.com/dart-lang/pana/issues/1351))

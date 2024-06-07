@@ -1,3 +1,7 @@
+## 0.4.2
+
+- feat: Add support for event streaming via SSE/WebSockets
+
 ## 0.4.1
 
 - chore(core): Deserialize errors returned from backend
