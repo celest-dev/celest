@@ -1721,6 +1721,7 @@ import 'package:celest/http.dart';
 
 @cloud
 String sayHello({
+  @httpHeader() required String header,
   @httpHeader('x-custom-string') required String customString,
   @httpHeader('x-custom-bool') required bool customBool,
   @httpHeader('x-custom-int') required int customInt,
@@ -1744,6 +1745,7 @@ String sayHello({
                   ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
                   ..has((it) => it.name, 'name').equals(name);
             check(parameters).containsInOrder([
+              hasHeader('header'),
               hasHeader('x-custom-string'),
               hasHeader('x-custom-bool'),
               hasHeader('x-custom-int'),
@@ -1769,6 +1771,7 @@ import 'package:celest/http.dart';
 
 @cloud
 String sayHello({
+  @httpQuery() required String query,
   @httpQuery('x-custom-string') required String customString,
   @httpQuery('x-custom-bool') required bool customBool,
   @httpQuery('x-custom-int') required int customInt,
@@ -1810,6 +1813,7 @@ String sayHello({
                   ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
                   ..has((it) => it.name, 'name').equals(name);
             check(parameters).containsInOrder([
+              hasQuery('query'),
               hasQuery('x-custom-string'),
               hasQuery('x-custom-bool'),
               hasQuery('x-custom-int'),

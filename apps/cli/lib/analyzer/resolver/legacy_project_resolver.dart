@@ -555,10 +555,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           return null;
         }
 
-        final name = value.getField('name')?.toStringValue();
-        if (name == null) {
-          unreachable('httpHeader value=$value');
-        }
+        var name = value.getField('name')?.toStringValue();
+        name ??= parameter.name;
 
         final validHeaderType = switch (parameter.type) {
           final InterfaceType type =>
@@ -616,10 +614,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           name: name,
         );
       case DartType(isHttpQuery: true):
-        final name = value.getField('name')?.toStringValue();
-        if (name == null) {
-          unreachable('httpQuery value=$value');
-        }
+        var name = value.getField('name')?.toStringValue();
+        name ??= parameter.name;
 
         final validQueryType = switch (parameter.type) {
           InterfaceType(isDartCoreList: true, typeArguments: [final type]) =>
