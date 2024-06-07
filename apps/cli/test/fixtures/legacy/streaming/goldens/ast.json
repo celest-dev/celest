@@ -35,15 +35,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 141,
+                  "offset": 234,
                   "uri": "server_side.dart",
-                  "line": 6,
+                  "line": 8,
                   "column": 34
                 },
                 "end": {
-                  "offset": 146,
+                  "offset": 239,
                   "uri": "server_side.dart",
-                  "line": 6,
+                  "line": 8,
                   "column": 39
                 },
                 "text": "names"
@@ -74,18 +74,137 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 122,
+              "offset": 215,
               "uri": "server_side.dart",
-              "line": 6,
+              "line": 8,
               "column": 15
             },
             "end": {
-              "offset": 127,
+              "offset": 220,
               "uri": "server_side.dart",
-              "line": 6,
+              "line": 8,
               "column": 20
             },
             "text": "hello"
+          },
+          "streamType": "unidirectionalServer"
+        },
+        "stockTicker": {
+          "name": "stockTicker",
+          "apiName": "server_side",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "symbol",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "location": {
+                "start": {
+                  "offset": 376,
+                  "uri": "server_side.dart",
+                  "line": 15,
+                  "column": 55
+                },
+                "end": {
+                  "offset": 382,
+                  "uri": "server_side.dart",
+                  "line": 15,
+                  "column": 61
+                },
+                "text": "symbol"
+              },
+              "references": {
+                "name": "symbol",
+                "type": "httpQuery"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "AvailableStock",
+                "url": "package:_common/src/models/available_stock.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStock",
+            "url": "package:_common/src/models/available_stock.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 344,
+              "uri": "server_side.dart",
+              "line": 15,
+              "column": 23
+            },
+            "end": {
+              "offset": 355,
+              "uri": "server_side.dart",
+              "line": 15,
+              "column": 34
+            },
+            "text": "stockTicker"
+          },
+          "streamType": "unidirectionalServer"
+        },
+        "jsonValues": {
+          "name": "jsonValues",
+          "apiName": "server_side",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stream",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "JsonValue",
+            "url": "package:celest_core/src/serialization/json_value.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 530,
+              "uri": "server_side.dart",
+              "line": 22,
+              "column": 18
+            },
+            "end": {
+              "offset": 540,
+              "uri": "server_side.dart",
+              "line": 22,
+              "column": 28
+            },
+            "text": "jsonValues"
           },
           "streamType": "unidirectionalServer"
         }

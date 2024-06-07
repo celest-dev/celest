@@ -10,6 +10,20 @@
           "apiName": "server_side",
           "envVars": [],
           "streamType": "unidirectionalServer"
+        },
+        "stockTicker": {
+          "name": "stockTicker",
+          "route": "/server-side/stock-ticker",
+          "apiName": "server_side",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
+        },
+        "jsonValues": {
+          "name": "jsonValues",
+          "route": "/server-side/json-values",
+          "apiName": "server_side",
+          "envVars": [],
+          "streamType": "unidirectionalServer"
         }
       }
     }

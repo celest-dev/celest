@@ -4,11 +4,17 @@
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
 import 'functions/server_side/hello.dart' as _i2;
+import 'functions/server_side/jsonValues.dart' as _i3;
+import 'functions/server_side/stockTicker.dart' as _i4;
 
 Future<void> main() async {
   return start();
 }
 
 Future<void> start() async {
-  await _i1.serve(targets: {'/server-side/hello': _i2.HelloTarget()});
+  await _i1.serve(targets: {
+    '/server-side/hello': _i2.HelloTarget(),
+    '/server-side/json-values': _i3.JsonValuesTarget(),
+    '/server-side/stock-ticker': _i4.StockTickerTarget(),
+  });
 }

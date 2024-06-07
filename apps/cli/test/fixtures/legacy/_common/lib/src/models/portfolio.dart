@@ -6,7 +6,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:meta/meta.dart';
 
 import 'available_stock.dart';
-import 'buy_or_sell.dart';
 import 'cash_balance.dart';
 import 'stock.dart';
 
@@ -52,31 +51,6 @@ class Portfolio {
     return withStock(ticker, 0, 0.0);
   }
 
-  Portfolio withAddedStock(AvailableStock availableStock, int howMany) {
-    final pos = _getStockPositionInList(availableStock);
-    List<Stock> newStocks;
-
-    if (pos == -1) {
-      newStocks = [...stocks, availableStock.toStock(shares: howMany)];
-    } else {
-      final stock = stocks[pos];
-      final newShares = stock.howManyShares + howMany;
-      final newAveragePrice = round(
-          ((stock.howManyShares * stock.averagePrice) +
-                  (howMany * availableStock.currentPrice)) /
-              newShares);
-
-      newStocks = [...stocks];
-      newStocks[pos] = Stock(
-        stock.ticker,
-        howManyShares: newShares,
-        averagePrice: newAveragePrice,
-      );
-    }
-
-    return copyWith(stocks: newStocks);
-  }
-
   Portfolio withoutStocks() {
     return copyWith(stocks: []);
   }
@@ -116,26 +90,6 @@ class Portfolio {
 
   bool hasMoneyToBuyStock(AvailableStock availableStock) {
     return cashBalance.amount >= availableStock.currentPrice;
-  }
-
-  Portfolio buyOrSell(
-      BuyOrSell buyOrSell, AvailableStock availableStock, int howMany) {
-    return (buyOrSell == BuyOrSell.buy)
-        ? buy(availableStock, howMany: howMany)
-        : sell(availableStock, howMany: howMany);
-  }
-
-  /// Buys [howMany] shares of [availableStock].
-  /// If the user does not have enough money, throws a [UserException].
-  Portfolio buy(AvailableStock availableStock, {required int howMany}) {
-    if (cashBalance.amount < availableStock.currentPrice * howMany) {
-      throw const UserException('Not enough money to buy stock');
-    } else {
-      final newCashBalance = CashBalance(
-          cashBalance.amount - availableStock.currentPrice * howMany);
-      final newPortfolio = withAddedStock(availableStock, howMany);
-      return newPortfolio.copyWith(cashBalance: newCashBalance);
-    }
   }
 
   /// Sells [howMany] shares of [availableStock].

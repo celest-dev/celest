@@ -1961,6 +1961,34 @@ Stream<String> greetings(List<String> names) async* {
         },
       );
 
+      testNoErrors(
+        name: 'streaming_complex_type',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+
+@cloud
+Stream<ComplexClass> greetings() async* {
+  throw UnimplementedError();
+}
+''',
+        },
+        models: '''
+class SimpleClass {
+  const SimpleClass(this.value);
+
+  final String value;
+}
+
+class ComplexClass {
+  const ComplexClass(this.simple, this.list);
+
+  final SimpleClass simple;
+  final List<SimpleClass> list;
+}
+''',
+      );
+
       testErrors(
         name: 'future_of_streaming_return_type',
         apis: {
@@ -2022,6 +2050,43 @@ Stream<String> greetings(List<String> names) async* {
           'Functions that return a stream may not customize their HTTP '
               'configuration',
         ],
+      );
+
+      testErrors(
+        name: 'http_header',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+Stream<String> greetings({
+  @httpHeader('x-custom-string') required String customString,
+}) async* {
+  throw UnimplementedError();
+}
+''',
+        },
+        errors: [
+          'HTTP headers may not be used in functions that return a stream',
+        ],
+      );
+
+      testNoErrors(
+        name: 'http_query',
+        apis: {
+          'greeting.dart': r'''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+Stream<String> greetings({
+  @httpQuery('x-custom-string') required String customString,
+}) async* {
+  throw UnimplementedError();
+}
+''',
+        },
       );
 
       testErrors(

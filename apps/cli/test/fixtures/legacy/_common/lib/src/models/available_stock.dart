@@ -1,8 +1,6 @@
 import 'package:_common/src/utils/utils.dart';
 import 'package:meta/meta.dart';
 
-import 'stock.dart';
-
 @immutable
 class AvailableStock {
   final String ticker;
@@ -22,14 +20,6 @@ class AvailableStock {
 
   AvailableStock withCurrentPrice(double price) =>
       AvailableStock(ticker, name: name, currentPrice: round(price));
-
-  Stock toStock({int shares = 1}) {
-    return Stock(
-      ticker,
-      howManyShares: shares,
-      averagePrice: currentPrice,
-    );
-  }
 
   @override
   String toString() => '$ticker ($name)';

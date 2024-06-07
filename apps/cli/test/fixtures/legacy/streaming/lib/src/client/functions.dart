@@ -2,11 +2,13 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:_common/src/models/available_stock.dart' as _$available_stock;
 import 'package:celest/celest.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/exception/serialization_exception.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
 
 import '../../client.dart';
 
@@ -53,6 +55,33 @@ class CelestFunctionsServerSide {
         _throwError($statusCode: -1, $body: $event);
       }
       return ($event['response'] as String);
+    });
+  }
+
+  Stream<_$available_stock.AvailableStock> stockTicker(String symbol) {
+    final $channel = celest.eventClient.connect(celest.baseUri
+        .resolve('/server-side/stock-ticker')
+        .replace(queryParameters: {r'symbol': symbol}));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return Serializers.instance
+          .deserialize<_$available_stock.AvailableStock>($event['response']);
+    });
+  }
+
+  Stream<JsonValue> jsonValues() {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/server-side/json-values'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return Serializers.instance.deserialize<JsonValue>(
+        $event['response'],
+        const TypeToken<JsonValue>('JsonValue'),
+      );
     });
   }
 }

@@ -16,6 +16,7 @@ import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
+import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 
 import '../../common.dart';
@@ -386,9 +387,15 @@ class TestRunner {
           try {
             switch (testCase) {
               case EventTestSuccess(:final output):
-                await expectLater(socket, output);
+                await expectLater(
+                  socket.tap((evt) => print('[${testCase.name}] $evt')),
+                  output,
+                );
               case EventTestError(:final error):
-                await expectLater(socket, emitsError(error));
+                await expectLater(
+                  socket.tap((evt) => print('[${testCase.name}] $evt')),
+                  emitsError(error),
+                );
             }
             if (testCase.logs case final expectedLogs?) {
               expect(logs, containsAllInOrder(expectedLogs.map(contains)));
@@ -4652,6 +4659,31 @@ final tests = <String, Test>{
                 'Hello, Amy!',
                 'Hello, Bob!',
                 'Hello, Charlie!',
+              ],
+            ),
+          ],
+          'stockTicker': [
+            EventTestSuccess(
+              name: 'stockTicker',
+              queryParameters: {
+                'symbol': ['AAPL'],
+              },
+              events: [
+                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 100.0},
+                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 101.0},
+                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 102.0},
+              ],
+            ),
+          ],
+          'jsonValues': [
+            EventTestSuccess(
+              name: 'jsonValues',
+              events: [
+                true,
+                42,
+                'hello',
+                [false, 42, 42.0],
+                {'key': true},
               ],
             ),
           ],
