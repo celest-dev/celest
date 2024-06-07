@@ -1,9 +1,6 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:io' as _i6;
-import 'dart:isolate' as _i7;
-
 import 'package:celest/celest.dart' as _i4;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
@@ -129,10 +126,7 @@ final class HasLiteralsAnnotationTarget extends _i1.CloudFunctionHttpTarget {
 }
 
 Future<void> main() async {
-  await Future.wait(eagerError: true, [
-    for (var i = 0; i < _i6.Platform.numberOfProcessors; i++)
-      _i7.Isolate.run(start),
-  ]);
+  return start();
 }
 
 Future<void> start() async {

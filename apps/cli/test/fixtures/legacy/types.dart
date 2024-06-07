@@ -105,7 +105,6 @@ class EventTestSuccess extends EventTest {
     required List<Object>? events,
     super.logs,
   }) : output = emitsInOrder([
-          jsonEncode(const {}),
           for (final event in events ?? const [])
             jsonEncode({
               'response': event,

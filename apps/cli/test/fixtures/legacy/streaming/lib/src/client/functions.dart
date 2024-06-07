@@ -2,9 +2,7 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
-
-import 'dart:convert' as _$convert;
+library;
 
 import 'package:celest/celest.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
@@ -46,20 +44,15 @@ class CelestFunctionsServerSide {
     }
   }
 
-  Future<String> hello(List<String> names) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/server-side/hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode({r'names': names}),
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> hello(List<String> names) {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/server-side/hello'));
+    $channel.sink.add({r'names': names});
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 }

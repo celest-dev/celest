@@ -1,6 +1,8 @@
+import 'package:analyzer/dart/element/type.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 Expression _fromString(
@@ -45,4 +47,49 @@ Expression fromString(
     fromString = fromString.parenthesized.ifNullThen(defaultValue);
   }
   return fromString;
+}
+
+Expression _toString(
+  Reference type,
+  Expression ref,
+) {
+  final dartType = typeHelper.fromReference(type);
+  if (dartType.isDartCoreList) {
+    if ((dartType as InterfaceType).typeArguments.first.isDartCoreString) {
+      return ref;
+    }
+    return ref
+        .nullableProperty('map', type.isNullableOrFalse)
+        .call([
+          Method(
+            (m) => m
+              ..requiredParameters.add(
+                Parameter(
+                  (p) => p..name = 'el',
+                ),
+              )
+              ..body = _toString(
+                type.toTypeReference.types.single,
+                refer('el'),
+              ).code
+              ..lambda = true,
+          ).closure,
+        ])
+        .property('toList')
+        .call([]);
+  }
+  if (type.symbol == 'DateTime') {
+    return ref.property('toIso8601String').call([]);
+  }
+  if (dartType.isDartCoreString) {
+    return ref;
+  }
+  return ref.property('toString').call([]);
+}
+
+Expression generateToString(
+  Reference type,
+  Expression ref,
+) {
+  return _toString(type, ref);
 }

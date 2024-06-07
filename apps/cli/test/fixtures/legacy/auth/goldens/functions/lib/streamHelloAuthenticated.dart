@@ -2,8 +2,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _i5;
-import 'dart:io' as _i8;
-import 'dart:isolate' as _i9;
 
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
@@ -16,6 +14,9 @@ import '../../../functions/lib.dart' as _i2;
 final class StreamHelloAuthenticatedTarget extends _i1.CloudEventSourceTarget {
   @override
   String get name => 'streamHelloAuthenticated';
+
+  @override
+  bool get hasBody => false;
 
   @override
   Stream<Map<String, Object?>> handle(
@@ -123,10 +124,7 @@ final class StreamHelloAuthenticatedTarget extends _i1.CloudEventSourceTarget {
 }
 
 Future<void> main() async {
-  await Future.wait(eagerError: true, [
-    for (var i = 0; i < _i8.Platform.numberOfProcessors; i++)
-      _i9.Isolate.run(start),
-  ]);
+  return start();
 }
 
 Future<void> start() async {

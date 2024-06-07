@@ -1,9 +1,6 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:io' as _i14;
-import 'dart:isolate' as _i15;
-
 import 'package:_common/src/models/cash_balance.dart' as _i11;
 import 'package:_common/src/models/errors_and_exceptions.dart' as _i8;
 import 'package:_common/src/models/portfolio.dart' as _i4;
@@ -374,10 +371,7 @@ final class PortfolioTarget extends _i1.CloudFunctionHttpTarget {
 }
 
 Future<void> main() async {
-  await Future.wait(eagerError: true, [
-    for (var i = 0; i < _i14.Platform.numberOfProcessors; i++)
-      _i15.Isolate.run(start),
-  ]);
+  return start();
 }
 
 Future<void> start() async {

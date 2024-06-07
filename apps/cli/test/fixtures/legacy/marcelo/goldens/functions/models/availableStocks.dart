@@ -1,9 +1,6 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:io' as _i13;
-import 'dart:isolate' as _i14;
-
 import 'package:_common/src/models/available_stock.dart' as _i11;
 import 'package:_common/src/models/available_stocks.dart' as _i4;
 import 'package:_common/src/models/errors_and_exceptions.dart' as _i8;
@@ -359,10 +356,7 @@ final class AvailableStocksTarget extends _i1.CloudFunctionHttpTarget {
 }
 
 Future<void> main() async {
-  await Future.wait(eagerError: true, [
-    for (var i = 0; i < _i13.Platform.numberOfProcessors; i++)
-      _i14.Isolate.run(start),
-  ]);
+  return start();
 }
 
 Future<void> start() async {

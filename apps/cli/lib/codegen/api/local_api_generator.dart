@@ -24,11 +24,16 @@ class LocalApiGenerator {
           ..body = Code.scope(
             (alloc) => switch (projectType) {
               CelestProjectType.dart => '''
-await Future.wait(eagerError: true, [
-  for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
-    ${alloc(DartTypes.isolate.isolate)}.run(start),
-]);
+return start();
 ''',
+
+// TODO(dnys1): No longer possible with stateful isolates (WS/SSE).
+//                   '''
+// await Future.wait(eagerError: true, [
+//   for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
+//     ${alloc(DartTypes.isolate.isolate)}.run(start),
+// ]);
+// ''',
               CelestProjectType.flutter => '''
 return start();
 ''',

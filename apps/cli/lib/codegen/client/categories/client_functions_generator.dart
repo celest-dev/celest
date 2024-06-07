@@ -9,6 +9,7 @@ import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/serialization/common.dart';
+import 'package:celest_cli/serialization/from_string_generator.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -49,6 +50,112 @@ final class ClientFunctionsGenerator {
     return builder;
   }
 
+  void _sendHttp({
+    required BlockBuilder b,
+    required ast.CloudFunction function,
+    required Expression uri,
+    required Map<Expression, Expression> headers,
+    required Expression? payload,
+  }) {
+    final httpClient = ClientTypes.topLevelClient.ref.property('httpClient');
+    final functionCall = httpClient.property('post').call([
+      uri,
+    ], {
+      'headers': literalMap({
+        'Content-Type': literalString(
+          'application/json; charset=utf-8',
+        ),
+        ...headers,
+      }),
+      if (payload != null) 'body': DartTypes.convert.jsonEncode.call([payload]),
+    }).awaited;
+
+    b.addExpression(
+      declareFinal(r'$response').assign(functionCall),
+    );
+    b.addExpression(
+      declareFinal(r'$body').assign(
+        DartTypes.convert.jsonDecode.call([
+          refer(r'$response').property('body'),
+        ]).asA(typeHelper.toReference(jsonMapType)),
+      ),
+    );
+
+    final returnedBody =
+        typeHelper.fromReference(function.flattenedReturnType) is VoidType
+            ? const Code('return;')
+            : jsonGenerator
+                .fromJson(
+                  function.flattenedReturnType,
+                  refer(r'$body').index(literalString('response')),
+                )
+                .returned
+                .statement;
+
+    final handleError = refer('_throwError').call([], {
+      r'$statusCode': refer(r'$response').property('statusCode'),
+      r'$body': refer(r'$body'),
+    });
+
+    b.statements
+      ..add(
+        handleError.wrapWithBlockIf(
+          refer(r'$response')
+              .property('statusCode')
+              .notEqualTo(literalNum(200)),
+        ),
+      )
+      ..add(returnedBody);
+  }
+
+  void _streamEvents({
+    required BlockBuilder b,
+    required ast.CloudFunction function,
+    required Expression uri,
+    required Expression? payload,
+  }) {
+    final eventClient = ClientTypes.topLevelClient.ref.property('eventClient');
+    b.addExpression(
+      declareFinal(r'$channel').assign(
+        eventClient.property('connect').call([uri]),
+      ),
+    );
+    final channel = refer(r'$channel');
+    if (payload != null) {
+      b.addExpression(
+        channel.property('sink').property('add').call([payload]),
+      );
+    }
+
+    final returnedBody =
+        typeHelper.fromReference(function.flattenedReturnType) is VoidType
+            ? const Code('return;')
+            : jsonGenerator
+                .fromJson(
+                  function.flattenedReturnType,
+                  refer(r'$event').index(literalString('response')),
+                )
+                .returned
+                .statement;
+    b.addExpression(
+      channel.property('stream').property('map').call([
+        Method(
+          (m) => m
+            ..requiredParameters.add(
+              Parameter((p) => p.name = r'$event'),
+            )
+            ..body = Block.of([
+              const Code(r'''
+if ($event.containsKey('error')) {
+  _throwError($statusCode: -1, $body: $event);
+}'''),
+              returnedBody,
+            ]),
+        ).closure,
+      ]).returned,
+    );
+  }
+
   void _generateApi(ast.Api api) {
     final apiType = ClientTypes.api(api);
     final apiClass = _beginClass(apiType.name)
@@ -69,14 +176,37 @@ final class ClientFunctionsGenerator {
     for (final function in functions) {
       final clientParameters =
           function.parameters.where((p) => p.includeInClient);
+      final bodyParameters = Set.of(clientParameters);
+      final headerParameters = <String, ast.CloudFunctionParameter>{};
+      final queryParameters = <String, ast.CloudFunctionParameter>{};
+      for (final parameter in clientParameters) {
+        switch (parameter.references) {
+          case ast.NodeReference(type: ast.NodeType.httpHeader, :final name):
+            bodyParameters.remove(parameter);
+            headerParameters[name] = parameter;
+          case ast.NodeReference(type: ast.NodeType.httpQuery, :final name):
+            bodyParameters.remove(parameter);
+            queryParameters[name] = parameter;
+          default:
+            break;
+        }
+      }
       final functionCall = Method(
         (m) => m
           ..name = function.name.camelCase
-          ..returns = DartTypes.core.future(
-            function.flattenedReturnType.noBound,
-          )
+          ..returns = switch (function.streamType) {
+            null => DartTypes.core.future(
+                function.flattenedReturnType.noBound,
+              ),
+            _ => DartTypes.core.stream(
+                function.flattenedReturnType.noBound,
+              ),
+          }
           ..types.addAll(function.typeParameters)
-          ..modifier = MethodModifier.async
+          ..modifier = switch (function.streamType) {
+            null => MethodModifier.async,
+            _ => null,
+          }
           ..docs.addAll(function.docs)
           ..annotations.addAll(
             function.annotations.map((annotation) => annotation.stripConst),
@@ -132,76 +262,77 @@ final class ClientFunctionsGenerator {
               );
               typeMaps[typeParameter] = typeMapName;
             }
-            final httpClient =
-                ClientTypes.topLevelClient.ref.property('httpClient');
-            final baseUri = ClientTypes.topLevelClient.ref.property('baseUri');
-            final functionCall = httpClient.property('post').call([
-              baseUri.property('resolve').call([
-                literalString(function.route),
-              ]),
-            ], {
-              'headers': literalConstMap({
-                'Content-Type': literalString(
-                  'application/json; charset=utf-8',
+
+            final headers = headerParameters.map((name, parameter) {
+              return MapEntry(
+                literalString(name, raw: true),
+                generateToString(
+                  parameter.type,
+                  refer(parameter.name),
                 ),
-              }),
-              // Don't include a body for functions with no parameters to save
-              // on a `jsonEncode` call.
-              if (clientParameters.isNotEmpty ||
-                  function.typeParameters.isNotEmpty)
-                'body': DartTypes.convert.jsonEncode.call([
-                  literalMap({
-                    for (final typeParameter in function.typeParameters)
-                      literalString(typeMaps[typeParameter]!, raw: true):
-                          refer(typeMaps[typeParameter]!)
-                              .index(refer(typeParameter.symbol!))
-                              .nullChecked,
-                    for (final parameter in clientParameters)
-                      literalString(parameter.name, raw: true):
-                          jsonGenerator.toJson(
-                        parameter.type,
-                        refer(parameter.name),
-                      ),
-                  }),
-                ]),
-            }).awaited;
-
-            b.addExpression(
-              declareFinal(r'$response').assign(functionCall),
-            );
-            b.addExpression(
-              declareFinal(r'$body').assign(
-                DartTypes.convert.jsonDecode.call([
-                  refer(r'$response').property('body'),
-                ]).asA(typeHelper.toReference(jsonMapType)),
-              ),
-            );
-
-            final returnedBody = typeHelper
-                    .fromReference(function.flattenedReturnType) is VoidType
-                ? const Code('return;')
-                : jsonGenerator
-                    .fromJson(
-                      function.flattenedReturnType,
-                      refer(r'$body').index(literalString('response')),
-                    )
-                    .returned
-                    .statement;
-
-            final handleError = refer('_throwError').call([], {
-              r'$statusCode': refer(r'$response').property('statusCode'),
-              r'$body': refer(r'$body'),
+              );
             });
+            final query = literalMap(
+              queryParameters.map((name, parameter) {
+                return MapEntry(
+                  literalString(name, raw: true),
+                  generateToString(
+                    parameter.type,
+                    refer(parameter.name),
+                  ),
+                );
+              }),
+            );
 
-            b.statements
-              ..add(
-                handleError.wrapWithBlockIf(
-                  refer(r'$response')
-                      .property('statusCode')
-                      .notEqualTo(literalNum(200)),
-                ),
-              )
-              ..add(returnedBody);
+            final baseUri = ClientTypes.topLevelClient.ref.property('baseUri');
+            var uri = baseUri.property('resolve').call([
+              literalString(function.route),
+            ]);
+            if (queryParameters.isNotEmpty) {
+              uri = uri.property('replace').call([], {
+                'queryParameters': query,
+              });
+            }
+
+            Expression? payload;
+            if (bodyParameters.isNotEmpty ||
+                function.typeParameters.isNotEmpty) {
+              payload = literalMap({
+                for (final typeParameter in function.typeParameters)
+                  literalString(typeMaps[typeParameter]!, raw: true):
+                      refer(typeMaps[typeParameter]!)
+                          .index(refer(typeParameter.symbol!))
+                          .nullChecked,
+                for (final parameter in bodyParameters)
+                  literalString(parameter.name, raw: true):
+                      jsonGenerator.toJson(
+                    parameter.type,
+                    refer(parameter.name),
+                  ),
+              });
+            }
+            switch (function.streamType) {
+              case null:
+                _sendHttp(
+                  b: b,
+                  function: function,
+                  uri: uri,
+                  headers: headers,
+                  payload: payload,
+                );
+              default:
+                assert(
+                  headers.isEmpty,
+                  'Headers are not supported for streams. Should be caught in '
+                  'resolver.',
+                );
+                _streamEvents(
+                  b: b,
+                  function: function,
+                  uri: uri,
+                  payload: payload,
+                );
+            }
           }),
       );
       apiClass.methods.add(functionCall);

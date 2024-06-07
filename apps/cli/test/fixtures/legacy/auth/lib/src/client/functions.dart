@@ -51,7 +51,7 @@ class CelestFunctionsAuthenticatedLib {
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/authenticated-lib/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -64,20 +64,15 @@ class CelestFunctionsAuthenticatedLib {
     return ($body['response'] as String);
   }
 
-  Future<String> streamHello() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/authenticated-lib/stream-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> streamHello() {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/authenticated-lib/stream-hello'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 }
 
@@ -112,7 +107,7 @@ class CelestFunctionsLib {
   Future<String> sayHelloAuthenticated() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-authenticated'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -125,26 +120,21 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
-  Future<String> streamHelloAuthenticated() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/lib/stream-hello-authenticated'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> streamHelloAuthenticated() {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/lib/stream-hello-authenticated'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 
   Future<String> sayHelloPublic() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-public'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -157,26 +147,21 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
-  Future<String> streamHelloPublic() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/lib/stream-hello-public'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> streamHelloPublic() {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/lib/stream-hello-public'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -189,20 +174,15 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
-  Future<String> streamHello() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/lib/stream-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> streamHello() {
+    final $channel =
+        celest.eventClient.connect(celest.baseUri.resolve('/lib/stream-hello'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 }
 
@@ -237,7 +217,7 @@ class CelestFunctionsPublicLib {
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/public-lib/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -250,19 +230,14 @@ class CelestFunctionsPublicLib {
     return ($body['response'] as String);
   }
 
-  Future<String> streamHello() async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/public-lib/stream-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-    );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
-    if ($response.statusCode != 200) {
-      _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
-      );
-    }
-    return ($body['response'] as String);
+  Stream<String> streamHello() {
+    final $channel = celest.eventClient
+        .connect(celest.baseUri.resolve('/public-lib/stream-hello'));
+    return $channel.stream.map(($event) {
+      if ($event.containsKey('error')) {
+        _throwError($statusCode: -1, $body: $event);
+      }
+      return ($event['response'] as String);
+    });
   }
 }

@@ -411,6 +411,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     ParameterElement parameter, {
     required Iterable<ast.EnvironmentVariable> environmentVariables,
     required ast.ApiAuth? applicableAuth,
+    required ast.StreamType? streamType,
   }) {
     final annotations = parameter.metadata;
     if (annotations.isEmpty) {
@@ -546,6 +547,14 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           type: ast.NodeType.userContext,
         );
       case DartType(isHttpHeader: true):
+        if (streamType != null) {
+          reportError(
+            'HTTP headers may not be used in functions that return a stream',
+            location: location,
+          );
+          return null;
+        }
+
         final name = value.getField('name')?.toStringValue();
         if (name == null) {
           unreachable('httpHeader value=$value');
@@ -781,6 +790,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 param,
                 applicableAuth: applicableAuth,
                 environmentVariables: environmentVariables,
+                streamType: streamType,
               ),
               annotations: param.metadata
                   .map((annotation) => annotation.toCodeBuilder)

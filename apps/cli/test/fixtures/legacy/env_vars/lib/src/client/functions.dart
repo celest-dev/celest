@@ -48,7 +48,7 @@ class CelestFunctionsInjected {
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/injected/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -64,7 +64,7 @@ class CelestFunctionsInjected {
   Future<_$person.Person> sayHelloPerson() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/injected/say-hello-person'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);

@@ -8,6 +8,7 @@ import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
@@ -362,6 +363,36 @@ final class LocalApiRunner implements Closeable {
         );
       }
       _vmService = await vmService;
+
+      // Pipe logs to output
+      _vmService!.onLoggingEvent.listen((event) {
+        assert(event.kind == EventKind.kLogging);
+        final record = event.logRecord!;
+        final loggerName =
+            record.loggerName?.valueAsString?.let((name) => '.$name') ?? '';
+        final logger = Logger('${_logger.fullName}$loggerName');
+        final level = record.level?.let(
+              (level) => Level.LEVELS.firstWhere((l) => l.value == level),
+            ) ??
+            Level.FINE;
+        if (!logger.isLoggable(level)) {
+          return;
+        }
+        logger.log(
+          level,
+          record.message?.valueAsString ?? '<no message>',
+          switch (record.error?.valueAsString) {
+            null || 'null' || '' => null,
+            final error => error,
+          },
+          switch (record.stackTrace?.valueAsString) {
+            null || 'null' || '' => null,
+            final stackTrace => StackTrace.fromString(stackTrace),
+          },
+        );
+      });
+      await _vmService!.streamListen(EventStreams.kLogging);
+
       _vmIsolateId = await _waitForIsolatesAndResume(_vmService!);
 
       await Future.any([

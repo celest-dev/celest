@@ -58,7 +58,7 @@ class CelestFunctionsDartUi {
   ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/dart-ui/lerp-color'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'a': Serializers.instance.serialize<_$ui.Color>(a),
         r'b': Serializers.instance.serialize<_$ui.Color>(b),
@@ -82,7 +82,7 @@ class CelestFunctionsDartUi {
   ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/dart-ui/add-country-code'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'locale': Serializers.instance.serialize<_$ui.Locale>(locale),
         r'countryCode': countryCode,
@@ -134,7 +134,7 @@ class CelestFunctionsFlutter {
   Future<_$typed_data.Uint8List> paintWidget() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/flutter/paint-widget'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);

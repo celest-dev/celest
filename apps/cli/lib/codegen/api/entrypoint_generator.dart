@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
@@ -87,7 +88,7 @@ final class EntrypointGenerator {
         final map = reference.type == NodeType.httpHeader
             ? 'headers'
             : 'queryParameters';
-        var fromMap = refer(map).index(literalString(param.name));
+        var fromMap = refer(map).index(literalString(reference.name));
         final isNullable = param.type.isNullableOrFalse;
         final (toType, isList) = switch (param.type.toTypeReference) {
           TypeReference(:final types) when types.isNotEmpty => (
@@ -586,6 +587,16 @@ final class EntrypointGenerator {
                 ..type = MethodType.getter
                 ..lambda = true
                 ..body = literalString(httpConfig?.method ?? 'POST').code,
+            ),
+          if (function.streamType != null)
+            Method(
+              (m) => m
+                ..name = 'hasBody'
+                ..annotations.add(DartTypes.core.override)
+                ..returns = DartTypes.core.bool
+                ..type = MethodType.getter
+                ..lambda = true
+                ..body = literalBool(function.hasHttpBody).code,
             ),
           if (function.typeParameters.isEmpty)
             innerHandle.rebuild(

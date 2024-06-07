@@ -74,7 +74,7 @@ class CelestFunctionsHttpErrors {
   Future<void> httpErrors(_$http_errors.ExceptionType type) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-errors/http-errors'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'type':
             Serializers.instance.serialize<_$http_errors.ExceptionType>(type)
@@ -120,10 +120,37 @@ class CelestFunctionsHttpHeader {
     }
   }
 
-  Future<_$http_header_query.HttpHeaderParams> headers() async {
+  Future<_$http_header_query.HttpHeaderParams> headers(
+    String aString,
+    int anInt,
+    double aDouble,
+    num aNum,
+    bool aBool,
+    DateTime aDateTime,
+    String? aNullableString,
+    int? aNullableInt,
+    double? aNullableDouble,
+    num? aNullableNum,
+    bool? aNullableBool,
+    DateTime? aNullableDateTime,
+  ) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-header/headers'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        r'aString': aString,
+        r'anInt': anInt.toString(),
+        r'aDouble': aDouble.toString(),
+        r'aNum': aNum.toString(),
+        r'aBool': aBool.toString(),
+        r'aDateTime': aDateTime.toIso8601String(),
+        r'aNullableString': aNullableString,
+        r'aNullableInt': aNullableInt.toString(),
+        r'aNullableDouble': aNullableDouble.toString(),
+        r'aNullableNum': aNullableNum.toString(),
+        r'aNullableBool': aNullableBool.toString(),
+        r'aNullableDateTime': aNullableDateTime.toIso8601String(),
+      },
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -169,7 +196,7 @@ class CelestFunctionsHttpMethod {
   Future<void> get() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/get'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -185,7 +212,7 @@ class CelestFunctionsHttpMethod {
   Future<void> post() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/post'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -201,7 +228,7 @@ class CelestFunctionsHttpMethod {
   Future<void> put() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/put'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -217,7 +244,7 @@ class CelestFunctionsHttpMethod {
   Future<void> delete() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/delete'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -233,7 +260,7 @@ class CelestFunctionsHttpMethod {
   Future<void> patch() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/patch'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -275,10 +302,66 @@ class CelestFunctionsHttpQuery {
     }
   }
 
-  Future<_$http_header_query.HttpQueryParams> query() async {
+  Future<_$http_header_query.HttpQueryParams> query(
+    String aString,
+    int anInt,
+    double aDouble,
+    num aNum,
+    bool aBool,
+    DateTime aDateTime,
+    String? aNullableString,
+    int? aNullableInt,
+    double? aNullableDouble,
+    num? aNullableNum,
+    bool? aNullableBool,
+    DateTime? aNullableDateTime,
+    List<String> aListOfString,
+    List<int> aListOfInt,
+    List<double> aListOfDouble,
+    List<num> aListOfNum,
+    List<bool> aListOfBool,
+    List<DateTime> aListOfDateTime,
+    List<String>? aNullableListOfString,
+    List<int>? aNullableListOfInt,
+    List<double>? aNullableListOfDouble,
+    List<num>? aNullableListOfNum,
+    List<bool>? aNullableListOfBool,
+    List<DateTime>? aNullableListOfDateTime,
+  ) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/http-query/query'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      celest.baseUri.resolve('/http-query/query').replace(queryParameters: {
+        r'aString': aString,
+        r'anInt': anInt.toString(),
+        r'aDouble': aDouble.toString(),
+        r'aNum': aNum.toString(),
+        r'aBool': aBool.toString(),
+        r'aDateTime': aDateTime.toIso8601String(),
+        r'aNullableString': aNullableString,
+        r'aNullableInt': aNullableInt.toString(),
+        r'aNullableDouble': aNullableDouble.toString(),
+        r'aNullableNum': aNullableNum.toString(),
+        r'aNullableBool': aNullableBool.toString(),
+        r'aNullableDateTime': aNullableDateTime.toIso8601String(),
+        r'aListOfString': aListOfString,
+        r'aListOfInt': aListOfInt.map((el) => el.toString()).toList(),
+        r'aListOfDouble': aListOfDouble.map((el) => el.toString()).toList(),
+        r'aListOfNum': aListOfNum.map((el) => el.toString()).toList(),
+        r'aListOfBool': aListOfBool.map((el) => el.toString()).toList(),
+        r'aListOfDateTime':
+            aListOfDateTime.map((el) => el.toIso8601String()).toList(),
+        r'aNullableListOfString': aNullableListOfString,
+        r'aNullableListOfInt':
+            aNullableListOfInt?.map((el) => el.toString()).toList(),
+        r'aNullableListOfDouble':
+            aNullableListOfDouble?.map((el) => el.toString()).toList(),
+        r'aNullableListOfNum':
+            aNullableListOfNum?.map((el) => el.toString()).toList(),
+        r'aNullableListOfBool':
+            aNullableListOfBool?.map((el) => el.toString()).toList(),
+        r'aNullableListOfDateTime':
+            aNullableListOfDateTime?.map((el) => el.toIso8601String()).toList(),
+      }),
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -324,7 +407,7 @@ class CelestFunctionsHttpStatus {
   Future<void> ok() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/ok'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -340,7 +423,7 @@ class CelestFunctionsHttpStatus {
   Future<void> created() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/created'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -356,7 +439,7 @@ class CelestFunctionsHttpStatus {
   Future<void> accepted() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/accepted'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -372,7 +455,7 @@ class CelestFunctionsHttpStatus {
   Future<void> badRequest() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/bad-request'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -388,7 +471,7 @@ class CelestFunctionsHttpStatus {
   Future<void> internalServerError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/internal-server-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);

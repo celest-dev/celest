@@ -76,7 +76,7 @@ class CelestFunctionsExceptions {
   Future<void> throwsUserException({JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-user-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'cause': Serializers.instance.serialize<JsonValue?>(
           cause,
@@ -98,7 +98,7 @@ class CelestFunctionsExceptions {
   Future<void> callsThrowsUserException({JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/calls-throws-user-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'cause': Serializers.instance.serialize<JsonValue?>(
           cause,
@@ -123,7 +123,7 @@ class CelestFunctionsExceptions {
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-app-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'message': message,
         r'error': Serializers.instance.serialize<JsonValue?>(
@@ -146,7 +146,7 @@ class CelestFunctionsExceptions {
   Future<void> throwsAppException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-app-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -162,7 +162,7 @@ class CelestFunctionsExceptions {
   Future<void> throwsNotYetImplementedError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-not-yet-implemented-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -178,7 +178,7 @@ class CelestFunctionsExceptions {
   Future<void> throwsValidateError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-validate-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -198,7 +198,7 @@ class CelestFunctionsExceptions {
     final $response = await celest.httpClient.post(
       celest.baseUri
           .resolve('/exceptions/throws-user-exception-show-in-console'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'message': message,
         r'cause': Serializers.instance.serialize<JsonValue?>(
@@ -268,7 +268,7 @@ class CelestFunctionsModels {
       _$available_stock.AvailableStock availableStock) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/available-stock'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'availableStock': Serializers.instance
             .serialize<_$available_stock.AvailableStock>(availableStock)
@@ -290,7 +290,7 @@ class CelestFunctionsModels {
       _$available_stocks.AvailableStocks availableStocks) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/available-stocks'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'availableStocks': Serializers.instance
             .serialize<_$available_stocks.AvailableStocks>(availableStocks)
@@ -312,7 +312,7 @@ class CelestFunctionsModels {
       _$cash_balance.CashBalance cashBalance) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/cash-balance'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'cashBalance': Serializers.instance
             .serialize<_$cash_balance.CashBalance>(cashBalance)
@@ -334,7 +334,7 @@ class CelestFunctionsModels {
       _$portfolio.Portfolio portfolio) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/portfolio'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode({
         r'portfolio':
             Serializers.instance.serialize<_$portfolio.Portfolio>(portfolio)
@@ -355,7 +355,7 @@ class CelestFunctionsModels {
   Future<_$stock.Stock> stock(_$stock.Stock stock) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/stock'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
           {r'stock': Serializers.instance.serialize<_$stock.Stock>(stock)}),
     );
@@ -373,7 +373,7 @@ class CelestFunctionsModels {
   Future<_$ui.Ui> ui(_$ui.Ui ui) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/ui'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert
           .jsonEncode({r'ui': Serializers.instance.serialize<_$ui.Ui>(ui)}),
     );

@@ -67,7 +67,7 @@ class CelestFunctionsExternal {
   Future<void> callsThrowsCommonException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-common-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -83,7 +83,7 @@ class CelestFunctionsExternal {
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-custom-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -141,7 +141,7 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -157,7 +157,7 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -173,7 +173,7 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -189,7 +189,7 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -246,7 +246,7 @@ class CelestFunctionsThrowing {
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -262,7 +262,7 @@ class CelestFunctionsThrowing {
   Future<void> throwsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-error'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -278,7 +278,7 @@ class CelestFunctionsThrowing {
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
@@ -294,7 +294,7 @@ class CelestFunctionsThrowing {
   Future<void> throwsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-exception'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
