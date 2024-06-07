@@ -54,7 +54,7 @@ class CelestFunctionsGreeting {
   Future<String> sayHello({required _$person.Person person}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/greeting/say-hello'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: _$convert.jsonEncode(
           {r'person': Serializers.instance.serialize<_$person.Person>(person)}),
     );

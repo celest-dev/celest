@@ -53,6 +53,17 @@ mixin BaseProtocol {
     };
   }
 
+  Stream<Map<String, Object?>> connect(
+    String path, {
+    required Map<String, Object?> payload,
+  }) {
+    final channel = celest.eventClient.connect(
+      celest.baseUri.resolve(path),
+    );
+    channel.sink.add(payload);
+    return channel.stream;
+  }
+
   Never _error<T extends Object>(
     http.Response response,
     T Function(String message) createError,

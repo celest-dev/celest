@@ -13,10 +13,19 @@ dependencies:
   celest_auth: ^0.4.0
   celest_core: ^0.4.0
   chunked_stream: ^1.4.2
+  collection: ^1.18.0
+  http: ^1.0.0
+  http_parser: ^4.0.0
+  logging: ^1.2.0
   meta: ^1.11.0
   shelf: ^1.4.1
   shelf_router: ^1.1.4
+  shelf_web_socket: ^2.0.0
+  stream_channel: ^2.1.2
+  web_socket_channel: ^3.0.0
 
 dev_dependencies:
   lints: ^4.0.0
+  stream_transform: ^2.1.0
   test: ^1.25.1
+  web: ^0.5.1

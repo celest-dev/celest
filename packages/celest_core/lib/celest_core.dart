@@ -5,6 +5,10 @@ library;
 export 'src/auth/auth_exception.dart';
 export 'src/auth/user.dart';
 
+/// Events
+export 'src/events/event_channel.dart';
+export 'src/events/event_client.dart';
+
 /// Exceptions
 export 'src/exception/celest_exception.dart';
 export 'src/exception/cloud_exception.dart';
