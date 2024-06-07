@@ -6,8 +6,10 @@ import 'package:meta/meta_meta.dart';
 @Target({TargetKind.parameter})
 final class httpHeader {
   /// {@macro celest.http.http_header}
-  const httpHeader(this.name);
+  const httpHeader([this.name]);
 
   /// The name of the HTTP header.
-  final String name;
+  ///
+  /// If `null`, the name of the parameter will be used.
+  final String? name;
 }

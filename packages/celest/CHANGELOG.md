@@ -1,3 +1,7 @@
+## 0.4.3-wip
+
+- fix: Allow `null` for `@httpQuery` and `@httpHeader` parameters, defaulting to the parameter name.
+
 ## 0.4.2
 
 - feat: Add support for event streaming via SSE/WebSockets
