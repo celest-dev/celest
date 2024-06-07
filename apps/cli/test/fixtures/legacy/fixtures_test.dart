@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:async/async.dart';
+import 'package:aws_common/aws_common.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
@@ -237,6 +238,16 @@ class TestRunner {
           );
         });
       }
+
+      final analyzeResult = await processManager.run(
+        <String>[Platform.resolvedExecutable, 'analyze', '.'],
+        workingDirectory: projectRoot,
+      );
+      expect(
+        analyzeResult.exitCode,
+        0,
+        reason: analyzeResult.stderr.toString(),
+      );
     });
   }
 
@@ -254,38 +265,13 @@ class TestRunner {
 
   void testApi(String apiName, ApiTest apiTest) {
     group(apiName, () {
-      final functions = {
-        ...apiTest.functionTests.keys,
-        ...apiTest.eventTests.keys,
-      };
-      for (final functionName in functions) {
-        testFunction(
-          apiName,
-          functionName,
-          apiTest.functionTests[functionName] ?? const [],
-          apiTest.eventTests[functionName] ?? const [],
-        );
-      }
-    });
-  }
-
-  void testFunction(
-    String apiName,
-    String functionName,
-    List<HttpTest> httpTests,
-    List<EventTest> eventTests,
-  ) {
-    group(functionName, () {
       late Uri apiUri;
       final logs = <String>[];
       final logSink = LogSink(logs);
       late LocalApiRunner apiRunner;
 
       setUpAll(() async {
-        final entrypoint = projectPaths.functionEntrypoint(
-          apiName,
-          functionName,
-        );
+        final entrypoint = projectPaths.localApiEntrypoint;
         apiRunner = await LocalApiRunner.start(
           path: entrypoint,
           envVars:
@@ -309,11 +295,39 @@ class TestRunner {
         await apiRunner.close();
       });
 
+      final functions = {
+        ...apiTest.functionTests.keys,
+        ...apiTest.eventTests.keys,
+      };
+      for (final functionName in functions) {
+        testFunction(
+          apiName,
+          functionName,
+          apiTest.functionTests[functionName] ?? const [],
+          apiTest.eventTests[functionName] ?? const [],
+          logs,
+          () => apiUri,
+        );
+      }
+    });
+  }
+
+  void testFunction(
+    String apiName,
+    String functionName,
+    List<HttpTest> httpTests,
+    List<EventTest> eventTests,
+    List<String> logs,
+    Uri Function() apiUri,
+  ) {
+    group(functionName, () {
       for (final testCase in httpTests) {
         test(testCase.name, () async {
           final request = Request(
             testCase.method,
-            apiUri.replace(queryParameters: testCase.queryParameters),
+            apiUri()
+                .resolve('/${apiName.paramCase}/${functionName.paramCase}')
+                .replace(queryParameters: testCase.queryParameters),
           )
             ..headers.addAll({
               'Content-Type': 'application/json',
@@ -359,7 +373,8 @@ class TestRunner {
       for (final testCase in eventTests) {
         test(testCase.name, () async {
           final socket = await WebSocket.connect(
-            apiUri
+            apiUri()
+                .resolve('/${apiName.paramCase}/${functionName.paramCase}')
                 .replace(
                   scheme: 'ws',
                   queryParameters: testCase.queryParameters,

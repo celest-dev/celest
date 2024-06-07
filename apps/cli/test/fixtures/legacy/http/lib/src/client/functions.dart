@@ -144,12 +144,14 @@ class CelestFunctionsHttpHeader {
         r'aNum': aNum.toString(),
         r'aBool': aBool.toString(),
         r'aDateTime': aDateTime.toIso8601String(),
-        r'aNullableString': aNullableString,
-        r'aNullableInt': aNullableInt.toString(),
-        r'aNullableDouble': aNullableDouble.toString(),
-        r'aNullableNum': aNullableNum.toString(),
-        r'aNullableBool': aNullableBool.toString(),
-        r'aNullableDateTime': aNullableDateTime.toIso8601String(),
+        if (aNullableString != null) r'aNullableString': aNullableString,
+        if (aNullableInt != null) r'aNullableInt': aNullableInt.toString(),
+        if (aNullableDouble != null)
+          r'aNullableDouble': aNullableDouble.toString(),
+        if (aNullableNum != null) r'aNullableNum': aNullableNum.toString(),
+        if (aNullableBool != null) r'aNullableBool': aNullableBool.toString(),
+        if (aNullableDateTime != null)
+          r'aNullableDateTime': aNullableDateTime.toIso8601String(),
       },
     );
     final $body =
@@ -336,12 +338,14 @@ class CelestFunctionsHttpQuery {
         r'aNum': aNum.toString(),
         r'aBool': aBool.toString(),
         r'aDateTime': aDateTime.toIso8601String(),
-        r'aNullableString': aNullableString,
-        r'aNullableInt': aNullableInt.toString(),
-        r'aNullableDouble': aNullableDouble.toString(),
-        r'aNullableNum': aNullableNum.toString(),
-        r'aNullableBool': aNullableBool.toString(),
-        r'aNullableDateTime': aNullableDateTime.toIso8601String(),
+        if (aNullableString != null) r'aNullableString': aNullableString,
+        if (aNullableInt != null) r'aNullableInt': aNullableInt.toString(),
+        if (aNullableDouble != null)
+          r'aNullableDouble': aNullableDouble.toString(),
+        if (aNullableNum != null) r'aNullableNum': aNullableNum.toString(),
+        if (aNullableBool != null) r'aNullableBool': aNullableBool.toString(),
+        if (aNullableDateTime != null)
+          r'aNullableDateTime': aNullableDateTime.toIso8601String(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt.map((el) => el.toString()).toList(),
         r'aListOfDouble': aListOfDouble.map((el) => el.toString()).toList(),
@@ -349,17 +353,24 @@ class CelestFunctionsHttpQuery {
         r'aListOfBool': aListOfBool.map((el) => el.toString()).toList(),
         r'aListOfDateTime':
             aListOfDateTime.map((el) => el.toIso8601String()).toList(),
-        r'aNullableListOfString': aNullableListOfString,
-        r'aNullableListOfInt':
-            aNullableListOfInt?.map((el) => el.toString()).toList(),
-        r'aNullableListOfDouble':
-            aNullableListOfDouble?.map((el) => el.toString()).toList(),
-        r'aNullableListOfNum':
-            aNullableListOfNum?.map((el) => el.toString()).toList(),
-        r'aNullableListOfBool':
-            aNullableListOfBool?.map((el) => el.toString()).toList(),
-        r'aNullableListOfDateTime':
-            aNullableListOfDateTime?.map((el) => el.toIso8601String()).toList(),
+        if (aNullableListOfString != null)
+          r'aNullableListOfString': aNullableListOfString,
+        if (aNullableListOfInt != null)
+          r'aNullableListOfInt':
+              aNullableListOfInt.map((el) => el.toString()).toList(),
+        if (aNullableListOfDouble != null)
+          r'aNullableListOfDouble':
+              aNullableListOfDouble.map((el) => el.toString()).toList(),
+        if (aNullableListOfNum != null)
+          r'aNullableListOfNum':
+              aNullableListOfNum.map((el) => el.toString()).toList(),
+        if (aNullableListOfBool != null)
+          r'aNullableListOfBool':
+              aNullableListOfBool.map((el) => el.toString()).toList(),
+        if (aNullableListOfDateTime != null)
+          r'aNullableListOfDateTime': aNullableListOfDateTime
+              .map((el) => el.toIso8601String())
+              .toList(),
       }),
       headers: {'Content-Type': 'application/json; charset=utf-8'},
     );

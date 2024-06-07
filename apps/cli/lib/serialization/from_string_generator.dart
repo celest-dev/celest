@@ -59,7 +59,7 @@ Expression _toString(
       return ref;
     }
     return ref
-        .nullableProperty('map', type.isNullableOrFalse)
+        .property('map')
         .call([
           Method(
             (m) => m

@@ -265,7 +265,13 @@ if ($event.containsKey('error')) {
 
             final headers = headerParameters.map((name, parameter) {
               return MapEntry(
-                literalString(name, raw: true),
+                CodeExpression(
+                  Block.of([
+                    if (parameter.type.isNullableOrFalse)
+                      Code('if ($name != null) '),
+                    literalString(name, raw: true).code,
+                  ]),
+                ),
                 generateToString(
                   parameter.type,
                   refer(parameter.name),
@@ -275,7 +281,13 @@ if ($event.containsKey('error')) {
             final query = literalMap(
               queryParameters.map((name, parameter) {
                 return MapEntry(
-                  literalString(name, raw: true),
+                  CodeExpression(
+                    Block.of([
+                      if (parameter.type.isNullableOrFalse)
+                        Code('if ($name != null) '),
+                      literalString(name, raw: true).code,
+                    ]),
+                  ),
                   generateToString(
                     parameter.type,
                     refer(parameter.name),
