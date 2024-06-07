@@ -4,6 +4,7 @@ import 'dart:io' as io show WebSocket;
 import 'dart:io';
 
 import 'package:async/async.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/auth/authenticator.dart';
 import 'package:celest_core/src/events/event_channel.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ final class EventChannelPlatform extends EventChannel {
   }) {
     final ws = Future(
       () async => io.WebSocket.connect(
-        uri.toString(),
+        uri.replace(scheme: uri.isScheme('https') ? 'wss' : 'ws').toString(),
         headers: {
           if (await authenticator?.token case final token?)
             HttpHeaders.authorizationHeader: token,
@@ -41,7 +42,7 @@ final class EventChannelPlatform extends EventChannel {
   );
 
   @override
-  Stream<Map<String, Object?>> get stream => _ws.stream.cast();
+  Stream<Map<String, Object?>> get stream => _ws.stream.map(JsonUtf8.decodeAny);
 
   @override
   StreamSink<Map<String, Object?>> get sink => _wsSink;

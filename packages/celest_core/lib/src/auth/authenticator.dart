@@ -1,10 +1,9 @@
 import 'package:celest_core/_internal.dart';
-import 'package:celest_core/src/util/globals.dart';
 
 final class Authenticator {
   Authenticator({
     required NativeSecureStorage secureStorage,
-  }) : _secureStorage = secureStorage.scoped('auth');
+  }) : _secureStorage = secureStorage;
 
   final NativeSecureStorage _secureStorage;
 

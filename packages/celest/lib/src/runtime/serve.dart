@@ -9,6 +9,7 @@ import 'package:async/async.dart';
 import 'package:celest/celest.dart';
 import 'package:celest/src/runtime/json_utils.dart';
 import 'package:celest/src/runtime/sse/sse_handler.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;

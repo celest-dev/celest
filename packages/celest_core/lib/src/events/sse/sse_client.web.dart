@@ -26,7 +26,7 @@ final class SseClientPlatform extends SseClient {
     clientId ??= Uuid.v7().toString();
     serverUri = serverUri.replace(
       queryParameters: {
-        ...serverUri.queryParameters,
+        ...serverUri.queryParametersAll,
         'sseClientId': clientId,
       },
     );
@@ -134,7 +134,7 @@ final class SseClientPlatform extends SseClient {
   Future<void> _onOutgoingMessage(Map<String, Object?> message) async {
     final uri = serverUri.replace(
       queryParameters: {
-        ...serverUri.queryParameters,
+        ...serverUri.queryParametersAll,
         'messageId': '${++_lastMessageId}',
       },
     );

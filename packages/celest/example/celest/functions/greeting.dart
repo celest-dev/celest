@@ -2,7 +2,6 @@
 // folder of your Celest project.
 
 import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
 import 'package:celest_backend/exceptions/bad_name_exception.dart';
 import 'package:celest_backend/models/person.dart';
 
@@ -19,14 +18,4 @@ Future<String> sayHello({required Person person}) async {
   print('Saying hello to ${person.name}');
 
   return 'Hello, ${person.name}!';
-}
-
-/// Says hello to many [people] and streams the output.
-@cloud
-Stream<String> sayHelloMany({
-  @httpQuery('to') required List<String> people,
-}) async* {
-  for (final person in people) {
-    yield 'Hello, $person!';
-  }
 }

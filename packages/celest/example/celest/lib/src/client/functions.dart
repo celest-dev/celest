@@ -68,17 +68,4 @@ class CelestFunctionsGreeting {
     }
     return ($body['response'] as String);
   }
-
-  /// Says hello to many [people] and streams the output.
-  Stream<String> sayHelloMany({required List<String> people}) {
-    final $channel = celest.eventClient.connect(celest.baseUri
-        .resolve('/greeting/say-hello-many')
-        .replace(queryParameters: {r'to': people}));
-    return $channel.stream.map(($event) {
-      if ($event.containsKey('error')) {
-        _throwError($statusCode: -1, $body: $event);
-      }
-      return ($event['response'] as String);
-    });
-  }
 }
