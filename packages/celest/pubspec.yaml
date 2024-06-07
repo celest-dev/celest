@@ -1,6 +1,6 @@
 name: celest
 description: The Flutter cloud platform. Celest enables you to build your entire backend in Dart.
-version: 0.4.1
+version: 0.4.2
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest
 
@@ -11,7 +11,7 @@ environment:
 dependencies:
   async: ^2.11.0
   celest_auth: ^0.4.0
-  celest_core: ^0.4.0
+  celest_core: ^0.4.2
   chunked_stream: ^1.4.2
   collection: ^1.18.0
   http: ^1.0.0
