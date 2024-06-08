@@ -9,8 +9,7 @@ final class CelestHttpClient extends http.BaseClient {
     NativeSecureStorage? secureStorage,
     http.Client? baseClient,
   })  : _authenticator = Authenticator(
-          secureStorage:
-              secureStorage ?? NativeSecureStorage(scope: 'celest/auth'),
+          secureStorage: secureStorage ?? NativeSecureStorage(),
         ),
         _ownsInner = baseClient == null,
         _inner = baseClient ?? createHttpClient();

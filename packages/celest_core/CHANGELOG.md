@@ -1,3 +1,7 @@
+## 0.4.3-wip
+
+- chore: Update dependencies
+
 ## 0.4.2
 
 - feat: Add support for event streaming via SSE/WebSockets
