@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:celest_cli/openapi/generator/openapi_array_generator.dart';
 import 'package:celest_cli/openapi/generator/openapi_client_generator.dart';
