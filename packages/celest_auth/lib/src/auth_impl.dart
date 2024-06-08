@@ -13,7 +13,7 @@ final class AuthImpl implements Auth {
   AuthImpl(
     this.celest, {
     NativeStorage? storage,
-  }) : _storage = storage ?? NativeStorage(scope: 'celest/auth');
+  }) : _storage = (storage ?? celest.nativeStorage).scoped('/celest/auth');
 
   AuthState? _authState;
 
@@ -29,7 +29,7 @@ final class AuthImpl implements Auth {
   final StreamController<AuthState> _authStateController =
       StreamController.broadcast();
 
-  late final StreamSubscription<AuthState> _authStateSubscription;
+  StreamSubscription<AuthState>? _authStateSubscription;
   StreamSubscription<AuthState>? _authFlowSubscription;
 
   @override
@@ -87,7 +87,9 @@ final class AuthImpl implements Auth {
     try {
       await protocol.signOut();
     } finally {
-      _authStateController.add(const Unauthenticated());
+      if (!_authStateController.isClosed) {
+        _authStateController.add(const Unauthenticated());
+      }
     }
   }
 
@@ -100,7 +102,7 @@ final class AuthImpl implements Auth {
   late final AuthClient protocol = AuthClient(celest);
 
   Future<void> close() async {
-    await _authStateSubscription.cancel();
+    await _authStateSubscription?.cancel();
     await _authFlowSubscription?.cancel();
     await _authStateController.close();
     localStorage.close();
