@@ -220,14 +220,14 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "0.4.1"
+    version: "0.4.3-wip"
   celest_auth:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "0.4.1"
+    version: "0.4.2-wip"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -241,7 +241,7 @@ packages:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "0.4.1"
+    version: "0.4.3-wip"
   celest_lints:
     dependency: "direct dev"
     description:
@@ -738,10 +738,10 @@ packages:
     dependency: "direct dev"
     description:
       name: mocktail
-      sha256: c4b5007d91ca4f67256e720cb1b6d704e79a510183a12fa551021f652577dce6
+      sha256: "890df3f9688106f25755f26b1c60589a92b3ab91a22b8b224947ad041bf172d8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   mustache_template:
     dependency: "direct dev"
     description:
@@ -770,10 +770,10 @@ packages:
     dependency: transitive
     description:
       name: native_storage
-      sha256: "902d947082753c956163c47b9652c77c76b9bcd15d1fcbe5f4960b012782d535"
+      sha256: "635598d338b6f8773e6993c52412a3f6b09770848ed94e8afae2e7ad53e06a01"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.7"
   native_toolchain_c:
     dependency: transitive
     description:
@@ -818,10 +818,10 @@ packages:
     dependency: "direct main"
     description:
       name: platform
-      sha256: "12220bb4b65720483f8fa9450b4332347737cf8213dd2840d8b2c823e47243ec"
+      sha256: "9b71283fc13df574056616011fb138fd3b793ea47cc509c189a6c3fa5f8a1a65"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "3.1.5"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -941,14 +941,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  shelf_proxy:
-    dependency: transitive
-    description:
-      name: shelf_proxy
-      sha256: a71d2307f4393211930c590c3d2c00630f6c5a7a77edc1ef6436dfd85a6a7ee3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
   shelf_router:
     dependency: transitive
     description:
