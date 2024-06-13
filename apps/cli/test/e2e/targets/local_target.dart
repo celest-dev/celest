@@ -50,5 +50,6 @@ final class LocalTarget extends TestTarget {
             .currentDirectory.parent.parent.absolute.uri
             .resolve('celest/')
             .toFilePath(),
+        'CELEST_TEST': 'true',
       };
 }
