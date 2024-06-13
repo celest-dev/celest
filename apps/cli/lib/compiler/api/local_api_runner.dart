@@ -121,9 +121,9 @@ final class LocalApiRunner implements Closeable {
     }
 
     final client = await FrontendServerClient.start(
-      path, // entrypoint
-      outputDill, // outputDillPath
-      platformDill, // platformKernel
+      Uri.file(path).toString(), // entrypoint, must be URI
+      outputDill, // outputDillPath, must be path
+      Uri.file(platformDill).toString(), // platformKernel, must be URI
       workingDirectory: projectPaths.outputsDir,
       target: target,
       verbose: verbose,
