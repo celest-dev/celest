@@ -113,7 +113,7 @@ base mixin Configure on CelestCommand {
     );
     try {
       logger.finest('Hydrating pub cache...');
-      await pubCache.hydate();
+      await pubCache.hydrate();
       logger.finest('Fixing pub cache...');
       await pubCache.fix();
       logger.finest('Pub cache fixed.');

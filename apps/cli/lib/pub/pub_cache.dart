@@ -1,30 +1,34 @@
+import 'dart:io';
+
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
 /// Pub cache utilities
-final pubCache = _PubCache();
+final pubCache = PubCache();
 
-final class _PubCache {
+final class PubCache {
   static final packagesToFix = {
-    'native_storage': '^0.1.0',
-    'jni': '>=0.8.0',
-    'celest_auth': '>=$currentMinorVersion',
-    'celest': '>=$currentMinorVersion',
-    'celest_core': '>=$currentMinorVersion',
+    // This is the only syntax that reliably works with both dart/flutter
+    'native_storage': '>=0.1.0 <1.0.0',
+    'jni': '>=0.8.0 <1.0.0',
+    'celest_auth': '>=$currentMinorVersion <1.0.0',
+    'celest': '>=$currentMinorVersion <1.0.0',
+    'celest_core': '>=$currentMinorVersion <1.0.0',
   };
   static final _logger = Logger('PubCache');
 
   String? _cachePath;
 
   // Adapted from `package:pub/src/system_cache.dart`
-  String? _findCachePath() {
+  String? findCachePath() {
     if (platform.environment['PUB_CACHE'] case final cacheDir?) {
       return p.absolute(cacheDir);
     }
@@ -51,10 +55,14 @@ final class _PubCache {
     return p.join(home, '.pub-cache');
   }
 
-  Future<void> hydate() async {
+  /// Runs `pub cache add` for each package in [packagesToFix].
+  ///
+  /// Returns the exit codes and output for each package.
+  Future<List<(int, String)>> hydrate() async {
+    final results = <(int, String)>[];
     for (final package in packagesToFix.entries) {
       // Run serially to avoid flutter lock
-      await processManager.start([
+      final result = await processManager.start([
         Sdk.current.sdkType.name,
         'pub',
         'cache',
@@ -63,34 +71,62 @@ final class _PubCache {
         '--version',
         package.value,
         '--all',
-      ]).then((process) {
-        process.captureStdout(sink: _logger.finest);
-        process.captureStderr(sink: _logger.finest);
-        return process.exitCode;
+      ]).then((process) async {
+        final combinedOutput = StringBuffer();
+        process.captureStdout(
+          sink: (line) {
+            _logger.finest(line);
+            combinedOutput.writeln(line);
+          },
+        );
+        process.captureStderr(
+          sink: (line) {
+            _logger.finest(line);
+            combinedOutput.writeln(line);
+          },
+        );
+        return (await process.exitCode, combinedOutput.toString());
       });
+      results.add(result);
     }
+    return results;
   }
 
-  Future<void> fix() async {
-    final cachePath = _cachePath ??= _findCachePath();
+  /// Fixes the pubspec for each package in [packagesToFix].
+  ///
+  /// Returns the number of packages fixed.
+  Future<int> fix({
+    @visibleForTesting bool throwOnError = false,
+  }) async {
+    final cachePath = _cachePath ??= findCachePath();
     if (cachePath == null) {
+      if (throwOnError) {
+        throw Exception('Could not find the pub cache.');
+      }
       _logger.finest('No pub cache found. Skipping fix.');
-      return;
+      return 0;
     }
     _logger.finest('Pub cache found at $cachePath');
     final cacheDir = fileSystem.directory(cachePath);
     if (!cacheDir.existsSync()) {
+      if (throwOnError) {
+        throw Exception('No pub cache found at $cachePath.');
+      }
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
-      return;
+      return 0;
     }
     final hostedPubDevDir =
         cacheDir.childDirectory('hosted').childDirectory('pub.dev');
     if (!hostedPubDevDir.existsSync()) {
+      if (throwOnError) {
+        throw Exception('No pub cache found at ${hostedPubDevDir.path}.');
+      }
       _logger.finest(
         'No pub cache found at ${hostedPubDevDir.path}. ' 'Skipping fix.',
       );
-      return;
+      return 0;
     }
+    var fixed = 0;
     await for (final packageDir
         in hostedPubDevDir.list().whereType<Directory>()) {
       var fixPackage = false;
@@ -105,11 +141,20 @@ final class _PubCache {
       }
       final pubspecFile = packageDir.childFile('pubspec.yaml');
       if (!pubspecFile.existsSync()) {
+        if (throwOnError) {
+          throw Exception('No pubspec found in ${packageDir.path}.');
+        }
+        _logger.finest('No pubspec found in ${packageDir.path}. Skipping fix.');
         continue;
       }
       final pubspecYaml = await pubspecFile.readAsString();
       final pubspec = Pubspec.parse(pubspecYaml);
       if (!packagesToFix.containsKey(pubspec.name)) {
+        if (throwOnError) {
+          throw Exception(
+            'Pubspec for ${pubspec.name} does not need fixing.',
+          );
+        }
         continue;
       }
       final needsFix = pubspec.environment?.containsKey('flutter') ?? false;
@@ -120,6 +165,18 @@ final class _PubCache {
       editor.remove(['environment', 'flutter']);
       await pubspecFile.writeAsString(editor.toString());
       _logger.finest('Fixed pubspec for ${pubspec.name} in ${packageDir.path}');
+      fixed++;
     }
+    return fixed;
+  }
+
+  @visibleForTesting
+  Future<ProcessResult> repair() async {
+    return processManager.run([
+      Sdk.current.dart,
+      'pub',
+      'cache',
+      'repair',
+    ]);
   }
 }
