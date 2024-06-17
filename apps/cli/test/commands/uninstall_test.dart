@@ -139,10 +139,13 @@ void main() {
         ctx.fileSystem
             .file('/opt/celest/celest.app/Contents/MacOS/celest')
             .createSync(recursive: true);
-        ctx.fileSystem.link(CelestUninstaller.macosSymlink).createSync(
-              '/opt/celest/celest.app/Contents/MacOS/celest',
-              recursive: true,
-            );
+        ctx.fileSystem.file(CelestUninstaller.macosEntrypoint)
+          ..createSync(recursive: true)
+          ..writeAsStringSync(r'''
+#!/bin/bash
+
+/opt/celest/celest.app/Contents/MacOS/celest $@
+''');
         ctx.platform = FakePlatform(
           operatingSystem: 'macos',
           executable: 'celest',
@@ -160,8 +163,9 @@ void main() {
           projectRoot: ctx.fileSystem.systemTempDirectory.path,
         );
 
-        const uninstallScript = "[ -d '/opt/celest' ] && rm -r '/opt/celest'; "
-            "[ -h '/usr/local/bin/celest' ] && rm '/usr/local/bin/celest'";
+        const uninstallScript =
+            "[[ -d '/opt/celest' ]] && rm -r '/opt/celest'; "
+            "[[ -h '/usr/local/bin/celest' || -f '/usr/local/bin/celest' ]] && rm '/usr/local/bin/celest'";
         when(
           () => ctx.processManager.run(
             [

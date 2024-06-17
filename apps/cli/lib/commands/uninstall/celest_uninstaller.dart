@@ -13,7 +13,7 @@ class CelestUninstaller {
   static final logger = Logger('CelestUninstaller');
 
   static const windowsPackageName = 'Celest.CLI';
-  static const macosSymlink = '/usr/local/bin/celest';
+  static const macosEntrypoint = '/usr/local/bin/celest';
 
   Future<void> uninstall() async {
     await removeConfig();
@@ -101,7 +101,7 @@ class CelestUninstaller {
             throw StateError('Unexpected install path: $installPath');
           }
           final uninstallScript =
-              "[ -d '$installPath' ] && rm -r '$installPath'; [ -h '$macosSymlink' ] && rm '$macosSymlink'";
+              "[[ -d '$installPath' ]] && rm -r '$installPath'; [[ -h '$macosEntrypoint' || -f '$macosEntrypoint' ]] && rm '$macosEntrypoint'";
           final uninstallOutput = await processManager.run(
             <String>[
               'osascript',
