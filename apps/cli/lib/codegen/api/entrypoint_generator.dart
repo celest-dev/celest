@@ -564,10 +564,12 @@ final class EntrypointGenerator {
       (c) => c
         ..name = targetName
         ..modifier = ClassModifier.final$
-        ..extend = switch (function.streamType) {
-          null => DartTypes.celest.cloudFunctionHttpTarget,
-          _ => DartTypes.celest.cloudEventSourceTarget,
-        }
+        ..extend = project.sdkInfo.featureEnabled(FeatureFlag.streaming)
+            ? switch (function.streamType) {
+                null => DartTypes.celest.cloudFunctionHttpTarget,
+                _ => DartTypes.celest.cloudEventSourceTarget,
+              }
+            : DartTypes.celest.cloudFunctionTarget
         ..methods.addAll([
           Method(
             (m) => m

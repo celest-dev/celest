@@ -1,7 +1,8 @@
-import 'dart:io' show Process, Platform, ProcessException, ProcessStartMode;
+import 'dart:io' show Process, Platform, ProcessException;
 import 'dart:math';
 
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:meta/meta.dart';
@@ -42,6 +43,7 @@ abstract base class E2ETest with TestHelpers {
   @override
   File get logFile => tempDir.childFile('${name.snakeCase}.log')..createSync();
 
+  @override
   void log(Object? object) {
     final terminator = Platform.lineTerminator;
     print(object);
@@ -73,6 +75,8 @@ mixin TestHelpers {
   bool get skip => false;
   File? get logFile;
 
+  void log(Object? object) => print(object);
+
   bool get hasFlutter {
     return getExecutablePath('flutter', null) != null;
   }
@@ -81,20 +85,25 @@ mixin TestHelpers {
     List<String> command, {
     String? workingDirectory,
     Map<String, String>? environment,
+    bool? runInShell,
   }) async {
-    print('Running command: ${command.join(' ')}');
+    log(
+      'Running command: "${command.join(' ')}" in '
+      '"${workingDirectory ?? fileSystem.currentDirectory.path}"',
+    );
     final process = await Process.start(
       command.first,
       command.skip(1).toList(),
       workingDirectory: workingDirectory,
-      mode: ProcessStartMode.inheritStdio,
       environment: {
         ...platform.environment,
         ...defaultCliEnvironment,
         ...?environment,
       },
-      runInShell: platform.isWindows,
+      runInShell: runInShell ?? platform.isWindows,
     );
+    process.captureStdout(sink: log);
+    process.captureStderr(sink: log);
     if (await process.exitCode case final exitCode && != 0) {
       throw ProcessException(
         command.first,

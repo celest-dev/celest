@@ -13,6 +13,7 @@ import 'features/create/create_project_isolated.dart';
 import 'features/hello_project.dart';
 import 'features/hot_reload/hot_reload_add_auth.dart';
 import 'features/hot_reload/hot_reload_add_model_after_error.dart';
+import 'features/package_support/supports_supabase.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_target.dart';
 
@@ -36,6 +37,9 @@ void main() {
     AddRemoveFieldsTest.new,
     HotReloadAddAuthTest.new,
     HotReloadNonExistentModel.new,
+
+    // Package support
+    SupportsSupabase.new,
   ];
 
   for (final target in targets) {
@@ -56,6 +60,7 @@ void main() {
             print('--------------------------------');
             print(t.logFile.readAsStringSync());
             print('--------------------------------');
+            print('Full logs written to: ${t.logFile.path}');
             rethrow;
           } finally {
             await t.tearDown();

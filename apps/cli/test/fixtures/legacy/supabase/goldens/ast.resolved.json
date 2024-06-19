@@ -1,0 +1,29 @@
+{
+  "name": "supabase",
+  "apis": {
+    "auth": {
+      "name": "auth",
+      "functions": {
+        "currentUser": {
+          "name": "currentUser",
+          "route": "/auth/current-user",
+          "apiName": "auth",
+          "envVars": [],
+          "httpConfig": {
+            "method": "GET",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
+        }
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": [],
+    "featureFlags": [
+      "streaming"
+    ]
+  }
+}

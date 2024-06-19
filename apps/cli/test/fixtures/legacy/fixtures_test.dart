@@ -4691,6 +4691,49 @@ final tests = <String, Test>{
       ),
     },
   ),
+  'supabase': Test(
+    apis: {
+      'auth': ApiTest(
+        functionTests: {
+          'currentUser': [
+            FunctionTestSuccess(
+              name: 'currentUser',
+              method: 'GET',
+              input: {},
+              output: {
+                'id': '123',
+                'app_metadata': {
+                  'provider': 'email',
+                },
+                'user_metadata': {
+                  'name': 'Celest',
+                },
+                'aud': 'aud',
+                'confirmation_sent_at': null,
+                'recovery_sent_at': null,
+                'email_change_sent_at': null,
+                'new_email': null,
+                'invited_at': null,
+                'action_link': null,
+                'email': 'email',
+                'phone': 'phone',
+                'created_at': 'createdAt',
+                'confirmed_at': null,
+                'email_confirmed_at': null,
+                'phone_confirmed_at': null,
+                'last_sign_in_at': null,
+                'role': 'role',
+                'updated_at': 'updatedAt',
+                'identities': null,
+                'factors': null,
+                'is_anonymous': false,
+              },
+            ),
+          ],
+        },
+      ),
+    },
+  ),
 };
 
 const genericWrappers = {

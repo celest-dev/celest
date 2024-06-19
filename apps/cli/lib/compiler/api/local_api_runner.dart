@@ -7,6 +7,7 @@ import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -91,7 +92,7 @@ final class LocalApiRunner implements Closeable {
     final outputDill = p.setExtension(path, '.dill');
 
     // NOTE: FE server requires file: URIs for *some* paths on Windows.
-    final genKernelRes = await processManager.run(
+    final genKernelRes = await processManager.start(
       <String>[
         Sdk.current.dartAotRuntime,
         Sdk.current.frontendServerAotSnapshot,
@@ -108,16 +109,12 @@ final class LocalApiRunner implements Closeable {
         outputDill, // Must be path
         Uri.file(path).toString(),
       ],
-      stdoutEncoding: utf8,
-      stderrEncoding: utf8,
       workingDirectory: projectPaths.outputsDir,
     );
-    if (genKernelRes.exitCode != 0) {
-      throw CompilationException(
-        'Error generating initial kernel file: '
-        '${genKernelRes.stdout}\n'
-        '${genKernelRes.stderr}',
-      );
+    genKernelRes.captureStdout(sink: _logger.finest);
+    genKernelRes.captureStderr(sink: _logger.finest);
+    if (await genKernelRes.exitCode != 0) {
+      throw CompilationException('Error generating initial kernel file');
     }
 
     final client = await FrontendServerClient.start(

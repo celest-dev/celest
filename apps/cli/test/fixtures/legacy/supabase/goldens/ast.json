@@ -1,0 +1,181 @@
+{
+  "name": "supabase",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "project:project.dart"
+  },
+  "apis": {
+    "auth": {
+      "name": "auth",
+      "metadata": [],
+      "functions": {
+        "currentUser": {
+          "name": "currentUser",
+          "apiName": "auth",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "AuthUser",
+                "url": "package:supabase/src/auth_user.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AuthUser",
+            "url": "package:supabase/src/auth_user.dart",
+            "isNullable": false
+          },
+          "metadata": [
+            {
+              "$": "ApiHttpConfig",
+              "method": "GET",
+              "statusCode": 200,
+              "location": {
+                "start": {
+                  "offset": 133,
+                  "uri": "auth.dart",
+                  "line": 5,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 162,
+                  "uri": "auth.dart",
+                  "line": 5,
+                  "column": 29
+                },
+                "text": "@http(method: HttpMethod.get)"
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 189,
+              "uri": "auth.dart",
+              "line": 6,
+              "column": 26
+            },
+            "end": {
+              "offset": 200,
+              "uri": "auth.dart",
+              "line": 6,
+              "column": 37
+            },
+            "text": "currentUser"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthException",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthPKCEGrantCodeExchangeError",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthSessionMissingException",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthRetryableFetchException",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthApiException",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthWeakPasswordException",
+          "url": "package:gotrue/src/types/auth_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "auth.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "auth.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "envVars": [],
+  "sdkInfo": {
+    "sdkVersion": "3.4.1",
+    "enabledExperiments": [],
+    "featureFlags": [
+      "streaming"
+    ]
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 51,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 13
+    },
+    "text": "project"
+  }
+}

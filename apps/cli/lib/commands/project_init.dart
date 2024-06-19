@@ -169,7 +169,8 @@ base mixin Configure on CelestCommand {
     if (celestProject.parentProject case final parentProject?) {
       await runPub(
         exe: parentProject.type.name,
-        action: PubAction.get,
+        // TODO(dnys1): Use `pub get` in 0.5.0
+        action: PubAction.upgrade,
         workingDirectory: parentProject.path,
       );
     }

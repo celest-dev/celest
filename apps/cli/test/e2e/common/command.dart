@@ -21,6 +21,7 @@ final class Command {
   final Map<String, String> _environment = Map.of(defaultCliEnvironment);
   Matcher? _expectedExitCode;
   Matcher? _expectedError;
+  bool _usePublishedRuntime = false;
 
   Future<void> run() async {
     final result = await Process.run(
@@ -44,14 +45,19 @@ final class Command {
   }
 
   InteractiveCommand start() {
+    final environment = {
+      ...platform.environment,
+      ..._environment,
+    };
+    if (_usePublishedRuntime) {
+      environment.remove('CELEST_LOCAL_PATH');
+    }
     final process = Process.start(
       command.first,
       command.skip(1).toList(),
       workingDirectory: _workingDirectory,
-      environment: {
-        ...platform.environment,
-        ..._environment,
-      },
+      environment: environment,
+      includeParentEnvironment: false,
     );
     return InteractiveCommand._(process);
   }
@@ -63,6 +69,11 @@ final class Command {
 
   Command environment(Map<String, String> env) {
     _environment.addAll(env);
+    return this;
+  }
+
+  Command withPublishedRuntime() {
+    _usePublishedRuntime = true;
     return this;
   }
 
@@ -207,7 +218,7 @@ final class InteractiveCommand {
     return this;
   }
 
-  static const _defaultTimeout = Duration(seconds: 60);
+  static const _defaultTimeout = Duration(minutes: 3);
 
   InteractiveCommand writeLine(String line) {
     return _addTask(

@@ -706,6 +706,10 @@ class _Celest {
   /// Creates a [celest_runtime.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _runtimeUrl);
 
+  /// Creates a [celest_runtime.CloudFunctionTarget] reference.
+  DartTypeReference get cloudFunctionTarget =>
+      const DartTypeReference('CloudFunctionTarget', _runtimeUrl);
+
   /// Creates a [celest_runtime.CloudFunctionHttpTarget] reference.
   DartTypeReference get cloudFunctionHttpTarget =>
       const DartTypeReference('CloudFunctionHttpTarget', _runtimeUrl);

@@ -8,6 +8,7 @@ import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
+import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/serialization_verdict.dart';
@@ -29,6 +30,7 @@ import 'package:stream_transform/stream_transform.dart';
 final class LegacyCelestProjectResolver extends CelestProjectResolver {
   LegacyCelestProjectResolver({
     required super.migrateProject,
+    required this.featureFlags,
     required CelestErrorReporter errorReporter,
     required this.context,
   }) : _errorReporter = errorReporter;
@@ -36,6 +38,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   static final _logger = Logger('LegacyCelestProjectResolver');
 
   final CelestErrorReporter _errorReporter;
+  final FeatureFlags featureFlags;
 
   @override
   final AnalysisContext context;
@@ -225,6 +228,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     }
     _logger.finer('Resolved project name: $projectName');
 
+    final featureFlags = await FeatureFlags.load();
+
     return ast.Project(
       name: projectName,
       reference: refer(
@@ -238,6 +243,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           _ => null,
         },
         enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        featureFlags: featureFlags.toAst(),
       ),
       location: projectDefineLocation,
     );
@@ -715,6 +721,15 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
             streaming ? ast.StreamType.unidirectionalServer : null;
 
         if (streaming) {
+          if (!featureFlags.streaming.enabled) {
+            reportError(
+              'Streaming functions are not supported for this project. '
+              'Upgrade to "celest: ^${featureFlags.streaming.enabledVersion}" '
+              'in your pubspec.yaml and try again.',
+            );
+            return null;
+          }
+
           final httpConfig = functionMetadata.whereType<ast.ApiHttpMetadata>();
           for (final httpConfig in httpConfig) {
             reportError(

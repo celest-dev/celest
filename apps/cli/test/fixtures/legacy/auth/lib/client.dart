@@ -36,7 +36,6 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  @override
   late final NativeStorage nativeStorage = NativeStorage(scope: 'celest');
 
   @override

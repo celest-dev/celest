@@ -14,6 +14,7 @@ import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
@@ -78,6 +79,7 @@ final class CelestAnalyzer
       reset();
     }
     _resolver ??= LegacyCelestProjectResolver(
+      featureFlags: await FeatureFlags.load(),
       migrateProject: migrateProject,
       errorReporter: this,
       context: context,

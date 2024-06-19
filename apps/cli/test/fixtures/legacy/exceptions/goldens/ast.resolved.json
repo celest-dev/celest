@@ -80,6 +80,9 @@
   "envVars": [],
   "sdkInfo": {
     "sdkVersion": "3.4.1",
-    "enabledExperiments": []
+    "enabledExperiments": [],
+    "featureFlags": [
+      "streaming"
+    ]
   }
 }

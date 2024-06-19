@@ -114,7 +114,7 @@ class FrontendServerClient {
     // The frontend_server doesn't appear to recursively create files, so we
     //  need to make sure the output dir already exists.
     final outputDir = Directory(p.dirname(outputDillPath));
-    if (!await outputDir.exists()) await outputDir.create();
+    if (!outputDir.existsSync()) await outputDir.create();
 
     return FrontendServerClient._(
       entrypoint,
@@ -175,8 +175,9 @@ class FrontendServerClient {
       final compilerOutputLines = <String>[];
       var errorCount = 0;
       String? outputDillPath;
-      while (
-          state != _CompileState.done && await _feServerStdoutLines.hasNext) {
+      while (!closed &&
+          state != _CompileState.done &&
+          await _feServerStdoutLines.hasNext) {
         final line = await _nextInputLine();
         switch (state) {
           case _CompileState.started:

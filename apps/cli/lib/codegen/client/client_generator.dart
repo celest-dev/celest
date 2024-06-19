@@ -168,7 +168,8 @@ final class ClientGenerator {
       if (_hasServer) ...[
         Field(
           (f) => f
-            ..annotations.add(DartTypes.core.override)
+            // TODO(dnys1): Add back in 0.5.0
+            // ..annotations.add(DartTypes.core.override)
             ..late = true
             ..modifier = FieldModifier.final$
             ..type = refer(
