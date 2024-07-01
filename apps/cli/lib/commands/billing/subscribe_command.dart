@@ -52,9 +52,10 @@ final class SubscribeCommand extends BillingCommand with Authenticate {
     );
 
     try {
+      final deviceId = await secureStorage.readDeviceId();
       final response = await billingClient.subscribe(
         tier: OrganizationTier.solo,
-        deviceId: secureStorage.deviceId,
+        deviceId: deviceId,
         redirectUri: Uri(
           scheme: 'http',
           host: 'localhost',
@@ -68,7 +69,7 @@ final class SubscribeCommand extends BillingCommand with Authenticate {
           'utm_source': 'cli',
           'utm_medium': 'cli',
           'utm_campaign': 'subscribe',
-          'client_reference_id': secureStorage.deviceId,
+          'client_reference_id': deviceId,
         },
       );
       logger.finest('Launching payment link: $paymentLink');

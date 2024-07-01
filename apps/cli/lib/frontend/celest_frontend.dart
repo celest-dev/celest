@@ -714,6 +714,7 @@ final class CelestFrontend implements Closeable {
           environment: {},
         ),
         logger: logger,
+        storage: secureStorage,
       );
       final port = await const PortFinder(defaultCelestPort)
           .checkOrUpdatePort(proxyPort);
