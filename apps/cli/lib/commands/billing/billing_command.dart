@@ -3,7 +3,7 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 
 abstract base class BillingCommand extends CelestCommand {
   @override
-  String get category => 'Subscription';
+  String get category => 'Account';
 
   late final billingClient = BillingClient(
     nativeStorage: secureStorage,
