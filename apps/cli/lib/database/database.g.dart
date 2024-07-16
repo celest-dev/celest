@@ -129,6 +129,14 @@ class Project extends DataClass implements Insertable<Project> {
         name: name ?? this.name,
         path: path ?? this.path,
       );
+  Project copyWithCompanion(ProjectsCompanion data) {
+    return Project(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      path: data.path.present ? data.path.value : this.path,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Project(')
@@ -227,7 +235,7 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
 
 abstract class _$CelestDatabase extends GeneratedDatabase {
   _$CelestDatabase(QueryExecutor e) : super(e);
-  _$CelestDatabaseManager get managers => _$CelestDatabaseManager(this);
+  $CelestDatabaseManager get managers => $CelestDatabaseManager(this);
   late final $ProjectsTable projects = $ProjectsTable(this);
   late final Index name = Index('name', 'CREATE INDEX name ON projects (name)');
   late final Index path =
@@ -239,7 +247,7 @@ abstract class _$CelestDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [projects, name, path];
 }
 
-typedef $$ProjectsTableInsertCompanionBuilder = ProjectsCompanion Function({
+typedef $$ProjectsTableCreateCompanionBuilder = ProjectsCompanion Function({
   Value<String> id,
   required String name,
   required String path,
@@ -258,8 +266,7 @@ class $$ProjectsTableTableManager extends RootTableManager<
     Project,
     $$ProjectsTableFilterComposer,
     $$ProjectsTableOrderingComposer,
-    $$ProjectsTableProcessedTableManager,
-    $$ProjectsTableInsertCompanionBuilder,
+    $$ProjectsTableCreateCompanionBuilder,
     $$ProjectsTableUpdateCompanionBuilder> {
   $$ProjectsTableTableManager(_$CelestDatabase db, $ProjectsTable table)
       : super(TableManagerState(
@@ -269,9 +276,7 @@ class $$ProjectsTableTableManager extends RootTableManager<
               $$ProjectsTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$ProjectsTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ProjectsTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<String> path = const Value.absent(),
@@ -283,7 +288,7 @@ class $$ProjectsTableTableManager extends RootTableManager<
             path: path,
             rowid: rowid,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<String> id = const Value.absent(),
             required String name,
             required String path,
@@ -296,18 +301,6 @@ class $$ProjectsTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
         ));
-}
-
-class $$ProjectsTableProcessedTableManager extends ProcessedTableManager<
-    _$CelestDatabase,
-    $ProjectsTable,
-    Project,
-    $$ProjectsTableFilterComposer,
-    $$ProjectsTableOrderingComposer,
-    $$ProjectsTableProcessedTableManager,
-    $$ProjectsTableInsertCompanionBuilder,
-    $$ProjectsTableUpdateCompanionBuilder> {
-  $$ProjectsTableProcessedTableManager(super.$state);
 }
 
 class $$ProjectsTableFilterComposer
@@ -348,9 +341,9 @@ class $$ProjectsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class _$CelestDatabaseManager {
+class $CelestDatabaseManager {
   final _$CelestDatabase _db;
-  _$CelestDatabaseManager(this._db);
+  $CelestDatabaseManager(this._db);
   $$ProjectsTableTableManager get projects =>
       $$ProjectsTableTableManager(_db, _db.projects);
 }

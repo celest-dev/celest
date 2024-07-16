@@ -39,7 +39,7 @@ dependencies:
   corks_cedar: ^0.1.0
   crypto: ^3.0.3
   dart_style: ^2.3.4
-  drift: ^2.16.0
+  drift: ">=2.19.0 <2.20.0"
   email_validator: ^2.1.17
   file: ^7.0.0
   fixnum: ^1.1.0
@@ -118,7 +118,7 @@ dev_dependencies:
   celest_lints:
     path: ../../packages/celest_lints
   checks: ^0.3.0
-  drift_dev: ^2.14.1
+  drift_dev: ">=2.19.0 <2.20.0"
   gcloud: ^0.8.12
   # Required for the `gcloud` package
   googleapis: ^12.0.0
