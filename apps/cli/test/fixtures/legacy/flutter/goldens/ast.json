@@ -372,12 +372,12 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.1",
+    "sdkVersion": "3.4.3",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
     ],
-    "flutterSdkVersion": "3.22.1"
+    "flutterSdkVersion": "3.22.2"
   },
   "location": {
     "start": {

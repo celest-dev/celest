@@ -554,7 +554,7 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.1",
+    "sdkVersion": "3.4.3",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
