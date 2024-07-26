@@ -8,7 +8,7 @@
   "apis": {},
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.3",
+    "sdkVersion": "3.4.4",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"

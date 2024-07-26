@@ -429,5 +429,3 @@ enum _RejectState {
   waitingForKey,
   done,
 }
-
-final _feServerPath = Sdk.current.frontendServerSnapshot;

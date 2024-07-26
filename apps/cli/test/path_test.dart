@@ -1,4 +1,5 @@
 @Skip('Needs work')
+library;
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/path.dart';

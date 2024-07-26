@@ -85,7 +85,11 @@ void initSerializers() {
       r'statusCode': $value.statusCode,
     },
     deserialize: ($serialized) {
-      return _$auth_exception.AuthRetryableFetchException();
+      return _$auth_exception.AuthRetryableFetchException(
+        message: (($serialized?[r'message'] as String?)) ??
+            'AuthRetryableFetchException',
+        statusCode: ($serialized?[r'statusCode'] as String?),
+      );
     },
   ));
   Serializers.instance.put(Serializer.define<

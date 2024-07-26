@@ -7973,15 +7973,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 303,
+                  "offset": 256,
                   "uri": "extension_types.dart",
-                  "line": 11,
+                  "line": 10,
                   "column": 23
                 },
                 "end": {
-                  "offset": 304,
+                  "offset": 257,
                   "uri": "extension_types.dart",
-                  "line": 11,
+                  "line": 10,
                   "column": 24
                 },
                 "text": "s"
@@ -8004,15 +8004,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 288,
+              "offset": 241,
               "uri": "extension_types.dart",
-              "line": 11,
+              "line": 10,
               "column": 8
             },
             "end": {
-              "offset": 294,
+              "offset": 247,
               "uri": "extension_types.dart",
-              "line": 11,
+              "line": 10,
               "column": 14
             },
             "text": "string"
@@ -8035,15 +8035,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 359,
+                  "offset": 312,
                   "uri": "extension_types.dart",
-                  "line": 13,
+                  "line": 12,
                   "column": 40
                 },
                 "end": {
-                  "offset": 360,
+                  "offset": 313,
                   "uri": "extension_types.dart",
-                  "line": 13,
+                  "line": 12,
                   "column": 41
                 },
                 "text": "s"
@@ -8074,15 +8074,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 337,
+              "offset": 290,
               "uri": "extension_types.dart",
-              "line": 13,
+              "line": 12,
               "column": 18
             },
             "end": {
-              "offset": 350,
+              "offset": 303,
               "uri": "extension_types.dart",
-              "line": 13,
+              "line": 12,
               "column": 31
             },
             "text": "asyncOrString"
@@ -8105,15 +8105,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 411,
+                  "offset": 364,
                   "uri": "extension_types.dart",
-                  "line": 15,
+                  "line": 14,
                   "column": 36
                 },
                 "end": {
-                  "offset": 412,
+                  "offset": 365,
                   "uri": "extension_types.dart",
-                  "line": 15,
+                  "line": 14,
                   "column": 37
                 },
                 "text": "s"
@@ -8144,15 +8144,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 391,
+              "offset": 344,
               "uri": "extension_types.dart",
-              "line": 15,
+              "line": 14,
               "column": 16
             },
             "end": {
-              "offset": 402,
+              "offset": 355,
               "uri": "extension_types.dart",
-              "line": 15,
+              "line": 14,
               "column": 27
             },
             "text": "asyncString"
@@ -8175,15 +8175,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 502,
+                  "offset": 455,
                   "uri": "extension_types.dart",
-                  "line": 19,
+                  "line": 18,
                   "column": 35
                 },
                 "end": {
-                  "offset": 503,
+                  "offset": 456,
                   "uri": "extension_types.dart",
-                  "line": 19,
+                  "line": 18,
                   "column": 36
                 },
                 "text": "s"
@@ -8206,15 +8206,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 479,
+              "offset": 432,
               "uri": "extension_types.dart",
-              "line": 19,
+              "line": 18,
               "column": 12
             },
             "end": {
-              "offset": 489,
+              "offset": 442,
               "uri": "extension_types.dart",
-              "line": 19,
+              "line": 18,
               "column": 22
             },
             "text": "stringImpl"
@@ -8237,15 +8237,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 571,
+                  "offset": 524,
                   "uri": "extension_types.dart",
-                  "line": 21,
+                  "line": 20,
                   "column": 53
                 },
                 "end": {
-                  "offset": 572,
+                  "offset": 525,
                   "uri": "extension_types.dart",
-                  "line": 21,
+                  "line": 20,
                   "column": 54
                 },
                 "text": "s"
@@ -8268,15 +8268,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 536,
+              "offset": 489,
               "uri": "extension_types.dart",
-              "line": 21,
+              "line": 20,
               "column": 18
             },
             "end": {
-              "offset": 552,
+              "offset": 505,
               "uri": "extension_types.dart",
-              "line": 21,
+              "line": 20,
               "column": 34
             },
             "text": "stringToFromJson"
@@ -8299,15 +8299,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 628,
+                  "offset": 581,
                   "uri": "extension_types.dart",
-                  "line": 23,
+                  "line": 22,
                   "column": 41
                 },
                 "end": {
-                  "offset": 629,
+                  "offset": 582,
                   "uri": "extension_types.dart",
-                  "line": 23,
+                  "line": 22,
                   "column": 42
                 },
                 "text": "s"
@@ -8330,15 +8330,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 601,
+              "offset": 554,
               "uri": "extension_types.dart",
-              "line": 23,
+              "line": 22,
               "column": 14
             },
             "end": {
-              "offset": 613,
+              "offset": 566,
               "uri": "extension_types.dart",
-              "line": 23,
+              "line": 22,
               "column": 26
             },
             "text": "stringToJson"
@@ -8361,15 +8361,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 697,
+                  "offset": 650,
                   "uri": "extension_types.dart",
-                  "line": 25,
+                  "line": 24,
                   "column": 53
                 },
                 "end": {
-                  "offset": 698,
+                  "offset": 651,
                   "uri": "extension_types.dart",
-                  "line": 25,
+                  "line": 24,
                   "column": 54
                 },
                 "text": "s"
@@ -8392,15 +8392,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 662,
+              "offset": 615,
               "uri": "extension_types.dart",
-              "line": 25,
+              "line": 24,
               "column": 18
             },
             "end": {
-              "offset": 678,
+              "offset": 631,
               "uri": "extension_types.dart",
-              "line": 25,
+              "line": 24,
               "column": 34
             },
             "text": "stringToJsonImpl"
@@ -8423,15 +8423,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 760,
+                  "offset": 713,
                   "uri": "extension_types.dart",
-                  "line": 27,
+                  "line": 26,
                   "column": 47
                 },
                 "end": {
-                  "offset": 761,
+                  "offset": 714,
                   "uri": "extension_types.dart",
-                  "line": 27,
+                  "line": 26,
                   "column": 48
                 },
                 "text": "s"
@@ -8454,15 +8454,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 729,
+              "offset": 682,
               "uri": "extension_types.dart",
-              "line": 27,
+              "line": 26,
               "column": 16
             },
             "end": {
-              "offset": 743,
+              "offset": 696,
               "uri": "extension_types.dart",
-              "line": 27,
+              "line": 26,
               "column": 30
             },
             "text": "stringFromJson"
@@ -8485,15 +8485,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 835,
+                  "offset": 788,
                   "uri": "extension_types.dart",
-                  "line": 29,
+                  "line": 28,
                   "column": 59
                 },
                 "end": {
-                  "offset": 836,
+                  "offset": 789,
                   "uri": "extension_types.dart",
-                  "line": 29,
+                  "line": 28,
                   "column": 60
                 },
                 "text": "s"
@@ -8516,15 +8516,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 796,
+              "offset": 749,
               "uri": "extension_types.dart",
-              "line": 29,
+              "line": 28,
               "column": 20
             },
             "end": {
-              "offset": 814,
+              "offset": 767,
               "uri": "extension_types.dart",
-              "line": 29,
+              "line": 28,
               "column": 38
             },
             "text": "stringFromJsonImpl"
@@ -8547,15 +8547,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 916,
+                  "offset": 869,
                   "uri": "extension_types.dart",
-                  "line": 31,
+                  "line": 30,
                   "column": 65
                 },
                 "end": {
-                  "offset": 917,
+                  "offset": 870,
                   "uri": "extension_types.dart",
-                  "line": 31,
+                  "line": 30,
                   "column": 66
                 },
                 "text": "s"
@@ -8578,15 +8578,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 873,
+              "offset": 826,
               "uri": "extension_types.dart",
-              "line": 31,
+              "line": 30,
               "column": 22
             },
             "end": {
-              "offset": 893,
+              "offset": 846,
               "uri": "extension_types.dart",
-              "line": 31,
+              "line": 30,
               "column": 42
             },
             "text": "stringFromJsonStatic"
@@ -8609,15 +8609,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 991,
+                  "offset": 944,
                   "uri": "extension_types.dart",
-                  "line": 33,
+                  "line": 32,
                   "column": 59
                 },
                 "end": {
-                  "offset": 992,
+                  "offset": 945,
                   "uri": "extension_types.dart",
-                  "line": 33,
+                  "line": 32,
                   "column": 60
                 },
                 "text": "s"
@@ -8640,15 +8640,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 952,
+              "offset": 905,
               "uri": "extension_types.dart",
-              "line": 33,
+              "line": 32,
               "column": 20
             },
             "end": {
-              "offset": 970,
+              "offset": 923,
               "uri": "extension_types.dart",
-              "line": 33,
+              "line": 32,
               "column": 38
             },
             "text": "stringPrivateField"
@@ -8671,15 +8671,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1078,
+                  "offset": 1031,
                   "uri": "extension_types.dart",
-                  "line": 35,
+                  "line": 34,
                   "column": 71
                 },
                 "end": {
-                  "offset": 1079,
+                  "offset": 1032,
                   "uri": "extension_types.dart",
-                  "line": 35,
+                  "line": 34,
                   "column": 72
                 },
                 "text": "s"
@@ -8702,15 +8702,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1031,
+              "offset": 984,
               "uri": "extension_types.dart",
-              "line": 35,
+              "line": 34,
               "column": 24
             },
             "end": {
-              "offset": 1053,
+              "offset": 1006,
               "uri": "extension_types.dart",
-              "line": 35,
+              "line": 34,
               "column": 46
             },
             "text": "stringPrivateFieldImpl"
@@ -8733,15 +8733,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1150,
+                  "offset": 1103,
                   "uri": "extension_types.dart",
-                  "line": 37,
+                  "line": 36,
                   "column": 56
                 },
                 "end": {
-                  "offset": 1151,
+                  "offset": 1104,
                   "uri": "extension_types.dart",
-                  "line": 37,
+                  "line": 36,
                   "column": 57
                 },
                 "text": "s"
@@ -8764,15 +8764,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1113,
+              "offset": 1066,
               "uri": "extension_types.dart",
-              "line": 37,
+              "line": 36,
               "column": 19
             },
             "end": {
-              "offset": 1130,
+              "offset": 1083,
               "uri": "extension_types.dart",
-              "line": 37,
+              "line": 36,
               "column": 36
             },
             "text": "stringPrivateCtor"
@@ -8795,15 +8795,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1234,
+                  "offset": 1187,
                   "uri": "extension_types.dart",
-                  "line": 39,
+                  "line": 38,
                   "column": 68
                 },
                 "end": {
-                  "offset": 1235,
+                  "offset": 1188,
                   "uri": "extension_types.dart",
-                  "line": 39,
+                  "line": 38,
                   "column": 69
                 },
                 "text": "s"
@@ -8826,15 +8826,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1189,
+              "offset": 1142,
               "uri": "extension_types.dart",
-              "line": 39,
+              "line": 38,
               "column": 23
             },
             "end": {
-              "offset": 1210,
+              "offset": 1163,
               "uri": "extension_types.dart",
-              "line": 39,
+              "line": 38,
               "column": 44
             },
             "text": "stringPrivateCtorImpl"
@@ -8857,15 +8857,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1305,
+                  "offset": 1258,
                   "uri": "extension_types.dart",
-                  "line": 43,
+                  "line": 42,
                   "column": 18
                 },
                 "end": {
-                  "offset": 1306,
+                  "offset": 1259,
                   "uri": "extension_types.dart",
-                  "line": 43,
+                  "line": 42,
                   "column": 19
                 },
                 "text": "v"
@@ -8888,15 +8888,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1293,
+              "offset": 1246,
               "uri": "extension_types.dart",
-              "line": 43,
+              "line": 42,
               "column": 6
             },
             "end": {
-              "offset": 1298,
+              "offset": 1251,
               "uri": "extension_types.dart",
-              "line": 43,
+              "line": 42,
               "column": 11
             },
             "text": "value"
@@ -8919,15 +8919,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1342,
+                  "offset": 1295,
                   "uri": "extension_types.dart",
-                  "line": 45,
+                  "line": 44,
                   "column": 21
                 },
                 "end": {
-                  "offset": 1343,
+                  "offset": 1296,
                   "uri": "extension_types.dart",
-                  "line": 45,
+                  "line": 44,
                   "column": 22
                 },
                 "text": "v"
@@ -8950,15 +8950,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1328,
+              "offset": 1281,
               "uri": "extension_types.dart",
-              "line": 45,
+              "line": 44,
               "column": 7
             },
             "end": {
-              "offset": 1334,
+              "offset": 1287,
               "uri": "extension_types.dart",
-              "line": 45,
+              "line": 44,
               "column": 13
             },
             "text": "valueX"
@@ -8981,15 +8981,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1391,
+                  "offset": 1344,
                   "uri": "extension_types.dart",
-                  "line": 47,
+                  "line": 46,
                   "column": 33
                 },
                 "end": {
-                  "offset": 1392,
+                  "offset": 1345,
                   "uri": "extension_types.dart",
-                  "line": 47,
+                  "line": 46,
                   "column": 34
                 },
                 "text": "v"
@@ -9012,15 +9012,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1369,
+              "offset": 1322,
               "uri": "extension_types.dart",
-              "line": 47,
+              "line": 46,
               "column": 11
             },
             "end": {
-              "offset": 1379,
+              "offset": 1332,
               "uri": "extension_types.dart",
-              "line": 47,
+              "line": 46,
               "column": 21
             },
             "text": "valueXImpl"
@@ -9043,15 +9043,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1458,
+                  "offset": 1411,
                   "uri": "extension_types.dart",
-                  "line": 49,
+                  "line": 48,
                   "column": 51
                 },
                 "end": {
-                  "offset": 1459,
+                  "offset": 1412,
                   "uri": "extension_types.dart",
-                  "line": 49,
+                  "line": 48,
                   "column": 52
                 },
                 "text": "v"
@@ -9074,15 +9074,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1424,
+              "offset": 1377,
               "uri": "extension_types.dart",
-              "line": 49,
+              "line": 48,
               "column": 17
             },
             "end": {
-              "offset": 1440,
+              "offset": 1393,
               "uri": "extension_types.dart",
-              "line": 49,
+              "line": 48,
               "column": 33
             },
             "text": "valueXToFromJson"
@@ -9105,15 +9105,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1513,
+                  "offset": 1466,
                   "uri": "extension_types.dart",
-                  "line": 51,
+                  "line": 50,
                   "column": 39
                 },
                 "end": {
-                  "offset": 1514,
+                  "offset": 1467,
                   "uri": "extension_types.dart",
-                  "line": 51,
+                  "line": 50,
                   "column": 40
                 },
                 "text": "v"
@@ -9136,15 +9136,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1487,
+              "offset": 1440,
               "uri": "extension_types.dart",
-              "line": 51,
+              "line": 50,
               "column": 13
             },
             "end": {
-              "offset": 1499,
+              "offset": 1452,
               "uri": "extension_types.dart",
-              "line": 51,
+              "line": 50,
               "column": 25
             },
             "text": "valueXToJson"
@@ -9167,15 +9167,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1580,
+                  "offset": 1533,
                   "uri": "extension_types.dart",
-                  "line": 53,
+                  "line": 52,
                   "column": 51
                 },
                 "end": {
-                  "offset": 1581,
+                  "offset": 1534,
                   "uri": "extension_types.dart",
-                  "line": 53,
+                  "line": 52,
                   "column": 52
                 },
                 "text": "v"
@@ -9198,15 +9198,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1546,
+              "offset": 1499,
               "uri": "extension_types.dart",
-              "line": 53,
+              "line": 52,
               "column": 17
             },
             "end": {
-              "offset": 1562,
+              "offset": 1515,
               "uri": "extension_types.dart",
-              "line": 53,
+              "line": 52,
               "column": 33
             },
             "text": "valueXToJsonImpl"
@@ -9229,15 +9229,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1641,
+                  "offset": 1594,
                   "uri": "extension_types.dart",
-                  "line": 55,
+                  "line": 54,
                   "column": 45
                 },
                 "end": {
-                  "offset": 1642,
+                  "offset": 1595,
                   "uri": "extension_types.dart",
-                  "line": 55,
+                  "line": 54,
                   "column": 46
                 },
                 "text": "v"
@@ -9260,15 +9260,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1611,
+              "offset": 1564,
               "uri": "extension_types.dart",
-              "line": 55,
+              "line": 54,
               "column": 15
             },
             "end": {
-              "offset": 1625,
+              "offset": 1578,
               "uri": "extension_types.dart",
-              "line": 55,
+              "line": 54,
               "column": 29
             },
             "text": "valueXFromJson"
@@ -9291,15 +9291,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1714,
+                  "offset": 1667,
                   "uri": "extension_types.dart",
-                  "line": 57,
+                  "line": 56,
                   "column": 57
                 },
                 "end": {
-                  "offset": 1715,
+                  "offset": 1668,
                   "uri": "extension_types.dart",
-                  "line": 57,
+                  "line": 56,
                   "column": 58
                 },
                 "text": "v"
@@ -9322,15 +9322,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1676,
+              "offset": 1629,
               "uri": "extension_types.dart",
-              "line": 57,
+              "line": 56,
               "column": 19
             },
             "end": {
-              "offset": 1694,
+              "offset": 1647,
               "uri": "extension_types.dart",
-              "line": 57,
+              "line": 56,
               "column": 37
             },
             "text": "valueXFromJsonImpl"
@@ -9353,15 +9353,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1793,
+                  "offset": 1746,
                   "uri": "extension_types.dart",
-                  "line": 59,
+                  "line": 58,
                   "column": 63
                 },
                 "end": {
-                  "offset": 1794,
+                  "offset": 1747,
                   "uri": "extension_types.dart",
-                  "line": 59,
+                  "line": 58,
                   "column": 64
                 },
                 "text": "v"
@@ -9384,15 +9384,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1751,
+              "offset": 1704,
               "uri": "extension_types.dart",
-              "line": 59,
+              "line": 58,
               "column": 21
             },
             "end": {
-              "offset": 1771,
+              "offset": 1724,
               "uri": "extension_types.dart",
-              "line": 59,
+              "line": 58,
               "column": 41
             },
             "text": "valueXFromJsonStatic"
@@ -9415,15 +9415,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1842,
+                  "offset": 1795,
                   "uri": "extension_types.dart",
-                  "line": 63,
+                  "line": 62,
                   "column": 18
                 },
                 "end": {
-                  "offset": 1847,
+                  "offset": 1800,
                   "uri": "extension_types.dart",
-                  "line": 63,
+                  "line": 62,
                   "column": 23
                 },
                 "text": "color"
@@ -9446,15 +9446,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1830,
+              "offset": 1783,
               "uri": "extension_types.dart",
-              "line": 63,
+              "line": 62,
               "column": 6
             },
             "end": {
-              "offset": 1835,
+              "offset": 1788,
               "uri": "extension_types.dart",
-              "line": 63,
+              "line": 62,
               "column": 11
             },
             "text": "color"
@@ -9477,15 +9477,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1887,
+                  "offset": 1840,
                   "uri": "extension_types.dart",
-                  "line": 65,
+                  "line": 64,
                   "column": 21
                 },
                 "end": {
-                  "offset": 1892,
+                  "offset": 1845,
                   "uri": "extension_types.dart",
-                  "line": 65,
+                  "line": 64,
                   "column": 26
                 },
                 "text": "color"
@@ -9508,15 +9508,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1873,
+              "offset": 1826,
               "uri": "extension_types.dart",
-              "line": 65,
+              "line": 64,
               "column": 7
             },
             "end": {
-              "offset": 1879,
+              "offset": 1832,
               "uri": "extension_types.dart",
-              "line": 65,
+              "line": 64,
               "column": 13
             },
             "text": "colorX"
@@ -9539,15 +9539,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 1944,
+                  "offset": 1897,
                   "uri": "extension_types.dart",
-                  "line": 67,
+                  "line": 66,
                   "column": 33
                 },
                 "end": {
-                  "offset": 1949,
+                  "offset": 1902,
                   "uri": "extension_types.dart",
-                  "line": 67,
+                  "line": 66,
                   "column": 38
                 },
                 "text": "color"
@@ -9570,15 +9570,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1922,
+              "offset": 1875,
               "uri": "extension_types.dart",
-              "line": 67,
+              "line": 66,
               "column": 11
             },
             "end": {
-              "offset": 1932,
+              "offset": 1885,
               "uri": "extension_types.dart",
-              "line": 67,
+              "line": 66,
               "column": 21
             },
             "text": "colorXImpl"
@@ -9601,15 +9601,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2019,
+                  "offset": 1972,
                   "uri": "extension_types.dart",
-                  "line": 69,
+                  "line": 68,
                   "column": 51
                 },
                 "end": {
-                  "offset": 2024,
+                  "offset": 1977,
                   "uri": "extension_types.dart",
-                  "line": 69,
+                  "line": 68,
                   "column": 56
                 },
                 "text": "color"
@@ -9632,15 +9632,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1985,
+              "offset": 1938,
               "uri": "extension_types.dart",
-              "line": 69,
+              "line": 68,
               "column": 17
             },
             "end": {
-              "offset": 2001,
+              "offset": 1954,
               "uri": "extension_types.dart",
-              "line": 69,
+              "line": 68,
               "column": 33
             },
             "text": "colorXToFromJson"
@@ -9663,15 +9663,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2082,
+                  "offset": 2035,
                   "uri": "extension_types.dart",
-                  "line": 71,
+                  "line": 70,
                   "column": 39
                 },
                 "end": {
-                  "offset": 2087,
+                  "offset": 2040,
                   "uri": "extension_types.dart",
-                  "line": 71,
+                  "line": 70,
                   "column": 44
                 },
                 "text": "color"
@@ -9694,15 +9694,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2056,
+              "offset": 2009,
               "uri": "extension_types.dart",
-              "line": 71,
+              "line": 70,
               "column": 13
             },
             "end": {
-              "offset": 2068,
+              "offset": 2021,
               "uri": "extension_types.dart",
-              "line": 71,
+              "line": 70,
               "column": 25
             },
             "text": "colorXToJson"
@@ -9725,15 +9725,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2157,
+                  "offset": 2110,
                   "uri": "extension_types.dart",
-                  "line": 73,
+                  "line": 72,
                   "column": 51
                 },
                 "end": {
-                  "offset": 2162,
+                  "offset": 2115,
                   "uri": "extension_types.dart",
-                  "line": 73,
+                  "line": 72,
                   "column": 56
                 },
                 "text": "color"
@@ -9756,15 +9756,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2123,
+              "offset": 2076,
               "uri": "extension_types.dart",
-              "line": 73,
+              "line": 72,
               "column": 17
             },
             "end": {
-              "offset": 2139,
+              "offset": 2092,
               "uri": "extension_types.dart",
-              "line": 73,
+              "line": 72,
               "column": 33
             },
             "text": "colorXToJsonImpl"
@@ -9787,15 +9787,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2226,
+                  "offset": 2179,
                   "uri": "extension_types.dart",
-                  "line": 75,
+                  "line": 74,
                   "column": 45
                 },
                 "end": {
-                  "offset": 2231,
+                  "offset": 2184,
                   "uri": "extension_types.dart",
-                  "line": 75,
+                  "line": 74,
                   "column": 50
                 },
                 "text": "color"
@@ -9818,15 +9818,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2196,
+              "offset": 2149,
               "uri": "extension_types.dart",
-              "line": 75,
+              "line": 74,
               "column": 15
             },
             "end": {
-              "offset": 2210,
+              "offset": 2163,
               "uri": "extension_types.dart",
-              "line": 75,
+              "line": 74,
               "column": 29
             },
             "text": "colorXFromJson"
@@ -9849,15 +9849,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2307,
+                  "offset": 2260,
                   "uri": "extension_types.dart",
-                  "line": 77,
+                  "line": 76,
                   "column": 57
                 },
                 "end": {
-                  "offset": 2312,
+                  "offset": 2265,
                   "uri": "extension_types.dart",
-                  "line": 77,
+                  "line": 76,
                   "column": 62
                 },
                 "text": "color"
@@ -9880,15 +9880,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2269,
+              "offset": 2222,
               "uri": "extension_types.dart",
-              "line": 77,
+              "line": 76,
               "column": 19
             },
             "end": {
-              "offset": 2287,
+              "offset": 2240,
               "uri": "extension_types.dart",
-              "line": 77,
+              "line": 76,
               "column": 37
             },
             "text": "colorXFromJsonImpl"
@@ -9911,15 +9911,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2394,
+                  "offset": 2347,
                   "uri": "extension_types.dart",
-                  "line": 79,
+                  "line": 78,
                   "column": 63
                 },
                 "end": {
-                  "offset": 2399,
+                  "offset": 2352,
                   "uri": "extension_types.dart",
-                  "line": 79,
+                  "line": 78,
                   "column": 68
                 },
                 "text": "color"
@@ -9942,15 +9942,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2352,
+              "offset": 2305,
               "uri": "extension_types.dart",
-              "line": 79,
+              "line": 78,
               "column": 21
             },
             "end": {
-              "offset": 2372,
+              "offset": 2325,
               "uri": "extension_types.dart",
-              "line": 79,
+              "line": 78,
               "column": 41
             },
             "text": "colorXFromJsonStatic"
@@ -9973,15 +9973,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2468,
+                  "offset": 2421,
                   "uri": "extension_types.dart",
-                  "line": 83,
+                  "line": 82,
                   "column": 30
                 },
                 "end": {
-                  "offset": 2473,
+                  "offset": 2426,
                   "uri": "extension_types.dart",
-                  "line": 83,
+                  "line": 82,
                   "column": 35
                 },
                 "text": "value"
@@ -10004,15 +10004,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2448,
+              "offset": 2401,
               "uri": "extension_types.dart",
-              "line": 83,
+              "line": 82,
               "column": 10
             },
             "end": {
-              "offset": 2457,
+              "offset": 2410,
               "uri": "extension_types.dart",
-              "line": 83,
+              "line": 82,
               "column": 19
             },
             "text": "jsonValue"
@@ -10035,15 +10035,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2525,
+                  "offset": 2478,
                   "uri": "extension_types.dart",
-                  "line": 85,
+                  "line": 84,
                   "column": 33
                 },
                 "end": {
-                  "offset": 2530,
+                  "offset": 2483,
                   "uri": "extension_types.dart",
-                  "line": 85,
+                  "line": 84,
                   "column": 38
                 },
                 "text": "value"
@@ -10066,15 +10066,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2503,
+              "offset": 2456,
               "uri": "extension_types.dart",
-              "line": 85,
+              "line": 84,
               "column": 11
             },
             "end": {
-              "offset": 2513,
+              "offset": 2466,
               "uri": "extension_types.dart",
-              "line": 85,
+              "line": 84,
               "column": 21
             },
             "text": "jsonString"
@@ -10097,15 +10097,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2573,
+                  "offset": 2526,
                   "uri": "extension_types.dart",
-                  "line": 87,
+                  "line": 86,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2578,
+                  "offset": 2531,
                   "uri": "extension_types.dart",
-                  "line": 87,
+                  "line": 86,
                   "column": 29
                 },
                 "text": "value"
@@ -10128,15 +10128,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2557,
+              "offset": 2510,
               "uri": "extension_types.dart",
-              "line": 87,
+              "line": 86,
               "column": 8
             },
             "end": {
-              "offset": 2564,
+              "offset": 2517,
               "uri": "extension_types.dart",
-              "line": 87,
+              "line": 86,
               "column": 15
             },
             "text": "jsonNum"
@@ -10159,15 +10159,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2621,
+                  "offset": 2574,
                   "uri": "extension_types.dart",
-                  "line": 89,
+                  "line": 88,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2626,
+                  "offset": 2579,
                   "uri": "extension_types.dart",
-                  "line": 89,
+                  "line": 88,
                   "column": 29
                 },
                 "text": "value"
@@ -10190,15 +10190,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2605,
+              "offset": 2558,
               "uri": "extension_types.dart",
-              "line": 89,
+              "line": 88,
               "column": 8
             },
             "end": {
-              "offset": 2612,
+              "offset": 2565,
               "uri": "extension_types.dart",
-              "line": 89,
+              "line": 88,
               "column": 15
             },
             "text": "jsonInt"
@@ -10221,15 +10221,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2678,
+                  "offset": 2631,
                   "uri": "extension_types.dart",
-                  "line": 91,
+                  "line": 90,
                   "column": 33
                 },
                 "end": {
-                  "offset": 2683,
+                  "offset": 2636,
                   "uri": "extension_types.dart",
-                  "line": 91,
+                  "line": 90,
                   "column": 38
                 },
                 "text": "value"
@@ -10252,15 +10252,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2656,
+              "offset": 2609,
               "uri": "extension_types.dart",
-              "line": 91,
+              "line": 90,
               "column": 11
             },
             "end": {
-              "offset": 2666,
+              "offset": 2619,
               "uri": "extension_types.dart",
-              "line": 91,
+              "line": 90,
               "column": 21
             },
             "text": "jsonDouble"
@@ -10283,15 +10283,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2729,
+                  "offset": 2682,
                   "uri": "extension_types.dart",
-                  "line": 93,
+                  "line": 92,
                   "column": 27
                 },
                 "end": {
-                  "offset": 2734,
+                  "offset": 2687,
                   "uri": "extension_types.dart",
-                  "line": 93,
+                  "line": 92,
                   "column": 32
                 },
                 "text": "value"
@@ -10314,15 +10314,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2711,
+              "offset": 2664,
               "uri": "extension_types.dart",
-              "line": 93,
+              "line": 92,
               "column": 9
             },
             "end": {
-              "offset": 2719,
+              "offset": 2672,
               "uri": "extension_types.dart",
-              "line": 93,
+              "line": 92,
               "column": 17
             },
             "text": "jsonBool"
@@ -10345,15 +10345,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2780,
+                  "offset": 2733,
                   "uri": "extension_types.dart",
-                  "line": 95,
+                  "line": 94,
                   "column": 27
                 },
                 "end": {
-                  "offset": 2785,
+                  "offset": 2738,
                   "uri": "extension_types.dart",
-                  "line": 95,
+                  "line": 94,
                   "column": 32
                 },
                 "text": "value"
@@ -10376,15 +10376,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2762,
+              "offset": 2715,
               "uri": "extension_types.dart",
-              "line": 95,
+              "line": 94,
               "column": 9
             },
             "end": {
-              "offset": 2770,
+              "offset": 2723,
               "uri": "extension_types.dart",
-              "line": 95,
+              "line": 94,
               "column": 17
             },
             "text": "jsonList"
@@ -10407,15 +10407,15 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 2828,
+                  "offset": 2781,
                   "uri": "extension_types.dart",
-                  "line": 97,
+                  "line": 96,
                   "column": 24
                 },
                 "end": {
-                  "offset": 2833,
+                  "offset": 2786,
                   "uri": "extension_types.dart",
-                  "line": 97,
+                  "line": 96,
                   "column": 29
                 },
                 "text": "value"
@@ -10438,15 +10438,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2812,
+              "offset": 2765,
               "uri": "extension_types.dart",
-              "line": 97,
+              "line": 96,
               "column": 8
             },
             "end": {
-              "offset": 2819,
+              "offset": 2772,
               "uri": "extension_types.dart",
-              "line": 97,
+              "line": 96,
               "column": 15
             },
             "text": "jsonMap"
@@ -23329,7 +23329,7 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.3",
+    "sdkVersion": "3.4.4",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"

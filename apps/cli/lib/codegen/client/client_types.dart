@@ -1,6 +1,6 @@
+import 'package:api_celest/ast.dart';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:api_celest/ast.dart';
 import 'package:code_builder/code_builder.dart';
 
 abstract final class ClientPaths {

@@ -2,7 +2,7 @@ name: _common
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.4.0
 dependencies:
   celest_core:
     path: ../../../../../../celest/packages/celest_core

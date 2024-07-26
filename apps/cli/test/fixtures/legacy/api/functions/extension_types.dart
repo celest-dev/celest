@@ -1,11 +1,10 @@
 /// Tests that extension types are correctly handled by the analyzer.
 library;
 
-import 'package:celest/celest.dart';
 import 'dart:async';
 
+import 'package:celest/celest.dart';
 import 'package:celest_backend/models/extension_types.dart';
-import 'package:celest_core/celest_core.dart';
 
 // Basic extension types
 @cloud

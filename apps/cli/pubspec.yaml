@@ -16,7 +16,7 @@ dependencies:
   archive: ^3.4.9
   args: ^2.4.2
   async: ^2.11.0
-  aws_common: ^0.6.1
+  aws_common: ^0.7.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
   cedar:
@@ -40,7 +40,7 @@ dependencies:
   crypto: ^3.0.3
   dart_style: ^2.3.4
   drift: ">=2.19.0 <2.20.0"
-  email_validator: ^2.1.17
+  email_validator: ^3.0.0
   file: ^7.0.0
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1
@@ -68,7 +68,7 @@ dependencies:
   pub_server:
     path: ../../packages/pub_server
   pubspec_parse: ^1.2.3
-  sentry: ^7.14.0
+  sentry: ^8.5.0
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ^2.0.0

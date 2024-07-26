@@ -32,11 +32,11 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.3",
+    "sdkVersion": "3.4.4",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
     ],
-    "flutterSdkVersion": "3.22.2"
+    "flutterSdkVersion": "3.22.3"
   }
 }

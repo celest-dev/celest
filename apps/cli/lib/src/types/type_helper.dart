@@ -15,6 +15,7 @@ import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
+import 'package:celest_cli/src/types/type_impl_alias.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -318,8 +319,9 @@ final class TypeHelper {
     // nullable/non-nullable promotions which require [fromReference] succeed.
     if (!reference.isNullableOrFalse) {
       _referenceToDartType[reference.withNullability(true)] ??=
-          (type as TypeImpl).withNullability(NullabilitySuffix.question)
-            ..alias = type.alias;
+          (type as TypeImpl)
+              .withNullability(NullabilitySuffix.question)
+              .withAlias(type.alias);
       _referenceToDartType[reference.withNullability(false)] ??= type;
     }
     if (toUri(type) case final wireType?) {
@@ -502,7 +504,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 
   @override
   codegen.Reference visitInvalidType(InvalidType type) =>
-      codegen.refer(type.getDisplayString(withNullability: false));
+      codegen.refer(type.getDisplayString(withNullability: true));
 
   @override
   codegen.Reference visitNeverType(NeverType type) => DartTypes.core.never;
@@ -539,7 +541,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   codegen.Reference visitTypeParameterType(TypeParameterType type) {
     return codegen.TypeReference(
       (t) => t
-        ..symbol = type.getDisplayString(withNullability: false)
+        ..symbol = type.getDisplayString(withNullability: true)
         ..bound = type.bound is DynamicType
             ? null
             : typeHelper.toReference(type.bound),

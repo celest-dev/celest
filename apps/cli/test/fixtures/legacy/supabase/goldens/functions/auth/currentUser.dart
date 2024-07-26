@@ -252,7 +252,11 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
         r'statusCode': $value.statusCode,
       },
       deserialize: ($serialized) {
-        return _i5.AuthRetryableFetchException();
+        return _i5.AuthRetryableFetchException(
+          message: (($serialized?[r'message'] as String?)) ??
+              'AuthRetryableFetchException',
+          statusCode: ($serialized?[r'statusCode'] as String?),
+        );
       },
     ));
     _i3.Serializers.instance.put(_i3.Serializer.define<

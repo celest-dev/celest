@@ -752,6 +752,94 @@ extension type StringXString(String s) implements String {}
       );
 
       testNoErrors(
+        name: 'extension_type_complex',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+Value value(Value v) => v;
+@cloud
+ValueX valueX(ValueX v) => v;
+@cloud
+ValueXImpl valueXImpl(ValueXImpl v) => v;
+''',
+        },
+        models: '''
+class Value {
+  const Value(this.value);
+
+  factory Value.fromJson(String value) => Value(value);
+
+  final String value;
+
+  String toJson() => value;
+}
+
+extension type const ValueX(Value v) {}
+extension type const ValueXImpl(Value v) implements Value {}
+''',
+      );
+
+      testNoErrors(
+        name: 'extension_type_complex_to_from_json',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+ValueXToFromJson valueXToFromJson(ValueXToFromJson v) => v;
+@cloud
+ValueXToJson valueXToJson(ValueXToJson v) => v;
+@cloud
+ValueXToJsonImpl valueXToJsonImpl(ValueXToJsonImpl v) => v;
+@cloud
+ValueXFromJson valueXFromJson(ValueXFromJson v) => v;
+@cloud
+ValueXFromJsonImpl valueXFromJsonImpl(ValueXFromJsonImpl v) => v;
+@cloud
+ValueXFromJsonStatic valueXFromJsonStatic(ValueXFromJsonStatic v) => v;
+''',
+        },
+        models: r'''
+class Value {
+  const Value(this.value);
+
+  factory Value.fromJson(String value) => Value(value);
+
+  final String value;
+
+  String toJson() => value;
+}
+
+extension type const ValueXToFromJson(Value v) {
+  ValueXToFromJson.fromJson(String value) : v = Value('${value}FromJson');
+
+  String toJson() => '${v.value}ToJson';
+}
+extension type const ValueXToJson(Value v) {
+  Map<String, Object?> toJson() => {'value': '${v.value}ToJson'};
+}
+extension type const ValueXToJsonImpl(Value v) implements Value {
+  String toJson() => '${v.value}ToJson';
+}
+extension type const ValueXFromJson(Value v) {
+  ValueXFromJson.fromJson(Map<String, Object?> json)
+      : v = Value('${json['value']}FromJson');
+}
+extension type const ValueXFromJsonImpl(Value v) implements Value {
+  ValueXFromJsonImpl.fromJson(String value) : v = Value('${value}FromJson');
+
+  String toJson() => v.toJson();
+}
+extension type const ValueXFromJsonStatic(Value v) {
+  static ValueXFromJsonStatic fromJson(Map<String, Object?> json) =>
+      ValueXFromJsonStatic(Value('${json['value']}FromJson'));
+}
+''',
+      );
+
+      testNoErrors(
         name: 'allows_map_string_dynamic_object',
         apis: {
           'greeting.dart': '''

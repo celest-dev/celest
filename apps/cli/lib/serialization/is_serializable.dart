@@ -123,6 +123,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     DartType wireType,
   ) {
     if (fromJsonCtor is! ConstructorElement) {
+      // TODO(dnys1): Breaks with analyzer >=6.5.0 because type system uses
+      // `identical` in subtype checks instead of `==`
+      // https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
       if (!identical(fromJsonCtor.returnType, type)) {
         return Verdict.no(
           'The return type of ${type.element.name}\'s fromJson constructor '
@@ -148,7 +151,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         .toList();
     if (positionalParameters.isEmpty || namedParameters.isNotEmpty) {
       final functionSignature =
-          'factory ${type.element.name}.fromJson(${wireType.getDisplayString(withNullability: false)} json)';
+          'factory ${type.element.name}.fromJson(${wireType.getDisplayString(withNullability: true)} json)';
       return Verdict.no(
         'The fromJson constructor of type ${type.element.name} must have '
         'one required, positional parameter whose type matches the return '
@@ -171,6 +174,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     switch (wireType) {
       case DartType(isDartCoreObject: true) || DynamicType():
       case _
+          // TODO(dnys1): Breaks with analyzer >=6.5.0 because type system uses
+          // `identical` in subtype checks instead of `==`
+          // https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
           when typeHelper.typeSystem.isAssignableTo(
             wireType,
             requiredParam.type,
@@ -508,7 +514,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                   'All classes in a sealed class hierarchy must use '
                   'Map<String, Object?> as their wire type but '
                   '${subtypeSpec.type.element!.name!} uses '
-                  '${subtypeWireType.getDisplayString(withNullability: false)}',
+                  '${subtypeWireType.getDisplayString(withNullability: true)}',
                 );
               }
               spec.subtypes.add(subtypeSpec..parent = spec);
@@ -644,7 +650,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         analytics.capture(
           'type_parameter',
           properties: {
-            'type': type.getDisplayString(withNullability: false),
+            'type': type.getDisplayString(withNullability: true),
             'bound': 'sealed',
           },
         );
@@ -653,7 +659,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         analytics.capture(
           'type_parameter',
           properties: {
-            'type': type.getDisplayString(withNullability: false),
+            'type': type.getDisplayString(withNullability: true),
             'bound': 'unbounded',
           },
         );
@@ -664,7 +670,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         analytics.capture(
           'type_parameter',
           properties: {
-            'type': type.getDisplayString(withNullability: false),
+            'type': type.getDisplayString(withNullability: true),
             'bound': 'other',
           },
         );
@@ -883,7 +889,7 @@ extension on InterfaceType {
         analytics.capture(
           'extension_type',
           properties: {
-            'type': getDisplayString(withNullability: false),
+            'type': getDisplayString(withNullability: true),
             'representationType': representationType.getDisplayString(
               withNullability: false,
             ),

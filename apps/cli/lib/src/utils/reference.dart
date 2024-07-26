@@ -26,7 +26,7 @@ extension ReferenceHelper on Reference {
             final dartType =
                 typeHelper.fromReference(functionType) as ast.FunctionType;
             t
-              ..symbol = dartType.getDisplayString(withNullability: false)
+              ..symbol = dartType.getDisplayString(withNullability: true)
               ..url = dartType.sourceUri?.toString()
               ..isNullable = functionType.isNullable;
           }),
