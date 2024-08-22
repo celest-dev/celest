@@ -18,4 +18,4 @@ dependency_overrides:
     path: ../../../../../../celest/packages/celest_auth
   celest_core:
     path: ../../../../../../celest/packages/celest_core
-  web_socket_channel: ^3.0.0
+  native_storage: ^0.2.0

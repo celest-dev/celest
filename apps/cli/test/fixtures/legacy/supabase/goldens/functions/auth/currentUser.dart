@@ -213,11 +213,13 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
       },
       deserialize: ($serialized) {
         return _i5.AuthApiException(
           ($serialized[r'message'] as String),
           statusCode: ($serialized[r'statusCode'] as String?),
+          code: ($serialized[r'code'] as String?),
         );
       },
     ));
@@ -226,11 +228,13 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
       },
       deserialize: ($serialized) {
         return _i5.AuthException(
           ($serialized[r'message'] as String),
           statusCode: ($serialized[r'statusCode'] as String?),
+          code: ($serialized[r'code'] as String?),
         );
       },
     ));
@@ -239,6 +243,7 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
       },
       deserialize: ($serialized) {
         return _i5.AuthPKCEGrantCodeExchangeError(
@@ -250,6 +255,7 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
       },
       deserialize: ($serialized) {
         return _i5.AuthRetryableFetchException(
@@ -264,9 +270,11 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
       },
       deserialize: ($serialized) {
-        return _i5.AuthSessionMissingException();
+        return _i5.AuthSessionMissingException(
+            ($serialized?[r'message'] as String?));
       },
     ));
     _i3.Serializers.instance.put(_i3.Serializer.define<
@@ -274,12 +282,13 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => {
         r'message': $value.message,
         r'statusCode': $value.statusCode,
+        r'code': $value.code,
         r'reasons': $value.reasons,
       },
       deserialize: ($serialized) {
         return _i5.AuthWeakPasswordException(
           message: ($serialized[r'message'] as String),
-          statusCode: ($serialized[r'statusCode'] as String),
+          statusCode: ($serialized[r'statusCode'] as String?),
           reasons: ($serialized[r'reasons'] as Iterable<Object?>)
               .map((el) => (el as String))
               .toList(),
@@ -293,7 +302,7 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
         return _i4.AuthUser(
           id: ($serialized[r'id'] as String),
           appMetadata: ($serialized[r'appMetadata'] as Map<String, Object?>),
-          userMetadata: ($serialized[r'userMetadata'] as Map<String, Object?>),
+          userMetadata: ($serialized[r'userMetadata'] as Map<String, Object?>?),
           aud: ($serialized[r'aud'] as String),
           email: ($serialized[r'email'] as String?),
           phone: ($serialized[r'phone'] as String?),
@@ -302,8 +311,8 @@ final class CurrentUserTarget extends _i1.CloudFunctionHttpTarget {
           emailConfirmedAt: ($serialized[r'emailConfirmedAt'] as String?),
           phoneConfirmedAt: ($serialized[r'phoneConfirmedAt'] as String?),
           lastSignInAt: ($serialized[r'lastSignInAt'] as String?),
-          role: ($serialized[r'role'] as String),
-          updatedAt: ($serialized[r'updatedAt'] as String),
+          role: ($serialized[r'role'] as String?),
+          updatedAt: ($serialized[r'updatedAt'] as String?),
         );
       },
     ));

@@ -46,11 +46,13 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
     },
     deserialize: ($serialized) {
       return _$auth_exception.AuthApiException(
         ($serialized[r'message'] as String),
         statusCode: ($serialized[r'statusCode'] as String?),
+        code: ($serialized[r'code'] as String?),
       );
     },
   ));
@@ -59,11 +61,13 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
     },
     deserialize: ($serialized) {
       return _$auth_exception.AuthException(
         ($serialized[r'message'] as String),
         statusCode: ($serialized[r'statusCode'] as String?),
+        code: ($serialized[r'code'] as String?),
       );
     },
   ));
@@ -72,6 +76,7 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
     },
     deserialize: ($serialized) {
       return _$auth_exception.AuthPKCEGrantCodeExchangeError(
@@ -83,6 +88,7 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
     },
     deserialize: ($serialized) {
       return _$auth_exception.AuthRetryableFetchException(
@@ -97,9 +103,11 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
     },
     deserialize: ($serialized) {
-      return _$auth_exception.AuthSessionMissingException();
+      return _$auth_exception.AuthSessionMissingException(
+          ($serialized?[r'message'] as String?));
     },
   ));
   Serializers.instance.put(Serializer.define<
@@ -107,12 +115,13 @@ void initSerializers() {
     serialize: ($value) => {
       r'message': $value.message,
       r'statusCode': $value.statusCode,
+      r'code': $value.code,
       r'reasons': $value.reasons,
     },
     deserialize: ($serialized) {
       return _$auth_exception.AuthWeakPasswordException(
         message: ($serialized[r'message'] as String),
-        statusCode: ($serialized[r'statusCode'] as String),
+        statusCode: ($serialized[r'statusCode'] as String?),
         reasons: ($serialized[r'reasons'] as Iterable<Object?>)
             .map((el) => (el as String))
             .toList(),
@@ -126,7 +135,7 @@ void initSerializers() {
       return _$auth_user.AuthUser(
         id: ($serialized[r'id'] as String),
         appMetadata: ($serialized[r'appMetadata'] as Map<String, Object?>),
-        userMetadata: ($serialized[r'userMetadata'] as Map<String, Object?>),
+        userMetadata: ($serialized[r'userMetadata'] as Map<String, Object?>?),
         aud: ($serialized[r'aud'] as String),
         email: ($serialized[r'email'] as String?),
         phone: ($serialized[r'phone'] as String?),
@@ -135,8 +144,8 @@ void initSerializers() {
         emailConfirmedAt: ($serialized[r'emailConfirmedAt'] as String?),
         phoneConfirmedAt: ($serialized[r'phoneConfirmedAt'] as String?),
         lastSignInAt: ($serialized[r'lastSignInAt'] as String?),
-        role: ($serialized[r'role'] as String),
-        updatedAt: ($serialized[r'updatedAt'] as String),
+        role: ($serialized[r'role'] as String?),
+        updatedAt: ($serialized[r'updatedAt'] as String?),
       );
     },
   ));

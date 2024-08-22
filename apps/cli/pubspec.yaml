@@ -105,6 +105,9 @@ dependency_overrides:
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
 
+  # TODO: Remove when updated in celest_core
+  native_storage: ^0.2.0
+
   # Use vendored sqlite3 to make use of native-assets
   sqlite3:
     path: ../../packages/sqlite3/sqlite3
