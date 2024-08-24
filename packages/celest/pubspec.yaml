@@ -11,6 +11,7 @@ environment:
 dependencies:
   async: ^2.11.0
   celest_auth: ^0.4.0
+  celest_cloud: ^0.1.0
   celest_core: ^0.4.2
   chunked_stream: ^1.4.2
   collection: ^1.18.0

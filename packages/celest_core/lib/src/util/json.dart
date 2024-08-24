@@ -22,7 +22,9 @@ extension JsonUtf8 on Object {
   }
 
   static Never _invalidJson(Object? json) {
-    throw BadRequestException('Invalid JSON body (${json.runtimeType}): $json');
+    throw BadRequestException(
+      'Invalid JSON body (${json.runtimeType}): $json',
+    );
   }
 
   /// Decodes a JSON [body] of type [List<int>] or [String].
