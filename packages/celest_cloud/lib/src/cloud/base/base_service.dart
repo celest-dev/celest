@@ -49,7 +49,7 @@ abstract mixin class BaseService {
     try {
       await for (final state in stream) {
         logger?.fine(
-          '[$name.${operation.name}] Operation state:\n$response',
+          '[$name.${operation.name}] Operation state:\n$state',
         );
         yield state;
       }

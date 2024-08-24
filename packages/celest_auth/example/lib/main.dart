@@ -122,6 +122,20 @@ class _MainAppState extends State<MainApp> {
                             child: const Text('Sign out'),
                           ),
                         ],
+                      AuthLinkUser() => [
+                          const Text('User already exists'),
+                          TextButton(
+                            onPressed: state.confirm,
+                            child: const Text('Link account'),
+                          ),
+                        ],
+                      AuthRegisterUser() => [
+                          const Text('User does not exist'),
+                          TextButton(
+                            onPressed: state.confirm,
+                            child: const Text('Create new account'),
+                          ),
+                        ],
                     },
                   ],
                 );
