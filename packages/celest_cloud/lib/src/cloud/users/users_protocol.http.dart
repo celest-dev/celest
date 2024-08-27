@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/auth/v1alpha1/users.pb.dart';
 import 'package:celest_cloud/src/proto/google/protobuf/empty.pb.dart';
-import 'package:celest_core/celest_core.dart' show CloudException;
 import 'package:http/http.dart' as http;
 
-final class UsersProtocolHttp implements UsersProtocol {
+final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
   UsersProtocolHttp({
     required Uri uri,
     http.Client? httpClient,
@@ -26,7 +26,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -44,7 +44,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -73,7 +73,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -100,7 +100,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -127,7 +127,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -155,7 +155,7 @@ final class UsersProtocolHttp implements UsersProtocol {
     final res = await _client.send(req);
     if (res.statusCode != 200) {
       final body = await res.stream.bytesToString();
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );

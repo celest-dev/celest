@@ -8,5 +8,6 @@ analyzer:
   errors:
     # To prevent issues publishing.
     depend_on_referenced_packages: error
+    camel_case_types: ignore
   exclude:
     - "**/*.ffi.dart"

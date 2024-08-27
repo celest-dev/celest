@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
-import 'package:celest_core/celest_core.dart' show CloudException;
 import 'package:http/http.dart' as http;
 
-final class OrganizationsProtocolHttp implements OrganizationsProtocol {
+final class OrganizationsProtocolHttp
+    with BaseProtocol
+    implements OrganizationsProtocol {
   OrganizationsProtocolHttp({
     required Uri uri,
     http.Client? httpClient,
@@ -36,7 +38,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -65,7 +67,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -82,7 +84,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -109,7 +111,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -138,7 +140,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -157,7 +159,7 @@ final class OrganizationsProtocolHttp implements OrganizationsProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );

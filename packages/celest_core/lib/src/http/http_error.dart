@@ -3,12 +3,17 @@ import 'package:meta/meta_meta.dart';
 /// {@template celest.http.http_error}
 /// Configures an HTTP error response for a cloud function.
 /// {@endtemplate}
-@Target({TargetKind.library, TargetKind.function})
+@Target({
+  TargetKind.library,
+  TargetKind.function,
+  TargetKind.classType,
+  TargetKind.extensionType,
+})
 final class httpError {
   /// {@macro celest.http.http_error}
   const httpError(
-    this.statusCode,
-    this.type, [
+    this.statusCode, [
+    this.type,
     this.type1,
     this.type2,
     this.type3,
@@ -22,7 +27,7 @@ final class httpError {
   final int statusCode;
 
   /// The error type this configuration applies to.
-  final Type type;
+  final Type? type;
 
   /// Additional error type this configuration applies to.
   final Type? type1;

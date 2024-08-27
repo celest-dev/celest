@@ -9,75 +9,76 @@ import 'package:http/http.dart' as http;
 /// An exception thrown by a Cloud Widget.
 abstract mixin class CloudException implements CelestException {
   /// {@macro celest_core.exception.bad_request_exception}
-  const factory CloudException.badRequest(String? message, {Object? details}) =
-      BadRequestException;
+  const factory CloudException.badRequest(String? message,
+      {JsonValue? details}) = BadRequestException;
 
   /// {@macro celest_core.exception.unauthorized_exception}
   const factory CloudException.unauthorized(String? message,
-      {Object? details}) = UnauthorizedException;
+      {JsonValue? details}) = UnauthorizedException;
 
   /// {@macro celest_core.exception.internal_server_error}
   factory CloudException.internalServerError(String? message,
-      {Object? details}) = InternalServerError;
+      {JsonValue? details}) = InternalServerError;
 
   /// {@macro celest_core.exception.cancelled_exception}
-  const factory CloudException.cancelled(String? message, {Object? details}) =
-      CancelledException;
+  const factory CloudException.cancelled(String? message,
+      {JsonValue? details}) = CancelledException;
 
   /// {@macro celest_core.exception.unknown_error}
-  factory CloudException.unknownError(String? message, {Object? details}) =
+  factory CloudException.unknownError(String? message, {JsonValue? details}) =
       UnknownError;
 
   /// {@macro celest_core.exception.not_found_exception}
-  const factory CloudException.notFound(String? message, {Object? details}) =
+  const factory CloudException.notFound(String? message, {JsonValue? details}) =
       NotFoundException;
 
   /// {@macro celest_core.exception.already_exists_exception}
   const factory CloudException.alreadyExists(String? message,
-      {Object? details}) = AlreadyExistsException;
+      {JsonValue? details}) = AlreadyExistsException;
 
   /// {@macro celest_core.exception.permission_denied_exception}
   const factory CloudException.permissionDenied(String? message,
-      {Object? details}) = PermissionDeniedException;
+      {JsonValue? details}) = PermissionDeniedException;
 
   /// {@macro celest_core.exception.resource_exhausted_exception}
   const factory CloudException.resourceExhausted(String? message,
-      {Object? details}) = ResourceExhaustedException;
+      {JsonValue? details}) = ResourceExhaustedException;
 
   /// {@macro celest_core.exception.failed_precondition_exception}
   const factory CloudException.failedPrecondition(String? message,
-      {Object? details}) = FailedPreconditionException;
+      {JsonValue? details}) = FailedPreconditionException;
 
   /// {@macro celest_core.exception.aborted_exception}
-  const factory CloudException.aborted(String? message, {Object? details}) =
+  const factory CloudException.aborted(String? message, {JsonValue? details}) =
       AbortedException;
 
   /// {@macro celest_core.exception.out_of_range_exception}
-  const factory CloudException.outOfRange(String? message, {Object? details}) =
-      OutOfRangeException;
+  const factory CloudException.outOfRange(String? message,
+      {JsonValue? details}) = OutOfRangeException;
 
   /// {@macro celest_core.exception.unimplemented_error}
-  factory CloudException.unimplemented(String? message, {Object? details}) =
-      UnimplementedError;
+  factory CloudException.unimplemented([String? message]) = UnimplementedError;
 
   /// {@macro celest_core.exception.unavailable_error}
-  factory CloudException.unavailable(String? message, {Object? details}) =
+  factory CloudException.unavailable(String? message, {JsonValue? details}) =
       UnavailableError;
 
   /// {@macro celest_core.exception.data_loss_error}
-  factory CloudException.dataLoss(String? message, {Object? details}) =
+  factory CloudException.dataLoss(String? message, {JsonValue? details}) =
       DataLossError;
 
   /// {@macro celest_core.exception.deadline_exceeded_error}
-  factory CloudException.deadlineExceeded(String? message, {Object? details}) =
-      DeadlineExceededError;
+  factory CloudException.deadlineExceeded(String? message,
+      {JsonValue? details}) = DeadlineExceededError;
 
   /// Creates a [CloudException] from the given gRPC [error].
   factory CloudException.fromGrpcError(GrpcError error) {
     return CloudException.grpc(
       code: error.code,
       message: error.message,
-      details: error.details,
+      details: error.details
+          ?.map((det) => det.toProto3Json() as JsonValue)
+          .toList() as JsonList,
     );
   }
 
@@ -85,7 +86,7 @@ abstract mixin class CloudException implements CelestException {
   factory CloudException.grpc({
     required int code,
     String? message,
-    Object? details,
+    JsonValue? details,
   }) {
     return switch (code) {
       StatusCode.aborted => AbortedException(
@@ -144,10 +145,7 @@ abstract mixin class CloudException implements CelestException {
           message,
           details: details,
         ),
-      StatusCode.unimplemented => UnimplementedError(
-          message,
-          details: details,
-        ),
+      StatusCode.unimplemented => UnimplementedError(message),
       _ => UnknownError(
           message,
           details: details,
@@ -155,31 +153,45 @@ abstract mixin class CloudException implements CelestException {
     };
   }
 
+  /// Creates a [CloudException] from the given JSON body.
+  factory CloudException.fromJson(Map<String, Object?> json) {
+    final error = json['error'] as Map? ?? json;
+    final code = error['code'];
+    final message = error['message'] as String?;
+    final details = switch (error['details']) {
+      null => null,
+      final Map<Object?, Object?> map => JsonMap(map.cast()) as JsonValue,
+      final List<Object?> list => JsonList(list.cast()),
+      final Object value => JsonValue(value),
+    };
+    return CloudException.http(
+      code: code,
+      message: message,
+      details: details,
+    );
+  }
+
   /// Creates a [CloudException] from the given HTTP [response].
   factory CloudException.fromHttpResponse(http.Response response) {
+    try {
+      final json = JsonUtf8.decodeAny(response.bodyBytes);
+      return CloudException.fromJson(json);
+    } on Object {
+      // OK
+    }
     return CloudException.http(
       statusCode: response.statusCode,
-      body: response.bodyBytes,
+      message: response.body,
     );
   }
 
   /// Creates a [CloudException] from the given HTTP response parameters.
   factory CloudException.http({
     int? statusCode,
-    Object? body,
+    Object? code,
+    String? message,
+    JsonValue? details,
   }) {
-    Object? code;
-    String? message;
-    Object? details = body;
-    try {
-      final json = JsonUtf8.decodeAny(body);
-      final error = json['error'] as Map?;
-      code = error?['code'];
-      message = error?['message'] as String?;
-      details = error?['details'];
-    } on Object {
-      // OK
-    }
     if (code is String) {
       return switch (code) {
         'BadRequestException' => BadRequestException(
@@ -218,10 +230,7 @@ abstract mixin class CloudException implements CelestException {
             message,
             details: details,
           ),
-        'UnimplementedError' => UnimplementedError(
-            message,
-            details: details,
-          ),
+        'UnimplementedError' => UnimplementedError(message),
         'InternalServerError' => InternalServerError(
             message,
             details: details,
@@ -295,10 +304,7 @@ abstract mixin class CloudException implements CelestException {
         ),
       HttpStatus.notImplemented ||
       StatusCode.unimplemented =>
-        UnimplementedError(
-          message,
-          details: details,
-        ),
+        UnimplementedError(message),
       HttpStatus.internalServerError ||
       StatusCode.internal =>
         InternalServerError(
@@ -318,21 +324,15 @@ abstract mixin class CloudException implements CelestException {
     };
   }
 
-  /// The exception code.
-  String get code;
-
-  /// The gRPC status code associated with this exception.
-  int get grpcStatus;
-
-  /// The HTTP status code associated with this exception.
-  int get httpStatus;
+  @override
+  String get message;
 
   /// Any details associated with the exception.
-  Object? get details;
+  JsonValue? get details;
 
   @override
   String toString() {
-    final buf = StringBuffer('$code: $message');
+    final buf = StringBuffer('$runtimeType: $message');
     if (details != null) {
       if (!message.endsWith('.')) {
         buf.write('.');
@@ -346,6 +346,7 @@ abstract mixin class CloudException implements CelestException {
 /// {@template celest_core.exception.cancelled_exception}
 /// An exception thrown by a Cloud Function when a request is cancelled.
 /// {@endtemplate}
+@httpError(HttpStatus.clientClosedRequest)
 class CancelledException with CloudException {
   /// Creates a [CancelledException] with the given [message].
   ///
@@ -357,21 +358,13 @@ class CancelledException with CloudException {
   final String message;
 
   @override
-  String get code => 'CancelledException';
-
-  @override
-  int get grpcStatus => StatusCode.cancelled;
-
-  @override
-  int get httpStatus => HttpStatus.clientClosedRequest;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.unknown_error}
 /// An exception thrown by a Cloud Function when an unknown error occurs.
 /// {@endtemplate}
+@httpError(HttpStatus.internalServerError)
 class UnknownError extends Error with CloudException {
   /// Creates a [UnknownError] with the given [message].
   ///
@@ -383,37 +376,26 @@ class UnknownError extends Error with CloudException {
   final String message;
 
   @override
-  String get code => 'UnknownError';
-
-  @override
-  int get grpcStatus => StatusCode.unknown;
-
-  @override
-  int get httpStatus => HttpStatus.internalServerError;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.bad_request_exception}
 /// An exception thrown by a Cloud Function when a request contains invalid
 /// data or otherwise lead to a recoverable exception.
 /// {@endtemplate}
+@httpError(HttpStatus.badRequest)
 abstract mixin class BadRequestException implements CloudException {
   /// Creates a [BadRequestException] with the given [message].
   ///
   /// {@macro celest_core.exception.bad_request_exception}
-  const factory BadRequestException(String? message, {Object? details}) =
+  const factory BadRequestException(String? message, {JsonValue? details}) =
       _BadRequestException;
 
   @override
-  String get code => 'BadRequestException';
+  String get message;
 
   @override
-  int get grpcStatus => StatusCode.invalidArgument;
-
-  @override
-  int get httpStatus => HttpStatus.badRequest;
+  JsonValue? get details;
 }
 
 final class _BadRequestException with CloudException, BadRequestException {
@@ -424,12 +406,13 @@ final class _BadRequestException with CloudException, BadRequestException {
   final String message;
 
   @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.unauthorized_exception}
 /// An exception thrown by a Cloud Function when a request is not authorized.
 /// {@endtemplate}
+@httpError(HttpStatus.unauthorized)
 class UnauthorizedException with CloudException {
   /// Creates a [UnauthorizedException] with the given [message].
   ///
@@ -441,22 +424,14 @@ class UnauthorizedException with CloudException {
   final String message;
 
   @override
-  String get code => 'UnauthorizedException';
-
-  @override
-  int get grpcStatus => StatusCode.unauthenticated;
-
-  @override
-  int get httpStatus => HttpStatus.unauthorized;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.not_found_exception}
 /// An exception thrown by a Cloud Function when a requested resource is not
 /// found.
 /// {@endtemplate}
+@httpError(HttpStatus.notFound)
 class NotFoundException with CloudException {
   /// Creates a [NotFoundException] with the given [message].
   ///
@@ -468,21 +443,13 @@ class NotFoundException with CloudException {
   final String message;
 
   @override
-  String get code => 'NotFoundException';
-
-  @override
-  int get grpcStatus => StatusCode.notFound;
-
-  @override
-  int get httpStatus => HttpStatus.notFound;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.already_exists_exception}
 /// An exception thrown by a Cloud Function when a resource already exists.
 /// {@endtemplate}
+@httpError(HttpStatus.conflict)
 class AlreadyExistsException with CloudException {
   /// Creates a [AlreadyExistsException] with the given [message].
   ///
@@ -494,22 +461,14 @@ class AlreadyExistsException with CloudException {
   final String message;
 
   @override
-  String get code => 'AlreadyExistsException';
-
-  @override
-  int get grpcStatus => StatusCode.alreadyExists;
-
-  @override
-  int get httpStatus => HttpStatus.conflict;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.permission_denied_exception}
 /// An exception thrown by a Cloud Function when a request is not authorized due
 /// to insufficient permissions.
 /// {@endtemplate}
+@httpError(HttpStatus.forbidden)
 class PermissionDeniedException with CloudException {
   /// Creates a [PermissionDeniedException] with the given [message].
   ///
@@ -521,21 +480,13 @@ class PermissionDeniedException with CloudException {
   final String message;
 
   @override
-  String get code => 'PermissionDeniedException';
-
-  @override
-  int get grpcStatus => StatusCode.permissionDenied;
-
-  @override
-  int get httpStatus => HttpStatus.forbidden;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.resource_exhausted_exception}
 /// An exception thrown by a Cloud Function when a resource has been exhausted.
 /// {@endtemplate}
+@httpError(HttpStatus.tooManyRequests)
 class ResourceExhaustedException with CloudException {
   /// Creates a [ResourceExhaustedException] with the given [message].
   ///
@@ -547,22 +498,14 @@ class ResourceExhaustedException with CloudException {
   final String message;
 
   @override
-  String get code => 'ResourceExhaustedException';
-
-  @override
-  int get grpcStatus => StatusCode.resourceExhausted;
-
-  @override
-  int get httpStatus => HttpStatus.tooManyRequests;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.failed_precondition_exception}
 /// An exception thrown by a Cloud Function when a request is not authorized due
 /// to a failed precondition.
 /// {@endtemplate}
+@httpError(HttpStatus.preconditionFailed)
 class FailedPreconditionException with CloudException {
   /// Creates a [FailedPreconditionException] with the given [message].
   ///
@@ -574,21 +517,13 @@ class FailedPreconditionException with CloudException {
   final String message;
 
   @override
-  String get code => 'FailedPreconditionException';
-
-  @override
-  int get grpcStatus => StatusCode.failedPrecondition;
-
-  @override
-  int get httpStatus => HttpStatus.preconditionFailed;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.aborted_exception}
 /// An exception thrown by a Cloud Function when a request is aborted.
 /// {@endtemplate}
+@httpError(HttpStatus.conflict)
 class AbortedException with CloudException {
   /// Creates a [AbortedException] with the given [message].
   ///
@@ -600,21 +535,13 @@ class AbortedException with CloudException {
   final String message;
 
   @override
-  String get code => 'AbortedException';
-
-  @override
-  int get grpcStatus => StatusCode.aborted;
-
-  @override
-  int get httpStatus => HttpStatus.conflict;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.out_of_range_exception}
 /// An exception thrown by a Cloud Function when a request is out of range.
 /// {@endtemplate}
+@httpError(HttpStatus.requestedRangeNotSatisfiable)
 class OutOfRangeException with CloudException {
   /// Creates a [OutOfRangeException] with the given [message].
   ///
@@ -626,48 +553,31 @@ class OutOfRangeException with CloudException {
   final String message;
 
   @override
-  String get code => 'OutOfRangeException';
-
-  @override
-  int get grpcStatus => StatusCode.outOfRange;
-
-  @override
-  int get httpStatus => HttpStatus.requestedRangeNotSatisfiable;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.unimplemented_error}
 /// An exception thrown by a Cloud Function when a request is not implemented.
 /// {@endtemplate}
+@httpError(HttpStatus.notImplemented)
 class UnimplementedError extends core.UnimplementedError with CloudException {
   /// Creates a [UnimplementedError] with the given [message].
   ///
   /// {@macro celest_core.exception.unimplemented_error}
-  UnimplementedError(String? message, {this.details})
-      : super(message ?? 'Unimplemented');
+  UnimplementedError([String? message]) : super(message ?? 'Unimplemented');
 
   @override
   String get message => super.message!;
 
   @override
-  String get code => 'UnimplementedError';
-
-  @override
-  int get grpcStatus => StatusCode.unimplemented;
-
-  @override
-  int get httpStatus => HttpStatus.notImplemented;
-
-  @override
-  final Object? details;
+  JsonValue? get details => null;
 }
 
 /// {@template celest_core.exception.internal_server_error}
 /// An exception thrown by a Cloud Function when an unrecoverable internal error
 /// occurs.
 /// {@endtemplate}
+@httpError(HttpStatus.internalServerError)
 class InternalServerError extends Error with CloudException {
   /// Creates a [InternalServerError] with the given [message].
   ///
@@ -679,21 +589,13 @@ class InternalServerError extends Error with CloudException {
   final String message;
 
   @override
-  String get code => 'InternalServerError';
-
-  @override
-  int get grpcStatus => StatusCode.internal;
-
-  @override
-  int get httpStatus => HttpStatus.internalServerError;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.unavailable_error}
 /// An exception thrown by a Cloud Function when a resource is unavailable.
 /// {@endtemplate}
+@httpError(HttpStatus.serviceUnavailable)
 class UnavailableError extends Error with CloudException {
   /// Creates a [UnavailableError] with the given [message].
   ///
@@ -705,21 +607,13 @@ class UnavailableError extends Error with CloudException {
   final String message;
 
   @override
-  String get code => 'UnavailableError';
-
-  @override
-  int get grpcStatus => StatusCode.unavailable;
-
-  @override
-  int get httpStatus => HttpStatus.serviceUnavailable;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.data_loss_error}
 /// Unrecoverable data loss or corruption.
 /// {@endtemplate}
+@httpError(HttpStatus.internalServerError)
 class DataLossError extends Error with CloudException {
   /// Creates a [DataLossError] with the given [message].
   ///
@@ -731,21 +625,13 @@ class DataLossError extends Error with CloudException {
   final String message;
 
   @override
-  String get code => 'DataLossError';
-
-  @override
-  int get grpcStatus => StatusCode.dataLoss;
-
-  @override
-  int get httpStatus => HttpStatus.internalServerError;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
 
 /// {@template celest_core.exception.deadline_exceeded_error}
 /// An exception thrown by a Cloud Function when a request deadline is exceeded.
 /// {@endtemplate}
+@httpError(HttpStatus.gatewayTimeout)
 class DeadlineExceededError extends Error with CloudException {
   /// Creates a [DeadlineExceededError] with the given [message].
   ///
@@ -757,14 +643,5 @@ class DeadlineExceededError extends Error with CloudException {
   final String message;
 
   @override
-  String get code => 'DeadlineExceededError';
-
-  @override
-  int get grpcStatus => StatusCode.deadlineExceeded;
-
-  @override
-  int get httpStatus => HttpStatus.gatewayTimeout;
-
-  @override
-  final Object? details;
+  final JsonValue? details;
 }
