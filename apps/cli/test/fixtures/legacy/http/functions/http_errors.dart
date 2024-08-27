@@ -1,4 +1,4 @@
-import 'package:celest/celest.dart';
+import 'package:celest/celest.dart' hide NotFoundException;
 import 'package:celest/http.dart';
 import 'package:celest_backend/exceptions/http_errors.dart';
 import 'package:celest_backend/models/http_errors.dart';

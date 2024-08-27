@@ -17,7 +17,7 @@ extension MapDeserializeExtension on Json {
   ///
   List<T> asList<T>(String key) {
     //
-    List<dynamic>? value = this[key];
+    List<dynamic>? value = this[key] as List<dynamic>?;
     value ??= <T>[];
 
     // Note: toList is not necessary, but I want to fail right away in case any
@@ -45,11 +45,11 @@ extension MapDeserializeExtension on Json {
       asListOfJson(key).map(fromJson).toList();
 
   /// If possible, prefer using [asIListOf] or [asListOf].
-  List<Json> asListOfJson(String key) => asList(key).cast<Json>();
+  List<Json> asListOfJson(String key) => asList<Object?>(key).cast<Json>();
 
-  String? asString(String key) => this[key];
+  String? asString(String key) => this[key] as String?;
 
-  String asStringOrEmpty(String key) => this[key] ?? '';
+  String asStringOrEmpty(String key) => this[key] as String? ?? '';
 
   int? asInt(String key) {
     dynamic value = this[key];
@@ -102,7 +102,7 @@ extension MapDeserializeExtension on Json {
   }
 
   CashBalance? asCashBalance(String key) {
-    var value = this[key];
+    var value = this[key] as Map<String, Object?>?;
     return (value == null) ? null : CashBalance.fromJson(value);
   }
 }

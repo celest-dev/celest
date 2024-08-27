@@ -5,6 +5,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/resolver/scope.dart';
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -161,7 +162,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         interfaceType.extensionTypeErasure,
         typeHelper.coreTypes.coreErrorType,
       );
-      final isExceptionOrErrorType = isExceptionType || isErrorType;
+      final isExceptionOrErrorType =
+          isExceptionType || isErrorType ;
       if (!isExceptionOrErrorType) {
         continue;
       }
@@ -185,7 +187,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         continue;
       }
       final isInstantiable = switch (interfaceElement) {
-        final ClassElement classElement => classElement.isConstructable,
+        final ClassElement classElement => classElement.isConstructable ||
+            classElement.constructors.any((ctor) => ctor.isFactory),
         ExtensionTypeElement() || EnumElement() => true,
         _ => false,
       };
@@ -208,6 +211,18 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
             );
           }
         }
+        // TODO(dnys1): Warn based on whether the type is thrown directly or
+        // just indirectly imported.
+        //
+        // Also codegen a comment in the generated client with the reason why
+        // it's not included instead of reporting in console. (put behind a
+        // --debug flag or something).
+        reportError(
+          'Cannot serialize the exception type "${interfaceElement.name}": '
+          '${isSerializable.reasons.join('\n')}',
+          severity: AnalysisErrorSeverity.warning,
+          location: interfaceElement.sourceLocation,
+        );
         continue;
       }
       exceptionTypes.add(interfaceType);

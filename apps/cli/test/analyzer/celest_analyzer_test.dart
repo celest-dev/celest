@@ -159,12 +159,14 @@ void testNoErrors({
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
   void Function(Project)? expectProject,
+  List<Object /* String | Matcher */ > warnings = const [],
 }) {
   testErrors(
     name: name,
     analysisOptions: analysisOptions,
     skip: skip,
     errors: [],
+    warnings: warnings,
     projectDart: projectDart,
     authDart: authDart,
     resourcesDart: resourcesDart,
@@ -190,6 +192,7 @@ void testErrors({
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
   required List<Object /* String | Matcher */ > errors,
+  List<Object /* String | Matcher */ > warnings = const [],
   void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
@@ -206,13 +209,16 @@ void testErrors({
       lib: lib,
     );
     final analyzer = CelestAnalyzer();
-    final CelestAnalysisResult(:project, errors: actual) =
-        await analyzer.analyzeProject();
-    for (final error in actual) {
+    final CelestAnalysisResult(
+      :project,
+      errors: actualErrors,
+      warnings: actualWarnings
+    ) = await analyzer.analyzeProject();
+    for (final error in actualErrors) {
       print(error);
     }
     expect(
-      actual.map((e) => e.toString()),
+      actualErrors.map((e) => e.toString()),
       unorderedEquals(
         errors.map((error) {
           return switch (error) {
@@ -223,7 +229,19 @@ void testErrors({
         }),
       ),
     );
-    if (actual.isEmpty) {
+    expect(
+      actualWarnings.map((e) => e.toString()),
+      unorderedEquals(
+        warnings.map((warning) {
+          return switch (warning) {
+            Matcher _ => warning,
+            String _ => contains(warning),
+            _ => unreachable(),
+          };
+        }),
+      ),
+    );
+    if (actualErrors.isEmpty) {
       expectProject?.call(project!);
     }
   });
@@ -1379,6 +1397,18 @@ class ValidJsonable {}
         ],
       );
 
+      testNoErrors(
+        name: 'cloud_exceptions',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+void sayHello() => throw const BadRequestException(null);
+''',
+        },
+      );
+
       testErrors(
         name: 'invalid_exception_def_location',
         apis: {
@@ -1441,501 +1471,6 @@ const auth = Auth(
           "The name 'sayHello' is already defined",
         ],
       );
-
-      group('auth', () {
-        testNoErrors(
-          name: 'api_authenticated',
-          apis: {
-            'greeting.dart': '''
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        );
-
-        testNoErrors(
-          name: 'api_public',
-          apis: {
-            'greeting.dart': '''
-@public
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        );
-
-        testErrors(
-          name: 'multiple_api_auth',
-          apis: {
-            'greeting.dart': '''
-@public
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-          errors: [
-            'Only one `@authenticated` or `@public` annotation may be '
-                'specified on the same function or API library',
-          ],
-        );
-
-        testErrors(
-          name: 'multiple_api_auth_same_type',
-          apis: {
-            'greeting.dart': '''
-@authenticated
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-          errors: [
-            'Only one `@authenticated` or `@public` annotation may be '
-                'specified on the same function or API library',
-          ],
-        );
-
-        testNoErrors(
-          name: 'function_authenticated',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        );
-
-        testNoErrors(
-          name: 'function_public',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@public
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-        );
-
-        testNoErrors(
-          name: 'function_public_no_auth',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@public
-String sayHello() => 'Hello, World!';
-''',
-          },
-        );
-
-        testErrors(
-          name: 'function_authenticated_no_auth',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-          },
-          errors: [
-            'The `@authenticated` annotation may only be used in '
-                'projects with authentication enabled.',
-          ],
-        );
-
-        testErrors(
-          name: 'multiple_function_auth',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@public
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-          errors: [
-            'Only one `@authenticated` or `@public` annotation may be '
-                'specified on the same function or API library',
-          ],
-        );
-
-        testErrors(
-          name: 'multiple_function_auth_same_type',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-@authenticated
-@authenticated
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-          errors: [
-            'Only one `@authenticated` or `@public` annotation may be '
-                'specified on the same function or API library',
-          ],
-        );
-
-        testNoErrors(
-          name: 'api_public_no_auth',
-          apis: {
-            'greeting.dart': '''
-@public
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-        );
-
-        testErrors(
-          name: 'api_authenticated_no_auth',
-          apis: {
-            'greeting.dart': '''
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-String sayHello() => 'Hello, World!';
-''',
-          },
-          errors: [
-            'The `@authenticated` annotation may only be used in '
-                'projects with authentication enabled.',
-          ],
-        );
-
-        testErrors(
-          name: 'conflicting_auth',
-          apis: {
-            'greeting.dart': '''
-@authenticated
-library;
-
-import 'package:celest/celest.dart';
-
-@cloud
-@public
-String sayHello() => 'Hello, World!';
-''',
-          },
-          authDart: '''
-const auth = Auth(
-  providers: [AuthProvider.email()],
-);
-''',
-          errors: [
-            '`@public` has no effect when `@authenticated` is applied at the '
-                'API level. It is recommended to move the `@public` method to '
-                'another API.',
-          ],
-        );
-      });
-
-      group('http', () {
-        testNoErrors(
-          name: 'http_method',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-
-@cloud
-@http(method: HttpMethod.get)
-String sayHello() => 'Hello, World!';
-''',
-          },
-          expectProject: (project) {
-            final function = project.apis.values.single.functions.values.single;
-            check(function.metadata.single)
-                .isA<ApiHttpConfig>()
-                .has((it) => it.method, 'method')
-                .equals(HttpMethod.get);
-          },
-        );
-
-        testNoErrors(
-          name: 'http_status_valid',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-
-@cloud
-@http(statusCode: HttpStatus.created)
-String sayHello() => 'Hello, World!';
-''',
-          },
-          expectProject: (project) {
-            final function = project.apis.values.single.functions.values.single;
-            check(function.metadata.single)
-                .isA<ApiHttpConfig>()
-                .has((it) => it.statusCode, 'statusCode')
-                .equals(HttpStatus.created);
-          },
-        );
-
-        testErrors(
-          name: 'http_status_invalid',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-
-@cloud
-@http(statusCode: HttpStatus(600))
-String sayHello() => 'Hello, World!';
-''',
-          },
-          errors: [
-            'Invalid HTTP status code',
-          ],
-        );
-
-        testNoErrors(
-          name: 'http_errors_valid',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-import 'package:http_errors_valid/exceptions.dart';
-
-@cloud
-@httpError(HttpStatus.unauthorized, UnauthorizedException, ForbiddenException)
-@httpError(HttpStatus.notFound, NotFoundException)
-String sayHello() => 'Hello, World!';
-''',
-          },
-          exceptions: '''
-class ForbiddenException implements Exception {}
-class NotFoundException implements Exception {}
-''',
-          expectProject: (project) {
-            final function = project.apis.values.single.functions.values.single;
-
-            hasErrorType(String type, int statusCode) =>
-                (Subject<ApiMetadata> it) => it.isA<ApiHttpError>()
-                  ..has((it) => it.type.symbol, 'symbol').equals(type)
-                  ..has((it) => it.statusCode, 'statusCode').equals(statusCode);
-
-            check(function.metadata).containsInOrder([
-              hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
-              hasErrorType('ForbiddenException', HttpStatus.unauthorized),
-              hasErrorType('NotFoundException', HttpStatus.notFound),
-            ]);
-          },
-        );
-
-        testNoErrors(
-          name: 'http_header_valid',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-
-@cloud
-String sayHello({
-  @httpHeader() required String header,
-  @httpHeader('x-custom-string') required String customString,
-  @httpHeader('x-custom-bool') required bool customBool,
-  @httpHeader('x-custom-int') required int customInt,
-  @httpHeader('x-custom-num') required num customNum,
-  @httpHeader('x-custom-double') required double customDouble,
-  @httpHeader('x-custom-datetime') required DateTime customDateTime,
-  @httpHeader('x-custom-nullable-string') String? customNullableString,
-  @httpHeader('x-custom-nullable-bool') bool? customNullableBool,
-  @httpHeader('x-custom-nullable-int') int? customNullableInt,
-  @httpHeader('x-custom-nullable-num') num? customNullableNum,
-  @httpHeader('x-custom-nullable-double') double? customNullableDouble,
-  @httpHeader('x-custom-nullable-datetime') DateTime? customNullableDateTime,
-}) => 'Hello, World!';
-''',
-          },
-          expectProject: (project) {
-            final parameters =
-                project.apis.values.single.functions.values.single.parameters;
-            hasHeader(String name) => (Subject<CloudFunctionParameter> it) =>
-                it.has((it) => it.references, 'references').isA<NodeReference>()
-                  ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
-                  ..has((it) => it.name, 'name').equals(name);
-            check(parameters).containsInOrder([
-              hasHeader('header'),
-              hasHeader('x-custom-string'),
-              hasHeader('x-custom-bool'),
-              hasHeader('x-custom-int'),
-              hasHeader('x-custom-num'),
-              hasHeader('x-custom-double'),
-              hasHeader('x-custom-datetime'),
-              hasHeader('x-custom-nullable-string'),
-              hasHeader('x-custom-nullable-bool'),
-              hasHeader('x-custom-nullable-int'),
-              hasHeader('x-custom-nullable-num'),
-              hasHeader('x-custom-nullable-double'),
-              hasHeader('x-custom-nullable-datetime'),
-            ]);
-          },
-        );
-
-        testNoErrors(
-          name: 'http_query_valid',
-          apis: {
-            'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:celest/http.dart';
-
-@cloud
-String sayHello({
-  @httpQuery() required String query,
-  @httpQuery('x-custom-string') required String customString,
-  @httpQuery('x-custom-bool') required bool customBool,
-  @httpQuery('x-custom-int') required int customInt,
-  @httpQuery('x-custom-num') required num customNum,
-  @httpQuery('x-custom-double') required double customDouble,
-  @httpQuery('x-custom-datetime') required DateTime customDateTime,
-  @httpQuery('x-custom-nullable-string') String? customNullableString,
-  @httpQuery('x-custom-nullable-bool') bool? customNullableBool,
-  @httpQuery('x-custom-nullable-int') int? customNullableInt,
-  @httpQuery('x-custom-nullable-num') num? customNullableNum,
-  @httpQuery('x-custom-nullable-double') double? customNullableDouble,
-  @httpQuery('x-custom-nullable-datetime') DateTime? customNullableDateTime,
-  @httpQuery('x-custom-list-string') required List<String> customListString,
-  @httpQuery('x-custom-list-bool') required List<bool> customListBool,
-  @httpQuery('x-custom-list-int') required List<int> customListInt,
-  @httpQuery('x-custom-list-num') required List<num> customListNum,
-  @httpQuery('x-custom-list-double') required List<double> customListDouble,
-  @httpQuery('x-custom-list-datetime') required List<DateTime> customListDateTime,
-  @httpQuery('x-custom-nullable-list-string')  List<String>? customNullableListString,
-  @httpQuery('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
-  @httpQuery('x-custom-nullable-list-int')  List<int>? customNullableListInt,
-  @httpQuery('x-custom-nullable-list-num')  List<num>? customNullableListNum,
-  @httpQuery('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
-  @httpQuery('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
-  @httpQuery('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
-  @httpQuery('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
-  @httpQuery('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
-  @httpQuery('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
-  @httpQuery('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
-  @httpQuery('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
-}) => 'Hello, World!';
-''',
-          },
-          expectProject: (project) {
-            final parameters =
-                project.apis.values.single.functions.values.single.parameters;
-            hasQuery(String name) => (Subject<CloudFunctionParameter> it) =>
-                it.has((it) => it.references, 'references').isA<NodeReference>()
-                  ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
-                  ..has((it) => it.name, 'name').equals(name);
-            check(parameters).containsInOrder([
-              hasQuery('query'),
-              hasQuery('x-custom-string'),
-              hasQuery('x-custom-bool'),
-              hasQuery('x-custom-int'),
-              hasQuery('x-custom-num'),
-              hasQuery('x-custom-double'),
-              hasQuery('x-custom-datetime'),
-              hasQuery('x-custom-nullable-string'),
-              hasQuery('x-custom-nullable-bool'),
-              hasQuery('x-custom-nullable-int'),
-              hasQuery('x-custom-nullable-num'),
-              hasQuery('x-custom-nullable-double'),
-              hasQuery('x-custom-nullable-datetime'),
-              hasQuery('x-custom-list-string'),
-              hasQuery('x-custom-list-bool'),
-              hasQuery('x-custom-list-int'),
-              hasQuery('x-custom-list-num'),
-              hasQuery('x-custom-list-double'),
-              hasQuery('x-custom-list-datetime'),
-              hasQuery('x-custom-nullable-list-string'),
-              hasQuery('x-custom-nullable-list-bool'),
-              hasQuery('x-custom-nullable-list-int'),
-              hasQuery('x-custom-nullable-list-num'),
-              hasQuery('x-custom-nullable-list-double'),
-              hasQuery('x-custom-nullable-list-datetime'),
-              hasQuery('x-custom-nullable-list-nullable-string'),
-              hasQuery('x-custom-nullable-list-nullable-bool'),
-              hasQuery('x-custom-nullable-list-nullable-int'),
-              hasQuery('x-custom-nullable-list-nullable-num'),
-              hasQuery('x-custom-nullable-list-nullable-double'),
-              hasQuery('x-custom-nullable-list-nullable-datetime'),
-            ]);
-          },
-        );
-      });
 
       // Valid types but invalid to target with `@httpHeader`
       testErrors(
@@ -2029,6 +1564,501 @@ String sayHello({
           'Invalid HTTP query type', // List<BigInt>
           'Invalid HTTP query type', // List<Uri>
         ],
+      );
+    });
+
+    group('auth', () {
+      testNoErrors(
+        name: 'api_authenticated',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testNoErrors(
+        name: 'api_public',
+        apis: {
+          'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testErrors(
+        name: 'multiple_api_auth',
+        apis: {
+          'greeting.dart': '''
+@public
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_api_auth_same_type',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testNoErrors(
+        name: 'function_authenticated',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testNoErrors(
+        name: 'function_public',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+      );
+
+      testNoErrors(
+        name: 'function_public_no_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testErrors(
+        name: 'function_authenticated_no_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'The `@authenticated` annotation may only be used in '
+              'projects with authentication enabled.',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_function_auth',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testErrors(
+        name: 'multiple_function_auth_same_type',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+
+@cloud
+@authenticated
+@authenticated
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        errors: [
+          'Only one `@authenticated` or `@public` annotation may be '
+              'specified on the same function or API library',
+        ],
+      );
+
+      testNoErrors(
+        name: 'api_public_no_auth',
+        apis: {
+          'greeting.dart': '''
+@public
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+      );
+
+      testErrors(
+        name: 'api_authenticated_no_auth',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'The `@authenticated` annotation may only be used in '
+              'projects with authentication enabled.',
+        ],
+      );
+
+      testNoErrors(
+        name: 'conflicting_auth',
+        apis: {
+          'greeting.dart': '''
+@authenticated
+library;
+
+import 'package:celest/celest.dart';
+
+@cloud
+@public
+String sayHello() => 'Hello, World!';
+''',
+        },
+        authDart: '''
+const auth = Auth(
+  providers: [AuthProvider.email()],
+);
+''',
+        warnings: [
+          '`@public` has no effect when `@authenticated` is applied at the '
+              'API level. It is recommended to move the `@public` method to '
+              'another API.',
+        ],
+      );
+    });
+
+    group('http', () {
+      testNoErrors(
+        name: 'http_method',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(method: HttpMethod.get)
+String sayHello() => 'Hello, World!';
+''',
+        },
+        expectProject: (project) {
+          final function = project.apis.values.single.functions.values.single;
+          check(function.metadata.single)
+              .isA<ApiHttpConfig>()
+              .has((it) => it.method, 'method')
+              .equals(HttpMethod.get);
+        },
+      );
+
+      testNoErrors(
+        name: 'http_status_valid',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(statusCode: HttpStatus.created)
+String sayHello() => 'Hello, World!';
+''',
+        },
+        expectProject: (project) {
+          final function = project.apis.values.single.functions.values.single;
+          check(function.metadata.single)
+              .isA<ApiHttpConfig>()
+              .has((it) => it.statusCode, 'statusCode')
+              .equals(HttpStatus.created);
+        },
+      );
+
+      testErrors(
+        name: 'http_status_invalid',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+@http(statusCode: HttpStatus(600))
+String sayHello() => 'Hello, World!';
+''',
+        },
+        errors: [
+          'Invalid HTTP status code',
+        ],
+      );
+
+      testNoErrors(
+        name: 'http_errors_valid',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+import 'package:http_errors_valid/exceptions.dart';
+
+@cloud
+@httpError(HttpStatus.unauthorized, UnauthorizedException, ForbiddenException)
+@httpError(HttpStatus.notFound, ItemNotFoundException)
+String sayHello() => 'Hello, World!';
+''',
+        },
+        exceptions: '''
+class ForbiddenException implements Exception {}
+class ItemNotFoundException implements Exception {}
+''',
+        expectProject: (project) {
+          final function = project.apis.values.single.functions.values.single;
+
+          hasErrorType(String type, int statusCode) =>
+              (Subject<ApiMetadata> it) => it.isA<ApiHttpError>()
+                ..has((it) => it.type.symbol, 'symbol').equals(type)
+                ..has((it) => it.statusCode, 'statusCode').equals(statusCode);
+
+          check(function.metadata).containsInOrder([
+            hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
+            hasErrorType('ForbiddenException', HttpStatus.unauthorized),
+            hasErrorType('ItemNotFoundException', HttpStatus.notFound),
+          ]);
+        },
+      );
+
+      testNoErrors(
+        name: 'http_header_valid',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+String sayHello({
+  @httpHeader() required String header,
+  @httpHeader('x-custom-string') required String customString,
+  @httpHeader('x-custom-bool') required bool customBool,
+  @httpHeader('x-custom-int') required int customInt,
+  @httpHeader('x-custom-num') required num customNum,
+  @httpHeader('x-custom-double') required double customDouble,
+  @httpHeader('x-custom-datetime') required DateTime customDateTime,
+  @httpHeader('x-custom-nullable-string') String? customNullableString,
+  @httpHeader('x-custom-nullable-bool') bool? customNullableBool,
+  @httpHeader('x-custom-nullable-int') int? customNullableInt,
+  @httpHeader('x-custom-nullable-num') num? customNullableNum,
+  @httpHeader('x-custom-nullable-double') double? customNullableDouble,
+  @httpHeader('x-custom-nullable-datetime') DateTime? customNullableDateTime,
+}) => 'Hello, World!';
+''',
+        },
+        expectProject: (project) {
+          final parameters =
+              project.apis.values.single.functions.values.single.parameters;
+          hasHeader(String name) => (Subject<CloudFunctionParameter> it) =>
+              it.has((it) => it.references, 'references').isA<NodeReference>()
+                ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
+                ..has((it) => it.name, 'name').equals(name);
+          check(parameters).containsInOrder([
+            hasHeader('header'),
+            hasHeader('x-custom-string'),
+            hasHeader('x-custom-bool'),
+            hasHeader('x-custom-int'),
+            hasHeader('x-custom-num'),
+            hasHeader('x-custom-double'),
+            hasHeader('x-custom-datetime'),
+            hasHeader('x-custom-nullable-string'),
+            hasHeader('x-custom-nullable-bool'),
+            hasHeader('x-custom-nullable-int'),
+            hasHeader('x-custom-nullable-num'),
+            hasHeader('x-custom-nullable-double'),
+            hasHeader('x-custom-nullable-datetime'),
+          ]);
+        },
+      );
+
+      testNoErrors(
+        name: 'http_query_valid',
+        apis: {
+          'greeting.dart': '''
+import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
+
+@cloud
+String sayHello({
+  @httpQuery() required String query,
+  @httpQuery('x-custom-string') required String customString,
+  @httpQuery('x-custom-bool') required bool customBool,
+  @httpQuery('x-custom-int') required int customInt,
+  @httpQuery('x-custom-num') required num customNum,
+  @httpQuery('x-custom-double') required double customDouble,
+  @httpQuery('x-custom-datetime') required DateTime customDateTime,
+  @httpQuery('x-custom-nullable-string') String? customNullableString,
+  @httpQuery('x-custom-nullable-bool') bool? customNullableBool,
+  @httpQuery('x-custom-nullable-int') int? customNullableInt,
+  @httpQuery('x-custom-nullable-num') num? customNullableNum,
+  @httpQuery('x-custom-nullable-double') double? customNullableDouble,
+  @httpQuery('x-custom-nullable-datetime') DateTime? customNullableDateTime,
+  @httpQuery('x-custom-list-string') required List<String> customListString,
+  @httpQuery('x-custom-list-bool') required List<bool> customListBool,
+  @httpQuery('x-custom-list-int') required List<int> customListInt,
+  @httpQuery('x-custom-list-num') required List<num> customListNum,
+  @httpQuery('x-custom-list-double') required List<double> customListDouble,
+  @httpQuery('x-custom-list-datetime') required List<DateTime> customListDateTime,
+  @httpQuery('x-custom-nullable-list-string')  List<String>? customNullableListString,
+  @httpQuery('x-custom-nullable-list-bool')  List<bool>? customNullableListBool,
+  @httpQuery('x-custom-nullable-list-int')  List<int>? customNullableListInt,
+  @httpQuery('x-custom-nullable-list-num')  List<num>? customNullableListNum,
+  @httpQuery('x-custom-nullable-list-double')  List<double>? customNullableListDouble,
+  @httpQuery('x-custom-nullable-list-datetime')  List<DateTime>? customNullableListDateTime,
+  @httpQuery('x-custom-nullable-list-nullable-string')  List<String?>? customNullableListNullableString,
+  @httpQuery('x-custom-nullable-list-nullable-bool')  List<bool?>? customNullableListNullableBool,
+  @httpQuery('x-custom-nullable-list-nullable-int')  List<int?>? customNullableListNullableInt,
+  @httpQuery('x-custom-nullable-list-nullable-num')  List<num?>? customNullableListNullableNum,
+  @httpQuery('x-custom-nullable-list-nullable-double')  List<double?>? customNullableListNullableDouble,
+  @httpQuery('x-custom-nullable-list-nullable-datetime')  List<DateTime?>? customNullableListNullableDateTime,
+}) => 'Hello, World!';
+''',
+        },
+        expectProject: (project) {
+          final parameters =
+              project.apis.values.single.functions.values.single.parameters;
+          hasQuery(String name) => (Subject<CloudFunctionParameter> it) =>
+              it.has((it) => it.references, 'references').isA<NodeReference>()
+                ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
+                ..has((it) => it.name, 'name').equals(name);
+          check(parameters).containsInOrder([
+            hasQuery('query'),
+            hasQuery('x-custom-string'),
+            hasQuery('x-custom-bool'),
+            hasQuery('x-custom-int'),
+            hasQuery('x-custom-num'),
+            hasQuery('x-custom-double'),
+            hasQuery('x-custom-datetime'),
+            hasQuery('x-custom-nullable-string'),
+            hasQuery('x-custom-nullable-bool'),
+            hasQuery('x-custom-nullable-int'),
+            hasQuery('x-custom-nullable-num'),
+            hasQuery('x-custom-nullable-double'),
+            hasQuery('x-custom-nullable-datetime'),
+            hasQuery('x-custom-list-string'),
+            hasQuery('x-custom-list-bool'),
+            hasQuery('x-custom-list-int'),
+            hasQuery('x-custom-list-num'),
+            hasQuery('x-custom-list-double'),
+            hasQuery('x-custom-list-datetime'),
+            hasQuery('x-custom-nullable-list-string'),
+            hasQuery('x-custom-nullable-list-bool'),
+            hasQuery('x-custom-nullable-list-int'),
+            hasQuery('x-custom-nullable-list-num'),
+            hasQuery('x-custom-nullable-list-double'),
+            hasQuery('x-custom-nullable-list-datetime'),
+            hasQuery('x-custom-nullable-list-nullable-string'),
+            hasQuery('x-custom-nullable-list-nullable-bool'),
+            hasQuery('x-custom-nullable-list-nullable-int'),
+            hasQuery('x-custom-nullable-list-nullable-num'),
+            hasQuery('x-custom-nullable-list-nullable-double'),
+            hasQuery('x-custom-nullable-list-nullable-datetime'),
+          ]);
+        },
       );
     });
 

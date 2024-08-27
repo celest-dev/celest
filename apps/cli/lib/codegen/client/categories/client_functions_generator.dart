@@ -19,6 +19,7 @@ import 'package:code_builder/code_builder.dart';
 
 final class ClientFunctionsGenerator {
   ClientFunctionsGenerator({
+    required this.project,
     required this.apis,
   }) {
     apis.sort((a, b) => a.name.compareTo(b.name));
@@ -28,6 +29,7 @@ final class ClientFunctionsGenerator {
       ..body.add(lazySpec(_client.build));
   }
 
+  final ast.Project project;
   final List<ast.Api> apis;
 
   final customSerializers = LinkedHashSet<SerializerDefinition>(
@@ -410,40 +412,48 @@ if ($event.containsKey('error')) {
                 ),
               )
               ..addExpression(
+                declareFinal(r'$message').assign(
+                  refer(r'$error')
+                      .index(literalString('message'))
+                      .asA(DartTypes.core.string.nullable),
+                ),
+              )
+              ..addExpression(
                 declareFinal(r'$details').assign(
                   refer(r'$error')
                       .index(literalString('details'))
-                      .asA(typeHelper.toReference(jsonMapType).nullable),
+                      .asA(DartTypes.celest.jsonMap.nullable),
                 ),
               );
             b.statements.add(const Code(r'switch ($code) {'));
             for (final exceptionType in api.exceptionTypes) {
+              final dartExceptionType = typeHelper.fromReference(exceptionType);
               final deserializedException = jsonGenerator.fromJson(
                 exceptionType,
                 refer(r'$details'),
               );
               b.statements.addAll([
-                Code("case r'${exceptionType.symbol}': "),
+                Code(
+                  "case r'${dartExceptionType.exceptionUri(project.name)}': ",
+                ),
                 deserializedException.thrown.statement,
               ]);
             }
             b.statements.addAll([
-              const Code(r'case _: switch ($statusCode) {'),
-              const Code('case 400: '),
-              DartTypes.celest.badRequestException
-                  .newInstance([
-                    refer(r'$code'),
-                  ])
+              const Code('default: '),
+              DartTypes.celest.cloudException
+                  .newInstanceNamed(
+                    'http',
+                    [],
+                    {
+                      'statusCode': refer(r'$statusCode'),
+                      'code': refer(r'$code'),
+                      'message': refer(r'$message'),
+                      'details': refer(r'$details'),
+                    },
+                  )
                   .thrown
                   .statement,
-              const Code('case _: '),
-              DartTypes.celest.internalServerError
-                  .newInstance([
-                    refer(r'$code'),
-                  ])
-                  .thrown
-                  .statement,
-              const Code('}'),
               const Code('}'),
             ]);
           });

@@ -15,6 +15,7 @@ import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 
@@ -319,6 +320,10 @@ final class EntrypointGenerator {
               // catch blocks should come after more specific catch blocks.
               return typeHelper.typeSystem.isSubtypeOf(dtA, dtB) ? -1 : 1;
             });
+          final dartExceptionTypes = {
+            for (final exceptionType in exceptionTypes)
+              exceptionType: typeHelper.fromReference(exceptionType),
+          };
 
           final rawStatusCodes = httpConfig?.errorStatuses.toMap().map(
                 (type, status) => MapEntry(
@@ -327,11 +332,12 @@ final class EntrypointGenerator {
                 ),
               );
 
-          final exceptionCodes = <Reference, int>{};
+          final exceptionCodes = <Reference, Expression>{};
           for (final exceptionType in exceptionTypes) {
-            final dartExceptionType = typeHelper.fromReference(exceptionType);
+            final dartExceptionType = dartExceptionTypes[exceptionType]!;
 
-            var statusCode = httpConfig?.errorStatuses[exceptionType];
+            var statusCode =
+                httpConfig?.errorStatuses[exceptionType]?.let(literalNum);
             if (statusCode == null && rawStatusCodes != null) {
               final relevantExceptionCodes =
                   SplayTreeMap<ast.DartType, int>((a, b) {
@@ -347,19 +353,46 @@ final class EntrypointGenerator {
                   relevantExceptionCodes[type] = statusCode;
                 }
               });
-              statusCode = relevantExceptionCodes.values.firstOrNull;
+              statusCode =
+                  relevantExceptionCodes.values.firstOrNull?.let(literalNum);
             }
+
+            // Check if the type or one of its supertypes is annotated with an
+            // `@httpError` config.
+            final exceptionElement = dartExceptionType.element;
+            if (statusCode == null &&
+                exceptionElement is ast.InterfaceElement) {
+              final errorConfig = [
+                exceptionElement,
+                ...exceptionElement.allSupertypes.map((it) => it.element),
+              ]
+                  .map(
+                    (el) => el.metadata.firstWhereOrNull(
+                      (m) => m.isHttpError,
+                    ),
+                  )
+                  .nonNulls
+                  .firstOrNull;
+              if (errorConfig?.computeConstantValue() case final value?) {
+                statusCode =
+                    value.getField('statusCode')?.toIntValue()?.let(literalNum);
+              }
+            }
+
+            // Fallback based on the type hierarchy.
             statusCode ??= typeHelper.typeSystem.isSubtypeOf(
               dartExceptionType,
               typeHelper.coreTypes.coreErrorType,
             )
-                ? 500
-                : 400;
+                ? literalNum(500)
+                : literalNum(400);
 
             exceptionCodes[exceptionType] = statusCode;
           }
 
           for (final exceptionType in exceptionTypes) {
+            final dartExceptionType = dartExceptionTypes[exceptionType]!;
+
             b.statements.add(
               Code.scope(
                 (alloc) => '} on ${alloc(exceptionType)} catch (e) {',
@@ -367,26 +400,35 @@ final class EntrypointGenerator {
             );
             final statusCode = exceptionCodes[exceptionType]!;
             b.addExpression(
-              declareConst('statusCode').assign(literalNum(statusCode)),
+              declareConst('statusCode').assign(statusCode),
             );
             b.addExpression(
               refer('print').call([
                 literalString(r'$statusCode $e'),
               ]),
             );
+
+            final isCloudException = typeHelper.typeSystem.isSubtypeOf(
+              dartExceptionType,
+              typeHelper.coreTypes.cloudExceptionType,
+            );
             b.addExpression(
               declareFinal('error').assign(
-                jsonGenerator.toJson(
-                  exceptionType,
-                  refer('e'),
-                ),
+                isCloudException
+                    ? literalMap({
+                        'message': refer('e').property('message'),
+                        'code': dartExceptionType.exceptionUri(project.name),
+                        'details': refer('e').property('details'),
+                      })
+                    : literalMap({
+                        'code': dartExceptionType.exceptionUri(project.name),
+                        'details':
+                            jsonGenerator.toJson(exceptionType, refer('e')),
+                      }),
               ),
             );
             final errorBody = literalMap({
-              'error': literalMap({
-                'code': literalString(exceptionType.symbol!, raw: true),
-                'details': refer('error'),
-              }),
+              'error': refer('error'),
             });
             switch (function.streamType) {
               case null:

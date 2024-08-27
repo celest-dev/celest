@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use_from_same_package
+// ignore_for_file: deprecated_member_use_from_same_package, non_constant_identifier_names
 
 import 'package:_common/src/models/errors_and_exceptions.dart';
 import 'package:celest/celest.dart';

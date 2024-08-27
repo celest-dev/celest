@@ -1,13 +1,13 @@
-import 'package:celest/celest.dart';
 import 'package:_common/marcelo.dart' as models;
+import 'package:celest/celest.dart';
 
 @customOverride
 extension type AvailableStock(models.AvailableStock _)
     implements models.AvailableStock {}
 
-@customOverride
-extension type AvailableStocks(models.AvailableStocks _)
-    implements models.AvailableStocks {}
+// @customOverride
+// extension type AvailableStocks(models.AvailableStocks _)
+//     implements models.AvailableStocks {}
 
 @customOverride
 extension type CashBalance(models.CashBalance _)

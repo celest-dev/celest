@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:async/async.dart';
-import 'package:aws_common/aws_common.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
@@ -16,6 +15,7 @@ import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
+import 'package:recase/recase.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 
@@ -1647,7 +1647,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'OverriddenException',
+                  'code': 'api.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1662,7 +1662,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'OverriddenException',
+                  'code': 'api.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1677,7 +1677,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'OverriddenException',
+                  'code': 'api.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1692,7 +1692,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'OverriddenException',
+                  'code': 'api.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -2503,7 +2503,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomException',
+                  'code': 'api.CustomException',
                   'details': {
                     'message': 'This is a custom exception',
                     'additionalInfo': {
@@ -2521,7 +2521,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomExceptionToFromJson',
+                  'code': 'api.CustomExceptionToFromJson',
                   'details': {
                     'message': 'This is a custom exception',
                     'hello': 'world',
@@ -2538,7 +2538,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomError',
+                  'code': 'api.CustomError',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {
@@ -2556,7 +2556,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomErrorToFromJson',
+                  'code': 'api.CustomErrorToFromJson',
                   'details': {
                     'message': 'This is a custom error',
                     'hello': 'world',
@@ -2573,7 +2573,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomErrorWithStackTrace',
+                  'code': 'api.CustomErrorWithStackTrace',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {
@@ -2609,11 +2609,13 @@ final tests = <String, Test>{
                 {
                   r'$type': 'Circle',
                   'radius': 5,
+                  'area': pi * 5 * 5,
                 },
                 {
                   r'$type': 'Rectangle',
                   'width': 5,
                   'height': 5,
+                  'area': 25.0,
                 },
               ],
             ),
@@ -2653,6 +2655,7 @@ final tests = <String, Test>{
               output: {
                 'width': 5.0,
                 'height': 5.0,
+                'area': 25.0,
               },
             ),
           ],
@@ -2666,6 +2669,7 @@ final tests = <String, Test>{
               },
               output: {
                 'radius': 5.0,
+                'area': pi * 5 * 5,
               },
             ),
           ],
@@ -2869,6 +2873,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -2877,6 +2882,7 @@ final tests = <String, Test>{
                     r'$type': 'Rectangle',
                     'width': 5.0,
                     'height': 5.0,
+                    'area': 25.0,
                   },
                 },
                 {
@@ -2911,6 +2917,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -2918,6 +2925,7 @@ final tests = <String, Test>{
                     r'$type': 'Rectangle',
                     'width': 5.0,
                     'height': 5.0,
+                    'area': 25.0,
                   },
                 }
               ],
@@ -2971,6 +2979,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -2979,6 +2988,7 @@ final tests = <String, Test>{
                     r'$type': 'Rectangle',
                     'width': 5.0,
                     'height': 5.0,
+                    'area': 25.0,
                   },
                 },
                 {
@@ -3014,6 +3024,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -3022,6 +3033,7 @@ final tests = <String, Test>{
                     r'$type': 'Rectangle',
                     'width': 5.0,
                     'height': 5.0,
+                    'area': 25.0,
                   },
                 }
               ],
@@ -3068,6 +3080,7 @@ final tests = <String, Test>{
                 'data': {
                   r'$type': 'Circle',
                   'radius': 5.0,
+                  'area': pi * 5.0 * 5.0,
                 },
               },
             ),
@@ -3085,6 +3098,7 @@ final tests = <String, Test>{
                   r'$type': 'Rectangle',
                   'width': 5.0,
                   'height': 5.0,
+                  'area': 25.0,
                 },
               },
             ),
@@ -3107,6 +3121,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
               },
@@ -3124,6 +3139,7 @@ final tests = <String, Test>{
               output: {
                 'data': {
                   'radius': 5.0,
+                  'area': pi * 5.0 * 5.0,
                 },
               },
             ),
@@ -3139,6 +3155,7 @@ final tests = <String, Test>{
                 'data': {
                   r'$type': 'Circle',
                   'radius': 5.0,
+                  'area': pi * 5.0 * 5.0,
                 },
               },
             ),
@@ -3164,6 +3181,7 @@ final tests = <String, Test>{
                   r'$type': 'OkResult',
                   'data': {
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -3172,6 +3190,7 @@ final tests = <String, Test>{
                     'shape': {
                       r'$type': 'Circle',
                       'radius': 5.0,
+                      'area': pi * 5.0 * 5.0,
                     },
                   },
                 },
@@ -3198,6 +3217,7 @@ final tests = <String, Test>{
                   'data': {
                     r'$type': 'Circle',
                     'radius': 5.0,
+                    'area': pi * 5.0 * 5.0,
                   },
                 },
                 {
@@ -3207,6 +3227,7 @@ final tests = <String, Test>{
                     'shape': {
                       r'$type': 'Circle',
                       'radius': 5.0,
+                      'area': pi * 5.0 * 5.0,
                     },
                   },
                 },
@@ -3232,10 +3253,12 @@ final tests = <String, Test>{
                       {
                         r'$type': 'Child',
                         'name': 'childA',
+                        'children': <Object?>[],
                       },
                       {
                         r'$type': 'Child',
                         'name': 'childB',
+                        'children': <Object?>[],
                       }
                     ],
                   },
@@ -3246,10 +3269,12 @@ final tests = <String, Test>{
                       {
                         r'$type': 'Child',
                         'name': 'childC',
+                        'children': <Object?>[],
                       },
                       {
                         r'$type': 'Child',
                         'name': 'childD',
+                        'children': <Object?>[],
                       }
                     ],
                   }
@@ -3362,10 +3387,12 @@ final tests = <String, Test>{
                       {
                         r'$type': 'Child',
                         'name': 'childA',
+                        'children': <Object?>[],
                       },
                       {
                         r'$type': 'Child',
                         'name': 'childB',
+                        'children': <Object?>[],
                       }
                     ],
                   },
@@ -3376,20 +3403,24 @@ final tests = <String, Test>{
                       {
                         r'$type': 'Child',
                         'name': 'childC',
+                        'children': <Object?>[],
                       },
                       {
                         r'$type': 'Child',
                         'name': 'childD',
+                        'children': <Object?>[],
                       }
                     ],
                   },
                   {
                     r'$type': 'Child',
                     'name': 'childE',
+                    'children': <Object?>[],
                   },
                   {
                     r'$type': 'Child',
                     'name': 'childF',
+                    'children': <Object?>[],
                   }
                 ],
               },
@@ -3653,7 +3684,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'BaseError',
+                  'code': 'exceptions.BaseError',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3668,7 +3699,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomError',
+                  'code': 'exceptions.CustomError',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3683,7 +3714,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'BaseException',
+                  'code': 'exceptions.BaseException',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3698,7 +3729,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomException',
+                  'code': 'exceptions.CustomException',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3717,7 +3748,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'BaseError',
+                  'code': 'exceptions.BaseError',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3732,7 +3763,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomError',
+                  'code': 'exceptions.CustomError',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3747,7 +3778,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'BaseException',
+                  'code': 'exceptions.BaseException',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3762,7 +3793,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomException',
+                  'code': 'exceptions.CustomException',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3781,7 +3812,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CommonException',
+                  'code': '_common.CommonException',
                   'details': {
                     'message': 'message',
                   },
@@ -3796,7 +3827,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'CustomException',
+                  'code': '_common.CustomException',
                   'details': {
                     'message': 'message',
                   },
@@ -3826,6 +3857,11 @@ final tests = <String, Test>{
               },
               output: {
                 'value': 0xFF7F7F7F,
+                'alpha': 255,
+                'opacity': 1.0,
+                'red': 127,
+                'green': 127,
+                'blue': 127,
               },
             ),
           ],
@@ -3833,10 +3869,16 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'addCountryCode',
               input: {
-                'locale': ['en', null],
+                'locale': {
+                  'languageCode': 'en',
+                },
                 'countryCode': 'US',
               },
-              output: ['en', 'US'],
+              output: {
+                'languageCode': 'en',
+                'countryCode': 'US',
+                'scriptCode': null,
+              },
             ),
           ],
         },
@@ -3867,10 +3909,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'BadRequestException',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'celest.core.BadRequestException',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -3882,10 +3923,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'CustomBadRequestException',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'api.CustomBadRequestException',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -3897,10 +3937,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UnauthorizedException',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'celest.core.UnauthorizedException',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -3912,10 +3951,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'ForbiddenException',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'api.ForbiddenException',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -3927,7 +3965,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'NotFoundException',
+                  'code': 'api.NotFoundException',
                   'details': <String, Object?>{},
                 },
               },
@@ -3940,7 +3978,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'AnotherNotFoundException',
+                  'code': 'api.AnotherNotFoundException',
                   'details': <String, Object?>{},
                 },
               },
@@ -3953,10 +3991,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'InternalServerError',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'celest.core.InternalServerError',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -3968,10 +4005,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'BadGatewayError',
-                  'details': {
-                    'message': '',
-                  },
+                  'code': 'api.BadGatewayError',
+                  'message': '',
+                  'details': null,
                 },
               },
             ),
@@ -4281,11 +4317,9 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
-                    'cause': null,
                   },
                 },
               },
@@ -4298,10 +4332,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
                     'cause': 'Bad thing happened',
                   },
                 },
@@ -4317,13 +4350,10 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
-                    'cause': {
-                      'reason': 'Bad thing happened',
-                    },
+                    'cause': '{reason: Bad thing happened}', // cause.toString()
                   },
                 },
               },
@@ -4336,11 +4366,9 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
-                    'cause': null,
                   },
                 },
               },
@@ -4353,10 +4381,9 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
                     'cause': 'Bad thing happened',
                   },
                 },
@@ -4372,13 +4399,10 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UserException',
+                  'code': '_common.UserException',
                   'details': {
                     'msg': 'message',
-                    'code': null,
-                    'cause': {
-                      'reason': 'Bad thing happened',
-                    },
+                    'cause': '{reason: Bad thing happened}', // cause.toString()
                   },
                 },
               },
@@ -4391,7 +4415,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'AppError',
+                  'code': 'marcelo.AppError',
                   'details': {
                     'msg': 'message',
                     'error': null,
@@ -4408,7 +4432,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'AppError',
+                  'code': 'marcelo.AppError',
                   'details': {
                     'msg': 'test',
                     'error': 123,
@@ -4424,7 +4448,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'AppException',
+                  'code': 'marcelo.AppException',
                   'details': {
                     'msg': 'message',
                     'error': 'error',
@@ -4440,7 +4464,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'NotYetImplementedError',
+                  'code': 'marcelo.NotYetImplementedError',
                   'details': {
                     'msg': 'message',
                     'message': null,
@@ -4456,7 +4480,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'ValidateError',
+                  'code': '_common.ValidateError',
                   'details': {
                     'msg': 'message',
                   },
@@ -4471,7 +4495,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'UserException_ShowInConsole',
+                  'code': 'marcelo.UserException_ShowInConsole',
                   'details': {
                     'msg': 'message',
                     'code': null,
@@ -4489,7 +4513,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'UserException_ShowInConsole',
+                  'code': 'marcelo.UserException_ShowInConsole',
                   'details': {
                     'msg': 'test',
                     'code': null,
@@ -4517,6 +4541,7 @@ final tests = <String, Test>{
                 'ticker': 'ABC',
                 'name': 'Acme',
                 'currentPrice': 123.45,
+                'currentPriceStr': r'US$ 123.45',
               },
             ),
           ],
@@ -4545,11 +4570,13 @@ final tests = <String, Test>{
                     'ticker': 'ABC',
                     'name': 'Acme',
                     'currentPrice': 123.45,
+                    'currentPriceStr': r'US$ 123.45',
                   },
                   {
                     'ticker': 'ABC',
                     'name': 'Acme',
                     'currentPrice': 123.45,
+                    'currentPriceStr': r'US$ 123.45',
                   }
                 ],
               },
@@ -4596,16 +4623,22 @@ final tests = <String, Test>{
                     'ticker': 'ABC',
                     'howManyShares': 1000,
                     'averagePrice': 123.45,
+                    'costBasis': 123450.0,
+                    'averagePriceStr': r'US$ 123.45',
                   },
                   {
                     'ticker': 'ABC',
                     'howManyShares': 1000,
                     'averagePrice': 123.45,
-                  }
+                    'costBasis': 123450.0,
+                    'averagePriceStr': r'US$ 123.45',
+                  },
                 ],
                 'cashBalance': {
                   'amount': 123.45,
                 },
+                'isEmpty': false,
+                'totalCostBasis': 247023.45,
               },
             ),
           ],
@@ -4623,6 +4656,8 @@ final tests = <String, Test>{
                 'ticker': 'ABC',
                 'howManyShares': 1000,
                 'averagePrice': 123.45,
+                'costBasis': 123450.0,
+                'averagePriceStr': r'US$ 123.45',
               },
             ),
           ],
@@ -4669,9 +4704,24 @@ final tests = <String, Test>{
                 'symbol': ['AAPL'],
               },
               events: [
-                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 100.0},
-                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 101.0},
-                {'ticker': 'AAPL', 'name': 'AAPL', 'currentPrice': 102.0},
+                {
+                  'ticker': 'AAPL',
+                  'name': 'AAPL',
+                  'currentPrice': 100.0,
+                  'currentPriceStr': r'US$ 100.00',
+                },
+                {
+                  'ticker': 'AAPL',
+                  'name': 'AAPL',
+                  'currentPrice': 101.0,
+                  'currentPriceStr': r'US$ 101.00',
+                },
+                {
+                  'ticker': 'AAPL',
+                  'name': 'AAPL',
+                  'currentPrice': 102.0,
+                  'currentPriceStr': r'US$ 102.00',
+                },
               ],
             ),
           ],

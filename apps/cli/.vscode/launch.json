@@ -5,22 +5,29 @@
       "name": "CLI / E2E (--update-goldens)",
       "request": "launch",
       "type": "dart",
-      "program": "test/fixtures/fixtures_test.dart",
+      "program": "test/fixtures/legacy/fixtures_test.dart",
       "env": {
-        "UPDATE_GOLDENS": "true"
+        "UPDATE_GOLDENS": "true",
+        "INCLUDE_TESTS": "api"
       },
       "vmAdditionalArgs": [
         "--enable-experiment=native-assets",
+      ],
+      "args": [
+        "--timeout=none"
       ]
     },
     {
       "name": "CLI (test/analyzer)",
       "request": "launch",
       "type": "dart",
-      "program": "test/analyzer/analyzer_test.dart",
+      "program": "test/analyzer/celest_analyzer_test.dart",
       "vmAdditionalArgs": [
-        "--enable-experiment=native-assets",
+        "--enable-experiment=native-assets"
       ],
+      "args": [
+        "--timeout=none"
+      ]
     }
   ]
 }

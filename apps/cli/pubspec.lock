@@ -81,7 +81,7 @@ packages:
     source: hosted
     version: "2.11.0"
   aws_common:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: aws_common
       sha256: f328f0ba7c9480c64645ccbaaef72cbffb7492c443b8f0fdc288377c78905668
@@ -419,18 +419,18 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: "8fafcd97c0cbfabbcb8132b4465f1bc5210f73d59f1d598506b5b9e7d8b0d8f9"
+      sha256: "15b51e0ee1970455c0c3f7e560f3ac02ecb9c04711a9657586e470b234659dba"
       url: "https://pub.dev"
     source: hosted
-    version: "2.19.2"
+    version: "2.20.0"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: ac7647c6cedca99724ca300cff9181f6dd799428f8ed71f94159ed0528eaec26
+      sha256: b9ec6159a731288e805a44225ccbebad507dd84d52ab71352c52584f13199d2d
       url: "https://pub.dev"
     source: hosted
-    version: "2.19.1"
+    version: "2.20.1"
   drift_hrana:
     dependency: transitive
     description:
@@ -953,7 +953,7 @@ packages:
     source: hosted
     version: "1.3.0"
   recase:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: recase
       sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
@@ -1004,10 +1004,10 @@ packages:
     dependency: transitive
     description:
       name: shelf_multipart
-      sha256: "6dc368d7778ea031e7f688b70ea95b1b27731116cf71d837f6a25df613d81902"
+      sha256: "0278c1c3a49474b3635ed52de11f1fff385b1dcc685ae7585d3c3cfd0d3c953e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   shelf_packages_handler:
     dependency: transitive
     description:

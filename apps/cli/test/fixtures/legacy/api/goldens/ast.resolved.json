@@ -332,7 +332,7 @@
         },
         "valueX": {
           "name": "valueX",
-          "route": "/extension-types/valuex",
+          "route": "/extension-types/value-x",
           "apiName": "extension_types",
           "envVars": []
         },
@@ -386,7 +386,7 @@
         },
         "colorX": {
           "name": "colorX",
-          "route": "/extension-types/colorx",
+          "route": "/extension-types/color-x",
           "apiName": "extension_types",
           "envVars": []
         },
@@ -1404,10 +1404,11 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.4",
+    "sdkVersion": "3.5.1",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.1"
   }
 }

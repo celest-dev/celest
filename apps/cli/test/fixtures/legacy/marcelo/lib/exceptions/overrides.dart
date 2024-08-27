@@ -2,18 +2,6 @@ import 'package:_common/marcelo.dart' as core;
 import 'package:celest/celest.dart';
 
 @customOverride
-extension type UserException._(core.UserException _ex)
-    implements core.UserException {
-  UserException({
-    String? msg,
-    JsonValue? cause,
-  }) : this._(core.UserException(msg, cause: cause));
-
-  Null get code => null;
-  JsonValue? get cause => _ex.cause as JsonValue?;
-}
-
-@customOverride
 extension type AppError(core.AppError _err) implements core.AppError {
   AppError.fromJson(Map<String, Object?> json)
       : _err = core.AppError(json['msg'], json['error']);

@@ -350,7 +350,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             return false;
           });
         }
-        final (fields: _, :toJsonMethod, :fromJsonCtor, wireType: _) =
+        final (:toJsonMethod, :fromJsonCtor, wireType: _) =
             type.interfaceMembers;
         // The representation type is either a built-in or a primitive at
         // this point.
@@ -387,8 +387,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
 
   Verdict _visitCustomInterfaceType(InterfaceType type) {
     final element = type.element;
-    final (:fields, :toJsonMethod, :fromJsonCtor, :wireType) =
-        type.interfaceMembers;
+    final (:toJsonMethod, :fromJsonCtor, :wireType) = type.interfaceMembers;
 
     // Check if non-SDK class is serializable.
     //
@@ -447,10 +446,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       type: type,
       wireType: typeHelper.toReference(wireType),
       castType: fromJsonCtor?.parameters.first.type.let(typeHelper.toReference),
-      fields: [
-        for (final field in fields)
-          FieldSpec(name: field.displayName, type: field.type),
-      ],
+      fields: type.fieldSpecs,
       wireConstructor: wireConstructor,
       constructorParameters: wireConstructor.parameterSpecs,
       fromJsonParameters: fromJsonCtor.parameterSpecs,
@@ -705,7 +701,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     final fields = element.sortedFields(type);
     var verdict = const Verdict.yes();
     var fieldsVerdict = const Verdict.yes();
-    for (final field in fields) {
+    for (final field in List.of(fields)) {
       if (const DartTypeEquality().equals(type, field.type)) {
         fieldsVerdict &= Verdict.no(
           'Classes are not allowed to have fields of their own type.',
@@ -714,14 +710,22 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         continue;
       }
       final fieldVerdict = typeHelper.isSerializable(field.type);
-      fieldsVerdict &= switch (fieldVerdict) {
-        VerdictYes() => fieldVerdict,
-        _ => Verdict.no(
+      switch (fieldVerdict) {
+        case VerdictYes():
+          fieldsVerdict &= fieldVerdict;
+        case VerdictNo():
+          // Ignore, we can't serialize. If later we determine the getter is
+          // needed to construct the object, we'll error then.
+          if (field.isSynthetic) {
+            fields.remove(field);
+            continue;
+          }
+          fieldsVerdict &= Verdict.no(
             'Field "${field.displayName}" of type "${element.displayName}" is '
             'not serializable: $fieldVerdict',
             location: field.sourceLocation,
-          ),
-      };
+          );
+      }
     }
     if (position == TypePosition.return$) {
       verdict &= fieldsVerdict;
@@ -767,7 +771,12 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
           continue;
         }
 
-        final hasField = fields.any((field) => field.name == parameter.name);
+        final hasField = fields.any((field) {
+          if (parameter.name.startsWith('_')) {
+            return field.name == parameter.name.substring(1);
+          }
+          return field.name == parameter.name;
+        });
         if (!hasField) {
           constructorVerdict &= Verdict.no(
             'Constructor parameter "${parameter.displayName}" is not '
@@ -812,7 +821,6 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
 }
 
 typedef InterfaceMembers = ({
-  List<FieldElement> fields,
   MethodElement? toJsonMethod,
   ExecutableElement? fromJsonCtor,
   DartType wireType,
@@ -850,38 +858,51 @@ extension on InterfaceType {
     return unnamedConstructor;
   }
 
+  List<FieldSpec> get fieldSpecs => switch (element) {
+        final ClassElement element => [
+            for (final field in element.sortedFields(this))
+              FieldSpec(name: field.displayName, type: field.type),
+          ],
+        EnumElement() => const [],
+        ExtensionTypeElement(:final representation) => [
+            FieldSpec(
+              name: representation.name,
+              type: representation.type,
+            ),
+          ],
+        _ => unreachable(),
+      };
+
   InterfaceMembers get interfaceMembers {
     switch (element) {
       case EnumElement():
         return (
-          fields: const [],
           toJsonMethod: toJsonMethod,
           fromJsonCtor: fromJsonCtor,
           wireType: wireType,
         );
       case MixinElement():
         unreachable('Mixins are not supported');
-      case final ClassElement element:
+      case final ClassElement _:
         final serializedType =
             isOverridden ? asOverriden as InterfaceType : this;
         return (
-          fields: element.sortedFields(this),
           toJsonMethod: serializedType.toJsonMethod,
           fromJsonCtor: serializedType.fromJsonCtor,
           wireType: serializedType.wireType,
         );
-      case final ExtensionTypeElement element:
+      case final ExtensionTypeElement _:
         final representationType = extensionTypeErasure;
         if (representationType is! InterfaceType) {
           unreachable('Extension type erasure is not an interface type');
         }
         final members = (
-          fields: [
-            // if (isOverridden)
-            //   ...(representationType.element as ClassElement).sortedFields(this)
-            // else
-            element.representation,
-          ],
+          // fields: [
+          //   // if (isOverridden)
+          //   //   ...(representationType.element as ClassElement).sortedFields(this)
+          //   // else
+          //   element.representation,
+          // ],
           toJsonMethod: toJsonMethod,
           fromJsonCtor: fromJsonCtor,
           wireType: wireType,
@@ -910,18 +931,23 @@ extension on InterfaceType {
 // Below is copied from `package:json_serializable`.
 
 extension on ClassElement {
+  static final _coreObjectUri = Uri.parse('dart:core#Object');
+  static final _coreErrorUri = Uri.parse('dart:core#Error');
+
+  /// Fields from dart:core types which should never be serialized.
+  static final _coreFields = [
+    Name(_coreObjectUri, 'hashCode'),
+    Name(_coreObjectUri, 'runtimeType'),
+    Name(_coreErrorUri, 'stackTrace'),
+  ];
+
   /// Returns a [List] of all instance [FieldElement] items for this class and
   /// super classes, sorted first by their location in the inheritance hierarchy
   /// (super first) and then by their location in the source file.
   List<FieldElement> sortedFields(InterfaceType type) {
     // Get all of the fields that need to be assigned
     final elementInstanceFields = Map.fromEntries(
-      this
-          .fields
-          // Note: Unlike `json_serializable` we do not support synthetic fields,
-          // i.e. those fields which are synthesized from getters/setters.
-          .where((e) => !e.isStatic && !e.isSynthetic && !e.isPrivate)
-          .map((e) {
+      this.fields.where((e) => !e.isStatic && !e.isPrivate).map((e) {
         final member = inheritanceManager.getMember(
           type,
           Name(e.library.source.uri, e.name),
@@ -942,10 +968,16 @@ extension on ClassElement {
       return const [];
     }
 
+    final coreErrorType =
+        TypeChecker.fromStatic(typeHelper.coreTypes.coreErrorType);
+
     // ignore: deprecated_member_use
     for (final v in inheritanceManager.getInheritedConcreteMap(type).values) {
       assert(v is! FieldElement);
       if (dartCoreObject.isExactly(v.enclosingElement)) {
+        continue;
+      }
+      if (coreErrorType.isExactly(v.enclosingElement)) {
         continue;
       }
 
@@ -956,11 +988,6 @@ extension on ClassElement {
       if (v is PropertyAccessorElement && v.isGetter) {
         assert(v.variable is FieldElement);
         final variable = v.variable as FieldElement;
-        // Note: Unlike `json_serializable` we do not support synthetic fields,
-        // i.e. those fields which are synthesized from getters/setters.
-        if (variable.isSynthetic) {
-          continue;
-        }
         assert(!inheritedFields.containsKey(variable.name));
         inheritedFields[variable.name] = variable;
       }
@@ -996,7 +1023,35 @@ extension on ClassElement {
         .toList()
       ..sort();
 
-    return fields.map((fs) => fs.field).toList(growable: false);
+    // Remove fields which are synthetic and not serializable.
+    final filtered = <FieldElement>[];
+
+    filter:
+    for (final field in fields) {
+      if (!field.field.isSynthetic) {
+        filtered.add(field.field);
+        continue;
+      }
+      for (final coreField in _coreFields) {
+        if (coreField.name != field.field.name) {
+          continue;
+        }
+        final overriddenFields =
+            inheritanceManager.getOverridden2(this, coreField) ?? const [];
+        if (overriddenFields.isNotEmpty) {
+          // Skip, it's a core field.
+          continue filter;
+        }
+      }
+      switch (typeHelper.isSerializable(field.field.type)) {
+        case VerdictYes():
+          filtered.add(field.field);
+        case VerdictNo():
+        // Skip, not serializable.
+      }
+    }
+
+    return filtered;
   }
 }
 

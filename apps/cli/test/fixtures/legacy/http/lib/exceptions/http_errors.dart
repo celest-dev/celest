@@ -1,11 +1,23 @@
 import 'package:celest/celest.dart';
 
-class CustomBadRequestException extends BadRequestException {
-  CustomBadRequestException(super.message);
+class CustomBadRequestException with CloudException, BadRequestException {
+  CustomBadRequestException(this.message);
+
+  @override
+  JsonValue? get details => null;
+
+  @override
+  final String message;
 }
 
-class ForbiddenException extends BadRequestException {
-  ForbiddenException(super.message);
+class ForbiddenException with CloudException, BadRequestException {
+  ForbiddenException(this.message);
+
+  @override
+  JsonValue? get details => null;
+
+  @override
+  final String message;
 }
 
 class NotFoundException implements Exception {}

@@ -230,9 +230,12 @@ class UserException implements Exception {
   /// ```
   factory UserException.fromJson(Map<String, dynamic> json) {
     return UserException(
-      json['msg'],
+      json['msg'] as String?,
       cause: json['cause'],
-      code: json['code'],
+      code: switch (json['code']) {
+        final String code => _StringExceptionCode(code),
+        _ => null,
+      },
     );
   }
 
@@ -412,4 +415,13 @@ class UserException_ShowInConsole extends UserException {
       '\nCode = $code',
     );
   }
+}
+
+final class _StringExceptionCode implements ExceptionCode {
+  _StringExceptionCode(this.code);
+
+  final String code;
+
+  @override
+  String asText([Locale? locale]) => code;
 }

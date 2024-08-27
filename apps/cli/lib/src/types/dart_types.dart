@@ -647,6 +647,10 @@ class _Celest {
   /// Creates a [celest.CloudApi] reference.
   DartTypeReference get cloudApi => const DartTypeReference('CloudApi', _url);
 
+  /// Creates a [celest.CloudException] reference.
+  DartTypeReference get cloudException =>
+      const DartTypeReference('CloudException', _url);
+
   /// Creates a [celest.CloudFunction] reference.
   Reference cloudFunction([Reference? input, Reference? output]) =>
       TypeReference(

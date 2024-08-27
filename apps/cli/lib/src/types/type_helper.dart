@@ -37,6 +37,7 @@ final class CoreTypes implements TypeProvider {
     required this.badRequestExceptionType,
     required this.internalServerErrorType,
     required this.userType,
+    required this.cloudExceptionType,
   }) : _typeProvider = typeProvider;
 
   final TypeProvider _typeProvider;
@@ -55,6 +56,7 @@ final class CoreTypes implements TypeProvider {
   final DartType badRequestExceptionType;
   final DartType internalServerErrorType;
   final DartType userType;
+  final DartType cloudExceptionType;
 
   @override
   ClassElement get boolElement => _typeProvider.boolElement;
@@ -386,7 +388,9 @@ final class TypeHelper {
           if (verdict is! VerdictYes) {
             return true;
           }
-          if (!(verdict.primarySpec?.type.isExtensionType ?? false)) {
+          final isExtensionType =
+              verdict.primarySpec?.type.isExtensionType ?? false;
+          if (!isExtensionType) {
             return false;
           }
           for (final additionalSpec in verdict.additionalSpecs) {
@@ -516,7 +520,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
         (b) => b
           ..symbol = alias.element.displayName
           ..url = projectPaths
-              .normalizeUri(alias.element.sourceLocation.sourceUrl!)
+              .normalizeUri(alias.element.sourceLocation!.sourceUrl!)
               .toString()
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
           // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,

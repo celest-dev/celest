@@ -55,14 +55,14 @@ import 'functions/exceptions/throwsException.dart' as _i50;
 import 'functions/extension_types/asyncOrString.dart' as _i51;
 import 'functions/extension_types/asyncString.dart' as _i52;
 import 'functions/extension_types/color.dart' as _i53;
-import 'functions/extension_types/colorX.dart' as _i61;
-import 'functions/extension_types/colorXFromJson.dart' as _i54;
-import 'functions/extension_types/colorXFromJsonImpl.dart' as _i55;
-import 'functions/extension_types/colorXFromJsonStatic.dart' as _i56;
-import 'functions/extension_types/colorXImpl.dart' as _i57;
-import 'functions/extension_types/colorXToFromJson.dart' as _i58;
-import 'functions/extension_types/colorXToJson.dart' as _i59;
-import 'functions/extension_types/colorXToJsonImpl.dart' as _i60;
+import 'functions/extension_types/colorX.dart' as _i54;
+import 'functions/extension_types/colorXFromJson.dart' as _i55;
+import 'functions/extension_types/colorXFromJsonImpl.dart' as _i56;
+import 'functions/extension_types/colorXFromJsonStatic.dart' as _i57;
+import 'functions/extension_types/colorXImpl.dart' as _i58;
+import 'functions/extension_types/colorXToFromJson.dart' as _i59;
+import 'functions/extension_types/colorXToJson.dart' as _i60;
+import 'functions/extension_types/colorXToJsonImpl.dart' as _i61;
 import 'functions/extension_types/jsonBool.dart' as _i62;
 import 'functions/extension_types/jsonDouble.dart' as _i63;
 import 'functions/extension_types/jsonInt.dart' as _i64;
@@ -84,14 +84,14 @@ import 'functions/extension_types/stringToFromJson.dart' as _i79;
 import 'functions/extension_types/stringToJson.dart' as _i80;
 import 'functions/extension_types/stringToJsonImpl.dart' as _i81;
 import 'functions/extension_types/value.dart' as _i82;
-import 'functions/extension_types/valueX.dart' as _i90;
-import 'functions/extension_types/valueXFromJson.dart' as _i83;
-import 'functions/extension_types/valueXFromJsonImpl.dart' as _i84;
-import 'functions/extension_types/valueXFromJsonStatic.dart' as _i85;
-import 'functions/extension_types/valueXImpl.dart' as _i86;
-import 'functions/extension_types/valueXToFromJson.dart' as _i87;
-import 'functions/extension_types/valueXToJson.dart' as _i88;
-import 'functions/extension_types/valueXToJsonImpl.dart' as _i89;
+import 'functions/extension_types/valueX.dart' as _i83;
+import 'functions/extension_types/valueXFromJson.dart' as _i84;
+import 'functions/extension_types/valueXFromJsonImpl.dart' as _i85;
+import 'functions/extension_types/valueXFromJsonStatic.dart' as _i86;
+import 'functions/extension_types/valueXImpl.dart' as _i87;
+import 'functions/extension_types/valueXToFromJson.dart' as _i88;
+import 'functions/extension_types/valueXToJson.dart' as _i89;
+import 'functions/extension_types/valueXToJsonImpl.dart' as _i90;
 import 'functions/generic_wrappers/genericWrapperParameters.dart' as _i91;
 import 'functions/generic_wrappers/genericWrappers.dart' as _i92;
 import 'functions/generic_wrappers/genericWrappersAsync.dart' as _i93;
@@ -294,15 +294,15 @@ Future<void> start() async {
     '/extension-types/async-or-string': _i51.AsyncOrStringTarget(),
     '/extension-types/async-string': _i52.AsyncStringTarget(),
     '/extension-types/color': _i53.ColorTarget(),
-    '/extension-types/color-x-from-json': _i54.ColorXFromJsonTarget(),
-    '/extension-types/color-x-from-json-impl': _i55.ColorXFromJsonImplTarget(),
+    '/extension-types/color-x': _i54.ColorxTarget(),
+    '/extension-types/color-x-from-json': _i55.ColorXFromJsonTarget(),
+    '/extension-types/color-x-from-json-impl': _i56.ColorXFromJsonImplTarget(),
     '/extension-types/color-x-from-json-static':
-        _i56.ColorXFromJsonStaticTarget(),
-    '/extension-types/color-x-impl': _i57.ColorXImplTarget(),
-    '/extension-types/color-x-to-from-json': _i58.ColorXToFromJsonTarget(),
-    '/extension-types/color-x-to-json': _i59.ColorXToJsonTarget(),
-    '/extension-types/color-x-to-json-impl': _i60.ColorXToJsonImplTarget(),
-    '/extension-types/colorx': _i61.ColorxTarget(),
+        _i57.ColorXFromJsonStaticTarget(),
+    '/extension-types/color-x-impl': _i58.ColorXImplTarget(),
+    '/extension-types/color-x-to-from-json': _i59.ColorXToFromJsonTarget(),
+    '/extension-types/color-x-to-json': _i60.ColorXToJsonTarget(),
+    '/extension-types/color-x-to-json-impl': _i61.ColorXToJsonImplTarget(),
     '/extension-types/json-bool': _i62.JsonBoolTarget(),
     '/extension-types/json-double': _i63.JsonDoubleTarget(),
     '/extension-types/json-int': _i64.JsonIntTarget(),
@@ -327,15 +327,15 @@ Future<void> start() async {
     '/extension-types/string-to-json': _i80.StringToJsonTarget(),
     '/extension-types/string-to-json-impl': _i81.StringToJsonImplTarget(),
     '/extension-types/value': _i82.ValueTarget(),
-    '/extension-types/value-x-from-json': _i83.ValueXFromJsonTarget(),
-    '/extension-types/value-x-from-json-impl': _i84.ValueXFromJsonImplTarget(),
+    '/extension-types/value-x': _i83.ValuexTarget(),
+    '/extension-types/value-x-from-json': _i84.ValueXFromJsonTarget(),
+    '/extension-types/value-x-from-json-impl': _i85.ValueXFromJsonImplTarget(),
     '/extension-types/value-x-from-json-static':
-        _i85.ValueXFromJsonStaticTarget(),
-    '/extension-types/value-x-impl': _i86.ValueXImplTarget(),
-    '/extension-types/value-x-to-from-json': _i87.ValueXToFromJsonTarget(),
-    '/extension-types/value-x-to-json': _i88.ValueXToJsonTarget(),
-    '/extension-types/value-x-to-json-impl': _i89.ValueXToJsonImplTarget(),
-    '/extension-types/valuex': _i90.ValuexTarget(),
+        _i86.ValueXFromJsonStaticTarget(),
+    '/extension-types/value-x-impl': _i87.ValueXImplTarget(),
+    '/extension-types/value-x-to-from-json': _i88.ValueXToFromJsonTarget(),
+    '/extension-types/value-x-to-json': _i89.ValueXToJsonTarget(),
+    '/extension-types/value-x-to-json-impl': _i90.ValueXToJsonImplTarget(),
     '/generic-wrappers/generic-wrapper-parameters':
         _i91.GenericWrapperParametersTarget(),
     '/generic-wrappers/generic-wrappers': _i92.GenericWrappersTarget(),

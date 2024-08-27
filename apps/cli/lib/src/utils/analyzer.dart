@@ -23,8 +23,17 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
-  bool get isPackageCelest =>
-      source.uri.toString().startsWith('package:celest');
+  bool get isPackageCelest => switch (source.uri) {
+        Uri(
+          scheme: 'package',
+          pathSegments: [
+            'celest' || 'celest_core' || 'celest_auth' || 'celest_cloud',
+            ...,
+          ]
+        ) =>
+          true,
+        _ => false,
+      };
   bool get isWithinProject =>
       p.isWithin(projectPaths.projectRoot, source.fullName);
   bool get isWithinProjectLib =>
@@ -37,6 +46,14 @@ extension ElementAnnotationHelper on ElementAnnotation {
         final PropertyAccessorElement propertyAccessor =>
           propertyAccessor.name == 'customOverride' &&
               propertyAccessor.library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isHttpError => switch (element) {
+        ConstructorElement(
+          enclosingElement: ClassElement(:final name, :final library)
+        ) =>
+          name == 'httpError' && library.isPackageCelest,
         _ => false,
       };
 }
@@ -76,6 +93,8 @@ extension DartTypeHelper on DartType {
       );
 
   bool get isPackageCelest => element?.library?.isPackageCelest ?? false;
+
+  bool get isDartSdk => element?.library?.source.uri.scheme == 'dart';
 
   bool get isJsonExtensionType => switch (element) {
         ExtensionTypeElement(:final name, :final library) =>
@@ -244,8 +263,8 @@ extension DartTypeHelper on DartType {
   Uri? get sourceUri {
     final sourceUri = switch (this) {
       // Don't consider aliases for non-record types.
-      RecordType(:final alias?) => alias.element.sourceLocation.sourceUrl,
-      _ => element?.sourceLocation.sourceUrl,
+      RecordType(:final alias?) => alias.element.sourceLocation?.sourceUrl,
+      _ => element?.sourceLocation?.sourceUrl,
     };
     if (sourceUri == null) {
       return null;
@@ -360,6 +379,35 @@ extension DartTypeHelper on DartType {
         InterfaceElement() => jsonMapType,
         _ => null,
       };
+
+  String exceptionUri(String projectName) {
+    final symbol = switch (this) {
+      final RecordType type => type.symbol,
+      _ => element?.name,
+    };
+    assert(symbol != null, 'Symbol is null for $this');
+    final sourceUri = switch (this) {
+      // Don't consider aliases for non-record types.
+      RecordType(:final alias?) => alias.element.sourceLocation?.sourceUrl,
+      _ => element?.sourceLocation?.sourceUrl,
+    };
+    if (isPackageCelest) {
+      final prefix = switch (sourceUri!.pathSegments.first) {
+        'celest' => 'celest',
+        final package => package.split('_').join('.'),
+      };
+      return '$prefix.$symbol';
+    }
+    if (isDartSdk) {
+      return 'dart.${sourceUri!.pathSegments.first}.$symbol';
+    }
+    // TODO: Include organization name
+    var prefix = sourceUri?.pathSegments.first;
+    if (prefix case null || 'celest_backend') {
+      prefix = projectName;
+    }
+    return '$prefix.$symbol';
+  }
 }
 
 typedef SubtypeResult = ({
@@ -431,8 +479,15 @@ extension NodeSourceLocation on AstNode {
 }
 
 extension ElementSourceLocation on Element {
-  FileSpan get sourceLocation {
-    return source!.toSpan(nameOffset, nameOffset + nameLength);
+  FileSpan? get sourceLocation {
+    final source = this.source;
+    if (source == null) {
+      return null;
+    }
+    if (nameOffset < 0) {
+      return null;
+    }
+    return source.toSpan(nameOffset, nameOffset + nameLength);
   }
 
   List<String> get docLines => switch (documentationComment) {
@@ -629,4 +684,13 @@ extension ParameterDefaultTo on ParameterElement {
           constVar.computeConstantValue()?.toCodeBuilder,
         _ => null,
       };
+}
+
+extension NonPrivate on String {
+  String get nonPrivate {
+    if (startsWith('_')) {
+      return substring(1);
+    }
+    return this;
+  }
 }

@@ -31,127 +31,208 @@ final class ThrowsCustomExceptionToFromJsonTarget
     } on _i3.CustomErrorWithStackTrace catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i3.CustomErrorWithStackTrace>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'CustomErrorWithStackTrace',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'code': 'api.CustomErrorWithStackTrace',
+        'details': _i4.Serializers.instance
+            .serialize<_i3.CustomErrorWithStackTrace>(e),
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i3.CustomErrorToFromJson catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i3.CustomErrorToFromJson>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'CustomErrorToFromJson',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'code': 'api.CustomErrorToFromJson',
+        'details':
+            _i4.Serializers.instance.serialize<_i3.CustomErrorToFromJson>(e),
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i3.CustomError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error = _i4.Serializers.instance.serialize<_i3.CustomError>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'CustomError',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'code': 'api.CustomError',
+        'details': _i4.Serializers.instance.serialize<_i3.CustomError>(e),
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i3.CustomExceptionToFromJson catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i3.CustomExceptionToFromJson>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'CustomExceptionToFromJson',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'code': 'api.CustomExceptionToFromJson',
+        'details': _i4.Serializers.instance
+            .serialize<_i3.CustomExceptionToFromJson>(e),
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i3.CustomException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error = _i4.Serializers.instance.serialize<_i3.CustomException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'CustomException',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'code': 'api.CustomException',
+        'details': _i4.Serializers.instance.serialize<_i3.CustomException>(e),
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i5.SerializationException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i5.SerializationException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'SerializationException',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.SerializationException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.DeadlineExceededError catch (e) {
+      const statusCode = 504;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.DeadlineExceededError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.DataLossError catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.DataLossError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.UnavailableError catch (e) {
+      const statusCode = 503;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.UnavailableError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i6.InternalServerError catch (e) {
       const statusCode = 500;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i6.InternalServerError>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'InternalServerError',
-            'details': error,
-          }
-        }
-      );
-    } on _i6.UnauthorizedException catch (e) {
-      const statusCode = 400;
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.InternalServerError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.UnimplementedError catch (e) {
+      const statusCode = 501;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i6.UnauthorizedException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'UnauthorizedException',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.UnimplementedError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.OutOfRangeException catch (e) {
+      const statusCode = 416;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.OutOfRangeException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.AbortedException catch (e) {
+      const statusCode = 409;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.AbortedException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.FailedPreconditionException catch (e) {
+      const statusCode = 412;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.FailedPreconditionException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.ResourceExhaustedException catch (e) {
+      const statusCode = 429;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.ResourceExhaustedException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.PermissionDeniedException catch (e) {
+      const statusCode = 403;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.PermissionDeniedException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.AlreadyExistsException catch (e) {
+      const statusCode = 409;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.AlreadyExistsException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.NotFoundException catch (e) {
+      const statusCode = 404;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.NotFoundException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.UnauthorizedException catch (e) {
+      const statusCode = 401;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.UnauthorizedException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
     } on _i6.BadRequestException catch (e) {
       const statusCode = 400;
       print('$statusCode $e');
-      final error =
-          _i4.Serializers.instance.serialize<_i6.BadRequestException>(e);
-      return (
-        statusCode: statusCode,
-        body: {
-          'error': {
-            'code': r'BadRequestException',
-            'details': error,
-          }
-        }
-      );
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.BadRequestException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.UnknownError catch (e) {
+      const statusCode = 500;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.UnknownError',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.CancelledException catch (e) {
+      const statusCode = 499;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.CancelledException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
+    } on _i6.CloudException catch (e) {
+      const statusCode = 400;
+      print('$statusCode $e');
+      final error = {
+        'message': e.message,
+        'code': 'celest.core.CloudException',
+        'details': e.details,
+      };
+      return (statusCode: statusCode, body: {'error': error});
     }
   }
 
@@ -211,26 +292,315 @@ final class ThrowsCustomExceptionToFromJsonTarget
         return _i3.CustomExceptionToFromJson.fromJson($serialized);
       },
     ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.AbortedException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.AbortedException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.AlreadyExistsException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.AlreadyExistsException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
     _i4.Serializers.instance.put(
         _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
-      serialize: ($value) => {r'message': $value.message},
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
       deserialize: ($serialized) {
-        return _i6.BadRequestException(($serialized[r'message'] as String));
+        return _i6.BadRequestException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.CancelledException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.CancelledException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.CloudException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.CloudException.fromJson($serialized);
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.DataLossError, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.DataLossError(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.DeadlineExceededError, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.DeadlineExceededError(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i6.FailedPreconditionException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.FailedPreconditionException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
       },
     ));
     _i4.Serializers.instance.put(
         _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>>(
-      serialize: ($value) => {r'message': $value.message},
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
       deserialize: ($serialized) {
-        return _i6.InternalServerError(($serialized[r'message'] as String));
+        return _i6.InternalServerError(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.NotFoundException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.NotFoundException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>?>(
-      serialize: ($value) => {r'message': $value.message},
+        _i4.Serializer.define<_i6.OutOfRangeException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.OutOfRangeException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i6.PermissionDeniedException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.PermissionDeniedException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i6.ResourceExhaustedException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.ResourceExhaustedException(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
       deserialize: ($serialized) {
         return _i6.UnauthorizedException(
-            (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.UnavailableError, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.UnavailableError(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
+      },
+    ));
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.UnimplementedError, Map<String, Object?>?>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.UnimplementedError(($serialized?[r'message'] as String?));
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i6.UnknownError, Map<String, Object?>>(
+      serialize: ($value) => {
+        r'message': $value.message,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
+      },
+      deserialize: ($serialized) {
+        return _i6.UnknownError(
+          ($serialized[r'message'] as String?),
+          details: _i4.Serializers.instance.deserialize<_i7.JsonValue?>(
+            $serialized[r'details'],
+            const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+          ),
+        );
       },
     ));
     _i4.Serializers.instance.put(
@@ -239,6 +609,10 @@ final class ThrowsCustomExceptionToFromJsonTarget
         r'message': $value.message,
         r'offset': $value.offset,
         r'source': $value.source,
+        r'details': _i4.Serializers.instance.serialize<_i7.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
+        ),
       },
       deserialize: ($serialized) {
         return _i5.SerializationException(($serialized[r'message'] as String));
@@ -252,6 +626,15 @@ final class ThrowsCustomExceptionToFromJsonTarget
         },
       ),
       const _i4.TypeToken<_i7.JsonMap>('JsonMap'),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.JsonValue, Object>(
+        serialize: ($value) => $value.value,
+        deserialize: ($serialized) {
+          return _i7.JsonValue($serialized);
+        },
+      ),
+      const _i4.TypeToken<_i7.JsonValue?>('JsonValue'),
     );
   }
 }

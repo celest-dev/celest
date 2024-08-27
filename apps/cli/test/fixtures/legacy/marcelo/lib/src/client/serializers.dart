@@ -18,6 +18,28 @@ import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 
 void initSerializers() {
+  Serializers.instance.put(Serializer.define<_$available_stocks.AvailableStocks,
+      Map<String, Object?>>(
+    serialize: ($value) => {
+      r'list': Serializers.instance
+          .serialize<_$ilist.IList<_$available_stock.AvailableStock>>(
+              $value.list)
+    },
+    deserialize: ($serialized) {
+      return _$available_stocks.AvailableStocks(
+          ($serialized[r'list'] as Iterable<Object?>)
+              .map((el) => Serializers.instance
+                  .deserialize<_$available_stock.AvailableStock>(el))
+              .toList());
+    },
+  ));
+  Serializers.instance.put(Serializer.define<
+      _$errors_and_exceptions.UserException, Map<String, dynamic>>(
+    serialize: ($value) => $value.toJson(),
+    deserialize: ($serialized) {
+      return _$errors_and_exceptions.UserException.fromJson($serialized);
+    },
+  ));
   Serializers.instance.put(Serializer.define<
       _$errors_and_exceptions.ValidateError, Map<String, Object?>>(
     serialize: ($value) => {r'msg': $value.msg},
@@ -75,26 +97,6 @@ void initSerializers() {
       ));
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.UserException, Map<String, Object?>?>(
-    serialize: ($value) => {
-      r'msg': $value.msg,
-      r'code': $value.code,
-      r'cause': Serializers.instance.serialize<JsonValue?>(
-        $value.cause,
-        const TypeToken<JsonValue?>('JsonValue'),
-      ),
-    },
-    deserialize: ($serialized) {
-      return _$overrides.UserException(
-        msg: ($serialized?[r'msg'] as String?),
-        cause: Serializers.instance.deserialize<JsonValue?>(
-          $serialized?[r'cause'],
-          const TypeToken<JsonValue?>('JsonValue'),
-        ),
-      );
-    },
-  ));
   Serializers.instance.put(Serializer.define<
       _$overrides.UserException_ShowInConsole, Map<String, Object?>>(
     serialize: ($value) => {
@@ -121,6 +123,7 @@ void initSerializers() {
       r'ticker': $value.ticker,
       r'name': $value.name,
       r'currentPrice': $value.currentPrice,
+      r'currentPriceStr': $value.currentPriceStr,
     },
     deserialize: ($serialized) {
       return (_$available_stock.AvailableStock(
@@ -128,21 +131,6 @@ void initSerializers() {
         name: ($serialized[r'name'] as String),
         currentPrice: ($serialized[r'currentPrice'] as num).toDouble(),
       ) as _$overrides.AvailableStock);
-    },
-  ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.AvailableStocks, Map<String, Object?>>(
-    serialize: ($value) => {
-      r'list': Serializers.instance
-          .serialize<_$ilist.IList<_$available_stock.AvailableStock>>(
-              $value.list)
-    },
-    deserialize: ($serialized) {
-      return (_$available_stocks.AvailableStocks(
-          ($serialized[r'list'] as Iterable<Object?>)
-              .map((el) => Serializers.instance
-                  .deserialize<_$available_stock.AvailableStock>(el))
-              .toList()) as _$overrides.AvailableStocks);
     },
   ));
   Serializers.instance
@@ -161,6 +149,8 @@ void initSerializers() {
           .serialize<_$ilist.IList<_$stock.Stock>>($value.stocks),
       r'cashBalance': Serializers.instance
           .serialize<_$cash_balance.CashBalance>($value.cashBalance),
+      r'isEmpty': $value.isEmpty,
+      r'totalCostBasis': $value.totalCostBasis,
     },
     deserialize: ($serialized) {
       return (_$portfolio.Portfolio(
@@ -180,6 +170,8 @@ void initSerializers() {
       r'ticker': $value.ticker,
       r'howManyShares': $value.howManyShares,
       r'averagePrice': $value.averagePrice,
+      r'costBasis': $value.costBasis,
+      r'averagePriceStr': $value.averagePriceStr,
     },
     deserialize: ($serialized) {
       return (_$stock.Stock(
@@ -206,25 +198,314 @@ void initSerializers() {
     },
   ));
   Serializers.instance
-      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
+      .put(Serializer.define<AbortedException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
     deserialize: ($serialized) {
-      return BadRequestException(($serialized[r'message'] as String));
+      return AbortedException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<AlreadyExistsException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return AlreadyExistsException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return BadRequestException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<CancelledException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return CancelledException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<CloudException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return CloudException.fromJson($serialized);
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<DataLossError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return DataLossError(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<DeadlineExceededError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return DeadlineExceededError(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<FailedPreconditionException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return FailedPreconditionException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
     },
   ));
   Serializers.instance
       .put(Serializer.define<InternalServerError, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
     deserialize: ($serialized) {
-      return InternalServerError(($serialized[r'message'] as String));
+      return InternalServerError(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
     },
   ));
   Serializers.instance
-      .put(Serializer.define<UnauthorizedException, Map<String, Object?>?>(
-    serialize: ($value) => {r'message': $value.message},
+      .put(Serializer.define<NotFoundException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return NotFoundException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<OutOfRangeException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return OutOfRangeException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<PermissionDeniedException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return PermissionDeniedException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<ResourceExhaustedException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return ResourceExhaustedException(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<UnauthorizedException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
     deserialize: ($serialized) {
       return UnauthorizedException(
-          (($serialized?[r'message'] as String?)) ?? 'Unauthorized');
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<UnavailableError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return UnavailableError(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<UnimplementedError, Map<String, Object?>?>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return UnimplementedError(($serialized?[r'message'] as String?));
+    },
+  ));
+  Serializers.instance
+      .put(Serializer.define<UnknownError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
+    },
+    deserialize: ($serialized) {
+      return UnknownError(
+        ($serialized[r'message'] as String?),
+        details: Serializers.instance.deserialize<JsonValue?>(
+          $serialized[r'details'],
+          const TypeToken<JsonValue?>('JsonValue'),
+        ),
+      );
     },
   ));
   Serializers.instance
@@ -233,6 +514,10 @@ void initSerializers() {
       r'message': $value.message,
       r'offset': $value.offset,
       r'source': $value.source,
+      r'details': Serializers.instance.serialize<JsonValue?>(
+        $value.details,
+        const TypeToken<JsonValue?>('JsonValue'),
+      ),
     },
     deserialize: ($serialized) {
       return SerializationException(($serialized[r'message'] as String));

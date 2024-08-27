@@ -8,11 +8,12 @@
   "apis": {},
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.4",
+    "sdkVersion": "3.5.1",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.1"
   },
   "location": {
     "start": {

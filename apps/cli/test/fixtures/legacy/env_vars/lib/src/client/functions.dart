@@ -24,24 +24,57 @@ class CelestFunctionsInjected {
   }) {
     final $error = ($body['error'] as Map<String, Object?>);
     final $code = ($error['code'] as String);
-    final $details = ($error['details'] as Map<String, Object?>?);
+    final $message = ($error['message'] as String?);
+    final $details = ($error['details'] as JsonMap?);
     switch ($code) {
-      case r'BadRequestException':
+      case r'celest.core.CloudException':
+        throw Serializers.instance.deserialize<CloudException>($details);
+      case r'celest.core.CancelledException':
+        throw Serializers.instance.deserialize<CancelledException>($details);
+      case r'celest.core.UnknownError':
+        throw Serializers.instance.deserialize<UnknownError>($details);
+      case r'celest.core.BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
-      case r'UnauthorizedException':
+      case r'celest.core.UnauthorizedException':
         throw Serializers.instance.deserialize<UnauthorizedException>($details);
-      case r'InternalServerError':
+      case r'celest.core.NotFoundException':
+        throw Serializers.instance.deserialize<NotFoundException>($details);
+      case r'celest.core.AlreadyExistsException':
+        throw Serializers.instance
+            .deserialize<AlreadyExistsException>($details);
+      case r'celest.core.PermissionDeniedException':
+        throw Serializers.instance
+            .deserialize<PermissionDeniedException>($details);
+      case r'celest.core.ResourceExhaustedException':
+        throw Serializers.instance
+            .deserialize<ResourceExhaustedException>($details);
+      case r'celest.core.FailedPreconditionException':
+        throw Serializers.instance
+            .deserialize<FailedPreconditionException>($details);
+      case r'celest.core.AbortedException':
+        throw Serializers.instance.deserialize<AbortedException>($details);
+      case r'celest.core.OutOfRangeException':
+        throw Serializers.instance.deserialize<OutOfRangeException>($details);
+      case r'celest.core.UnimplementedError':
+        throw Serializers.instance.deserialize<UnimplementedError>($details);
+      case r'celest.core.InternalServerError':
         throw Serializers.instance.deserialize<InternalServerError>($details);
-      case r'SerializationException':
+      case r'celest.core.UnavailableError':
+        throw Serializers.instance.deserialize<UnavailableError>($details);
+      case r'celest.core.DataLossError':
+        throw Serializers.instance.deserialize<DataLossError>($details);
+      case r'celest.core.DeadlineExceededError':
+        throw Serializers.instance.deserialize<DeadlineExceededError>($details);
+      case r'celest.core.SerializationException':
         throw Serializers.instance
             .deserialize<SerializationException>($details);
-      case _:
-        switch ($statusCode) {
-          case 400:
-            throw BadRequestException($code);
-          case _:
-            throw InternalServerError($code);
-        }
+      default:
+        throw CloudException.http(
+          statusCode: $statusCode,
+          code: $code,
+          message: $message,
+          details: $details,
+        );
     }
   }
 

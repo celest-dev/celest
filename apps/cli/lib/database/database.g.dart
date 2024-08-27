@@ -260,49 +260,6 @@ typedef $$ProjectsTableUpdateCompanionBuilder = ProjectsCompanion Function({
   Value<int> rowid,
 });
 
-class $$ProjectsTableTableManager extends RootTableManager<
-    _$CelestDatabase,
-    $ProjectsTable,
-    Project,
-    $$ProjectsTableFilterComposer,
-    $$ProjectsTableOrderingComposer,
-    $$ProjectsTableCreateCompanionBuilder,
-    $$ProjectsTableUpdateCompanionBuilder> {
-  $$ProjectsTableTableManager(_$CelestDatabase db, $ProjectsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ProjectsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ProjectsTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> path = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ProjectsCompanion(
-            id: id,
-            name: name,
-            path: path,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            required String name,
-            required String path,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ProjectsCompanion.insert(
-            id: id,
-            name: name,
-            path: path,
-            rowid: rowid,
-          ),
-        ));
-}
-
 class $$ProjectsTableFilterComposer
     extends FilterComposer<_$CelestDatabase, $ProjectsTable> {
   $$ProjectsTableFilterComposer(super.$state);
@@ -340,6 +297,68 @@ class $$ProjectsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
+
+class $$ProjectsTableTableManager extends RootTableManager<
+    _$CelestDatabase,
+    $ProjectsTable,
+    Project,
+    $$ProjectsTableFilterComposer,
+    $$ProjectsTableOrderingComposer,
+    $$ProjectsTableCreateCompanionBuilder,
+    $$ProjectsTableUpdateCompanionBuilder,
+    (Project, BaseReferences<_$CelestDatabase, $ProjectsTable, Project>),
+    Project,
+    PrefetchHooks Function()> {
+  $$ProjectsTableTableManager(_$CelestDatabase db, $ProjectsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ProjectsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ProjectsTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> path = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProjectsCompanion(
+            id: id,
+            name: name,
+            path: path,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            required String name,
+            required String path,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProjectsCompanion.insert(
+            id: id,
+            name: name,
+            path: path,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ProjectsTableProcessedTableManager = ProcessedTableManager<
+    _$CelestDatabase,
+    $ProjectsTable,
+    Project,
+    $$ProjectsTableFilterComposer,
+    $$ProjectsTableOrderingComposer,
+    $$ProjectsTableCreateCompanionBuilder,
+    $$ProjectsTableUpdateCompanionBuilder,
+    (Project, BaseReferences<_$CelestDatabase, $ProjectsTable, Project>),
+    Project,
+    PrefetchHooks Function()>;
 
 class $CelestDatabaseManager {
   final _$CelestDatabase _db;

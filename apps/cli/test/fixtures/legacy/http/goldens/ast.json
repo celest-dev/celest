@@ -325,6 +325,24 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -337,7 +355,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -683,6 +767,24 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -695,7 +797,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -1588,6 +1756,24 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1600,7 +1786,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -1648,13 +1900,13 @@
               "named": false,
               "location": {
                 "start": {
-                  "offset": 489,
+                  "offset": 512,
                   "uri": "http_errors.dart",
                   "line": 10,
                   "column": 38
                 },
                 "end": {
-                  "offset": 493,
+                  "offset": 516,
                   "uri": "http_errors.dart",
                   "line": 10,
                   "column": 42
@@ -1692,13 +1944,13 @@
               "statusCode": 403,
               "location": {
                 "start": {
-                  "offset": 198,
+                  "offset": 221,
                   "uri": "http_errors.dart",
                   "line": 6,
                   "column": 0
                 },
                 "end": {
-                  "offset": 250,
+                  "offset": 273,
                   "uri": "http_errors.dart",
                   "line": 6,
                   "column": 52
@@ -1716,13 +1968,13 @@
               "statusCode": 412,
               "location": {
                 "start": {
-                  "offset": 251,
+                  "offset": 274,
                   "uri": "http_errors.dart",
                   "line": 7,
                   "column": 0
                 },
                 "end": {
-                  "offset": 319,
+                  "offset": 342,
                   "uri": "http_errors.dart",
                   "line": 7,
                   "column": 68
@@ -1740,13 +1992,13 @@
               "statusCode": 401,
               "location": {
                 "start": {
-                  "offset": 320,
+                  "offset": 343,
                   "uri": "http_errors.dart",
                   "line": 8,
                   "column": 0
                 },
                 "end": {
-                  "offset": 378,
+                  "offset": 401,
                   "uri": "http_errors.dart",
                   "line": 8,
                   "column": 58
@@ -1764,13 +2016,13 @@
               "statusCode": 404,
               "location": {
                 "start": {
-                  "offset": 379,
+                  "offset": 402,
                   "uri": "http_errors.dart",
                   "line": 9,
                   "column": 0
                 },
                 "end": {
-                  "offset": 450,
+                  "offset": 473,
                   "uri": "http_errors.dart",
                   "line": 9,
                   "column": 71
@@ -1788,13 +2040,13 @@
               "statusCode": 404,
               "location": {
                 "start": {
-                  "offset": 379,
+                  "offset": 402,
                   "uri": "http_errors.dart",
                   "line": 9,
                   "column": 0
                 },
                 "end": {
-                  "offset": 450,
+                  "offset": 473,
                   "uri": "http_errors.dart",
                   "line": 9,
                   "column": 71
@@ -1806,13 +2058,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 464,
+              "offset": 487,
               "uri": "http_errors.dart",
               "line": 10,
               "column": 13
             },
             "end": {
-              "offset": 474,
+              "offset": 497,
               "uri": "http_errors.dart",
               "line": 10,
               "column": 23
@@ -1823,6 +2075,24 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "BadRequestException",
@@ -1837,7 +2107,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -2306,6 +2642,24 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -2318,7 +2672,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -2348,11 +2768,12 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.4",
+    "sdkVersion": "3.5.1",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.1"
   },
   "location": {
     "start": {

@@ -16,7 +16,6 @@ dependencies:
   archive: ^3.4.9
   args: ^2.4.2
   async: ^2.11.0
-  aws_common: ^0.7.1
   built_collection: ^5.1.1
   built_value: ^8.6.3
   cedar:
@@ -41,7 +40,7 @@ dependencies:
   corks_cedar: ^0.1.0
   crypto: ^3.0.3
   dart_style: ^2.3.4
-  drift: ">=2.19.0 <2.20.0"
+  drift: ">=2.20.0 <2.21.0"
   email_validator: ^3.0.0
   file: ^7.0.0
   fixnum: ^1.1.0
@@ -70,6 +69,7 @@ dependencies:
   pub_server:
     path: ../../packages/pub_server
   pubspec_parse: ^1.2.3
+  recase: ^4.1.0
   sentry: ^8.5.0
   shelf: ^1.4.1
   shelf_static: ^1.1.2
@@ -125,7 +125,7 @@ dev_dependencies:
   celest_lints:
     path: ../../packages/celest_lints
   checks: ^0.3.0
-  drift_dev: ">=2.19.0 <2.20.0"
+  drift_dev: ">=2.20.0 <2.21.0"
   gcloud: ^0.8.12
   # Required for the `gcloud` package
   googleapis: ^12.0.0

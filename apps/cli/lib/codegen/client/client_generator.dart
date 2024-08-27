@@ -227,6 +227,7 @@ final class ClientGenerator {
     final apis = project.apis.values;
     if (apis.isNotEmpty) {
       final functionsGenerator = ClientFunctionsGenerator(
+        project: project,
         apis: apis.toList(),
       );
       libraries[ClientPaths.functions] = functionsGenerator.generate();

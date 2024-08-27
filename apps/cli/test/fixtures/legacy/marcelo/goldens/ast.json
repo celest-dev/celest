@@ -27,13 +27,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 281,
+                  "offset": 312,
                   "uri": "exceptions.dart",
                   "line": 8,
                   "column": 13
                 },
                 "end": {
-                  "offset": 286,
+                  "offset": 317,
                   "uri": "exceptions.dart",
                   "line": 8,
                   "column": 18
@@ -56,13 +56,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 246,
+              "offset": 277,
               "uri": "exceptions.dart",
               "line": 7,
               "column": 5
             },
             "end": {
-              "offset": 265,
+              "offset": 296,
               "uri": "exceptions.dart",
               "line": 7,
               "column": 24
@@ -87,13 +87,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 396,
+                  "offset": 427,
                   "uri": "exceptions.dart",
                   "line": 15,
                   "column": 13
                 },
                 "end": {
-                  "offset": 401,
+                  "offset": 432,
                   "uri": "exceptions.dart",
                   "line": 15,
                   "column": 18
@@ -116,13 +116,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 356,
+              "offset": 387,
               "uri": "exceptions.dart",
               "line": 14,
               "column": 5
             },
             "end": {
-              "offset": 380,
+              "offset": 411,
               "uri": "exceptions.dart",
               "line": 14,
               "column": 29
@@ -147,13 +147,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 486,
+                  "offset": 517,
                   "uri": "exceptions.dart",
                   "line": 22,
                   "column": 9
                 },
                 "end": {
-                  "offset": 493,
+                  "offset": 524,
                   "uri": "exceptions.dart",
                   "line": 22,
                   "column": 16
@@ -173,13 +173,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 520,
+                  "offset": 551,
                   "uri": "exceptions.dart",
                   "line": 23,
                   "column": 13
                 },
                 "end": {
-                  "offset": 525,
+                  "offset": 556,
                   "uri": "exceptions.dart",
                   "line": 23,
                   "column": 18
@@ -202,13 +202,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 460,
+              "offset": 491,
               "uri": "exceptions.dart",
               "line": 21,
               "column": 5
             },
             "end": {
-              "offset": 474,
+              "offset": 505,
               "uri": "exceptions.dart",
               "line": 21,
               "column": 19
@@ -235,13 +235,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 581,
+              "offset": 612,
               "uri": "exceptions.dart",
               "line": 29,
               "column": 5
             },
             "end": {
-              "offset": 599,
+              "offset": 630,
               "uri": "exceptions.dart",
               "line": 29,
               "column": 23
@@ -268,13 +268,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 684,
+              "offset": 715,
               "uri": "exceptions.dart",
               "line": 34,
               "column": 5
             },
             "end": {
-              "offset": 712,
+              "offset": 743,
               "uri": "exceptions.dart",
               "line": 34,
               "column": 33
@@ -301,13 +301,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 775,
+              "offset": 806,
               "uri": "exceptions.dart",
               "line": 39,
               "column": 5
             },
             "end": {
-              "offset": 794,
+              "offset": 825,
               "uri": "exceptions.dart",
               "line": 39,
               "column": 24
@@ -332,13 +332,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 893,
+                  "offset": 924,
                   "uri": "exceptions.dart",
                   "line": 45,
                   "column": 9
                 },
                 "end": {
-                  "offset": 900,
+                  "offset": 931,
                   "uri": "exceptions.dart",
                   "line": 45,
                   "column": 16
@@ -358,13 +358,13 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 927,
+                  "offset": 958,
                   "uri": "exceptions.dart",
                   "line": 46,
                   "column": 13
                 },
                 "end": {
-                  "offset": 932,
+                  "offset": 963,
                   "uri": "exceptions.dart",
                   "line": 46,
                   "column": 18
@@ -387,13 +387,13 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 848,
+              "offset": 879,
               "uri": "exceptions.dart",
               "line": 44,
               "column": 5
             },
             "end": {
-              "offset": 881,
+              "offset": 912,
               "uri": "exceptions.dart",
               "line": 44,
               "column": 38
@@ -407,7 +407,7 @@
         {
           "$": "TypeReference",
           "symbol": "UserException",
-          "url": "package:celest_backend/exceptions/overrides.dart",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
           "isNullable": false
         },
         {
@@ -442,6 +442,24 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -454,7 +472,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -863,7 +947,7 @@
         {
           "$": "TypeReference",
           "symbol": "UserException",
-          "url": "package:celest_backend/exceptions/overrides.dart",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
           "isNullable": false
         },
         {
@@ -898,6 +982,24 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "BadRequestException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -910,7 +1012,73 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
@@ -940,11 +1108,12 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.4.4",
+    "sdkVersion": "3.5.1",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.1"
   },
   "location": {
     "start": {

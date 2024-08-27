@@ -38,6 +38,9 @@ final class CelestAnalyzer
   AnalysisContext get context => celestProject.analysisContext;
 
   final List<CelestAnalysisError> _errors = [];
+  final List<CelestAnalysisError> _warnings = [];
+  final List<CelestAnalysisError> _infos = [];
+
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
   CelestProjectResolver? _resolver;
@@ -49,13 +52,32 @@ final class CelestAnalyzer
     AnalysisErrorSeverity? severity,
     SourceSpan? location,
   }) {
-    _errors.add(
-      CelestAnalysisError(
-        message: error,
-        location: location,
-        severity: severity,
-      ),
-    );
+    switch (severity) {
+      case AnalysisErrorSeverity.error || null:
+        _errors.add(
+          CelestAnalysisError(
+            message: error,
+            location: location,
+            severity: severity,
+          ),
+        );
+      case AnalysisErrorSeverity.warning:
+        _warnings.add(
+          CelestAnalysisError(
+            message: error,
+            location: location,
+            severity: severity,
+          ),
+        );
+      case AnalysisErrorSeverity.info:
+        _infos.add(
+          CelestAnalysisError(
+            message: error,
+            location: location,
+            severity: severity,
+          ),
+        );
+    }
   }
 
   @override
@@ -75,6 +97,8 @@ final class CelestAnalyzer
 
   Future<void> init({required bool migrateProject}) async {
     _errors.clear();
+    _warnings.clear();
+    _infos.clear();
     if (_lastAnalyzed != projectPaths.projectRoot) {
       reset();
     }
@@ -121,6 +145,7 @@ final class CelestAnalyzer
       badRequestExceptionType: celestCore.getClassType('BadRequestException'),
       internalServerErrorType: celestCore.getClassType('InternalServerError'),
       userType: celestCore.getClassType('User'),
+      cloudExceptionType: celestCore.getClassType('CloudException'),
     );
   }
 
@@ -140,12 +165,20 @@ final class CelestAnalyzer
   }) async {
     await init(migrateProject: migrateProject);
     if (_errors.isNotEmpty) {
-      return CelestAnalysisResult.failure(_errors);
+      return CelestAnalysisResult.failure(
+        _errors,
+        warnings: _warnings,
+        infos: _infos,
+      );
     }
 
     final project = await _findProject();
     if (project == null) {
-      return CelestAnalysisResult.failure(_errors);
+      return CelestAnalysisResult.failure(
+        _errors,
+        warnings: _warnings,
+        infos: _infos,
+      );
     }
 
     _project = project.toBuilder();
@@ -180,6 +213,8 @@ final class CelestAnalyzer
     return CelestAnalysisResult.success(
       project: _project.build(),
       errors: _errors,
+      warnings: _warnings,
+      infos: _infos,
     );
   }
 

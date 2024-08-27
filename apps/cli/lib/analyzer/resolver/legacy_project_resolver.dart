@@ -245,7 +245,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         enabledExperiments: celestProject.analysisOptions.enabledExperiments,
         featureFlags: featureFlags.toAst(),
       ),
-      location: projectDefineLocation,
+      location: projectDefineLocation!,
     );
   }
 
@@ -426,7 +426,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     if (annotations.length > 1) {
       reportError(
         'Only one annotation may be specified on a parameter',
-        location: parameter.sourceLocation.safeExpand(
+        location: parameter.sourceLocation?.safeExpand(
           annotations.fold<FileSpan>(
             annotations[0].sourceLocation(parameter.source!),
             (span, el) {
@@ -783,7 +783,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           parameters: await func.parameters.asyncMap((param) async {
             final paramType = param.type;
             final paramTypeRef = typeHelper.toReference(paramType);
-            final paramLoc = param.sourceLocation;
+            final paramLoc = param.sourceLocation!;
             if (paramType.element case final InterfaceElement interface) {
               ensureClientReferenceable(
                 interface,
@@ -857,7 +857,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           returnType: typeHelper.toReference(returnType),
           flattenedReturnType: typeHelper.toReference(flattenedReturnType),
           streamType: streamType,
-          location: func.sourceLocation,
+          location: func.sourceLocation!,
           metadata: functionMetadata,
           annotations: func.metadata
               .map((annotation) => annotation.toCodeBuilder)
@@ -869,7 +869,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         if (flattenedReturnType.element case final InterfaceElement interface) {
           ensureClientReferenceable(
             interface,
-            func.sourceLocation,
+            func.sourceLocation!,
             type: CustomType.model,
           );
         }
@@ -976,7 +976,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       }
       final astAuthProvider = ast.AuthProvider(
         type: type,
-        location: authDefinitionLocation,
+        location: authDefinitionLocation!,
       );
       if (!uniqueAuthProviders.add(astAuthProvider)) {
         reportError(
@@ -986,7 +986,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       }
     }
     return ast.Auth(
-      location: authDefinitionLocation,
+      location: authDefinitionLocation!,
       providers: uniqueAuthProviders.toList(),
     );
   }

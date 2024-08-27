@@ -116,7 +116,7 @@ Future<void> runPub({
       await Future<void>.delayed(const Duration(milliseconds: 50));
     }
   } on Object {
-    await dumpPackageConfig();
+    // await dumpPackageConfig();
     rethrow;
   } finally {
     unawaited(stdout.cancel());

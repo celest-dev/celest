@@ -577,18 +577,19 @@ final class SerializerGenerator {
     final deserializedPositional = <Expression>[];
     final deserializedNamed = <String, Expression>{};
     for (final parameter in serializationSpec.parameters) {
+      final parameterWireName = parameter.name.nonPrivate;
       final reference = typeHelper.toReference(parameter.type);
       final deserialized = jsonGenerator.fromJson(
         reference,
         typeHelper.fromReference(serializationSpec.wireType).isDartCoreMap
-            ? ref.index(literalString(parameter.name, raw: true))
+            ? ref.index(literalString(parameterWireName, raw: true))
             : ref,
         defaultValue: parameter.defaultValue,
       );
       if (parameter.isPositional) {
         deserializedPositional.add(deserialized);
       } else {
-        deserializedNamed[parameter.name] = deserialized;
+        deserializedNamed[parameterWireName] = deserialized;
       }
     }
     return switch (type) {
