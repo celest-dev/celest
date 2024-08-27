@@ -29,6 +29,8 @@ dependencies:
     path: ../../celest/packages/celest_auth
   celest_cli_common:
     path: ../../packages/celest_cli_common
+  celest_cloud:
+    path: ../../celest/packages/celest_cloud
   celest_core:
     path: ../../celest/packages/celest_core
   chunked_stream: ^1.4.2
@@ -56,8 +58,8 @@ dependencies:
   logging: ^1.2.0
   mason_logger: ^0.2.10
   meta: ^1.10.0
-  native_assets_builder: ^0.6.1
-  native_assets_cli: ^0.5.4
+  native_assets_builder: ^0.8.1
+  native_assets_cli: ^0.7.2
   os_detect: ^2.0.1
   package_config: ^2.1.0
   path: ^1.8.3
@@ -98,6 +100,8 @@ dependency_overrides:
     path: ../../celest/packages/celest_auth
   celest_cli_common:
     path: ../../packages/celest_cli_common
+  celest_cloud:
+    path: ../../celest/packages/celest_cloud
   celest_core:
     path: ../../celest/packages/celest_core
 

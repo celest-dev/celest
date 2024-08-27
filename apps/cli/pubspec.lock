@@ -21,18 +21,18 @@ packages:
     dependency: transitive
     description:
       name: amplify_core
-      sha256: "913dabb3efff4df2681875d8161cb57844c2bfddf49da0a60b16338d77f60c86"
+      sha256: db441806943b89c0a8c44475f0b69b8cd102ced8886cb3c79507e05f0183bac4
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   amplify_secure_storage_dart:
     dependency: transitive
     description:
       name: amplify_secure_storage_dart
-      sha256: "00ed4093787d81e80bb3ca737a0791f602ab524f84fd187873e4c5e83c2554fe"
+      sha256: "02e5f66aacc38258e3ba7e1f2e732a303a3ae2467868d72fcdc0fe7488505437"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "0.5.2"
   analyzer:
     dependency: "direct main"
     description:
@@ -55,7 +55,7 @@ packages:
       path: "../../packages/api_celest"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.0.0"
   archive:
     dependency: "direct main"
     description:
@@ -84,18 +84,18 @@ packages:
     dependency: "direct main"
     description:
       name: aws_common
-      sha256: f0c86eb59753a5ddb1f535e3b82b5d3a94326e1d984f3b2b773b67d1c7d3d033
+      sha256: f328f0ba7c9480c64645ccbaaef72cbffb7492c443b8f0fdc288377c78905668
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.1"
+    version: "0.7.2"
   aws_signature_v4:
     dependency: transitive
     description:
       name: aws_signature_v4
-      sha256: "345faf0b350e6c8b4538391c2711de631d72d55bbb792ca8e82befc2b00d71b5"
+      sha256: "3b5289814e0c0147974e193cdcdb01b96ae15f81cb36a5ffdc0a7043ed57ba6d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.2"
   benchmark_harness:
     dependency: "direct dev"
     description:
@@ -213,7 +213,7 @@ packages:
       path: "../../cedar/packages/cedar_ffi"
       relative: true
     source: path
-    version: "0.1.4"
+    version: "0.2.0-wip"
   celest:
     dependency: "direct main"
     description:
@@ -221,6 +221,13 @@ packages:
       relative: true
     source: path
     version: "0.4.3-wip"
+  celest_ast:
+    dependency: transitive
+    description:
+      path: "../../packages/celest_ast"
+      relative: true
+    source: path
+    version: "0.0.0"
   celest_auth:
     dependency: "direct main"
     description:
@@ -235,6 +242,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  celest_cloud:
+    dependency: "direct main"
+    description:
+      path: "../../celest/packages/celest_cloud"
+      relative: true
+    source: path
+    version: "0.1.0"
   celest_core:
     dependency: "direct main"
     description:
@@ -249,6 +263,14 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  characters:
+    dependency: transitive
+    description:
+      name: characters
+      sha256: "04a925763edad70e8443c99234dc3328f442e811f1d8fd1a72f1c8ad0f69a605"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   charcode:
     dependency: transitive
     description:
@@ -333,10 +355,10 @@ packages:
     dependency: "direct main"
     description:
       name: collection
-      sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
+      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
       url: "https://pub.dev"
     source: hosted
-    version: "1.19.0"
+    version: "1.18.0"
   convert:
     dependency: "direct main"
     description:
@@ -456,6 +478,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flutter:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_lints:
     dependency: transitive
     description:
@@ -628,10 +655,10 @@ packages:
     dependency: "direct main"
     description:
       name: http_parser
-      sha256: "40f592dd352890c3b60fec1b68e786cefb9603e05ff303dbc4dda49b304ecdf4"
+      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "4.0.2"
   hub:
     dependency: "direct main"
     description:
@@ -742,6 +769,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.16+1"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      sha256: f7142bb1154231d7ea5f96bc7bde4bda2a0945d2806bb11670e30b850d56bdec
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.1"
   meta:
     dependency: "direct main"
     description:
@@ -754,10 +789,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
+      sha256: "801fd0b26f14a4a58ccb09d5892c3fbdeff209594300a542492cf13fba9d247a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   mocktail:
     dependency: "direct dev"
     description:
@@ -778,18 +813,26 @@ packages:
     dependency: "direct main"
     description:
       name: native_assets_builder
-      sha256: "32beacac1b465c63554eee65e5f1379bd0c7b98f5dcf8a9ac86f014ce450a832"
+      sha256: c4e3a04568cc3f8843d29531044a22c181bde7ca21d6e764a7ac22c6a7164eb9
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.8.1"
   native_assets_cli:
     dependency: "direct main"
     description:
       name: native_assets_cli
-      sha256: "9c1b67ccf85ec9282f34e5348ae78dcb7da2c7dc965c0265306477d977853a0d"
+      sha256: "3da9bdd4beb2ed059dae7fd93baa62c5f6c3cdf630bbb88334303dfa92d6da26"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.4"
+    version: "0.7.2"
+  native_authentication:
+    dependency: transitive
+    description:
+      name: native_authentication
+      sha256: "8bf0bcfd0cdac01948a9a29b41f1bc3ae7fea0ab6aa6b8206185c139cef037be"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   native_storage:
     dependency: "direct overridden"
     description:
@@ -802,10 +845,10 @@ packages:
     dependency: transitive
     description:
       name: native_toolchain_c
-      sha256: "1b1b86f47570378d0003f0d949fbb03b637ec9d2dcbcf698a16f7cbffb3a945c"
+      sha256: "6f4f327d9c131848a833652d758faf4bcb883af45afbb050fcd5ffa8b4e8029b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.2"
   node_preamble:
     dependency: transitive
     description:
@@ -814,6 +857,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  objective_c:
+    dependency: transitive
+    description:
+      name: objective_c
+      sha256: "77c341fce45bb3865a7bc3ddee4201605799e3de2f7af200e8dae26369d210ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   os_detect:
     dependency: "direct main"
     description:
@@ -945,10 +996,10 @@ packages:
     dependency: "direct main"
     description:
       name: shelf
-      sha256: e7dd780a7ffb623c57850b33f43309312fc863fb6aa3d276a754bb299839ef12
+      sha256: ad29c505aee705f41a4d8963641f91ac4cee3c8fad5947e033390a7bd8180fa4
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.1"
   shelf_multipart:
     dependency: transitive
     description:
@@ -989,6 +1040,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  sky_engine:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.99"
   source_gen:
     dependency: transitive
     description:
@@ -1009,10 +1065,10 @@ packages:
     dependency: transitive
     description:
       name: source_map_stack_trace
-      sha256: "84cf769ad83aa6bb61e0aa5a18e53aea683395f196a6f39c4c881fb90ed4f7ae"
+      sha256: c0713a43e323c3302c2abe2a1cc89aa057a387101ebd280371d6a6c9fa68516b
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   source_maps:
     dependency: transitive
     description:
@@ -1043,7 +1099,7 @@ packages:
       path: "../../packages/sqlite3/sqlite3"
       relative: true
     source: path
-    version: "2.4.1-dev"
+    version: "2.4.6"
   sqlparser:
     dependency: transitive
     description:
@@ -1164,6 +1220,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.4.2"
+  vector_math:
+    dependency: transitive
+    description:
+      name: vector_math
+      sha256: "80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   vm_service:
     dependency: "direct main"
     description:
@@ -1210,7 +1274,7 @@ packages:
       path: "../../packages/webcrypto"
       relative: true
     source: path
-    version: "0.5.5"
+    version: "0.5.7"
   webkit_inspection_protocol:
     dependency: transitive
     description:
@@ -1351,10 +1415,10 @@ packages:
     dependency: transitive
     description:
       name: worker_bee
-      sha256: ba4c6684fd012b6ebfe37540bff770787f1631093b96b92291ca9b3685a467df
+      sha256: d75dac8a77275c77a5ef34eee4479ad543345c45e01cafcee81f0882c3521ff2
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.1"
+    version: "0.3.2"
   xdg_directories:
     dependency: transitive
     description:
@@ -1380,5 +1444,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=3.5.0-259.0.dev <4.0.0"
-  flutter: ">=2.11.0"
+  dart: ">=3.5.1 <4.0.0"
+  flutter: ">=3.19.0"

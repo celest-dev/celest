@@ -27,6 +27,7 @@ Future<File> generateNativeAssetsYaml({
     supportedAssetTypes: [
       NativeCodeAsset.type,
     ],
+    linkingEnabled: false,
   );
   if (!buildResult.success) {
     throw StateError('Native assets build failed.');
