@@ -17,7 +17,7 @@ mixin BaseProtocol {
       },
     );
     if (resp.statusCode == 401) {
-      throw UnauthorizedException();
+      throw const UnauthorizedException(null);
     }
     if (resp.statusCode != 200) {
       throw http.ClientException(
@@ -66,18 +66,26 @@ mixin BaseProtocol {
 
   Never _error<T extends Object>(
     http.Response response,
-    T Function(String message) createError,
+    T Function(String? message, {Object? details}) createError,
   ) {
     final mediaType = switch (response.headers['content-type']) {
       final contentType? => MediaType.parse(contentType),
-      _ => throw createError(response.body),
+      _ => throw createError(
+          'Missing content type',
+          details: response.body,
+        ),
     };
     if (mediaType.mimeType != 'application/json') {
-      throw createError(response.body);
+      throw createError(
+        'Unexpected content type: ${mediaType.mimeType}',
+        details: response.body,
+      );
     }
     final json = jsonDecode(response.body) as Map<String, Object?>;
     final error = json['error'] as Map<String, Object?>?;
-    final message = error?['message'] as String?;
-    throw createError(message ?? response.body);
+    throw createError(
+      error?['message'] as String?,
+      details: error?['details'],
+    );
   }
 }

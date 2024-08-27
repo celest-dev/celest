@@ -44,14 +44,14 @@ final class User {
 
   final String userId;
   final String? displayName;
-  final String email;
+  final String? email;
   final bool emailVerified;
 
   Map<String, Object?> toJson() => {
         'sub': userId,
         if (displayName != null) 'name': displayName,
-        'email': email,
-        'email_verified': emailVerified,
+        if (email != null) 'email': email,
+        if (email != null) 'email_verified': emailVerified,
       };
 
   @override

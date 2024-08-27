@@ -7,7 +7,7 @@ import 'package:celest_core/celest_core.dart';
 /// deserialize a value.
 /// {@endtemplate}
 final class SerializationException extends FormatException
-    implements BadRequestException, CelestException {
+    with BadRequestException {
   /// Creates a [SerializationException] with the given [message].
   ///
   /// {@macro celest_core_exceptions_serialization_exception}
@@ -20,4 +20,7 @@ final class SerializationException extends FormatException
 
   @override
   String toString() => 'SerializationException: $message';
+
+  @override
+  Object? get details => null;
 }
