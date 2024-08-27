@@ -66,26 +66,29 @@ mixin BaseProtocol {
 
   Never _error<T extends Object>(
     http.Response response,
-    T Function(String? message, {Object? details}) createError,
+    T Function(String? message, {JsonValue? details}) createError,
   ) {
     final mediaType = switch (response.headers['content-type']) {
       final contentType? => MediaType.parse(contentType),
       _ => throw createError(
           'Missing content type',
-          details: response.body,
+          details: JsonString(response.body),
         ),
     };
     if (mediaType.mimeType != 'application/json') {
       throw createError(
         'Unexpected content type: ${mediaType.mimeType}',
-        details: response.body,
+        details: JsonString(response.body),
       );
     }
     final json = jsonDecode(response.body) as Map<String, Object?>;
     final error = json['error'] as Map<String, Object?>?;
     throw createError(
       error?['message'] as String?,
-      details: error?['details'],
+      details: switch (error?['details']) {
+        null => null,
+        final Object details => JsonValue(details),
+      },
     );
   }
 }

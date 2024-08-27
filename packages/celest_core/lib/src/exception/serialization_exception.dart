@@ -22,5 +22,5 @@ final class SerializationException extends FormatException
   String toString() => 'SerializationException: $message';
 
   @override
-  Object? get details => null;
+  JsonValue? get details => null;
 }

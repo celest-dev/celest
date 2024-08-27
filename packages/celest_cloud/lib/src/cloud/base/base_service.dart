@@ -23,7 +23,10 @@ abstract mixin class BaseService {
       final cloudEx = switch (e) {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
-        final Exception ex => CloudException.unknownError(null, details: ex),
+        final Exception ex => CloudException.unknownError(
+            null,
+            details: JsonString(ex.toString()),
+          ),
         _ => e,
       };
       logger?.severe('[$name] Error', cloudEx, st);
@@ -57,7 +60,10 @@ abstract mixin class BaseService {
       final cloudEx = switch (e) {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
-        final Exception ex => CloudException.unknownError(null, details: ex),
+        final Exception ex => CloudException.unknownError(
+            null,
+            details: JsonString(ex.toString()),
+          ),
         _ => e,
       };
       logger?.severe('[$name] Error in operation', cloudEx, st);

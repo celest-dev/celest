@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:celest_cloud/src/cloud/authentication/authentication_protocol.dart';
+import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/auth/v1alpha1/authentication.pb.dart';
-import 'package:celest_core/celest_core.dart' show CloudException;
 import 'package:http/http.dart' as http;
 
-final class AuthenticationProtocolHttp implements AuthenticationProtocol {
+final class AuthenticationProtocolHttp
+    with BaseProtocol
+    implements AuthenticationProtocol {
   AuthenticationProtocolHttp({
     required Uri uri,
     http.Client? httpClient,
@@ -29,7 +31,7 @@ final class AuthenticationProtocolHttp implements AuthenticationProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -48,7 +50,7 @@ final class AuthenticationProtocolHttp implements AuthenticationProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
@@ -67,7 +69,7 @@ final class AuthenticationProtocolHttp implements AuthenticationProtocol {
     final res = await _client.send(req);
     final body = await res.stream.bytesToString();
     if (res.statusCode != 200) {
-      throw CloudException.http(
+      httpError(
         statusCode: res.statusCode,
         body: body,
       );
