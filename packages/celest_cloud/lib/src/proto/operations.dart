@@ -212,7 +212,7 @@ final class OperationWaiter {
       if (timer.elapsed > timeout) {
         throw TimeoutException('Operation did not complete within $timeout');
       }
-      await Future<void>.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 5));
       _operation = await _client.get(
         GetOperationRequest(name: _operation.name),
       );
@@ -231,7 +231,7 @@ final class OperationWaiter {
   Stream<Operation> get stream async* {
     yield _operation;
     while (!_operation.done) {
-      await Future<void>.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 5));
       _operation = await _client.get(
         GetOperationRequest(name: _operation.name),
       );

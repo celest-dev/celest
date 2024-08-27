@@ -29,31 +29,31 @@ abstract mixin class CloudException implements CelestException {
       UnknownError;
 
   /// {@macro celest_core.exception.not_found_exception}
-  factory CloudException.notFound(String? message, {Object? details}) =
+  const factory CloudException.notFound(String? message, {Object? details}) =
       NotFoundException;
 
   /// {@macro celest_core.exception.already_exists_exception}
-  factory CloudException.alreadyExists(String? message, {Object? details}) =
-      AlreadyExistsException;
+  const factory CloudException.alreadyExists(String? message,
+      {Object? details}) = AlreadyExistsException;
 
   /// {@macro celest_core.exception.permission_denied_exception}
-  factory CloudException.permissionDenied(String? message, {Object? details}) =
-      PermissionDeniedException;
+  const factory CloudException.permissionDenied(String? message,
+      {Object? details}) = PermissionDeniedException;
 
   /// {@macro celest_core.exception.resource_exhausted_exception}
-  factory CloudException.resourceExhausted(String? message, {Object? details}) =
-      ResourceExhaustedException;
+  const factory CloudException.resourceExhausted(String? message,
+      {Object? details}) = ResourceExhaustedException;
 
   /// {@macro celest_core.exception.failed_precondition_exception}
-  factory CloudException.failedPrecondition(String? message,
+  const factory CloudException.failedPrecondition(String? message,
       {Object? details}) = FailedPreconditionException;
 
   /// {@macro celest_core.exception.aborted_exception}
-  factory CloudException.aborted(String? message, {Object? details}) =
+  const factory CloudException.aborted(String? message, {Object? details}) =
       AbortedException;
 
   /// {@macro celest_core.exception.out_of_range_exception}
-  factory CloudException.outOfRange(String? message, {Object? details}) =
+  const factory CloudException.outOfRange(String? message, {Object? details}) =
       OutOfRangeException;
 
   /// {@macro celest_core.exception.unimplemented_error}
