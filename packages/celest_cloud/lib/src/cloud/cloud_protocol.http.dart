@@ -1,11 +1,12 @@
 import 'package:celest_cloud/src/cloud/authentication/authentication_protocol.dart';
 import 'package:celest_cloud/src/cloud/authentication/authentication_protocol.http.dart';
-import 'package:celest_cloud/src/cloud/base/base_http_client.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.http.dart';
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.http.dart';
 import 'package:celest_core/_internal.dart';
@@ -18,8 +19,8 @@ final class CloudProtocolHttp implements CloudProtocol {
     required Authenticator authenticator,
     http.Client? httpClient,
     Logger? logger,
-  })  : _client = AuthenticatingHttpClient(
-          client: httpClient ?? http.Client(),
+  })  : _client = CelestHttpClient(
+          baseClient: httpClient,
           authenticator: authenticator,
           logger: logger,
         ),
@@ -48,6 +49,12 @@ final class CloudProtocolHttp implements CloudProtocol {
 
   @override
   late final UsersProtocol users = UsersProtocolHttp(
+    uri: _baseUri,
+    httpClient: _client,
+  );
+
+  @override
+  late final ProjectsProtocol projects = ProjectsProtocolHttp(
     uri: _baseUri,
     httpClient: _client,
   );

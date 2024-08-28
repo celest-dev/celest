@@ -2,15 +2,13 @@ import 'dart:convert';
 
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
-import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
-import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pb.dart';
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
+import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 import 'package:http/http.dart' as http;
 
-final class OrganizationsProtocolHttp
-    with BaseProtocol
-    implements OrganizationsProtocol {
-  OrganizationsProtocolHttp({
+final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
+  ProjectsProtocolHttp({
     required Uri uri,
     http.Client? httpClient,
   })  : _client = httpClient ?? http.Client(),
@@ -20,20 +18,19 @@ final class OrganizationsProtocolHttp
   final Uri _baseUri;
 
   @override
-  Future<Operation> create(CreateOrganizationRequest request) async {
-    const path = '/v1alpha1/organizations';
+  Future<Operation> create(CreateProjectRequest request) async {
+    final path = '/v1alpha1/${request.parent}/projects';
     final uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.hasParent()) 'parent': request.parent,
-        if (request.hasOrganizationId())
-          'organizationId': request.organizationId,
+        if (request.hasProjectId()) 'projectId': request.projectId,
         if (request.hasValidateOnly())
           'validateOnly': request.validateOnly.toString(),
       },
     );
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.organization.toProto3Json(
+      ..body = jsonEncode(request.project.toProto3Json(
         typeRegistry: CelestCloud.typeRegistry,
       ))
       ..headers['content-type'] = 'application/json'
@@ -54,7 +51,7 @@ final class OrganizationsProtocolHttp
   }
 
   @override
-  Future<Operation> delete(DeleteOrganizationRequest request) async {
+  Future<Operation> delete(DeleteProjectRequest request) async {
     final path = '/v1alpha1/${request.name}';
     final uri = _baseUri.replace(
       path: path,
@@ -91,7 +88,7 @@ final class OrganizationsProtocolHttp
   }
 
   @override
-  Future<Organization> get(GetOrganizationRequest request) async {
+  Future<Project> get(GetProjectRequest request) async {
     final path = '/v1alpha1/${request.name}';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('GET', uri)
@@ -104,7 +101,7 @@ final class OrganizationsProtocolHttp
         body: body,
       );
     }
-    return Organization()
+    return Project()
       ..mergeFromProto3Json(
         jsonDecode(body),
         typeRegistry: CelestCloud.typeRegistry,
@@ -112,10 +109,10 @@ final class OrganizationsProtocolHttp
   }
 
   @override
-  Future<ListOrganizationsResponse> list(
-    ListOrganizationsRequest request,
+  Future<ListProjectsResponse> list(
+    ListProjectsRequest request,
   ) async {
-    const path = '/v1alpha1/organizations';
+    final path = '/v1alpha1/${request.parent}/projects';
     final uri = _baseUri.replace(
       path: path,
       queryParameters: {
@@ -137,7 +134,7 @@ final class OrganizationsProtocolHttp
         body: body,
       );
     }
-    return ListOrganizationsResponse()
+    return ListProjectsResponse()
       ..mergeFromProto3Json(
         jsonDecode(body),
         typeRegistry: CelestCloud.typeRegistry,
@@ -145,8 +142,8 @@ final class OrganizationsProtocolHttp
   }
 
   @override
-  Future<Operation> update(UpdateOrganizationRequest request) async {
-    final path = '/v1alpha1/${request.organization.name}';
+  Future<Operation> update(UpdateProjectRequest request) async {
+    final path = '/v1alpha1/${request.project.name}';
     final uri = _baseUri.replace(
       path: path,
       queryParameters: {
@@ -159,7 +156,7 @@ final class OrganizationsProtocolHttp
       },
     );
     final req = http.Request('PATCH', uri)
-      ..body = jsonEncode(request.organization.toProto3Json(
+      ..body = jsonEncode(request.project.toProto3Json(
         typeRegistry: CelestCloud.typeRegistry,
       ))
       ..headers['content-type'] = 'application/json'
@@ -180,7 +177,7 @@ final class OrganizationsProtocolHttp
   }
 
   @override
-  Future<Operation> rename(RenameOrganizationRequest request) async {
+  Future<Operation> rename(RenameProjectRequest request) async {
     final path = '/v1alpha1/${request.name}:rename';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)

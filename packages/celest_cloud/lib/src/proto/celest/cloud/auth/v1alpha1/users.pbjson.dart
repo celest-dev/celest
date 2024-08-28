@@ -260,10 +260,9 @@ const GetUserRequest$json = {
 
 /// Descriptor for `GetUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getUserRequestDescriptor = $convert.base64Decode(
-    'Cg5HZXRVc2VyUmVxdWVzdBKcAQoEbmFtZRgBIAEoCUKHAeBBAvpBFwoVY2xvdWQuY2VsZXN0Lm'
-    'Rldi9Vc2VyukhnugFkChh2YWxpZF91c2VyX3Jlc291cmNlX25hbWUSGmludmFsaWQgdXNlciBy'
-    'ZXNvdXJjZSBuYW1lGix0aGlzID09ICdtZScgfHwgdGhpcy5tYXRjaGVzKCd1c2Vycy9bXi9dKy'
-    'QnKVIEbmFtZQ==');
+    'Cg5HZXRVc2VyUmVxdWVzdBKLAQoEbmFtZRgBIAEoCUJ34EEC+kEXChVjbG91ZC5jZWxlc3QuZG'
+    'V2L1VzZXK6SFe6AVQKGHZhbGlkX3VzZXJfcmVzb3VyY2VfbmFtZRIaaW52YWxpZCB1c2VyIHJl'
+    'c291cmNlIG5hbWUaHHRoaXMubWF0Y2hlcygndXNlcnMvW14vXSskJylSBG5hbWU=');
 
 @$core.Deprecated('Use listUsersRequestDescriptor instead')
 const ListUsersRequest$json = {
@@ -348,10 +347,11 @@ final $typed_data.Uint8List updateUserRequestDescriptor = $convert.base64Decode(
     'ChFVcGRhdGVVc2VyUmVxdWVzdBI5CgR1c2VyGAEgASgLMiAuY2VsZXN0LmNsb3VkLmF1dGgudj'
     'FhbHBoYTEuVXNlckID4EECUgR1c2VyEkAKC3VwZGF0ZV9tYXNrGAIgASgLMhouZ29vZ2xlLnBy'
     'b3RvYnVmLkZpZWxkTWFza0ID4EEBUgp1cGRhdGVNYXNrEigKDXZhbGlkYXRlX29ubHkYAyABKA'
-    'hCA+BBAVIMdmFsaWRhdGVPbmx5OqwBukioARqlAQoQdmFsaWRfZmllbGRfbWFzaxIqYSBmaWVs'
-    'ZCBtYXNrIHBhdGggbXVzdCBiZSB2YWxpZCBmb3IgYSB1c2VyGmV0aGlzLnVwZGF0ZV9tYXNrLn'
-    'BhdGhzLmFsbChwYXRoLCBwYXRoIGluIFsnZ2l2ZW5fbmFtZScsICdmYW1pbHlfbmFtZScsICd0'
-    'aW1lX3pvbmUnLCAnbGFuZ3VhZ2VfY29kZSddKQ==');
+    'hCA+BBAVIMdmFsaWRhdGVPbmx5OuEBukjdARraAQoQdmFsaWRfZmllbGRfbWFzaxJXdXBkYXRl'
+    'X21hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2dpdmVuX25hbWUnLCAnZmFtaWx5X25hbWUnLCAndG'
+    'ltZV96b25lJywgJ2xhbmd1YWdlX2NvZGUnGm10aGlzLnVwZGF0ZV9tYXNrLnBhdGhzLmFsbChw'
+    'YXRoLCBwYXRoIGluIFsnbmFtZScsICdnaXZlbl9uYW1lJywgJ2ZhbWlseV9uYW1lJywgJ3RpbW'
+    'Vfem9uZScsICdsYW5ndWFnZV9jb2RlJ10p');
 
 @$core.Deprecated('Use deleteUserRequestDescriptor instead')
 const DeleteUserRequest$json = {
@@ -381,12 +381,12 @@ const DeleteUserRequest$json = {
 
 /// Descriptor for `DeleteUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteUserRequestDescriptor = $convert.base64Decode(
-    'ChFEZWxldGVVc2VyUmVxdWVzdBKcAQoEbmFtZRgBIAEoCUKHAeBBAvpBFwoVY2xvdWQuY2VsZX'
-    'N0LmRldi9Vc2VyukhnugFkChh2YWxpZF91c2VyX3Jlc291cmNlX25hbWUSGmludmFsaWQgdXNl'
-    'ciByZXNvdXJjZSBuYW1lGix0aGlzID09ICdtZScgfHwgdGhpcy5tYXRjaGVzKCd1c2Vycy9bXi'
-    '9dKyQnKVIEbmFtZRIXCgRldGFnGAIgASgJQgPgQQFSBGV0YWcSKAoNYWxsb3dfbWlzc2luZxgD'
-    'IAEoCEID4EEBUgxhbGxvd01pc3NpbmcSKAoNdmFsaWRhdGVfb25seRgEIAEoCEID4EEBUgx2YW'
-    'xpZGF0ZU9ubHkSGQoFZm9yY2UYBSABKAhCA+BBAVIFZm9yY2U=');
+    'ChFEZWxldGVVc2VyUmVxdWVzdBKLAQoEbmFtZRgBIAEoCUJ34EEC+kEXChVjbG91ZC5jZWxlc3'
+    'QuZGV2L1VzZXK6SFe6AVQKGHZhbGlkX3VzZXJfcmVzb3VyY2VfbmFtZRIaaW52YWxpZCB1c2Vy'
+    'IHJlc291cmNlIG5hbWUaHHRoaXMubWF0Y2hlcygndXNlcnMvW14vXSskJylSBG5hbWUSFwoEZX'
+    'RhZxgCIAEoCUID4EEBUgRldGFnEigKDWFsbG93X21pc3NpbmcYAyABKAhCA+BBAVIMYWxsb3dN'
+    'aXNzaW5nEigKDXZhbGlkYXRlX29ubHkYBCABKAhCA+BBAVIMdmFsaWRhdGVPbmx5EhkKBWZvcm'
+    'NlGAUgASgIQgPgQQFSBWZvcmNl');
 
 @$core.Deprecated('Use userMembershipDescriptor instead')
 const UserMembership$json = {
@@ -436,12 +436,12 @@ const ListUserMembershipsRequest$json = {
 
 /// Descriptor for `ListUserMembershipsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listUserMembershipsRequestDescriptor = $convert.base64Decode(
-    'ChpMaXN0VXNlck1lbWJlcnNoaXBzUmVxdWVzdBKhAQoGcGFyZW50GAEgASgJQogB4EEC+kEhEh'
-    '9jbG91ZC5jZWxlc3QuZGV2L1VzZXJNZW1iZXJzaGlwukheugFbCgx2YWxpZF9wYXJlbnQSHXBh'
-    'cmVudCBtdXN0IGJlIGEgdmFsaWQgcGFyZW50Gix0aGlzID09ICdtZScgfHwgdGhpcy5tYXRjaG'
-    'VzKCd1c2Vycy9bXi9dKyQnKVIGcGFyZW50EicKCXBhZ2Vfc2l6ZRgCIAEoBUIK4EEBukgEGgIo'
-    'AFIIcGFnZVNpemUSIgoKcGFnZV90b2tlbhgDIAEoCUID4EEBUglwYWdlVG9rZW4SGwoGZmlsdG'
-    'VyGAQgASgJQgPgQQFSBmZpbHRlcg==');
+    'ChpMaXN0VXNlck1lbWJlcnNoaXBzUmVxdWVzdBKQAQoGcGFyZW50GAEgASgJQnjgQQL6QSESH2'
+    'Nsb3VkLmNlbGVzdC5kZXYvVXNlck1lbWJlcnNoaXC6SE66AUsKDHZhbGlkX3BhcmVudBIdcGFy'
+    'ZW50IG11c3QgYmUgYSB2YWxpZCBwYXJlbnQaHHRoaXMubWF0Y2hlcygndXNlcnMvW14vXSskJy'
+    'lSBnBhcmVudBInCglwYWdlX3NpemUYAiABKAVCCuBBAbpIBBoCKABSCHBhZ2VTaXplEiIKCnBh'
+    'Z2VfdG9rZW4YAyABKAlCA+BBAVIJcGFnZVRva2VuEhsKBmZpbHRlchgEIAEoCUID4EEBUgZmaW'
+    'x0ZXI=');
 
 @$core.Deprecated('Use listUserMembershipsResponseDescriptor instead')
 const ListUserMembershipsResponse$json = {

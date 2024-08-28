@@ -25,6 +25,7 @@ class PageToken extends $pb.GeneratedMessage {
   factory PageToken({
     $fixnum.Int64? offset,
     $20.Timestamp? startTime,
+    $core.bool? showDeleted,
   }) {
     final $result = create();
     if (offset != null) {
@@ -32,6 +33,9 @@ class PageToken extends $pb.GeneratedMessage {
     }
     if (startTime != null) {
       $result.startTime = startTime;
+    }
+    if (showDeleted != null) {
+      $result.showDeleted = showDeleted;
     }
     return $result;
   }
@@ -51,6 +55,7 @@ class PageToken extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'offset')
     ..aOM<$20.Timestamp>(2, _omitFieldNames ? '' : 'startTime',
         subBuilder: $20.Timestamp.create)
+    ..aOB(3, _omitFieldNames ? '' : 'showDeleted')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -101,6 +106,19 @@ class PageToken extends $pb.GeneratedMessage {
   void clearStartTime() => clearField(2);
   @$pb.TagNumber(2)
   $20.Timestamp ensureStartTime() => $_ensure(1);
+
+  /// Whether to show deleted items.
+  @$pb.TagNumber(3)
+  $core.bool get showDeleted => $_getBF(2);
+  @$pb.TagNumber(3)
+  set showDeleted($core.bool v) {
+    $_setBool(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasShowDeleted() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearShowDeleted() => clearField(3);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

@@ -16,6 +16,9 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import '../../../google/protobuf/field_mask.pb.dart' as $46;
 import '../../../google/protobuf/timestamp.pb.dart' as $20;
 import 'operations.pbenum.dart' as $56;
+import 'organizations.pbenum.dart';
+
+export 'organizations.pbenum.dart';
 
 /// A root-level organization resource.
 class Organization extends $pb.GeneratedMessage {
@@ -32,6 +35,8 @@ class Organization extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
     $core.String? primaryRegion,
+    Organization_State? state,
+    $20.Timestamp? purgeTime,
   }) {
     final $result = create();
     if (name != null) {
@@ -70,6 +75,12 @@ class Organization extends $pb.GeneratedMessage {
     if (primaryRegion != null) {
       $result.primaryRegion = primaryRegion;
     }
+    if (state != null) {
+      $result.state = state;
+    }
+    if (purgeTime != null) {
+      $result.purgeTime = purgeTime;
+    }
     return $result;
   }
   Organization._() : super();
@@ -104,6 +115,13 @@ class Organization extends $pb.GeneratedMessage {
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
     ..aOS(12, _omitFieldNames ? '' : 'primaryRegion')
+    ..e<Organization_State>(
+        13, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
+        defaultOrMaker: Organization_State.STATE_UNSPECIFIED,
+        valueOf: Organization_State.valueOf,
+        enumValues: Organization_State.values)
+    ..aOM<$20.Timestamp>(14, _omitFieldNames ? '' : 'purgeTime',
+        subBuilder: $20.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -291,6 +309,34 @@ class Organization extends $pb.GeneratedMessage {
   $core.bool hasPrimaryRegion() => $_has(11);
   @$pb.TagNumber(12)
   void clearPrimaryRegion() => clearField(12);
+
+  /// Output only. The lifecycle state of the organization.
+  @$pb.TagNumber(13)
+  Organization_State get state => $_getN(12);
+  @$pb.TagNumber(13)
+  set state(Organization_State v) {
+    setField(13, v);
+  }
+
+  @$pb.TagNumber(13)
+  $core.bool hasState() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearState() => clearField(13);
+
+  /// Output only. The time the organization is scheduled for permanent deletion.
+  @$pb.TagNumber(14)
+  $20.Timestamp get purgeTime => $_getN(13);
+  @$pb.TagNumber(14)
+  set purgeTime($20.Timestamp v) {
+    setField(14, v);
+  }
+
+  @$pb.TagNumber(14)
+  $core.bool hasPurgeTime() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearPurgeTime() => clearField(14);
+  @$pb.TagNumber(14)
+  $20.Timestamp ensurePurgeTime() => $_ensure(13);
 }
 
 /// Request message for the `CreateOrganization` method.
@@ -773,6 +819,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
     $core.String? pageToken,
     $core.String? filter,
     $core.String? orderBy,
+    $core.bool? showDeleted,
   }) {
     final $result = create();
     if (parent != null) {
@@ -789,6 +836,9 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
     }
     if (orderBy != null) {
       $result.orderBy = orderBy;
+    }
+    if (showDeleted != null) {
+      $result.showDeleted = showDeleted;
     }
     return $result;
   }
@@ -810,6 +860,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'pageToken')
     ..aOS(4, _omitFieldNames ? '' : 'filter')
     ..aOS(5, _omitFieldNames ? '' : 'orderBy')
+    ..aOB(6, _omitFieldNames ? '' : 'showDeleted')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -901,6 +952,19 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
   void clearOrderBy() => clearField(5);
+
+  /// Include soft-deleted organizations in the results.
+  @$pb.TagNumber(6)
+  $core.bool get showDeleted => $_getBF(5);
+  @$pb.TagNumber(6)
+  set showDeleted($core.bool v) {
+    $_setBool(5, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasShowDeleted() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearShowDeleted() => clearField(6);
 }
 
 /// Response message for the `ListOrganizations` method.
@@ -1052,8 +1116,9 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<DeleteOrganizationRequest>(create);
   static DeleteOrganizationRequest? _defaultInstance;
 
-  /// The name of the organization to delete.
-  /// Format: `organizations/{organization}`
+  ///  Required. The name of the organization to delete.
+  ///
+  ///  Format: `organizations/{organization}`
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -1066,7 +1131,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearName() => clearField(1);
 
-  /// If set to true, any resources associated with the organization will also be marked for deletion.
+  /// Optional. If set to true, any resources associated with the organization will also be marked for deletion.
   /// (Otherwise, the request will only work if the organization has no resources.)
   @$pb.TagNumber(2)
   $core.bool get force => $_getBF(1);
@@ -1094,7 +1159,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearEtag() => clearField(3);
 
-  /// If set to true, and the organization is not found, the request will succeed
+  /// Optional. If set to true, and the organization is not found, the request will succeed
   /// but no action will be taken on the server.
   @$pb.TagNumber(4)
   $core.bool get allowMissing => $_getBF(3);
@@ -1108,7 +1173,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearAllowMissing() => clearField(4);
 
-  /// If set to true, the request is validated but not actually executed.
+  /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(5)
   $core.bool get validateOnly => $_getBF(4);
   @$pb.TagNumber(5)
@@ -1120,6 +1185,113 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
   void clearValidateOnly() => clearField(5);
+}
+
+/// Request message for the `UndeleteOrganization` method.
+class UndeleteOrganizationRequest extends $pb.GeneratedMessage {
+  factory UndeleteOrganizationRequest({
+    $core.String? name,
+    $core.bool? validateOnly,
+    $core.String? etag,
+  }) {
+    final $result = create();
+    if (name != null) {
+      $result.name = name;
+    }
+    if (validateOnly != null) {
+      $result.validateOnly = validateOnly;
+    }
+    if (etag != null) {
+      $result.etag = etag;
+    }
+    return $result;
+  }
+  UndeleteOrganizationRequest._() : super();
+  factory UndeleteOrganizationRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory UndeleteOrganizationRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UndeleteOrganizationRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOB(2, _omitFieldNames ? '' : 'validateOnly')
+    ..aOS(3, _omitFieldNames ? '' : 'etag')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  UndeleteOrganizationRequest clone() =>
+      UndeleteOrganizationRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  UndeleteOrganizationRequest copyWith(
+          void Function(UndeleteOrganizationRequest) updates) =>
+      super.copyWith(
+              (message) => updates(message as UndeleteOrganizationRequest))
+          as UndeleteOrganizationRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UndeleteOrganizationRequest create() =>
+      UndeleteOrganizationRequest._();
+  UndeleteOrganizationRequest createEmptyInstance() => create();
+  static $pb.PbList<UndeleteOrganizationRequest> createRepeated() =>
+      $pb.PbList<UndeleteOrganizationRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UndeleteOrganizationRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UndeleteOrganizationRequest>(create);
+  static UndeleteOrganizationRequest? _defaultInstance;
+
+  ///  Required. The name of the organization to undelete.
+  ///
+  ///  Format: `organizations/{organization}`
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  /// Optional. If set to true, the request is validated but not actually executed.
+  @$pb.TagNumber(2)
+  $core.bool get validateOnly => $_getBF(1);
+  @$pb.TagNumber(2)
+  set validateOnly($core.bool v) {
+    $_setBool(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasValidateOnly() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValidateOnly() => clearField(2);
+
+  /// Optional. The etag of the organization.
+  /// If this is provided, it must match the server's etag.
+  @$pb.TagNumber(3)
+  $core.String get etag => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set etag($core.String v) {
+    $_setString(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasEtag() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEtag() => clearField(3);
 }
 
 /// Request message for the `RenameOrganization` operation.

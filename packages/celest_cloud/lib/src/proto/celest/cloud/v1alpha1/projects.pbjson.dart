@@ -127,14 +127,14 @@ final $typed_data.Uint8List projectDescriptor = $convert.base64Decode(
     'lkX2Fubm90YXRpb25fdmFsdWUSYXZhbHVlcyBtdXN0IGJlIDAtNjMgY2hhcmFjdGVycyBhbmQg'
     'aGF2ZSBvbmx5IGxvd2VyY2FzZSBsZXR0ZXJzLCBudW1lcmljcywgdW5kZXJzY29yZXMsIGFuZC'
     'BkYXNoZXMaInRoaXMubWF0Y2hlcygnXlthLXowLTlfLV17MCw2M30kJylSC2Fubm90YXRpb25z'
-    'EiUKC3JlY29uY2lsaW5nGA0gASgIQgPgQQNSC3JlY29uY2lsaW5nEocBCgZyZWdpb24YDiABKA'
-    'lCb+BBAeBBBbpIZroBYwoUdmFsaWRfcHJpbWFyeV9yZWdpb24SJXByaW1hcnlfcmVnaW9uIG11'
-    'c3QgYmUgYSB2YWxpZCByZWdpb24aJHRoaXMubWF0Y2hlcygnXlthLXpdKy1bYS16XStbMC05XS'
-    'QnKVIGcmVnaW9uGj4KEEFubm90YXRpb25zRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFs'
-    'dWUYAiABKAlSBXZhbHVlOgI4ASJaCgVTdGF0ZRIVChFTVEFURV9VTlNQRUNJRklFRBAAEgwKCE'
-    'NSRUFUSU5HEAESEwoPQ1JFQVRJT05fRkFJTEVEEAISCgoGQUNUSVZFEAMSCwoHREVMRVRFRBAE'
-    'OmTqQWEKGGNsb3VkLmNlbGVzdC5kZXYvUHJvamVjdBIvb3JnYW5pemF0aW9ucy97b3JnYW5pem'
-    'F0aW9ufS9wcm9qZWN0cy97cHJvamVjdH0qCHByb2plY3RzMgdwcm9qZWN0UgEB');
+    'EiUKC3JlY29uY2lsaW5nGA0gASgIQgPgQQNSC3JlY29uY2lsaW5nEncKBnJlZ2lvbhgOIAEoCU'
+    'Jf4EEB4EEFukhWugFTCgx2YWxpZF9yZWdpb24SHXJlZ2lvbiBtdXN0IGJlIGEgdmFsaWQgcmVn'
+    'aW9uGiR0aGlzLm1hdGNoZXMoJ15bYS16XSstW2Etel0rWzAtOV0kJylSBnJlZ2lvbho+ChBBbm'
+    '5vdGF0aW9uc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToC'
+    'OAEiWgoFU3RhdGUSFQoRU1RBVEVfVU5TUEVDSUZJRUQQABIMCghDUkVBVElORxABEhMKD0NSRU'
+    'FUSU9OX0ZBSUxFRBACEgoKBkFDVElWRRADEgsKB0RFTEVURUQQBDpk6kFhChhjbG91ZC5jZWxl'
+    'c3QuZGV2L1Byb2plY3QSL29yZ2FuaXphdGlvbnMve29yZ2FuaXphdGlvbn0vcHJvamVjdHMve3'
+    'Byb2plY3R9Kghwcm9qZWN0czIHcHJvamVjdFIBAQ==');
 
 @$core.Deprecated('Use createProjectRequestDescriptor instead')
 const CreateProjectRequest$json = {
@@ -283,12 +283,12 @@ final $typed_data.Uint8List updateProjectRequestDescriptor = $convert.base64Deco
     'YxYWxwaGExLlByb2plY3RCA+BBAlIHcHJvamVjdBJACgt1cGRhdGVfbWFzaxgCIAEoCzIaLmdv'
     'b2dsZS5wcm90b2J1Zi5GaWVsZE1hc2tCA+BBAVIKdXBkYXRlTWFzaxIoCg1hbGxvd19taXNzaW'
     '5nGAMgASgIQgPgQQFSDGFsbG93TWlzc2luZxIoCg12YWxpZGF0ZV9vbmx5GAQgASgIQgPgQQFS'
-    'DHZhbGlkYXRlT25seTqHArpIgwIacgoNdmFsaWRfb3B0aW9ucxItY2Fubm90IHNldCBib3RoIG'
+    'DHZhbGlkYXRlT25seTqdArpImQIacgoNdmFsaWRfb3B0aW9ucxItY2Fubm90IHNldCBib3RoIG'
     'FsbG93X21pc3NpbmcgYW5kIHVwZGF0ZV9tYXNrGjJ0aGlzLmFsbG93X21pc3NpbmcgPyAhaGFz'
-    'KHRoaXMudXBkYXRlX21hc2spIDogdHJ1ZRqMAQoQdmFsaWRfZmllbGRfbWFzaxItYSBmaWVsZC'
-    'BtYXNrIHBhdGggbXVzdCBiZSB2YWxpZCBmb3IgYSBwcm9qZWN0Gkl0aGlzLnVwZGF0ZV9tYXNr'
-    'LnBhdGhzLmFsbChwYXRoLCBwYXRoIGluIFsnZGlzcGxheV9uYW1lJywgJ2Fubm90YXRpb25zJ1'
-    '0p');
+    'KHRoaXMudXBkYXRlX21hc2spIDogdHJ1ZRqiAQoQdmFsaWRfZmllbGRfbWFzaxI7dXBkYXRlX2'
+    '1hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2Rpc3BsYXlfbmFtZScsICdhbm5vdGF0aW9ucycaUXRo'
+    'aXMudXBkYXRlX21hc2sucGF0aHMuYWxsKHBhdGgsIHBhdGggaW4gWyduYW1lJywgJ2Rpc3BsYX'
+    'lfbmFtZScsICdhbm5vdGF0aW9ucyddKQ==');
 
 @$core.Deprecated('Use deleteProjectRequestDescriptor instead')
 const DeleteProjectRequest$json = {

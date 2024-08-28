@@ -48,6 +48,11 @@ class OrganizationsClient extends $grpc.Client {
           '/celest.cloud.v1alpha1.Organizations/DeleteOrganization',
           ($8.DeleteOrganizationRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
+  static final _$undeleteOrganization =
+      $grpc.ClientMethod<$8.UndeleteOrganizationRequest, $2.Operation>(
+          '/celest.cloud.v1alpha1.Organizations/UndeleteOrganization',
+          ($8.UndeleteOrganizationRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
   static final _$renameOrganization =
       $grpc.ClientMethod<$8.RenameOrganizationRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Organizations/RenameOrganization',
@@ -87,6 +92,12 @@ class OrganizationsClient extends $grpc.Client {
       $8.DeleteOrganizationRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteOrganization, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$2.Operation> undeleteOrganization(
+      $8.UndeleteOrganizationRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$undeleteOrganization, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Operation> renameOrganization(
@@ -142,6 +153,15 @@ abstract class OrganizationsServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $8.DeleteOrganizationRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$8.UndeleteOrganizationRequest, $2.Operation>(
+            'UndeleteOrganization',
+            undeleteOrganization_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $8.UndeleteOrganizationRequest.fromBuffer(value),
+            ($2.Operation value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$8.RenameOrganizationRequest, $2.Operation>(
         'RenameOrganization',
         renameOrganization_Pre,
@@ -178,6 +198,11 @@ abstract class OrganizationsServiceBase extends $grpc.Service {
     return deleteOrganization(call, await request);
   }
 
+  $async.Future<$2.Operation> undeleteOrganization_Pre($grpc.ServiceCall call,
+      $async.Future<$8.UndeleteOrganizationRequest> request) async {
+    return undeleteOrganization(call, await request);
+  }
+
   $async.Future<$2.Operation> renameOrganization_Pre($grpc.ServiceCall call,
       $async.Future<$8.RenameOrganizationRequest> request) async {
     return renameOrganization(call, await request);
@@ -193,6 +218,8 @@ abstract class OrganizationsServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $8.UpdateOrganizationRequest request);
   $async.Future<$2.Operation> deleteOrganization(
       $grpc.ServiceCall call, $8.DeleteOrganizationRequest request);
+  $async.Future<$2.Operation> undeleteOrganization(
+      $grpc.ServiceCall call, $8.UndeleteOrganizationRequest request);
   $async.Future<$2.Operation> renameOrganization(
       $grpc.ServiceCall call, $8.RenameOrganizationRequest request);
 }

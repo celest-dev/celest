@@ -72,7 +72,7 @@ final class AuthImpl implements Auth {
       return const Unauthenticated();
     }
     try {
-      final user = await cloud.users.get('me');
+      final user = await cloud.users.get('users/me');
       initialState = Authenticated(user: user.toCelest());
     } on UnauthorizedException {
       initialState = const Unauthenticated();

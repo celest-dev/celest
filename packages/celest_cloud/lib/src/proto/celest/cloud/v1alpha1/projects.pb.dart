@@ -272,7 +272,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $20.Timestamp ensureDeleteTime() => $_ensure(8);
 
-  /// Output only. The time the project is scheduled for deletion.
+  /// Output only. The time the project is scheduled for permanent deletion.
   @$pb.TagNumber(10)
   $20.Timestamp get purgeTime => $_getN(9);
   @$pb.TagNumber(10)
@@ -959,8 +959,9 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<DeleteProjectRequest>(create);
   static DeleteProjectRequest? _defaultInstance;
 
-  /// The name of the project to delete.
-  /// Format: `organizations/{organization}/projects/{project}`
+  ///  Required. The name of the project to delete.
+  ///
+  ///  Format: `organizations/{organization}/projects/{project}`
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -973,7 +974,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearName() => clearField(1);
 
-  /// If set to true, any resources associated with the project will also be marked for deletion.
+  /// Optional. If set to true, any resources associated with the project will also be marked for deletion.
   /// (Otherwise, the request will only work if the project has no resources.)
   @$pb.TagNumber(2)
   $core.bool get force => $_getBF(1);
@@ -1001,7 +1002,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearEtag() => clearField(3);
 
-  /// If set to true, and the project is not found, the request will succeed
+  /// Optional. If set to true, and the project is not found, the request will succeed
   /// but no action will be taken on the server.
   @$pb.TagNumber(4)
   $core.bool get allowMissing => $_getBF(3);
@@ -1015,7 +1016,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearAllowMissing() => clearField(4);
 
-  /// If set to true, the request is validated but not actually executed.
+  /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(5)
   $core.bool get validateOnly => $_getBF(4);
   @$pb.TagNumber(5)
