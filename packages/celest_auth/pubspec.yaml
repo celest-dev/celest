@@ -16,7 +16,7 @@ dependencies:
   celest_cloud: ^0.1.0
   celest_core: ^0.4.3-wip
   chunked_stream: ^1.4.2
-  corks_cedar: ^0.1.0
+  corks_cedar: ^0.2.0
   ffi: ^2.1.2
   http: ^1.2.1
   logging: ^1.2.0
