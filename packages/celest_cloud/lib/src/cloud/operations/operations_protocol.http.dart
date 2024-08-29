@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
+import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/proto.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,9 @@ final class OperationsProtocolHttp
     final path = '/v1alpha1/${request.name}:cancel';
     final url = _baseUri.replace(path: path);
     final req = http.Request('POST', url)
-      ..body = jsonEncode(request.toProto3Json())
+      ..body = jsonEncode(request.toProto3Json(
+        typeRegistry: CelestCloud.typeRegistry,
+      ))
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -50,12 +53,19 @@ final class OperationsProtocolHttp
         body: body,
       );
     }
-    return Operation()..mergeFromProto3Json(jsonDecode(body));
+    return Operation()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override
   Future<ListOperationsResponse> list(ListOperationsRequest request) async {
-    const path = '/v1alpha1/operations';
+    if (request.name == '') {
+      throw ArgumentError.value(request.name, 'name', 'must not be empty');
+    }
+    final path = '/v1alpha1/${request.name}/operations';
     final url = _baseUri.replace(
       path: path,
       queryParameters: {
@@ -75,6 +85,10 @@ final class OperationsProtocolHttp
         body: body,
       );
     }
-    return ListOperationsResponse()..mergeFromProto3Json(jsonDecode(body));
+    return ListOperationsResponse()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 }

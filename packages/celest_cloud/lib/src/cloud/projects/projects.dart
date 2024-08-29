@@ -1,14 +1,14 @@
 import 'package:celest_cloud/src/cloud/base/base_service.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
-import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
-import 'package:celest_cloud/src/proto.dart' hide OperationState, Duration;
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
+import 'package:celest_cloud/src/proto.dart' hide OperationState;
 import 'package:celest_cloud/src/proto/operations.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 
-final class Organizations with BaseService {
-  Organizations({
-    required OrganizationsProtocol protocol,
+final class Projects with BaseService {
+  Projects({
+    required ProjectsProtocol protocol,
     required OperationsProtocol operations,
     this.logger,
   })  : _protocol = protocol,
@@ -16,39 +16,44 @@ final class Organizations with BaseService {
 
   @override
   final Logger? logger;
-  final OrganizationsProtocol _protocol;
+  final ProjectsProtocol _protocol;
   final OperationsProtocol _operations;
 
-  Future<Organization> create({
-    String? parent,
-    String? organizationId,
-    Organization? organization,
+  Future<Project> create({
+    required String parent,
+    required String projectId,
+    required String displayName,
+    required String region,
+    Map<String, String>? annotations,
     bool validateOnly = false,
   }) async {
-    final request = CreateOrganizationRequest(
+    final request = CreateProjectRequest(
       parent: parent,
-      organizationId: organizationId,
-      organization: organization,
+      projectId: projectId,
+      project: Project(
+        displayName: displayName,
+        region: region,
+        annotations: annotations,
+      ),
       validateOnly: validateOnly,
     );
     final operation = await run(
-      'Organizations.Create',
+      'Projects.Create',
       request: request,
       action: _protocol.create,
     );
     return operation.wait(
       operations: _operations,
+      response: Project(),
       logger: logger,
-      response: Organization(),
-      timeout: const Duration(minutes: 1),
     );
   }
 
-  Future<Organization?> get(String name) async {
+  Future<Project?> get(String name) async {
     try {
-      final request = GetOrganizationRequest(name: name);
+      final request = GetProjectRequest(name: name);
       return await run(
-        'Organizations.Get',
+        'Projects.Get',
         request: request,
         action: _protocol.get,
       );
@@ -57,7 +62,7 @@ final class Organizations with BaseService {
     }
   }
 
-  Future<ListOrganizationsResponse> list({
+  Future<ListProjectsResponse> list({
     String? parent,
     int? pageSize,
     String? pageToken,
@@ -65,7 +70,7 @@ final class Organizations with BaseService {
     String? orderBy,
     bool showDeleted = false,
   }) async {
-    final request = ListOrganizationsRequest(
+    final request = ListProjectsRequest(
       parent: parent,
       pageSize: pageSize,
       pageToken: pageToken,
@@ -74,34 +79,33 @@ final class Organizations with BaseService {
       showDeleted: showDeleted,
     );
     return run(
-      'Organizations.List',
+      'Projects.List',
       request: request,
       action: _protocol.list,
     );
   }
 
-  Future<Organization> update({
-    required Organization organization,
+  Future<Project> update({
+    required Project project,
     FieldMask? updateMask,
     bool allowMissing = false,
     bool validateOnly = false,
   }) async {
-    final request = UpdateOrganizationRequest(
-      organization: organization,
+    final request = UpdateProjectRequest(
+      project: project,
       updateMask: updateMask,
       validateOnly: validateOnly,
       allowMissing: allowMissing,
     );
     final operation = await run(
-      'Organizations.Update',
+      'Projects.Update',
       request: request,
       action: _protocol.update,
     );
     return operation.wait(
       operations: _operations,
       logger: logger,
-      response: Organization(),
-      timeout: const Duration(minutes: 1),
+      response: Project(),
     );
   }
 
@@ -112,15 +116,15 @@ final class Organizations with BaseService {
     bool validateOnly = false,
     bool force = false,
   }) async {
-    final request = DeleteOrganizationRequest(
+    final request = DeleteProjectRequest(
       name: name,
-      force: force,
       etag: etag,
       allowMissing: allowMissing,
       validateOnly: validateOnly,
+      force: force,
     );
     final operation = await run(
-      'Organizations.Delete',
+      'Projects.Delete',
       request: request,
       action: _protocol.delete,
     );
@@ -131,27 +135,27 @@ final class Organizations with BaseService {
     );
   }
 
-  Future<Organization> rename({
+  Future<Project> rename({
     required String name,
     required String newAlias,
     String? etag,
     bool validateOnly = false,
   }) async {
-    final request = RenameOrganizationRequest(
+    final request = RenameProjectRequest(
       name: name,
-      organizationId: newAlias,
+      projectId: newAlias,
       etag: etag,
       validateOnly: validateOnly,
     );
     final operation = await run(
-      'Organizations.Rename',
+      'Projects.Rename',
       request: request,
       action: _protocol.rename,
     );
     return operation.wait(
       operations: _operations,
       logger: logger,
-      response: Organization(),
+      response: Project(),
     );
   }
 }

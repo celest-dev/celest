@@ -6,6 +6,8 @@ import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.grpc.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.grpc.dart';
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
+import 'package:celest_cloud/src/cloud/projects/projects_protocol.grpc.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.grpc.dart';
 import 'package:celest_core/_internal.dart';
@@ -60,4 +62,8 @@ final class CloudProtocolGrpc implements CloudProtocol {
   @override
   late final UsersProtocol users =
       UsersProtocolGrpc(_channel, interceptors: _interceptors);
+
+  @override
+  late final ProjectsProtocol projects =
+      ProjectsProtocolGrpc(_channel, interceptors: _interceptors);
 }

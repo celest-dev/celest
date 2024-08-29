@@ -38,16 +38,13 @@ void main() {
 
     group('Organizations', () {
       test('create organization (validate-only)', () async {
-        final state = await celest.organizations
-            .create(
-              organizationId: 'test-organization',
-              organization: Organization(
-                displayName: 'Test Organization',
-              ),
-              validateOnly: true,
-            )
-            .last;
-        expect(state, isA<OperationSuccess>());
+        await celest.organizations.create(
+          organizationId: 'test-organization',
+          organization: Organization(
+            displayName: 'Test Organization',
+          ),
+          validateOnly: true,
+        );
         expect(
           await celest.organizations.get('organizations/test-organization'),
           isNull,
@@ -55,18 +52,14 @@ void main() {
       });
 
       test('create organization', () async {
-        final state = await celest.organizations
-            .create(
-              organizationId: 'test-organization',
-              organization: Organization(
-                displayName: 'Test Organization',
-              ),
-            )
-            .last;
-        expect(state, isA<OperationSuccess>());
-        expect(state.metadata, isNotNull);
+        final organization = await celest.organizations.create(
+          organizationId: 'test-organization',
+          organization: Organization(
+            displayName: 'Test Organization',
+          ),
+        );
         expect(
-          state.response,
+          organization,
           isA<Organization>()
               .having(
                 (org) => org.organizationId,

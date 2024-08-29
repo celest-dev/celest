@@ -1,14 +1,16 @@
-import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/authentication/authentication.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.grpc.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations.dart';
+import 'package:celest_cloud/src/cloud/projects/projects.dart';
 import 'package:celest_cloud/src/cloud/users/users.dart';
+import 'package:celest_cloud/src/proto.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:os_detect/os_detect.dart' as os;
+import 'package:protobuf/protobuf.dart';
 
 class CelestCloud {
   CelestCloud({
@@ -49,6 +51,16 @@ class CelestCloud {
                           ? ClientType.LINUX
                           : ClientType.CLIENT_TYPE_UNSPECIFIED;
 
+  static final typeRegistry = TypeRegistry([
+    Empty(),
+    OperationMetadata(),
+    Organization(),
+    CreateOrganizationMetadata(),
+    Project(),
+    CreateEnvironmentMetadata(),
+    DeploymentOperationMetadata(),
+  ]);
+
   final CloudProtocol _protocol;
   final ClientType _clientType;
   final Logger _logger;
@@ -67,6 +79,12 @@ class CelestCloud {
 
   late final Users users = Users(
     protocol: _protocol.users,
+    logger: _logger,
+  );
+
+  late final Projects projects = Projects(
+    protocol: _protocol.projects,
+    operations: _protocol.operations,
     logger: _logger,
   );
 }

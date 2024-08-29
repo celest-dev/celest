@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/auth/v1alpha1/users.pb.dart';
@@ -31,7 +32,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
         body: body,
       );
     }
-    return User()..mergeFromProto3Json(jsonDecode(body));
+    return User()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override
@@ -49,7 +54,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
         body: body,
       );
     }
-    return UserMembership()..mergeFromProto3Json(jsonDecode(body));
+    return UserMembership()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override
@@ -78,7 +87,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
         body: body,
       );
     }
-    return ListUsersResponse()..mergeFromProto3Json(jsonDecode(body));
+    return ListUsersResponse()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override
@@ -105,7 +118,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
         body: body,
       );
     }
-    return ListUserMembershipsResponse()..mergeFromProto3Json(jsonDecode(body));
+    return ListUserMembershipsResponse()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override
@@ -121,7 +138,9 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
       },
     );
     final req = http.Request('PATCH', url)
-      ..body = jsonEncode(request.user.toProto3Json())
+      ..body = jsonEncode(request.user.toProto3Json(
+        typeRegistry: CelestCloud.typeRegistry,
+      ))
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -132,7 +151,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
         body: body,
       );
     }
-    return User()..mergeFromProto3Json(jsonDecode(body));
+    return User()
+      ..mergeFromProto3Json(
+        jsonDecode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
   }
 
   @override

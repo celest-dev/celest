@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pbgrpc.dart';
 import 'package:celest_cloud/src/proto/google/protobuf/any.pb.dart';
@@ -216,7 +217,11 @@ final class OperationWaiter {
       _operation = await _client.get(
         GetOperationRequest(name: _operation.name),
       );
-      _logger?.fine(() => _operation.toProto3Json().toString());
+      _logger?.fine(
+        () => _operation
+            .toProto3Json(typeRegistry: CelestCloud.typeRegistry)
+            .toString(),
+      );
     }
     if (_operation.hasError()) {
       throw GrpcError.custom(
