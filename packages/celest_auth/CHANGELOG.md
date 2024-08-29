@@ -1,6 +1,8 @@
-## 0.4.2-wip
+## 0.5.0-dev.0
 
+- feat: Add social sign-in support
 - chore: Disambiguate native storage scoping
+- chore: Migrate to new Cloud API
 
 ## 0.4.1
 
