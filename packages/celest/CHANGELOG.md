@@ -1,6 +1,8 @@
-## 0.4.3-wip
+## 0.5.0-dev.0
 
+- feat: Add social sign-in support
 - fix: Allow `null` for `@httpQuery` and `@httpHeader` parameters, defaulting to the parameter name.
+- chore: Migrate to new Cloud API
 
 ## 0.4.2
 

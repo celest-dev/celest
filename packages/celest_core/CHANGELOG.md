@@ -1,6 +1,9 @@
-## 0.4.3-wip
+## 0.5.0-dev.0
 
 - chore: Update dependencies
+- chore: Add all HTTP exceptions to `CloudException`
+- chore: Improve HTTP authentication
+- chore: Migrate to new Cloud API
 
 ## 0.4.2
 
