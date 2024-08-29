@@ -4,9 +4,6 @@ library;
 /// Celest
 export 'proto/celest/cloud/auth/v1alpha1/authentication.pbgrpc.dart';
 export 'proto/celest/cloud/auth/v1alpha1/users.pbgrpc.dart';
-export 'proto/celest/cloud/v1alpha1/deployments.pbgrpc.dart';
-export 'proto/celest/cloud/v1alpha1/environments.pbgrpc.dart';
-export 'proto/celest/cloud/v1alpha1/functions.pbgrpc.dart';
 export 'proto/celest/cloud/v1alpha1/operations.pbgrpc.dart'
     show OperationsClient;
 export 'proto/celest/cloud/v1alpha1/organizations.pbgrpc.dart';

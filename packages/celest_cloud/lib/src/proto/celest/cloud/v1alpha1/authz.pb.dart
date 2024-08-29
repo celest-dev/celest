@@ -13,16 +13,16 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/api/auth.pb.dart' as $27;
+import '../../../google/api/auth.pb.dart' as $24;
 
 class Authz {
-  static final authn = $pb.Extension<$27.AuthenticationRule>(
+  static final authn = $pb.Extension<$24.AuthenticationRule>(
       _omitMessageNames ? '' : 'google.protobuf.MethodOptions',
       _omitFieldNames ? '' : 'authn',
       32649046,
       $pb.PbFieldType.OM,
-      defaultOrMaker: $27.AuthenticationRule.getDefault,
-      subBuilder: $27.AuthenticationRule.create);
+      defaultOrMaker: $24.AuthenticationRule.getDefault,
+      subBuilder: $24.AuthenticationRule.create);
   static void registerAllExtensions($pb.ExtensionRegistry registry) {
     registry.add(authn);
   }

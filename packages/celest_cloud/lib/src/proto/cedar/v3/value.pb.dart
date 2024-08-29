@@ -14,7 +14,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity_id.pb.dart' as $48;
+import 'entity_id.pb.dart' as $45;
 
 enum Value_Value {
   string,
@@ -404,7 +404,7 @@ class ExtensionValue extends $pb.GeneratedMessage {
 
 class EntityValue extends $pb.GeneratedMessage {
   factory EntityValue({
-    $48.EntityId? uid,
+    $45.EntityId? uid,
   }) {
     final $result = create();
     if (uid != null) {
@@ -424,8 +424,8 @@ class EntityValue extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'EntityValue',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$48.EntityId>(1, _omitFieldNames ? '' : 'uid',
-        subBuilder: $48.EntityId.create)
+    ..aOM<$45.EntityId>(1, _omitFieldNames ? '' : 'uid',
+        subBuilder: $45.EntityId.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -451,9 +451,9 @@ class EntityValue extends $pb.GeneratedMessage {
   static EntityValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $48.EntityId get uid => $_getN(0);
+  $45.EntityId get uid => $_getN(0);
   @$pb.TagNumber(1)
-  set uid($48.EntityId v) {
+  set uid($45.EntityId v) {
     setField(1, v);
   }
 
@@ -462,7 +462,7 @@ class EntityValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearUid() => clearField(1);
   @$pb.TagNumber(1)
-  $48.EntityId ensureUid() => $_ensure(0);
+  $45.EntityId ensureUid() => $_ensure(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

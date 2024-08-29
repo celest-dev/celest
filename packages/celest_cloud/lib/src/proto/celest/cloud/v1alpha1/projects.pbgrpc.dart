@@ -16,47 +16,47 @@ import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/longrunning/operations.pb.dart' as $2;
-import 'projects.pb.dart' as $9;
+import 'projects.pb.dart' as $8;
 
 export 'projects.pb.dart';
 
 @$pb.GrpcServiceName('celest.cloud.v1alpha1.Projects')
 class ProjectsClient extends $grpc.Client {
   static final _$createProject =
-      $grpc.ClientMethod<$9.CreateProjectRequest, $2.Operation>(
+      $grpc.ClientMethod<$8.CreateProjectRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Projects/CreateProject',
-          ($9.CreateProjectRequest value) => value.writeToBuffer(),
+          ($8.CreateProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
   static final _$getProject =
-      $grpc.ClientMethod<$9.GetProjectRequest, $9.Project>(
+      $grpc.ClientMethod<$8.GetProjectRequest, $8.Project>(
           '/celest.cloud.v1alpha1.Projects/GetProject',
-          ($9.GetProjectRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $9.Project.fromBuffer(value));
+          ($8.GetProjectRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $8.Project.fromBuffer(value));
   static final _$listProjects =
-      $grpc.ClientMethod<$9.ListProjectsRequest, $9.ListProjectsResponse>(
+      $grpc.ClientMethod<$8.ListProjectsRequest, $8.ListProjectsResponse>(
           '/celest.cloud.v1alpha1.Projects/ListProjects',
-          ($9.ListProjectsRequest value) => value.writeToBuffer(),
+          ($8.ListProjectsRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $9.ListProjectsResponse.fromBuffer(value));
+              $8.ListProjectsResponse.fromBuffer(value));
   static final _$updateProject =
-      $grpc.ClientMethod<$9.UpdateProjectRequest, $2.Operation>(
+      $grpc.ClientMethod<$8.UpdateProjectRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Projects/UpdateProject',
-          ($9.UpdateProjectRequest value) => value.writeToBuffer(),
+          ($8.UpdateProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
   static final _$deleteProject =
-      $grpc.ClientMethod<$9.DeleteProjectRequest, $2.Operation>(
+      $grpc.ClientMethod<$8.DeleteProjectRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Projects/DeleteProject',
-          ($9.DeleteProjectRequest value) => value.writeToBuffer(),
+          ($8.DeleteProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
   static final _$undeleteProject =
-      $grpc.ClientMethod<$9.UndeleteProjectRequest, $2.Operation>(
+      $grpc.ClientMethod<$8.UndeleteProjectRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Projects/UndeleteProject',
-          ($9.UndeleteProjectRequest value) => value.writeToBuffer(),
+          ($8.UndeleteProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
   static final _$renameProject =
-      $grpc.ClientMethod<$9.RenameProjectRequest, $2.Operation>(
+      $grpc.ClientMethod<$8.RenameProjectRequest, $2.Operation>(
           '/celest.cloud.v1alpha1.Projects/RenameProject',
-          ($9.RenameProjectRequest value) => value.writeToBuffer(),
+          ($8.RenameProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Operation.fromBuffer(value));
 
   ProjectsClient($grpc.ClientChannel channel,
@@ -65,42 +65,42 @@ class ProjectsClient extends $grpc.Client {
       : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$2.Operation> createProject(
-      $9.CreateProjectRequest request,
+      $8.CreateProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createProject, request, options: options);
   }
 
-  $grpc.ResponseFuture<$9.Project> getProject($9.GetProjectRequest request,
+  $grpc.ResponseFuture<$8.Project> getProject($8.GetProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getProject, request, options: options);
   }
 
-  $grpc.ResponseFuture<$9.ListProjectsResponse> listProjects(
-      $9.ListProjectsRequest request,
+  $grpc.ResponseFuture<$8.ListProjectsResponse> listProjects(
+      $8.ListProjectsRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listProjects, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Operation> updateProject(
-      $9.UpdateProjectRequest request,
+      $8.UpdateProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateProject, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Operation> deleteProject(
-      $9.DeleteProjectRequest request,
+      $8.DeleteProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteProject, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Operation> undeleteProject(
-      $9.UndeleteProjectRequest request,
+      $8.UndeleteProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$undeleteProject, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Operation> renameProject(
-      $9.RenameProjectRequest request,
+      $8.RenameProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renameProject, request, options: options);
   }
@@ -111,112 +111,112 @@ abstract class ProjectsServiceBase extends $grpc.Service {
   $core.String get $name => 'celest.cloud.v1alpha1.Projects';
 
   ProjectsServiceBase() {
-    $addMethod($grpc.ServiceMethod<$9.CreateProjectRequest, $2.Operation>(
+    $addMethod($grpc.ServiceMethod<$8.CreateProjectRequest, $2.Operation>(
         'CreateProject',
         createProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $9.CreateProjectRequest.fromBuffer(value),
+            $8.CreateProjectRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$9.GetProjectRequest, $9.Project>(
+    $addMethod($grpc.ServiceMethod<$8.GetProjectRequest, $8.Project>(
         'GetProject',
         getProject_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $9.GetProjectRequest.fromBuffer(value),
-        ($9.Project value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $8.GetProjectRequest.fromBuffer(value),
+        ($8.Project value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$9.ListProjectsRequest, $9.ListProjectsResponse>(
+        $grpc.ServiceMethod<$8.ListProjectsRequest, $8.ListProjectsResponse>(
             'ListProjects',
             listProjects_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
-                $9.ListProjectsRequest.fromBuffer(value),
-            ($9.ListProjectsResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$9.UpdateProjectRequest, $2.Operation>(
+                $8.ListProjectsRequest.fromBuffer(value),
+            ($8.ListProjectsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$8.UpdateProjectRequest, $2.Operation>(
         'UpdateProject',
         updateProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $9.UpdateProjectRequest.fromBuffer(value),
+            $8.UpdateProjectRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$9.DeleteProjectRequest, $2.Operation>(
+    $addMethod($grpc.ServiceMethod<$8.DeleteProjectRequest, $2.Operation>(
         'DeleteProject',
         deleteProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $9.DeleteProjectRequest.fromBuffer(value),
+            $8.DeleteProjectRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$9.UndeleteProjectRequest, $2.Operation>(
+    $addMethod($grpc.ServiceMethod<$8.UndeleteProjectRequest, $2.Operation>(
         'UndeleteProject',
         undeleteProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $9.UndeleteProjectRequest.fromBuffer(value),
+            $8.UndeleteProjectRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$9.RenameProjectRequest, $2.Operation>(
+    $addMethod($grpc.ServiceMethod<$8.RenameProjectRequest, $2.Operation>(
         'RenameProject',
         renameProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $9.RenameProjectRequest.fromBuffer(value),
+            $8.RenameProjectRequest.fromBuffer(value),
         ($2.Operation value) => value.writeToBuffer()));
   }
 
   $async.Future<$2.Operation> createProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.CreateProjectRequest> request) async {
+      $async.Future<$8.CreateProjectRequest> request) async {
     return createProject(call, await request);
   }
 
-  $async.Future<$9.Project> getProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.GetProjectRequest> request) async {
+  $async.Future<$8.Project> getProject_Pre($grpc.ServiceCall call,
+      $async.Future<$8.GetProjectRequest> request) async {
     return getProject(call, await request);
   }
 
-  $async.Future<$9.ListProjectsResponse> listProjects_Pre(
+  $async.Future<$8.ListProjectsResponse> listProjects_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$9.ListProjectsRequest> request) async {
+      $async.Future<$8.ListProjectsRequest> request) async {
     return listProjects(call, await request);
   }
 
   $async.Future<$2.Operation> updateProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.UpdateProjectRequest> request) async {
+      $async.Future<$8.UpdateProjectRequest> request) async {
     return updateProject(call, await request);
   }
 
   $async.Future<$2.Operation> deleteProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.DeleteProjectRequest> request) async {
+      $async.Future<$8.DeleteProjectRequest> request) async {
     return deleteProject(call, await request);
   }
 
   $async.Future<$2.Operation> undeleteProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.UndeleteProjectRequest> request) async {
+      $async.Future<$8.UndeleteProjectRequest> request) async {
     return undeleteProject(call, await request);
   }
 
   $async.Future<$2.Operation> renameProject_Pre($grpc.ServiceCall call,
-      $async.Future<$9.RenameProjectRequest> request) async {
+      $async.Future<$8.RenameProjectRequest> request) async {
     return renameProject(call, await request);
   }
 
   $async.Future<$2.Operation> createProject(
-      $grpc.ServiceCall call, $9.CreateProjectRequest request);
-  $async.Future<$9.Project> getProject(
-      $grpc.ServiceCall call, $9.GetProjectRequest request);
-  $async.Future<$9.ListProjectsResponse> listProjects(
-      $grpc.ServiceCall call, $9.ListProjectsRequest request);
+      $grpc.ServiceCall call, $8.CreateProjectRequest request);
+  $async.Future<$8.Project> getProject(
+      $grpc.ServiceCall call, $8.GetProjectRequest request);
+  $async.Future<$8.ListProjectsResponse> listProjects(
+      $grpc.ServiceCall call, $8.ListProjectsRequest request);
   $async.Future<$2.Operation> updateProject(
-      $grpc.ServiceCall call, $9.UpdateProjectRequest request);
+      $grpc.ServiceCall call, $8.UpdateProjectRequest request);
   $async.Future<$2.Operation> deleteProject(
-      $grpc.ServiceCall call, $9.DeleteProjectRequest request);
+      $grpc.ServiceCall call, $8.DeleteProjectRequest request);
   $async.Future<$2.Operation> undeleteProject(
-      $grpc.ServiceCall call, $9.UndeleteProjectRequest request);
+      $grpc.ServiceCall call, $8.UndeleteProjectRequest request);
   $async.Future<$2.Operation> renameProject(
-      $grpc.ServiceCall call, $9.RenameProjectRequest request);
+      $grpc.ServiceCall call, $8.RenameProjectRequest request);
 }

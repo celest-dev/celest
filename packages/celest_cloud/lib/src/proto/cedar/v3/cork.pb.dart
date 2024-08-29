@@ -13,20 +13,20 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity.pb.dart' as $51;
-import 'entity_id.pb.dart' as $48;
-import 'expr.pb.dart' as $50;
+import 'entity.pb.dart' as $48;
+import 'entity_id.pb.dart' as $45;
+import 'expr.pb.dart' as $47;
 
 /// A bearer token that can be used to make claims about an entity for the purpose
 /// of authorization and authentication w/ Cedar.
 class Cork extends $pb.GeneratedMessage {
   factory Cork({
     $core.List<$core.int>? id,
-    $48.EntityId? issuer,
-    $48.EntityId? bearer,
-    $48.EntityId? audience,
-    $51.Entity? claims,
-    $core.Iterable<$50.Expr>? caveats,
+    $45.EntityId? issuer,
+    $45.EntityId? bearer,
+    $45.EntityId? audience,
+    $48.Entity? claims,
+    $core.Iterable<$47.Expr>? caveats,
     $core.List<$core.int>? signature,
   }) {
     final $result = create();
@@ -67,16 +67,16 @@ class Cork extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..a<$core.List<$core.int>>(
         1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OY)
-    ..aOM<$48.EntityId>(2, _omitFieldNames ? '' : 'issuer',
-        subBuilder: $48.EntityId.create)
-    ..aOM<$48.EntityId>(3, _omitFieldNames ? '' : 'bearer',
-        subBuilder: $48.EntityId.create)
-    ..aOM<$48.EntityId>(4, _omitFieldNames ? '' : 'audience',
-        subBuilder: $48.EntityId.create)
-    ..aOM<$51.Entity>(5, _omitFieldNames ? '' : 'claims',
-        subBuilder: $51.Entity.create)
-    ..pc<$50.Expr>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM,
-        subBuilder: $50.Expr.create)
+    ..aOM<$45.EntityId>(2, _omitFieldNames ? '' : 'issuer',
+        subBuilder: $45.EntityId.create)
+    ..aOM<$45.EntityId>(3, _omitFieldNames ? '' : 'bearer',
+        subBuilder: $45.EntityId.create)
+    ..aOM<$45.EntityId>(4, _omitFieldNames ? '' : 'audience',
+        subBuilder: $45.EntityId.create)
+    ..aOM<$48.Entity>(5, _omitFieldNames ? '' : 'claims',
+        subBuilder: $48.Entity.create)
+    ..pc<$47.Expr>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM,
+        subBuilder: $47.Expr.create)
     ..a<$core.List<$core.int>>(
         999, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
@@ -117,9 +117,9 @@ class Cork extends $pb.GeneratedMessage {
 
   /// The issuing authority of the cork.
   @$pb.TagNumber(2)
-  $48.EntityId get issuer => $_getN(1);
+  $45.EntityId get issuer => $_getN(1);
   @$pb.TagNumber(2)
-  set issuer($48.EntityId v) {
+  set issuer($45.EntityId v) {
     setField(2, v);
   }
 
@@ -128,13 +128,13 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearIssuer() => clearField(2);
   @$pb.TagNumber(2)
-  $48.EntityId ensureIssuer() => $_ensure(1);
+  $45.EntityId ensureIssuer() => $_ensure(1);
 
   /// The bearer of the cork, about which [claims] can be made.
   @$pb.TagNumber(3)
-  $48.EntityId get bearer => $_getN(2);
+  $45.EntityId get bearer => $_getN(2);
   @$pb.TagNumber(3)
-  set bearer($48.EntityId v) {
+  set bearer($45.EntityId v) {
     setField(3, v);
   }
 
@@ -143,13 +143,13 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearBearer() => clearField(3);
   @$pb.TagNumber(3)
-  $48.EntityId ensureBearer() => $_ensure(2);
+  $45.EntityId ensureBearer() => $_ensure(2);
 
   /// The intended audience of the cork.
   @$pb.TagNumber(4)
-  $48.EntityId get audience => $_getN(3);
+  $45.EntityId get audience => $_getN(3);
   @$pb.TagNumber(4)
-  set audience($48.EntityId v) {
+  set audience($45.EntityId v) {
     setField(4, v);
   }
 
@@ -158,13 +158,13 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearAudience() => clearField(4);
   @$pb.TagNumber(4)
-  $48.EntityId ensureAudience() => $_ensure(3);
+  $45.EntityId ensureAudience() => $_ensure(3);
 
   /// Claims made about the [bearer] of the cork.
   @$pb.TagNumber(5)
-  $51.Entity get claims => $_getN(4);
+  $48.Entity get claims => $_getN(4);
   @$pb.TagNumber(5)
-  set claims($51.Entity v) {
+  set claims($48.Entity v) {
     setField(5, v);
   }
 
@@ -173,7 +173,7 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearClaims() => clearField(5);
   @$pb.TagNumber(5)
-  $51.Entity ensureClaims() => $_ensure(4);
+  $48.Entity ensureClaims() => $_ensure(4);
 
   ///  The caveats to this cork's validity and usage.
   ///
@@ -182,7 +182,7 @@ class Cork extends $pb.GeneratedMessage {
   ///
   ///  Effectively, these form the body of a `forbid unless` policy AND'd together.
   @$pb.TagNumber(6)
-  $core.List<$50.Expr> get caveats => $_getList(5);
+  $core.List<$47.Expr> get caveats => $_getList(5);
 
   /// The final signature of the cork.
   @$pb.TagNumber(999)
