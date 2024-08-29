@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../../google/protobuf/field_mask.pb.dart' as $46;
-import '../../../../google/protobuf/timestamp.pb.dart' as $20;
-import '../../../../i18n/phonenumbers/phonenumber.pb.dart' as $54;
+import '../../../../google/protobuf/field_mask.pb.dart' as $43;
+import '../../../../google/protobuf/timestamp.pb.dart' as $17;
+import '../../../../i18n/phonenumbers/phonenumber.pb.dart' as $49;
 import 'users.pbenum.dart';
 
 export 'users.pbenum.dart';
@@ -26,8 +26,8 @@ class User extends $pb.GeneratedMessage {
     $core.String? name,
     $core.String? parent,
     $core.String? userId,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
+    $17.Timestamp? createTime,
+    $17.Timestamp? updateTime,
     $core.String? givenName,
     $core.String? familyName,
     $core.String? timeZone,
@@ -91,10 +91,10 @@ class User extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'parent')
     ..aOS(3, _omitFieldNames ? '' : 'userId')
-    ..aOM<$20.Timestamp>(4, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(5, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$17.Timestamp>(4, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $17.Timestamp.create)
+    ..aOM<$17.Timestamp>(5, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $17.Timestamp.create)
     ..aOS(6, _omitFieldNames ? '' : 'givenName')
     ..aOS(7, _omitFieldNames ? '' : 'familyName')
     ..aOS(8, _omitFieldNames ? '' : 'timeZone')
@@ -172,9 +172,9 @@ class User extends $pb.GeneratedMessage {
 
   /// Output only. The time the user was created.
   @$pb.TagNumber(4)
-  $20.Timestamp get createTime => $_getN(3);
+  $17.Timestamp get createTime => $_getN(3);
   @$pb.TagNumber(4)
-  set createTime($20.Timestamp v) {
+  set createTime($17.Timestamp v) {
     setField(4, v);
   }
 
@@ -183,13 +183,13 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearCreateTime() => clearField(4);
   @$pb.TagNumber(4)
-  $20.Timestamp ensureCreateTime() => $_ensure(3);
+  $17.Timestamp ensureCreateTime() => $_ensure(3);
 
   /// Output only. The time the user was last updated.
   @$pb.TagNumber(5)
-  $20.Timestamp get updateTime => $_getN(4);
+  $17.Timestamp get updateTime => $_getN(4);
   @$pb.TagNumber(5)
-  set updateTime($20.Timestamp v) {
+  set updateTime($17.Timestamp v) {
     setField(5, v);
   }
 
@@ -198,7 +198,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearUpdateTime() => clearField(5);
   @$pb.TagNumber(5)
-  $20.Timestamp ensureUpdateTime() => $_ensure(4);
+  $17.Timestamp ensureUpdateTime() => $_ensure(4);
 
   /// Optional. The given name of the user.
   @$pb.TagNumber(6)
@@ -392,7 +392,7 @@ class Email extends $pb.GeneratedMessage {
 /// A phone number used within Celest Cloud.
 class PhoneNumber extends $pb.GeneratedMessage {
   factory PhoneNumber({
-    $54.PhoneNumber? phoneNumber,
+    $49.PhoneNumber? phoneNumber,
     $core.bool? verified,
     $core.bool? primary,
   }) {
@@ -421,8 +421,8 @@ class PhoneNumber extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$54.PhoneNumber>(1, _omitFieldNames ? '' : 'phoneNumber',
-        subBuilder: $54.PhoneNumber.create)
+    ..aOM<$49.PhoneNumber>(1, _omitFieldNames ? '' : 'phoneNumber',
+        subBuilder: $49.PhoneNumber.create)
     ..aOB(2, _omitFieldNames ? '' : 'verified')
     ..aOB(3, _omitFieldNames ? '' : 'primary');
 
@@ -450,9 +450,9 @@ class PhoneNumber extends $pb.GeneratedMessage {
 
   /// Output only. The parsed and decoded phone number.
   @$pb.TagNumber(1)
-  $54.PhoneNumber get phoneNumber => $_getN(0);
+  $49.PhoneNumber get phoneNumber => $_getN(0);
   @$pb.TagNumber(1)
-  set phoneNumber($54.PhoneNumber v) {
+  set phoneNumber($49.PhoneNumber v) {
     setField(1, v);
   }
 
@@ -461,7 +461,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearPhoneNumber() => clearField(1);
   @$pb.TagNumber(1)
-  $54.PhoneNumber ensurePhoneNumber() => $_ensure(0);
+  $49.PhoneNumber ensurePhoneNumber() => $_ensure(0);
 
   /// Whether the phone number is verified.
   @$pb.TagNumber(2)
@@ -974,7 +974,7 @@ class ListUsersResponse extends $pb.GeneratedMessage {
 class UpdateUserRequest extends $pb.GeneratedMessage {
   factory UpdateUserRequest({
     User? user,
-    $46.FieldMask? updateMask,
+    $43.FieldMask? updateMask,
     $core.bool? validateOnly,
   }) {
     final $result = create();
@@ -1003,8 +1003,8 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOM<User>(1, _omitFieldNames ? '' : 'user', subBuilder: User.create)
-    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $46.FieldMask.create)
+    ..aOM<$43.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $43.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly');
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1047,9 +1047,9 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
 
   /// The fields to update.
   @$pb.TagNumber(2)
-  $46.FieldMask get updateMask => $_getN(1);
+  $43.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($46.FieldMask v) {
+  set updateMask($43.FieldMask v) {
     setField(2, v);
   }
 
@@ -1058,7 +1058,7 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $46.FieldMask ensureUpdateMask() => $_ensure(1);
+  $43.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(3)

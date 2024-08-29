@@ -14,7 +14,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'expr.pbenum.dart';
-import 'value.pb.dart' as $49;
+import 'value.pb.dart' as $46;
 
 export 'expr.pbenum.dart';
 
@@ -734,7 +734,7 @@ class Expr extends $pb.GeneratedMessage {
 
 class ExprValue extends $pb.GeneratedMessage {
   factory ExprValue({
-    $49.Value? value,
+    $46.Value? value,
   }) {
     final $result = create();
     if (value != null) {
@@ -754,8 +754,8 @@ class ExprValue extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ExprValue',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$49.Value>(1, _omitFieldNames ? '' : 'value',
-        subBuilder: $49.Value.create)
+    ..aOM<$46.Value>(1, _omitFieldNames ? '' : 'value',
+        subBuilder: $46.Value.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -780,9 +780,9 @@ class ExprValue extends $pb.GeneratedMessage {
   static ExprValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $49.Value get value => $_getN(0);
+  $46.Value get value => $_getN(0);
   @$pb.TagNumber(1)
-  set value($49.Value v) {
+  set value($46.Value v) {
     setField(1, v);
   }
 
@@ -791,7 +791,7 @@ class ExprValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearValue() => clearField(1);
   @$pb.TagNumber(1)
-  $49.Value ensureValue() => $_ensure(0);
+  $46.Value ensureValue() => $_ensure(0);
 }
 
 class ExprVar extends $pb.GeneratedMessage {

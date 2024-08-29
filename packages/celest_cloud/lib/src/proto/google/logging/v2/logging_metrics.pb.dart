@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../api/distribution.pb.dart' as $47;
-import '../../api/metric.pb.dart' as $34;
-import '../../protobuf/timestamp.pb.dart' as $20;
+import '../../api/distribution.pb.dart' as $44;
+import '../../api/metric.pb.dart' as $31;
+import '../../protobuf/timestamp.pb.dart' as $17;
 import 'logging_metrics.pbenum.dart';
 
 export 'logging_metrics.pbenum.dart';
@@ -34,12 +34,12 @@ class LogMetric extends $pb.GeneratedMessage {
     $core.String? filter,
     @$core.Deprecated('This field is deprecated.')
     LogMetric_ApiVersion? version,
-    $34.MetricDescriptor? metricDescriptor,
+    $31.MetricDescriptor? metricDescriptor,
     $core.String? valueExtractor,
     $core.Map<$core.String, $core.String>? labelExtractors,
-    $47.Distribution_BucketOptions? bucketOptions,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
+    $44.Distribution_BucketOptions? bucketOptions,
+    $17.Timestamp? createTime,
+    $17.Timestamp? updateTime,
     $core.bool? disabled,
     $core.String? bucketName,
   }) {
@@ -104,21 +104,21 @@ class LogMetric extends $pb.GeneratedMessage {
         defaultOrMaker: LogMetric_ApiVersion.V2,
         valueOf: LogMetric_ApiVersion.valueOf,
         enumValues: LogMetric_ApiVersion.values)
-    ..aOM<$34.MetricDescriptor>(5, _omitFieldNames ? '' : 'metricDescriptor',
-        subBuilder: $34.MetricDescriptor.create)
+    ..aOM<$31.MetricDescriptor>(5, _omitFieldNames ? '' : 'metricDescriptor',
+        subBuilder: $31.MetricDescriptor.create)
     ..aOS(6, _omitFieldNames ? '' : 'valueExtractor')
     ..m<$core.String, $core.String>(7, _omitFieldNames ? '' : 'labelExtractors',
         entryClassName: 'LogMetric.LabelExtractorsEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('google.logging.v2'))
-    ..aOM<$47.Distribution_BucketOptions>(
+    ..aOM<$44.Distribution_BucketOptions>(
         8, _omitFieldNames ? '' : 'bucketOptions',
-        subBuilder: $47.Distribution_BucketOptions.create)
-    ..aOM<$20.Timestamp>(9, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(10, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
+        subBuilder: $44.Distribution_BucketOptions.create)
+    ..aOM<$17.Timestamp>(9, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $17.Timestamp.create)
+    ..aOM<$17.Timestamp>(10, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $17.Timestamp.create)
     ..aOB(12, _omitFieldNames ? '' : 'disabled')
     ..aOS(13, _omitFieldNames ? '' : 'bucketName')
     ..hasRequiredFields = false;
@@ -242,9 +242,9 @@ class LogMetric extends $pb.GeneratedMessage {
   ///  `metric_descriptor`, but existing labels cannot be modified except for
   ///  their description.
   @$pb.TagNumber(5)
-  $34.MetricDescriptor get metricDescriptor => $_getN(4);
+  $31.MetricDescriptor get metricDescriptor => $_getN(4);
   @$pb.TagNumber(5)
-  set metricDescriptor($34.MetricDescriptor v) {
+  set metricDescriptor($31.MetricDescriptor v) {
     setField(5, v);
   }
 
@@ -253,7 +253,7 @@ class LogMetric extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearMetricDescriptor() => clearField(5);
   @$pb.TagNumber(5)
-  $34.MetricDescriptor ensureMetricDescriptor() => $_ensure(4);
+  $31.MetricDescriptor ensureMetricDescriptor() => $_ensure(4);
 
   ///  Optional. A `value_extractor` is required when using a distribution
   ///  logs-based metric to extract the values to record from a log entry.
@@ -308,9 +308,9 @@ class LogMetric extends $pb.GeneratedMessage {
   /// using a DISTRIBUTION value type and it describes the bucket boundaries
   /// used to create a histogram of the extracted values.
   @$pb.TagNumber(8)
-  $47.Distribution_BucketOptions get bucketOptions => $_getN(7);
+  $44.Distribution_BucketOptions get bucketOptions => $_getN(7);
   @$pb.TagNumber(8)
-  set bucketOptions($47.Distribution_BucketOptions v) {
+  set bucketOptions($44.Distribution_BucketOptions v) {
     setField(8, v);
   }
 
@@ -319,15 +319,15 @@ class LogMetric extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearBucketOptions() => clearField(8);
   @$pb.TagNumber(8)
-  $47.Distribution_BucketOptions ensureBucketOptions() => $_ensure(7);
+  $44.Distribution_BucketOptions ensureBucketOptions() => $_ensure(7);
 
   ///  Output only. The creation timestamp of the metric.
   ///
   ///  This field may not be present for older metrics.
   @$pb.TagNumber(9)
-  $20.Timestamp get createTime => $_getN(8);
+  $17.Timestamp get createTime => $_getN(8);
   @$pb.TagNumber(9)
-  set createTime($20.Timestamp v) {
+  set createTime($17.Timestamp v) {
     setField(9, v);
   }
 
@@ -336,15 +336,15 @@ class LogMetric extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearCreateTime() => clearField(9);
   @$pb.TagNumber(9)
-  $20.Timestamp ensureCreateTime() => $_ensure(8);
+  $17.Timestamp ensureCreateTime() => $_ensure(8);
 
   ///  Output only. The last update timestamp of the metric.
   ///
   ///  This field may not be present for older metrics.
   @$pb.TagNumber(10)
-  $20.Timestamp get updateTime => $_getN(9);
+  $17.Timestamp get updateTime => $_getN(9);
   @$pb.TagNumber(10)
-  set updateTime($20.Timestamp v) {
+  set updateTime($17.Timestamp v) {
     setField(10, v);
   }
 
@@ -353,7 +353,7 @@ class LogMetric extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   void clearUpdateTime() => clearField(10);
   @$pb.TagNumber(10)
-  $20.Timestamp ensureUpdateTime() => $_ensure(9);
+  $17.Timestamp ensureUpdateTime() => $_ensure(9);
 
   /// Optional. If set to True, then this metric is disabled and it does not
   /// generate any points.

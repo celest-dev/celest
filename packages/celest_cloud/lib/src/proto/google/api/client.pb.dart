@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../protobuf/duration.pb.dart' as $17;
+import '../protobuf/duration.pb.dart' as $14;
 import 'client.pbenum.dart';
-import 'launch_stage.pbenum.dart' as $18;
+import 'launch_stage.pbenum.dart' as $15;
 
 export 'client.pbenum.dart';
 
@@ -109,7 +109,7 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
 class ClientLibrarySettings extends $pb.GeneratedMessage {
   factory ClientLibrarySettings({
     $core.String? version,
-    $18.LaunchStage? launchStage,
+    $15.LaunchStage? launchStage,
     $core.bool? restNumericEnums,
     JavaSettings? javaSettings,
     CppSettings? cppSettings,
@@ -169,11 +169,11 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'version')
-    ..e<$18.LaunchStage>(
+    ..e<$15.LaunchStage>(
         2, _omitFieldNames ? '' : 'launchStage', $pb.PbFieldType.OE,
-        defaultOrMaker: $18.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
-        valueOf: $18.LaunchStage.valueOf,
-        enumValues: $18.LaunchStage.values)
+        defaultOrMaker: $15.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
+        valueOf: $15.LaunchStage.valueOf,
+        enumValues: $15.LaunchStage.values)
     ..aOB(3, _omitFieldNames ? '' : 'restNumericEnums')
     ..aOM<JavaSettings>(21, _omitFieldNames ? '' : 'javaSettings',
         subBuilder: JavaSettings.create)
@@ -235,9 +235,9 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
 
   /// Launch stage of this version of the API.
   @$pb.TagNumber(2)
-  $18.LaunchStage get launchStage => $_getN(1);
+  $15.LaunchStage get launchStage => $_getN(1);
   @$pb.TagNumber(2)
-  set launchStage($18.LaunchStage v) {
+  set launchStage($15.LaunchStage v) {
     setField(2, v);
   }
 
@@ -1272,10 +1272,10 @@ class GoSettings extends $pb.GeneratedMessage {
 /// [Java](https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
 class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   factory MethodSettings_LongRunning({
-    $17.Duration? initialPollDelay,
+    $14.Duration? initialPollDelay,
     $core.double? pollDelayMultiplier,
-    $17.Duration? maxPollDelay,
-    $17.Duration? totalPollTimeout,
+    $14.Duration? maxPollDelay,
+    $14.Duration? totalPollTimeout,
   }) {
     final $result = create();
     if (initialPollDelay != null) {
@@ -1304,14 +1304,14 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'MethodSettings.LongRunning',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOM<$17.Duration>(1, _omitFieldNames ? '' : 'initialPollDelay',
-        subBuilder: $17.Duration.create)
+    ..aOM<$14.Duration>(1, _omitFieldNames ? '' : 'initialPollDelay',
+        subBuilder: $14.Duration.create)
     ..a<$core.double>(
         2, _omitFieldNames ? '' : 'pollDelayMultiplier', $pb.PbFieldType.OF)
-    ..aOM<$17.Duration>(3, _omitFieldNames ? '' : 'maxPollDelay',
-        subBuilder: $17.Duration.create)
-    ..aOM<$17.Duration>(4, _omitFieldNames ? '' : 'totalPollTimeout',
-        subBuilder: $17.Duration.create)
+    ..aOM<$14.Duration>(3, _omitFieldNames ? '' : 'maxPollDelay',
+        subBuilder: $14.Duration.create)
+    ..aOM<$14.Duration>(4, _omitFieldNames ? '' : 'totalPollTimeout',
+        subBuilder: $14.Duration.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1343,9 +1343,9 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   /// Initial delay after which the first poll request will be made.
   /// Default value: 5 seconds.
   @$pb.TagNumber(1)
-  $17.Duration get initialPollDelay => $_getN(0);
+  $14.Duration get initialPollDelay => $_getN(0);
   @$pb.TagNumber(1)
-  set initialPollDelay($17.Duration v) {
+  set initialPollDelay($14.Duration v) {
     setField(1, v);
   }
 
@@ -1354,7 +1354,7 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearInitialPollDelay() => clearField(1);
   @$pb.TagNumber(1)
-  $17.Duration ensureInitialPollDelay() => $_ensure(0);
+  $14.Duration ensureInitialPollDelay() => $_ensure(0);
 
   /// Multiplier to gradually increase delay between subsequent polls until it
   /// reaches max_poll_delay.
@@ -1374,9 +1374,9 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   /// Maximum time between two subsequent poll requests.
   /// Default value: 45 seconds.
   @$pb.TagNumber(3)
-  $17.Duration get maxPollDelay => $_getN(2);
+  $14.Duration get maxPollDelay => $_getN(2);
   @$pb.TagNumber(3)
-  set maxPollDelay($17.Duration v) {
+  set maxPollDelay($14.Duration v) {
     setField(3, v);
   }
 
@@ -1385,14 +1385,14 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearMaxPollDelay() => clearField(3);
   @$pb.TagNumber(3)
-  $17.Duration ensureMaxPollDelay() => $_ensure(2);
+  $14.Duration ensureMaxPollDelay() => $_ensure(2);
 
   /// Total polling timeout.
   /// Default value: 5 minutes.
   @$pb.TagNumber(4)
-  $17.Duration get totalPollTimeout => $_getN(3);
+  $14.Duration get totalPollTimeout => $_getN(3);
   @$pb.TagNumber(4)
-  set totalPollTimeout($17.Duration v) {
+  set totalPollTimeout($14.Duration v) {
     setField(4, v);
   }
 
@@ -1401,7 +1401,7 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearTotalPollTimeout() => clearField(4);
   @$pb.TagNumber(4)
-  $17.Duration ensureTotalPollTimeout() => $_ensure(3);
+  $14.Duration ensureTotalPollTimeout() => $_ensure(3);
 }
 
 /// Describes the generator configuration for a method.

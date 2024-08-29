@@ -57,8 +57,6 @@ class CelestCloud {
     Organization(),
     CreateOrganizationMetadata(),
     Project(),
-    CreateEnvironmentMetadata(),
-    DeploymentOperationMetadata(),
   ]);
 
   final CloudProtocol _protocol;

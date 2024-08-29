@@ -7,13 +7,9 @@ export 'package:protobuf/src/protobuf/mixins/well_known.dart';
 export 'proto/celest/cloud/auth/v1alpha1/authentication.pb.dart';
 export 'proto/celest/cloud/auth/v1alpha1/users.pb.dart';
 export 'proto/celest/cloud/v1alpha1/common.pb.dart';
-export 'proto/celest/cloud/v1alpha1/deployments.pb.dart';
-export 'proto/celest/cloud/v1alpha1/environments.pb.dart';
-export 'proto/celest/cloud/v1alpha1/functions.pb.dart';
 export 'proto/celest/cloud/v1alpha1/operations.pb.dart';
 export 'proto/celest/cloud/v1alpha1/organizations.pb.dart';
 export 'proto/celest/cloud/v1alpha1/projects.pb.dart';
-export 'proto/celest/cloud/v1alpha1/tenants.pb.dart';
 
 /// GCP
 export 'proto/google/logging/type/http_request.pb.dart';

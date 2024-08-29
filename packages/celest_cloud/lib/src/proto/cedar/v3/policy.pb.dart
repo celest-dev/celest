@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity_id.pb.dart' as $48;
-import 'expr.pb.dart' as $50;
+import 'entity_id.pb.dart' as $45;
+import 'expr.pb.dart' as $47;
 import 'policy.pbenum.dart';
 
 export 'policy.pbenum.dart';
@@ -234,7 +234,7 @@ class Policy extends $pb.GeneratedMessage {
 class PolicyPrincipal extends $pb.GeneratedMessage {
   factory PolicyPrincipal({
     PolicyOp? op,
-    $48.EntityId? entity,
+    $45.EntityId? entity,
     $core.String? entityType,
   }) {
     final $result = create();
@@ -265,8 +265,8 @@ class PolicyPrincipal extends $pb.GeneratedMessage {
         defaultOrMaker: PolicyOp.POLICY_OP_UNSPECIFIED,
         valueOf: PolicyOp.valueOf,
         enumValues: PolicyOp.values)
-    ..aOM<$48.EntityId>(2, _omitFieldNames ? '' : 'entity',
-        subBuilder: $48.EntityId.create)
+    ..aOM<$45.EntityId>(2, _omitFieldNames ? '' : 'entity',
+        subBuilder: $45.EntityId.create)
     ..aOS(3, _omitFieldNames ? '' : 'entityType')
     ..hasRequiredFields = false;
 
@@ -306,9 +306,9 @@ class PolicyPrincipal extends $pb.GeneratedMessage {
   void clearOp() => clearField(1);
 
   @$pb.TagNumber(2)
-  $48.EntityId get entity => $_getN(1);
+  $45.EntityId get entity => $_getN(1);
   @$pb.TagNumber(2)
-  set entity($48.EntityId v) {
+  set entity($45.EntityId v) {
     setField(2, v);
   }
 
@@ -317,7 +317,7 @@ class PolicyPrincipal extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearEntity() => clearField(2);
   @$pb.TagNumber(2)
-  $48.EntityId ensureEntity() => $_ensure(1);
+  $45.EntityId ensureEntity() => $_ensure(1);
 
   @$pb.TagNumber(3)
   $core.String get entityType => $_getSZ(2);
@@ -335,8 +335,8 @@ class PolicyPrincipal extends $pb.GeneratedMessage {
 class PolicyAction extends $pb.GeneratedMessage {
   factory PolicyAction({
     PolicyOp? op,
-    $48.EntityId? entity,
-    $core.Iterable<$48.EntityId>? entities,
+    $45.EntityId? entity,
+    $core.Iterable<$45.EntityId>? entities,
   }) {
     final $result = create();
     if (op != null) {
@@ -366,10 +366,10 @@ class PolicyAction extends $pb.GeneratedMessage {
         defaultOrMaker: PolicyOp.POLICY_OP_UNSPECIFIED,
         valueOf: PolicyOp.valueOf,
         enumValues: PolicyOp.values)
-    ..aOM<$48.EntityId>(2, _omitFieldNames ? '' : 'entity',
-        subBuilder: $48.EntityId.create)
-    ..pc<$48.EntityId>(3, _omitFieldNames ? '' : 'entities', $pb.PbFieldType.PM,
-        subBuilder: $48.EntityId.create)
+    ..aOM<$45.EntityId>(2, _omitFieldNames ? '' : 'entity',
+        subBuilder: $45.EntityId.create)
+    ..pc<$45.EntityId>(3, _omitFieldNames ? '' : 'entities', $pb.PbFieldType.PM,
+        subBuilder: $45.EntityId.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -408,9 +408,9 @@ class PolicyAction extends $pb.GeneratedMessage {
   void clearOp() => clearField(1);
 
   @$pb.TagNumber(2)
-  $48.EntityId get entity => $_getN(1);
+  $45.EntityId get entity => $_getN(1);
   @$pb.TagNumber(2)
-  set entity($48.EntityId v) {
+  set entity($45.EntityId v) {
     setField(2, v);
   }
 
@@ -419,16 +419,16 @@ class PolicyAction extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearEntity() => clearField(2);
   @$pb.TagNumber(2)
-  $48.EntityId ensureEntity() => $_ensure(1);
+  $45.EntityId ensureEntity() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.List<$48.EntityId> get entities => $_getList(2);
+  $core.List<$45.EntityId> get entities => $_getList(2);
 }
 
 class PolicyResource extends $pb.GeneratedMessage {
   factory PolicyResource({
     PolicyOp? op,
-    $48.EntityId? entity,
+    $45.EntityId? entity,
     $core.String? entityType,
   }) {
     final $result = create();
@@ -459,8 +459,8 @@ class PolicyResource extends $pb.GeneratedMessage {
         defaultOrMaker: PolicyOp.POLICY_OP_UNSPECIFIED,
         valueOf: PolicyOp.valueOf,
         enumValues: PolicyOp.values)
-    ..aOM<$48.EntityId>(2, _omitFieldNames ? '' : 'entity',
-        subBuilder: $48.EntityId.create)
+    ..aOM<$45.EntityId>(2, _omitFieldNames ? '' : 'entity',
+        subBuilder: $45.EntityId.create)
     ..aOS(3, _omitFieldNames ? '' : 'entityType')
     ..hasRequiredFields = false;
 
@@ -500,9 +500,9 @@ class PolicyResource extends $pb.GeneratedMessage {
   void clearOp() => clearField(1);
 
   @$pb.TagNumber(2)
-  $48.EntityId get entity => $_getN(1);
+  $45.EntityId get entity => $_getN(1);
   @$pb.TagNumber(2)
-  set entity($48.EntityId v) {
+  set entity($45.EntityId v) {
     setField(2, v);
   }
 
@@ -511,7 +511,7 @@ class PolicyResource extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearEntity() => clearField(2);
   @$pb.TagNumber(2)
-  $48.EntityId ensureEntity() => $_ensure(1);
+  $45.EntityId ensureEntity() => $_ensure(1);
 
   @$pb.TagNumber(3)
   $core.String get entityType => $_getSZ(2);
@@ -529,7 +529,7 @@ class PolicyResource extends $pb.GeneratedMessage {
 class PolicyCondition extends $pb.GeneratedMessage {
   factory PolicyCondition({
     PolicyConditionKind? kind,
-    $50.Expr? body,
+    $47.Expr? body,
   }) {
     final $result = create();
     if (kind != null) {
@@ -557,8 +557,8 @@ class PolicyCondition extends $pb.GeneratedMessage {
         defaultOrMaker: PolicyConditionKind.POLICY_CONDITION_KIND_UNSPECIFIED,
         valueOf: PolicyConditionKind.valueOf,
         enumValues: PolicyConditionKind.values)
-    ..aOM<$50.Expr>(2, _omitFieldNames ? '' : 'body',
-        subBuilder: $50.Expr.create)
+    ..aOM<$47.Expr>(2, _omitFieldNames ? '' : 'body',
+        subBuilder: $47.Expr.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -597,9 +597,9 @@ class PolicyCondition extends $pb.GeneratedMessage {
   void clearKind() => clearField(1);
 
   @$pb.TagNumber(2)
-  $50.Expr get body => $_getN(1);
+  $47.Expr get body => $_getN(1);
   @$pb.TagNumber(2)
-  set body($50.Expr v) {
+  set body($47.Expr v) {
     setField(2, v);
   }
 
@@ -608,7 +608,7 @@ class PolicyCondition extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearBody() => clearField(2);
   @$pb.TagNumber(2)
-  $50.Expr ensureBody() => $_ensure(1);
+  $47.Expr ensureBody() => $_ensure(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $46;
-import '../../../google/protobuf/timestamp.pb.dart' as $20;
+import '../../../google/protobuf/field_mask.pb.dart' as $43;
+import '../../../google/protobuf/timestamp.pb.dart' as $17;
 import 'projects.pbenum.dart';
 
 export 'projects.pbenum.dart';
@@ -28,10 +28,10 @@ class Project extends $pb.GeneratedMessage {
     $core.String? projectId,
     Project_State? state,
     $core.String? displayName,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
-    $20.Timestamp? deleteTime,
-    $20.Timestamp? purgeTime,
+    $17.Timestamp? createTime,
+    $17.Timestamp? updateTime,
+    $17.Timestamp? deleteTime,
+    $17.Timestamp? purgeTime,
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
@@ -104,14 +104,14 @@ class Project extends $pb.GeneratedMessage {
         valueOf: Project_State.valueOf,
         enumValues: Project_State.values)
     ..aOS(6, _omitFieldNames ? '' : 'displayName')
-    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(8, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(9, _omitFieldNames ? '' : 'deleteTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(10, _omitFieldNames ? '' : 'purgeTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$17.Timestamp>(7, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $17.Timestamp.create)
+    ..aOM<$17.Timestamp>(8, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $17.Timestamp.create)
+    ..aOM<$17.Timestamp>(9, _omitFieldNames ? '' : 'deleteTime',
+        subBuilder: $17.Timestamp.create)
+    ..aOM<$17.Timestamp>(10, _omitFieldNames ? '' : 'purgeTime',
+        subBuilder: $17.Timestamp.create)
     ..aOS(11, _omitFieldNames ? '' : 'etag')
     ..m<$core.String, $core.String>(12, _omitFieldNames ? '' : 'annotations',
         entryClassName: 'Project.AnnotationsEntry',
@@ -229,9 +229,9 @@ class Project extends $pb.GeneratedMessage {
 
   /// Output only. The time the project was created.
   @$pb.TagNumber(7)
-  $20.Timestamp get createTime => $_getN(6);
+  $17.Timestamp get createTime => $_getN(6);
   @$pb.TagNumber(7)
-  set createTime($20.Timestamp v) {
+  set createTime($17.Timestamp v) {
     setField(7, v);
   }
 
@@ -240,13 +240,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearCreateTime() => clearField(7);
   @$pb.TagNumber(7)
-  $20.Timestamp ensureCreateTime() => $_ensure(6);
+  $17.Timestamp ensureCreateTime() => $_ensure(6);
 
   /// Output only. The time the project was last updated.
   @$pb.TagNumber(8)
-  $20.Timestamp get updateTime => $_getN(7);
+  $17.Timestamp get updateTime => $_getN(7);
   @$pb.TagNumber(8)
-  set updateTime($20.Timestamp v) {
+  set updateTime($17.Timestamp v) {
     setField(8, v);
   }
 
@@ -255,13 +255,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearUpdateTime() => clearField(8);
   @$pb.TagNumber(8)
-  $20.Timestamp ensureUpdateTime() => $_ensure(7);
+  $17.Timestamp ensureUpdateTime() => $_ensure(7);
 
   /// Output only. The time the project was soft-deleted.
   @$pb.TagNumber(9)
-  $20.Timestamp get deleteTime => $_getN(8);
+  $17.Timestamp get deleteTime => $_getN(8);
   @$pb.TagNumber(9)
-  set deleteTime($20.Timestamp v) {
+  set deleteTime($17.Timestamp v) {
     setField(9, v);
   }
 
@@ -270,13 +270,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearDeleteTime() => clearField(9);
   @$pb.TagNumber(9)
-  $20.Timestamp ensureDeleteTime() => $_ensure(8);
+  $17.Timestamp ensureDeleteTime() => $_ensure(8);
 
   /// Output only. The time the project is scheduled for permanent deletion.
   @$pb.TagNumber(10)
-  $20.Timestamp get purgeTime => $_getN(9);
+  $17.Timestamp get purgeTime => $_getN(9);
   @$pb.TagNumber(10)
-  set purgeTime($20.Timestamp v) {
+  set purgeTime($17.Timestamp v) {
     setField(10, v);
   }
 
@@ -285,7 +285,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   void clearPurgeTime() => clearField(10);
   @$pb.TagNumber(10)
-  $20.Timestamp ensurePurgeTime() => $_ensure(9);
+  $17.Timestamp ensurePurgeTime() => $_ensure(9);
 
   /// Output only. A checksum computed by the server based on the current value
   /// of the Project resource. This may be sent on update and delete requests to
@@ -763,7 +763,7 @@ class ListProjectsResponse extends $pb.GeneratedMessage {
 class UpdateProjectRequest extends $pb.GeneratedMessage {
   factory UpdateProjectRequest({
     Project? project,
-    $46.FieldMask? updateMask,
+    $43.FieldMask? updateMask,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
@@ -797,8 +797,8 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Project>(1, _omitFieldNames ? '' : 'project',
         subBuilder: Project.create)
-    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $46.FieldMask.create)
+    ..aOM<$43.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $43.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
@@ -847,9 +847,9 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
 
   /// The update mask to apply to the project.
   @$pb.TagNumber(2)
-  $46.FieldMask get updateMask => $_getN(1);
+  $43.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($46.FieldMask v) {
+  set updateMask($43.FieldMask v) {
     setField(2, v);
   }
 
@@ -858,7 +858,7 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $46.FieldMask ensureUpdateMask() => $_ensure(1);
+  $43.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, and the project is not found, a new project will be created.
   /// In this situation, `update_mask` is ignored.

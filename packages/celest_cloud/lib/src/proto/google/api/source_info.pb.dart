@@ -13,12 +13,12 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../protobuf/any.pb.dart' as $13;
+import '../protobuf/any.pb.dart' as $10;
 
 /// Source information used to create a Service Config
 class SourceInfo extends $pb.GeneratedMessage {
   factory SourceInfo({
-    $core.Iterable<$13.Any>? sourceFiles,
+    $core.Iterable<$10.Any>? sourceFiles,
   }) {
     final $result = create();
     if (sourceFiles != null) {
@@ -38,8 +38,8 @@ class SourceInfo extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'SourceInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..pc<$13.Any>(1, _omitFieldNames ? '' : 'sourceFiles', $pb.PbFieldType.PM,
-        subBuilder: $13.Any.create)
+    ..pc<$10.Any>(1, _omitFieldNames ? '' : 'sourceFiles', $pb.PbFieldType.PM,
+        subBuilder: $10.Any.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -65,7 +65,7 @@ class SourceInfo extends $pb.GeneratedMessage {
 
   /// All files used during config generation.
   @$pb.TagNumber(1)
-  $core.List<$13.Any> get sourceFiles => $_getList(0);
+  $core.List<$10.Any> get sourceFiles => $_getList(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
