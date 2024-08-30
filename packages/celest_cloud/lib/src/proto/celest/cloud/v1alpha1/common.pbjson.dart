@@ -13,6 +13,22 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use regionDescriptor instead')
+const Region$json = {
+  '1': 'Region',
+  '2': [
+    {'1': 'REGION_UNSPECIFIED', '2': 0},
+    {'1': 'NORTH_AMERICA', '2': 1},
+    {'1': 'EUROPE', '2': 2},
+    {'1': 'ASIA_PACIFIC', '2': 3},
+  ],
+};
+
+/// Descriptor for `Region`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List regionDescriptor = $convert.base64Decode(
+    'CgZSZWdpb24SFgoSUkVHSU9OX1VOU1BFQ0lGSUVEEAASEQoNTk9SVEhfQU1FUklDQRABEgoKBk'
+    'VVUk9QRRACEhAKDEFTSUFfUEFDSUZJQxAD');
+
 @$core.Deprecated('Use pageTokenDescriptor instead')
 const PageToken$json = {
   '1': 'PageToken',

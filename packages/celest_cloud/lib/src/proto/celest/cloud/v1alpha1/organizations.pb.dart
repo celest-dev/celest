@@ -15,7 +15,8 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/protobuf/field_mask.pb.dart' as $43;
 import '../../../google/protobuf/timestamp.pb.dart' as $17;
-import 'operations.pbenum.dart' as $50;
+import 'common.pbenum.dart' as $50;
+import 'operations.pbenum.dart' as $51;
 import 'organizations.pbenum.dart';
 
 export 'organizations.pbenum.dart';
@@ -34,7 +35,7 @@ class Organization extends $pb.GeneratedMessage {
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
-    $core.String? primaryRegion,
+    $50.Region? defaultRegion,
     Organization_State? state,
     $17.Timestamp? purgeTime,
   }) {
@@ -72,8 +73,8 @@ class Organization extends $pb.GeneratedMessage {
     if (reconciling != null) {
       $result.reconciling = reconciling;
     }
-    if (primaryRegion != null) {
-      $result.primaryRegion = primaryRegion;
+    if (defaultRegion != null) {
+      $result.defaultRegion = defaultRegion;
     }
     if (state != null) {
       $result.state = state;
@@ -114,7 +115,11 @@ class Organization extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..aOS(12, _omitFieldNames ? '' : 'primaryRegion')
+    ..e<$50.Region>(
+        12, _omitFieldNames ? '' : 'defaultRegion', $pb.PbFieldType.OE,
+        defaultOrMaker: $50.Region.REGION_UNSPECIFIED,
+        valueOf: $50.Region.valueOf,
+        enumValues: $50.Region.values)
     ..e<Organization_State>(
         13, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
         defaultOrMaker: Organization_State.STATE_UNSPECIFIED,
@@ -295,20 +300,21 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   void clearReconciling() => clearField(11);
 
-  ///  Optional. The primary region for the organization.
+  ///  Optional. The default region for the organization.
   ///
-  ///  If not set, the organization will use the closest region to the caller.
+  ///  If set, projects will by default be deployed to this region. Projects can
+  ///  individually be deployed to different regions, if preferred.
   @$pb.TagNumber(12)
-  $core.String get primaryRegion => $_getSZ(11);
+  $50.Region get defaultRegion => $_getN(11);
   @$pb.TagNumber(12)
-  set primaryRegion($core.String v) {
-    $_setString(11, v);
+  set defaultRegion($50.Region v) {
+    setField(12, v);
   }
 
   @$pb.TagNumber(12)
-  $core.bool hasPrimaryRegion() => $_has(11);
+  $core.bool hasDefaultRegion() => $_has(11);
   @$pb.TagNumber(12)
-  void clearPrimaryRegion() => clearField(12);
+  void clearDefaultRegion() => clearField(12);
 
   /// Output only. The lifecycle state of the organization.
   @$pb.TagNumber(13)
@@ -466,7 +472,7 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
 class CreateOrganizationMetadata extends $pb.GeneratedMessage {
   factory CreateOrganizationMetadata({
     Organization? organization,
-    $50.OperationState? state,
+    $51.OperationState? state,
     $17.Timestamp? createTime,
     $17.Timestamp? startTime,
     $17.Timestamp? endTime,
@@ -504,11 +510,11 @@ class CreateOrganizationMetadata extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Organization>(1, _omitFieldNames ? '' : 'organization',
         subBuilder: Organization.create)
-    ..e<$50.OperationState>(
+    ..e<$51.OperationState>(
         2, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $50.OperationState.OPERATION_STATE_UNSPECIFIED,
-        valueOf: $50.OperationState.valueOf,
-        enumValues: $50.OperationState.values)
+        defaultOrMaker: $51.OperationState.OPERATION_STATE_UNSPECIFIED,
+        valueOf: $51.OperationState.valueOf,
+        enumValues: $51.OperationState.values)
     ..aOM<$17.Timestamp>(3, _omitFieldNames ? '' : 'createTime',
         subBuilder: $17.Timestamp.create)
     ..aOM<$17.Timestamp>(4, _omitFieldNames ? '' : 'startTime',
@@ -560,9 +566,9 @@ class CreateOrganizationMetadata extends $pb.GeneratedMessage {
 
   /// The state of the operation.
   @$pb.TagNumber(2)
-  $50.OperationState get state => $_getN(1);
+  $51.OperationState get state => $_getN(1);
   @$pb.TagNumber(2)
-  set state($50.OperationState v) {
+  set state($51.OperationState v) {
     setField(2, v);
   }
 

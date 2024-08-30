@@ -23,7 +23,7 @@ final class Projects with BaseService {
     required String parent,
     required String projectId,
     required String displayName,
-    required String region,
+    required Region region,
     Map<String, String>? annotations,
     bool validateOnly = false,
   }) async {

@@ -86,12 +86,13 @@ const Organization$json = {
     },
     {'1': 'reconciling', '3': 11, '4': 1, '5': 8, '8': {}, '10': 'reconciling'},
     {
-      '1': 'primary_region',
+      '1': 'default_region',
       '3': 12,
       '4': 1,
-      '5': 9,
+      '5': 14,
+      '6': '.celest.cloud.v1alpha1.Region',
       '8': {},
-      '10': 'primaryRegion'
+      '10': 'defaultRegion'
     },
   ],
   '3': [Organization_AnnotationsEntry$json],
@@ -142,12 +143,13 @@ final $typed_data.Uint8List organizationDescriptor = $convert.base64Decode(
     'bXVzdCBiZSAwLTYzIGNoYXJhY3RlcnMgYW5kIGhhdmUgb25seSBsb3dlcmNhc2UgbGV0dGVycy'
     'wgbnVtZXJpY3MsIHVuZGVyc2NvcmVzLCBhbmQgZGFzaGVzGiJ0aGlzLm1hdGNoZXMoJ15bYS16'
     'MC05Xy1dezAsNjN9JCcpUgthbm5vdGF0aW9ucxIlCgtyZWNvbmNpbGluZxgLIAEoCEID4EEDUg'
-    'tyZWNvbmNpbGluZxIqCg5wcmltYXJ5X3JlZ2lvbhgMIAEoCUID4EEBUg1wcmltYXJ5UmVnaW9u'
-    'Gj4KEEFubm90YXRpb25zRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBX'
-    'ZhbHVlOgI4ASJaCgVTdGF0ZRIVChFTVEFURV9VTlNQRUNJRklFRBAAEgwKCENSRUFUSU5HEAES'
-    'EwoPQ1JFQVRJT05fRkFJTEVEEAISCgoGQUNUSVZFEAMSCwoHREVMRVRFRBAEOmDqQV0KHWNsb3'
-    'VkLmNlbGVzdC5kZXYvT3JnYW5pemF0aW9uEhxvcmdhbml6YXRpb25zL3tvcmdhbml6YXRpb259'
-    'Kg1vcmdhbml6YXRpb25zMgxvcmdhbml6YXRpb25SAQE=');
+    'tyZWNvbmNpbGluZxJJCg5kZWZhdWx0X3JlZ2lvbhgMIAEoDjIdLmNlbGVzdC5jbG91ZC52MWFs'
+    'cGhhMS5SZWdpb25CA+BBAVINZGVmYXVsdFJlZ2lvbho+ChBBbm5vdGF0aW9uc0VudHJ5EhAKA2'
+    'tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEiWgoFU3RhdGUSFQoRU1RB'
+    'VEVfVU5TUEVDSUZJRUQQABIMCghDUkVBVElORxABEhMKD0NSRUFUSU9OX0ZBSUxFRBACEgoKBk'
+    'FDVElWRRADEgsKB0RFTEVURUQQBDpg6kFdCh1jbG91ZC5jZWxlc3QuZGV2L09yZ2FuaXphdGlv'
+    'bhIcb3JnYW5pemF0aW9ucy97b3JnYW5pemF0aW9ufSoNb3JnYW5pemF0aW9uczIMb3JnYW5pem'
+    'F0aW9uUgEB');
 
 @$core.Deprecated('Use createOrganizationRequestDescriptor instead')
 const CreateOrganizationRequest$json = {
@@ -180,7 +182,6 @@ const CreateOrganizationRequest$json = {
       '10': 'validateOnly'
     },
   ],
-  '7': {},
 };
 
 /// Descriptor for `CreateOrganizationRequest`. Decode as a `google.protobuf.DescriptorProto`.
@@ -194,9 +195,7 @@ final $typed_data.Uint8List createOrganizationRequestDescriptor = $convert.base6
     'aXphdGlvbiBhbGlhcxomdGhpcy5tYXRjaGVzKCdeW2Etel1bYS16MC05LV17NSwyOX0kJylSDm'
     '9yZ2FuaXphdGlvbklkEkwKDG9yZ2FuaXphdGlvbhgDIAEoCzIjLmNlbGVzdC5jbG91ZC52MWFs'
     'cGhhMS5Pcmdhbml6YXRpb25CA+BBAlIMb3JnYW5pemF0aW9uEigKDXZhbGlkYXRlX29ubHkYBC'
-    'ABKAhCA+BBAVIMdmFsaWRhdGVPbmx5OoUBukiBARp/ChR2YWxpZF9wcmltYXJ5X3JlZ2lvbhIl'
-    'cHJpbWFyeV9yZWdpb24gbXVzdCBiZSBhIHZhbGlkIHJlZ2lvbhpAdGhpcy5vcmdhbml6YXRpb2'
-    '4ucHJpbWFyeV9yZWdpb24ubWF0Y2hlcygnXlthLXpdKy1bYS16XStbMC05XSQnKQ==');
+    'ABKAhCA+BBAVIMdmFsaWRhdGVPbmx5');
 
 @$core.Deprecated('Use createOrganizationMetadataDescriptor instead')
 const CreateOrganizationMetadata$json = {
@@ -308,16 +307,13 @@ final $typed_data.Uint8List updateOrganizationRequestDescriptor = $convert.base6
     'VzdC5jbG91ZC52MWFscGhhMS5Pcmdhbml6YXRpb25CA+BBAlIMb3JnYW5pemF0aW9uEkAKC3Vw'
     'ZGF0ZV9tYXNrGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLkZpZWxkTWFza0ID4EEBUgp1cGRhdG'
     'VNYXNrEigKDWFsbG93X21pc3NpbmcYAyABKAhCA+BBAVIMYWxsb3dNaXNzaW5nEigKDXZhbGlk'
-    'YXRlX29ubHkYBCABKAhCA+BBAVIMdmFsaWRhdGVPbmx5Ou0DukjpAxpyCg12YWxpZF9vcHRpb2'
+    'YXRlX29ubHkYBCABKAhCA+BBAVIMdmFsaWRhdGVPbmx5OsECuki9AhpyCg12YWxpZF9vcHRpb2'
     '5zEi1jYW5ub3Qgc2V0IGJvdGggYWxsb3dfbWlzc2luZyBhbmQgdXBkYXRlX21hc2saMnRoaXMu'
     'YWxsb3dfbWlzc2luZyA/ICFoYXModGhpcy51cGRhdGVfbWFzaykgOiB0cnVlGsYBChB2YWxpZF'
     '9maWVsZF9tYXNrEk11cGRhdGVfbWFzayBtYXkgb25seSBpbmNsdWRlOiAnZGlzcGxheV9uYW1l'
-    'JywgJ2Fubm90YXRpb25zJywgJ3ByaW1hcnlfcmVnaW9uJxpjdGhpcy51cGRhdGVfbWFzay5wYX'
+    'JywgJ2Fubm90YXRpb25zJywgJ2RlZmF1bHRfcmVnaW9uJxpjdGhpcy51cGRhdGVfbWFzay5wYX'
     'Rocy5hbGwocGF0aCwgcGF0aCBpbiBbJ25hbWUnLCAnZGlzcGxheV9uYW1lJywgJ2Fubm90YXRp'
-    'b25zJywgJ3ByaW1hcnlfcmVnaW9uJ10pGqkBChR2YWxpZF9wcmltYXJ5X3JlZ2lvbhIlcHJpbW'
-    'FyeV9yZWdpb24gbXVzdCBiZSBhIHZhbGlkIHJlZ2lvbhpqIWhhcyh0aGlzLm9yZ2FuaXphdGlv'
-    'bi5wcmltYXJ5X3JlZ2lvbikgfHwgdGhpcy5vcmdhbml6YXRpb24ucHJpbWFyeV9yZWdpb24ubW'
-    'F0Y2hlcygnXlthLXpdKy1bYS16XStbMC05XSQnKQ==');
+    'b25zJywgJ2RlZmF1bHRfcmVnaW9uJ10p');
 
 @$core.Deprecated('Use getOrganizationRequestDescriptor instead')
 const GetOrganizationRequest$json = {
