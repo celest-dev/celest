@@ -37,7 +37,7 @@ dependencies:
   code_builder: ^4.8.0
   collection: ^1.18.0
   convert: ^3.1.1
-  corks_cedar: ^0.1.0
+  corks_cedar: ^0.2.0
   crypto: ^3.0.3
   dart_style: ^2.3.4
   drift: ">=2.20.0 <2.21.0"
