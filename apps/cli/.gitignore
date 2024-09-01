@@ -3,7 +3,7 @@
 .dart_tool/
 
 # Build dir
-celest/
+build/
 
 tool/debug
 **/*.dill

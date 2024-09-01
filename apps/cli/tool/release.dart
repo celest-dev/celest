@@ -24,7 +24,7 @@ import 'package:pub_semver/pub_semver.dart';
 final Directory toolDir = fileSystem.file(platform.script).parent;
 
 /// The directory with the built CLI.
-final String buildPath = platform.environment['BUILD_DIR'] ?? 'celest';
+final String buildPath = platform.environment['BUILD_DIR'] ?? 'build';
 final Directory buildDir = fileSystem.directory(
   platform.script.resolve('../$buildPath'),
 );
