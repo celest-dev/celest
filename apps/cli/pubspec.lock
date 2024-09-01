@@ -220,7 +220,7 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "0.4.3-wip"
+    version: "0.5.0-dev.0"
   celest_ast:
     dependency: transitive
     description:
@@ -234,7 +234,7 @@ packages:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "0.4.2-wip"
+    version: "0.5.0-dev.0"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -255,7 +255,7 @@ packages:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "0.4.3-wip"
+    version: "0.5.0-dev.0"
   celest_lints:
     dependency: "direct dev"
     description:
@@ -371,10 +371,10 @@ packages:
     dependency: "direct main"
     description:
       name: corks_cedar
-      sha256: e20a877be6b09abec75f2f61dccfc8952f0bee7f3e2b70103c6a50aff3b02cca
+      sha256: e0e05c6fb96f3ed1a6e0bc695649f32e8fb877e104febb9f41968e44c5c16d30
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.2"
+    version: "0.2.0"
   coverage:
     dependency: transitive
     description:

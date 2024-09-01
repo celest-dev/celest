@@ -18,6 +18,7 @@ final class PubCache {
   static final packagesToFix = {
     // This is the only syntax that reliably works with both dart/flutter
     'native_storage': '>=0.1.0 <1.0.0',
+    'native_authentication': '>=0.1.0 <1.0.0',
     'jni': '>=0.8.0 <1.0.0',
     'celest_auth': '>=$currentMinorVersion <1.0.0',
     'celest': '>=$currentMinorVersion <1.0.0',
