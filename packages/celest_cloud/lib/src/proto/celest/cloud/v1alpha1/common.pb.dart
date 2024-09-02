@@ -16,6 +16,8 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/protobuf/timestamp.pb.dart' as $17;
 
+export 'common.pbenum.dart';
+
 ///  A common message for paginating through large sets of data.
 ///
 ///  Page tokens are returned as opaque strings to prevent introspection. AIP

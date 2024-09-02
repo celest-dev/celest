@@ -78,7 +78,15 @@ const Project$json = {
       '10': 'annotations'
     },
     {'1': 'reconciling', '3': 13, '4': 1, '5': 8, '8': {}, '10': 'reconciling'},
-    {'1': 'region', '3': 14, '4': 1, '5': 9, '8': {}, '10': 'region'},
+    {
+      '1': 'region',
+      '3': 14,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.cloud.v1alpha1.Region',
+      '8': {},
+      '10': 'region'
+    },
   ],
   '3': [Project_AnnotationsEntry$json],
   '4': [Project_State$json],
@@ -127,14 +135,13 @@ final $typed_data.Uint8List projectDescriptor = $convert.base64Decode(
     'lkX2Fubm90YXRpb25fdmFsdWUSYXZhbHVlcyBtdXN0IGJlIDAtNjMgY2hhcmFjdGVycyBhbmQg'
     'aGF2ZSBvbmx5IGxvd2VyY2FzZSBsZXR0ZXJzLCBudW1lcmljcywgdW5kZXJzY29yZXMsIGFuZC'
     'BkYXNoZXMaInRoaXMubWF0Y2hlcygnXlthLXowLTlfLV17MCw2M30kJylSC2Fubm90YXRpb25z'
-    'EiUKC3JlY29uY2lsaW5nGA0gASgIQgPgQQNSC3JlY29uY2lsaW5nEncKBnJlZ2lvbhgOIAEoCU'
-    'Jf4EEB4EEFukhWugFTCgx2YWxpZF9yZWdpb24SHXJlZ2lvbiBtdXN0IGJlIGEgdmFsaWQgcmVn'
-    'aW9uGiR0aGlzLm1hdGNoZXMoJ15bYS16XSstW2Etel0rWzAtOV0kJylSBnJlZ2lvbho+ChBBbm'
-    '5vdGF0aW9uc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToC'
-    'OAEiWgoFU3RhdGUSFQoRU1RBVEVfVU5TUEVDSUZJRUQQABIMCghDUkVBVElORxABEhMKD0NSRU'
-    'FUSU9OX0ZBSUxFRBACEgoKBkFDVElWRRADEgsKB0RFTEVURUQQBDpk6kFhChhjbG91ZC5jZWxl'
-    'c3QuZGV2L1Byb2plY3QSL29yZ2FuaXphdGlvbnMve29yZ2FuaXphdGlvbn0vcHJvamVjdHMve3'
-    'Byb2plY3R9Kghwcm9qZWN0czIHcHJvamVjdFIBAQ==');
+    'EiUKC3JlY29uY2lsaW5nGA0gASgIQgPgQQNSC3JlY29uY2lsaW5nEj0KBnJlZ2lvbhgOIAEoDj'
+    'IdLmNlbGVzdC5jbG91ZC52MWFscGhhMS5SZWdpb25CBuBBAeBBBVIGcmVnaW9uGj4KEEFubm90'
+    'YXRpb25zRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AS'
+    'JaCgVTdGF0ZRIVChFTVEFURV9VTlNQRUNJRklFRBAAEgwKCENSRUFUSU5HEAESEwoPQ1JFQVRJ'
+    'T05fRkFJTEVEEAISCgoGQUNUSVZFEAMSCwoHREVMRVRFRBAEOmTqQWEKGGNsb3VkLmNlbGVzdC'
+    '5kZXYvUHJvamVjdBIvb3JnYW5pemF0aW9ucy97b3JnYW5pemF0aW9ufS9wcm9qZWN0cy97cHJv'
+    'amVjdH0qCHByb2plY3RzMgdwcm9qZWN0UgEB');
 
 @$core.Deprecated('Use createProjectRequestDescriptor instead')
 const CreateProjectRequest$json = {

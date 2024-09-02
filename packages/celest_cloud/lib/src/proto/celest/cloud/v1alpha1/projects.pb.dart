@@ -15,6 +15,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/protobuf/field_mask.pb.dart' as $43;
 import '../../../google/protobuf/timestamp.pb.dart' as $17;
+import 'common.pbenum.dart' as $50;
 import 'projects.pbenum.dart';
 
 export 'projects.pbenum.dart';
@@ -35,7 +36,7 @@ class Project extends $pb.GeneratedMessage {
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
-    $core.String? region,
+    $50.Region? region,
   }) {
     final $result = create();
     if (name != null) {
@@ -119,7 +120,10 @@ class Project extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(13, _omitFieldNames ? '' : 'reconciling')
-    ..aOS(14, _omitFieldNames ? '' : 'region')
+    ..e<$50.Region>(14, _omitFieldNames ? '' : 'region', $pb.PbFieldType.OE,
+        defaultOrMaker: $50.Region.REGION_UNSPECIFIED,
+        valueOf: $50.Region.valueOf,
+        enumValues: $50.Region.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -321,14 +325,13 @@ class Project extends $pb.GeneratedMessage {
 
   ///  Optional. The project region where resources are deployed. This cannot be changed after creation.
   ///
-  ///  If not specified, the project region is determined by the organization's primary region.
-  ///
-  ///  Example: `us-central1`
+  ///  If not specified, the project region is determined by the organization's default region. Or if not
+  ///  set either, the region closest to the caller.
   @$pb.TagNumber(14)
-  $core.String get region => $_getSZ(13);
+  $50.Region get region => $_getN(13);
   @$pb.TagNumber(14)
-  set region($core.String v) {
-    $_setString(13, v);
+  set region($50.Region v) {
+    setField(14, v);
   }
 
   @$pb.TagNumber(14)
