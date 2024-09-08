@@ -1,17 +1,5 @@
-include: package:lints/recommended.yaml
+include: package:celest_lints/library.yaml
 
 analyzer:
-  language:
-    strict-casts: true
-    strict-inference: true
-    strict-raw-types: true
-  errors:
+  errors: 
     camel_case_types: ignore
-
-    # To prevent issues publishing.
-    depend_on_referenced_packages: error
-    public_member_api_docs: warning
-linter:
-  rules:
-    - depend_on_referenced_packages
-    - public_member_api_docs

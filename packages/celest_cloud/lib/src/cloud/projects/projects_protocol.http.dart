@@ -30,9 +30,11 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       },
     );
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.project.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.project.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -65,9 +67,11 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       },
     );
     final req = http.Request('DELETE', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -156,9 +160,11 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       },
     );
     final req = http.Request('PATCH', uri)
-      ..body = jsonEncode(request.project.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.project.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -181,9 +187,11 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
     final path = '/v1alpha1/${request.name}:rename';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

@@ -9,20 +9,28 @@ import 'package:http/http.dart' as http;
 /// An exception thrown by a Cloud Widget.
 abstract mixin class CloudException implements CelestException {
   /// {@macro celest_core.exception.bad_request_exception}
-  const factory CloudException.badRequest(String? message,
-      {JsonValue? details}) = BadRequestException;
+  const factory CloudException.badRequest(
+    String? message, {
+    JsonValue? details,
+  }) = BadRequestException;
 
   /// {@macro celest_core.exception.unauthorized_exception}
-  const factory CloudException.unauthorized(String? message,
-      {JsonValue? details}) = UnauthorizedException;
+  const factory CloudException.unauthorized(
+    String? message, {
+    JsonValue? details,
+  }) = UnauthorizedException;
 
   /// {@macro celest_core.exception.internal_server_error}
-  factory CloudException.internalServerError(String? message,
-      {JsonValue? details}) = InternalServerError;
+  factory CloudException.internalServerError(
+    String? message, {
+    JsonValue? details,
+  }) = InternalServerError;
 
   /// {@macro celest_core.exception.cancelled_exception}
-  const factory CloudException.cancelled(String? message,
-      {JsonValue? details}) = CancelledException;
+  const factory CloudException.cancelled(
+    String? message, {
+    JsonValue? details,
+  }) = CancelledException;
 
   /// {@macro celest_core.exception.unknown_error}
   factory CloudException.unknownError(String? message, {JsonValue? details}) =
@@ -33,28 +41,38 @@ abstract mixin class CloudException implements CelestException {
       NotFoundException;
 
   /// {@macro celest_core.exception.already_exists_exception}
-  const factory CloudException.alreadyExists(String? message,
-      {JsonValue? details}) = AlreadyExistsException;
+  const factory CloudException.alreadyExists(
+    String? message, {
+    JsonValue? details,
+  }) = AlreadyExistsException;
 
   /// {@macro celest_core.exception.permission_denied_exception}
-  const factory CloudException.permissionDenied(String? message,
-      {JsonValue? details}) = PermissionDeniedException;
+  const factory CloudException.permissionDenied(
+    String? message, {
+    JsonValue? details,
+  }) = PermissionDeniedException;
 
   /// {@macro celest_core.exception.resource_exhausted_exception}
-  const factory CloudException.resourceExhausted(String? message,
-      {JsonValue? details}) = ResourceExhaustedException;
+  const factory CloudException.resourceExhausted(
+    String? message, {
+    JsonValue? details,
+  }) = ResourceExhaustedException;
 
   /// {@macro celest_core.exception.failed_precondition_exception}
-  const factory CloudException.failedPrecondition(String? message,
-      {JsonValue? details}) = FailedPreconditionException;
+  const factory CloudException.failedPrecondition(
+    String? message, {
+    JsonValue? details,
+  }) = FailedPreconditionException;
 
   /// {@macro celest_core.exception.aborted_exception}
   const factory CloudException.aborted(String? message, {JsonValue? details}) =
       AbortedException;
 
   /// {@macro celest_core.exception.out_of_range_exception}
-  const factory CloudException.outOfRange(String? message,
-      {JsonValue? details}) = OutOfRangeException;
+  const factory CloudException.outOfRange(
+    String? message, {
+    JsonValue? details,
+  }) = OutOfRangeException;
 
   /// {@macro celest_core.exception.unimplemented_error}
   factory CloudException.unimplemented([String? message]) = UnimplementedError;
@@ -68,8 +86,10 @@ abstract mixin class CloudException implements CelestException {
       DataLossError;
 
   /// {@macro celest_core.exception.deadline_exceeded_error}
-  factory CloudException.deadlineExceeded(String? message,
-      {JsonValue? details}) = DeadlineExceededError;
+  factory CloudException.deadlineExceeded(
+    String? message, {
+    JsonValue? details,
+  }) = DeadlineExceededError;
 
   /// Creates a [CloudException] from the given gRPC [error].
   factory CloudException.fromGrpcError(GrpcError error) {

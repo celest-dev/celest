@@ -1,0 +1,12 @@
+name: celest_lints
+description: The lint rules used in developing Celest packages and plugins.
+version: 1.0.0
+homepage: https://celest.dev
+repository: https://github.com/celest-dev/celest/tree/main/packages/celest_lints
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  flutter_lints: ^4.0.0
+  lints: ^4.0.0

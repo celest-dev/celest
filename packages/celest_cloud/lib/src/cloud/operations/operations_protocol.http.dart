@@ -23,9 +23,11 @@ final class OperationsProtocolHttp
     final path = '/v1alpha1/${request.name}:cancel';
     final url = _baseUri.replace(path: path);
     final req = http.Request('POST', url)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

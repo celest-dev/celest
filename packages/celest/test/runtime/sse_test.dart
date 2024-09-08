@@ -51,8 +51,9 @@ void main() {
       const message = {'a': 1};
       client.sink.add(message);
       await expectLater(
-          client.stream.tap((msg) => web.console.log(msg.jsify())),
-          emitsInOrder([message, emitsDone]));
+        client.stream.tap((msg) => web.console.log(msg.jsify())),
+        emitsInOrder([message, emitsDone]),
+      );
     });
   });
 }

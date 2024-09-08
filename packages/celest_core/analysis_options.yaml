@@ -1,13 +1,8 @@
-include: package:lints/recommended.yaml
+include: package:celest_lints/library.yaml
 
 analyzer:
-  language:
-    strict-casts: true
-    strict-inference: true
-    strict-raw-types: true
   errors:
-    # To prevent issues publishing.
-    depend_on_referenced_packages: error
+    avoid_unused_constructor_parameters: ignore
     camel_case_types: ignore
-  exclude:
-    - "**/*.ffi.dart"
+    implementation_imports: ignore
+    public_member_api_docs: ignore

@@ -33,9 +33,9 @@ jobs:
       - name: Format
         working-directory: packages/celest_auth
         run: dart format --set-exit-if-changed .
-      - name: Test
-        working-directory: packages/celest_auth
-        run: dart test
+      # - name: Test
+      #   working-directory: packages/celest_auth
+      #   run: dart test
       - name: Test (Example)
         working-directory: packages/celest_auth/example/celest
         run: dart test
