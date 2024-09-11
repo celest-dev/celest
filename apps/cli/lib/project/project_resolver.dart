@@ -1,19 +1,14 @@
 import 'package:api_celest/ast.dart';
+import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:collection/collection.dart';
 
 extension on AstNode {
-  CedarPolicyResource get resource => switch (this) {
-        final Api api => CedarPolicyResource(
-            op: CedarPolicyOp.in$,
-            entity: api.id,
-          ),
-        final CloudFunction function => CedarPolicyResource(
-            op: CedarPolicyOp.equals,
-            entity: function.id,
-          ),
+  ResourceConstraint get resource => switch (this) {
+        final Api api => ResourceIn(api.id),
+        final CloudFunction function => ResourceEquals(function.id),
         _ => unreachable(),
       };
 }
@@ -24,53 +19,39 @@ extension on ApiAuth {
         ApiAuthenticated() => 'authenticated',
       };
 
-  List<CedarPolicy> policiesFor(AstNode node) {
+  List<Policy> policiesFor(AstNode node) {
     return switch (this) {
       ApiAuthenticated(:final role) => [
-          CedarPolicy(
-            effect: CedarPolicyEffect.permit,
-            principal: CedarPolicyPrincipal(
-              op: CedarPolicyOp.in$,
-              entity: role,
-            ),
-            action: CedarPolicyAction(
-              op: CedarPolicyOp.equals,
-              entity: CloudFunctionAction.invoke.id,
-            ),
+          Policy(
+            effect: Effect.permit,
+            principal: PrincipalIn(role),
+            action: ActionEquals(CloudFunctionAction.invoke.id),
             resource: node.resource,
           ),
 
           // Add a forbid policy for `@authenticated` so that it overrides
           // any other allow policies, e.g. if the library has `@public`.
-          CedarPolicy(
-            effect: CedarPolicyEffect.forbid,
-            principal: CedarPolicyPrincipal(op: CedarPolicyOp.all),
-            action: CedarPolicyAction(
-              op: CedarPolicyOp.equals,
-              entity: CloudFunctionAction.invoke.id,
-            ),
+          Policy(
+            effect: Effect.forbid,
+            principal: const PrincipalAll(),
+            action: ActionEquals(CloudFunctionAction.invoke.id),
             resource: node.resource,
             conditions: [
-              CedarPolicyCondition(
-                kind: CedarPolicyConditionKind.unless,
-                body: JsonExpr.in$(
-                  const JsonExpr.variable(CedarVariable.principal),
-                  JsonExpr.value(
-                    CedarValueJson.entity(role),
-                  ),
+              Condition(
+                kind: ConditionKind.unless,
+                body: Expr.in_(
+                  left: const Expr.variable(CedarVariable.principal),
+                  right: Expr.value(Value.entity(uid: role)),
                 ),
               ),
             ],
           ),
         ],
       ApiPublic() => [
-          CedarPolicy(
-            effect: CedarPolicyEffect.permit,
-            principal: CedarPolicyPrincipal(op: CedarPolicyOp.all),
-            action: CedarPolicyAction(
-              op: CedarPolicyOp.equals,
-              entity: CloudFunctionAction.invoke.id,
-            ),
+          Policy(
+            effect: Effect.permit,
+            principal: const PrincipalAll(),
+            action: ActionEquals(CloudFunctionAction.invoke.id),
             resource: node.resource,
           ),
         ],

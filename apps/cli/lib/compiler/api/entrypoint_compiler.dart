@@ -41,7 +41,7 @@ final class EntrypointResult {
     required this.outputDillSha256,
   });
 
-  final CedarEntityId nodeId;
+  final EntityUid nodeId;
   final String outputDillPath;
   final Uint8List outputDill;
   final Digest outputDillSha256;
@@ -66,7 +66,7 @@ final class EntrypointCompiler {
   final List<String> enabledExperiments;
 
   Future<EntrypointResult> compile(
-    CedarEntityId id,
+    EntityUid id,
     String entrypointPath,
   ) async {
     logger.fine('Compiling entrypoint: $entrypointPath');
