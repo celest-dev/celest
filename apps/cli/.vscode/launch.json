@@ -10,24 +10,14 @@
         "UPDATE_GOLDENS": "true",
         "INCLUDE_TESTS": "api"
       },
-      "vmAdditionalArgs": [
-        "--enable-experiment=native-assets",
-      ],
-      "args": [
-        "--timeout=none"
-      ]
+      "args": ["--timeout=none"]
     },
     {
       "name": "CLI (test/analyzer)",
       "request": "launch",
       "type": "dart",
       "program": "test/analyzer/celest_analyzer_test.dart",
-      "vmAdditionalArgs": [
-        "--enable-experiment=native-assets"
-      ],
-      "args": [
-        "--timeout=none"
-      ]
+      "args": ["--timeout=none"]
     }
   ]
 }

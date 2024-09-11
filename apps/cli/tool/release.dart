@@ -113,7 +113,6 @@ Future<void> _build() async {
   await _runProcess(
     'dart',
     [
-      '--enable-experiment=native-assets',
       if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
       '--define=version=$version',
       'build',

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:celest_cli/compiler/native_assets/native_asset_helpers.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 
 import '../common/common.dart';
@@ -14,13 +13,7 @@ final class LocalTarget extends TestTarget {
     // Speed up tests by precompiling the CLI to kernel.
     final entrypoint =
         Directory.current.uri.resolve('bin/celest.dart').toFilePath();
-    final nativeAssetsYaml =
-        tempDir.uri.resolve('native_assets.yaml').toFilePath();
     final output = tempDir.childFile('celest.dill').path;
-    await generateNativeAssetsYaml(
-      packageRoot: Directory.current.uri,
-      outputDir: tempDir,
-    );
     await runCommand(<String>[
       Sdk.current.dartAotRuntime,
       Sdk.current.genKernelAotSnapshot,
@@ -28,9 +21,7 @@ final class LocalTarget extends TestTarget {
       // https://github.com/dart-lang/sdk/issues/53343
       // '--aot',
       '--enable-asserts',
-      '--enable-experiment=native-assets',
       '--platform=${Sdk.current.vmPlatformProductDill}',
-      '--native-assets=$nativeAssetsYaml',
       '--output=$output',
       entrypoint,
     ]);
