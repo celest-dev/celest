@@ -74,8 +74,6 @@ dependencies:
   shelf_static: ^1.1.2
   shelf_web_socket: ^2.0.0
   source_span: ^1.10.0
-  sqlite3:
-    path: ../../packages/sqlite3/sqlite3
   stack_trace: ^1.11.1
   stream_channel: ^2.1.2
   stream_transform: ^2.1.0
@@ -105,13 +103,6 @@ dependency_overrides:
   # TODO: Remove aws_common dependency
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
-
-  # TODO: Remove when updated in celest_core
-  native_storage: ^0.2.0
-
-  # Use vendored sqlite3 to make use of native-assets
-  sqlite3:
-    path: ../../packages/sqlite3/sqlite3
 
 dev_dependencies:
   benchmark_harness: ^2.2.2

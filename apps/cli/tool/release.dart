@@ -938,7 +938,6 @@ final class LinuxBundler implements Bundler {
   ///  celest/
   ///   celest
   ///   launcher.sh
-  ///   libdart_sqlite.so
   Future<void> _createDeb() async {
     print('Creating Debian archive...');
 

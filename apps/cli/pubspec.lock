@@ -835,7 +835,7 @@ packages:
     source: hosted
     version: "0.1.0"
   native_storage:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: native_storage
       sha256: "0cdf8c75cfe38c6c820546d57954e35ecdc8918017b24fad4e7c7f8b9dd50fbf"
@@ -1103,11 +1103,12 @@ packages:
     source: hosted
     version: "7.0.0"
   sqlite3:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "../../packages/sqlite3/sqlite3"
-      relative: true
-    source: path
+      name: sqlite3
+      sha256: "45f168ae2213201b54e09429ed0c593dc2c88c924a1488d6f9c523a255d567cb"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.4.6"
   sqlparser:
     dependency: transitive

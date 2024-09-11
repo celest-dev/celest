@@ -80,6 +80,9 @@ Future<void> runPub({
   });
   final stderr = process.stderr.lines.listen((line) {
     logger.finest('stderr: $line');
+    if (line.trim().startsWith('Waiting for another flutter command')) {
+      return;
+    }
     if (!completer.isCompleted) {
       completer.completeError(
         CelestException(
