@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:celest_core/src/auth/authenticator.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/events/event_channel.dart';
-import 'package:celest_core/src/events/sse/sse_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:stream_channel/stream_channel.dart';
 

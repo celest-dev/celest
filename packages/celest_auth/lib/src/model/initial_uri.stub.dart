@@ -1,1 +1,2 @@
-const Uri? initialUri = null;
+// ignore: prefer_const_declarations
+final Uri? initialUri = null;

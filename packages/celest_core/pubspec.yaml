@@ -26,5 +26,5 @@ dependencies:
   web_socket_channel: ^3.0.0
 
 dev_dependencies:
-  lints: ^4.0.0
+  celest_lints: ^1.0.0
   test: ^1.25.0

@@ -5,13 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:stream_channel/stream_channel.dart';
 
 abstract class EventChannel with StreamChannelMixin<Map<String, Object?>> {
+  EventChannel();
   factory EventChannel.connect(
     Uri uri, {
     Authenticator? authenticator,
     http.Client? httpClient,
   }) = EventChannelPlatform.connect;
-
-  EventChannel();
 
   void close();
 }

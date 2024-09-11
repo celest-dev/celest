@@ -14,9 +14,7 @@ final class SerializationException extends FormatException
   const SerializationException(super.message);
 
   @override
-  // TODO(dnys1): Find a better resolution to this.
-  // ignore: overridden_fields
-  final Null source = null;
+  Null get source => null;
 
   @override
   String toString() => 'SerializationException: $message';

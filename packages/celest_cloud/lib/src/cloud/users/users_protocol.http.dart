@@ -138,9 +138,11 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
       },
     );
     final req = http.Request('PATCH', url)
-      ..body = jsonEncode(request.user.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.user.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

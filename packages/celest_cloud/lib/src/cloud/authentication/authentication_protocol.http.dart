@@ -26,9 +26,11 @@ final class AuthenticationProtocolHttp
     };
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -48,12 +50,14 @@ final class AuthenticationProtocolHttp
 
   @override
   Future<Session> continueSession(ContinueSessionRequest request) async {
-    final path = '/v1alpha1/auth/sessions:continueSession';
+    const path = '/v1alpha1/auth/sessions:continueSession';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -76,9 +80,11 @@ final class AuthenticationProtocolHttp
     const path = '/v1alpha1/auth/sessions:endSession';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

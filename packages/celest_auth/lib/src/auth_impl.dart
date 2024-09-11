@@ -133,14 +133,15 @@ final class AuthImpl implements Auth {
           onCancel: () => _authStateController.add(previousState),
         );
         _authFlowSubscription = controller.stream.listen(
-          (state) => _authStateController.add(state),
-          onError: (error, stackTrace) {
-            // TODO(dnys1)
+          _authStateController.add,
+          onError: (Object error, StackTrace stackTrace) {
+            _authStateController.addError(error, stackTrace);
+            controller.close().ignore();
           },
           onDone: () => _authFlowSubscription = null,
           cancelOnError: true,
         );
-        return AuthFlowController(controller.sink);
+        return AuthFlowController(controller);
     }
   }
 

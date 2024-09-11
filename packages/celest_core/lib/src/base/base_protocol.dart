@@ -64,7 +64,7 @@ mixin BaseProtocol {
     return channel.stream;
   }
 
-  Never _error<T extends Object>(
+  Never _error<T extends Exception>(
     http.Response response,
     T Function(String? message, {JsonValue? details}) createError,
   ) {

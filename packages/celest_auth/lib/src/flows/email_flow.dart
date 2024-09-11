@@ -57,7 +57,7 @@ final class EmailFlow implements AuthFlow {
         state: state,
         code: code,
       );
-      _hub.secureStorage.write('cork', success.identityToken);
+      await _hub.secureStorage.write('cork', success.identityToken);
       _hub.localStorage.write('userId', success.user.userId);
       return Authenticated(user: success.user.toCelest());
     });
@@ -87,7 +87,7 @@ final class EmailFlow implements AuthFlow {
       );
       switch (newState) {
         case cloud.EmailSessionSuccess(:final identityToken, :final user):
-          _hub.secureStorage.write('cork', identityToken);
+          await _hub.secureStorage.write('cork', identityToken);
           _hub.localStorage.write('userId', user.userId);
           return Authenticated(user: user.toCelest());
         case cloud.EmailSessionRegisterUser(:final user):

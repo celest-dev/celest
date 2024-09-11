@@ -6,7 +6,7 @@ import 'package:celest_auth/src/flows/auth_flow.dart';
 import 'package:celest_auth/src/model/cloud_interop.dart';
 import 'package:celest_auth/src/state/auth_state.dart';
 import 'package:celest_cloud/celest_cloud.dart' as cloud;
-import 'package:celest_core/src/auth/user.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:meta/meta.dart';
 import 'package:native_authentication/native_authentication.dart';
 
@@ -75,7 +75,7 @@ final class IdpFlow implements AuthFlow {
       );
       switch (postRedirectState) {
         case cloud.IdpSessionSuccess(:final identityToken, :final user):
-          _hub.secureStorage.write('cork', identityToken);
+          await _hub.secureStorage.write('cork', identityToken);
           _hub.localStorage.write('userId', user.userId);
           return Authenticated(user: user.toCelest());
         case cloud.IdpSessionLinkUser(:final user):
@@ -101,7 +101,7 @@ final class IdpFlow implements AuthFlow {
       final success = await _hub.cloud.authentication.idp.confirm(
         state: state,
       );
-      _hub.secureStorage.write('cork', success.identityToken);
+      await _hub.secureStorage.write('cork', success.identityToken);
       _hub.localStorage.write('userId', success.user.userId);
       return Authenticated(user: success.user.toCelest());
     }).whenComplete(cleanUp);

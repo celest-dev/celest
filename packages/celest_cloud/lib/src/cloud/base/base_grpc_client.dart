@@ -25,7 +25,10 @@ final class AuthenticatingGrpcChannel extends ClientChannel {
 
   @override
   ClientCall<Q, R> createCall<Q, R>(
-      ClientMethod<Q, R> method, Stream<Q> requests, CallOptions options) {
+    ClientMethod<Q, R> method,
+    Stream<Q> requests,
+    CallOptions options,
+  ) {
     options = options.mergedWith(
       CallOptions(providers: [_provider]),
     );
@@ -53,7 +56,7 @@ final class RevokingGrpcInterceptor implements ClientInterceptor {
     return _DelegatingResponseStream(
       response,
       response.handleError(
-        (error, stackTrace) async {
+        (Object error, StackTrace stackTrace) async {
           logger?.finer(
             'Revoking authentication due to error',
             error,

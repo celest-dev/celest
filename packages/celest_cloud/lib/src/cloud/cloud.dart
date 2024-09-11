@@ -36,7 +36,6 @@ class CelestCloud {
         _clientType = clientType ?? _defaultClientType,
         _logger = logger ?? Logger('Celest.Cloud');
 
-  @pragma('vm:platform-const')
   static final _defaultClientType = kIsWeb
       ? ClientType.WEB
       : os.isAndroid

@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_core/_internal.dart';
-import 'package:celest_core/src/auth/authenticator.dart';
 import 'package:celest_core/src/events/event_channel.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/io.dart';
@@ -49,6 +48,8 @@ final class EventChannelPlatform extends EventChannel {
 
   @override
   void close() {
-    _ws.sink.close(WebSocketStatus.goingAway).ignore();
+    _ws.sink.close(WebSocketStatus.goingAway).then((_) {
+      return _wsSink.close();
+    }).ignore();
   }
 }

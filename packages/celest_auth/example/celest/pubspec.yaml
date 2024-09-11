@@ -9,6 +9,8 @@ dependencies:
   celest: ^0.5.0-0
   http: ">=0.13.0 <2.0.0"
 
+  celest_core: any
+  celest_auth: any
 dependency_overrides:
   celest:
     path: ../../../celest

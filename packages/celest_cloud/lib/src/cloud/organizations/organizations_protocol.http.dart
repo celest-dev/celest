@@ -33,9 +33,11 @@ final class OrganizationsProtocolHttp
       },
     );
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.organization.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.organization.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -68,9 +70,11 @@ final class OrganizationsProtocolHttp
       },
     );
     final req = http.Request('DELETE', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -159,9 +163,11 @@ final class OrganizationsProtocolHttp
       },
     );
     final req = http.Request('PATCH', uri)
-      ..body = jsonEncode(request.organization.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.organization.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
@@ -184,9 +190,11 @@ final class OrganizationsProtocolHttp
     final path = '/v1alpha1/${request.name}:rename';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('POST', uri)
-      ..body = jsonEncode(request.toProto3Json(
-        typeRegistry: CelestCloud.typeRegistry,
-      ))
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

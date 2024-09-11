@@ -79,15 +79,13 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
         _socket.flush().ignore();
       },
     );
-    _haltOutgoingQueue.future.whenComplete(() {
-      subscription.cancel();
-    });
+    _haltOutgoingQueue.future.whenComplete(subscription.cancel);
   }
 
   void _handleIncoming(int id, Map<String, Object?> message) {
     _pendingMessages.add((id: id, message: message));
     while (_pendingMessages.isNotEmpty) {
-      var pendingMessage = _pendingMessages.first;
+      final pendingMessage = _pendingMessages.first;
       // Only process the next incremental message.
       if (pendingMessage.id - _lastProcessedId <= 1) {
         _logger.finest(
