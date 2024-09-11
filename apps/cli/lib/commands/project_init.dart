@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:aws_common/aws_common.dart';
@@ -100,13 +99,6 @@ base mixin Configure on CelestCommand {
       this.isExistingProject = isExistingProject;
     }
 
-    if (zReleaseMode && platform.isWindows) {
-      final process = DynamicLibrary.process();
-      if (!process.providesSymbol('cedar_init')) {
-        _loadLibrary('cedar_ffi');
-      }
-    }
-
     await init(
       projectRoot: projectRoot,
       parentProject: parentProject,
@@ -141,20 +133,6 @@ base mixin Configure on CelestCommand {
     await _pubUpgrade();
 
     return needsMigration;
-  }
-
-  void _loadLibrary(String name) {
-    final prefix = platform.isWindows ? '' : 'lib';
-    final suffix = platform.isWindows
-        ? '.dll'
-        : platform.isMacOS
-            ? '.dylib'
-            : '.so';
-    final library = p.join(
-      p.dirname(platform.resolvedExecutable),
-      '$prefix$name$suffix',
-    );
-    DynamicLibrary.open(library);
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if

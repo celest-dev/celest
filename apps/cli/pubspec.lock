@@ -206,14 +206,7 @@ packages:
       path: "../../cedar/packages/cedar"
       relative: true
     source: path
-    version: "0.2.1"
-  cedar_ffi:
-    dependency: transitive
-    description:
-      path: "../../cedar/packages/cedar_ffi"
-      relative: true
-    source: path
-    version: "0.2.0"
+    version: "0.2.2"
   celest:
     dependency: "direct main"
     description:
@@ -443,10 +436,10 @@ packages:
     dependency: transitive
     description:
       name: drift_hrana
-      sha256: "9910e276d3c8313afc051777ffb924afe00ad86a08e5d31ae57040c51b3b7bac"
+      sha256: dbfaa94582703c22391f784c9c359472a8ae22145c9de5cfaa03d7bc6f1a471a
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   email_validator:
     dependency: "direct main"
     description:
@@ -607,10 +600,10 @@ packages:
     dependency: transitive
     description:
       name: hrana
-      sha256: "3207ffe5b4ab26b0ca83c4bf52b9b9006a6d5f7361840ae6c82cbc5797b6e78a"
+      sha256: "6057172dacc08ee4b701f5fbfc36306965fe59da9d85a8622a2faad98404c508"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.0"
   html:
     dependency: transitive
     description:
