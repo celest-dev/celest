@@ -114,9 +114,7 @@ dev_dependencies:
     path: ../../packages/celest_lints
   checks: ^0.3.0
   drift_dev: ">=2.20.0 <2.21.0"
-  gcloud: ^0.8.12
-  # Required for the `gcloud` package
-  googleapis: ^12.0.0
+  gcloud: ^0.8.13
   googleapis_auth: ^1.4.1
   json_serializable: ^6.8.0
   mocktail: ^1.0.2
