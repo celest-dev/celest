@@ -85,7 +85,7 @@ class TestRunner {
       setUpAll(() async {
         await runPub(
           exe: Platform.resolvedExecutable,
-          action: PubAction.get,
+          action: PubAction.upgrade,
           workingDirectory: projectRoot,
         ).timeout(const Duration(seconds: 10));
         if (updateGoldens && goldensDir.existsSync()) {
