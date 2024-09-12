@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/commands/start_command.dart';
+import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 base mixin Configure on CelestCommand {
@@ -112,6 +114,9 @@ base mixin Configure on CelestCommand {
     } on Object catch (e, st) {
       performance.captureError(e, stackTrace: st);
     }
+
+    final sqliteVersion = SqliteVersion(Version(3, 46, 1));
+    await loadSqlite3(sqliteVersion, logger: logger);
 
     var needsMigration = false;
     if (!isExistingProject) {
