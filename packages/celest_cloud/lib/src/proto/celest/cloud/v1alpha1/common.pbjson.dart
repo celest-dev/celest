@@ -29,6 +29,29 @@ final $typed_data.Uint8List regionDescriptor = $convert.base64Decode(
     'CgZSZWdpb24SFgoSUkVHSU9OX1VOU1BFQ0lGSUVEEAASEQoNTk9SVEhfQU1FUklDQRABEgoKBk'
     'VVUk9QRRACEhAKDEFTSUFfUEFDSUZJQxAD');
 
+@$core.Deprecated('Use lifecycleStateDescriptor instead')
+const LifecycleState$json = {
+  '1': 'LifecycleState',
+  '2': [
+    {'1': 'LIFECYCLE_STATE_UNSPECIFIED', '2': 0},
+    {'1': 'CREATING', '2': 1},
+    {'1': 'CREATION_FAILED', '2': 2},
+    {'1': 'ACTIVE', '2': 3},
+    {'1': 'UPDATING', '2': 4},
+    {'1': 'UPDATE_FAILED', '2': 5},
+    {'1': 'DELETING', '2': 6},
+    {'1': 'DELETION_FAILED', '2': 7},
+    {'1': 'DELETED', '2': 8},
+  ],
+};
+
+/// Descriptor for `LifecycleState`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List lifecycleStateDescriptor = $convert.base64Decode(
+    'Cg5MaWZlY3ljbGVTdGF0ZRIfChtMSUZFQ1lDTEVfU1RBVEVfVU5TUEVDSUZJRUQQABIMCghDUk'
+    'VBVElORxABEhMKD0NSRUFUSU9OX0ZBSUxFRBACEgoKBkFDVElWRRADEgwKCFVQREFUSU5HEAQS'
+    'EQoNVVBEQVRFX0ZBSUxFRBAFEgwKCERFTEVUSU5HEAYSEwoPREVMRVRJT05fRkFJTEVEEAcSCw'
+    'oHREVMRVRFRBAI');
+
 @$core.Deprecated('Use pageTokenDescriptor instead')
 const PageToken$json = {
   '1': 'PageToken',

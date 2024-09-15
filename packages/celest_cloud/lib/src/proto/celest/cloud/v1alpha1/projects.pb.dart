@@ -13,12 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $43;
-import '../../../google/protobuf/timestamp.pb.dart' as $17;
-import 'common.pbenum.dart' as $50;
-import 'projects.pbenum.dart';
-
-export 'projects.pbenum.dart';
+import '../../../google/protobuf/field_mask.pb.dart' as $46;
+import '../../../google/protobuf/timestamp.pb.dart' as $20;
+import 'common.pbenum.dart' as $55;
 
 /// A project resource.
 class Project extends $pb.GeneratedMessage {
@@ -27,16 +24,16 @@ class Project extends $pb.GeneratedMessage {
     $core.String? uid,
     $core.String? parent,
     $core.String? projectId,
-    Project_State? state,
+    $55.LifecycleState? state,
     $core.String? displayName,
-    $17.Timestamp? createTime,
-    $17.Timestamp? updateTime,
-    $17.Timestamp? deleteTime,
-    $17.Timestamp? purgeTime,
+    $20.Timestamp? createTime,
+    $20.Timestamp? updateTime,
+    $20.Timestamp? deleteTime,
+    $20.Timestamp? purgeTime,
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
-    $50.Region? region,
+    $core.Iterable<$55.Region>? regions,
   }) {
     final $result = create();
     if (name != null) {
@@ -78,8 +75,8 @@ class Project extends $pb.GeneratedMessage {
     if (reconciling != null) {
       $result.reconciling = reconciling;
     }
-    if (region != null) {
-      $result.region = region;
+    if (regions != null) {
+      $result.regions.addAll(regions);
     }
     return $result;
   }
@@ -100,19 +97,20 @@ class Project extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'uid')
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..aOS(4, _omitFieldNames ? '' : 'projectId')
-    ..e<Project_State>(5, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: Project_State.STATE_UNSPECIFIED,
-        valueOf: Project_State.valueOf,
-        enumValues: Project_State.values)
+    ..e<$55.LifecycleState>(
+        5, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
+        defaultOrMaker: $55.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $55.LifecycleState.valueOf,
+        enumValues: $55.LifecycleState.values)
     ..aOS(6, _omitFieldNames ? '' : 'displayName')
-    ..aOM<$17.Timestamp>(7, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $17.Timestamp.create)
-    ..aOM<$17.Timestamp>(8, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $17.Timestamp.create)
-    ..aOM<$17.Timestamp>(9, _omitFieldNames ? '' : 'deleteTime',
-        subBuilder: $17.Timestamp.create)
-    ..aOM<$17.Timestamp>(10, _omitFieldNames ? '' : 'purgeTime',
-        subBuilder: $17.Timestamp.create)
+    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $20.Timestamp.create)
+    ..aOM<$20.Timestamp>(8, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $20.Timestamp.create)
+    ..aOM<$20.Timestamp>(9, _omitFieldNames ? '' : 'deleteTime',
+        subBuilder: $20.Timestamp.create)
+    ..aOM<$20.Timestamp>(10, _omitFieldNames ? '' : 'purgeTime',
+        subBuilder: $20.Timestamp.create)
     ..aOS(11, _omitFieldNames ? '' : 'etag')
     ..m<$core.String, $core.String>(12, _omitFieldNames ? '' : 'annotations',
         entryClassName: 'Project.AnnotationsEntry',
@@ -120,10 +118,10 @@ class Project extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(13, _omitFieldNames ? '' : 'reconciling')
-    ..e<$50.Region>(14, _omitFieldNames ? '' : 'region', $pb.PbFieldType.OE,
-        defaultOrMaker: $50.Region.REGION_UNSPECIFIED,
-        valueOf: $50.Region.valueOf,
-        enumValues: $50.Region.values)
+    ..pc<$55.Region>(14, _omitFieldNames ? '' : 'regions', $pb.PbFieldType.KE,
+        valueOf: $55.Region.valueOf,
+        enumValues: $55.Region.values,
+        defaultEnumValue: $55.Region.REGION_UNSPECIFIED)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -207,9 +205,9 @@ class Project extends $pb.GeneratedMessage {
 
   /// Output only. The project lifecycle state.
   @$pb.TagNumber(5)
-  Project_State get state => $_getN(4);
+  $55.LifecycleState get state => $_getN(4);
   @$pb.TagNumber(5)
-  set state(Project_State v) {
+  set state($55.LifecycleState v) {
     setField(5, v);
   }
 
@@ -233,9 +231,9 @@ class Project extends $pb.GeneratedMessage {
 
   /// Output only. The time the project was created.
   @$pb.TagNumber(7)
-  $17.Timestamp get createTime => $_getN(6);
+  $20.Timestamp get createTime => $_getN(6);
   @$pb.TagNumber(7)
-  set createTime($17.Timestamp v) {
+  set createTime($20.Timestamp v) {
     setField(7, v);
   }
 
@@ -244,13 +242,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearCreateTime() => clearField(7);
   @$pb.TagNumber(7)
-  $17.Timestamp ensureCreateTime() => $_ensure(6);
+  $20.Timestamp ensureCreateTime() => $_ensure(6);
 
   /// Output only. The time the project was last updated.
   @$pb.TagNumber(8)
-  $17.Timestamp get updateTime => $_getN(7);
+  $20.Timestamp get updateTime => $_getN(7);
   @$pb.TagNumber(8)
-  set updateTime($17.Timestamp v) {
+  set updateTime($20.Timestamp v) {
     setField(8, v);
   }
 
@@ -259,13 +257,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearUpdateTime() => clearField(8);
   @$pb.TagNumber(8)
-  $17.Timestamp ensureUpdateTime() => $_ensure(7);
+  $20.Timestamp ensureUpdateTime() => $_ensure(7);
 
   /// Output only. The time the project was soft-deleted.
   @$pb.TagNumber(9)
-  $17.Timestamp get deleteTime => $_getN(8);
+  $20.Timestamp get deleteTime => $_getN(8);
   @$pb.TagNumber(9)
-  set deleteTime($17.Timestamp v) {
+  set deleteTime($20.Timestamp v) {
     setField(9, v);
   }
 
@@ -274,13 +272,13 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearDeleteTime() => clearField(9);
   @$pb.TagNumber(9)
-  $17.Timestamp ensureDeleteTime() => $_ensure(8);
+  $20.Timestamp ensureDeleteTime() => $_ensure(8);
 
   /// Output only. The time the project is scheduled for permanent deletion.
   @$pb.TagNumber(10)
-  $17.Timestamp get purgeTime => $_getN(9);
+  $20.Timestamp get purgeTime => $_getN(9);
   @$pb.TagNumber(10)
-  set purgeTime($17.Timestamp v) {
+  set purgeTime($20.Timestamp v) {
     setField(10, v);
   }
 
@@ -289,7 +287,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   void clearPurgeTime() => clearField(10);
   @$pb.TagNumber(10)
-  $17.Timestamp ensurePurgeTime() => $_ensure(9);
+  $20.Timestamp ensurePurgeTime() => $_ensure(9);
 
   /// Output only. A checksum computed by the server based on the current value
   /// of the Project resource. This may be sent on update and delete requests to
@@ -323,21 +321,14 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   void clearReconciling() => clearField(13);
 
-  ///  Optional. The project region where resources are deployed. This cannot be changed after creation.
+  ///  Optional. The project region(s) where resources are deployed.
   ///
   ///  If not specified, the project region is determined by the organization's default region. Or if not
   ///  set either, the region closest to the caller.
+  ///
+  ///  **NOTE**: This functionality is only available in enterprise subscriptions.
   @$pb.TagNumber(14)
-  $50.Region get region => $_getN(13);
-  @$pb.TagNumber(14)
-  set region($50.Region v) {
-    setField(14, v);
-  }
-
-  @$pb.TagNumber(14)
-  $core.bool hasRegion() => $_has(13);
-  @$pb.TagNumber(14)
-  void clearRegion() => clearField(14);
+  $core.List<$55.Region> get regions => $_getList(13);
 }
 
 /// Request message for the `CreateProject` method.
@@ -766,7 +757,7 @@ class ListProjectsResponse extends $pb.GeneratedMessage {
 class UpdateProjectRequest extends $pb.GeneratedMessage {
   factory UpdateProjectRequest({
     Project? project,
-    $43.FieldMask? updateMask,
+    $46.FieldMask? updateMask,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
@@ -800,8 +791,8 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Project>(1, _omitFieldNames ? '' : 'project',
         subBuilder: Project.create)
-    ..aOM<$43.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $43.FieldMask.create)
+    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $46.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
@@ -850,9 +841,9 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
 
   /// The update mask to apply to the project.
   @$pb.TagNumber(2)
-  $43.FieldMask get updateMask => $_getN(1);
+  $46.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($43.FieldMask v) {
+  set updateMask($46.FieldMask v) {
     setField(2, v);
   }
 
@@ -861,7 +852,7 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $43.FieldMask ensureUpdateMask() => $_ensure(1);
+  $46.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, and the project is not found, a new project will be created.
   /// In this situation, `update_mask` is ignored.

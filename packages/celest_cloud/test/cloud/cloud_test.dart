@@ -38,13 +38,15 @@ void main() {
 
     group('Organizations', () {
       test('create organization (validate-only)', () async {
-        await celest.organizations.create(
-          organizationId: 'test-organization',
-          organization: Organization(
-            displayName: 'Test Organization',
-          ),
-          validateOnly: true,
-        );
+        await celest.organizations
+            .create(
+              organizationId: 'test-organization',
+              organization: Organization(
+                displayName: 'Test Organization',
+              ),
+              validateOnly: true,
+            )
+            .last;
         expect(
           await celest.organizations.get('organizations/test-organization'),
           isNull,
@@ -52,12 +54,14 @@ void main() {
       });
 
       test('create organization', () async {
-        final organization = await celest.organizations.create(
-          organizationId: 'test-organization',
-          organization: Organization(
-            displayName: 'Test Organization',
-          ),
-        );
+        final organization = await celest.organizations
+            .create(
+              organizationId: 'test-organization',
+              organization: Organization(
+                displayName: 'Test Organization',
+              ),
+            )
+            .last;
         expect(
           organization,
           isA<Organization>()

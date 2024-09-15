@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: cedar/v3/cork.proto
+//  source: corks/cedar/v3/cork.proto
 //
 // @dart = 2.12
 
@@ -13,9 +13,9 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use corkDescriptor instead')
-const Cork$json = {
-  '1': 'Cork',
+@$core.Deprecated('Use cedarCorkDescriptor instead')
+const CedarCork$json = {
+  '1': 'CedarCork',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 12, '10': 'id'},
     {
@@ -23,7 +23,7 @@ const Cork$json = {
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.EntityId',
+      '6': '.cedar.v3.EntityUid',
       '10': 'issuer'
     },
     {
@@ -31,7 +31,7 @@ const Cork$json = {
       '3': 3,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.EntityId',
+      '6': '.cedar.v3.EntityUid',
       '10': 'bearer'
     },
     {
@@ -39,7 +39,7 @@ const Cork$json = {
       '3': 4,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.EntityId',
+      '6': '.cedar.v3.EntityUid',
       '9': 0,
       '10': 'audience',
       '17': true
@@ -70,11 +70,11 @@ const Cork$json = {
   ],
 };
 
-/// Descriptor for `Cork`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List corkDescriptor = $convert.base64Decode(
-    'CgRDb3JrEg4KAmlkGAEgASgMUgJpZBIqCgZpc3N1ZXIYAiABKAsyEi5jZWRhci52My5FbnRpdH'
-    'lJZFIGaXNzdWVyEioKBmJlYXJlchgDIAEoCzISLmNlZGFyLnYzLkVudGl0eUlkUgZiZWFyZXIS'
-    'MwoIYXVkaWVuY2UYBCABKAsyEi5jZWRhci52My5FbnRpdHlJZEgAUghhdWRpZW5jZYgBARItCg'
-    'ZjbGFpbXMYBSABKAsyEC5jZWRhci52My5FbnRpdHlIAVIGY2xhaW1ziAEBEigKB2NhdmVhdHMY'
-    'BiADKAsyDi5jZWRhci52My5FeHByUgdjYXZlYXRzEh0KCXNpZ25hdHVyZRjnByABKAxSCXNpZ2'
-    '5hdHVyZUILCglfYXVkaWVuY2VCCQoHX2NsYWltcw==');
+/// Descriptor for `CedarCork`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cedarCorkDescriptor = $convert.base64Decode(
+    'CglDZWRhckNvcmsSDgoCaWQYASABKAxSAmlkEisKBmlzc3VlchgCIAEoCzITLmNlZGFyLnYzLk'
+    'VudGl0eVVpZFIGaXNzdWVyEisKBmJlYXJlchgDIAEoCzITLmNlZGFyLnYzLkVudGl0eVVpZFIG'
+    'YmVhcmVyEjQKCGF1ZGllbmNlGAQgASgLMhMuY2VkYXIudjMuRW50aXR5VWlkSABSCGF1ZGllbm'
+    'NliAEBEi0KBmNsYWltcxgFIAEoCzIQLmNlZGFyLnYzLkVudGl0eUgBUgZjbGFpbXOIAQESKAoH'
+    'Y2F2ZWF0cxgGIAMoCzIOLmNlZGFyLnYzLkV4cHJSB2NhdmVhdHMSHQoJc2lnbmF0dXJlGOcHIA'
+    'EoDFIJc2lnbmF0dXJlQgsKCV9hdWRpZW5jZUIJCgdfY2xhaW1z');

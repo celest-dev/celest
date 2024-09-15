@@ -36,14 +36,29 @@ final $typed_data.Uint8List operationStateDescriptor = $convert.base64Decode(
 const OperationMetadata$json = {
   '1': 'OperationMetadata',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'type'},
-    {'1': 'name', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'name'},
-    {'1': 'parent', '3': 3, '4': 1, '5': 9, '8': {}, '10': 'parent'},
-    {'1': 'trigger', '3': 4, '4': 1, '5': 9, '8': {}, '10': 'trigger'},
-    {'1': 'request_id', '3': 5, '4': 1, '5': 9, '8': {}, '10': 'requestId'},
+    {'1': 'parent', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'parent'},
+    {
+      '1': 'resource',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Any',
+      '8': {},
+      '10': 'resource'
+    },
+    {
+      '1': 'state',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.cloud.v1alpha1.OperationState',
+      '8': {},
+      '10': 'state'
+    },
+    {'1': 'request_id', '3': 4, '4': 1, '5': 9, '8': {}, '10': 'requestId'},
     {
       '1': 'create_time',
-      '3': 6,
+      '3': 5,
       '4': 1,
       '5': 11,
       '6': '.google.protobuf.Timestamp',
@@ -52,7 +67,7 @@ const OperationMetadata$json = {
     },
     {
       '1': 'start_time',
-      '3': 7,
+      '3': 6,
       '4': 1,
       '5': 11,
       '6': '.google.protobuf.Timestamp',
@@ -61,7 +76,7 @@ const OperationMetadata$json = {
     },
     {
       '1': 'end_time',
-      '3': 8,
+      '3': 7,
       '4': 1,
       '5': 11,
       '6': '.google.protobuf.Timestamp',
@@ -70,7 +85,7 @@ const OperationMetadata$json = {
     },
     {
       '1': 'progress',
-      '3': 9,
+      '3': 8,
       '4': 1,
       '5': 5,
       '8': {},
@@ -86,11 +101,12 @@ const OperationMetadata$json = {
 
 /// Descriptor for `OperationMetadata`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List operationMetadataDescriptor = $convert.base64Decode(
-    'ChFPcGVyYXRpb25NZXRhZGF0YRIaCgR0eXBlGAEgASgJQgbgQQLgQQNSBHR5cGUSGgoEbmFtZR'
-    'gCIAEoCUIG4EEC4EEDUgRuYW1lEh4KBnBhcmVudBgDIAEoCUIG4EEB4EEDUgZwYXJlbnQSIAoH'
-    'dHJpZ2dlchgEIAEoCUIG4EEB4EEDUgd0cmlnZ2VyEi0KCnJlcXVlc3RfaWQYBSABKAlCDuBBAe'
-    'BBA+KMz9cIAggBUglyZXF1ZXN0SWQSQwoLY3JlYXRlX3RpbWUYBiABKAsyGi5nb29nbGUucHJv'
-    'dG9idWYuVGltZXN0YW1wQgbgQQLgQQNSCmNyZWF0ZVRpbWUSQQoKc3RhcnRfdGltZRgHIAEoCz'
-    'IaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBCBuBBAeBBA1IJc3RhcnRUaW1lEj0KCGVuZF90'
-    'aW1lGAggASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEIG4EEB4EEDUgdlbmRUaW1lEi'
-    'cKCHByb2dyZXNzGAkgASgFQgbgQQHgQQNIAFIIcHJvZ3Jlc3OIAQFCCwoJX3Byb2dyZXNz');
+    'ChFPcGVyYXRpb25NZXRhZGF0YRIeCgZwYXJlbnQYASABKAlCBuBBAuBBA1IGcGFyZW50EjgKCH'
+    'Jlc291cmNlGAIgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueUIG4EEB4EEDUghyZXNvdXJjZRJD'
+    'CgVzdGF0ZRgDIAEoDjIlLmNlbGVzdC5jbG91ZC52MWFscGhhMS5PcGVyYXRpb25TdGF0ZUIG4E'
+    'EC4EEDUgVzdGF0ZRItCgpyZXF1ZXN0X2lkGAQgASgJQg7gQQHgQQPijM/XCAIIAVIJcmVxdWVz'
+    'dElkEkMKC2NyZWF0ZV90aW1lGAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEIG4E'
+    'EC4EEDUgpjcmVhdGVUaW1lEkEKCnN0YXJ0X3RpbWUYBiABKAsyGi5nb29nbGUucHJvdG9idWYu'
+    'VGltZXN0YW1wQgbgQQHgQQNSCXN0YXJ0VGltZRI9CghlbmRfdGltZRgHIAEoCzIaLmdvb2dsZS'
+    '5wcm90b2J1Zi5UaW1lc3RhbXBCBuBBAeBBA1IHZW5kVGltZRIwCghwcm9ncmVzcxgIIAEoBUIP'
+    '4EEB4EEDukgGGgQYZCgASABSCHByb2dyZXNziAEBQgsKCV9wcm9ncmVzcw==');

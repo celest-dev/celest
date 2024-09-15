@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
+import 'package:celest_cloud/src/cloud/project_environments/project_environments_protocol.dart';
+import 'package:celest_cloud/src/cloud/project_environments/project_environments_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
@@ -16,6 +18,13 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
 
   final http.Client _client;
   final Uri _baseUri;
+
+  @override
+  late final ProjectEnvironmentsProtocol environments =
+      ProjectEnvironmentsProtocolHttp(
+    uri: _baseUri,
+    httpClient: _client,
+  );
 
   @override
   Future<Operation> create(CreateProjectRequest request) async {
@@ -67,11 +76,6 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       },
     );
     final req = http.Request('DELETE', uri)
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

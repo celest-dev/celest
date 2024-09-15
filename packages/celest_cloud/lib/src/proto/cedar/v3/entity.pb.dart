@@ -13,14 +13,14 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity_id.pb.dart' as $45;
-import 'value.pb.dart' as $46;
+import 'entity_uid.pb.dart' as $48;
+import 'value.pb.dart' as $49;
 
 class Entity extends $pb.GeneratedMessage {
   factory Entity({
-    $45.EntityId? uid,
-    $core.Iterable<$45.EntityId>? parents,
-    $core.Map<$core.String, $46.Value>? attributes,
+    $48.EntityUid? uid,
+    $core.Iterable<$48.EntityUid>? parents,
+    $core.Map<$core.String, $49.Value>? attributes,
   }) {
     final $result = create();
     if (uid != null) {
@@ -46,16 +46,16 @@ class Entity extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'Entity',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$45.EntityId>(1, _omitFieldNames ? '' : 'uid',
-        subBuilder: $45.EntityId.create)
-    ..pc<$45.EntityId>(2, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
-        subBuilder: $45.EntityId.create)
-    ..m<$core.String, $46.Value>(3, _omitFieldNames ? '' : 'attributes',
+    ..aOM<$48.EntityUid>(1, _omitFieldNames ? '' : 'uid',
+        subBuilder: $48.EntityUid.create)
+    ..pc<$48.EntityUid>(2, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
+        subBuilder: $48.EntityUid.create)
+    ..m<$core.String, $49.Value>(3, _omitFieldNames ? '' : 'attributes',
         entryClassName: 'Entity.AttributesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $46.Value.create,
-        valueDefaultOrMaker: $46.Value.getDefault,
+        valueCreator: $49.Value.create,
+        valueDefaultOrMaker: $49.Value.getDefault,
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
@@ -81,9 +81,9 @@ class Entity extends $pb.GeneratedMessage {
   static Entity? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $45.EntityId get uid => $_getN(0);
+  $48.EntityUid get uid => $_getN(0);
   @$pb.TagNumber(1)
-  set uid($45.EntityId v) {
+  set uid($48.EntityUid v) {
     setField(1, v);
   }
 
@@ -92,13 +92,13 @@ class Entity extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearUid() => clearField(1);
   @$pb.TagNumber(1)
-  $45.EntityId ensureUid() => $_ensure(0);
+  $48.EntityUid ensureUid() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<$45.EntityId> get parents => $_getList(1);
+  $core.List<$48.EntityUid> get parents => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $46.Value> get attributes => $_getMap(2);
+  $core.Map<$core.String, $49.Value> get attributes => $_getMap(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

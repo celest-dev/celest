@@ -1,8 +1,8 @@
 import 'package:celest_cloud/src/cloud/base/base_service.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
-import 'package:celest_cloud/src/proto.dart' hide OperationState, Duration;
-import 'package:celest_cloud/src/proto/operations.dart';
+import 'package:celest_cloud/src/proto.dart' hide OperationState;
+import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 
@@ -19,12 +19,12 @@ final class Organizations with BaseService {
   final OrganizationsProtocol _protocol;
   final OperationsProtocol _operations;
 
-  Future<Organization> create({
+  CloudOperation<Organization> create({
     String? parent,
     String? organizationId,
     Organization? organization,
     bool validateOnly = false,
-  }) async {
+  }) async* {
     final request = CreateOrganizationRequest(
       parent: parent,
       organizationId: organizationId,
@@ -36,11 +36,11 @@ final class Organizations with BaseService {
       request: request,
       action: _protocol.create,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
+      metadata: OperationMetadata(),
       response: Organization(),
-      timeout: const Duration(minutes: 1),
     );
   }
 
@@ -80,12 +80,12 @@ final class Organizations with BaseService {
     );
   }
 
-  Future<Organization> update({
+  CloudOperation<Organization> update({
     required Organization organization,
     FieldMask? updateMask,
     bool allowMissing = false,
     bool validateOnly = false,
-  }) async {
+  }) async* {
     final request = UpdateOrganizationRequest(
       organization: organization,
       updateMask: updateMask,
@@ -97,21 +97,21 @@ final class Organizations with BaseService {
       request: request,
       action: _protocol.update,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
       response: Organization(),
-      timeout: const Duration(minutes: 1),
+      metadata: OperationMetadata(),
     );
   }
 
-  Future<Empty> delete(
+  CloudOperation<Empty> delete(
     String name, {
     String? etag,
     bool allowMissing = false,
     bool validateOnly = false,
     bool force = false,
-  }) async {
+  }) async* {
     final request = DeleteOrganizationRequest(
       name: name,
       force: force,
@@ -124,9 +124,10 @@ final class Organizations with BaseService {
       request: request,
       action: _protocol.delete,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
+      metadata: OperationMetadata(),
       response: Empty(),
     );
   }

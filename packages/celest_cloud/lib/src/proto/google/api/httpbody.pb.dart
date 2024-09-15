@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../protobuf/any.pb.dart' as $10;
+import '../protobuf/any.pb.dart' as $13;
 
 ///  Message that represents an arbitrary HTTP body. It should only be used for
 ///  payload formats that can't be represented as JSON, such as raw binary or
@@ -62,7 +62,7 @@ class HttpBody extends $pb.GeneratedMessage {
   factory HttpBody({
     $core.String? contentType,
     $core.List<$core.int>? data,
-    $core.Iterable<$10.Any>? extensions,
+    $core.Iterable<$13.Any>? extensions,
   }) {
     final $result = create();
     if (contentType != null) {
@@ -91,8 +91,8 @@ class HttpBody extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'contentType')
     ..a<$core.List<$core.int>>(
         2, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
-    ..pc<$10.Any>(3, _omitFieldNames ? '' : 'extensions', $pb.PbFieldType.PM,
-        subBuilder: $10.Any.create)
+    ..pc<$13.Any>(3, _omitFieldNames ? '' : 'extensions', $pb.PbFieldType.PM,
+        subBuilder: $13.Any.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -145,7 +145,7 @@ class HttpBody extends $pb.GeneratedMessage {
   /// Application specific response metadata. Must be set in the first response
   /// for streaming APIs.
   @$pb.TagNumber(3)
-  $core.List<$10.Any> get extensions => $_getList(2);
+  $core.List<$13.Any> get extensions => $_getList(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

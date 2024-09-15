@@ -22,7 +22,7 @@ const Entity$json = {
       '3': 1,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.EntityId',
+      '6': '.cedar.v3.EntityUid',
       '10': 'uid'
     },
     {
@@ -30,7 +30,7 @@ const Entity$json = {
       '3': 2,
       '4': 3,
       '5': 11,
-      '6': '.cedar.v3.EntityId',
+      '6': '.cedar.v3.EntityUid',
       '10': 'parents'
     },
     {
@@ -64,8 +64,8 @@ const Entity_AttributesEntry$json = {
 
 /// Descriptor for `Entity`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List entityDescriptor = $convert.base64Decode(
-    'CgZFbnRpdHkSJAoDdWlkGAEgASgLMhIuY2VkYXIudjMuRW50aXR5SWRSA3VpZBIsCgdwYXJlbn'
-    'RzGAIgAygLMhIuY2VkYXIudjMuRW50aXR5SWRSB3BhcmVudHMSQAoKYXR0cmlidXRlcxgDIAMo'
-    'CzIgLmNlZGFyLnYzLkVudGl0eS5BdHRyaWJ1dGVzRW50cnlSCmF0dHJpYnV0ZXMaTgoPQXR0cm'
-    'lidXRlc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EiUKBXZhbHVlGAIgASgLMg8uY2VkYXIudjMu'
-    'VmFsdWVSBXZhbHVlOgI4AQ==');
+    'CgZFbnRpdHkSJQoDdWlkGAEgASgLMhMuY2VkYXIudjMuRW50aXR5VWlkUgN1aWQSLQoHcGFyZW'
+    '50cxgCIAMoCzITLmNlZGFyLnYzLkVudGl0eVVpZFIHcGFyZW50cxJACgphdHRyaWJ1dGVzGAMg'
+    'AygLMiAuY2VkYXIudjMuRW50aXR5LkF0dHJpYnV0ZXNFbnRyeVIKYXR0cmlidXRlcxpOCg9BdH'
+    'RyaWJ1dGVzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSJQoFdmFsdWUYAiABKAsyDy5jZWRhci52'
+    'My5WYWx1ZVIFdmFsdWU6AjgB');

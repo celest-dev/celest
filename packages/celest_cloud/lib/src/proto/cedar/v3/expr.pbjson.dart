@@ -60,14 +60,13 @@ const Expr$json = {
       '10': 'value'
     },
     {
-      '1': 'var',
+      '1': 'variable',
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprVar',
-      '8': {'28700919': 'var_'},
+      '6': '.cedar.v3.ExprVariable',
       '9': 0,
-      '10': 'var',
+      '10': 'variable'
     },
     {
       '1': 'slot',
@@ -97,13 +96,13 @@ const Expr$json = {
       '10': 'not'
     },
     {
-      '1': 'neg',
+      '1': 'negate',
       '3': 6,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprNeg',
+      '6': '.cedar.v3.ExprNegate',
       '9': 0,
-      '10': 'neg'
+      '10': 'negate'
     },
     {
       '1': 'equals',
@@ -188,31 +187,31 @@ const Expr$json = {
       '10': 'or'
     },
     {
-      '1': 'plus',
+      '1': 'add',
       '3': 16,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprPlus',
+      '6': '.cedar.v3.ExprAdd',
       '9': 0,
-      '10': 'plus'
+      '10': 'add'
     },
     {
-      '1': 'minus',
+      '1': 'subtract',
       '3': 17,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprMinus',
+      '6': '.cedar.v3.ExprSubt',
       '9': 0,
-      '10': 'minus'
+      '10': 'subtract'
     },
     {
-      '1': 'times',
+      '1': 'multiply',
       '3': 18,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprTimes',
+      '6': '.cedar.v3.ExprMult',
       '9': 0,
-      '10': 'times'
+      '10': 'multiply'
     },
     {
       '1': 'contains',
@@ -306,13 +305,13 @@ const Expr$json = {
       '10': 'record'
     },
     {
-      '1': 'func_call',
+      '1': 'extension_call',
       '3': 29,
       '4': 1,
       '5': 11,
-      '6': '.cedar.v3.ExprFuncCall',
+      '6': '.cedar.v3.ExprExtensionCall',
       '9': 0,
-      '10': 'funcCall'
+      '10': 'extensionCall'
     },
   ],
   '8': [
@@ -322,34 +321,35 @@ const Expr$json = {
 
 /// Descriptor for `Expr`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List exprDescriptor = $convert.base64Decode(
-    'CgRFeHByEisKBXZhbHVlGAEgASgLMhMuY2VkYXIudjMuRXhwclZhbHVlSABSBXZhbHVlEjAKA3'
-    'ZhchgCIAEoCzIRLmNlZGFyLnYzLkV4cHJWYXJCCbqPvm0EdmFyX0gAUgN2YXISKAoEc2xvdBgD'
-    'IAEoCzISLmNlZGFyLnYzLkV4cHJTbG90SABSBHNsb3QSMQoHdW5rbm93bhgEIAEoCzIVLmNlZG'
-    'FyLnYzLkV4cHJVbmtub3duSABSB3Vua25vd24SJQoDbm90GAUgASgLMhEuY2VkYXIudjMuRXhw'
-    'ck5vdEgAUgNub3QSJQoDbmVnGAYgASgLMhEuY2VkYXIudjMuRXhwck5lZ0gAUgNuZWcSLgoGZX'
-    'F1YWxzGAcgASgLMhQuY2VkYXIudjMuRXhwckVxdWFsc0gAUgZlcXVhbHMSOAoKbm90X2VxdWFs'
-    'cxgIIAEoCzIXLmNlZGFyLnYzLkV4cHJOb3RFcXVhbHNIAFIJbm90RXF1YWxzEiwKAmluGAkgAS'
-    'gLMhAuY2VkYXIudjMuRXhwckluQgi6j75tA2luX0gAUgJpbhI1CglsZXNzX3RoYW4YCiABKAsy'
-    'Fi5jZWRhci52My5FeHByTGVzc1RoYW5IAFIIbGVzc1RoYW4STwoTbGVzc190aGFuX29yX2VxdW'
-    'FscxgLIAEoCzIeLmNlZGFyLnYzLkV4cHJMZXNzVGhhbk9yRXF1YWxzSABSEGxlc3NUaGFuT3JF'
-    'cXVhbHMSPgoMZ3JlYXRlcl90aGFuGAwgASgLMhkuY2VkYXIudjMuRXhwckdyZWF0ZXJUaGFuSA'
-    'BSC2dyZWF0ZXJUaGFuElgKFmdyZWF0ZXJfdGhhbl9vcl9lcXVhbHMYDSABKAsyIS5jZWRhci52'
-    'My5FeHByR3JlYXRlclRoYW5PckVxdWFsc0gAUhNncmVhdGVyVGhhbk9yRXF1YWxzEiUKA2FuZB'
-    'gOIAEoCzIRLmNlZGFyLnYzLkV4cHJBbmRIAFIDYW5kEiIKAm9yGA8gASgLMhAuY2VkYXIudjMu'
-    'RXhwck9ySABSAm9yEigKBHBsdXMYECABKAsyEi5jZWRhci52My5FeHByUGx1c0gAUgRwbHVzEi'
-    'sKBW1pbnVzGBEgASgLMhMuY2VkYXIudjMuRXhwck1pbnVzSABSBW1pbnVzEisKBXRpbWVzGBIg'
-    'ASgLMhMuY2VkYXIudjMuRXhwclRpbWVzSABSBXRpbWVzEjQKCGNvbnRhaW5zGBMgASgLMhYuY2'
-    'VkYXIudjMuRXhwckNvbnRhaW5zSABSCGNvbnRhaW5zEj4KDGNvbnRhaW5zX2FsbBgUIAEoCzIZ'
-    'LmNlZGFyLnYzLkV4cHJDb250YWluc0FsbEgAUgtjb250YWluc0FsbBI+Cgxjb250YWluc19hbn'
-    'kYFSABKAsyGS5jZWRhci52My5FeHByQ29udGFpbnNBbnlIAFILY29udGFpbnNBbnkSQQoNZ2V0'
-    'X2F0dHJpYnV0ZRgWIAEoCzIaLmNlZGFyLnYzLkV4cHJHZXRBdHRyaWJ1dGVIAFIMZ2V0QXR0cm'
-    'lidXRlEkEKDWhhc19hdHRyaWJ1dGUYFyABKAsyGi5jZWRhci52My5FeHBySGFzQXR0cmlidXRl'
-    'SABSDGhhc0F0dHJpYnV0ZRIoCgRsaWtlGBggASgLMhIuY2VkYXIudjMuRXhwckxpa2VIAFIEbG'
-    'lrZRIsCgJpcxgZIAEoCzIQLmNlZGFyLnYzLkV4cHJJc0IIuo++bQNpc19IAFICaXMSPAoMaWZf'
-    'dGhlbl9lbHNlGBogASgLMhguY2VkYXIudjMuRXhwcklmVGhlbkVsc2VIAFIKaWZUaGVuRWxzZR'
-    'IlCgNzZXQYGyABKAsyES5jZWRhci52My5FeHByU2V0SABSA3NldBIuCgZyZWNvcmQYHCABKAsy'
-    'FC5jZWRhci52My5FeHByUmVjb3JkSABSBnJlY29yZBI1CglmdW5jX2NhbGwYHSABKAsyFi5jZW'
-    'Rhci52My5FeHByRnVuY0NhbGxIAFIIZnVuY0NhbGxCBgoEZXhwcg==');
+    'CgRFeHByEisKBXZhbHVlGAEgASgLMhMuY2VkYXIudjMuRXhwclZhbHVlSABSBXZhbHVlEjQKCH'
+    'ZhcmlhYmxlGAIgASgLMhYuY2VkYXIudjMuRXhwclZhcmlhYmxlSABSCHZhcmlhYmxlEigKBHNs'
+    'b3QYAyABKAsyEi5jZWRhci52My5FeHByU2xvdEgAUgRzbG90EjEKB3Vua25vd24YBCABKAsyFS'
+    '5jZWRhci52My5FeHByVW5rbm93bkgAUgd1bmtub3duEiUKA25vdBgFIAEoCzIRLmNlZGFyLnYz'
+    'LkV4cHJOb3RIAFIDbm90Ei4KBm5lZ2F0ZRgGIAEoCzIULmNlZGFyLnYzLkV4cHJOZWdhdGVIAF'
+    'IGbmVnYXRlEi4KBmVxdWFscxgHIAEoCzIULmNlZGFyLnYzLkV4cHJFcXVhbHNIAFIGZXF1YWxz'
+    'EjgKCm5vdF9lcXVhbHMYCCABKAsyFy5jZWRhci52My5FeHByTm90RXF1YWxzSABSCW5vdEVxdW'
+    'FscxIsCgJpbhgJIAEoCzIQLmNlZGFyLnYzLkV4cHJJbkIIuo++bQNpbl9IAFICaW4SNQoJbGVz'
+    'c190aGFuGAogASgLMhYuY2VkYXIudjMuRXhwckxlc3NUaGFuSABSCGxlc3NUaGFuEk8KE2xlc3'
+    'NfdGhhbl9vcl9lcXVhbHMYCyABKAsyHi5jZWRhci52My5FeHByTGVzc1RoYW5PckVxdWFsc0gA'
+    'UhBsZXNzVGhhbk9yRXF1YWxzEj4KDGdyZWF0ZXJfdGhhbhgMIAEoCzIZLmNlZGFyLnYzLkV4cH'
+    'JHcmVhdGVyVGhhbkgAUgtncmVhdGVyVGhhbhJYChZncmVhdGVyX3RoYW5fb3JfZXF1YWxzGA0g'
+    'ASgLMiEuY2VkYXIudjMuRXhwckdyZWF0ZXJUaGFuT3JFcXVhbHNIAFITZ3JlYXRlclRoYW5Pck'
+    'VxdWFscxIlCgNhbmQYDiABKAsyES5jZWRhci52My5FeHByQW5kSABSA2FuZBIiCgJvchgPIAEo'
+    'CzIQLmNlZGFyLnYzLkV4cHJPckgAUgJvchIlCgNhZGQYECABKAsyES5jZWRhci52My5FeHByQW'
+    'RkSABSA2FkZBIwCghzdWJ0cmFjdBgRIAEoCzISLmNlZGFyLnYzLkV4cHJTdWJ0SABSCHN1YnRy'
+    'YWN0EjAKCG11bHRpcGx5GBIgASgLMhIuY2VkYXIudjMuRXhwck11bHRIAFIIbXVsdGlwbHkSNA'
+    'oIY29udGFpbnMYEyABKAsyFi5jZWRhci52My5FeHByQ29udGFpbnNIAFIIY29udGFpbnMSPgoM'
+    'Y29udGFpbnNfYWxsGBQgASgLMhkuY2VkYXIudjMuRXhwckNvbnRhaW5zQWxsSABSC2NvbnRhaW'
+    '5zQWxsEj4KDGNvbnRhaW5zX2FueRgVIAEoCzIZLmNlZGFyLnYzLkV4cHJDb250YWluc0FueUgA'
+    'Ugtjb250YWluc0FueRJBCg1nZXRfYXR0cmlidXRlGBYgASgLMhouY2VkYXIudjMuRXhwckdldE'
+    'F0dHJpYnV0ZUgAUgxnZXRBdHRyaWJ1dGUSQQoNaGFzX2F0dHJpYnV0ZRgXIAEoCzIaLmNlZGFy'
+    'LnYzLkV4cHJIYXNBdHRyaWJ1dGVIAFIMaGFzQXR0cmlidXRlEigKBGxpa2UYGCABKAsyEi5jZW'
+    'Rhci52My5FeHByTGlrZUgAUgRsaWtlEiwKAmlzGBkgASgLMhAuY2VkYXIudjMuRXhwcklzQgi6'
+    'j75tA2lzX0gAUgJpcxI8CgxpZl90aGVuX2Vsc2UYGiABKAsyGC5jZWRhci52My5FeHBySWZUaG'
+    'VuRWxzZUgAUgppZlRoZW5FbHNlEiUKA3NldBgbIAEoCzIRLmNlZGFyLnYzLkV4cHJTZXRIAFID'
+    'c2V0Ei4KBnJlY29yZBgcIAEoCzIULmNlZGFyLnYzLkV4cHJSZWNvcmRIAFIGcmVjb3JkEkQKDm'
+    'V4dGVuc2lvbl9jYWxsGB0gASgLMhsuY2VkYXIudjMuRXhwckV4dGVuc2lvbkNhbGxIAFINZXh0'
+    'ZW5zaW9uQ2FsbEIGCgRleHBy');
 
 @$core.Deprecated('Use exprValueDescriptor instead')
 const ExprValue$json = {
@@ -370,9 +370,9 @@ const ExprValue$json = {
 final $typed_data.Uint8List exprValueDescriptor = $convert.base64Decode(
     'CglFeHByVmFsdWUSJQoFdmFsdWUYASABKAsyDy5jZWRhci52My5WYWx1ZVIFdmFsdWU=');
 
-@$core.Deprecated('Use exprVarDescriptor instead')
-const ExprVar$json = {
-  '1': 'ExprVar',
+@$core.Deprecated('Use exprVariableDescriptor instead')
+const ExprVariable$json = {
+  '1': 'ExprVariable',
   '2': [
     {
       '1': 'variable',
@@ -385,10 +385,10 @@ const ExprVar$json = {
   ],
 };
 
-/// Descriptor for `ExprVar`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprVarDescriptor = $convert.base64Decode(
-    'CgdFeHByVmFyEi4KCHZhcmlhYmxlGAEgASgOMhIuY2VkYXIudjMuVmFyaWFibGVSCHZhcmlhYm'
-    'xl');
+/// Descriptor for `ExprVariable`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprVariableDescriptor = $convert.base64Decode(
+    'CgxFeHByVmFyaWFibGUSLgoIdmFyaWFibGUYASABKA4yEi5jZWRhci52My5WYXJpYWJsZVIIdm'
+    'FyaWFibGU=');
 
 @$core.Deprecated('Use exprSlotDescriptor instead')
 const ExprSlot$json = {
@@ -425,25 +425,25 @@ final $typed_data.Uint8List exprUnknownDescriptor =
 const ExprNot$json = {
   '1': 'ExprNot',
   '2': [
-    {'1': 'expr', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'expr'},
+    {'1': 'arg', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'arg'},
   ],
 };
 
 /// Descriptor for `ExprNot`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List exprNotDescriptor = $convert.base64Decode(
-    'CgdFeHByTm90EiIKBGV4cHIYASABKAsyDi5jZWRhci52My5FeHByUgRleHBy');
+    'CgdFeHByTm90EiAKA2FyZxgBIAEoCzIOLmNlZGFyLnYzLkV4cHJSA2FyZw==');
 
-@$core.Deprecated('Use exprNegDescriptor instead')
-const ExprNeg$json = {
-  '1': 'ExprNeg',
+@$core.Deprecated('Use exprNegateDescriptor instead')
+const ExprNegate$json = {
+  '1': 'ExprNegate',
   '2': [
-    {'1': 'expr', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'expr'},
+    {'1': 'arg', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'arg'},
   ],
 };
 
-/// Descriptor for `ExprNeg`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprNegDescriptor = $convert.base64Decode(
-    'CgdFeHByTmVnEiIKBGV4cHIYASABKAsyDi5jZWRhci52My5FeHByUgRleHBy');
+/// Descriptor for `ExprNegate`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprNegateDescriptor = $convert.base64Decode(
+    'CgpFeHByTmVnYXRlEiAKA2FyZxgBIAEoCzIOLmNlZGFyLnYzLkV4cHJSA2FyZw==');
 
 @$core.Deprecated('Use exprEqualsDescriptor instead')
 const ExprEquals$json = {
@@ -635,9 +635,9 @@ final $typed_data.Uint8List exprOrDescriptor = $convert.base64Decode(
     'CgZFeHByT3ISIgoEbGVmdBgBIAEoCzIOLmNlZGFyLnYzLkV4cHJSBGxlZnQSJAoFcmlnaHQYAi'
     'ABKAsyDi5jZWRhci52My5FeHByUgVyaWdodA==');
 
-@$core.Deprecated('Use exprPlusDescriptor instead')
-const ExprPlus$json = {
-  '1': 'ExprPlus',
+@$core.Deprecated('Use exprAddDescriptor instead')
+const ExprAdd$json = {
+  '1': 'ExprAdd',
   '2': [
     {'1': 'left', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'left'},
     {
@@ -651,14 +651,35 @@ const ExprPlus$json = {
   ],
 };
 
-/// Descriptor for `ExprPlus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprPlusDescriptor = $convert.base64Decode(
-    'CghFeHByUGx1cxIiCgRsZWZ0GAEgASgLMg4uY2VkYXIudjMuRXhwclIEbGVmdBIkCgVyaWdodB'
+/// Descriptor for `ExprAdd`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprAddDescriptor = $convert.base64Decode(
+    'CgdFeHByQWRkEiIKBGxlZnQYASABKAsyDi5jZWRhci52My5FeHByUgRsZWZ0EiQKBXJpZ2h0GA'
+    'IgASgLMg4uY2VkYXIudjMuRXhwclIFcmlnaHQ=');
+
+@$core.Deprecated('Use exprSubtDescriptor instead')
+const ExprSubt$json = {
+  '1': 'ExprSubt',
+  '2': [
+    {'1': 'left', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'left'},
+    {
+      '1': 'right',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v3.Expr',
+      '10': 'right'
+    },
+  ],
+};
+
+/// Descriptor for `ExprSubt`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprSubtDescriptor = $convert.base64Decode(
+    'CghFeHByU3VidBIiCgRsZWZ0GAEgASgLMg4uY2VkYXIudjMuRXhwclIEbGVmdBIkCgVyaWdodB'
     'gCIAEoCzIOLmNlZGFyLnYzLkV4cHJSBXJpZ2h0');
 
-@$core.Deprecated('Use exprMinusDescriptor instead')
-const ExprMinus$json = {
-  '1': 'ExprMinus',
+@$core.Deprecated('Use exprMultDescriptor instead')
+const ExprMult$json = {
+  '1': 'ExprMult',
   '2': [
     {'1': 'left', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'left'},
     {
@@ -672,31 +693,10 @@ const ExprMinus$json = {
   ],
 };
 
-/// Descriptor for `ExprMinus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprMinusDescriptor = $convert.base64Decode(
-    'CglFeHByTWludXMSIgoEbGVmdBgBIAEoCzIOLmNlZGFyLnYzLkV4cHJSBGxlZnQSJAoFcmlnaH'
-    'QYAiABKAsyDi5jZWRhci52My5FeHByUgVyaWdodA==');
-
-@$core.Deprecated('Use exprTimesDescriptor instead')
-const ExprTimes$json = {
-  '1': 'ExprTimes',
-  '2': [
-    {'1': 'left', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'left'},
-    {
-      '1': 'right',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.cedar.v3.Expr',
-      '10': 'right'
-    },
-  ],
-};
-
-/// Descriptor for `ExprTimes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprTimesDescriptor = $convert.base64Decode(
-    'CglFeHByVGltZXMSIgoEbGVmdBgBIAEoCzIOLmNlZGFyLnYzLkV4cHJSBGxlZnQSJAoFcmlnaH'
-    'QYAiABKAsyDi5jZWRhci52My5FeHByUgVyaWdodA==');
+/// Descriptor for `ExprMult`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprMultDescriptor = $convert.base64Decode(
+    'CghFeHByTXVsdBIiCgRsZWZ0GAEgASgLMg4uY2VkYXIudjMuRXhwclIEbGVmdBIkCgVyaWdodB'
+    'gCIAEoCzIOLmNlZGFyLnYzLkV4cHJSBXJpZ2h0');
 
 @$core.Deprecated('Use exprContainsDescriptor instead')
 const ExprContains$json = {
@@ -836,33 +836,24 @@ final $typed_data.Uint8List exprIsDescriptor = $convert.base64Decode(
 const ExprIfThenElse$json = {
   '1': 'ExprIfThenElse',
   '2': [
-    {
-      '1': 'if',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.cedar.v3.Expr',
-      '8': {'28700919': 'if_'},
-      '10': 'if',
-    },
+    {'1': 'cond', '3': 1, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'cond'},
     {'1': 'then', '3': 2, '4': 1, '5': 11, '6': '.cedar.v3.Expr', '10': 'then'},
     {
-      '1': 'else',
+      '1': 'otherwise',
       '3': 3,
       '4': 1,
       '5': 11,
       '6': '.cedar.v3.Expr',
-      '8': {'28700919': 'else_'},
-      '10': 'else',
+      '10': 'otherwise'
     },
   ],
 };
 
 /// Descriptor for `ExprIfThenElse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List exprIfThenElseDescriptor = $convert.base64Decode(
-    'Cg5FeHBySWZUaGVuRWxzZRIoCgJpZhgBIAEoCzIOLmNlZGFyLnYzLkV4cHJCCLqPvm0DaWZfUg'
-    'JpZhIiCgR0aGVuGAIgASgLMg4uY2VkYXIudjMuRXhwclIEdGhlbhIuCgRlbHNlGAMgASgLMg4u'
-    'Y2VkYXIudjMuRXhwckIKuo++bQVlbHNlX1IEZWxzZQ==');
+    'Cg5FeHBySWZUaGVuRWxzZRIiCgRjb25kGAEgASgLMg4uY2VkYXIudjMuRXhwclIEY29uZBIiCg'
+    'R0aGVuGAIgASgLMg4uY2VkYXIudjMuRXhwclIEdGhlbhIsCglvdGhlcndpc2UYAyABKAsyDi5j'
+    'ZWRhci52My5FeHByUglvdGhlcndpc2U=');
 
 @$core.Deprecated('Use exprSetDescriptor instead')
 const ExprSet$json = {
@@ -923,16 +914,16 @@ final $typed_data.Uint8List exprRecordDescriptor = $convert.base64Decode(
     'F0dHJpYnV0ZXNFbnRyeVIKYXR0cmlidXRlcxpNCg9BdHRyaWJ1dGVzRW50cnkSEAoDa2V5GAEg'
     'ASgJUgNrZXkSJAoFdmFsdWUYAiABKAsyDi5jZWRhci52My5FeHByUgV2YWx1ZToCOAE=');
 
-@$core.Deprecated('Use exprFuncCallDescriptor instead')
-const ExprFuncCall$json = {
-  '1': 'ExprFuncCall',
+@$core.Deprecated('Use exprExtensionCallDescriptor instead')
+const ExprExtensionCall$json = {
+  '1': 'ExprExtensionCall',
   '2': [
     {'1': 'fn', '3': 1, '4': 1, '5': 9, '10': 'fn'},
     {'1': 'args', '3': 2, '4': 3, '5': 11, '6': '.cedar.v3.Expr', '10': 'args'},
   ],
 };
 
-/// Descriptor for `ExprFuncCall`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exprFuncCallDescriptor = $convert.base64Decode(
-    'CgxFeHByRnVuY0NhbGwSDgoCZm4YASABKAlSAmZuEiIKBGFyZ3MYAiADKAsyDi5jZWRhci52My'
-    '5FeHByUgRhcmdz');
+/// Descriptor for `ExprExtensionCall`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List exprExtensionCallDescriptor = $convert.base64Decode(
+    'ChFFeHByRXh0ZW5zaW9uQ2FsbBIOCgJmbhgBIAEoCVICZm4SIgoEYXJncxgCIAMoCzIOLmNlZG'
+    'FyLnYzLkV4cHJSBGFyZ3M=');

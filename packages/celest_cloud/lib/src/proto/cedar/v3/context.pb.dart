@@ -13,11 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'value.pb.dart' as $46;
+import 'value.pb.dart' as $49;
 
 class Context extends $pb.GeneratedMessage {
   factory Context({
-    $core.Map<$core.String, $46.Value>? values,
+    $core.Map<$core.String, $49.Value>? values,
   }) {
     final $result = create();
     if (values != null) {
@@ -37,12 +37,12 @@ class Context extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'Context',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..m<$core.String, $46.Value>(1, _omitFieldNames ? '' : 'values',
+    ..m<$core.String, $49.Value>(1, _omitFieldNames ? '' : 'values',
         entryClassName: 'Context.ValuesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $46.Value.create,
-        valueDefaultOrMaker: $46.Value.getDefault,
+        valueCreator: $49.Value.create,
+        valueDefaultOrMaker: $49.Value.getDefault,
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
@@ -68,7 +68,7 @@ class Context extends $pb.GeneratedMessage {
   static Context? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, $46.Value> get values => $_getMap(0);
+  $core.Map<$core.String, $49.Value> get values => $_getMap(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

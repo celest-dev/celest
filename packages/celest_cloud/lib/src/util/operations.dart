@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
-import 'package:celest_cloud/src/proto/google/longrunning/operations.pbgrpc.dart';
-import 'package:celest_cloud/src/proto/google/protobuf/any.pb.dart';
+import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart';
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
+
+typedef CloudOperation<R extends GeneratedMessage>
+    = Stream<OperationState<OperationMetadata, R>>;
 
 extension WaitForOperation on Operation {
   Future<T> wait<T extends GeneratedMessage>({
@@ -61,19 +63,19 @@ extension WaitForOperation on Operation {
       if (hasError()) {
         return OperationFailure<Metadata, Response>(
           id: name,
-          metadata: metadata.unpack(this.metadata),
+          metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
           error: error.grpcError,
         );
       }
       return OperationSuccess<Metadata, Response>(
         id: name,
-        metadata: metadata.unpack(this.metadata),
-        response: response.unpack(this.response),
+        metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
+        response: response.unpack(ensureResponse()),
       );
     }
     return OperationInProgress<Metadata, Response>(
       id: name,
-      metadata: metadata.unpack(this.metadata),
+      metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
     );
   }
 }

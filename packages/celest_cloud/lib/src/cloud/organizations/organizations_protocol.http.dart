@@ -70,11 +70,6 @@ final class OrganizationsProtocolHttp
       },
     );
     final req = http.Request('DELETE', uri)
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      )
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);

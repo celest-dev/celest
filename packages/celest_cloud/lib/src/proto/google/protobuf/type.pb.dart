@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'any.pb.dart' as $10;
-import 'source_context.pb.dart' as $9;
+import 'any.pb.dart' as $13;
+import 'source_context.pb.dart' as $12;
 import 'type.pbenum.dart';
 
 export 'type.pbenum.dart';
@@ -26,7 +26,7 @@ class Type extends $pb.GeneratedMessage {
     $core.Iterable<Field>? fields,
     $core.Iterable<$core.String>? oneofs,
     $core.Iterable<Option>? options,
-    $9.SourceContext? sourceContext,
+    $12.SourceContext? sourceContext,
     Syntax? syntax,
     $core.String? edition,
   }) {
@@ -73,8 +73,8 @@ class Type extends $pb.GeneratedMessage {
     ..pPS(3, _omitFieldNames ? '' : 'oneofs')
     ..pc<Option>(4, _omitFieldNames ? '' : 'options', $pb.PbFieldType.PM,
         subBuilder: Option.create)
-    ..aOM<$9.SourceContext>(5, _omitFieldNames ? '' : 'sourceContext',
-        subBuilder: $9.SourceContext.create)
+    ..aOM<$12.SourceContext>(5, _omitFieldNames ? '' : 'sourceContext',
+        subBuilder: $12.SourceContext.create)
     ..e<Syntax>(6, _omitFieldNames ? '' : 'syntax', $pb.PbFieldType.OE,
         defaultOrMaker: Syntax.SYNTAX_PROTO2,
         valueOf: Syntax.valueOf,
@@ -130,9 +130,9 @@ class Type extends $pb.GeneratedMessage {
 
   /// The source context.
   @$pb.TagNumber(5)
-  $9.SourceContext get sourceContext => $_getN(4);
+  $12.SourceContext get sourceContext => $_getN(4);
   @$pb.TagNumber(5)
-  set sourceContext($9.SourceContext v) {
+  set sourceContext($12.SourceContext v) {
     setField(5, v);
   }
 
@@ -141,7 +141,7 @@ class Type extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearSourceContext() => clearField(5);
   @$pb.TagNumber(5)
-  $9.SourceContext ensureSourceContext() => $_ensure(4);
+  $12.SourceContext ensureSourceContext() => $_ensure(4);
 
   /// The source syntax.
   @$pb.TagNumber(6)
@@ -401,7 +401,7 @@ class Enum extends $pb.GeneratedMessage {
     $core.String? name,
     $core.Iterable<EnumValue>? enumvalue,
     $core.Iterable<Option>? options,
-    $9.SourceContext? sourceContext,
+    $12.SourceContext? sourceContext,
     Syntax? syntax,
     $core.String? edition,
   }) {
@@ -444,8 +444,8 @@ class Enum extends $pb.GeneratedMessage {
         subBuilder: EnumValue.create)
     ..pc<Option>(3, _omitFieldNames ? '' : 'options', $pb.PbFieldType.PM,
         subBuilder: Option.create)
-    ..aOM<$9.SourceContext>(4, _omitFieldNames ? '' : 'sourceContext',
-        subBuilder: $9.SourceContext.create)
+    ..aOM<$12.SourceContext>(4, _omitFieldNames ? '' : 'sourceContext',
+        subBuilder: $12.SourceContext.create)
     ..e<Syntax>(5, _omitFieldNames ? '' : 'syntax', $pb.PbFieldType.OE,
         defaultOrMaker: Syntax.SYNTAX_PROTO2,
         valueOf: Syntax.valueOf,
@@ -497,9 +497,9 @@ class Enum extends $pb.GeneratedMessage {
 
   /// The source context.
   @$pb.TagNumber(4)
-  $9.SourceContext get sourceContext => $_getN(3);
+  $12.SourceContext get sourceContext => $_getN(3);
   @$pb.TagNumber(4)
-  set sourceContext($9.SourceContext v) {
+  set sourceContext($12.SourceContext v) {
     setField(4, v);
   }
 
@@ -508,7 +508,7 @@ class Enum extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearSourceContext() => clearField(4);
   @$pb.TagNumber(4)
-  $9.SourceContext ensureSourceContext() => $_ensure(3);
+  $12.SourceContext ensureSourceContext() => $_ensure(3);
 
   /// The source syntax.
   @$pb.TagNumber(5)
@@ -632,7 +632,7 @@ class EnumValue extends $pb.GeneratedMessage {
 class Option extends $pb.GeneratedMessage {
   factory Option({
     $core.String? name,
-    $10.Any? value,
+    $13.Any? value,
   }) {
     final $result = create();
     if (name != null) {
@@ -657,8 +657,8 @@ class Option extends $pb.GeneratedMessage {
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOM<$10.Any>(2, _omitFieldNames ? '' : 'value',
-        subBuilder: $10.Any.create)
+    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'value',
+        subBuilder: $13.Any.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -703,9 +703,9 @@ class Option extends $pb.GeneratedMessage {
   /// should be used. If the value is an enum, it should be stored as an int32
   /// value using the google.protobuf.Int32Value type.
   @$pb.TagNumber(2)
-  $10.Any get value => $_getN(1);
+  $13.Any get value => $_getN(1);
   @$pb.TagNumber(2)
-  set value($10.Any v) {
+  set value($13.Any v) {
     setField(2, v);
   }
 
@@ -714,7 +714,7 @@ class Option extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearValue() => clearField(2);
   @$pb.TagNumber(2)
-  $10.Any ensureValue() => $_ensure(1);
+  $13.Any ensureValue() => $_ensure(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

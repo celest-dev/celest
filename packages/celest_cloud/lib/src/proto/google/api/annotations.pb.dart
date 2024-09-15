@@ -13,16 +13,16 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'http.pb.dart' as $13;
+import 'http.pb.dart' as $16;
 
 class Annotations {
-  static final http = $pb.Extension<$13.HttpRule>(
+  static final http = $pb.Extension<$16.HttpRule>(
       _omitMessageNames ? '' : 'google.protobuf.MethodOptions',
       _omitFieldNames ? '' : 'http',
       72295728,
       $pb.PbFieldType.OM,
-      defaultOrMaker: $13.HttpRule.getDefault,
-      subBuilder: $13.HttpRule.create);
+      defaultOrMaker: $16.HttpRule.getDefault,
+      subBuilder: $16.HttpRule.create);
   static void registerAllExtensions($pb.ExtensionRegistry registry) {
     registry.add(http);
   }

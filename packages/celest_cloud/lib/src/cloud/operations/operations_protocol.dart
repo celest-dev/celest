@@ -1,4 +1,4 @@
-import 'package:celest_cloud/src/proto.dart';
+import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 
 abstract interface class OperationsProtocol {
   Future<Operation> get(GetOperationRequest request);

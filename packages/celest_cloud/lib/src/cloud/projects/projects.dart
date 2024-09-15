@@ -1,8 +1,9 @@
 import 'package:celest_cloud/src/cloud/base/base_service.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
+import 'package:celest_cloud/src/cloud/project_environments/project_environments.dart';
 import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
 import 'package:celest_cloud/src/proto.dart' hide OperationState;
-import 'package:celest_cloud/src/proto/operations.dart';
+import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 
@@ -19,20 +20,24 @@ final class Projects with BaseService {
   final ProjectsProtocol _protocol;
   final OperationsProtocol _operations;
 
-  Future<Project> create({
+  late final ProjectEnvironments environments = ProjectEnvironments(
+    protocol: _protocol.environments,
+    operations: _operations,
+    logger: logger,
+  );
+
+  Stream<OperationState<OperationMetadata, Project>> create({
     required String parent,
     required String projectId,
     required String displayName,
-    required Region region,
     Map<String, String>? annotations,
     bool validateOnly = false,
-  }) async {
+  }) async* {
     final request = CreateProjectRequest(
       parent: parent,
       projectId: projectId,
       project: Project(
         displayName: displayName,
-        region: region,
         annotations: annotations,
       ),
       validateOnly: validateOnly,
@@ -42,8 +47,9 @@ final class Projects with BaseService {
       request: request,
       action: _protocol.create,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
+      metadata: OperationMetadata(),
       response: Project(),
       logger: logger,
     );
@@ -85,12 +91,12 @@ final class Projects with BaseService {
     );
   }
 
-  Future<Project> update({
+  Stream<OperationState<OperationMetadata, Project>> update({
     required Project project,
     FieldMask? updateMask,
     bool allowMissing = false,
     bool validateOnly = false,
-  }) async {
+  }) async* {
     final request = UpdateProjectRequest(
       project: project,
       updateMask: updateMask,
@@ -102,20 +108,21 @@ final class Projects with BaseService {
       request: request,
       action: _protocol.update,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
       response: Project(),
+      metadata: OperationMetadata(),
     );
   }
 
-  Future<Empty> delete(
+  Stream<OperationState<OperationMetadata, Empty>> delete(
     String name, {
     String? etag,
     bool allowMissing = false,
     bool validateOnly = false,
     bool force = false,
-  }) async {
+  }) async* {
     final request = DeleteProjectRequest(
       name: name,
       etag: etag,
@@ -128,19 +135,20 @@ final class Projects with BaseService {
       request: request,
       action: _protocol.delete,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
       response: Empty(),
+      metadata: OperationMetadata(),
     );
   }
 
-  Future<Project> rename({
+  Stream<OperationState<OperationMetadata, Project>> rename({
     required String name,
     required String newAlias,
     String? etag,
     bool validateOnly = false,
-  }) async {
+  }) async* {
     final request = RenameProjectRequest(
       name: name,
       projectId: newAlias,
@@ -152,10 +160,11 @@ final class Projects with BaseService {
       request: request,
       action: _protocol.rename,
     );
-    return operation.wait(
+    yield* operation.stream(
       operations: _operations,
       logger: logger,
       response: Project(),
+      metadata: OperationMetadata(),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:celest_cloud/src/cloud/cloud_protocol.grpc.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations.dart';
 import 'package:celest_cloud/src/cloud/projects/projects.dart';
+import 'package:celest_cloud/src/cloud/subscriptions/subscriptions.dart';
 import 'package:celest_cloud/src/cloud/users/users.dart';
 import 'package:celest_cloud/src/proto.dart';
 import 'package:celest_core/_internal.dart';
@@ -54,8 +55,8 @@ class CelestCloud {
     Empty(),
     OperationMetadata(),
     Organization(),
-    CreateOrganizationMetadata(),
     Project(),
+    ProjectEnvironment(),
   ]);
 
   final CloudProtocol _protocol;
@@ -82,6 +83,11 @@ class CelestCloud {
   late final Projects projects = Projects(
     protocol: _protocol.projects,
     operations: _protocol.operations,
+    logger: _logger,
+  );
+
+  late final Subscriptions subscriptions = Subscriptions(
+    protocol: _protocol.subscriptions,
     logger: _logger,
   );
 }
