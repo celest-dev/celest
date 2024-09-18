@@ -2,6 +2,7 @@ import 'package:celest_cloud/src/cloud/authentication/authentication.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.grpc.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.http.dart';
+import 'package:celest_cloud/src/cloud/operations/operations.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations.dart';
 import 'package:celest_cloud/src/cloud/projects/projects.dart';
 import 'package:celest_cloud/src/cloud/subscriptions/subscriptions.dart';
@@ -88,6 +89,11 @@ class CelestCloud {
 
   late final Subscriptions subscriptions = Subscriptions(
     protocol: _protocol.subscriptions,
+    logger: _logger,
+  );
+
+  late final Operations operations = Operations(
+    protocol: _protocol.operations,
     logger: _logger,
   );
 }

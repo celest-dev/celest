@@ -1,3 +1,7 @@
+## 0.5.0-dev.1
+
+- chore: Update dependencies
+
 ## 0.5.0-dev.0
 
 - chore: Update dependencies

@@ -132,7 +132,7 @@ final $typed_data.Uint8List sessionClientDescriptor = $convert.base64Decode(
     'Cg1TZXNzaW9uQ2xpZW50EiAKCWNsaWVudF9pZBgBIAEoCUID4EECUghjbGllbnRJZBJMCgtjbG'
     'llbnRfdHlwZRgCIAEoDjImLmNlbGVzdC5jbG91ZC5hdXRoLnYxYWxwaGExLkNsaWVudFR5cGVC'
     'A+BBAlIKY2xpZW50VHlwZRJPCgljYWxsYmFja3MYAyABKAsyLC5jZWxlc3QuY2xvdWQuYXV0aC'
-    '52MWFscGhhMS5TZXNzaW9uQ2FsbGJhY2tzQgPgQQFSCWNhbGxiYWNrcw==');
+    '52MWFscGhhMS5TZXNzaW9uQ2FsbGJhY2tzQgPgQQJSCWNhbGxiYWNrcw==');
 
 @$core.Deprecated('Use sessionCallbacksDescriptor instead')
 const SessionCallbacks$json = {
