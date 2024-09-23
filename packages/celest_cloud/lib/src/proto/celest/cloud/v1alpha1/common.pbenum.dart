@@ -41,4 +41,44 @@ class Region extends $pb.ProtobufEnum {
   const Region._($core.int v, $core.String n) : super(v, n);
 }
 
+/// The lifecycle state of a Celest Cloud resource.
+class LifecycleState extends $pb.ProtobufEnum {
+  static const LifecycleState LIFECYCLE_STATE_UNSPECIFIED =
+      LifecycleState._(0, _omitEnumNames ? '' : 'LIFECYCLE_STATE_UNSPECIFIED');
+  static const LifecycleState CREATING =
+      LifecycleState._(1, _omitEnumNames ? '' : 'CREATING');
+  static const LifecycleState CREATION_FAILED =
+      LifecycleState._(2, _omitEnumNames ? '' : 'CREATION_FAILED');
+  static const LifecycleState ACTIVE =
+      LifecycleState._(3, _omitEnumNames ? '' : 'ACTIVE');
+  static const LifecycleState UPDATING =
+      LifecycleState._(4, _omitEnumNames ? '' : 'UPDATING');
+  static const LifecycleState UPDATE_FAILED =
+      LifecycleState._(5, _omitEnumNames ? '' : 'UPDATE_FAILED');
+  static const LifecycleState DELETING =
+      LifecycleState._(6, _omitEnumNames ? '' : 'DELETING');
+  static const LifecycleState DELETION_FAILED =
+      LifecycleState._(7, _omitEnumNames ? '' : 'DELETION_FAILED');
+  static const LifecycleState DELETED =
+      LifecycleState._(8, _omitEnumNames ? '' : 'DELETED');
+
+  static const $core.List<LifecycleState> values = <LifecycleState>[
+    LIFECYCLE_STATE_UNSPECIFIED,
+    CREATING,
+    CREATION_FAILED,
+    ACTIVE,
+    UPDATING,
+    UPDATE_FAILED,
+    DELETING,
+    DELETION_FAILED,
+    DELETED,
+  ];
+
+  static final $core.Map<$core.int, LifecycleState> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static LifecycleState? valueOf($core.int value) => _byValue[value];
+
+  const LifecycleState._($core.int v, $core.String n) : super(v, n);
+}
+
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

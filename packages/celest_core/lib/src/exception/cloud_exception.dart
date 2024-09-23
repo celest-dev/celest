@@ -98,7 +98,7 @@ abstract mixin class CloudException implements CelestException {
       message: error.message,
       details: error.details
           ?.map((det) => det.writeToJsonMap() as JsonValue)
-          .toList() as JsonList,
+          .toList() as JsonList?,
     );
   }
 

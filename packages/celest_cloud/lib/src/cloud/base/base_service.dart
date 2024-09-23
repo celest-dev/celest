@@ -1,6 +1,6 @@
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/proto.dart' show Operation;
-import 'package:celest_cloud/src/proto/operations.dart';
+import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logging/logging.dart';

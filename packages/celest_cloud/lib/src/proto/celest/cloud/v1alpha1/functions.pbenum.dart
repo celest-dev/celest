@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: cedar/v3/cork.proto
+//  source: celest/cloud/v1alpha1/functions.proto
 //
 // @dart = 2.12
 

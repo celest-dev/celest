@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
-import 'package:celest_cloud/src/proto.dart';
+import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 import 'package:http/http.dart' as http;
 
 final class OperationsProtocolHttp

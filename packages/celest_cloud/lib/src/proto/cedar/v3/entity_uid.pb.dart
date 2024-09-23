@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: cedar/v3/entity_id.proto
+//  source: cedar/v3/entity_uid.proto
 //
 // @dart = 2.12
 
@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class EntityId extends $pb.GeneratedMessage {
-  factory EntityId({
+class EntityUid extends $pb.GeneratedMessage {
+  factory EntityUid({
     $core.String? type,
     $core.String? id,
   }) {
@@ -27,16 +27,16 @@ class EntityId extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  EntityId._() : super();
-  factory EntityId.fromBuffer($core.List<$core.int> i,
+  EntityUid._() : super();
+  factory EntityUid.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory EntityId.fromJson($core.String i,
+  factory EntityUid.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'EntityId',
+      _omitMessageNames ? '' : 'EntityUid',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'type')
@@ -46,23 +46,23 @@ class EntityId extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  EntityId clone() => EntityId()..mergeFromMessage(this);
+  EntityUid clone() => EntityUid()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  EntityId copyWith(void Function(EntityId) updates) =>
-      super.copyWith((message) => updates(message as EntityId)) as EntityId;
+  EntityUid copyWith(void Function(EntityUid) updates) =>
+      super.copyWith((message) => updates(message as EntityUid)) as EntityUid;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static EntityId create() => EntityId._();
-  EntityId createEmptyInstance() => create();
-  static $pb.PbList<EntityId> createRepeated() => $pb.PbList<EntityId>();
+  static EntityUid create() => EntityUid._();
+  EntityUid createEmptyInstance() => create();
+  static $pb.PbList<EntityUid> createRepeated() => $pb.PbList<EntityUid>();
   @$core.pragma('dart2js:noInline')
-  static EntityId getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityId>(create);
-  static EntityId? _defaultInstance;
+  static EntityUid getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityUid>(create);
+  static EntityUid? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get type => $_getSZ(0);

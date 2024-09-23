@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
-import 'package:celest_cloud/src/proto/celest/cloud/auth/v1alpha1/users.pb.dart';
-import 'package:celest_cloud/src/proto/google/protobuf/empty.pb.dart';
 import 'package:http/http.dart' as http;
 
 final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {

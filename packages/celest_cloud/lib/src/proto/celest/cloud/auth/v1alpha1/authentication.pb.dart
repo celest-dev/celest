@@ -15,8 +15,8 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../../google/protobuf/struct.pb.dart' as $19;
-import '../../../../google/protobuf/timestamp.pb.dart' as $17;
+import '../../../../google/protobuf/struct.pb.dart' as $22;
+import '../../../../google/protobuf/timestamp.pb.dart' as $20;
 import 'authentication.pbenum.dart';
 import 'users.pb.dart' as $5;
 import 'users.pbenum.dart' as $5;
@@ -31,7 +31,7 @@ class Session extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? sessionId,
     $core.String? sessionToken,
-    $17.Timestamp? expireTime,
+    $20.Timestamp? expireTime,
     AuthenticationSuccess? success,
     AuthenticationStep? nextStep,
     SessionClient? client,
@@ -82,8 +82,8 @@ class Session extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'parent')
     ..aOS(2, _omitFieldNames ? '' : 'sessionId')
     ..aOS(3, _omitFieldNames ? '' : 'sessionToken')
-    ..aOM<$17.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
-        subBuilder: $17.Timestamp.create)
+    ..aOM<$20.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $20.Timestamp.create)
     ..aOM<AuthenticationSuccess>(5, _omitFieldNames ? '' : 'success',
         subBuilder: AuthenticationSuccess.create)
     ..aOM<AuthenticationStep>(6, _omitFieldNames ? '' : 'nextStep',
@@ -158,9 +158,9 @@ class Session extends $pb.GeneratedMessage {
 
   /// Required. The time the flow will expire.
   @$pb.TagNumber(4)
-  $17.Timestamp get expireTime => $_getN(3);
+  $20.Timestamp get expireTime => $_getN(3);
   @$pb.TagNumber(4)
-  set expireTime($17.Timestamp v) {
+  set expireTime($20.Timestamp v) {
     setField(4, v);
   }
 
@@ -169,7 +169,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearExpireTime() => clearField(4);
   @$pb.TagNumber(4)
-  $17.Timestamp ensureExpireTime() => $_ensure(3);
+  $20.Timestamp ensureExpireTime() => $_ensure(3);
 
   /// The authentication operation was successful.
   @$pb.TagNumber(5)
@@ -1673,7 +1673,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     $core.String? locale,
     $core.String? phoneNumber,
     $core.bool? phoneNumberVerified,
-    $19.Value? address,
+    $22.Value? address,
     $fixnum.Int64? updatedAt,
   }) {
     final $result = create();
@@ -1770,8 +1770,8 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     ..aOS(16, _omitFieldNames ? '' : 'locale')
     ..aOS(17, _omitFieldNames ? '' : 'phone_number')
     ..aOB(18, _omitFieldNames ? '' : 'phone_number_verified')
-    ..aOM<$19.Value>(19, _omitFieldNames ? '' : 'address',
-        subBuilder: $19.Value.create)
+    ..aOM<$22.Value>(19, _omitFieldNames ? '' : 'address',
+        subBuilder: $22.Value.create)
     ..aInt64(20, _omitFieldNames ? '' : 'updated_at')
     ..hasRequiredFields = false;
 
@@ -2109,9 +2109,9 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   ///  }
   ///  ```
   @$pb.TagNumber(19)
-  $19.Value get address => $_getN(18);
+  $22.Value get address => $_getN(18);
   @$pb.TagNumber(19)
-  set address($19.Value v) {
+  set address($22.Value v) {
     setField(19, v);
   }
 
@@ -2120,7 +2120,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(19)
   void clearAddress() => clearField(19);
   @$pb.TagNumber(19)
-  $19.Value ensureAddress() => $_ensure(18);
+  $22.Value ensureAddress() => $_ensure(18);
 
   ///  Optional. Time the End-User's information was last updated.
   ///

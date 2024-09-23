@@ -14,7 +14,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/timestamp.pb.dart' as $17;
+import '../../../google/protobuf/timestamp.pb.dart' as $20;
 
 export 'common.pbenum.dart';
 
@@ -26,7 +26,7 @@ export 'common.pbenum.dart';
 class PageToken extends $pb.GeneratedMessage {
   factory PageToken({
     $fixnum.Int64? offset,
-    $17.Timestamp? startTime,
+    $20.Timestamp? startTime,
     $core.bool? showDeleted,
   }) {
     final $result = create();
@@ -55,8 +55,8 @@ class PageToken extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'offset')
-    ..aOM<$17.Timestamp>(2, _omitFieldNames ? '' : 'startTime',
-        subBuilder: $17.Timestamp.create)
+    ..aOM<$20.Timestamp>(2, _omitFieldNames ? '' : 'startTime',
+        subBuilder: $20.Timestamp.create)
     ..aOB(3, _omitFieldNames ? '' : 'showDeleted')
     ..hasRequiredFields = false;
 
@@ -96,9 +96,9 @@ class PageToken extends $pb.GeneratedMessage {
 
   /// The start time of the pagination window.
   @$pb.TagNumber(2)
-  $17.Timestamp get startTime => $_getN(1);
+  $20.Timestamp get startTime => $_getN(1);
   @$pb.TagNumber(2)
-  set startTime($17.Timestamp v) {
+  set startTime($20.Timestamp v) {
     setField(2, v);
   }
 
@@ -107,7 +107,7 @@ class PageToken extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearStartTime() => clearField(2);
   @$pb.TagNumber(2)
-  $17.Timestamp ensureStartTime() => $_ensure(1);
+  $20.Timestamp ensureStartTime() => $_ensure(1);
 
   /// Whether to show deleted items.
   @$pb.TagNumber(3)

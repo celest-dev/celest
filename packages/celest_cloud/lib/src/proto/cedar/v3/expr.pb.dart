@@ -14,17 +14,17 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'expr.pbenum.dart';
-import 'value.pb.dart' as $46;
+import 'value.pb.dart' as $49;
 
 export 'expr.pbenum.dart';
 
 enum Expr_Expr {
   value,
-  var_,
+  variable,
   slot,
   unknown,
   not,
-  neg,
+  negate,
   equals,
   notEquals,
   in_,
@@ -34,9 +34,9 @@ enum Expr_Expr {
   greaterThanOrEquals,
   and,
   or,
-  plus,
-  minus,
-  times,
+  add,
+  subtract,
+  multiply,
   contains,
   containsAll,
   containsAny,
@@ -47,18 +47,18 @@ enum Expr_Expr {
   ifThenElse,
   set,
   record,
-  funcCall,
+  extensionCall,
   notSet
 }
 
 class Expr extends $pb.GeneratedMessage {
   factory Expr({
     ExprValue? value,
-    ExprVar? var_,
+    ExprVariable? variable,
     ExprSlot? slot,
     ExprUnknown? unknown,
     ExprNot? not,
-    ExprNeg? neg,
+    ExprNegate? negate,
     ExprEquals? equals,
     ExprNotEquals? notEquals,
     ExprIn? in_,
@@ -68,9 +68,9 @@ class Expr extends $pb.GeneratedMessage {
     ExprGreaterThanOrEquals? greaterThanOrEquals,
     ExprAnd? and,
     ExprOr? or,
-    ExprPlus? plus,
-    ExprMinus? minus,
-    ExprTimes? times,
+    ExprAdd? add,
+    ExprSubt? subtract,
+    ExprMult? multiply,
     ExprContains? contains,
     ExprContainsAll? containsAll,
     ExprContainsAny? containsAny,
@@ -81,14 +81,14 @@ class Expr extends $pb.GeneratedMessage {
     ExprIfThenElse? ifThenElse,
     ExprSet? set,
     ExprRecord? record,
-    ExprFuncCall? funcCall,
+    ExprExtensionCall? extensionCall,
   }) {
     final $result = create();
     if (value != null) {
       $result.value = value;
     }
-    if (var_ != null) {
-      $result.var_ = var_;
+    if (variable != null) {
+      $result.variable = variable;
     }
     if (slot != null) {
       $result.slot = slot;
@@ -99,8 +99,8 @@ class Expr extends $pb.GeneratedMessage {
     if (not != null) {
       $result.not = not;
     }
-    if (neg != null) {
-      $result.neg = neg;
+    if (negate != null) {
+      $result.negate = negate;
     }
     if (equals != null) {
       $result.equals = equals;
@@ -129,14 +129,14 @@ class Expr extends $pb.GeneratedMessage {
     if (or != null) {
       $result.or = or;
     }
-    if (plus != null) {
-      $result.plus = plus;
+    if (add != null) {
+      $result.add = add;
     }
-    if (minus != null) {
-      $result.minus = minus;
+    if (subtract != null) {
+      $result.subtract = subtract;
     }
-    if (times != null) {
-      $result.times = times;
+    if (multiply != null) {
+      $result.multiply = multiply;
     }
     if (contains != null) {
       $result.contains = contains;
@@ -168,8 +168,8 @@ class Expr extends $pb.GeneratedMessage {
     if (record != null) {
       $result.record = record;
     }
-    if (funcCall != null) {
-      $result.funcCall = funcCall;
+    if (extensionCall != null) {
+      $result.extensionCall = extensionCall;
     }
     return $result;
   }
@@ -183,11 +183,11 @@ class Expr extends $pb.GeneratedMessage {
 
   static const $core.Map<$core.int, Expr_Expr> _Expr_ExprByTag = {
     1: Expr_Expr.value,
-    2: Expr_Expr.var_,
+    2: Expr_Expr.variable,
     3: Expr_Expr.slot,
     4: Expr_Expr.unknown,
     5: Expr_Expr.not,
-    6: Expr_Expr.neg,
+    6: Expr_Expr.negate,
     7: Expr_Expr.equals,
     8: Expr_Expr.notEquals,
     9: Expr_Expr.in_,
@@ -197,9 +197,9 @@ class Expr extends $pb.GeneratedMessage {
     13: Expr_Expr.greaterThanOrEquals,
     14: Expr_Expr.and,
     15: Expr_Expr.or,
-    16: Expr_Expr.plus,
-    17: Expr_Expr.minus,
-    18: Expr_Expr.times,
+    16: Expr_Expr.add,
+    17: Expr_Expr.subtract,
+    18: Expr_Expr.multiply,
     19: Expr_Expr.contains,
     20: Expr_Expr.containsAll,
     21: Expr_Expr.containsAny,
@@ -210,7 +210,7 @@ class Expr extends $pb.GeneratedMessage {
     26: Expr_Expr.ifThenElse,
     27: Expr_Expr.set,
     28: Expr_Expr.record,
-    29: Expr_Expr.funcCall,
+    29: Expr_Expr.extensionCall,
     0: Expr_Expr.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
@@ -250,13 +250,15 @@ class Expr extends $pb.GeneratedMessage {
     ])
     ..aOM<ExprValue>(1, _omitFieldNames ? '' : 'value',
         subBuilder: ExprValue.create)
-    ..aOM<ExprVar>(2, _omitFieldNames ? '' : 'var', subBuilder: ExprVar.create)
+    ..aOM<ExprVariable>(2, _omitFieldNames ? '' : 'variable',
+        subBuilder: ExprVariable.create)
     ..aOM<ExprSlot>(3, _omitFieldNames ? '' : 'slot',
         subBuilder: ExprSlot.create)
     ..aOM<ExprUnknown>(4, _omitFieldNames ? '' : 'unknown',
         subBuilder: ExprUnknown.create)
     ..aOM<ExprNot>(5, _omitFieldNames ? '' : 'not', subBuilder: ExprNot.create)
-    ..aOM<ExprNeg>(6, _omitFieldNames ? '' : 'neg', subBuilder: ExprNeg.create)
+    ..aOM<ExprNegate>(6, _omitFieldNames ? '' : 'negate',
+        subBuilder: ExprNegate.create)
     ..aOM<ExprEquals>(7, _omitFieldNames ? '' : 'equals',
         subBuilder: ExprEquals.create)
     ..aOM<ExprNotEquals>(8, _omitFieldNames ? '' : 'notEquals',
@@ -273,12 +275,11 @@ class Expr extends $pb.GeneratedMessage {
         subBuilder: ExprGreaterThanOrEquals.create)
     ..aOM<ExprAnd>(14, _omitFieldNames ? '' : 'and', subBuilder: ExprAnd.create)
     ..aOM<ExprOr>(15, _omitFieldNames ? '' : 'or', subBuilder: ExprOr.create)
-    ..aOM<ExprPlus>(16, _omitFieldNames ? '' : 'plus',
-        subBuilder: ExprPlus.create)
-    ..aOM<ExprMinus>(17, _omitFieldNames ? '' : 'minus',
-        subBuilder: ExprMinus.create)
-    ..aOM<ExprTimes>(18, _omitFieldNames ? '' : 'times',
-        subBuilder: ExprTimes.create)
+    ..aOM<ExprAdd>(16, _omitFieldNames ? '' : 'add', subBuilder: ExprAdd.create)
+    ..aOM<ExprSubt>(17, _omitFieldNames ? '' : 'subtract',
+        subBuilder: ExprSubt.create)
+    ..aOM<ExprMult>(18, _omitFieldNames ? '' : 'multiply',
+        subBuilder: ExprMult.create)
     ..aOM<ExprContains>(19, _omitFieldNames ? '' : 'contains',
         subBuilder: ExprContains.create)
     ..aOM<ExprContainsAll>(20, _omitFieldNames ? '' : 'containsAll',
@@ -297,8 +298,8 @@ class Expr extends $pb.GeneratedMessage {
     ..aOM<ExprSet>(27, _omitFieldNames ? '' : 'set', subBuilder: ExprSet.create)
     ..aOM<ExprRecord>(28, _omitFieldNames ? '' : 'record',
         subBuilder: ExprRecord.create)
-    ..aOM<ExprFuncCall>(29, _omitFieldNames ? '' : 'funcCall',
-        subBuilder: ExprFuncCall.create)
+    ..aOM<ExprExtensionCall>(29, _omitFieldNames ? '' : 'extensionCall',
+        subBuilder: ExprExtensionCall.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -340,18 +341,18 @@ class Expr extends $pb.GeneratedMessage {
   ExprValue ensureValue() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  ExprVar get var_ => $_getN(1);
+  ExprVariable get variable => $_getN(1);
   @$pb.TagNumber(2)
-  set var_(ExprVar v) {
+  set variable(ExprVariable v) {
     setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasVar_() => $_has(1);
+  $core.bool hasVariable() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVar_() => clearField(2);
+  void clearVariable() => clearField(2);
   @$pb.TagNumber(2)
-  ExprVar ensureVar_() => $_ensure(1);
+  ExprVariable ensureVariable() => $_ensure(1);
 
   @$pb.TagNumber(3)
   ExprSlot get slot => $_getN(2);
@@ -396,18 +397,18 @@ class Expr extends $pb.GeneratedMessage {
   ExprNot ensureNot() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  ExprNeg get neg => $_getN(5);
+  ExprNegate get negate => $_getN(5);
   @$pb.TagNumber(6)
-  set neg(ExprNeg v) {
+  set negate(ExprNegate v) {
     setField(6, v);
   }
 
   @$pb.TagNumber(6)
-  $core.bool hasNeg() => $_has(5);
+  $core.bool hasNegate() => $_has(5);
   @$pb.TagNumber(6)
-  void clearNeg() => clearField(6);
+  void clearNegate() => clearField(6);
   @$pb.TagNumber(6)
-  ExprNeg ensureNeg() => $_ensure(5);
+  ExprNegate ensureNegate() => $_ensure(5);
 
   @$pb.TagNumber(7)
   ExprEquals get equals => $_getN(6);
@@ -536,46 +537,46 @@ class Expr extends $pb.GeneratedMessage {
   ExprOr ensureOr() => $_ensure(14);
 
   @$pb.TagNumber(16)
-  ExprPlus get plus => $_getN(15);
+  ExprAdd get add => $_getN(15);
   @$pb.TagNumber(16)
-  set plus(ExprPlus v) {
+  set add(ExprAdd v) {
     setField(16, v);
   }
 
   @$pb.TagNumber(16)
-  $core.bool hasPlus() => $_has(15);
+  $core.bool hasAdd() => $_has(15);
   @$pb.TagNumber(16)
-  void clearPlus() => clearField(16);
+  void clearAdd() => clearField(16);
   @$pb.TagNumber(16)
-  ExprPlus ensurePlus() => $_ensure(15);
+  ExprAdd ensureAdd() => $_ensure(15);
 
   @$pb.TagNumber(17)
-  ExprMinus get minus => $_getN(16);
+  ExprSubt get subtract => $_getN(16);
   @$pb.TagNumber(17)
-  set minus(ExprMinus v) {
+  set subtract(ExprSubt v) {
     setField(17, v);
   }
 
   @$pb.TagNumber(17)
-  $core.bool hasMinus() => $_has(16);
+  $core.bool hasSubtract() => $_has(16);
   @$pb.TagNumber(17)
-  void clearMinus() => clearField(17);
+  void clearSubtract() => clearField(17);
   @$pb.TagNumber(17)
-  ExprMinus ensureMinus() => $_ensure(16);
+  ExprSubt ensureSubtract() => $_ensure(16);
 
   @$pb.TagNumber(18)
-  ExprTimes get times => $_getN(17);
+  ExprMult get multiply => $_getN(17);
   @$pb.TagNumber(18)
-  set times(ExprTimes v) {
+  set multiply(ExprMult v) {
     setField(18, v);
   }
 
   @$pb.TagNumber(18)
-  $core.bool hasTimes() => $_has(17);
+  $core.bool hasMultiply() => $_has(17);
   @$pb.TagNumber(18)
-  void clearTimes() => clearField(18);
+  void clearMultiply() => clearField(18);
   @$pb.TagNumber(18)
-  ExprTimes ensureTimes() => $_ensure(17);
+  ExprMult ensureMultiply() => $_ensure(17);
 
   @$pb.TagNumber(19)
   ExprContains get contains => $_getN(18);
@@ -718,23 +719,23 @@ class Expr extends $pb.GeneratedMessage {
   ExprRecord ensureRecord() => $_ensure(27);
 
   @$pb.TagNumber(29)
-  ExprFuncCall get funcCall => $_getN(28);
+  ExprExtensionCall get extensionCall => $_getN(28);
   @$pb.TagNumber(29)
-  set funcCall(ExprFuncCall v) {
+  set extensionCall(ExprExtensionCall v) {
     setField(29, v);
   }
 
   @$pb.TagNumber(29)
-  $core.bool hasFuncCall() => $_has(28);
+  $core.bool hasExtensionCall() => $_has(28);
   @$pb.TagNumber(29)
-  void clearFuncCall() => clearField(29);
+  void clearExtensionCall() => clearField(29);
   @$pb.TagNumber(29)
-  ExprFuncCall ensureFuncCall() => $_ensure(28);
+  ExprExtensionCall ensureExtensionCall() => $_ensure(28);
 }
 
 class ExprValue extends $pb.GeneratedMessage {
   factory ExprValue({
-    $46.Value? value,
+    $49.Value? value,
   }) {
     final $result = create();
     if (value != null) {
@@ -754,8 +755,8 @@ class ExprValue extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ExprValue',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$46.Value>(1, _omitFieldNames ? '' : 'value',
-        subBuilder: $46.Value.create)
+    ..aOM<$49.Value>(1, _omitFieldNames ? '' : 'value',
+        subBuilder: $49.Value.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -780,9 +781,9 @@ class ExprValue extends $pb.GeneratedMessage {
   static ExprValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $46.Value get value => $_getN(0);
+  $49.Value get value => $_getN(0);
   @$pb.TagNumber(1)
-  set value($46.Value v) {
+  set value($49.Value v) {
     setField(1, v);
   }
 
@@ -791,11 +792,11 @@ class ExprValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearValue() => clearField(1);
   @$pb.TagNumber(1)
-  $46.Value ensureValue() => $_ensure(0);
+  $49.Value ensureValue() => $_ensure(0);
 }
 
-class ExprVar extends $pb.GeneratedMessage {
-  factory ExprVar({
+class ExprVariable extends $pb.GeneratedMessage {
+  factory ExprVariable({
     Variable? variable,
   }) {
     final $result = create();
@@ -804,16 +805,16 @@ class ExprVar extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ExprVar._() : super();
-  factory ExprVar.fromBuffer($core.List<$core.int> i,
+  ExprVariable._() : super();
+  factory ExprVariable.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprVar.fromJson($core.String i,
+  factory ExprVariable.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprVar',
+      _omitMessageNames ? '' : 'ExprVariable',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..e<Variable>(1, _omitFieldNames ? '' : 'variable', $pb.PbFieldType.OE,
@@ -825,23 +826,25 @@ class ExprVar extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprVar clone() => ExprVar()..mergeFromMessage(this);
+  ExprVariable clone() => ExprVariable()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprVar copyWith(void Function(ExprVar) updates) =>
-      super.copyWith((message) => updates(message as ExprVar)) as ExprVar;
+  ExprVariable copyWith(void Function(ExprVariable) updates) =>
+      super.copyWith((message) => updates(message as ExprVariable))
+          as ExprVariable;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprVar create() => ExprVar._();
-  ExprVar createEmptyInstance() => create();
-  static $pb.PbList<ExprVar> createRepeated() => $pb.PbList<ExprVar>();
+  static ExprVariable create() => ExprVariable._();
+  ExprVariable createEmptyInstance() => create();
+  static $pb.PbList<ExprVariable> createRepeated() =>
+      $pb.PbList<ExprVariable>();
   @$core.pragma('dart2js:noInline')
-  static ExprVar getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprVar>(create);
-  static ExprVar? _defaultInstance;
+  static ExprVariable getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExprVariable>(create);
+  static ExprVariable? _defaultInstance;
 
   @$pb.TagNumber(1)
   Variable get variable => $_getN(0);
@@ -980,11 +983,11 @@ class ExprUnknown extends $pb.GeneratedMessage {
 
 class ExprNot extends $pb.GeneratedMessage {
   factory ExprNot({
-    Expr? expr,
+    Expr? arg,
   }) {
     final $result = create();
-    if (expr != null) {
-      $result.expr = expr;
+    if (arg != null) {
+      $result.arg = arg;
     }
     return $result;
   }
@@ -1000,7 +1003,7 @@ class ExprNot extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ExprNot',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<Expr>(1, _omitFieldNames ? '' : 'expr', subBuilder: Expr.create)
+    ..aOM<Expr>(1, _omitFieldNames ? '' : 'arg', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1025,79 +1028,79 @@ class ExprNot extends $pb.GeneratedMessage {
   static ExprNot? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Expr get expr => $_getN(0);
+  Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
-  set expr(Expr v) {
+  set arg(Expr v) {
     setField(1, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasExpr() => $_has(0);
+  $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
-  void clearExpr() => clearField(1);
+  void clearArg() => clearField(1);
   @$pb.TagNumber(1)
-  Expr ensureExpr() => $_ensure(0);
+  Expr ensureArg() => $_ensure(0);
 }
 
-class ExprNeg extends $pb.GeneratedMessage {
-  factory ExprNeg({
-    Expr? expr,
+class ExprNegate extends $pb.GeneratedMessage {
+  factory ExprNegate({
+    Expr? arg,
   }) {
     final $result = create();
-    if (expr != null) {
-      $result.expr = expr;
+    if (arg != null) {
+      $result.arg = arg;
     }
     return $result;
   }
-  ExprNeg._() : super();
-  factory ExprNeg.fromBuffer($core.List<$core.int> i,
+  ExprNegate._() : super();
+  factory ExprNegate.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprNeg.fromJson($core.String i,
+  factory ExprNegate.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprNeg',
+      _omitMessageNames ? '' : 'ExprNegate',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<Expr>(1, _omitFieldNames ? '' : 'expr', subBuilder: Expr.create)
+    ..aOM<Expr>(1, _omitFieldNames ? '' : 'arg', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprNeg clone() => ExprNeg()..mergeFromMessage(this);
+  ExprNegate clone() => ExprNegate()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprNeg copyWith(void Function(ExprNeg) updates) =>
-      super.copyWith((message) => updates(message as ExprNeg)) as ExprNeg;
+  ExprNegate copyWith(void Function(ExprNegate) updates) =>
+      super.copyWith((message) => updates(message as ExprNegate)) as ExprNegate;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprNeg create() => ExprNeg._();
-  ExprNeg createEmptyInstance() => create();
-  static $pb.PbList<ExprNeg> createRepeated() => $pb.PbList<ExprNeg>();
+  static ExprNegate create() => ExprNegate._();
+  ExprNegate createEmptyInstance() => create();
+  static $pb.PbList<ExprNegate> createRepeated() => $pb.PbList<ExprNegate>();
   @$core.pragma('dart2js:noInline')
-  static ExprNeg getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprNeg>(create);
-  static ExprNeg? _defaultInstance;
+  static ExprNegate getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExprNegate>(create);
+  static ExprNegate? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Expr get expr => $_getN(0);
+  Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
-  set expr(Expr v) {
+  set arg(Expr v) {
     setField(1, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasExpr() => $_has(0);
+  $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
-  void clearExpr() => clearField(1);
+  void clearArg() => clearField(1);
   @$pb.TagNumber(1)
-  Expr ensureExpr() => $_ensure(0);
+  Expr ensureArg() => $_ensure(0);
 }
 
 class ExprEquals extends $pb.GeneratedMessage {
@@ -1833,8 +1836,8 @@ class ExprOr extends $pb.GeneratedMessage {
   Expr ensureRight() => $_ensure(1);
 }
 
-class ExprPlus extends $pb.GeneratedMessage {
-  factory ExprPlus({
+class ExprAdd extends $pb.GeneratedMessage {
+  factory ExprAdd({
     Expr? left,
     Expr? right,
   }) {
@@ -1847,16 +1850,16 @@ class ExprPlus extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ExprPlus._() : super();
-  factory ExprPlus.fromBuffer($core.List<$core.int> i,
+  ExprAdd._() : super();
+  factory ExprAdd.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprPlus.fromJson($core.String i,
+  factory ExprAdd.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprPlus',
+      _omitMessageNames ? '' : 'ExprAdd',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..aOM<Expr>(1, _omitFieldNames ? '' : 'left', subBuilder: Expr.create)
@@ -1866,23 +1869,23 @@ class ExprPlus extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprPlus clone() => ExprPlus()..mergeFromMessage(this);
+  ExprAdd clone() => ExprAdd()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprPlus copyWith(void Function(ExprPlus) updates) =>
-      super.copyWith((message) => updates(message as ExprPlus)) as ExprPlus;
+  ExprAdd copyWith(void Function(ExprAdd) updates) =>
+      super.copyWith((message) => updates(message as ExprAdd)) as ExprAdd;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprPlus create() => ExprPlus._();
-  ExprPlus createEmptyInstance() => create();
-  static $pb.PbList<ExprPlus> createRepeated() => $pb.PbList<ExprPlus>();
+  static ExprAdd create() => ExprAdd._();
+  ExprAdd createEmptyInstance() => create();
+  static $pb.PbList<ExprAdd> createRepeated() => $pb.PbList<ExprAdd>();
   @$core.pragma('dart2js:noInline')
-  static ExprPlus getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprPlus>(create);
-  static ExprPlus? _defaultInstance;
+  static ExprAdd getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprAdd>(create);
+  static ExprAdd? _defaultInstance;
 
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
@@ -1913,8 +1916,8 @@ class ExprPlus extends $pb.GeneratedMessage {
   Expr ensureRight() => $_ensure(1);
 }
 
-class ExprMinus extends $pb.GeneratedMessage {
-  factory ExprMinus({
+class ExprSubt extends $pb.GeneratedMessage {
+  factory ExprSubt({
     Expr? left,
     Expr? right,
   }) {
@@ -1927,16 +1930,16 @@ class ExprMinus extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ExprMinus._() : super();
-  factory ExprMinus.fromBuffer($core.List<$core.int> i,
+  ExprSubt._() : super();
+  factory ExprSubt.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprMinus.fromJson($core.String i,
+  factory ExprSubt.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprMinus',
+      _omitMessageNames ? '' : 'ExprSubt',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..aOM<Expr>(1, _omitFieldNames ? '' : 'left', subBuilder: Expr.create)
@@ -1946,23 +1949,23 @@ class ExprMinus extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprMinus clone() => ExprMinus()..mergeFromMessage(this);
+  ExprSubt clone() => ExprSubt()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprMinus copyWith(void Function(ExprMinus) updates) =>
-      super.copyWith((message) => updates(message as ExprMinus)) as ExprMinus;
+  ExprSubt copyWith(void Function(ExprSubt) updates) =>
+      super.copyWith((message) => updates(message as ExprSubt)) as ExprSubt;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprMinus create() => ExprMinus._();
-  ExprMinus createEmptyInstance() => create();
-  static $pb.PbList<ExprMinus> createRepeated() => $pb.PbList<ExprMinus>();
+  static ExprSubt create() => ExprSubt._();
+  ExprSubt createEmptyInstance() => create();
+  static $pb.PbList<ExprSubt> createRepeated() => $pb.PbList<ExprSubt>();
   @$core.pragma('dart2js:noInline')
-  static ExprMinus getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprMinus>(create);
-  static ExprMinus? _defaultInstance;
+  static ExprSubt getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprSubt>(create);
+  static ExprSubt? _defaultInstance;
 
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
@@ -1993,8 +1996,8 @@ class ExprMinus extends $pb.GeneratedMessage {
   Expr ensureRight() => $_ensure(1);
 }
 
-class ExprTimes extends $pb.GeneratedMessage {
-  factory ExprTimes({
+class ExprMult extends $pb.GeneratedMessage {
+  factory ExprMult({
     Expr? left,
     Expr? right,
   }) {
@@ -2007,16 +2010,16 @@ class ExprTimes extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ExprTimes._() : super();
-  factory ExprTimes.fromBuffer($core.List<$core.int> i,
+  ExprMult._() : super();
+  factory ExprMult.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprTimes.fromJson($core.String i,
+  factory ExprMult.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprTimes',
+      _omitMessageNames ? '' : 'ExprMult',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..aOM<Expr>(1, _omitFieldNames ? '' : 'left', subBuilder: Expr.create)
@@ -2026,23 +2029,23 @@ class ExprTimes extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprTimes clone() => ExprTimes()..mergeFromMessage(this);
+  ExprMult clone() => ExprMult()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprTimes copyWith(void Function(ExprTimes) updates) =>
-      super.copyWith((message) => updates(message as ExprTimes)) as ExprTimes;
+  ExprMult copyWith(void Function(ExprMult) updates) =>
+      super.copyWith((message) => updates(message as ExprMult)) as ExprMult;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprTimes create() => ExprTimes._();
-  ExprTimes createEmptyInstance() => create();
-  static $pb.PbList<ExprTimes> createRepeated() => $pb.PbList<ExprTimes>();
+  static ExprMult create() => ExprMult._();
+  ExprMult createEmptyInstance() => create();
+  static $pb.PbList<ExprMult> createRepeated() => $pb.PbList<ExprMult>();
   @$core.pragma('dart2js:noInline')
-  static ExprTimes getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprTimes>(create);
-  static ExprTimes? _defaultInstance;
+  static ExprMult getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExprMult>(create);
+  static ExprMult? _defaultInstance;
 
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
@@ -2656,19 +2659,19 @@ class ExprIs extends $pb.GeneratedMessage {
 
 class ExprIfThenElse extends $pb.GeneratedMessage {
   factory ExprIfThenElse({
-    Expr? if_,
+    Expr? cond,
     Expr? then,
-    Expr? else_,
+    Expr? otherwise,
   }) {
     final $result = create();
-    if (if_ != null) {
-      $result.if_ = if_;
+    if (cond != null) {
+      $result.cond = cond;
     }
     if (then != null) {
       $result.then = then;
     }
-    if (else_ != null) {
-      $result.else_ = else_;
+    if (otherwise != null) {
+      $result.otherwise = otherwise;
     }
     return $result;
   }
@@ -2684,9 +2687,9 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ExprIfThenElse',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<Expr>(1, _omitFieldNames ? '' : 'if', subBuilder: Expr.create)
+    ..aOM<Expr>(1, _omitFieldNames ? '' : 'cond', subBuilder: Expr.create)
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'then', subBuilder: Expr.create)
-    ..aOM<Expr>(3, _omitFieldNames ? '' : 'else', subBuilder: Expr.create)
+    ..aOM<Expr>(3, _omitFieldNames ? '' : 'otherwise', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2713,18 +2716,18 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   static ExprIfThenElse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Expr get if_ => $_getN(0);
+  Expr get cond => $_getN(0);
   @$pb.TagNumber(1)
-  set if_(Expr v) {
+  set cond(Expr v) {
     setField(1, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasIf_() => $_has(0);
+  $core.bool hasCond() => $_has(0);
   @$pb.TagNumber(1)
-  void clearIf_() => clearField(1);
+  void clearCond() => clearField(1);
   @$pb.TagNumber(1)
-  Expr ensureIf_() => $_ensure(0);
+  Expr ensureCond() => $_ensure(0);
 
   @$pb.TagNumber(2)
   Expr get then => $_getN(1);
@@ -2741,18 +2744,18 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   Expr ensureThen() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  Expr get else_ => $_getN(2);
+  Expr get otherwise => $_getN(2);
   @$pb.TagNumber(3)
-  set else_(Expr v) {
+  set otherwise(Expr v) {
     setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasElse_() => $_has(2);
+  $core.bool hasOtherwise() => $_has(2);
   @$pb.TagNumber(3)
-  void clearElse_() => clearField(3);
+  void clearOtherwise() => clearField(3);
   @$pb.TagNumber(3)
-  Expr ensureElse_() => $_ensure(2);
+  Expr ensureOtherwise() => $_ensure(2);
 }
 
 class ExprSet extends $pb.GeneratedMessage {
@@ -2862,8 +2865,8 @@ class ExprRecord extends $pb.GeneratedMessage {
   $core.Map<$core.String, Expr> get attributes => $_getMap(0);
 }
 
-class ExprFuncCall extends $pb.GeneratedMessage {
-  factory ExprFuncCall({
+class ExprExtensionCall extends $pb.GeneratedMessage {
+  factory ExprExtensionCall({
     $core.String? fn,
     $core.Iterable<Expr>? args,
   }) {
@@ -2876,16 +2879,16 @@ class ExprFuncCall extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ExprFuncCall._() : super();
-  factory ExprFuncCall.fromBuffer($core.List<$core.int> i,
+  ExprExtensionCall._() : super();
+  factory ExprExtensionCall.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExprFuncCall.fromJson($core.String i,
+  factory ExprExtensionCall.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ExprFuncCall',
+      _omitMessageNames ? '' : 'ExprExtensionCall',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'fn')
@@ -2896,25 +2899,25 @@ class ExprFuncCall extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExprFuncCall clone() => ExprFuncCall()..mergeFromMessage(this);
+  ExprExtensionCall clone() => ExprExtensionCall()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExprFuncCall copyWith(void Function(ExprFuncCall) updates) =>
-      super.copyWith((message) => updates(message as ExprFuncCall))
-          as ExprFuncCall;
+  ExprExtensionCall copyWith(void Function(ExprExtensionCall) updates) =>
+      super.copyWith((message) => updates(message as ExprExtensionCall))
+          as ExprExtensionCall;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExprFuncCall create() => ExprFuncCall._();
-  ExprFuncCall createEmptyInstance() => create();
-  static $pb.PbList<ExprFuncCall> createRepeated() =>
-      $pb.PbList<ExprFuncCall>();
+  static ExprExtensionCall create() => ExprExtensionCall._();
+  ExprExtensionCall createEmptyInstance() => create();
+  static $pb.PbList<ExprExtensionCall> createRepeated() =>
+      $pb.PbList<ExprExtensionCall>();
   @$core.pragma('dart2js:noInline')
-  static ExprFuncCall getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ExprFuncCall>(create);
-  static ExprFuncCall? _defaultInstance;
+  static ExprExtensionCall getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExprExtensionCall>(create);
+  static ExprExtensionCall? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get fn => $_getSZ(0);

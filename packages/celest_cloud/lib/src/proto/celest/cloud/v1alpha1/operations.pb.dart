@@ -13,37 +13,33 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/timestamp.pb.dart' as $17;
+import '../../../google/protobuf/any.pb.dart' as $13;
+import '../../../google/protobuf/timestamp.pb.dart' as $20;
+import 'operations.pbenum.dart';
 
 export 'operations.pbenum.dart';
 
 /// Metadata for long-running operations in Celest Cloud.
-/// (-- api-linter: core::0123::resource-annotation=disabled
-///     aip.dev/not-precedent: Not a resource --)
 class OperationMetadata extends $pb.GeneratedMessage {
   factory OperationMetadata({
-    $core.String? type,
-    $core.String? name,
     $core.String? parent,
-    $core.String? trigger,
+    $13.Any? resource,
+    OperationState? state,
     $core.String? requestId,
-    $17.Timestamp? createTime,
-    $17.Timestamp? startTime,
-    $17.Timestamp? endTime,
+    $20.Timestamp? createTime,
+    $20.Timestamp? startTime,
+    $20.Timestamp? endTime,
     $core.int? progress,
   }) {
     final $result = create();
-    if (type != null) {
-      $result.type = type;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
     if (parent != null) {
       $result.parent = parent;
     }
-    if (trigger != null) {
-      $result.trigger = trigger;
+    if (resource != null) {
+      $result.resource = resource;
+    }
+    if (state != null) {
+      $result.state = state;
     }
     if (requestId != null) {
       $result.requestId = requestId;
@@ -75,18 +71,21 @@ class OperationMetadata extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'type')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'parent')
-    ..aOS(4, _omitFieldNames ? '' : 'trigger')
-    ..aOS(5, _omitFieldNames ? '' : 'requestId')
-    ..aOM<$17.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $17.Timestamp.create)
-    ..aOM<$17.Timestamp>(7, _omitFieldNames ? '' : 'startTime',
-        subBuilder: $17.Timestamp.create)
-    ..aOM<$17.Timestamp>(8, _omitFieldNames ? '' : 'endTime',
-        subBuilder: $17.Timestamp.create)
-    ..a<$core.int>(9, _omitFieldNames ? '' : 'progress', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'parent')
+    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'resource',
+        subBuilder: $13.Any.create)
+    ..e<OperationState>(3, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
+        defaultOrMaker: OperationState.OPERATION_STATE_UNSPECIFIED,
+        valueOf: OperationState.valueOf,
+        enumValues: OperationState.values)
+    ..aOS(4, _omitFieldNames ? '' : 'requestId')
+    ..aOM<$20.Timestamp>(5, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $20.Timestamp.create)
+    ..aOM<$20.Timestamp>(6, _omitFieldNames ? '' : 'startTime',
+        subBuilder: $20.Timestamp.create)
+    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'endTime',
+        subBuilder: $20.Timestamp.create)
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'progress', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -112,129 +111,121 @@ class OperationMetadata extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<OperationMetadata>(create);
   static OperationMetadata? _defaultInstance;
 
-  /// The operation type.
+  /// The resource name of the parent resource to the operation.
   @$pb.TagNumber(1)
-  $core.String get type => $_getSZ(0);
+  $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type($core.String v) {
+  set parent($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasType() => $_has(0);
+  $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearParent() => clearField(1);
 
-  /// The resource name of the operation.
+  ///  The resource being operated on.
+  ///
+  ///  (-- api-linter: core::0146::any=disabled --)
   @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
+  $13.Any get resource => $_getN(1);
   @$pb.TagNumber(2)
-  set name($core.String v) {
-    $_setString(1, v);
+  set resource($13.Any v) {
+    setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
+  $core.bool hasResource() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => clearField(2);
+  void clearResource() => clearField(2);
+  @$pb.TagNumber(2)
+  $13.Any ensureResource() => $_ensure(1);
 
-  /// The resource name of the parent operation.
+  /// The state of the operation.
   @$pb.TagNumber(3)
-  $core.String get parent => $_getSZ(2);
+  OperationState get state => $_getN(2);
   @$pb.TagNumber(3)
-  set parent($core.String v) {
-    $_setString(2, v);
+  set state(OperationState v) {
+    setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasParent() => $_has(2);
+  $core.bool hasState() => $_has(2);
   @$pb.TagNumber(3)
-  void clearParent() => clearField(3);
+  void clearState() => clearField(3);
 
-  /// The resource name of the operation that triggered this operation.
+  /// The request ID used for the triggering request.
   @$pb.TagNumber(4)
-  $core.String get trigger => $_getSZ(3);
+  $core.String get requestId => $_getSZ(3);
   @$pb.TagNumber(4)
-  set trigger($core.String v) {
+  set requestId($core.String v) {
     $_setString(3, v);
   }
 
   @$pb.TagNumber(4)
-  $core.bool hasTrigger() => $_has(3);
+  $core.bool hasRequestId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTrigger() => clearField(4);
+  void clearRequestId() => clearField(4);
 
-  /// The request ID used for the create request.
+  /// The time the operation was created.
   @$pb.TagNumber(5)
-  $core.String get requestId => $_getSZ(4);
+  $20.Timestamp get createTime => $_getN(4);
   @$pb.TagNumber(5)
-  set requestId($core.String v) {
-    $_setString(4, v);
+  set createTime($20.Timestamp v) {
+    setField(5, v);
   }
 
   @$pb.TagNumber(5)
-  $core.bool hasRequestId() => $_has(4);
+  $core.bool hasCreateTime() => $_has(4);
   @$pb.TagNumber(5)
-  void clearRequestId() => clearField(5);
+  void clearCreateTime() => clearField(5);
+  @$pb.TagNumber(5)
+  $20.Timestamp ensureCreateTime() => $_ensure(4);
 
-  /// The time the operation was created.
+  /// The time the operation was started.
   @$pb.TagNumber(6)
-  $17.Timestamp get createTime => $_getN(5);
+  $20.Timestamp get startTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($17.Timestamp v) {
+  set startTime($20.Timestamp v) {
     setField(6, v);
   }
 
   @$pb.TagNumber(6)
-  $core.bool hasCreateTime() => $_has(5);
+  $core.bool hasStartTime() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCreateTime() => clearField(6);
+  void clearStartTime() => clearField(6);
   @$pb.TagNumber(6)
-  $17.Timestamp ensureCreateTime() => $_ensure(5);
+  $20.Timestamp ensureStartTime() => $_ensure(5);
 
-  /// The time the operation was started.
+  /// The time the operation was completed.
   @$pb.TagNumber(7)
-  $17.Timestamp get startTime => $_getN(6);
+  $20.Timestamp get endTime => $_getN(6);
   @$pb.TagNumber(7)
-  set startTime($17.Timestamp v) {
+  set endTime($20.Timestamp v) {
     setField(7, v);
   }
 
   @$pb.TagNumber(7)
-  $core.bool hasStartTime() => $_has(6);
+  $core.bool hasEndTime() => $_has(6);
   @$pb.TagNumber(7)
-  void clearStartTime() => clearField(7);
+  void clearEndTime() => clearField(7);
   @$pb.TagNumber(7)
-  $17.Timestamp ensureStartTime() => $_ensure(6);
+  $20.Timestamp ensureEndTime() => $_ensure(6);
 
-  /// The time the operation was completed.
+  ///  If available, the progress of the operation.
+  ///
+  ///  Range: [0, 100]
   @$pb.TagNumber(8)
-  $17.Timestamp get endTime => $_getN(7);
+  $core.int get progress => $_getIZ(7);
   @$pb.TagNumber(8)
-  set endTime($17.Timestamp v) {
-    setField(8, v);
-  }
-
-  @$pb.TagNumber(8)
-  $core.bool hasEndTime() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearEndTime() => clearField(8);
-  @$pb.TagNumber(8)
-  $17.Timestamp ensureEndTime() => $_ensure(7);
-
-  /// If available, progress of the operation.
-  /// Range: [0, 100]
-  @$pb.TagNumber(9)
-  $core.int get progress => $_getIZ(8);
-  @$pb.TagNumber(9)
   set progress($core.int v) {
-    $_setSignedInt32(8, v);
+    $_setSignedInt32(7, v);
   }
 
-  @$pb.TagNumber(9)
-  $core.bool hasProgress() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearProgress() => clearField(9);
+  @$pb.TagNumber(8)
+  $core.bool hasProgress() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearProgress() => clearField(8);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

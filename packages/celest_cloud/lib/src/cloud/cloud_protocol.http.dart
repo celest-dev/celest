@@ -7,6 +7,8 @@ import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
 import 'package:celest_cloud/src/cloud/projects/projects_protocol.http.dart';
+import 'package:celest_cloud/src/cloud/subscriptions/subscriptions_protocol.dart';
+import 'package:celest_cloud/src/cloud/subscriptions/subscriptions_protocol.http.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.dart';
 import 'package:celest_cloud/src/cloud/users/users_protocol.http.dart';
 import 'package:celest_core/_internal.dart';
@@ -55,6 +57,12 @@ final class CloudProtocolHttp implements CloudProtocol {
 
   @override
   late final ProjectsProtocol projects = ProjectsProtocolHttp(
+    uri: _baseUri,
+    httpClient: _client,
+  );
+
+  @override
+  late final SubscriptionsProtocol subscriptions = SubscriptionsProtocolHttp(
     uri: _baseUri,
     httpClient: _client,
   );
