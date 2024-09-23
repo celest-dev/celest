@@ -1,3 +1,8 @@
+## 0.5.0-dev.1
+
+- chore: Bump dependencies
+- fix: Catch errors on init
+
 ## 0.5.0-dev.0
 
 - feat: Add social sign-in support

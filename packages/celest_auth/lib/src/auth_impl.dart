@@ -56,7 +56,9 @@ final class AuthImpl implements Auth {
     return _init ??= Future.sync(() async {
       _authStateSubscription =
           _authStateController.stream.listen((state) => _authState = state);
-      final initialState = await _initialState;
+      final initialState = await _initialState.onError((e, st) {
+        return const Unauthenticated();
+      });
       _authStateController.add(initialState);
       return initialState;
     });
@@ -149,6 +151,8 @@ final class AuthImpl implements Auth {
   Future<void> signOut() async {
     try {
       await cloud.authentication.endSession(null);
+    } on Object {
+      // TODO(dnys1): Log error
     } finally {
       _reset();
       if (!_authStateController.isClosed) {

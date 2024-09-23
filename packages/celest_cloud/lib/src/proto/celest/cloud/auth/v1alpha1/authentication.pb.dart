@@ -309,7 +309,7 @@ class SessionClient extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearClientType() => clearField(2);
 
-  /// Optional. If the client is able to receive callbacks.
+  /// Required. If the client is able to receive callbacks.
   @$pb.TagNumber(3)
   SessionCallbacks get callbacks => $_getN(2);
   @$pb.TagNumber(3)
