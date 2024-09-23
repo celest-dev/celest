@@ -8,6 +8,18 @@ class Uuid {
 
   factory Uuid.v7() => Uuid._(_uuidv7());
 
+  factory Uuid.parse(String uuid) {
+    final buffer = Uint8List(16);
+    var i = 0;
+    for (var j = 0; j < uuid.length; j += 2) {
+      if (uuid[j] == '-') {
+        j++;
+      }
+      buffer[i++] = int.parse(uuid.substring(j, j + 2), radix: 16);
+    }
+    return Uuid._(buffer);
+  }
+
   final Uint8List value;
 
   static bool _addSeparator(int i) => i == 4 || i == 6 || i == 8 || i == 10;
