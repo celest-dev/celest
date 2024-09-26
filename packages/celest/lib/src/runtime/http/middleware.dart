@@ -120,7 +120,8 @@ Handler rootMiddleware(Handler inner) {
           completer.completeError(error, stackTrace);
         },
         print: (self, parent, zone, line) {
-          Logger.root.info(line);
+          final route = request.url.path;
+          parent.print(zone, '[$route] $line');
         },
       ),
     );
@@ -136,7 +137,7 @@ Handler rootMiddleware(Handler inner) {
       },
     );
 
-    // TODO: Convert errors to response
+    // TODO(dnys1): Convert errors to response
     return completer.future;
   };
 }
