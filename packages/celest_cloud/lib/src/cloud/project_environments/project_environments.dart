@@ -141,7 +141,7 @@ final class ProjectEnvironments with BaseService {
     bool validateOnly = false,
   }) async* {
     final request = DeployProjectEnvironmentRequest(
-      parent: environment,
+      name: environment,
       assets: assets,
       resolvedProjectAst: resolvedProject,
       requestId: requestId,

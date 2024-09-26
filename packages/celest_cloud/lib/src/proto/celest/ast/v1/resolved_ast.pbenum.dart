@@ -46,6 +46,8 @@ class ResolvedAuthProvider_Type extends $pb.ProtobufEnum {
       ResolvedAuthProvider_Type._(3, _omitEnumNames ? '' : 'GOOGLE');
   static const ResolvedAuthProvider_Type GITHUB =
       ResolvedAuthProvider_Type._(4, _omitEnumNames ? '' : 'GITHUB');
+  static const ResolvedAuthProvider_Type APPLE =
+      ResolvedAuthProvider_Type._(5, _omitEnumNames ? '' : 'APPLE');
 
   static const $core.List<ResolvedAuthProvider_Type> values =
       <ResolvedAuthProvider_Type>[
@@ -54,6 +56,7 @@ class ResolvedAuthProvider_Type extends $pb.ProtobufEnum {
     SMS_OTP,
     GOOGLE,
     GITHUB,
+    APPLE,
   ];
 
   static final $core.Map<$core.int, ResolvedAuthProvider_Type> _byValue =
