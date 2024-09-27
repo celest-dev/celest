@@ -141,7 +141,7 @@ final class LocalApiRunner implements Closeable {
     final flutterCacheDir =
         await fileSystem.systemTempDirectory.createTemp('celest_');
 
-    // Give the VM service a deterministic port, since allowing to to find one
+    // Give the VM service a deterministic port, since allowing it to find one
     // can lead to a race condition with our random port finder picking the same
     // port.
     //

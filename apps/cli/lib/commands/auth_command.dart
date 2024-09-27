@@ -12,12 +12,11 @@ final class AuthCommand extends CelestCommand {
   String get name => 'auth';
 
   @override
-  String get description => 'Manage your Celest Cloud account.';
+  String get description => 'Manage authentication to Celest Cloud.';
 
   @override
   String get category => 'Account';
 
-  // TODO(dnys1): Remove this once the auth command is fully implemented.
   @override
   bool get hidden => true;
 }

@@ -213,7 +213,7 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "0.5.0-dev.0"
+    version: "0.5.0-dev.1"
   celest_ast:
     dependency: transitive
     description:
@@ -227,7 +227,7 @@ packages:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "0.5.0-dev.0"
+    version: "0.5.0-dev.1"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -241,14 +241,14 @@ packages:
       path: "../../celest/packages/celest_cloud"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   celest_core:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "0.5.0-dev.0"
+    version: "0.5.0-dev.1"
   celest_lints:
     dependency: "direct dev"
     description:
@@ -336,6 +336,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  cloud_http:
+    dependency: transitive
+    description:
+      name: cloud_http
+      sha256: c20f72646647545dee042854b6da07773728f20d4217123f946108066a7cb0f4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   code_builder:
     dependency: "direct main"
     description:
@@ -660,6 +668,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  http_sfv:
+    dependency: transitive
+    description:
+      name: http_sfv
+      sha256: "469922520f97ceb1ddfea6c10f9fe0d45814f6e83f41fd7d32fcb995b3030d00"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   hub:
     dependency: "direct main"
     description:
@@ -695,10 +711,10 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: f377c585ea9c08d48b427dc2e03780af2889d1bb094440da853c6883c1acba4b
+      sha256: caefbbf9ed3b54b87bd3d479438e3837e7f8512015d04046a60b13c0b90d126f
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.1"
+    version: "0.11.0"
   js:
     dependency: transitive
     description:
@@ -830,18 +846,18 @@ packages:
     dependency: transitive
     description:
       name: native_authentication
-      sha256: "8bf0bcfd0cdac01948a9a29b41f1bc3ae7fea0ab6aa6b8206185c139cef037be"
+      sha256: "2e9105516e792af6186861c3f59b5255a6c1435422f58a76e6a30929d85bc8e4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.1.0+2"
   native_storage:
     dependency: transitive
     description:
       name: native_storage
-      sha256: "0cdf8c75cfe38c6c820546d57954e35ecdc8918017b24fad4e7c7f8b9dd50fbf"
+      sha256: "28ba067a74c6e1b610737e06f86d397e7271b2a0e045dfb71ee25eebdec05832"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.2"
   native_toolchain_c:
     dependency: transitive
     description:
@@ -862,10 +878,10 @@ packages:
     dependency: transitive
     description:
       name: objective_c
-      sha256: "77c341fce45bb3865a7bc3ddee4201605799e3de2f7af200e8dae26369d210ea"
+      sha256: "7ad3b1e4478812f8d642af1fe4698f86310ebec1248ba87e2a8fe74d2412731e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0"
   os_detect:
     dependency: "direct main"
     description:
@@ -1448,4 +1464,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=3.5.1 <4.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=3.19.0"
