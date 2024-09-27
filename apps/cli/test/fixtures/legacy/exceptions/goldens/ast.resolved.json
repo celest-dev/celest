@@ -79,7 +79,7 @@
   },
   "envVars": [],
   "sdkInfo": {
-    "sdkVersion": "3.5.1",
+    "sdkVersion": "3.5.3",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
