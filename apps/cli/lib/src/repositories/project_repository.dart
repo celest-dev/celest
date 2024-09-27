@@ -33,9 +33,7 @@ final class ProjectRepository {
 
   Future<Project> put(Project project) async {
     // Ensure org is in cache first.
-    await _organizations.get(
-      'organizations/${project.organizationId}',
-    );
+    await _organizations.get(project.organizationId);
     final result = await _db.upsertProject(
       id: project.id,
       projectId: project.projectId,

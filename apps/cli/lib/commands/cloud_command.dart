@@ -397,7 +397,7 @@ abstract base class CloudUpdateCommand<R extends GeneratedMessage>
         valueHelp: 'KEY=VALUE',
         splitCommas: true,
       )
-      ..addFlag(
+      ..addOption(
         'etag',
         // TODO(dnys1): Needs to be implemented on the backend
         hide: true,
@@ -444,7 +444,7 @@ abstract base class CloudDeleteCommand extends BaseCloudCommand<Empty>
             'also be marked for deletion. Otherwise, the request will only '
             'work if the $resource has no children',
       )
-      ..addFlag(
+      ..addOption(
         'etag',
         // TODO(dnys1): Needs to be implemented on the backend
         hide: true,

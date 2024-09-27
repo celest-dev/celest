@@ -1,5 +1,6 @@
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/authenticate.dart';
+import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 
 final class LogoutCommand extends CelestCommand with Authenticate {
@@ -19,6 +20,13 @@ final class LogoutCommand extends CelestCommand with Authenticate {
       await auth.signOut();
     } on Object catch (e, st) {
       performance.captureError(e, stackTrace: st);
+    }
+
+    // Remove local cloud cache
+    final config = await CelestConfig.load();
+    final cloudDb = config.configDir.childFile('cloud.db');
+    if (cloudDb.existsSync()) {
+      await cloudDb.delete();
     }
 
     cliLogger.success('You have been logged out.');
