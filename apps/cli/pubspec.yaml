@@ -115,6 +115,7 @@ dev_dependencies:
   checks: ^0.3.0
   drift_dev: ">=2.20.0 <2.21.0"
   gcloud: ^0.8.13
+  googleapis: ^13.2.0
   googleapis_auth: ^1.4.1
   json_serializable: ^6.8.0
   mocktail: ^1.0.2

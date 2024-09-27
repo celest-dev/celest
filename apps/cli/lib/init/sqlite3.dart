@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:async/async.dart';
-import 'package:celest_cli/releases/celest_release_info.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';

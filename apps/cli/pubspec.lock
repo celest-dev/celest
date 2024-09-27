@@ -557,7 +557,7 @@ packages:
     source: hosted
     version: "0.3.1+4"
   googleapis:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: googleapis
       sha256: "864f222aed3f2ff00b816c675edf00a39e2aaf373d728d8abec30b37bee1a81c"
@@ -1464,4 +1464,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=3.5.1 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.3.0"

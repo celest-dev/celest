@@ -1,18 +1,17 @@
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
-import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-final class StartCommand extends CelestCommand
+final class InitCommand extends CelestCommand
     with Configure, Migrate, ProjectCreator {
-  StartCommand();
+  InitCommand();
 
   @override
-  String get description => 'Starts a local Celest development environment.';
+  String get description => 'Creates a new Celest project.';
 
   @override
-  String get name => 'start';
+  String get name => 'init';
 
   @override
   String get category => 'Project';
@@ -25,15 +24,13 @@ final class StartCommand extends CelestCommand
     await super.run();
 
     await checkForLatestVersion();
-    final needsMigration = await configure();
+    await configure();
 
     currentProgress?.complete('Project generated successfully');
-    currentProgress = cliLogger.progress('Starting Celest');
-
-    // Start the Celest Frontend Loop
-    return CelestFrontend().run(
-      migrateProject: needsMigration,
-      currentProgress: currentProgress!,
+    cliLogger.success(
+      'Run `celest start` to start a local development server 🚀',
     );
+
+    return 0;
   }
 }

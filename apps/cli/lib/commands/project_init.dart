@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:aws_common/aws_common.dart';
+import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/commands/start_command.dart';
+import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
@@ -11,8 +13,33 @@ import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+
+base mixin ProjectCreator on CelestCommand {
+  abstract Progress? currentProgress;
+
+  Future<String> createProject({
+    required String projectName,
+    required ParentProject? parentProject,
+  }) async {
+    logger.finest(
+      'Generating project for "$projectName" at '
+      '"${projectPaths.projectRoot}"...',
+    );
+    currentProgress = cliLogger.progress('Generating project');
+    await performance.trace('ProjectCreator', 'createProject', () async {
+      await ProjectGenerator(
+        parentProject: parentProject,
+        projectRoot: projectPaths.projectRoot,
+        projectName: projectName,
+      ).generate();
+      logger.fine('Project generated successfully');
+    });
+    return projectName;
+  }
+}
 
 base mixin Configure on CelestCommand {
   // TODO(dnys1): Move to ProjectPaths. Rename to CelestProject.
@@ -21,7 +48,7 @@ base mixin Configure on CelestCommand {
 
   static Never _throwNoProject() => throw const CelestException(
         'No Celest project found in the current directory. '
-        'To create a new project, run `celest start`.',
+        'To create a new project, run `celest init`.',
       );
 
   String newProjectName({
@@ -56,16 +83,20 @@ base mixin Configure on CelestCommand {
     ParentProject? parentProject;
 
     if (!pubspecFile.existsSync()) {
-      if (this is! StartCommand) {
-        _throwNoProject();
-      }
-      final createNew = cliLogger.confirm(
-        'No Celest project found in the current directory. '
-        'Would you like to create one?',
-      );
-      if (!createNew) {
-        cliLogger.detail('Skipping project creation.');
-        await Future(() => exit(0));
+      switch (this) {
+        case StartCommand():
+          final createNew = cliLogger.confirm(
+            'No Celest project found in the current directory. '
+            'Would you like to create one?',
+          );
+          if (!createNew) {
+            cliLogger.detail('Skipping project creation.');
+            await Future(() => exit(0));
+          }
+        case InitCommand():
+          break;
+        default:
+          _throwNoProject();
       }
       projectName = newProjectName(parentProject: null);
       isExistingProject = false;
@@ -120,7 +151,7 @@ base mixin Configure on CelestCommand {
 
     var needsMigration = false;
     if (!isExistingProject) {
-      if (this case final StartCommand projectCreator) {
+      if (this case final ProjectCreator projectCreator) {
         projectName ??= newProjectName(parentProject: parentProject);
         await projectCreator.createProject(
           projectName: projectName,
