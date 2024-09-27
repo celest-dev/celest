@@ -2,35 +2,33 @@ import 'dart:async';
 import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 
-import 'package:api_celest/api_celest.dart';
 import 'package:api_celest/ast.dart' as ast;
 import 'package:api_celest/ast.dart';
 import 'package:async/async.dart';
 import 'package:aws_common/aws_common.dart';
-import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/commands/cloud_command.dart';
 import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/repositories/organization_repository.dart';
+import 'package:celest_cli/src/repositories/project_environment_repository.dart';
+import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:hub/context.dart' show EnvironmentConfig, HubMetadata, context;
-import 'package:hub/user_hub/user_hub_configuration.dart';
-import 'package:hub/user_hub/user_hub_server.dart';
+import 'package:celest_cloud/src/proto.dart' as pb;
+import 'package:celest_core/_internal.dart';
 import 'package:hub/util/email.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
-import 'package:platform/platform.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:watcher/watcher.dart';
-import 'package:yaml_edit/yaml_edit.dart';
 
 enum RestartMode {
   hotReload,
@@ -68,6 +66,15 @@ final class CelestFrontend implements Closeable {
   static CelestFrontend? instance;
   static final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer = CelestAnalyzer();
+
+  ProjectRepository get projects =>
+      ProjectRepository(celestProject.cloudDb, cloud);
+
+  ProjectEnvironmentRepository get projectEnvironments =>
+      ProjectEnvironmentRepository(celestProject.cloudDb, cloud);
+
+  OrganizationRepository get organizations =>
+      OrganizationRepository(celestProject.cloudDb, cloud);
 
   int _logErrors(List<CelestAnalysisError> errors) {
     for (final error in errors) {
@@ -242,7 +249,6 @@ final class CelestFrontend implements Closeable {
   StreamQueue<ProcessSignal>? _reloadStream;
 
   LocalApiRunner? _localApiRunner;
-  UserHubServer? _userHub;
   var _didFirstCompile = false;
 
   /// The current project being compiled.
@@ -314,9 +320,8 @@ final class CelestFrontend implements Closeable {
                 ],
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                proxyPort:
-                    (await isolatedSecureStorage.getLocalUri(project.name))
-                        .port,
+                port: (await isolatedSecureStorage.getLocalUri(project.name))
+                    .port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -366,72 +371,67 @@ final class CelestFrontend implements Closeable {
 
   /// Gets or creates a project with the given [projectName] in the authenticated
   /// user's organization.
-  Future<String?> _getOrCreateProject({
-    String? projectId,
+  Future<String?> _createProject({
     required String projectName,
   }) async {
-    if (projectId != null) {
-      logger.finest('Checking project existence in org');
-      try {
-        final GetProjectResponse(:project) =
-            await projectService.getProject(projectId: projectId);
-        if (project != null) {
-          if (project.projectId != projectId) {
-            throw StateError(
-              'Project ID mismatch: $projectId != ${project.projectId}',
-            );
-          }
-          return projectId;
-        }
-      } on Exception catch (e, st) {
-        logger.finest('Error retrieving project', e, st);
-      }
-      logger.finest('Checking ability to deploy to project: $projectId');
-      // TODO(dnys1): Actually check ability to deploy
-    }
-    logger.finest('Getting project ID for: $projectName');
-    final GetProjectResponse(:project) =
-        await projectService.getProject(projectName: projectName);
-    logger.finest('Found project: $project');
-    if (project != null) {
-      return project.projectId;
-    }
-    final shouldCreate = cliLogger.confirm(
-      'Would you like to create a new project?',
-    );
-    if (!shouldCreate) {
-      return null;
-    }
-    final quotas = await projectService.precheckProject(
-      projectName: projectName,
-    );
-    logger.finest('Project Quotas: $quotas');
-    final availableProjectTypes = [
-      if (quotas.limits.remainingFree > 0) ProjectType.free,
-      if (quotas.limits.remainingPremium > 0) ProjectType.premium,
-    ];
-    if (availableProjectTypes.isEmpty) {
-      cliLogger.err(
-        'Unfortunately, you have no remaining projects in your '
-        'organization. Please upgrade your plan to create more projects.',
+    var organization = await organizations.primary;
+    if (organization == null) {
+      final organizationName = cliLogger.prompt(
+        'What should we call your organization?',
       );
-      return null;
+      if (organizationName.isEmpty) {
+        return null;
+      }
+      // First, create the organization.
+      logger.fine('Creating organization');
+      final operation = cloud.organizations.create(
+        organizationId: organizationName.paramCase,
+        organization: pb.Organization(
+          displayName: organizationName,
+          primaryRegion: pb.Region.NORTH_AMERICA,
+        ),
+      );
+      final waiter = CloudCliOperation(
+        operation,
+        resourceType: 'organization',
+        logger: logger,
+      );
+      final cloudOrganization = await waiter.run(
+        verbs: const (
+          run: 'create',
+          running: 'Creating',
+          completed: 'created',
+        ),
+        cancelTrigger: _stopSignal.future,
+        resource: pb.Organization(),
+      );
+      logger.fine('Created organization: $cloudOrganization');
+      organization = cloudOrganization.toDb();
+      await organizations.put(organization);
     }
-    final projectType = cliLogger.chooseOne(
-      'Great! Which project type would you like to create?',
-      choices: availableProjectTypes,
-      display: (type) => type.displayName,
+    logger.finest('Creating project with name: $projectName');
+    final operation = cloud.projects.create(
+      parent: 'organizations/${organization.id}',
+      projectId: projectName.paramCase,
     );
-    logger.finest('Creating project with type: $projectType');
-    final response = await projectService.createProject(
-      projectName: projectName,
-      projectType: projectType,
+    final waiter = CloudCliOperation(
+      operation,
+      resourceType: 'project',
+      logger: logger,
     );
-    projectId = response.projectId;
-    logger.finest('Created project: $projectId');
-    await _saveProjectId(projectId);
+    final project = await waiter.run(
+      verbs: const (
+        run: 'create',
+        running: 'Creating',
+        completed: 'created',
+      ),
+      cancelTrigger: _stopSignal.future,
+      resource: pb.Project(),
+    );
+    logger.fine('Created project: $project');
+    final dbProject = await projects.put(project.toDb());
     cliLogger.success('Your project has been created! Starting deployment...');
-    return projectId;
+    return dbProject.id;
   }
 
   /// Builds the current project for deployment to the cloud.
@@ -465,8 +465,7 @@ final class CelestFrontend implements Closeable {
             fail(errors);
             await _nextChangeSet();
           case AnalysisSuccessResult(:final project):
-            projectId = await _getOrCreateProject(
-              projectId: projectId,
+            projectId ??= await _createProject(
               projectName: project.name,
             );
             if (projectId == null) {
@@ -513,6 +512,7 @@ final class CelestFrontend implements Closeable {
             timer.cancel();
             currentProgress!.complete();
             cliLogger.success('💙 Your Celest project has been deployed!');
+            cliLogger.info(projectOutputs.baseUri.toString());
             return 0;
         }
       }
@@ -592,7 +592,7 @@ final class CelestFrontend implements Closeable {
     List<String> invalidatedPaths, {
     required ResolvedProject resolvedProject,
     RestartMode restartMode = RestartMode.hotReload,
-    required int? proxyPort,
+    required int? port,
   }) async {
     final envVars = resolvedProject.envVars.map((envVar) => envVar.name);
     if (_localApiRunner == null) {
@@ -601,13 +601,9 @@ final class CelestFrontend implements Closeable {
           path: projectPaths.localApiEntrypoint,
           envVars: envVars,
           verbose: verbose,
+          port: port,
         );
       });
-      _userHub = await _startUserHub(
-        proxyPort: proxyPort,
-        localApiPort: _localApiRunner!.port,
-        resolvedProject: resolvedProject,
-      );
     } else {
       switch (restartMode) {
         case RestartMode.hotReload:
@@ -626,116 +622,62 @@ final class CelestFrontend implements Closeable {
             );
           });
       }
-      assert(_userHub != null);
-      _userHub!.config.resolvedProject = resolvedProject;
     }
     if (stopped) {
       throw const CancellationException('Celest was stopped');
     }
     return ast.LocalDeployedProject.from(
       projectAst: resolvedProject,
-      port: _userHub!.port,
+      port: _localApiRunner!.port,
     );
   }
 
-  Future<UserHubServer> _startUserHub({
-    required int? proxyPort,
-    required int localApiPort,
-    required ast.ResolvedProject resolvedProject,
-  }) async {
-    return performance.trace('CelestFrontend', 'startUserHub', () async {
-      final dbDir =
-          celestProject.config.configDir.childDirectory(resolvedProject.name);
-      await dbDir.create();
-
-      final metadata =
-          await isolatedSecureStorage.getMetadata(resolvedProject.name) ??
-              await isolatedSecureStorage.setMetadata(
-                resolvedProject.name,
-                HubMetadata.test(),
-              );
-      final envConfig = EnvironmentConfig(
-        isRunningInGcp: false,
-        dbDir: dbDir.path,
-        metadata: metadata,
-        logDatabaseStatements: false,
-      );
-      await context.init(
-        serverName: 'UserHub',
-        config: envConfig,
-        emailProvider: EmailPrinter(),
-        platform: FakePlatform.fromPlatform(platform).copyWith(
-          // Clear out the environment for the user hub so that sensitive info
-          // in the local environment is not used by mistake.
-          environment: {},
-        ),
-        logger: logger,
-        storage: secureStorage,
-      );
-      final port = await const PortFinder(defaultCelestPort)
-          .checkOrUpdatePort(proxyPort);
-      return UserHubServer.start(
-        port: port,
-        userApiUri: Uri.http('localhost:$localApiPort'),
-        config: UserHubConfiguration.development(
-          rpName: resolvedProject.name,
-          resolvedProject: resolvedProject,
-        ),
-      );
-    });
-  }
-
-  S _checkDeployState<S extends DeployState>(DeployState state) {
-    if (state case DeployFailed(:final error)) {
-      throw CelestException(error.message);
-    }
-    if (state is DeployCanceled) {
-      throw const CancellationException();
-    }
-    if (state is! S) {
-      throw StateError('Expected $S got ${state.runtimeType}');
-    }
-    return state;
-  }
-
   Future<String?> _loadProjectId() async {
-    final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
-    if (!pubspecFile.existsSync()) {
-      throw StateError('No pubspec.yaml found');
-    }
-    final pubspec = YamlEditor(await pubspecFile.readAsString());
-    try {
-      final projectId =
-          pubspec.parseAt(['celest', 'project', 'id']).value as String?;
-      logger.finer('Loaded project ID from pubspec.yaml: $projectId');
-      return projectId;
-    } on Object {
-      logger.finer('No project ID found in pubspec.yaml');
+    final projectData = await projects.get(
+      celestProject.projectName.paramCase,
+    );
+    if (projectData == null) {
+      logger.finer('No project ID found in cache');
       return null;
     }
+    logger.finer('Loaded project ID from cache: $projectData');
+    return projectData.id;
   }
 
-  Future<void> _saveProjectId(String? projectId) async {
-    logger.finer('Saving project ID to pubspec.yaml: $projectId');
-    final pubspecFile = fileSystem.file(projectPaths.pubspecYaml);
-    final pubspec = YamlEditor(await pubspecFile.readAsString());
-    if (projectId != null) {
-      pubspec.update(
-        ['celest'],
-        {
-          'project': {
-            'id': projectId,
-          },
-        },
-      );
-    } else {
-      try {
-        pubspec.remove(['celest']);
-      } on Object {
-        // OK
-      }
+  Future<String> _getOrCreateEnvironment(String projectId) async {
+    final environment = await projectEnvironments.get(
+      'production',
+      projectId: projectId,
+    );
+    if (environment != null) {
+      return environment.id;
     }
-    await pubspecFile.writeAsString(pubspec.toString());
+    final progress = cliLogger.progress('Creating production environment');
+    final operation = cloud.projects.environments.create(
+      projectEnvironmentId: 'production',
+      parent: 'projects/$projectId',
+      displayName: 'Production',
+    );
+    final waiter = CloudCliOperation(
+      operation,
+      resourceType: 'environment',
+      logger: logger,
+    );
+    final cloudEnvironment = await waiter.run(
+      verbs: const (
+        run: 'create',
+        running: 'Creating',
+        completed: 'created',
+      ),
+      cancelTrigger: _stopSignal.future,
+      resource: pb.ProjectEnvironment(),
+    );
+    logger.fine('Created production environment: $cloudEnvironment');
+    final dbEnvironment = await projectEnvironments.put(
+      cloudEnvironment.toDb(),
+    );
+    progress.complete();
+    return dbEnvironment.id;
   }
 
   Future<ast.RemoteDeployedProject> _deployProject({
@@ -743,28 +685,8 @@ final class CelestFrontend implements Closeable {
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        logger.fine('Creating deployment');
-        final createResult = await deployService.createDeployment(
-          projectId: projectId,
-          ast: resolvedProject,
-        );
-        if (stopped) {
-          throw const CancellationException();
-        }
-        final DeployCreated(
-          :deploymentId,
-          :missingAssetIds,
-          :ongoingDeployments,
-        ) = _checkDeployState<DeployCreated>(createResult);
-        analytics.capture(
-          'start_deployment',
-          properties: {
-            'deployment_id': deploymentId,
-          },
-        );
-        if (ongoingDeployments.isNotEmpty) {
-          // TODO: Handle multiple ongoing deployments
-        }
+        final environmentId = await _getOrCreateEnvironment(projectId);
+        final deploymentId = Uuid.v7().hexValue;
         try {
           final entrypointCompiler = EntrypointCompiler(
             logger: logger,
@@ -772,78 +694,59 @@ final class CelestFrontend implements Closeable {
             enabledExperiments:
                 celestProject.analysisOptions.enabledExperiments,
           );
-          final assets = Stream.fromFutures([
-            entrypointCompiler.compile(
-              resolvedProject.id,
-              projectPaths.localApiEntrypoint,
+          final kernel = await entrypointCompiler.compile(
+            resolvedProject.id,
+            projectPaths.localApiEntrypoint,
+          );
+          final operation = cloud.projects.environments.deploy(
+            'projects/$projectId/environments/$environmentId',
+            // HACK(dnys1): celest_ast and celest_cloud don't share types.
+            resolvedProject: pb.ResolvedProject.fromBuffer(
+              resolvedProject.toProto().writeToBuffer(),
             ),
-          ]);
-          logger.fine('Created deployment: $deploymentId');
-          logger.finest('Missing assets: ${missingAssetIds.join('\n')}');
-          await assets.concurrentAsyncMap((compilationResult) async {
-            logger.fine('Submitting asset for: ${compilationResult.nodeId}');
-            if (stopped) {
-              throw const CancellationException();
-            }
-            final submitAssetResult = await deployService.submitAsset(
-              deploymentId: deploymentId,
-              assetId: AssetId(
-                node: compilationResult.nodeId,
-                type: AssetType.dartKernel,
+            assets: [
+              pb.ProjectAsset(
+                type: pb.ProjectAsset_Type.DART_KERNEL,
+                etag: kernel.outputDillDigest.toString(),
+                filename: p.basename(kernel.outputDillPath),
+                inline: kernel.outputDill,
               ),
-              asset: compilationResult.outputDill,
-              assetSha256: Uint8List.fromList(
-                compilationResult.outputDillSha256.bytes,
-              ),
-            );
-            final checkedResult =
-                _checkDeployState<DeploySubmittedAsset>(submitAssetResult);
-            logger.fine('Submitted asset: ${checkedResult.assetId}');
-          }).drain<void>();
-          logger.fine('Starting deployment');
-          final startResult =
-              await deployService.startDeployment(deploymentId: deploymentId);
-          _checkDeployState<DeployStarted>(startResult);
-          logger.fine('Deployment started');
-          // Maximum allowable time. If it takes longer than this, something is
-          // really wrong.
-          const timeoutDuration = Duration(minutes: 3);
-          final timeout = Future<void>.delayed(timeoutDuration);
-          while (!stopped) {
-            final deployState = await deployService.getDeployment(
-              deploymentId: deploymentId,
-            );
-            logger.fine('Deploy state: $deployState');
-            switch (deployState) {
-              case DeploySucceeded(:final projectId, :final deployedProject):
-                await _saveProjectId(projectId);
-                return deployedProject;
-              case DeployFailed(:final error):
-                throw CelestException(error.message);
-              case DeployCanceled():
-                throw const CelestException('Deployment was canceled');
-              default:
-                break;
-            }
-            await Future.any([
-              Future<void>.delayed(const Duration(seconds: 5)),
-              _stopSignal.future,
-              timeout.then(
-                (_) => throw TimeoutException(
-                  'Timed out after $timeoutDuration',
-                ),
-              ),
-            ]);
-          }
-          logger.finer('Canceling deployment');
-          await deployService.cancelDeployment(deploymentId: deploymentId);
-          throw const CelestException('Deployment was canceled');
+            ],
+            requestId: deploymentId,
+          );
+          final waiter = CloudCliOperation(
+            operation,
+            resourceType: 'project',
+            logger: logger,
+          );
+          final deployment = await waiter.run(
+            verbs: const (
+              run: 'deploy',
+              running: 'Deploying',
+              completed: 'deployed',
+            ),
+            cancelTrigger: _stopSignal.future,
+            resource: pb.DeployProjectEnvironmentResponse(),
+          );
+          logger.fine('Deployed project: $deployment');
+          await projectEnvironments.putConfig(
+            environmentId: environmentId,
+            baseUri: deployment.uri,
+            host: deployment.database.host,
+            token: deployment.database.token,
+          );
+          return ast.RemoteDeployedProject.from(
+            projectAst: resolvedProject,
+            baseUri: Uri.parse(deployment.uri),
+          );
         } on Exception catch (e, st) {
           if (e case CancellationException() || CelestException()) {
             analytics.capture(
               'cancel_deployment',
               properties: {
                 'deployment_id': deploymentId,
+                'project_id': projectId,
+                'environment_id': environmentId,
               },
             );
             rethrow;
@@ -854,6 +757,8 @@ final class CelestFrontend implements Closeable {
               'reference deployment ID: $deploymentId',
               additionalContext: {
                 'deploymentId': deploymentId,
+                'project_id': projectId,
+                'environment_id': environmentId,
                 'error': '$e',
               },
             ),
@@ -892,7 +797,6 @@ final class CelestFrontend implements Closeable {
           Future.value(_reloadStream?.cancel()),
           Future.value(_watcherSub?.cancel()),
           Future.value(_localApiRunner?.close()),
-          Future.value(_userHub?.close(force: true)),
         ]);
         logger.finest('Stopped Celest frontend');
       });

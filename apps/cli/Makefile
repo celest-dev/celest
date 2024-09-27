@@ -1,14 +1,12 @@
-lib/database/*.drift.dart lib/database/database.g.dart: lib/database/*.drift
+.PHONY: database
+
+database:
 	@echo "Generating Dart Drift classes..."
 	@dart run build_runner build --delete-conflicting-outputs
-
-lib/database/schema/*.json: lib/database/database.g.dart
-	@echo "Generating schema JSON..."
-	@mkdir -p lib/database/schema/
-	@dart run drift_dev schema dump lib/database/database.dart lib/database/schema/
-
-lib/database/database_versions.dart: lib/database/schema/*.json
-	@echo "Generating migration steps..."
-	@dart run drift_dev schema steps lib/database/schema/ lib/database/database_versions.dart
-
-all: lib/database/database_versions.dart
+	@for DB in cache cloud; do \
+		echo "Generating schema JSON for $${DB} database..."; \
+		mkdir -p lib/database/$${DB}/schema/; \
+		dart run drift_dev schema dump lib/database/$${DB}/$${DB}_database.dart lib/database/$${DB}/schema/; \
+		echo "Generating migration file for $${DB} database..."; \
+		dart run drift_dev schema steps lib/database/$${DB}/schema/ lib/database/$${DB}/$${DB}.migrations.dart; \
+	done

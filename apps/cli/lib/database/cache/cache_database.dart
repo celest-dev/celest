@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
-import 'package:celest_cli/database/database_versions.dart';
+import 'package:celest_cli/database/cache/cache.migrations.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:drift/drift.dart';
@@ -12,11 +12,11 @@ import 'package:logging/logging.dart';
 import 'package:pool/pool.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-part 'database.g.dart';
+part 'cache_database.g.dart';
 
-@DriftDatabase(include: {'database.drift'})
-final class CelestDatabase extends _$CelestDatabase {
-  CelestDatabase._(
+@DriftDatabase(include: {'cache.drift'})
+final class CacheDatabase extends _$CacheDatabase {
+  CacheDatabase._(
     String projectRoot, {
     required Completer<Database> rawDatabase,
     required bool verbose,
@@ -28,19 +28,19 @@ final class CelestDatabase extends _$CelestDatabase {
           ),
         );
 
-  static Future<CelestDatabase> start(
+  static Future<CacheDatabase> start(
     String projectRoot, {
     required bool verbose,
   }) async {
     final rawCompleter = Completer<Database>();
-    final database = CelestDatabase._(
+    final database = CacheDatabase._(
       projectRoot,
       verbose: verbose,
       rawDatabase: rawCompleter,
     );
     await database.customSelect('SELECT 1').get();
     final rawDb = await rawCompleter.future;
-    database.byteStore = DatabaseByteStore(rawDb);
+    database.byteStore = CachingByteStore(rawDb);
     return database;
   }
 
@@ -71,22 +71,22 @@ final class CelestDatabase extends _$CelestDatabase {
     );
   }
 
-  late final DatabaseByteStore byteStore;
+  late final CachingByteStore byteStore;
 }
 
-final class DatabaseByteStore implements ByteStore {
-  DatabaseByteStore(this._database);
+final class CachingByteStore implements ByteStore {
+  CachingByteStore(this._database);
 
   final Database _database;
   static final _logger = Logger('DatabaseByteStore');
 
   late final _selectStmt = _database.prepare(
-    'SELECT content FROM dart_analyzer_cache WHERE entry_key = ?',
+    'SELECT content FROM analyzer_byte_store WHERE cache_key = ?',
   );
   late final _insertStmt = _database.prepare(
-    'INSERT INTO dart_analyzer_cache(entry_key, content) '
-    'VALUES(:entry_key, :content) '
-    'ON CONFLICT(entry_key) DO UPDATE SET content = :content '
+    'INSERT INTO analyzer_byte_store(cache_key, content) '
+    'VALUES(:cache_key, :content) '
+    'ON CONFLICT(cache_key) DO UPDATE SET content = :content '
     'RETURNING content',
   );
 
@@ -107,7 +107,7 @@ final class DatabaseByteStore implements ByteStore {
   Uint8List putGet(String key, Uint8List bytes) {
     final result = _insertStmt.selectWith(
       StatementParameters.named({
-        ':entry_key': key,
+        ':cache_key': key,
         ':content': bytes,
       }),
     );

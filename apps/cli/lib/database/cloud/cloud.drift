@@ -1,0 +1,234 @@
+-- Stores organization metadata returned from Celest Cloud.
+CREATE TABLE IF NOT EXISTS organizations (
+    -- Immutable. The unique identifier for the organization.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: org_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The primary alias for the organization.
+    organization_id TEXT NOT NULL UNIQUE,
+
+    -- A human-readable name for the organization.
+    display_name TEXT NOT NULL,
+
+    -- The organization's primary region.
+    primary_region TEXT NOT NULL,
+
+    -- The organization's etag.
+    etag TEXT NOT NULL
+);
+
+-- Upserts a new organization.
+upsertOrganization: INSERT INTO organizations (id, organization_id, display_name, primary_region, etag)
+VALUES (
+    :id,
+    :organization_id,
+    :display_name,
+    :primary_region,
+    :etag
+)
+ON CONFLICT (id) DO UPDATE
+SET
+    organization_id = :organization_id,
+    display_name = :display_name,
+    primary_region = :primary_region,
+    etag = :etag
+RETURNING *;
+
+-- Retrieves an organization by its ID or alias.
+getOrganization: SELECT * FROM organizations
+WHERE id = :id OR organization_id = :id;
+
+-- Lists all organizations.
+listOrganizations: SELECT * FROM organizations;
+
+-- Updates an organization.
+updateOrganization: UPDATE organizations
+SET
+    display_name = :display_name,
+    primary_region = :primary_region,
+    etag = :etag
+WHERE id = :id OR organization_id = :id
+RETURNING *;
+
+-- Deletes an organization by its ID or alias.
+deleteOrganization: DELETE FROM organizations
+WHERE id = :id OR organization_id = :id;
+
+-- Stores project metadata returned from Celest Cloud.
+CREATE TABLE IF NOT EXISTS projects (
+    -- Immutable. The unique identifier for the project.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: prj_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The organizaton that the project belongs to.
+    organization_id TEXT NOT NULL,
+
+    -- The primary alias for the project.
+    project_id TEXT NOT NULL UNIQUE,
+
+    -- A human-readable name for the project.
+    display_name TEXT,
+
+    -- The project's region.
+    region TEXT NOT NULL,
+
+    -- The project's etag.
+    etag TEXT NOT NULL,
+
+    CONSTRAINT fk_organization_id FOREIGN KEY (organization_id) REFERENCES organizations (id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Upserts a new project.
+upsertProject: INSERT INTO projects (id, organization_id, project_id, display_name, region, etag)
+VALUES (
+    :id,
+    :organization_id,
+    :project_id,
+    :display_name,
+    :region,
+    :etag
+)
+ON CONFLICT (id) DO UPDATE
+SET
+    organization_id = :organization_id,
+    project_id = :project_id,
+    display_name = :display_name,
+    region = :region,
+    etag = :etag
+RETURNING *;
+
+-- Retrieves a project by its ID or alias.
+getProject: SELECT * FROM projects
+WHERE id = :id OR project_id = :id;
+
+-- Lists all projects for an organization.
+listProjects: SELECT * FROM projects
+WHERE organization_id = :organization_id;
+
+-- Updates a project.
+updateProject: UPDATE projects
+SET
+    display_name = :display_name,
+    region = :region,
+    etag = :etag
+WHERE id = :id OR project_id = :id
+RETURNING *;
+
+-- Deletes a project by its ID or alias.
+deleteProject: DELETE FROM projects
+WHERE id = :id OR project_id = :id;
+
+-- Stores project environment metadata returned from Celest Cloud.
+CREATE TABLE IF NOT EXISTS project_environments (
+    -- Immutable. The unique identifier for the environment.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: env_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The project that the environment belongs to.
+    project_id TEXT NOT NULL,
+
+    -- The primary alias for the environment.
+    environment_id TEXT NOT NULL,
+
+    -- A human-readable name for the environment.
+    display_name TEXT,
+
+    -- The environment's etag.
+    etag TEXT NOT NULL,
+
+    CONSTRAINT fk_project_id FOREIGN KEY (project_id) REFERENCES projects (id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_project_environment ON project_environments (project_id, environment_id);
+CREATE INDEX IF NOT EXISTS idx_project_environment_project_id ON project_environments (project_id);
+
+-- Stores project environment configuration returned from Celest Cloud.
+CREATE TABLE IF NOT EXISTS project_environment_config (
+    -- The environment that the configuration belongs to.
+    environment_id TEXT NOT NULL PRIMARY KEY,
+
+    -- The environment's base URI.
+    base_uri TEXT NOT NULL,
+
+    -- The database host.
+    database_host TEXT NOT NULL,
+
+    -- The database token reference (a path in secure storage).
+    database_token_ref TEXT NOT NULL,
+
+    CONSTRAINT fk_environment_id FOREIGN KEY (environment_id) REFERENCES project_environments (id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_project_environment_database_environment_id ON project_environment_config (environment_id);
+
+-- Upserts a new project environment.
+upsertProjectEnvironment: INSERT INTO project_environments (id, project_id, environment_id, display_name, etag)
+VALUES (
+    :id,
+    :project_id,
+    :environment_id,
+    :display_name,
+    :etag
+)
+ON CONFLICT (id) DO UPDATE
+SET
+    project_id = :project_id,
+    environment_id = :environment_id,
+    display_name = :display_name,
+    etag = :etag
+RETURNING *;
+
+-- Retrieves a project environment by its ID or alias.
+getProjectEnvironment: SELECT * FROM project_environments
+WHERE id = :id OR environment_id = :id;
+
+-- Lists all project environments for a project.
+listProjectEnvironments: SELECT * FROM project_environments
+WHERE project_id = :project_id;
+
+-- Updates a project environment.
+updateProjectEnvironment: UPDATE project_environments
+SET
+    display_name = :display_name,
+    etag = :etag
+WHERE id = :id OR environment_id = :id
+RETURNING *;
+
+-- Deletes a project environment by its ID or alias.
+deleteProjectEnvironment: DELETE FROM project_environments
+WHERE id = :id OR environment_id = :id;
+
+-- Upserts a new project environment config.
+upsertProjectEnvironmentConfig: INSERT INTO project_environment_config (environment_id, base_uri, database_host, database_token_ref)
+VALUES (
+    :environment_id,
+    :base_uri,
+    :database_host,
+    :database_token_ref
+)
+ON CONFLICT (environment_id) DO UPDATE
+SET
+    base_uri = :base_uri,
+    database_host = :database_host,
+    database_token_ref = :database_token_ref
+RETURNING *;
+
+-- Retrieves a project environment config by its environment ID.
+getProjectEnvironmentConfig: SELECT * FROM project_environment_config
+WHERE environment_id = :environment_id;
+
+-- Deletes a project environment config by its environment ID.
+deleteProjectEnvironmentConfig: DELETE FROM project_environment_config
+WHERE environment_id = :environment_id;

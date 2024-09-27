@@ -16,7 +16,7 @@ import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/config/feature_flags.dart';
-import 'package:celest_cli/database/database.dart';
+import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pubspec.dart';
@@ -47,7 +47,7 @@ final class CelestAnalyzer
   /// The results will be persisted to the byte store so that they can be
   /// reused in subsequent analyzer instances.
   static Future<void> warmUp(String projectRoot) async {
-    final database = await CelestDatabase.start(projectRoot, verbose: false);
+    final database = await CacheDatabase.start(projectRoot, verbose: false);
 
     var projectDir = fileSystem.directory(projectRoot);
     final Iterable<String> dependencies;

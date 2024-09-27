@@ -77,7 +77,6 @@ final class InitCommand extends CelestCommand
     await configure();
     await _precacheInBackground();
 
-    currentProgress?.complete('Project generated successfully');
     cliLogger.success(
       'Run `celest start` to start a local development server 🚀',
     );

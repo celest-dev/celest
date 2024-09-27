@@ -33,6 +33,7 @@ base mixin ProjectCreator on Configure {
       ).generate();
       logger.fine('Project generated successfully');
     });
+    currentProgress!.complete('Project generated successfully');
     return projectName;
   }
 }
@@ -149,7 +150,6 @@ base mixin Configure on CelestCommand {
           projectName: projectName,
           parentProject: parentProject,
         );
-        currentProgress?.complete('Project generated successfully');
         if (this is StartCommand) {
           currentProgress = cliLogger.progress('Starting Celest...');
         }

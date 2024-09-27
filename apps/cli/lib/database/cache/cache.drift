@@ -2,9 +2,9 @@
 --
 -- With a persistent ByteStore, we can improve the performance of `celest start`
 -- by reusing the Dart analyzer cache between runs.
-CREATE TABLE IF NOT EXISTS dart_analyzer_cache (
+CREATE TABLE IF NOT EXISTS analyzer_byte_store (
   -- The entry's key in the cache.
-  entry_key TEXT NOT NULL PRIMARY KEY,
+  cache_key TEXT NOT NULL PRIMARY KEY,
 
   -- The content of the entry.
   content BLOB

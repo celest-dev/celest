@@ -38,19 +38,19 @@ final class EntrypointResult {
     required this.nodeId,
     required this.outputDillPath,
     required this.outputDill,
-    required this.outputDillSha256,
+    required this.outputDillDigest,
   });
 
   final EntityUid nodeId;
   final String outputDillPath;
   final Uint8List outputDill;
-  final Digest outputDillSha256;
+  final Digest outputDillDigest;
 
   @override
   String toString() => prettyPrintJson({
         'nodeId': nodeId.toJson(),
         'outputDillPath': outputDillPath,
-        'outputDillSha256': outputDillSha256.toString(),
+        'outputDillSha256': outputDillDigest.toString(),
       });
 }
 
@@ -141,18 +141,18 @@ final class EntrypointCompiler {
     logger.finer('Compilation succeeded');
 
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
-    final outputDillSha256 = await _computeSha256(
+    final outputDillDigest = await _computeMd5(
       outputDill.asUnmodifiableView(),
     );
     return EntrypointResult(
       nodeId: id,
       outputDillPath: outputPath,
       outputDill: outputDill,
-      outputDillSha256: outputDillSha256,
+      outputDillDigest: outputDillDigest,
     );
   }
 }
 
-Future<Digest> _computeSha256(Uint8List data) async {
-  return Isolate.run(() => sha256.convert(data));
+Future<Digest> _computeMd5(Uint8List data) async {
+  return Isolate.run(() => md5.convert(data));
 }

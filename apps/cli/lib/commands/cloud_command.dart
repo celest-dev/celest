@@ -3,13 +3,16 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/authenticate.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_core/celest_core.dart' hide CelestException;
-import 'package:mason_logger/mason_logger.dart';
+import 'package:logging/logging.dart';
+import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:protobuf/protobuf.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 enum CloudCommandType {
   create,
@@ -161,6 +164,65 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
       }
     }
     unreachable('Operation stopped abruptly');
+  }
+}
+
+final class CloudCliOperation<R extends GeneratedMessage> {
+  CloudCliOperation(
+    this._operation, {
+    required this.resourceType,
+    required this.logger,
+  });
+
+  final String resourceType;
+  final CloudOperation<R> _operation;
+  final Logger logger;
+
+  Future<R> run({
+    required CloudVerbs verbs,
+    required Future<void> cancelTrigger,
+    required R resource,
+  }) async {
+    try {
+      return await _waitOperation(
+        cancelTrigger: cancelTrigger,
+        resource: resource,
+      );
+    } on CloudException catch (e) {
+      throw CelestException(e.message);
+    } on Object {
+      rethrow;
+    }
+  }
+
+  Future<R> _waitOperation({
+    required Future<void> cancelTrigger,
+    required R resource,
+    // TODO(dnys1): Allow setting timeout
+    // Duration? timeout,
+  }) async {
+    await for (final update in _operation.takeUntil(cancelTrigger)) {
+      switch (update) {
+        case OperationInProgress(:final metadata):
+          final resourceState = resource.createEmptyInstance();
+          if (metadata.hasResource()) {
+            metadata.resource.unpackInto(resourceState);
+            metadata.clearResource();
+          }
+          logger.finest('Operation metadata:\n$metadata');
+          logger.finest('$resourceType state:\n$resource');
+        case OperationSuccess(response: final result):
+          return result;
+        case OperationCancelled(:final metadata):
+          throw CloudException.cancelled(
+            'Operation was canceled remotely',
+            details: JsonValue(metadata.toProto3Json()!),
+          );
+        case OperationFailure(:final error):
+          throw CloudException.fromGrpcError(error);
+      }
+    }
+    throw const CancellationException('Operation was canceled');
   }
 }
 

@@ -11,7 +11,8 @@ import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
-import 'package:celest_cli/database/database.dart';
+import 'package:celest_cli/database/cache/cache_database.dart';
+import 'package:celest_cli/database/cloud/cloud_database.dart';
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -72,7 +73,7 @@ final class CelestProject {
     required this.config,
     required this.envManager,
     required this.parentProject,
-    required this.database,
+    required this.cacheDb,
     required ByteStore byteStore,
   })  : _analysisOptions = analysisOptions,
         _byteStore = byteStore;
@@ -107,7 +108,7 @@ final class CelestProject {
     await envManager.spawn();
     envManager.envVars.ignore();
     _logger.finest('Spawned env manager');
-    final database = await CelestDatabase.start(projectRoot, verbose: verbose);
+    final database = await CacheDatabase.start(projectRoot, verbose: verbose);
     final byteStore = MemoryCachingByteStore(
       database.byteStore,
       1 << 30, // 1 GB
@@ -118,7 +119,7 @@ final class CelestProject {
       config: config,
       envManager: envManager,
       parentProject: parentProject,
-      database: database,
+      cacheDb: database,
       byteStore: byteStore,
     );
     return project;
@@ -172,8 +173,14 @@ final class CelestProject {
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
 
-  /// The [CelestDatabase] for the current project.
-  final CelestDatabase database;
+  /// The [CacheDatabase] for the current project.
+  final CacheDatabase cacheDb;
+
+  /// The [CloudDatabase] for the current project.
+  late final CloudDatabase cloudDb = CloudDatabase(
+    config,
+    verbose: verbose,
+  );
 
   Pubspec get pubspec => Pubspec.parse(
         fileSystem.file(projectPaths.pubspecYaml).readAsStringSync(),
@@ -244,7 +251,7 @@ final class CelestProject {
   Future<void> close() async {
     await Future.wait([
       _analysisContextCollection.dispose(forTesting: true),
-      database.close(),
+      cacheDb.close(),
     ]);
     _logger.finest('Closed Celest project');
   }
