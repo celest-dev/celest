@@ -10,8 +10,12 @@ import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/util/globals.dart';
 import 'package:http/http.dart' as _$http;
 
-import 'src/client/functions.dart';
-import 'src/client/serializers.dart';
+import 'src/functions.dart';
+import 'src/serializers.dart';
+
+export 'package:celest_backend/exceptions/bad_name_exception.dart'
+    show BadNameException;
+export 'package:celest_backend/models/person.dart' show Person;
 
 final Celest celest = Celest();
 
@@ -20,8 +24,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => kIsWeb || !_$io.Platform.isAndroid
-            ? Uri.parse('http://localhost:7778')
-            : Uri.parse('http://10.0.2.2:7778'),
+            ? Uri.parse('http://localhost:52780')
+            : Uri.parse('http://10.0.2.2:52780'),
       };
 }
 
@@ -30,7 +34,6 @@ class Celest with CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  @override
   late final NativeStorage nativeStorage = NativeStorage(scope: 'celest');
 
   @override
