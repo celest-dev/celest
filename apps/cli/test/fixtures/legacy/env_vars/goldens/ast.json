@@ -28,13 +28,13 @@
               "location": {
                 "start": {
                   "offset": 184,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 7,
                   "column": 30
                 },
                 "end": {
                   "offset": 188,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 7,
                   "column": 34
                 },
@@ -58,13 +58,13 @@
               "location": {
                 "start": {
                   "offset": 216,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 8,
                   "column": 26
                 },
                 "end": {
                   "offset": 219,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 8,
                   "column": 29
                 },
@@ -93,13 +93,13 @@
           "location": {
             "start": {
               "offset": 143,
-              "uri": "injected.dart",
+              "uri": "package:celest_backend/src/functions/injected.dart",
               "line": 6,
               "column": 7
             },
             "end": {
               "offset": 151,
-              "uri": "injected.dart",
+              "uri": "package:celest_backend/src/functions/injected.dart",
               "line": 6,
               "column": 15
             },
@@ -124,13 +124,13 @@
               "location": {
                 "start": {
                   "offset": 337,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 15,
                   "column": 30
                 },
                 "end": {
                   "offset": 341,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 15,
                   "column": 34
                 },
@@ -154,13 +154,13 @@
               "location": {
                 "start": {
                   "offset": 369,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 16,
                   "column": 26
                 },
                 "end": {
                   "offset": 372,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 16,
                   "column": 29
                 },
@@ -184,13 +184,13 @@
               "location": {
                 "start": {
                   "offset": 406,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 17,
                   "column": 32
                 },
                 "end": {
                   "offset": 412,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 17,
                   "column": 38
                 },
@@ -214,13 +214,13 @@
               "location": {
                 "start": {
                   "offset": 443,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 18,
                   "column": 29
                 },
                 "end": {
                   "offset": 449,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 18,
                   "column": 35
                 },
@@ -244,13 +244,13 @@
               "location": {
                 "start": {
                   "offset": 479,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 19,
                   "column": 28
                 },
                 "end": {
                   "offset": 485,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 19,
                   "column": 34
                 },
@@ -273,13 +273,13 @@
               "location": {
                 "start": {
                   "offset": 517,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 20,
                   "column": 30
                 },
                 "end": {
                   "offset": 524,
-                  "uri": "injected.dart",
+                  "uri": "package:celest_backend/src/functions/injected.dart",
                   "line": 20,
                   "column": 37
                 },
@@ -308,13 +308,13 @@
           "location": {
             "start": {
               "offset": 290,
-              "uri": "injected.dart",
+              "uri": "package:celest_backend/src/functions/injected.dart",
               "line": 14,
               "column": 7
             },
             "end": {
               "offset": 304,
-              "uri": "injected.dart",
+              "uri": "package:celest_backend/src/functions/injected.dart",
               "line": 14,
               "column": 21
             },
@@ -436,13 +436,13 @@
       "location": {
         "start": {
           "offset": 0,
-          "uri": "injected.dart",
+          "uri": "package:celest_backend/src/functions/injected.dart",
           "line": 0,
           "column": 0
         },
         "end": {
           "offset": 0,
-          "uri": "injected.dart",
+          "uri": "package:celest_backend/src/functions/injected.dart",
           "line": 0,
           "column": 0
         },
@@ -565,22 +565,21 @@
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ],
-    "flutterSdkVersion": "3.24.1"
+    ]
   },
   "location": {
     "start": {
-      "offset": 44,
+      "offset": 65,
       "uri": "project.dart",
-      "line": 2,
-      "column": 6
+      "line": 3,
+      "column": 2
     },
     "end": {
-      "offset": 51,
+      "offset": 81,
       "uri": "project.dart",
-      "line": 2,
-      "column": 13
+      "line": 3,
+      "column": 18
     },
-    "text": "project"
+    "text": "name: 'env_vars'"
   }
 }

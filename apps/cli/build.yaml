@@ -1,9 +1,37 @@
 targets:
-  $default:
+  json:
     sources:
       exclude:
         - "test/fixtures/**"
+        - "lib/database/**"
+    auto_apply_builders: false
     builders:
       json_serializable:
+        enabled: true
         options:
           explicit_to_json: true
+
+  $default:
+    sources:
+      include:
+        - "lib/database/**"
+    dependencies:
+      - ":json"
+    builders:
+      drift_dev:
+        enabled: true
+        options:
+          named_parameters: true
+          store_date_time_values_as_text: false
+          sql:
+            dialect: sqlite
+            options:
+              version: "3.38"
+              modules:
+                - json1
+              known_functions:
+                typeid: text(text)
+          
+          # Reduces generated code
+          skip_verification_code: true
+          data_class_to_companions: false

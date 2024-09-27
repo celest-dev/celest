@@ -5,11 +5,10 @@ import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/exceptions/exceptions.dart' as _i5;
 import 'package:celest_backend/models/sealed_classes.dart' as _i2;
+import 'package:celest_backend/src/functions/sealed_classes.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i7;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i6;
 import 'package:celest_core/src/serialization/json_value.dart' as _i8;
-
-import '../../../functions/sealed_classes.dart' as _i4;
 
 final class GenericResultTarget extends _i1.CloudFunctionHttpTarget {
   @override
@@ -21,7 +20,6 @@ final class GenericResultTarget extends _i1.CloudFunctionHttpTarget {
   @override
   Future<_i1.CelestResponse> handle(
     Map<String, Object?> request, {
-    required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
   }) {
@@ -30,19 +28,16 @@ final class GenericResultTarget extends _i1.CloudFunctionHttpTarget {
     return switch ($types) {
       (r'Shape' || null,) => innerHandle<_i2.Shape>(
           request,
-          context: context,
           headers: headers,
           queryParameters: queryParameters,
         ),
       (r'Circle',) => innerHandle<_i2.Circle>(
           request,
-          context: context,
           headers: headers,
           queryParameters: queryParameters,
         ),
       (r'Rectangle',) => innerHandle<_i2.Rectangle>(
           request,
-          context: context,
           headers: headers,
           queryParameters: queryParameters,
         ),
@@ -53,7 +48,6 @@ final class GenericResultTarget extends _i1.CloudFunctionHttpTarget {
 
   Future<_i1.CelestResponse> innerHandle<T extends _i2.Shape>(
     Map<String, Object?> request, {
-    required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
   }) async {

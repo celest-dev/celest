@@ -141,8 +141,10 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
       switch (update) {
         case OperationInProgress(:final metadata):
           final resource = createEmptyResource();
-          metadata.resource.unpackInto(resource);
-          metadata.clearResource();
+          if (metadata.hasResource()) {
+            metadata.resource.unpackInto(resource);
+            metadata.clearResource();
+          }
           logger.finest('Operation metadata:\n$metadata');
           logger.finest('$resourceType state:\n$resource');
         case OperationSuccess(response: final result):

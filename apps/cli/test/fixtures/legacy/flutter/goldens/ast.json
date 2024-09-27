@@ -28,13 +28,13 @@
               "location": {
                 "start": {
                   "offset": 189,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 36
                 },
                 "end": {
                   "offset": 190,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 37
                 },
@@ -54,13 +54,13 @@
               "location": {
                 "start": {
                   "offset": 201,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 48
                 },
                 "end": {
                   "offset": 202,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 49
                 },
@@ -80,13 +80,13 @@
               "location": {
                 "start": {
                   "offset": 211,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 58
                 },
                 "end": {
                   "offset": 212,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 8,
                   "column": 59
                 },
@@ -119,13 +119,13 @@
           "location": {
             "start": {
               "offset": 170,
-              "uri": "dart_ui.dart",
+              "uri": "package:celest_backend/src/functions/dart_ui.dart",
               "line": 8,
               "column": 17
             },
             "end": {
               "offset": 179,
-              "uri": "dart_ui.dart",
+              "uri": "package:celest_backend/src/functions/dart_ui.dart",
               "line": 8,
               "column": 26
             },
@@ -150,13 +150,13 @@
               "location": {
                 "start": {
                   "offset": 309,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 13,
                   "column": 43
                 },
                 "end": {
                   "offset": 315,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 13,
                   "column": 49
                 },
@@ -176,13 +176,13 @@
               "location": {
                 "start": {
                   "offset": 324,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 13,
                   "column": 58
                 },
                 "end": {
                   "offset": 335,
-                  "uri": "dart_ui.dart",
+                  "uri": "package:celest_backend/src/functions/dart_ui.dart",
                   "line": 13,
                   "column": 69
                 },
@@ -215,13 +215,13 @@
           "location": {
             "start": {
               "offset": 284,
-              "uri": "dart_ui.dart",
+              "uri": "package:celest_backend/src/functions/dart_ui.dart",
               "line": 13,
               "column": 18
             },
             "end": {
               "offset": 298,
-              "uri": "dart_ui.dart",
+              "uri": "package:celest_backend/src/functions/dart_ui.dart",
               "line": 13,
               "column": 32
             },
@@ -345,13 +345,13 @@
       "location": {
         "start": {
           "offset": 0,
-          "uri": "dart_ui.dart",
+          "uri": "package:celest_backend/src/functions/dart_ui.dart",
           "line": 0,
           "column": 0
         },
         "end": {
           "offset": 0,
-          "uri": "dart_ui.dart",
+          "uri": "package:celest_backend/src/functions/dart_ui.dart",
           "line": 0,
           "column": 0
         },
@@ -390,13 +390,13 @@
           "location": {
             "start": {
               "offset": 251,
-              "uri": "flutter.dart",
+              "uri": "package:celest_backend/src/functions/flutter.dart",
               "line": 10,
               "column": 18
             },
             "end": {
               "offset": 262,
-              "uri": "flutter.dart",
+              "uri": "package:celest_backend/src/functions/flutter.dart",
               "line": 10,
               "column": 29
             },
@@ -524,13 +524,13 @@
       "location": {
         "start": {
           "offset": 0,
-          "uri": "flutter.dart",
+          "uri": "package:celest_backend/src/functions/flutter.dart",
           "line": 0,
           "column": 0
         },
         "end": {
           "offset": 0,
-          "uri": "flutter.dart",
+          "uri": "package:celest_backend/src/functions/flutter.dart",
           "line": 0,
           "column": 0
         },
@@ -549,17 +549,17 @@
   },
   "location": {
     "start": {
-      "offset": 44,
+      "offset": 62,
       "uri": "project.dart",
       "line": 2,
-      "column": 6
+      "column": 24
     },
     "end": {
-      "offset": 51,
+      "offset": 77,
       "uri": "project.dart",
       "line": 2,
-      "column": 13
+      "column": 39
     },
-    "text": "project"
+    "text": "name: 'flutter'"
   }
 }

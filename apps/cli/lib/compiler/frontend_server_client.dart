@@ -23,8 +23,7 @@ class FrontendServerClient {
     this._feServer,
     this._feServerStdoutLines, {
     bool? verbose,
-  })  : _verbose = verbose ?? false,
-        _state = _ClientState.waitingForFirstCompile {
+  }) : _state = _ClientState.waitingForFirstCompile {
     _feServer.stderr
         .transform(utf8.decoder)
         .listen((err) => _logger.finest('Error in FE server: $err'));
@@ -36,7 +35,6 @@ class FrontendServerClient {
   final String _entrypoint;
   final Process _feServer;
   final StreamQueue<String> _feServerStdoutLines;
-  final bool _verbose;
 
   _ClientState _state;
 
@@ -336,12 +334,12 @@ class FrontendServerClient {
 
   /// Sends [command] to the [_feServer] via stdin, and logs it if [_verbose].
   void _sendCommand(String command) {
-    if (_verbose) {
-      final lines = const LineSplitter().convert(command);
-      for (final line in lines) {
-        _logger.finest('>> $line');
-      }
-    }
+    // if (_verbose) {
+    //   final lines = const LineSplitter().convert(command);
+    //   for (final line in lines) {
+    //     _logger.finest('>> $line');
+    //   }
+    // }
     _feServer.stdin.writeln(command);
   }
 
@@ -353,7 +351,7 @@ class FrontendServerClient {
       // command.
       line = await _nextInputLine();
     }
-    if (_verbose) _logger.finest('<< $line');
+    // if (_verbose) _logger.finest('<< $line');
     return line;
   }
 }

@@ -7,7 +7,6 @@
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ],
-    "flutterSdkVersion": "3.24.1"
+    ]
   }
 }

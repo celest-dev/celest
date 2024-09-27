@@ -9,17 +9,13 @@ import 'package:celest_cli/init/project_generator.dart';
 import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
-import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
-base mixin ProjectCreator on CelestCommand {
-  abstract Progress? currentProgress;
-
+base mixin ProjectCreator on Configure {
   Future<String> createProject({
     required String projectName,
     required ParentProject? parentProject,
@@ -45,6 +41,8 @@ base mixin Configure on CelestCommand {
   // TODO(dnys1): Move to ProjectPaths. Rename to CelestProject.
   late final Pubspec pubspec;
   late final bool isExistingProject;
+
+  abstract Progress? currentProgress;
 
   static Never _throwNoProject() => throw const CelestException(
         'No Celest project found in the current directory. '
@@ -132,22 +130,16 @@ base mixin Configure on CelestCommand {
       this.isExistingProject = isExistingProject;
     }
 
+    if (isExistingProject && this is StartCommand) {
+      currentProgress = cliLogger.progress('Starting Celest...');
+    }
+
     await init(
       projectRoot: projectRoot,
       parentProject: parentProject,
     );
-    try {
-      logger.finest('Hydrating pub cache...');
-      await pubCache.hydrate();
-      logger.finest('Fixing pub cache...');
-      await pubCache.fix();
-      logger.finest('Pub cache fixed.');
-    } on Object catch (e, st) {
-      performance.captureError(e, stackTrace: st);
-    }
 
-    final sqliteVersion = SqliteVersion(Version(3, 46, 1));
-    await loadSqlite3(sqliteVersion, logger: logger);
+    await loadSqlite3(logger: logger);
 
     var needsMigration = false;
     if (!isExistingProject) {
@@ -157,6 +149,10 @@ base mixin Configure on CelestCommand {
           projectName: projectName,
           parentProject: parentProject,
         );
+        currentProgress?.complete('Project generated successfully');
+        if (this is StartCommand) {
+          currentProgress = cliLogger.progress('Starting Celest...');
+        }
       } else {
         _throwNoProject();
       }

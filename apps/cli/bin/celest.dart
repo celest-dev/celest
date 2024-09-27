@@ -8,6 +8,7 @@ import 'package:celest_cli/commands/billing/unsubscribe_command.dart';
 import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/organizations/organizations_command.dart';
+import 'package:celest_cli/commands/precache_command.dart';
 import 'package:celest_cli/commands/projects/projects_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
@@ -54,7 +55,8 @@ void main(List<String> args) async {
     ..addCommand(UnsubscribeCommand())
     ..addCommand(AuthCommand())
     ..addCommand(UpgradeCommand())
-    ..addCommand(UninstallCommand());
+    ..addCommand(UninstallCommand())
+    ..addCommand(PrecacheCommand());
 
   // Cloud API commands
   cli

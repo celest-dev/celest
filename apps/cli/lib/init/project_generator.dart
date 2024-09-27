@@ -1,5 +1,5 @@
-import 'package:celest_cli/init/project_item.dart';
-import 'package:celest_cli/init/project_items/macos_entitlements.dart';
+import 'package:celest_cli/init/migrations/macos_entitlements.dart';
+import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
 
 /// Manages the generation of a new Celest project.

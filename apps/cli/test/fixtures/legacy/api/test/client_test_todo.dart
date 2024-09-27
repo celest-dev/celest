@@ -1,6 +1,7 @@
-import 'package:celest_backend/client.dart';
 import 'package:celest_backend/models/classes.dart';
 import 'package:test/test.dart';
+
+import '../client/lib/celest_client.dart';
 
 void main() {
   group('Client', () {

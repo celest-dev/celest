@@ -1,5 +1,5 @@
-import 'package:celest_cli/init/project_item.dart';
-import 'package:celest_cli/init/project_items/pubspec_updater.dart';
+import 'package:celest_cli/init/migrations/pubspec_updater.dart';
+import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
@@ -207,13 +207,13 @@ environment:
   sdk: ^3.4.1
 
 dependencies:
-  celest_backend:
-    path: celest/
+  barebones_client:
+    path: celest/client/
 '''),
       );
 
       final updatedPubspec = Pubspec.parse(updatedPubspecYaml);
-      expect(updatedPubspec.dependencies, contains('celest_backend'));
+      expect(updatedPubspec.dependencies, contains('barebones_client'));
     });
 
     test('empty dart project', () async {
@@ -262,8 +262,8 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  celest_backend:
-    path: celest/
+  empty_client:
+    path: celest/client/
 
 dev_dependencies:
   lints: ^3.0.0
@@ -272,7 +272,7 @@ dev_dependencies:
       );
 
       final updatedPubspec = Pubspec.parse(updatedPubspecYaml);
-      expect(updatedPubspec.dependencies, contains('celest_backend'));
+      expect(updatedPubspec.dependencies, contains('empty_client'));
     });
 
     test('existing dart project', () async {
@@ -319,8 +319,8 @@ environment:
   sdk: ^3.4.1
 
 dependencies:
-  celest_backend:
-    path: celest/
+  existing_client:
+    path: celest/client/
   path: ^1.8.0
 
 dev_dependencies:
@@ -330,7 +330,7 @@ dev_dependencies:
       );
 
       final updatedPubspec = Pubspec.parse(updatedPubspecYaml);
-      expect(updatedPubspec.dependencies, contains('celest_backend'));
+      expect(updatedPubspec.dependencies, contains('existing_client'));
     });
 
     test('existing celest project', () async {
@@ -344,8 +344,8 @@ environment:
   sdk: ^3.4.1
 
 dependencies:
-  celest_backend:
-    path: celest/
+  existing_client:
+    path: celest/client/
   path: ^1.8.0
 
 dev_dependencies:
@@ -379,8 +379,8 @@ environment:
   sdk: ^3.4.1
 
 dependencies:
-  celest_backend:
-    path: celest/
+  existing_client:
+    path: celest/client/
   path: ^1.8.0
 
 dev_dependencies:
@@ -390,7 +390,7 @@ dev_dependencies:
       );
 
       final updatedPubspec = Pubspec.parse(updatedPubspecYaml);
-      expect(updatedPubspec.dependencies, contains('celest_backend'));
+      expect(updatedPubspec.dependencies, contains('existing_client'));
     });
   });
 }

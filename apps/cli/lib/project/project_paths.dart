@@ -23,14 +23,20 @@ final class ProjectPaths {
   late final String projectDart = p.join(projectRoot, 'project.dart');
   late final String projectLib = p.join(projectRoot, 'lib');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
-  late final String clientOutputsDir =
+  late final String legacyClientOutputsDir =
       p.join(projectRoot, 'lib', 'src', 'client');
+  late final String clientRoot = p.join(projectRoot, 'client');
+  late final String clientOutputsDir = p.join(clientRoot, 'lib', 'src');
+  late final String projectCacheDir =
+      p.join(projectRoot, '.dart_tool', 'celest');
 
   // Generated
-  late final String generatedDir = p.join(projectRoot, 'generated');
+  late final String generatedDir =
+      p.join(projectRoot, 'lib', 'src', 'generated');
   late final String resourcesDart = p.join(generatedDir, 'resources.dart');
 
-  late final String apisDir = p.join(projectRoot, 'functions');
+  late final String apisDir = p.join(projectRoot, 'lib', 'src', 'functions');
+  late final String legacyApisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
   late final String envFile = p.join(projectRoot, 'config', '.env');
 
@@ -43,7 +49,7 @@ final class ProjectPaths {
   late final String authDart = p.join(projectRoot, 'auth.dart');
   late final String legacyAuthDart = p.join(projectRoot, 'auth', 'auth.dart');
 
-  String api(String apiName) => p.join(apisDir, '$apiName.dart');
+  String api(String apiName) => p.join(legacyApisDir, '$apiName.dart');
   String apiOutput(String apiName) => p.join(outputsDir, 'functions', apiName);
   String functionEntrypoint(String apiName, String functionName) => p.join(
         apiOutput(apiName),
@@ -51,10 +57,10 @@ final class ProjectPaths {
       );
 
   Uri normalizeUri(Uri uri) {
-    return switch (uri.scheme) {
-      'file' || '' => _fileToProjectUri(uri),
-      'dart' => normalizeDartUrl(uri),
-      'package' => uri,
+    return switch (uri) {
+      Uri(scheme: 'file' || '') => _fileToProjectUri(uri),
+      Uri(scheme: 'dart') => normalizeDartUrl(uri),
+      Uri(scheme: 'package') => uri,
       _ => uri,
     };
   }
@@ -77,6 +83,6 @@ final class ProjectPaths {
   }
 
   Uri _projectToFileUri(Uri uri) {
-    return Uri.file(p.join(projectRoot, uri.path));
+    return Uri.file(p.join(projectRoot, 'lib', 'src', uri.path));
   }
 }

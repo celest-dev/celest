@@ -60,7 +60,7 @@ environment:
   sdk:
 
 dependencies:
-  celest:
+  dummy:
 
 dev_dependencies:
   test:
@@ -93,6 +93,11 @@ dev_dependencies:
     addConstraints(dependencies, DependencyType.dependency);
     addConstraints(devDependencies, DependencyType.devDependency);
     addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
+    try {
+      editor.remove(['dependencies', 'dummy']);
+    } on Object {
+      // OK
+    }
 
     return editor.toString();
   }

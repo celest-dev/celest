@@ -68,22 +68,11 @@ final class EntrypointGenerator {
           paramExp = toType.property('parse').call([paramExp]);
         }
       case NodeType.userContext:
-        final paramJson = refer('context').index(
-          literalString(raw: true, reference.name.toLowerCase()),
-        );
-        paramExp = DartTypes.convert.jsonDecode.call([
-          paramJson.nullChecked,
+        paramExp = DartTypes.celest.globalContext
+            .property(param.type.isNullableOrFalse ? 'get' : 'expect')
+            .call([
+          DartTypes.celest.contextKey.property('principal'),
         ]);
-        if (param.type.isNullableOrFalse) {
-          paramExp =
-              paramJson.equalTo(literalNull).conditional(literalNull, paramExp);
-        }
-        paramExp = jsonGenerator.fromJson(
-          typeHelper
-              .toReference(typeHelper.coreTypes.userType)
-              .withNullability(param.type.isNullableOrFalse),
-          paramExp,
-        );
 
       case NodeType.httpHeader || NodeType.httpQuery:
         final map = reference.type == NodeType.httpHeader
@@ -174,16 +163,6 @@ final class EntrypointGenerator {
           ),
         ])
         ..optionalParameters.addAll([
-          Parameter(
-            (p) => p
-              ..type = DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.string,
-              )
-              ..name = 'context'
-              ..named = true
-              ..required = true,
-          ),
           Parameter(
             (p) => p
               ..type = DartTypes.core.map(
@@ -457,7 +436,6 @@ final class EntrypointGenerator {
           .call([
             refer('request'),
           ], {
-            'context': refer('context'),
             'headers': refer('headers'),
             'queryParameters': refer('queryParameters'),
           })
@@ -506,7 +484,6 @@ final class EntrypointGenerator {
             refer('innerHandle').call(
               [request],
               {
-                'context': refer('context'),
                 'headers': refer('headers'),
                 'queryParameters': refer('queryParameters'),
               },
@@ -548,16 +525,6 @@ final class EntrypointGenerator {
           ),
         ])
         ..optionalParameters.addAll([
-          Parameter(
-            (p) => p
-              ..type = DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.string,
-              )
-              ..name = 'context'
-              ..named = true
-              ..required = true,
-          ),
           Parameter(
             (p) => p
               ..type = DartTypes.core.map(

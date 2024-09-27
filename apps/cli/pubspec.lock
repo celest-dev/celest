@@ -923,7 +923,7 @@ packages:
     source: hosted
     version: "2.1.8"
   pool:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pool
       sha256: "20fe868b6314b322ea036ba325e6fc0711a22948856475e2c2b6306e8ab39c2a"
@@ -1119,7 +1119,7 @@ packages:
     source: hosted
     version: "7.0.0"
   sqlite3:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sqlite3
       sha256: "45f168ae2213201b54e09429ed0c593dc2c88c924a1488d6f9c523a255d567cb"
@@ -1464,4 +1464,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=3.5.1 <4.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=3.19.0"

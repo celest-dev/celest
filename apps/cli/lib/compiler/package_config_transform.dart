@@ -1,9 +1,6 @@
 import 'package:celest_cli/src/context.dart';
-import 'package:logging/logging.dart';
 import 'package:package_config/package_config.dart';
 import 'package:package_config/src/package_config_io.dart';
-
-final _logger = Logger('PackageConfigTransform');
 
 /// Transforms a package config to use the new root.
 Future<String> transformPackageConfig({
@@ -39,9 +36,6 @@ Future<String> transformPackageConfig({
   final toRootDir = fileSystem.directory(toRoot);
   final newPackageConfigBuf = StringBuffer();
   PackageConfig.writeString(newPackageConfig, newPackageConfigBuf);
-  _logger.finest(
-    'Writing new package config to $toRootDir: $newPackageConfigBuf',
-  );
   final newPackageConfigFile =
       toRootDir.childDirectory('.dart_tool').childFile(packageConfigFileName);
   await newPackageConfigFile.create(recursive: true);

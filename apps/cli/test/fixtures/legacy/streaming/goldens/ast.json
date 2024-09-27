@@ -36,13 +36,13 @@
               "location": {
                 "start": {
                   "offset": 234,
-                  "uri": "server_side.dart",
+                  "uri": "package:celest_backend/src/functions/server_side.dart",
                   "line": 8,
                   "column": 34
                 },
                 "end": {
                   "offset": 239,
-                  "uri": "server_side.dart",
+                  "uri": "package:celest_backend/src/functions/server_side.dart",
                   "line": 8,
                   "column": 39
                 },
@@ -75,13 +75,13 @@
           "location": {
             "start": {
               "offset": 215,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 8,
               "column": 15
             },
             "end": {
               "offset": 220,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 8,
               "column": 20
             },
@@ -107,13 +107,13 @@
               "location": {
                 "start": {
                   "offset": 376,
-                  "uri": "server_side.dart",
+                  "uri": "package:celest_backend/src/functions/server_side.dart",
                   "line": 15,
                   "column": 55
                 },
                 "end": {
                   "offset": 382,
-                  "uri": "server_side.dart",
+                  "uri": "package:celest_backend/src/functions/server_side.dart",
                   "line": 15,
                   "column": 61
                 },
@@ -150,13 +150,13 @@
           "location": {
             "start": {
               "offset": 344,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 15,
               "column": 23
             },
             "end": {
               "offset": 355,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 15,
               "column": 34
             },
@@ -194,13 +194,13 @@
           "location": {
             "start": {
               "offset": 530,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 22,
               "column": 18
             },
             "end": {
               "offset": 540,
-              "uri": "server_side.dart",
+              "uri": "package:celest_backend/src/functions/server_side.dart",
               "line": 22,
               "column": 28
             },
@@ -325,13 +325,13 @@
       "location": {
         "start": {
           "offset": 0,
-          "uri": "server_side.dart",
+          "uri": "package:celest_backend/src/functions/server_side.dart",
           "line": 0,
           "column": 0
         },
         "end": {
           "offset": 0,
-          "uri": "server_side.dart",
+          "uri": "package:celest_backend/src/functions/server_side.dart",
           "line": 0,
           "column": 0
         },
@@ -345,22 +345,21 @@
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ],
-    "flutterSdkVersion": "3.24.1"
+    ]
   },
   "location": {
     "start": {
-      "offset": 44,
+      "offset": 62,
       "uri": "project.dart",
       "line": 2,
-      "column": 6
+      "column": 24
     },
     "end": {
-      "offset": 51,
+      "offset": 79,
       "uri": "project.dart",
       "line": 2,
-      "column": 13
+      "column": 41
     },
-    "text": "project"
+    "text": "name: 'streaming'"
   }
 }

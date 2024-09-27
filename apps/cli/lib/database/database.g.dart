@@ -3,202 +3,153 @@
 part of 'database.dart';
 
 // ignore_for_file: type=lint
-class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
+class DartAnalyzerCache extends Table
+    with TableInfo<DartAnalyzerCache, DartAnalyzerCacheData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProjectsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
+  DartAnalyzerCache(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<String> entryKey = GeneratedColumn<String>(
+      'entry_key', aliasedName, false,
       type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL PRIMARY KEY');
+  late final GeneratedColumn<Uint8List> content = GeneratedColumn<Uint8List>(
+      'content', aliasedName, true,
+      type: DriftSqlType.blob,
       requiredDuringInsert: false,
-      clientDefault: () => const Uuid().v7());
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+      $customConstraints: '');
   @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _pathMeta = const VerificationMeta('path');
-  @override
-  late final GeneratedColumn<String> path = GeneratedColumn<String>(
-      'path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, name, path];
+  List<GeneratedColumn> get $columns => [entryKey, content];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'projects';
+  static const String $name = 'dart_analyzer_cache';
   @override
-  VerificationContext validateIntegrity(Insertable<Project> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('path')) {
-      context.handle(
-          _pathMeta, path.isAcceptableOrUnknown(data['path']!, _pathMeta));
-    } else if (isInserting) {
-      context.missing(_pathMeta);
-    }
-    return context;
-  }
-
+  Set<GeneratedColumn> get $primaryKey => {entryKey};
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Project map(Map<String, dynamic> data, {String? tablePrefix}) {
+  DartAnalyzerCacheData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Project(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      path: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}path'])!,
+    return DartAnalyzerCacheData(
+      entryKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_key'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}content']),
     );
   }
 
   @override
-  $ProjectsTable createAlias(String alias) {
-    return $ProjectsTable(attachedDatabase, alias);
+  DartAnalyzerCache createAlias(String alias) {
+    return DartAnalyzerCache(attachedDatabase, alias);
   }
+
+  @override
+  bool get dontWriteConstraints => true;
 }
 
-class Project extends DataClass implements Insertable<Project> {
-  /// A unique identifier of the project.
-  ///
-  /// By default, this is a UUID v7.
-  final String id;
+class DartAnalyzerCacheData extends DataClass
+    implements Insertable<DartAnalyzerCacheData> {
+  /// The entry's key in the cache.
+  final String entryKey;
 
-  /// The name of the project.
-  final String name;
-
-  /// The absolute, canonical path to the project in the user's FS.
-  final String path;
-  const Project({required this.id, required this.name, required this.path});
+  /// The content of the entry.
+  final Uint8List? content;
+  const DartAnalyzerCacheData({required this.entryKey, this.content});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['name'] = Variable<String>(name);
-    map['path'] = Variable<String>(path);
+    map['entry_key'] = Variable<String>(entryKey);
+    if (!nullToAbsent || content != null) {
+      map['content'] = Variable<Uint8List>(content);
+    }
     return map;
   }
 
-  ProjectsCompanion toCompanion(bool nullToAbsent) {
-    return ProjectsCompanion(
-      id: Value(id),
-      name: Value(name),
-      path: Value(path),
-    );
-  }
-
-  factory Project.fromJson(Map<String, dynamic> json,
+  factory DartAnalyzerCacheData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Project(
-      id: serializer.fromJson<String>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      path: serializer.fromJson<String>(json['path']),
+    return DartAnalyzerCacheData(
+      entryKey: serializer.fromJson<String>(json['entry_key']),
+      content: serializer.fromJson<Uint8List?>(json['content']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'name': serializer.toJson<String>(name),
-      'path': serializer.toJson<String>(path),
+      'entry_key': serializer.toJson<String>(entryKey),
+      'content': serializer.toJson<Uint8List?>(content),
     };
   }
 
-  Project copyWith({String? id, String? name, String? path}) => Project(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        path: path ?? this.path,
+  DartAnalyzerCacheData copyWith(
+          {String? entryKey,
+          Value<Uint8List?> content = const Value.absent()}) =>
+      DartAnalyzerCacheData(
+        entryKey: entryKey ?? this.entryKey,
+        content: content.present ? content.value : this.content,
       );
-  Project copyWithCompanion(ProjectsCompanion data) {
-    return Project(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-      path: data.path.present ? data.path.value : this.path,
+  DartAnalyzerCacheData copyWithCompanion(DartAnalyzerCacheCompanion data) {
+    return DartAnalyzerCacheData(
+      entryKey: data.entryKey.present ? data.entryKey.value : this.entryKey,
+      content: data.content.present ? data.content.value : this.content,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('Project(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('path: $path')
+    return (StringBuffer('DartAnalyzerCacheData(')
+          ..write('entryKey: $entryKey, ')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, path);
+  int get hashCode => Object.hash(entryKey, $driftBlobEquality.hash(content));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Project &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.path == this.path);
+      (other is DartAnalyzerCacheData &&
+          other.entryKey == this.entryKey &&
+          $driftBlobEquality.equals(other.content, this.content));
 }
 
-class ProjectsCompanion extends UpdateCompanion<Project> {
-  final Value<String> id;
-  final Value<String> name;
-  final Value<String> path;
+class DartAnalyzerCacheCompanion
+    extends UpdateCompanion<DartAnalyzerCacheData> {
+  final Value<String> entryKey;
+  final Value<Uint8List?> content;
   final Value<int> rowid;
-  const ProjectsCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.path = const Value.absent(),
+  const DartAnalyzerCacheCompanion({
+    this.entryKey = const Value.absent(),
+    this.content = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  ProjectsCompanion.insert({
-    this.id = const Value.absent(),
-    required String name,
-    required String path,
+  DartAnalyzerCacheCompanion.insert({
+    required String entryKey,
+    this.content = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : name = Value(name),
-        path = Value(path);
-  static Insertable<Project> custom({
-    Expression<String>? id,
-    Expression<String>? name,
-    Expression<String>? path,
+  }) : entryKey = Value(entryKey);
+  static Insertable<DartAnalyzerCacheData> custom({
+    Expression<String>? entryKey,
+    Expression<Uint8List>? content,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (path != null) 'path': path,
+      if (entryKey != null) 'entry_key': entryKey,
+      if (content != null) 'content': content,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  ProjectsCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? name,
-      Value<String>? path,
+  DartAnalyzerCacheCompanion copyWith(
+      {Value<String>? entryKey,
+      Value<Uint8List?>? content,
       Value<int>? rowid}) {
-    return ProjectsCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      path: path ?? this.path,
+    return DartAnalyzerCacheCompanion(
+      entryKey: entryKey ?? this.entryKey,
+      content: content ?? this.content,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -206,14 +157,11 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
+    if (entryKey.present) {
+      map['entry_key'] = Variable<String>(entryKey.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (path.present) {
-      map['path'] = Variable<String>(path.value);
+    if (content.present) {
+      map['content'] = Variable<Uint8List>(content.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -223,10 +171,9 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
 
   @override
   String toString() {
-    return (StringBuffer('ProjectsCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('path: $path, ')
+    return (StringBuffer('DartAnalyzerCacheCompanion(')
+          ..write('entryKey: $entryKey, ')
+          ..write('content: $content, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -236,109 +183,95 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
 abstract class _$CelestDatabase extends GeneratedDatabase {
   _$CelestDatabase(QueryExecutor e) : super(e);
   $CelestDatabaseManager get managers => $CelestDatabaseManager(this);
-  late final $ProjectsTable projects = $ProjectsTable(this);
-  late final Index name = Index('name', 'CREATE INDEX name ON projects (name)');
-  late final Index path =
-      Index('path', 'CREATE UNIQUE INDEX path ON projects (path)');
+  late final DartAnalyzerCache dartAnalyzerCache = DartAnalyzerCache(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [projects, name, path];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [dartAnalyzerCache];
 }
 
-typedef $$ProjectsTableCreateCompanionBuilder = ProjectsCompanion Function({
-  Value<String> id,
-  required String name,
-  required String path,
+typedef $DartAnalyzerCacheCreateCompanionBuilder = DartAnalyzerCacheCompanion
+    Function({
+  required String entryKey,
+  Value<Uint8List?> content,
   Value<int> rowid,
 });
-typedef $$ProjectsTableUpdateCompanionBuilder = ProjectsCompanion Function({
-  Value<String> id,
-  Value<String> name,
-  Value<String> path,
+typedef $DartAnalyzerCacheUpdateCompanionBuilder = DartAnalyzerCacheCompanion
+    Function({
+  Value<String> entryKey,
+  Value<Uint8List?> content,
   Value<int> rowid,
 });
 
-class $$ProjectsTableFilterComposer
-    extends FilterComposer<_$CelestDatabase, $ProjectsTable> {
-  $$ProjectsTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
+class $DartAnalyzerCacheFilterComposer
+    extends FilterComposer<_$CelestDatabase, DartAnalyzerCache> {
+  $DartAnalyzerCacheFilterComposer(super.$state);
+  ColumnFilters<String> get entryKey => $state.composableBuilder(
+      column: $state.table.entryKey,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get path => $state.composableBuilder(
-      column: $state.table.path,
+  ColumnFilters<Uint8List> get content => $state.composableBuilder(
+      column: $state.table.content,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
-class $$ProjectsTableOrderingComposer
-    extends OrderingComposer<_$CelestDatabase, $ProjectsTable> {
-  $$ProjectsTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
+class $DartAnalyzerCacheOrderingComposer
+    extends OrderingComposer<_$CelestDatabase, DartAnalyzerCache> {
+  $DartAnalyzerCacheOrderingComposer(super.$state);
+  ColumnOrderings<String> get entryKey => $state.composableBuilder(
+      column: $state.table.entryKey,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get path => $state.composableBuilder(
-      column: $state.table.path,
+  ColumnOrderings<Uint8List> get content => $state.composableBuilder(
+      column: $state.table.content,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class $$ProjectsTableTableManager extends RootTableManager<
+class $DartAnalyzerCacheTableManager extends RootTableManager<
     _$CelestDatabase,
-    $ProjectsTable,
-    Project,
-    $$ProjectsTableFilterComposer,
-    $$ProjectsTableOrderingComposer,
-    $$ProjectsTableCreateCompanionBuilder,
-    $$ProjectsTableUpdateCompanionBuilder,
-    (Project, BaseReferences<_$CelestDatabase, $ProjectsTable, Project>),
-    Project,
+    DartAnalyzerCache,
+    DartAnalyzerCacheData,
+    $DartAnalyzerCacheFilterComposer,
+    $DartAnalyzerCacheOrderingComposer,
+    $DartAnalyzerCacheCreateCompanionBuilder,
+    $DartAnalyzerCacheUpdateCompanionBuilder,
+    (
+      DartAnalyzerCacheData,
+      BaseReferences<_$CelestDatabase, DartAnalyzerCache, DartAnalyzerCacheData>
+    ),
+    DartAnalyzerCacheData,
     PrefetchHooks Function()> {
-  $$ProjectsTableTableManager(_$CelestDatabase db, $ProjectsTable table)
+  $DartAnalyzerCacheTableManager(_$CelestDatabase db, DartAnalyzerCache table)
       : super(TableManagerState(
           db: db,
           table: table,
           filteringComposer:
-              $$ProjectsTableFilterComposer(ComposerState(db, table)),
+              $DartAnalyzerCacheFilterComposer(ComposerState(db, table)),
           orderingComposer:
-              $$ProjectsTableOrderingComposer(ComposerState(db, table)),
+              $DartAnalyzerCacheOrderingComposer(ComposerState(db, table)),
           updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> path = const Value.absent(),
+            Value<String> entryKey = const Value.absent(),
+            Value<Uint8List?> content = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              ProjectsCompanion(
-            id: id,
-            name: name,
-            path: path,
+              DartAnalyzerCacheCompanion(
+            entryKey: entryKey,
+            content: content,
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            required String name,
-            required String path,
+            required String entryKey,
+            Value<Uint8List?> content = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              ProjectsCompanion.insert(
-            id: id,
-            name: name,
-            path: path,
+              DartAnalyzerCacheCompanion.insert(
+            entryKey: entryKey,
+            content: content,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
@@ -348,21 +281,24 @@ class $$ProjectsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$ProjectsTableProcessedTableManager = ProcessedTableManager<
+typedef $DartAnalyzerCacheProcessedTableManager = ProcessedTableManager<
     _$CelestDatabase,
-    $ProjectsTable,
-    Project,
-    $$ProjectsTableFilterComposer,
-    $$ProjectsTableOrderingComposer,
-    $$ProjectsTableCreateCompanionBuilder,
-    $$ProjectsTableUpdateCompanionBuilder,
-    (Project, BaseReferences<_$CelestDatabase, $ProjectsTable, Project>),
-    Project,
+    DartAnalyzerCache,
+    DartAnalyzerCacheData,
+    $DartAnalyzerCacheFilterComposer,
+    $DartAnalyzerCacheOrderingComposer,
+    $DartAnalyzerCacheCreateCompanionBuilder,
+    $DartAnalyzerCacheUpdateCompanionBuilder,
+    (
+      DartAnalyzerCacheData,
+      BaseReferences<_$CelestDatabase, DartAnalyzerCache, DartAnalyzerCacheData>
+    ),
+    DartAnalyzerCacheData,
     PrefetchHooks Function()>;
 
 class $CelestDatabaseManager {
   final _$CelestDatabase _db;
   $CelestDatabaseManager(this._db);
-  $$ProjectsTableTableManager get projects =>
-      $$ProjectsTableTableManager(_db, _db.projects);
+  $DartAnalyzerCacheTableManager get dartAnalyzerCache =>
+      $DartAnalyzerCacheTableManager(_db, _db.dartAnalyzerCache);
 }

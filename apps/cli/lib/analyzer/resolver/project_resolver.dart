@@ -23,7 +23,7 @@ abstract base class CelestProjectResolver with CelestAnalysisHelpers {
 
   /// Finds the project in the current workspace.
   Future<ast.Project?> resolveProject({
-    required ResolvedLibraryResult projectLibrary,
+    required ParsedLibraryResult projectLibrary,
   });
 
   /// Collects the environment variables of the project.

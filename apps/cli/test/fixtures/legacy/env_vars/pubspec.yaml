@@ -2,13 +2,10 @@ name: celest_backend
 publish_to: none
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.4.0
 
 dependencies:
-  celest:
-    path: ../../../../../../celest/packages/celest
-  celest_core:
-    path: ../../../../../../celest/packages/celest_core
+  celest: ^0.5.0-0
   http: ^1.0.0
 
 dependency_overrides:

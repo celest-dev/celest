@@ -23,10 +23,13 @@ extension type SqliteVersion(Version _version) {
   }
 }
 
-Future<void> loadSqlite3(
-  SqliteVersion version, {
+final defaultSqliteVersion = SqliteVersion(Version(3, 46, 1));
+
+Future<String> loadSqlite3({
+  SqliteVersion? version,
   required Logger logger,
 }) async {
+  version ??= defaultSqliteVersion;
   final file = celestProject.config.configDir.childFile(_libraryName);
   if (!file.existsSync()) {
     final downloadProgress =
@@ -41,7 +44,9 @@ Future<void> loadSqlite3(
   } else {
     logger.finest('Using cached sqlite3 library');
   }
-  DynamicLibrary.open(file.absolute.path);
+  final sqlite3Path = file.absolute.path;
+  DynamicLibrary.open(sqlite3Path);
+  return sqlite3Path;
 }
 
 Future<void> _downloadSqlite3(

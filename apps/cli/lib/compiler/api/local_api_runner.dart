@@ -111,9 +111,17 @@ final class LocalApiRunner implements Closeable {
       ],
       workingDirectory: projectPaths.outputsDir,
     );
-    genKernelRes.captureStdout(sink: _logger.finest);
-    genKernelRes.captureStderr(sink: _logger.finest);
+    final genKernelLogs = StringBuffer();
+    genKernelRes.captureStdout(
+      sink: genKernelLogs.writeln,
+      prefix: '[stdout] ',
+    );
+    genKernelRes.captureStderr(
+      sink: genKernelLogs.writeln,
+      prefix: '[stderr] ',
+    );
     if (await genKernelRes.exitCode != 0) {
+      _logger.finer('Error generating initial kernel file:\n$genKernelLogs');
       throw CompilationException('Error generating initial kernel file');
     }
 
@@ -130,10 +138,7 @@ final class LocalApiRunner implements Closeable {
       // additionalSources: additionalSources,
       additionalArgs: [
         '--no-support-mirrors', // Since it won't be supported in the cloud.
-        // TODO(dnys1): Would this help? It wants exclusive control over the info file...
-        // '--resident-info-file-name=${residentCompiler.infoFile.path}',
-        // TODO(dnys1): Re-enable with tests
-        // '--incremental-serialization', // Faster hot reload.
+        '--incremental-serialization', // Faster hot reload.
       ],
     );
     _logger.fine('Compiling local API...');
@@ -365,9 +370,14 @@ final class LocalApiRunner implements Closeable {
       _vmService!.onLoggingEvent.listen((event) {
         assert(event.kind == EventKind.kLogging);
         final record = event.logRecord!;
-        final loggerName =
-            record.loggerName?.valueAsString?.let((name) => '.$name') ?? '';
-        final logger = Logger('${_logger.fullName}$loggerName');
+        // TODO(dnys1): Should this be the project name or something to help
+        // distinguish logs?
+        const defaultLoggerName = '';
+        final loggerName = record.loggerName?.valueAsString?.let(
+              (name) => name.isNotEmpty ? '.$name' : defaultLoggerName,
+            ) ??
+            defaultLoggerName;
+        final logger = Logger(loggerName);
         final level = record.level?.let(
               (level) => Level.LEVELS.firstWhere((l) => l.value == level),
             ) ??
@@ -493,16 +503,20 @@ final class CompilationException implements Exception {
 
 extension on FrontendServerClient {
   String expectOutput(CompileResult result) {
-    _logger.finest('Compile result:\n${result.debugResult}');
+    _logger.finest(
+      'Compile result: dillOutput=${result.dillOutput} '
+      'errors=${result.errorCount}',
+    );
     switch (result) {
-      case CompileResult(errorCount: > 0, :final compilerOutputLines):
+      case CompileResult(errorCount: > 0):
         throw CompilationException(
-          'Error compiling local API: ${compilerOutputLines.join('\n')}',
+          'Error compiling local API: ${result.debugResult}',
         );
       case CompileResult(:final dillOutput?):
         accept();
         return dillOutput;
       default:
+        _logger.finest('Compile result:\n${result.debugResult}');
         // `dillOutput` should never be null (see its docs).
         unreachable('An unknown error occurred compiling local API.');
     }

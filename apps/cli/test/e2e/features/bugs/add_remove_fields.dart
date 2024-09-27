@@ -1,5 +1,4 @@
 import 'package:celest_cli/src/context.dart';
-import 'package:test/test.dart';
 
 import '../../common/common.dart';
 import '../../common/test_projects.dart';
@@ -10,6 +9,9 @@ final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
 
   @override
   String get name => 'add/remove fields in model';
+
+  @override
+  List<String> get tags => ['add_remove_fields'];
 
   // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
   // needed.
@@ -36,9 +38,9 @@ final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
         .childDirectory('celest')
         .childDirectory('lib')
         .childDirectory('models');
-    expect(modelsDir.existsSync(), isTrue);
 
-    final locationFile = await modelsDir.childFile('location.dart').create();
+    final locationFile =
+        await modelsDir.childFile('location.dart').create(recursive: true);
 
     // Create location function
     log('Creating location function');

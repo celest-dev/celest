@@ -623,6 +623,7 @@ class _Celest {
   static const _url = 'package:celest/celest.dart';
   static const _coreInternalUrl = 'package:celest_core/_internal.dart';
   static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
+  static const _contextUrl = 'package:celest/src/core/context.dart';
 
   /// Creates a [celest.BadRequestException] reference.
   DartTypeReference get badRequestException =>
@@ -721,6 +722,14 @@ class _Celest {
   /// Creates a [celest_runtime.CloudEventSourceTarget] reference.
   DartTypeReference get cloudEventSourceTarget =>
       const DartTypeReference('CloudEventSourceTarget', _runtimeUrl);
+
+  /// Creates a `context` reference.
+  DartTypeReference get globalContext =>
+      const DartTypeReference('context', _contextUrl);
+
+  /// Creates a `ContextKey` reference.
+  DartTypeReference get contextKey =>
+      const DartTypeReference('ContextKey', _contextUrl);
 }
 
 class _Collection {

@@ -12,22 +12,21 @@
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ],
-    "flutterSdkVersion": "3.24.1"
+    ]
   },
   "location": {
     "start": {
-      "offset": 44,
+      "offset": 62,
       "uri": "project.dart",
       "line": 2,
-      "column": 6
+      "column": 24
     },
     "end": {
-      "offset": 51,
+      "offset": 76,
       "uri": "project.dart",
       "line": 2,
-      "column": 13
+      "column": 38
     },
-    "text": "project"
+    "text": "name: 'simple'"
   }
 }

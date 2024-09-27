@@ -13,12 +13,10 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
-import 'package:celest_cli/database/database.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -212,57 +210,16 @@ final class CelestFrontend implements Closeable {
 
   /// Whether [path] is eligible for watching and reloading.
   bool _isReloadablePath(String path) {
-    // Ignore files from the .dart_tool directory
-    if (p.isWithin(
-      p.join(projectPaths.projectRoot, '.dart_tool'),
-      path,
-    )) {
+    // Ignore generated items.
+    if (p.isWithin(projectPaths.generatedDir, path)) {
       return false;
     }
-    // Ignore generated files
-    if (p.equals(projectPaths.resourcesDart, path)) {
-      return false;
+    // Reload top-level files.
+    if (p.equals(p.dirname(path), projectPaths.projectRoot)) {
+      return p.basename(path) == 'pubspec.yaml' || p.extension(path) == '.dart';
     }
-    if (p.equals(ClientTypes.clientClass.uri, path)) {
-      return false;
-    }
-    if (p.isWithin(projectPaths.clientOutputsDir, path)) {
-      return false;
-    }
-    // Ignore test files
-    if (p.isWithin(
-      p.join(projectPaths.projectRoot, 'test'),
-      path,
-    )) {
-      return false;
-    }
-    return true;
-  }
-
-  /// Ensures projects are recorded in the DB
-  Future<void> _addProjectToDb(String projectName) async {
-    logger.finest('Checking if project exists in DB...');
-    final dbProject = await celestProject.database
-        .findProjectByPath(projectPaths.projectRoot);
-    logger.finest('Found project in DB: $dbProject');
-    if (dbProject == null) {
-      logger.finest('Creating project in DB...');
-      await celestProject.database.createProject(
-        ProjectsCompanion.insert(
-          name: projectName,
-          path: projectPaths.projectRoot,
-        ),
-      );
-      logger.finest('Created project in DB');
-    } else if (dbProject.name != projectName) {
-      logger.finest('Updating project name in DB...');
-      await celestProject.database.updateProjectName(
-        projectName: projectName,
-        projectPath: projectPaths.projectRoot,
-      );
-      logger.finest('Updated project name in DB');
-    }
-    // TODO(dnys1): Update if project path changes.
+    // Otherwise, reload only handwritten backend code.
+    return p.isWithin(projectPaths.projectLib, path);
   }
 
   /// Signals that a SIGINT or SIGTERM event has fired and the CLI needs to
@@ -383,7 +340,6 @@ final class CelestFrontend implements Closeable {
 
             if (!_didFirstCompile) {
               _didFirstCompile = true;
-              await _addProjectToDb(project.name);
             }
 
             // Only clear changed paths once a full restart has been completed

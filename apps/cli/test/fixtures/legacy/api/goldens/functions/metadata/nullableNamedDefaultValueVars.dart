@@ -4,11 +4,10 @@
 import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/models/metadata.dart' as _i4;
+import 'package:celest_backend/src/functions/metadata.dart' as _i2;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import 'package:celest_core/src/serialization/json_value.dart' as _i7;
-
-import '../../../functions/metadata.dart' as _i2;
 
 final class NullableNamedDefaultValueVarsTarget
     extends _i1.CloudFunctionHttpTarget {
@@ -21,20 +20,21 @@ final class NullableNamedDefaultValueVarsTarget
   @override
   Future<_i1.CelestResponse> handle(
     Map<String, Object?> request, {
-    required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
   }) async {
     try {
       _i2.nullableNamedDefaultValueVars(
-        value: ((request[r'value'] as num?)?.toInt()) ?? 42,
-        doubleValue: ((request[r'doubleValue'] as num?)?.toDouble()) ?? 42.0,
-        boolValue: ((request[r'boolValue'] as bool?)) ?? true,
-        stringValue: ((request[r'stringValue'] as String?)) ?? 'default',
+        value: ((request[r'value'] as num?)?.toInt()) ?? _i2.defaultInt,
+        doubleValue: ((request[r'doubleValue'] as num?)?.toDouble()) ??
+            _i2.defaultDouble,
+        boolValue: ((request[r'boolValue'] as bool?)) ?? _i2.defaultBool,
+        stringValue:
+            ((request[r'stringValue'] as String?)) ?? _i2.defaultString,
         listValue: ((request[r'listValue'] as Iterable<Object?>?)
                 ?.map((el) => (el as String))
                 .toList()) ??
-            const ['default'],
+            _i2.defaultList,
         mapValue: ((request[r'mapValue'] as Map<String, Object?>?)?.map((
               key,
               value,
@@ -43,20 +43,20 @@ final class NullableNamedDefaultValueVarsTarget
                   key,
                   (value as String),
                 ))) ??
-            const {'default': 'default'},
+            _i2.defaultMap,
         enumValue: (_i3.Serializers.instance
                 .deserialize<_i4.LiteralEnum?>(request[r'enumValue'])) ??
-            _i4.LiteralEnum.a,
+            _i2.defaultEnum,
         recordValue: (_i3.Serializers.instance
                 .deserialize<({String a, String b, String c})?>(
                     request[r'recordValue'])) ??
-            const (a: 'a', b: 'b', c: 'c'),
+            _i2.defaultRecord,
         exportable: (_i3.Serializers.instance
                 .deserialize<_i4.Exportable?>(request[r'exportable'])) ??
-            const _i4.Exportable(),
+            _i2.defaultExportable,
         serializable: (_i3.Serializers.instance
                 .deserialize<_i4.Serializable?>(request[r'serializable'])) ??
-            const _i4.Serializable.forType('String'),
+            _i2.defaultSerializable,
       );
       return (statusCode: 200, body: {'response': null});
     } on _i5.SerializationException catch (e) {

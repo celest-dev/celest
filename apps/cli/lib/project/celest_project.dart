@@ -3,7 +3,10 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
+import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_options.dart';
@@ -69,7 +72,10 @@ final class CelestProject {
     required this.config,
     required this.envManager,
     required this.parentProject,
-  }) : _analysisOptions = analysisOptions;
+    required this.database,
+    required ByteStore byteStore,
+  })  : _analysisOptions = analysisOptions,
+        _byteStore = byteStore;
 
   static final _logger = Logger('CelestProject');
 
@@ -101,12 +107,19 @@ final class CelestProject {
     await envManager.spawn();
     envManager.envVars.ignore();
     _logger.finest('Spawned env manager');
+    final database = await CelestDatabase.start(projectRoot, verbose: verbose);
+    final byteStore = MemoryCachingByteStore(
+      database.byteStore,
+      1 << 30, // 1 GB
+    );
     final project = CelestProject._(
       projectPaths: projectPaths,
       analysisOptions: analysisOptions,
       config: config,
       envManager: envManager,
       parentProject: parentProject,
+      database: database,
+      byteStore: byteStore,
     );
     return project;
   }
@@ -117,11 +130,13 @@ final class CelestProject {
   AnalysisOptions _analysisOptions;
   AnalysisOptions get analysisOptions => _analysisOptions;
 
+  final ByteStore _byteStore;
   late final _analysisContextCollection = AnalysisContextCollectionImpl(
     includedPaths: [projectPaths.projectRoot],
     sdkPath: Sdk.current.sdkPath,
     // Needed for collecting subtypes.
     enableIndex: true,
+    byteStore: _byteStore,
   );
 
   Future<CelestProjectType> determineProjectType() async {
@@ -158,7 +173,7 @@ final class CelestProject {
   final CelestConfig config;
 
   /// The [CelestDatabase] for the current project.
-  late final database = CelestDatabase(config);
+  final CelestDatabase database;
 
   Pubspec get pubspec => Pubspec.parse(
         fileSystem.file(projectPaths.pubspecYaml).readAsStringSync(),
@@ -180,6 +195,50 @@ final class CelestProject {
       'Changed files: ${changedFiles.join(Platform.lineTerminator)}',
     );
     return changedFiles.toSet();
+  }
+
+  /// The name of the project as declared in the `project.dart` file.
+  ///
+  /// We parse the `project.dart` file to retrieve it since it is cheap and
+  /// follows a consistent pattern.
+  String get projectName {
+    final projectDart = fileSystem.file(projectPaths.projectDart);
+    if (!projectDart.existsSync()) {
+      // Shouldn't ever happen since we shouldn't be requesting this before
+      // the project is generated.
+      throw StateError(
+        'No project.dart file found in the project root.',
+      );
+    }
+    final projectLibrary =
+        analysisContext.currentSession.getParsedLibrary(projectDart.path);
+    switch (projectLibrary) {
+      case ParsedLibraryResult(:final units):
+        final declarations = units
+            .expand((unit) => unit.unit.declarations)
+            .whereType<TopLevelVariableDeclaration>()
+            .expand((declaration) => declaration.variables.variables);
+        for (final declaration in declarations) {
+          if (declaration.initializer
+              case MethodInvocation(
+                methodName: SimpleIdentifier(name: 'Project'),
+                :final argumentList,
+              )) {
+            for (final argument in argumentList.arguments) {
+              if (argument
+                  case NamedExpression(
+                    name: Label(label: SimpleIdentifier(name: 'name')),
+                    expression: SimpleStringLiteral(value: final projectName),
+                  )) {
+                return projectName;
+              }
+            }
+          }
+        }
+        throw StateError('No Project(name: "name") found in project.dart');
+      default:
+        throw StateError('Failed to parse project.dart');
+    }
   }
 
   Future<void> close() async {

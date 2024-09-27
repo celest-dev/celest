@@ -182,7 +182,7 @@ extension DartTypeHelper on DartType {
 
   bool get isUserContext => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == '_UserContext' && library.isPackageCelest,
+          name == '_PrincipalContextKey' && library.isPackageCelest,
         _ => false,
       };
 

@@ -17,12 +17,13 @@ final pubCache = PubCache();
 final class PubCache {
   static final packagesToFix = {
     // This is the only syntax that reliably works with both dart/flutter
-    'native_storage': '>=0.1.0 <1.0.0',
+    'native_storage': '>=0.2.2 <1.0.0',
     'native_authentication': '>=0.1.0 <1.0.0',
-    'jni': '>=0.8.0 <1.0.0',
+    'jni': '>=0.11.0 <1.0.0',
     'celest_auth': '>=$currentMinorVersion <1.0.0',
     'celest': '>=$currentMinorVersion <1.0.0',
     'celest_core': '>=$currentMinorVersion <1.0.0',
+    'objective_c': '>=2.0.0',
   };
   static final _logger = Logger('PubCache');
 
@@ -158,12 +159,18 @@ final class PubCache {
         }
         continue;
       }
-      final needsFix = pubspec.environment?.containsKey('flutter') ?? false;
-      if (!needsFix) {
+      final needsEnvFix = pubspec.environment?.containsKey('flutter') ?? false;
+      final needsDepsFix = pubspec.dependencies.containsKey('flutter');
+      if (!needsEnvFix && !needsDepsFix) {
         continue;
       }
       final editor = YamlEditor(pubspecYaml);
-      editor.remove(['environment', 'flutter']);
+      if (needsEnvFix) {
+        editor.remove(['environment', 'flutter']);
+      }
+      if (needsDepsFix) {
+        editor.remove(['dependencies', 'flutter']);
+      }
       await pubspecFile.writeAsString(editor.toString());
       _logger.finest('Fixed pubspec for ${pubspec.name} in ${packageDir.path}');
       fixed++;

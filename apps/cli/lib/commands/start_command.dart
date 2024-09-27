@@ -27,8 +27,7 @@ final class StartCommand extends CelestCommand
     await checkForLatestVersion();
     final needsMigration = await configure();
 
-    currentProgress?.complete('Project generated successfully');
-    currentProgress = cliLogger.progress('Starting Celest');
+    currentProgress ??= cliLogger.progress('Starting Celest');
 
     // Start the Celest Frontend Loop
     return CelestFrontend().run(

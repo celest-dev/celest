@@ -7,6 +7,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
+import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
@@ -15,12 +16,18 @@ import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/config/feature_flags.dart';
+import 'package:celest_cli/database/database.dart';
+import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
+import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
+import 'package:pub_semver/pub_semver.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -33,6 +40,66 @@ final class CelestAnalyzer
   static CelestAnalyzer? _instance;
 
   static final Logger _logger = Logger('CelestAnalyzer');
+
+  /// Warms up the analyzer caches by resolving the core libraries and types
+  /// in a background thread.
+  ///
+  /// The results will be persisted to the byte store so that they can be
+  /// reused in subsequent analyzer instances.
+  static Future<void> warmUp(String projectRoot) async {
+    final database = await CelestDatabase.start(projectRoot, verbose: false);
+
+    var projectDir = fileSystem.directory(projectRoot);
+    final Iterable<String> dependencies;
+    if (!fileSystem.file(p.join(projectRoot, 'pubspec.lock')).existsSync()) {
+      // If the project hasn't been created yet, create a dummy project to warm
+      // up the caches.
+      projectDir = fileSystem.systemTempDirectory.createTempSync('celest_');
+      dependencies = ProjectDependency.dependencies.keys;
+      final pubspec = Pubspec(
+        'warmup_celest_cache',
+        environment: {
+          'sdk': VersionConstraint.compatibleWith(minSupportedDartSdk),
+        },
+        dependencies: ProjectDependency.dependencies,
+      );
+      await [
+        projectDir.childFile('pubspec.yaml').writeAsString(pubspec.toYaml()),
+        projectDir.childFile('project.dart').writeAsString('''
+import 'package:celest/celest.dart';
+
+const project = Project(name: 'cache_warmup');
+'''),
+      ].wait;
+      await runPub(action: PubAction.get, workingDirectory: projectDir.path);
+    } else {
+      // Otherwise, cache the dependencies of the existing project.
+      final pubspec = Pubspec.parse(
+        projectDir.childFile('pubspec.yaml').readAsStringSync(),
+      );
+      dependencies = pubspec.dependencies.keys;
+    }
+
+    final contextCollection = AnalysisContextCollectionImpl(
+      includedPaths: [projectDir.path],
+      sdkPath: Sdk.current.sdkPath,
+      // Needed for collecting subtypes.
+      enableIndex: true,
+      byteStore: database.byteStore,
+    );
+    final context = contextCollection.contextFor(
+      p.join(projectDir.path, 'project.dart'),
+    );
+    final libraries = {
+      'dart:core',
+      'dart:typed_data',
+      'package:celest_core/celest_core.dart',
+      'package:celest_core/src/exception/cloud_exception.dart',
+      'package:celest_core/src/auth/user.dart',
+      ...dependencies.map((dep) => 'package:$dep/$dep.dart'),
+    };
+    await Future.wait(libraries.map(context.currentSession.getLibraryByUri));
+  }
 
   @override
   AnalysisContext get context => celestProject.analysisContext;
@@ -119,34 +186,48 @@ final class CelestAnalyzer
     final (
       dartCore as LibraryElementResult,
       dartTypedData as LibraryElementResult,
-      celestCore
+      celestCoreExceptions,
+      celestCoreUser,
     ) = await (
       context.currentSession.getLibraryByUri('dart:core'),
       context.currentSession.getLibraryByUri('dart:typed_data'),
-      context.currentSession
-          .getLibraryByUri('package:celest_core/celest_core.dart'),
+
+      // Resolve the specific URIs instead of resolving the whole package
+      // (which takes much much longer).
+      context.currentSession.getLibraryByUri(
+        'package:celest_core/src/exception/cloud_exception.dart',
+      ),
+      context.currentSession.getLibraryByUri(
+        'package:celest_core/src/auth/user.dart',
+      ),
     ).wait;
-    if (celestCore is! LibraryElementResult) {
+    if (celestCoreExceptions is! LibraryElementResult ||
+        celestCoreUser is! LibraryElementResult) {
       await dumpPackageConfig();
       throw StateError('Failed to resolve celest_core');
     }
-    typeHelper.coreTypes = CoreTypes(
-      typeProvider: dartCore.element.typeProvider,
-      coreExceptionType: dartCore.getClassType('Exception'),
-      coreErrorType: dartCore.getClassType('Error'),
-      coreBigIntType: dartCore.getClassType('BigInt'),
-      dateTimeType: dartCore.getClassType('DateTime'),
-      durationType: dartCore.getClassType('Duration'),
-      coreRegExpType: dartCore.getClassType('RegExp'),
-      coreStackTraceType: dartCore.getClassType('StackTrace'),
-      coreUriType: dartCore.getClassType('Uri'),
-      coreUriDataType: dartCore.getClassType('UriData'),
-      typedDataUint8ListType: dartTypedData.getClassType('Uint8List'),
-      badRequestExceptionType: celestCore.getClassType('BadRequestException'),
-      internalServerErrorType: celestCore.getClassType('InternalServerError'),
-      userType: celestCore.getClassType('User'),
-      cloudExceptionType: celestCore.getClassType('CloudException'),
-    );
+    typeHelper
+      ..coreTypes = CoreTypes(
+        typeProvider: dartCore.element.typeProvider,
+        coreExceptionType: dartCore.getClassType('Exception'),
+        coreErrorType: dartCore.getClassType('Error'),
+        coreBigIntType: dartCore.getClassType('BigInt'),
+        dateTimeType: dartCore.getClassType('DateTime'),
+        durationType: dartCore.getClassType('Duration'),
+        coreRegExpType: dartCore.getClassType('RegExp'),
+        coreStackTraceType: dartCore.getClassType('StackTrace'),
+        coreUriType: dartCore.getClassType('Uri'),
+        coreUriDataType: dartCore.getClassType('UriData'),
+        typedDataUint8ListType: dartTypedData.getClassType('Uint8List'),
+        badRequestExceptionType:
+            celestCoreExceptions.getClassType('BadRequestException'),
+        internalServerErrorType:
+            celestCoreExceptions.getClassType('InternalServerError'),
+        userType: celestCoreUser.getClassType('User'),
+        cloudExceptionType: celestCoreExceptions.getClassType('CloudException'),
+      )
+      ..typeSystem = dartCore.element.typeSystem
+      ..typeProvider = dartCore.element.typeProvider;
   }
 
   @override
@@ -163,7 +244,11 @@ final class CelestAnalyzer
     bool migrateProject = false,
     bool updateResources = true,
   }) async {
-    await init(migrateProject: migrateProject);
+    await performance.trace(
+      'CelestAnalyzer',
+      'init',
+      () => init(migrateProject: migrateProject),
+    );
     if (_errors.isNotEmpty) {
       return CelestAnalysisResult.failure(
         _errors,
@@ -172,8 +257,12 @@ final class CelestAnalyzer
       );
     }
 
-    final project = await _findProject();
-    if (project == null) {
+    final project = await performance.trace(
+      'CelestAnalyzer',
+      'findProject',
+      _findProject,
+    );
+    if (project == null || _errors.isNotEmpty) {
       return CelestAnalysisResult.failure(
         _errors,
         warnings: _warnings,
@@ -185,9 +274,12 @@ final class CelestAnalyzer
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: reportError,
     );
-    _project.envVars.replace(
-      await resolver.resolveEnvironmentVariables(),
+    final envVars = await performance.trace(
+      'CelestAnalyzer',
+      'resolveEnvVariables',
+      resolver.resolveEnvironmentVariables,
     );
+    _project.envVars.replace(envVars);
 
     // Regenerate resources.dart before analyzing remaining project files.
     // TODO(dnys1): Find a better way to do this.
@@ -203,11 +295,23 @@ final class CelestAnalyzer
       await celestProject.invalidate({projectPaths.resourcesDart});
     }
 
-    final hasAuth = await _collectAuth(migrateProject: migrateProject);
-    await _collectApis(hasAuth: hasAuth);
+    final hasAuth = await performance.trace(
+      'CelestAnalyzer',
+      'collectAuth',
+      () => _collectAuth(migrateProject: migrateProject),
+    );
+    await performance.trace(
+      'CelestAnalyzer',
+      'collectApis',
+      () => _collectApis(hasAuth: hasAuth),
+    );
 
     if (migrateProject) {
-      await _applyMigrations();
+      await performance.trace(
+        'CelestAnalyzer',
+        'applyMigrations',
+        _applyMigrations,
+      );
     }
 
     return CelestAnalysisResult.success(
@@ -221,18 +325,27 @@ final class CelestAnalyzer
   Future<ast.Project?> _findProject() async {
     _logger.fine('Analyzing project...');
     final projectFilePath = projectPaths.projectDart;
-    if (!await fileSystem.file(projectFilePath).exists()) {
+    if (!fileSystem.file(projectFilePath).existsSync()) {
       reportError('No project file found at $projectFilePath');
       return null;
     }
     _logger.finer('Found project file at $projectFilePath');
-    final projectLibrary = await resolveLibrary(projectFilePath);
+    final projectLibrary =
+        context.currentSession.getParsedLibrary(projectFilePath);
+    if (projectLibrary is! ParsedLibraryResult) {
+      reportError('Failed to parse project.dart file');
+      return null;
+    }
     final projectErrors = projectLibrary.units
         .expand((unit) => unit.errors)
         .where((error) => error.severity == Severity.error)
         .toList();
     if (projectErrors.isNotEmpty) {
       for (final projectError in projectErrors) {
+        _logger.finest(
+          'ERROR (project.dart): type=${projectError.errorCode.type} '
+          'name=${projectError.errorCode.name}',
+        );
         reportError(
           projectError.message,
           location: projectError.source.toSpan(
@@ -245,9 +358,6 @@ final class CelestAnalyzer
       return null;
     }
     _logger.finer('Resolved project file');
-    typeHelper
-      ..typeSystem = projectLibrary.element.typeSystem
-      ..typeProvider = projectLibrary.typeProvider;
     // TODO(dnys1): Some errors are okay, for example if `resources.dart` hasn't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
@@ -272,7 +382,7 @@ final class CelestAnalyzer
     }
 
     final apiFiles = await apiDir
-        .list()
+        .list(followLinks: true)
         .whereType<File>()
         .map((file) => file.path)
         .where((path) => path.endsWith('.dart'))
@@ -331,28 +441,17 @@ final class CelestAnalyzer
   }
 
   Future<bool> _collectAuth({required bool migrateProject}) async {
-    final authFilepath = projectPaths.authDart;
-    final authFile = fileSystem.file(authFilepath);
-    if (!authFile.existsSync()) {
-      if (!migrateProject) {
-        return false;
-      }
-      final legacyAuthFile = fileSystem.file(projectPaths.legacyAuthDart);
-      if (!legacyAuthFile.existsSync()) {
-        return false;
-      }
-      await legacyAuthFile.copy(authFilepath);
-      await legacyAuthFile.delete();
-      try {
-        await legacyAuthFile.parent.delete(recursive: false);
-      } on Object {
-        // Do not delete directory if not empty.
-        _logger.finest('Failed to delete legacy auth directory');
-      }
-    }
-
-    final authLibrary = await resolveLibrary(authFile.path);
-    final authErrors = authLibrary.units
+    final potentialAuthFiles = [
+      projectPaths.authDart,
+      projectPaths.projectDart,
+    ];
+    final authLibraries = await Future.wait(
+      potentialAuthFiles
+          .where((it) => fileSystem.file(it).existsSync())
+          .map(resolveLibrary),
+    );
+    final authErrors = authLibraries
+        .expand((library) => library.units)
         .expand((unit) => unit.errors)
         .where((error) => error.severity == Severity.error)
         .toList();
@@ -369,16 +468,17 @@ final class CelestAnalyzer
       return false;
     }
 
-    final auth = await resolver.resolveAuth(
-      authFilepath: authFilepath,
-      authLibrary: authLibrary,
-    );
-    if (auth == null) {
-      return false;
+    for (final library in authLibraries) {
+      final auth = await resolver.resolveAuth(
+        authFilepath: library.element.source.uri.toFilePath(),
+        authLibrary: library,
+      );
+      if (auth != null) {
+        _project.auth.replace(auth);
+        return true;
+      }
     }
-
-    _project.auth.replace(auth);
-    return true;
+    return false;
   }
 
   Future<void> _applyMigrations() async {

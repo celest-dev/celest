@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../functions/flutter.dart';
+import 'package:celest_backend/src/functions/flutter.dart';
 
 Future<void> main() async {
   final golden = await paintWidget();

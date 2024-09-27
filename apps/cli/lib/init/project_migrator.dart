@@ -1,6 +1,6 @@
-import 'package:celest_cli/init/project_items/add_generated_folder.dart';
-import 'package:celest_cli/init/project_items/macos_entitlements.dart';
-import 'package:celest_cli/init/project_items/pubspec_updater.dart';
+import 'package:celest_cli/init/migrations/macos_entitlements.dart';
+import 'package:celest_cli/init/migrations/pubspec_updater.dart';
+import 'package:celest_cli/init/migrations/v1_folder_structure.dart';
 import 'package:celest_cli/project/celest_project.dart';
 
 /// Manages the migration of a Celest project to the latest version.
@@ -22,7 +22,7 @@ class ProjectMigrator {
   final String projectRoot;
 
   /// The name of the project, as defined by the user.
-  final String? projectName;
+  final String projectName;
 
   /// Generates a new Celest project.
   ///
@@ -35,8 +35,8 @@ class ProjectMigrator {
             type: ParentProjectType.flutter
           ))
         MacOsEntitlements(appRoot).create(projectRoot).then((_) => false),
-      GeneratedFolder().create(projectRoot).then((_) => false),
       PubspecUpdater(parentProject, projectName).create(projectRoot),
+      V1FolderStructure(projectName).create(projectRoot),
     ]);
     return results.any((needsMigration) => needsMigration);
   }

@@ -43,13 +43,13 @@
               "location": {
                 "start": {
                   "offset": 133,
-                  "uri": "auth.dart",
+                  "uri": "package:celest_backend/src/functions/auth.dart",
                   "line": 5,
                   "column": 0
                 },
                 "end": {
                   "offset": 162,
-                  "uri": "auth.dart",
+                  "uri": "package:celest_backend/src/functions/auth.dart",
                   "line": 5,
                   "column": 29
                 },
@@ -61,13 +61,13 @@
           "location": {
             "start": {
               "offset": 189,
-              "uri": "auth.dart",
+              "uri": "package:celest_backend/src/functions/auth.dart",
               "line": 6,
               "column": 26
             },
             "end": {
               "offset": 200,
-              "uri": "auth.dart",
+              "uri": "package:celest_backend/src/functions/auth.dart",
               "line": 6,
               "column": 37
             },
@@ -225,13 +225,13 @@
       "location": {
         "start": {
           "offset": 0,
-          "uri": "auth.dart",
+          "uri": "package:celest_backend/src/functions/auth.dart",
           "line": 0,
           "column": 0
         },
         "end": {
           "offset": 0,
-          "uri": "auth.dart",
+          "uri": "package:celest_backend/src/functions/auth.dart",
           "line": 0,
           "column": 0
         },
@@ -245,22 +245,21 @@
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ],
-    "flutterSdkVersion": "3.24.1"
+    ]
   },
   "location": {
     "start": {
-      "offset": 44,
+      "offset": 62,
       "uri": "project.dart",
       "line": 2,
-      "column": 6
+      "column": 24
     },
     "end": {
-      "offset": 51,
+      "offset": 78,
       "uri": "project.dart",
       "line": 2,
-      "column": 13
+      "column": 40
     },
-    "text": "project"
+    "text": "name: 'supabase'"
   }
 }

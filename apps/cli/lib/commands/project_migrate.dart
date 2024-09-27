@@ -10,16 +10,11 @@ base mixin Migrate on Configure {
     logger.finest(
       'Migrating project at "${projectPaths.projectRoot}"...',
     );
-    return performance.trace('StartCommand', 'migrateProject', () async {
-      // TODO(dnys1): Improve this logic. Save in YAML?
-      final project = await celestProject.database.findProjectByPath(
-        projectPaths.projectRoot,
-      );
-      final projectName = project?.name;
+    return performance.trace('Migrate', 'migrateProject', () async {
       return ProjectMigrator(
         parentProject: parentProject,
         projectRoot: projectPaths.projectRoot,
-        projectName: projectName,
+        projectName: celestProject.projectName,
       ).migrate();
     });
   }

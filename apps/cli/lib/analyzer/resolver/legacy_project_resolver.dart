@@ -1,9 +1,11 @@
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/source/source_resource.dart';
 import 'package:api_celest/ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
@@ -189,38 +191,59 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
 
   @override
   Future<ast.Project?> resolveProject({
-    required ResolvedLibraryResult projectLibrary,
+    required ParsedLibraryResult projectLibrary,
   }) async {
-    final (topLevelConstants, hasErrors) =
-        projectLibrary.element.topLevelConstants(
-      errorReporter: _errorReporter,
+    final declarations = projectLibrary.units
+        .expand((unit) => unit.unit.declarations)
+        .whereType<TopLevelVariableDeclaration>()
+        .expand((declaration) => declaration.variables.variables);
+
+    final projectFilePath = projectPaths.projectDart;
+    final projectFile =
+        context.currentSession.getFile(projectFilePath) as FileResult;
+    final projectFileSource = FileSource(
+      projectFile.file,
+      p.toUri(projectFilePath),
     );
-    if (hasErrors) {
-      return null;
+
+    String? projectName;
+    String? variableName;
+    FileSpan? projectDefineLocation;
+
+    search:
+    for (final declaration in declarations) {
+      if (declaration
+          case VariableDeclaration(
+            name: Token(lexeme: final name),
+            initializer: MethodInvocation(
+              methodName: SimpleIdentifier(name: 'Project'),
+              :final argumentList,
+            )
+          )) {
+        for (final argument in argumentList.arguments) {
+          if (argument
+              case NamedExpression(
+                name: Label(label: SimpleIdentifier(name: 'name')),
+                expression: SimpleStringLiteral(:final value),
+              )) {
+            projectName = value;
+            variableName = name;
+            projectDefineLocation = argument.sourceLocation(projectFileSource);
+            break search;
+          }
+        }
+      }
     }
-    final projectFilePath = projectLibrary.element.source.uri.toFilePath();
-    final projectDefinition =
-        topLevelConstants.firstWhereOrNull((el) => el.element.type.isProject);
-    if (projectDefinition == null) {
+
+    if (projectName == null) {
       reportError('$projectFilePath: No `Project` type found');
       return null;
     }
-    final (
-      element: projectDefinitionElement,
-      value: projectDefinitionValue,
-    ) = projectDefinition;
 
     // Validate `project` variable
-    final projectDefineLocation = projectDefinitionElement.sourceLocation;
     _logger
         .finer('Resolved project definition location: $projectDefineLocation');
-    final projectName =
-        projectDefinitionValue.getField('name')?.toStringValue();
-    assert(
-      projectName != null,
-      'This should be impossible given that `name` is a required field on `Project`',
-    );
-    if (projectName!.isEmpty) {
+    if (projectName.isEmpty) {
       reportError(
         'The project name cannot be empty.',
         location: projectDefineLocation,
@@ -233,7 +256,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     return ast.Project(
       name: projectName,
       reference: refer(
-        projectDefinitionElement.name,
+        variableName!,
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       ),
       sdkInfo: ast.SdkInfo(

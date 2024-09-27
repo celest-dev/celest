@@ -5,11 +5,10 @@ import 'dart:io' as _i3;
 
 import 'package:celest/celest.dart' as _i6;
 import 'package:celest/src/runtime/serve.dart' as _i1;
+import 'package:celest_backend/src/functions/injected.dart' as _i2;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i4;
 import 'package:celest_core/src/serialization/json_value.dart' as _i7;
-
-import '../../../functions/injected.dart' as _i2;
 
 final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
   @override
@@ -21,7 +20,6 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
   @override
   Future<_i1.CelestResponse> handle(
     Map<String, Object?> request, {
-    required Map<String, String> context,
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
   }) async {

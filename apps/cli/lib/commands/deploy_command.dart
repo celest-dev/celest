@@ -3,6 +3,7 @@ import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:mason_logger/src/mason_logger.dart';
 
 final class DeployCommand extends CelestCommand
     with Configure, Migrate, Authenticate {
@@ -14,6 +15,9 @@ final class DeployCommand extends CelestCommand
 
   @override
   String get category => 'Project';
+
+  @override
+  Progress? currentProgress;
 
   @override
   Future<int> run() async {

@@ -95,25 +95,6 @@ import 'package:celest/celest.dart';
 
 $authDart
 '''),
-    d.dir('generated', [
-      if (resourcesDart != null) d.file('resources.dart', resourcesDart),
-    ]),
-    if (apis.isNotEmpty)
-      d.dir('functions', [
-        for (final MapEntry(key: fileName, value: contents) in apis.entries)
-          d.file(
-            fileName,
-            contents.startsWith('@')
-                ? contents
-                : '''
-import 'package:celest/celest.dart';
-import 'package:$name/exceptions.dart';
-import 'package:$name/models.dart';
-
-$contents
-''',
-          ),
-      ]),
     if (config.isNotEmpty)
       d.dir('config', [
         for (final MapEntry(key: fileName, value: contents) in config.entries)
@@ -122,13 +103,57 @@ $contents
     d.dir('lib', [
       d.file('models.dart', models ?? ''),
       d.file('exceptions.dart', exceptions ?? ''),
-      ..._nestedDescriptor(lib),
+      ..._nestedDescriptor(
+        _mergeMaps(lib, {
+          'src': {
+            'generated': {
+              'resources.dart': resourcesDart ?? '',
+            },
+            if (apis.isNotEmpty)
+              'functions': {
+                for (final MapEntry(key: fileName, value: contents)
+                    in apis.entries)
+                  fileName: contents.startsWith('@')
+                      ? contents
+                      : '''
+import 'package:celest/celest.dart';
+import 'package:$name/exceptions.dart';
+import 'package:$name/models.dart';
+
+$contents
+''',
+              },
+          },
+        }),
+      ),
     ]),
   ]);
   await project.create(parentDirectory);
   final projectRoot = p.join(parentDirectory ?? d.sandbox, name);
   await init(projectRoot: projectRoot);
   return celestProject;
+}
+
+Map<K, V> _mergeMaps<K, V>(Map<K, V> a, Map<K, V> b) {
+  final result = <K, V>{};
+  for (final entry in a.entries) {
+    result[entry.key] = entry.value;
+  }
+  for (final entry in b.entries) {
+    final key = entry.key;
+    final value = entry.value;
+    if (result.containsKey(key)) {
+      final existing = result[key];
+      if (existing is Map<K, V> && value is Map<K, V>) {
+        result[key] = _mergeMaps(existing, value) as V;
+      } else {
+        result[key] = value;
+      }
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
 }
 
 Iterable<d.Descriptor> _nestedDescriptor(
@@ -1322,7 +1347,7 @@ final class LeafB extends Base {
       );
 
       testNoErrors(
-        name: 'valid_def_locations',
+        name: 'legacy_def_locations',
         apis: {
           'greeting.dart': '''
 import 'package:celest/celest.dart';
@@ -1339,114 +1364,21 @@ class ValidException implements Exception {}
 ''',
       );
 
-      testErrors(
-        name: 'invalid_return_def_location',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-class ValidJsonable {}
-
-@cloud
-ValidJsonable sayHello() => throw UnimplementedError();
-''',
-        },
-        errors: [
-          'Custom model types referenced in APIs must be defined within the '
-              '`celest/lib/models` folder',
-        ],
-      );
-
-      testErrors(
-        name: 'invalid_param_def_location',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-class ValidJsonable {}
-
-@cloud
-void sayHello(ValidJsonable param) => print(param);
-''',
-        },
-        errors: [
-          'Custom model types referenced in APIs must be defined within the '
-              '`celest/lib/models` folder',
-        ],
-      );
-
-      testErrors(
-        name: 'invalid_model_def_location_in_lib',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:invalid_model_def_location_in_lib/valid_jsonable.dart';
-
-@cloud
-void sayHello(ValidJsonable param) => print(param);
-''',
-        },
-        lib: {
-          'valid_jsonable.dart': '''
-class ValidJsonable {}
-''',
-        },
-        errors: [
-          'Custom model types referenced in APIs must be defined within the '
-              '`celest/lib/models` folder',
-        ],
-      );
-
+      // In V1, it is valid to define models in the same file as the API which
+      // uses them.
       testNoErrors(
-        name: 'cloud_exceptions',
+        name: 'valid_def_locations',
         apis: {
           'greeting.dart': '''
 import 'package:celest/celest.dart';
 
-@cloud
-void sayHello() => throw const BadRequestException(null);
-''',
-        },
-      );
-
-      testErrors(
-        name: 'invalid_exception_def_location',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
+class ValidJsonable {}
 class ValidException implements Exception {}
 
 @cloud
-void sayHello() => throw ValidException();
+ValidJsonable sayHello(ValidJsonable param) => throw ValidException();
 ''',
         },
-        errors: [
-          'Custom exception types referenced in APIs must be defined within the '
-              '`celest/lib/exceptions` folder',
-        ],
-      );
-
-      testErrors(
-        name: 'invalid_exception_def_location_in_lib',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-import 'package:invalid_exception_def_location_in_lib/valid_exception.dart';
-
-@cloud
-void sayHello() => throw ValidException();
-''',
-        },
-        lib: {
-          'valid_exception.dart': '''
-class ValidException implements Exception {}
-''',
-        },
-        errors: [
-          'Custom exception types referenced in APIs must be defined within the '
-              '`celest/lib/exceptions` folder',
-        ],
       );
 
       testErrors(

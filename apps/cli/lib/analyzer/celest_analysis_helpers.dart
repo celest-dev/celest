@@ -9,7 +9,6 @@ import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
-import 'package:celest_cli/src/utils/path.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
@@ -162,21 +161,19 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         interfaceType.extensionTypeErasure,
         typeHelper.coreTypes.coreErrorType,
       );
-      final isExceptionOrErrorType =
-          isExceptionType || isErrorType ;
+      final isExceptionOrErrorType = isExceptionType || isErrorType;
       if (!isExceptionOrErrorType) {
         continue;
       }
-      final exportedFromExceptionsDart = isOverriden ||
-          customExceptionTypes.contains(interfaceElement) ||
-          customModelTypes.contains(interfaceElement);
-
       // Only types defined within the celest/ project folder need to be in
       // lib/ since all others can be imported on the client side.
-      final mustBeExportedFromExceptionsDart =
+      final (mustBeExportedFromExceptionsDart, exportedFromExceptionsDart) =
           switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
-        final path? => p.isWithin(projectPaths.projectRoot, path),
-        _ => false,
+        final path? => (
+            p.isWithin(projectPaths.projectRoot, path),
+            p.isWithin(projectPaths.projectLib, path),
+          ),
+        _ => (false, false),
       };
       if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
         reportError(
@@ -237,28 +234,19 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     SourceSpan location, {
     required CustomType type,
   }) {
-    final isCustomType = switch (context.currentSession.uriConverter
+    final (isCustomType, isDefinedInLib) = switch (context
+        .currentSession.uriConverter
         .uriToPath(modelType.library.source.uri)) {
-      final path? => p.isWithin(projectPaths.projectRoot, path),
-      _ => false,
+      final path? => (
+          p.isWithin(projectPaths.projectRoot, path),
+          p.isWithin(projectPaths.projectLib, path),
+        ),
+      _ => (false, false),
     };
-    if (!isCustomType) {
-      return;
-    }
-    final isDefinedInLib = switch (type) {
-      CustomType.model => customModelTypes.contains(modelType),
-      CustomType.exception => customExceptionTypes.contains(modelType),
-    };
-    if (!isDefinedInLib) {
-      final expectedPath = p
-          .relative(
-            type.dir,
-            from: projectPaths.projectRoot,
-          )
-          .to(p.url);
+    if (isCustomType && !isDefinedInLib) {
       reportError(
-        'Custom ${type.name} types referenced in APIs must be defined within the '
-        '`celest/$expectedPath` folder.',
+        'Custom ${type.name} types referenced in APIs must be defined somewhere '
+        'within the `celest/lib` folder.',
         location: location,
       );
     }

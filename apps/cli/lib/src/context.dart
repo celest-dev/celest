@@ -1,10 +1,12 @@
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:api_celest/api_celest.dart';
+import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
+import 'package:celest_cloud/celest_cloud.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';
@@ -53,3 +55,9 @@ ProjectClient get projectService => ProjectClient(
       baseUri: ctx.baseUri,
       httpClient: ctx.httpClient,
     );
+
+final CelestCloud cloud = CelestCloud(
+  uri: ctx.baseUri,
+  authenticator: authenticator,
+  httpClient: ctx.httpClient,
+);

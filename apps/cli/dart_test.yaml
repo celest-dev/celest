@@ -7,3 +7,5 @@ tags:
     timeout: 15m
   openapi:
     timeout: 5m
+  goldens:
+    timeout: 20m

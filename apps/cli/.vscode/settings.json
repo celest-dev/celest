@@ -1,4 +1,8 @@
 {
   // -- Dart --
-  "dart.analysisExcludedFolders": ["test/openapi/goldens"]
+  "dart.analysisExcludedFolders": ["test/openapi/goldens"],
+
+  "files.associations": {
+    "*.drift": "sql"
+}
 }

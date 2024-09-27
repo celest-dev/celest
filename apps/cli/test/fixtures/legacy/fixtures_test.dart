@@ -1,3 +1,6 @@
+@Tags(['goldens'])
+library;
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -111,7 +114,7 @@ class TestRunner {
       testCodegen();
       testClient();
 
-      final apisDir = Directory(p.join(projectRoot, 'functions'));
+      final apisDir = Directory(p.join(projectRoot, 'lib', 'src', 'functions'));
       if (apisDir.existsSync()) {
         testApis(apisDir);
       }
