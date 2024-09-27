@@ -438,13 +438,6 @@ const ProjectEnvironmentDatabase$json = {
   '2': [
     {'1': 'host', '3': 1, '4': 1, '5': 9, '10': 'host'},
     {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
-    {
-      '1': 'system_database_id',
-      '3': 3,
-      '4': 1,
-      '5': 9,
-      '10': 'systemDatabaseId'
-    },
   ],
 };
 
@@ -452,5 +445,4 @@ const ProjectEnvironmentDatabase$json = {
 final $typed_data.Uint8List projectEnvironmentDatabaseDescriptor =
     $convert.base64Decode(
         'ChpQcm9qZWN0RW52aXJvbm1lbnREYXRhYmFzZRISCgRob3N0GAEgASgJUgRob3N0EhQKBXRva2'
-        'VuGAIgASgJUgV0b2tlbhIsChJzeXN0ZW1fZGF0YWJhc2VfaWQYAyABKAlSEHN5c3RlbURhdGFi'
-        'YXNlSWQ=');
+        'VuGAIgASgJUgV0b2tlbg==');

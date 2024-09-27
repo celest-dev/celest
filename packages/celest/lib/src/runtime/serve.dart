@@ -59,5 +59,6 @@ Future<void> serve({
     ProcessSignal.sigint.watch(),
     if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
   ]).first;
+  print('Shutting down...');
   await server.close();
 }

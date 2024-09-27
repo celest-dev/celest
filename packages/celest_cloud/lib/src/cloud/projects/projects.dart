@@ -29,7 +29,8 @@ final class Projects with BaseService {
   Stream<OperationState<OperationMetadata, Project>> create({
     required String parent,
     required String projectId,
-    required String displayName,
+    String? displayName,
+    Iterable<Region>? regions,
     Map<String, String>? annotations,
     bool validateOnly = false,
   }) async* {
@@ -38,6 +39,7 @@ final class Projects with BaseService {
       projectId: projectId,
       project: Project(
         displayName: displayName,
+        regions: regions,
         annotations: annotations,
       ),
       validateOnly: validateOnly,

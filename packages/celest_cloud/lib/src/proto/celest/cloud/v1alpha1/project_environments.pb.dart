@@ -1417,7 +1417,6 @@ class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
   factory ProjectEnvironmentDatabase({
     $core.String? host,
     $core.String? token,
-    $core.String? systemDatabaseId,
   }) {
     final $result = create();
     if (host != null) {
@@ -1425,9 +1424,6 @@ class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
     }
     if (token != null) {
       $result.token = token;
-    }
-    if (systemDatabaseId != null) {
-      $result.systemDatabaseId = systemDatabaseId;
     }
     return $result;
   }
@@ -1446,7 +1442,6 @@ class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'host')
     ..aOS(2, _omitFieldNames ? '' : 'token')
-    ..aOS(3, _omitFieldNames ? '' : 'systemDatabaseId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1500,19 +1495,6 @@ class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearToken() => clearField(2);
-
-  /// The system database ID, used for attaching.
-  @$pb.TagNumber(3)
-  $core.String get systemDatabaseId => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set systemDatabaseId($core.String v) {
-    $_setString(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasSystemDatabaseId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSystemDatabaseId() => clearField(3);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

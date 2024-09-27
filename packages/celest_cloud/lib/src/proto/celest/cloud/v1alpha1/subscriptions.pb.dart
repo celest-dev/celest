@@ -898,7 +898,9 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<BuilderSubscriptionPlan>(create);
   static BuilderSubscriptionPlan? _defaultInstance;
 
-  /// Required. The preferred currency for payment.
+  ///  Optional. The preferred currency for payment.
+  ///
+  ///  If not provided, it will be inferred from the user's location.
   @$pb.TagNumber(1)
   $core.String get currencyCode => $_getSZ(0);
   @$pb.TagNumber(1)

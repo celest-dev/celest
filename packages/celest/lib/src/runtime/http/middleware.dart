@@ -109,6 +109,10 @@ Handler rootMiddleware(Handler inner) {
     final requestZone = Zone.current.fork(
       specification: ZoneSpecification(
         handleUncaughtError: (self, parent, zone, error, stackTrace) {
+          if (error is HijackException) {
+            completer.completeError(error, stackTrace);
+            return;
+          }
           Logger.root.shout(
             'An unexpected error occurred',
             error,

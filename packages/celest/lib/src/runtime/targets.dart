@@ -124,8 +124,8 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
         );
       },
       (Object e, StackTrace st) {
-        print('An unexpected error occurred: $e');
-        print(st);
+        stderr.writeln('An unexpected error occurred: $e');
+        stderr.writeln(st);
         connection.sink.addError(e, st);
         connection.sink.close();
       },
