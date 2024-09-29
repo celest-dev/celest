@@ -1,3 +1,4 @@
+import 'package:celest/celest.dart';
 import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
@@ -52,6 +53,14 @@ base mixin Authenticate on CelestCommand {
       );
       rethrow;
     }
+  }
+
+  Future<User?> authenticateUser() async {
+    final authState = await auth.init();
+    if (authState case Authenticated(:final user)) {
+      return user;
+    }
+    return null;
   }
 
   /// Retrieves the authenticated user or signs up a new user.

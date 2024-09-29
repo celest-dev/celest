@@ -3,14 +3,14 @@ import 'dart:typed_data';
 
 import 'package:celest_cli/commands/analysis_server_command.dart';
 import 'package:celest_cli/commands/auth_command.dart';
-import 'package:celest_cli/commands/billing/subscribe_command.dart';
-import 'package:celest_cli/commands/billing/unsubscribe_command.dart';
 import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/organizations/organizations_command.dart';
 import 'package:celest_cli/commands/precache_command.dart';
 import 'package:celest_cli/commands/projects/projects_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
+import 'package:celest_cli/commands/subscriptions/subscribe_command.dart';
+import 'package:celest_cli/commands/subscriptions/subscription_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
 import 'package:celest_cli/commands/upgrade_command.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
@@ -52,7 +52,7 @@ void main(List<String> args) async {
     ..addCommand(DeployCommand())
     ..addCommand(AnalysisServerCommand())
     ..addCommand(SubscribeCommand())
-    ..addCommand(UnsubscribeCommand())
+    ..addCommand(SubscriptionCommand())
     ..addCommand(AuthCommand())
     ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand())
