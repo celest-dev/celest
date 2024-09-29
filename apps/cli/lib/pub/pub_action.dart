@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:cli_script/cli_script.dart';
 import 'package:logging/logging.dart';
 
@@ -46,7 +46,7 @@ Future<void> runPub({
   required PubAction action,
   required String workingDirectory,
 }) async {
-  exe ??= zDebugMode
+  exe ??= kDebugMode
       ? platform.resolvedExecutable
       : (await celestProject.determineProjectType()).name;
 

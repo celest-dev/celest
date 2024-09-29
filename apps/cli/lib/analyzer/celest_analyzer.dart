@@ -8,7 +8,7 @@ import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';

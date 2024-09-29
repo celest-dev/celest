@@ -4,12 +4,11 @@ import 'dart:io' show ProcessException, stderr, stdout;
 
 import 'package:archive/archive_io.dart';
 import 'package:args/args.dart';
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart'
-    show CelestReleasesInfo, CelestReleaseInfo;
+    show CelestReleaseInfo, CelestReleasesInfo, prettyPrintJson;
 import 'package:chunked_stream/chunked_stream.dart';
 import 'package:file/file.dart';
 import 'package:gcloud/storage.dart';

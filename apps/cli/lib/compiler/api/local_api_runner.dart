@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -20,7 +19,7 @@ final Logger _logger = Logger('LocalApiRunner');
 
 /// Like [EntrypointCompiler], this class runs Celest API functions as a local
 /// server, watching for changes and hot-reloading when functions are changed.
-final class LocalApiRunner implements Closeable {
+final class LocalApiRunner {
   LocalApiRunner._({
     required this.path,
     required this.verbose,
@@ -468,7 +467,6 @@ final class LocalApiRunner implements Closeable {
     }
   }
 
-  @override
   Future<void> close() async {
     _logger.finer('Shutting down local API...');
     if (!await Future(() => _client.closed)) {

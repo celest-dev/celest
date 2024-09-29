@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:api_celest/ast.dart';
 import 'package:celest/http.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/celest_project.dart';

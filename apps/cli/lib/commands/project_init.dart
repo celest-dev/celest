@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/commands/start_command.dart';

@@ -1,6 +1,6 @@
-import 'package:api_celest/ast.dart';
 import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:collection/collection.dart';

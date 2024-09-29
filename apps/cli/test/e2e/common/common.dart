@@ -1,7 +1,6 @@
 import 'dart:io' show Process, Platform, ProcessException;
 import 'dart:math';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';

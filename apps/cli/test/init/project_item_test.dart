@@ -58,7 +58,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, null);
+      final updater = PubspecUpdater(null, _projectName);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -76,7 +76,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, null);
+      final updater = PubspecUpdater(null, _projectName);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -98,7 +98,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, null);
+      final updater = PubspecUpdater(null, _projectName);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -120,7 +120,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, null);
+      final updater = PubspecUpdater(null, _projectName);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =
@@ -142,7 +142,7 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, null);
+      final updater = PubspecUpdater(null, _projectName);
       await updater.create(projectPaths.projectRoot);
 
       final updatedPubspec =

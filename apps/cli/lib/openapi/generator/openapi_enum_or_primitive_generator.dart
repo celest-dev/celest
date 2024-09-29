@@ -1,8 +1,8 @@
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/codegen/reserved_words.dart';
 import 'package:celest_cli/openapi/generator/openapi_struct_generator.dart';
 import 'package:celest_cli/openapi/type/openapi_type.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:logging/logging.dart';

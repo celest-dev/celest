@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -18,7 +17,6 @@ import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/_internal.dart';
-import 'package:hub/context.dart' show HubMetadata;
 import 'package:logging/logging.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -283,30 +281,5 @@ extension CelestProjectUriStorage on IsolatedNativeStorage {
   Future<Uri> setLocalUri(String projectName, Uri uri) async {
     await write('$projectName.localUri', uri.toString());
     return uri;
-  }
-
-  Future<HubMetadata?> getMetadata(String projectName) async {
-    final (keyId, key) = await (
-      read('$projectName.keyId'),
-      read('$projectName.key'),
-    ).wait;
-    if (keyId != null && key != null) {
-      return HubMetadata(
-        keyId: base64Decode(keyId),
-        key: base64Decode(key),
-      );
-    }
-    return null;
-  }
-
-  Future<HubMetadata> setMetadata(
-    String projectName,
-    HubMetadata metadata,
-  ) async {
-    await (
-      write('$projectName.keyId', base64Encode(metadata.keyId)),
-      write('$projectName.key', base64Encode(metadata.key!)),
-    ).wait;
-    return metadata;
   }
 }

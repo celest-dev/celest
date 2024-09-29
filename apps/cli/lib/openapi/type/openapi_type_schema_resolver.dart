@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-import 'package:aws_common/aws_common.dart';
 import 'package:built_value/json_object.dart';
 import 'package:celest_cli/codegen/doc_comments.dart';
 import 'package:celest_cli/codegen/reserved_words.dart';
@@ -14,6 +13,7 @@ import 'package:celest_cli/openapi/type/openapi_type_schema.dart';
 import 'package:celest_cli/openapi/type/openapi_type_visitor.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -203,7 +203,7 @@ class OpenApiTypeSchemaResolver
         dartName: sanitizeVariableName(discriminator.propertyName.camelCase),
         mapping: mapping.map((value, ref) {
           final schemaName = ref.split('/').last;
-          final typeSchema = context.document.components.schemas[schemaName]!;
+          final typeSchema = context.document.components.schemas[schemaName];
           if (typeSchema.extensions['x-resourceId'] case final resourceId?) {
             value = resourceId.asString;
           } else if (typeSchema is OpenApiStructTypeSchema) {
@@ -553,7 +553,7 @@ class OpenApiTypeSchemaResolver
 
   bool _idIsNullable(OpenApiTypeSchema schemaOrRef) {
     if (schemaOrRef is OpenApiTypeSchemaReference) {
-      final schema = context.document.components.schemas[schemaOrRef.name]!;
+      final schema = context.document.components.schemas[schemaOrRef.name];
       return _idIsNullable(schema);
     }
     final schema = schemaOrRef;

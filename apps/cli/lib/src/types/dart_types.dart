@@ -6,7 +6,6 @@ import 'dart:convert' as convert;
 import 'dart:io' as io;
 import 'dart:typed_data';
 
-import 'package:aws_common/aws_common.dart' as aws_common;
 import 'package:built_collection/built_collection.dart' as built_collection;
 import 'package:built_value/built_value.dart' as built_value;
 import 'package:built_value/json_object.dart' as built_value_json_object;
@@ -95,9 +94,6 @@ abstract class DartTypes {
 
   /// `dart:async` types.
   static const async = _Async();
-
-  /// `package:aws_common` types.
-  static const awsCommon = _AwsCommon();
 
   /// `package:built_value` types.
   static const builtValue = BuiltValueType._();
@@ -400,62 +396,6 @@ class _Async {
   DartTypeReference get runZoned => const DartTypeReference('runZoned', _url);
 }
 
-/// `package:aws_common` types.
-class _AwsCommon {
-  const _AwsCommon();
-
-  static const _url = 'package:aws_common/aws_common.dart';
-
-  /// Creates an [aws_common.AWSEquatable] reference.
-  Reference awsEquatable(Reference ref) => TypeReference(
-        (t) => t
-          ..symbol = 'AWSEquatable'
-          ..url = _url
-          ..types.add(ref),
-      );
-
-  /// Creates an [aws_common.AWSHeaders] reference.
-  DartTypeReference get awsHeaders =>
-      const DartTypeReference('AWSHeaders', _url);
-
-  /// Creates an [aws_common.AWSHttpClient] reference.
-  DartTypeReference get awsHttpClient =>
-      const DartTypeReference('AWSHttpClient', _url);
-
-  /// Creates an [aws_common.AWSHttpMethod] reference.
-  DartTypeReference get awsHttpMethod =>
-      const DartTypeReference('AWSHttpMethod', _url);
-
-  /// Creates an [aws_common.AWSSerializable] reference.
-  DartTypeReference get awsSerializable =>
-      const DartTypeReference('AWSSerializable', _url);
-
-  /// Creates an [aws_common.AWSService] reference.
-  DartTypeReference get awsService =>
-      const DartTypeReference('AWSService', _url);
-
-  /// Creates an [aws_common.AWSBaseHttpRequest] reference.
-  DartTypeReference get awsBaseHttpRequest =>
-      const DartTypeReference('AWSBaseHttpRequest', _url);
-
-  /// Creates an [aws_common.AWSBaseHttpResponse] reference.
-  DartTypeReference get awsBaseHttpResponse =>
-      const DartTypeReference('AWSBaseHttpResponse', _url);
-
-  /// Creates an [aws_common.AWSHttpRequest] reference.
-  DartTypeReference get awsHttpRequest =>
-      const DartTypeReference('AWSHttpRequest', _url);
-
-  /// Creates an [aws_common.AWSStreamedHttpRequest] reference.
-  DartTypeReference get awsStreamedHttpRequest =>
-      const DartTypeReference('AWSStreamedHttpRequest', _url);
-
-  /// Creates a secure [aws_common.uuid] instance.
-  Expression uuid() => const DartTypeReference('uuid', _url).call([], {
-        'secure': literalTrue,
-      });
-}
-
 /// `package:built_value` types
 class BuiltValueType {
   const BuiltValueType._();
@@ -621,25 +561,14 @@ class _Celest {
   const _Celest();
 
   static const _url = 'package:celest/celest.dart';
+  static const _coreUrl = 'package:celest_core/celest_core.dart';
   static const _coreInternalUrl = 'package:celest_core/_internal.dart';
   static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
   static const _contextUrl = 'package:celest/src/core/context.dart';
 
   /// Creates a [celest.BadRequestException] reference.
   DartTypeReference get badRequestException =>
-      const DartTypeReference('BadRequestException', _url);
-
-  /// Creates a [celest.BuildEnvironment] reference.
-  DartTypeReference get buildEnvironment =>
-      const DartTypeReference('BuildEnvironment', _url);
-
-  /// Creates a [celest_runtime.celestEnv] reference.
-  DartTypeReference get celestEnv =>
-      const DartTypeReference('celestEnv', _runtimeUrl);
-
-  /// Creates a [celest_core.CelestEnvironment] reference.
-  DartTypeReference get celestEnvironment =>
-      const DartTypeReference('CelestEnvironment', _url);
+      const DartTypeReference('BadRequestException', _coreUrl);
 
   /// Creates a [celest_runtime.CelestResponse] reference.
   DartTypeReference get celestResponse =>
@@ -672,16 +601,12 @@ class _Celest {
   DartTypeReference get environmentVariable =>
       const DartTypeReference('EnvironmentVariable', _url);
 
-  /// Creates a [celest.FunctionContext] reference.
-  DartTypeReference get functionContext =>
-      const DartTypeReference('FunctionContext', _url);
-
-  /// Creates a [celest.InternalServerError] reference.
+  /// Creates a [celest_core.InternalServerError] reference.
   DartTypeReference get internalServerError =>
-      const DartTypeReference('InternalServerError', _url);
+      const DartTypeReference('InternalServerError', _coreUrl);
 
-  /// Creates a [celest.JsonMap] reference.
-  DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _url);
+  /// Creates a [celest_core.JsonMap] reference.
+  DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _coreUrl);
 
   /// Creates a [celest_core.NativeStorage] reference.
   DartTypeReference get nativeStorage =>
@@ -691,7 +616,7 @@ class _Celest {
   TypeReference serializer([Reference? dartType]) => TypeReference(
         (t) => t
           ..symbol = 'Serializer'
-          ..url = _url
+          ..url = _coreUrl
           ..types.addAll([
             if (dartType != null) dartType,
           ]),
@@ -699,14 +624,15 @@ class _Celest {
 
   /// Creates a [celest_core.SerializationException] reference.
   DartTypeReference get serializationException =>
-      const DartTypeReference('SerializationException', _url);
+      const DartTypeReference('SerializationException', _coreUrl);
 
   /// Creates a [celest_core.Serializers] reference.
   DartTypeReference get serializers =>
-      const DartTypeReference('Serializers', _url);
+      const DartTypeReference('Serializers', _coreUrl);
 
   /// Creates a [celest_core.TypeToken] reference.
-  DartTypeReference get typeToken => const DartTypeReference('TypeToken', _url);
+  DartTypeReference get typeToken =>
+      const DartTypeReference('TypeToken', _coreUrl);
 
   /// Creates a [celest_runtime.serve] reference.
   DartTypeReference get serve => const DartTypeReference('serve', _runtimeUrl);

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';

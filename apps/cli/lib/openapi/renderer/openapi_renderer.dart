@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:lib_openapi/lib_openapi.dart';
 

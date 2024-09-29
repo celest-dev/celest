@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pub_semver/pub_semver.dart';

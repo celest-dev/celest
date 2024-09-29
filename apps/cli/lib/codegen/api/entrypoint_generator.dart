@@ -2,8 +2,7 @@ import 'dart:collection';
 
 import 'package:analyzer/dart/element/element.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
-import 'package:api_celest/ast.dart';
-import 'package:aws_common/aws_common.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -16,6 +15,7 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 

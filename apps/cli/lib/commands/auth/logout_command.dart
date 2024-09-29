@@ -23,10 +23,14 @@ final class LogoutCommand extends CelestCommand with Authenticate {
     }
 
     // Remove local cloud cache
-    final config = await CelestConfig.load();
-    final cloudDb = config.configDir.childFile('cloud.db');
-    if (cloudDb.existsSync()) {
-      await cloudDb.delete();
+    try {
+      final config = await CelestConfig.load();
+      final cloudDb = config.configDir.childFile('cloud.db');
+      if (cloudDb.existsSync()) {
+        await cloudDb.delete();
+      }
+    } on Object catch (e, st) {
+      performance.captureError(e, stackTrace: st);
     }
 
     cliLogger.success('You have been logged out.');

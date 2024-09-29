@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/codegen/client/categories/client_auth_generator.dart';
 import 'package:celest_cli/codegen/client/categories/client_functions_generator.dart';
 import 'package:celest_cli/codegen/client/categories/client_serializers_generator.dart';

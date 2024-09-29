@@ -3,8 +3,8 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/commands/authenticate.dart';
+import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart';

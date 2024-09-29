@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';

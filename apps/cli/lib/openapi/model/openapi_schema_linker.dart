@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 import 'package:celest_cli/codegen/doc_comments.dart';
@@ -27,6 +26,7 @@ import 'package:celest_cli/openapi/type/openapi_type_system.dart';
 import 'package:celest_cli/openapi/type/openapi_type_visitor.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';

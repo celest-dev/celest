@@ -1,4 +1,3 @@
-import 'package:aws_common/aws_common.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
@@ -6,6 +5,7 @@ import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';

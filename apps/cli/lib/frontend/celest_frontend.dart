@@ -3,10 +3,9 @@ import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
 
-import 'package:api_celest/ast.dart' as ast;
-import 'package:api_celest/ast.dart';
 import 'package:async/async.dart';
-import 'package:aws_common/aws_common.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
@@ -18,13 +17,13 @@ import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/repositories/organization_repository.dart';
 import 'package:celest_cli/src/repositories/project_environment_repository.dart';
 import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_core/_internal.dart';
-import 'package:hub/util/email.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -35,7 +34,7 @@ enum RestartMode {
   fullRestart;
 }
 
-final class CelestFrontend implements Closeable {
+final class CelestFrontend {
   factory CelestFrontend() => instance ??= CelestFrontend._();
 
   CelestFrontend._() {
@@ -780,7 +779,6 @@ final class CelestFrontend implements Closeable {
         await generator.generate().write();
       });
 
-  @override
   Future<void> close() =>
       performance.trace('CelestFrontend', 'close', () async {
         logger.finest('Stopping Celest frontend...');
@@ -800,15 +798,4 @@ final class CelestFrontend implements Closeable {
         ]);
         logger.finest('Stopped Celest frontend');
       });
-}
-
-final class EmailPrinter implements EmailProvider {
-  @override
-  Future<void> sendTransactionalEmail({
-    required String to,
-    required TransactionalEmail email,
-  }) async {
-    final otpCode = (email as OtpCodeEmail).otp;
-    cliLogger.info('[$to] Received OTP code: $otpCode');
-  }
 }

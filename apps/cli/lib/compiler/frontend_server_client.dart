@@ -12,9 +12,9 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
-import 'package:uuid/uuid.dart';
 
 /// Wrapper around the incremental frontend server compiler.
 class FrontendServerClient {
@@ -157,7 +157,7 @@ class FrontendServerClient {
               'Subsequent compile invocations must provide a non-empty list '
               'of invalidated uris.');
         }
-        final boundaryKey = const Uuid().v4();
+        final boundaryKey = Uuid.v7();
         command.writeln(' $boundaryKey');
         for (final uri in invalidatedUris) {
           command.writeln('$uri');

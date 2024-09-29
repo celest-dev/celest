@@ -1,5 +1,4 @@
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
-import 'package:api_celest/api_celest.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
@@ -7,6 +6,7 @@ import 'package:celest_cli/serialization/json_generator.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:celest_cloud/celest_cloud.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';
@@ -45,19 +45,13 @@ InheritanceManager3 get inheritanceManager => InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
 
-DeployClient get deployService => DeployClient(
-      nativeStorage: ctx.storage.secure,
-      baseUri: ctx.baseUri,
-      httpClient: ctx.httpClient,
-    );
-ProjectClient get projectService => ProjectClient(
-      nativeStorage: ctx.storage.secure,
-      baseUri: ctx.baseUri,
-      httpClient: ctx.httpClient,
-    );
-
+final Logger _cloudLogger = Logger('Celest.Cloud');
 final CelestCloud cloud = CelestCloud(
   uri: ctx.baseUri,
   authenticator: authenticator,
   httpClient: ctx.httpClient,
+  logger: Logger.detached('')
+    ..onRecord.listen((record) {
+      _cloudLogger.finest(record.message, record.error, record.stackTrace);
+    }),
 );

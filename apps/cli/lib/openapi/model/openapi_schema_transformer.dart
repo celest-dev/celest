@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:aws_common/aws_common.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 import 'package:celest_cli/openapi/model/openapi_schema_visitor.dart';
@@ -171,7 +170,7 @@ final class OpenApiSchemaTransformer {
           if (serverVar.value.hasDescription()) {
             b.description = serverVar.value.description;
           }
-          final enumTag = serverVar.value.getTagNumber('enum')!;
+          final enumTag = serverVar.value.getTagNumber('enum');
           if (serverVar.value.hasField(enumTag)) {
             b.enumValues.addAll(serverVar.value.enum_1);
           }

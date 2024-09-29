@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 
 extension CloudFunctionExt on CloudFunction {

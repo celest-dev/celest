@@ -1,4 +1,4 @@
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 
 sealed class CelestAnalysisResult {

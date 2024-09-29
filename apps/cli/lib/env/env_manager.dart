@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/env/env_parser.dart';
 import 'package:celest_cli/src/context.dart';

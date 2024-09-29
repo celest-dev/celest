@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:api_celest/ast.dart' as ast;
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:source_span/source_span.dart';
