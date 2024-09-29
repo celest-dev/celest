@@ -213,6 +213,12 @@ if ($event.containsKey('error')) {
           ..annotations.addAll(
             function.annotations.map((annotation) => annotation.stripConst),
           )
+          ..annotations.add(
+            DartTypes.celest.cloudFunction.newInstance([], {
+              'api': literalString(api.name),
+              'function': literalString(function.name),
+            }),
+          )
           ..requiredParameters.addAll(
             clientParameters.where((p) => p.required && !p.named).map(
                   (param) => Parameter(

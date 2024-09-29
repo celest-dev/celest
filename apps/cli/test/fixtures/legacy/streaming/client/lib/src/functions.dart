@@ -5,6 +5,7 @@
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:_common/src/models/available_stock.dart' as _$available_stock;
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
@@ -93,6 +94,10 @@ class CelestFunctionsServerSide {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'server_side',
+    function: 'hello',
+  )
   Stream<String> hello(List<String> names) {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/server-side/hello'));
@@ -105,6 +110,10 @@ class CelestFunctionsServerSide {
     });
   }
 
+  @_$celest.CloudFunction(
+    api: 'server_side',
+    function: 'stockTicker',
+  )
   Stream<_$available_stock.AvailableStock> stockTicker(String symbol) {
     final $channel = celest.eventClient.connect(celest.baseUri
         .resolve('/server-side/stock-ticker')
@@ -118,6 +127,10 @@ class CelestFunctionsServerSide {
     });
   }
 
+  @_$celest.CloudFunction(
+    api: 'server_side',
+    function: 'jsonValues',
+  )
   Stream<_$celest.JsonValue> jsonValues() {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/server-side/json-values'));

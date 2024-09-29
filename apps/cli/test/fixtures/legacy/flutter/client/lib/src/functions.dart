@@ -8,6 +8,7 @@ import 'dart:convert' as _$convert;
 import 'dart:typed_data' as _$typed_data;
 import 'dart:ui' as _$ui;
 
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
@@ -98,6 +99,10 @@ class CelestFunctionsDartUi {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'dart_ui',
+    function: 'lerpColor',
+  )
   Future<_$ui.Color> lerpColor(
     _$ui.Color a,
     _$ui.Color b,
@@ -124,6 +129,10 @@ class CelestFunctionsDartUi {
         .deserialize<_$ui.Color>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'dart_ui',
+    function: 'addCountryCode',
+  )
   Future<_$ui.Locale> addCountryCode(
     _$ui.Locale locale,
     String countryCode,
@@ -226,6 +235,10 @@ class CelestFunctionsFlutter {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'flutter',
+    function: 'paintWidget',
+  )
   Future<_$typed_data.Uint8List> paintWidget() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/flutter/paint-widget'),

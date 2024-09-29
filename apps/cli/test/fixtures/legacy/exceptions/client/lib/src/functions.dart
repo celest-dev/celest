@@ -7,6 +7,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _$convert;
 
 import 'package:_common/_common.dart' as _$_common;
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/exceptions/exceptions.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
@@ -111,6 +112,10 @@ class CelestFunctionsExternal {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'external',
+    function: 'callsThrowsCommonException',
+  )
   Future<void> callsThrowsCommonException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-common-exception'),
@@ -127,6 +132,10 @@ class CelestFunctionsExternal {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'external',
+    function: 'callsThrowsCustomException',
+  )
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-custom-exception'),
@@ -229,6 +238,10 @@ class CelestFunctionsNonthrowing {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'nonthrowing',
+    function: 'callsThrowsCustomError',
+  )
   Future<void> callsThrowsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-error'),
@@ -245,6 +258,10 @@ class CelestFunctionsNonthrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'nonthrowing',
+    function: 'callsThrowsBaseError',
+  )
   Future<void> callsThrowsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-error'),
@@ -261,6 +278,10 @@ class CelestFunctionsNonthrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'nonthrowing',
+    function: 'callsThrowsCustomException',
+  )
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-exception'),
@@ -277,6 +298,10 @@ class CelestFunctionsNonthrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'nonthrowing',
+    function: 'callsThrowsBaseException',
+  )
   Future<void> callsThrowsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-exception'),
@@ -378,6 +403,10 @@ class CelestFunctionsThrowing {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsCustomError',
+  )
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-error'),
@@ -394,6 +423,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsBaseError',
+  )
   Future<void> throwsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-error'),
@@ -410,6 +443,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsCustomException',
+  )
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-exception'),
@@ -426,6 +463,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsBaseException',
+  )
   Future<void> throwsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-exception'),

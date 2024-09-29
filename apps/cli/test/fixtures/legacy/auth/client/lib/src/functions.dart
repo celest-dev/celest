@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:convert' as _$convert;
 
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
@@ -95,6 +96,10 @@ class CelestFunctionsAuthenticatedLib {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'authenticated_lib',
+    function: 'sayHello',
+  )
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/authenticated-lib/say-hello'),
@@ -111,6 +116,10 @@ class CelestFunctionsAuthenticatedLib {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'authenticated_lib',
+    function: 'streamHello',
+  )
   Stream<String> streamHello() {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/authenticated-lib/stream-hello'));
@@ -197,6 +206,10 @@ class CelestFunctionsLib {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'sayHelloAuthenticated',
+  )
   Future<String> sayHelloAuthenticated() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-authenticated'),
@@ -213,6 +226,10 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'streamHelloAuthenticated',
+  )
   Stream<String> streamHelloAuthenticated() {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/lib/stream-hello-authenticated'));
@@ -224,6 +241,10 @@ class CelestFunctionsLib {
     });
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'sayHelloPublic',
+  )
   Future<String> sayHelloPublic() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-public'),
@@ -240,6 +261,10 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'streamHelloPublic',
+  )
   Stream<String> streamHelloPublic() {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/lib/stream-hello-public'));
@@ -251,6 +276,10 @@ class CelestFunctionsLib {
     });
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'sayHello',
+  )
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello'),
@@ -267,6 +296,10 @@ class CelestFunctionsLib {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'lib',
+    function: 'streamHello',
+  )
   Stream<String> streamHello() {
     final $channel =
         celest.eventClient.connect(celest.baseUri.resolve('/lib/stream-hello'));
@@ -353,6 +386,10 @@ class CelestFunctionsPublicLib {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'public_lib',
+    function: 'sayHello',
+  )
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/public-lib/say-hello'),
@@ -369,6 +406,10 @@ class CelestFunctionsPublicLib {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'public_lib',
+    function: 'streamHello',
+  )
   Stream<String> streamHello() {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/public-lib/stream-hello'));

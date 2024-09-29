@@ -222,8 +222,7 @@ final class ProjectClient extends ProjectFile {
         },
         dependencies: {
           'celest_backend': PathDependency('../'),
-          'celest_core': ProjectDependency.celestCore.pubDependency,
-          'http': ProjectDependency.http.pubDependency,
+          ...ProjectDependency.dependencies,
         },
       );
       final pubspecYaml = pubspec.toYaml();

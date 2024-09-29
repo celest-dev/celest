@@ -701,15 +701,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 123,
+                  "offset": 170,
                   "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-                  "line": 7,
+                  "line": 8,
                   "column": 27
                 },
                 "end": {
-                  "offset": 127,
+                  "offset": 174,
                   "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-                  "line": 7,
+                  "line": 8,
                   "column": 31
                 },
                 "text": "user"
@@ -744,15 +744,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 85,
+              "offset": 132,
               "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-              "line": 6,
+              "line": 7,
               "column": 15
             },
             "end": {
-              "offset": 93,
+              "offset": 140,
               "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-              "line": 6,
+              "line": 7,
               "column": 23
             },
             "text": "sayHello"
@@ -775,15 +775,15 @@
               "named": true,
               "location": {
                 "start": {
-                  "offset": 231,
+                  "offset": 278,
                   "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-                  "line": 14,
+                  "line": 15,
                   "column": 27
                 },
                 "end": {
-                  "offset": 235,
+                  "offset": 282,
                   "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-                  "line": 14,
+                  "line": 15,
                   "column": 31
                 },
                 "text": "user"
@@ -818,15 +818,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 190,
+              "offset": 237,
               "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-              "line": 13,
+              "line": 14,
               "column": 15
             },
             "end": {
-              "offset": 201,
+              "offset": 248,
               "uri": "package:celest_backend/src/functions/authenticated_lib.dart",
-              "line": 13,
+              "line": 14,
               "column": 26
             },
             "text": "streamHello"

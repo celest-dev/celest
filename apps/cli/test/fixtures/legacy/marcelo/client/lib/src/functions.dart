@@ -14,6 +14,7 @@ import 'package:_common/src/models/errors_and_exceptions.dart'
 import 'package:_common/src/models/portfolio.dart' as _$portfolio;
 import 'package:_common/src/models/stock.dart' as _$stock;
 import 'package:_common/src/models/ui.dart' as _$ui;
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/exceptions/overrides.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
@@ -119,6 +120,10 @@ class CelestFunctionsExceptions {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsUserException',
+  )
   Future<void> throwsUserException({_$celest.JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-user-exception'),
@@ -141,6 +146,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'callsThrowsUserException',
+  )
   Future<void> callsThrowsUserException({_$celest.JsonValue? cause}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/calls-throws-user-exception'),
@@ -163,6 +172,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsAppError',
+  )
   Future<void> throwsAppError({
     String message = 'message',
     _$celest.JsonValue? error,
@@ -189,6 +202,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsAppException',
+  )
   Future<void> throwsAppException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-app-exception'),
@@ -205,6 +222,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsNotYetImplementedError',
+  )
   Future<void> throwsNotYetImplementedError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-not-yet-implemented-error'),
@@ -221,6 +242,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsValidateError',
+  )
   Future<void> throwsValidateError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-validate-error'),
@@ -237,6 +262,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsUserException_ShowInConsole',
+  )
   Future<void> throwsUserExceptionShowInConsole({
     String message = 'message',
     _$celest.JsonValue? cause,
@@ -355,6 +384,10 @@ class CelestFunctionsModels {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'availableStock',
+  )
   Future<_$available_stock.AvailableStock> availableStock(
       _$available_stock.AvailableStock availableStock) async {
     final $response = await celest.httpClient.post(
@@ -377,6 +410,10 @@ class CelestFunctionsModels {
         .deserialize<_$available_stock.AvailableStock>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'availableStocks',
+  )
   Future<_$available_stocks.AvailableStocks> availableStocks(
       _$available_stocks.AvailableStocks availableStocks) async {
     final $response = await celest.httpClient.post(
@@ -399,6 +436,10 @@ class CelestFunctionsModels {
         .deserialize<_$available_stocks.AvailableStocks>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'cashBalance',
+  )
   Future<_$cash_balance.CashBalance> cashBalance(
       _$cash_balance.CashBalance cashBalance) async {
     final $response = await celest.httpClient.post(
@@ -421,6 +462,10 @@ class CelestFunctionsModels {
         .deserialize<_$cash_balance.CashBalance>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'portfolio',
+  )
   Future<_$portfolio.Portfolio> portfolio(
       _$portfolio.Portfolio portfolio) async {
     final $response = await celest.httpClient.post(
@@ -443,6 +488,10 @@ class CelestFunctionsModels {
         .deserialize<_$portfolio.Portfolio>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'stock',
+  )
   Future<_$stock.Stock> stock(_$stock.Stock stock) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/stock'),
@@ -463,6 +512,10 @@ class CelestFunctionsModels {
         .deserialize<_$stock.Stock>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'models',
+    function: 'ui',
+  )
   Future<_$ui.Ui> ui(_$ui.Ui ui) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/models/ui'),

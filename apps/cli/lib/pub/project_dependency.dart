@@ -67,6 +67,7 @@ final class ProjectDependency {
   static final Map<String, HostedDependency> dependencies = {
     celest.name: celest.pubDependency,
     celestCore.name: celestCore.pubDependency,
+    http.name: http.pubDependency,
   };
 
   static final Map<String, HostedDependency> devDependencies = {

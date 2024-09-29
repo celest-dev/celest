@@ -1,3 +1,4 @@
+import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/migrations/pubspec_updater.dart';
 import 'package:celest_cli/init/migrations/v1_folder_structure.dart';
@@ -37,6 +38,8 @@ class ProjectMigrator {
         MacOsEntitlements(appRoot).create(projectRoot).then((_) => false),
       PubspecUpdater(parentProject, projectName).create(projectRoot),
       V1FolderStructure(projectName, parentProject).create(projectRoot),
+      if (parentProject case final parentProject?)
+        AddAnalyzerPlugin(parentProject).create(projectRoot),
     ]);
     return results.any((needsMigration) => needsMigration);
   }

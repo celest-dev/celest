@@ -1,7 +1,7 @@
-import 'package:celest/celest.dart';
 import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:email_validator/email_validator.dart';
 
 base mixin Authenticate on CelestCommand {

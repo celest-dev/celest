@@ -1,3 +1,4 @@
+import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -38,6 +39,8 @@ class ProjectGenerator {
               type: ParentProjectType.flutter
             ))
           MacOsEntitlements(appRoot),
+        if (parentProject case final parentProject?)
+          AddAnalyzerPlugin(parentProject),
       ].map((item) => item.create(projectRoot)),
     );
   }

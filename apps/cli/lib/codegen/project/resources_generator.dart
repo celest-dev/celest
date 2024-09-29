@@ -111,13 +111,7 @@ final class ResourcesGenerator {
           ..static = true
           ..name = functionFieldName
           ..modifier = FieldModifier.constant
-          ..assignment = DartTypes.celest
-              .cloudFunction(
-                  // TODO(dnys1): How to support generics here?
-                  // inputType,
-                  // function.flattenedReturnType,
-                  )
-              .constInstance([], {
+          ..assignment = DartTypes.celest.cloudFunction.constInstance([], {
             'api': literalString(api.name, raw: true),
             'functionName': literalString(function.name, raw: true),
           }).code,

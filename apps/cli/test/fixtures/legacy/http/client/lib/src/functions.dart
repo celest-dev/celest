@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:convert' as _$convert;
 
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/exceptions/http_errors.dart';
 import 'package:celest_backend/models/http_errors.dart';
 import 'package:celest_backend/models/http_header_query.dart';
@@ -117,6 +118,10 @@ class CelestFunctionsHttpErrors {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_errors',
+    function: 'httpErrors',
+  )
   Future<void> httpErrors(ExceptionType type) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-errors/http-errors'),
@@ -211,6 +216,10 @@ class CelestFunctionsHttpHeader {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_header',
+    function: 'headers',
+  )
   Future<HttpHeaderParams> headers(
     String aString,
     int anInt,
@@ -332,6 +341,10 @@ class CelestFunctionsHttpMethod {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_method',
+    function: 'get',
+  )
   Future<void> get() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/get'),
@@ -348,6 +361,10 @@ class CelestFunctionsHttpMethod {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_method',
+    function: 'post',
+  )
   Future<void> post() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/post'),
@@ -364,6 +381,10 @@ class CelestFunctionsHttpMethod {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_method',
+    function: 'put',
+  )
   Future<void> put() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/put'),
@@ -380,6 +401,10 @@ class CelestFunctionsHttpMethod {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_method',
+    function: 'delete',
+  )
   Future<void> delete() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/delete'),
@@ -396,6 +421,10 @@ class CelestFunctionsHttpMethod {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_method',
+    function: 'patch',
+  )
   Future<void> patch() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-method/patch'),
@@ -487,6 +516,10 @@ class CelestFunctionsHttpQuery {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_query',
+    function: 'query',
+  )
   Future<HttpQueryParams> query(
     String aString,
     int anInt,
@@ -644,6 +677,10 @@ class CelestFunctionsHttpStatus {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_status',
+    function: 'ok',
+  )
   Future<void> ok() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/ok'),
@@ -660,6 +697,10 @@ class CelestFunctionsHttpStatus {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_status',
+    function: 'created',
+  )
   Future<void> created() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/created'),
@@ -676,6 +717,10 @@ class CelestFunctionsHttpStatus {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_status',
+    function: 'accepted',
+  )
   Future<void> accepted() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/accepted'),
@@ -692,6 +737,10 @@ class CelestFunctionsHttpStatus {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_status',
+    function: 'badRequest',
+  )
   Future<void> badRequest() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/bad-request'),
@@ -708,6 +757,10 @@ class CelestFunctionsHttpStatus {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'http_status',
+    function: 'internalServerError',
+  )
   Future<void> internalServerError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/http-status/internal-server-error'),

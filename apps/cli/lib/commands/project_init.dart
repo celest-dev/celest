@@ -11,10 +11,8 @@ import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
-import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:pub_semver/pub_semver.dart';
 
 base mixin ProjectCreator on Configure {
   Future<String> createProject({
@@ -218,11 +216,7 @@ base mixin Configure on CelestCommand {
       parentProject: parentProject,
     );
 
-    final cachedVersionInfo =
-        await celestProject.cacheDb.getVersionInfo().getSingle();
-    final needsMigration =
-        Version.parse(cachedVersionInfo.celest) < Version.parse(packageVersion);
-
+    final needsMigration = celestProject.cacheDb.needsProjectUpgrade;
     var needsAnalyzerMigration = false;
     Future<void>? upgradePackages;
     if (!isExistingProject) {

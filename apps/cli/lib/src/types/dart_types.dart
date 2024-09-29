@@ -582,16 +582,7 @@ class _Celest {
       const DartTypeReference('CloudException', _coreUrl);
 
   /// Creates a [celest.CloudFunction] reference.
-  Reference cloudFunction([Reference? input, Reference? output]) =>
-      TypeReference(
-        (t) => t
-          ..symbol = 'CloudFunction'
-          ..url = _url
-          ..types.addAll([
-            if (input != null) input,
-            if (output != null) output,
-          ]),
-      );
+  Reference get cloudFunction => const DartTypeReference('CloudFunction', _url);
 
   /// Creates a [celest.CloudWidget] reference.
   DartTypeReference get cloudWidget =>

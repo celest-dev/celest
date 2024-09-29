@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:convert' as _$convert;
 
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/models/person.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
@@ -92,6 +93,10 @@ class CelestFunctionsInjected {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'injected',
+    function: 'sayHello',
+  )
   Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/injected/say-hello'),
@@ -108,6 +113,10 @@ class CelestFunctionsInjected {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'injected',
+    function: 'sayHelloPerson',
+  )
   Future<Person> sayHelloPerson() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/injected/say-hello-person'),

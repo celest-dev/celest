@@ -8,6 +8,7 @@ import 'dart:convert' as _$convert;
 import 'dart:typed_data' as _$typed_data;
 
 import 'package:_common/_common.dart' as _$_common;
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/exceptions/demo.dart';
 import 'package:celest_backend/exceptions/exceptions.dart';
 import 'package:celest_backend/exceptions/overrides.dart';
@@ -162,6 +163,10 @@ class CelestFunctionsAsserts {
   }
 
   /// Tests that asserts are enabled when running the local API.
+  @_$celest.CloudFunction(
+    api: 'asserts',
+    function: 'assertsEnabled',
+  )
   Future<bool> assertsEnabled() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/asserts/asserts-enabled'),
@@ -255,6 +260,10 @@ class CelestFunctionsClasses {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'empty',
+  )
   Future<Empty> empty(Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/empty'),
@@ -273,6 +282,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Empty>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncEmpty',
+  )
   Future<Empty> asyncEmpty(Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-empty'),
@@ -291,6 +304,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Empty>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fields',
+  )
   Future<Fields> fields(Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/fields'),
@@ -309,6 +326,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncFields',
+  )
   Future<Fields> asyncFields(Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-fields'),
@@ -327,6 +348,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nullableFields',
+  )
   Future<Fields?> nullableFields(Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nullable-fields'),
@@ -346,6 +371,10 @@ class CelestFunctionsClasses {
         .deserialize<Fields?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNullableFields',
+  )
   Future<Fields?> asyncNullableFields(Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nullable-fields'),
@@ -365,6 +394,10 @@ class CelestFunctionsClasses {
         .deserialize<Fields?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'namedFields',
+  )
   Future<NamedFields> namedFields(NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/named-fields'),
@@ -385,6 +418,10 @@ class CelestFunctionsClasses {
         .deserialize<NamedFields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNamedFields',
+  )
   Future<NamedFields> asyncNamedFields(NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-named-fields'),
@@ -405,6 +442,10 @@ class CelestFunctionsClasses {
         .deserialize<NamedFields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'mixedFields',
+  )
   Future<MixedFields> mixedFields(MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/mixed-fields'),
@@ -425,6 +466,10 @@ class CelestFunctionsClasses {
         .deserialize<MixedFields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncMixedFields',
+  )
   Future<MixedFields> asyncMixedFields(MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-mixed-fields'),
@@ -445,6 +490,10 @@ class CelestFunctionsClasses {
         .deserialize<MixedFields>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'defaultValues',
+  )
   Future<DefaultValues> defaultValues(DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/default-values'),
@@ -465,6 +514,10 @@ class CelestFunctionsClasses {
         .deserialize<DefaultValues>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncDefaultValues',
+  )
   Future<DefaultValues> asyncDefaultValues(DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-default-values'),
@@ -485,6 +538,10 @@ class CelestFunctionsClasses {
         .deserialize<DefaultValues>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nestedClass',
+  )
   Future<NestedClass> nestedClass(NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nested-class'),
@@ -505,6 +562,10 @@ class CelestFunctionsClasses {
         .deserialize<NestedClass>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNestedClass',
+  )
   Future<NestedClass> asyncNestedClass(NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nested-class'),
@@ -525,6 +586,10 @@ class CelestFunctionsClasses {
         .deserialize<NestedClass>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyFromJson',
+  )
   Future<OnlyFromJson> onlyFromJson(OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-from-json'),
@@ -545,6 +610,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyFromJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncOnlyFromJson',
+  )
   Future<OnlyFromJson> asyncOnlyFromJson(OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-from-json'),
@@ -565,6 +634,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyFromJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyToJson',
+  )
   Future<OnlyToJson> onlyToJson(OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json'),
@@ -585,6 +658,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncOnlyToJson',
+  )
   Future<OnlyToJson> asyncOnlyToJson(OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json'),
@@ -605,6 +682,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyToJsonWithDefaults',
+  )
   Future<OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
       OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
@@ -627,6 +708,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyToJsonWithDefaults>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncOnlyToJsonWithDefaults',
+  )
   Future<OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
       OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
@@ -649,6 +734,10 @@ class CelestFunctionsClasses {
         .deserialize<OnlyToJsonWithDefaults>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fromAndToJson',
+  )
   Future<FromJsonAndToJson> fromAndToJson(FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-and-to-json'),
@@ -670,6 +759,10 @@ class CelestFunctionsClasses {
         .deserialize<FromJsonAndToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncFromAndToJson',
+  )
   Future<FromJsonAndToJson> asyncFromAndToJson(FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-from-and-to-json'),
@@ -691,6 +784,10 @@ class CelestFunctionsClasses {
         .deserialize<FromJsonAndToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapToJson',
+  )
   Future<NonMapToJson> nonMapToJson(NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json'),
@@ -711,6 +808,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNonMapToJson',
+  )
   Future<NonMapToJson> asyncNonMapToJson(NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json'),
@@ -731,6 +832,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapToJsonWithDefaults',
+  )
   Future<NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
       NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
@@ -753,6 +858,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapToJsonWithDefaults>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNonMapToJsonWithDefaults',
+  )
   Future<NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
       NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
@@ -775,6 +884,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapToJsonWithDefaults>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapFromAndToJson',
+  )
   Future<NonMapFromAndToJson> nonMapFromAndToJson(
       NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
@@ -797,6 +910,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapFromAndToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNonMapFromAndToJson',
+  )
   Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
       NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
@@ -819,6 +936,10 @@ class CelestFunctionsClasses {
         .deserialize<NonMapFromAndToJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fromJsonStatic',
+  )
   Future<FromJsonStatic> fromJsonStatic(FromJsonStatic value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-json-static'),
@@ -916,6 +1037,10 @@ class CelestFunctionsCollections {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'simpleList',
+  )
   Future<List<String>> simpleList(List<String> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-list'),
@@ -935,6 +1060,10 @@ class CelestFunctionsCollections {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'complexList',
+  )
   Future<List<SimpleClass>> complexList(List<SimpleClass> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-list'),
@@ -959,6 +1088,10 @@ class CelestFunctionsCollections {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'simpleMap',
+  )
   Future<Map<String, String>> simpleMap(Map<String, String> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-map'),
@@ -983,6 +1116,10 @@ class CelestFunctionsCollections {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'dynamicMap',
+  )
   Future<Map<String, dynamic>> dynamicMap(Map<String, dynamic> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/dynamic-map'),
@@ -1000,6 +1137,10 @@ class CelestFunctionsCollections {
     return ($body['response'] as Map<String, Object?>);
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'objectMap',
+  )
   Future<Map<String, Object>> objectMap(Map<String, Object> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/object-map'),
@@ -1024,6 +1165,10 @@ class CelestFunctionsCollections {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'objectNullableMap',
+  )
   Future<Map<String, Object?>> objectNullableMap(
       Map<String, Object?> map) async {
     final $response = await celest.httpClient.post(
@@ -1042,6 +1187,10 @@ class CelestFunctionsCollections {
     return ($body['response'] as Map<String, Object?>);
   }
 
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'complexMap',
+  )
   Future<Map<String, SimpleClass>> complexMap(
       Map<String, SimpleClass> map) async {
     final $response = await celest.httpClient.post(
@@ -1153,6 +1302,10 @@ class CelestFunctionsCycles {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'createTree',
+  )
   Future<Node> createTree() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/create-tree'),
@@ -1169,6 +1322,10 @@ class CelestFunctionsCycles {
     return _$celest.Serializers.instance.deserialize<Node>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'printTree',
+  )
   Future<void> printTree(Node node) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/print-tree'),
@@ -1187,6 +1344,10 @@ class CelestFunctionsCycles {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'combineTrees',
+  )
   Future<Node> combineTrees(
     Node tree1, [
     Parent? tree2,
@@ -1218,6 +1379,10 @@ class CelestFunctionsCycles {
 
   /// Tests that self-referencing is allowed when there is a level
   /// of indirection, e.g. nullability, generics, or a wrapper.
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'selfReferencing',
+  )
   Future<SelfReferencing> selfReferencing(
       SelfReferencing selfReferencing) async {
     final $response = await celest.httpClient.post(
@@ -1319,6 +1484,10 @@ class CelestFunctionsDemo {
   }
 
   /// Says hello to a [person].
+  @_$celest.CloudFunction(
+    api: 'demo',
+    function: 'sayHello',
+  )
   Future<String> sayHello({required Person person}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/demo/say-hello'),
@@ -1426,6 +1595,10 @@ class CelestFunctionsExceptions {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsException',
+  )
   Future<void> throwsException({required SupportedExceptionType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-exception'),
@@ -1446,6 +1619,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsError',
+  )
   Future<void> throwsError({required SupportedErrorType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-error'),
@@ -1466,6 +1643,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomException',
+  )
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-custom-exception'),
@@ -1482,6 +1663,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomExceptionToFromJson',
+  )
   Future<void> throwsCustomExceptionToFromJson() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -1499,6 +1684,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomError',
+  )
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-custom-error'),
@@ -1515,6 +1704,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomErrorToFromJson',
+  )
   Future<void> throwsCustomErrorToFromJson() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-custom-error-to-from-json'),
@@ -1531,6 +1724,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomErrorWithStackTrace',
+  )
   Future<void> throwsCustomErrorWithStackTrace() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -1624,6 +1821,10 @@ class CelestFunctionsExtensionTypes {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'string',
+  )
   Future<StringX> string(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string'),
@@ -1649,6 +1850,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'asyncOrString',
+  )
   Future<StringX> asyncOrString(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-or-string'),
@@ -1674,6 +1879,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'asyncString',
+  )
   Future<StringX> asyncString(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-string'),
@@ -1699,6 +1908,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringImpl',
+  )
   Future<StringXImpl> stringImpl(StringXImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-impl'),
@@ -1724,6 +1937,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToFromJson',
+  )
   Future<StringXToFromJson> stringToFromJson(StringXToFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-from-json'),
@@ -1749,6 +1966,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToJson',
+  )
   Future<StringXToJson> stringToJson(StringXToJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json'),
@@ -1774,6 +1995,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToJsonImpl',
+  )
   Future<StringXToJsonImpl> stringToJsonImpl(StringXToJsonImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json-impl'),
@@ -1799,6 +2024,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringFromJson',
+  )
   Future<StringXFromJson> stringFromJson(StringXFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json'),
@@ -1824,6 +2053,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringFromJsonImpl',
+  )
   Future<StringXFromJsonImpl> stringFromJsonImpl(StringXFromJsonImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-impl'),
@@ -1849,6 +2082,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringFromJsonStatic',
+  )
   Future<StringXFromJsonStatic> stringFromJsonStatic(
       StringXFromJsonStatic s) async {
     final $response = await celest.httpClient.post(
@@ -1876,6 +2113,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringPrivateField',
+  )
   Future<StringXPrivateField> stringPrivateField(StringXPrivateField s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field'),
@@ -1901,6 +2142,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringPrivateFieldImpl',
+  )
   Future<StringXPrivateFieldImpl> stringPrivateFieldImpl(
       StringXPrivateFieldImpl s) async {
     final $response = await celest.httpClient.post(
@@ -1929,6 +2174,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringPrivateCtor',
+  )
   Future<StringXPrivateCtor> stringPrivateCtor(StringXPrivateCtor s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor'),
@@ -1954,6 +2203,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringPrivateCtorImpl',
+  )
   Future<StringXPrivateCtorImpl> stringPrivateCtorImpl(
       StringXPrivateCtorImpl s) async {
     final $response = await celest.httpClient.post(
@@ -1982,6 +2235,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'value',
+  )
   Future<Value> value(Value v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value'),
@@ -2000,6 +2257,10 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<Value>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueX',
+  )
   Future<ValueX> valueX(ValueX v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x'),
@@ -2025,6 +2286,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXImpl',
+  )
   Future<ValueXImpl> valueXImpl(ValueXImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl'),
@@ -2050,6 +2315,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToFromJson',
+  )
   Future<ValueXToFromJson> valueXToFromJson(ValueXToFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json'),
@@ -2075,6 +2344,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToJson',
+  )
   Future<ValueXToJson> valueXToJson(ValueXToJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json'),
@@ -2100,6 +2373,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToJsonImpl',
+  )
   Future<ValueXToJsonImpl> valueXToJsonImpl(ValueXToJsonImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json-impl'),
@@ -2125,6 +2402,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXFromJson',
+  )
   Future<ValueXFromJson> valueXFromJson(ValueXFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json'),
@@ -2150,6 +2431,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXFromJsonImpl',
+  )
   Future<ValueXFromJsonImpl> valueXFromJsonImpl(ValueXFromJsonImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-impl'),
@@ -2175,6 +2460,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXFromJsonStatic',
+  )
   Future<ValueXFromJsonStatic> valueXFromJsonStatic(
       ValueXFromJsonStatic v) async {
     final $response = await celest.httpClient.post(
@@ -2202,6 +2491,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'color',
+  )
   Future<Color> color(Color color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color'),
@@ -2220,6 +2513,10 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<Color>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorX',
+  )
   Future<ColorX> colorX(ColorX color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x'),
@@ -2245,6 +2542,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXImpl',
+  )
   Future<ColorXImpl> colorXImpl(ColorXImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl'),
@@ -2270,6 +2571,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToFromJson',
+  )
   Future<ColorXToFromJson> colorXToFromJson(ColorXToFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json'),
@@ -2295,6 +2600,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToJson',
+  )
   Future<ColorXToJson> colorXToJson(ColorXToJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json'),
@@ -2320,6 +2629,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToJsonImpl',
+  )
   Future<ColorXToJsonImpl> colorXToJsonImpl(ColorXToJsonImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json-impl'),
@@ -2345,6 +2658,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXFromJson',
+  )
   Future<ColorXFromJson> colorXFromJson(ColorXFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json'),
@@ -2370,6 +2687,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXFromJsonImpl',
+  )
   Future<ColorXFromJsonImpl> colorXFromJsonImpl(
       ColorXFromJsonImpl color) async {
     final $response = await celest.httpClient.post(
@@ -2396,6 +2717,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXFromJsonStatic',
+  )
   Future<ColorXFromJsonStatic> colorXFromJsonStatic(
       ColorXFromJsonStatic color) async {
     final $response = await celest.httpClient.post(
@@ -2423,6 +2748,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonValue',
+  )
   Future<_$celest.JsonValue> jsonValue(_$celest.JsonValue value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-value'),
@@ -2448,6 +2777,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonString',
+  )
   Future<_$celest.JsonString> jsonString(_$celest.JsonString value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-string'),
@@ -2473,6 +2806,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonNum',
+  )
   Future<_$celest.JsonNum> jsonNum(_$celest.JsonNum value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-num'),
@@ -2498,6 +2835,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonInt',
+  )
   Future<_$celest.JsonInt> jsonInt(_$celest.JsonInt value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-int'),
@@ -2523,6 +2864,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonDouble',
+  )
   Future<_$celest.JsonDouble> jsonDouble(_$celest.JsonDouble value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-double'),
@@ -2548,6 +2893,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonBool',
+  )
   Future<_$celest.JsonBool> jsonBool(_$celest.JsonBool value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-bool'),
@@ -2573,6 +2922,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonList',
+  )
   Future<_$celest.JsonList> jsonList(_$celest.JsonList value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-list'),
@@ -2598,6 +2951,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonMap',
+  )
   Future<_$celest.JsonMap> jsonMap(_$celest.JsonMap value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-map'),
@@ -2702,6 +3059,10 @@ class CelestFunctionsGenericWrappers {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'generic_wrappers',
+    function: 'genericWrappers',
+  )
   Future<GenericWrappers> genericWrappers(GenericWrappers value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
@@ -2723,6 +3084,10 @@ class CelestFunctionsGenericWrappers {
         .deserialize<GenericWrappers>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'generic_wrappers',
+    function: 'genericWrappersAsync',
+  )
   Future<GenericWrappers> genericWrappersAsync(GenericWrappers value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers-async'),
@@ -2744,6 +3109,10 @@ class CelestFunctionsGenericWrappers {
         .deserialize<GenericWrappers>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'generic_wrappers',
+    function: 'genericWrapperParameters',
+  )
   Future<GenericWrappers> genericWrapperParameters({
     required _$ilist.IList<String> listOfString,
     required _$ilist.IList<Uri> listOfUri,
@@ -2909,6 +3278,10 @@ class CelestFunctionsMetadata {
   /// ```dart
   /// void hasDocComments() {}
   /// ```
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasDocComments',
+  )
   Future<void> hasDocComments() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-doc-comments'),
@@ -2926,6 +3299,10 @@ class CelestFunctionsMetadata {
   }
 
   @deprecated
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasDeprecatedAnnotation',
+  )
   Future<void> hasDeprecatedAnnotation() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-deprecated-annotation'),
@@ -2943,6 +3320,10 @@ class CelestFunctionsMetadata {
   }
 
   @Deprecated('Do not use this function.')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasConstructedDeprecatedAnnotation',
+  )
   Future<void> hasConstructedDeprecatedAnnotation() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-constructed-deprecated-annotation'),
@@ -2962,6 +3343,10 @@ class CelestFunctionsMetadata {
   @MyAnnotation.create(
     'positional',
     named: 'named',
+  )
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasNamedConstructedAnnotation',
   )
   Future<void> hasNamedConstructedAnnotation() async {
     final $response = await celest.httpClient.post(
@@ -2988,6 +3373,10 @@ class CelestFunctionsMetadata {
     map: {'map': 'map'},
     enumValue: LiteralEnum.a,
     recordValue: const (a: 'a', b: 'b', c: 'c'),
+  )
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasLiteralsAnnotation',
   )
   Future<void> hasLiteralsAnnotation(
     @Literals(
@@ -3033,6 +3422,10 @@ class CelestFunctionsMetadata {
   }
 
   @exportable
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasExportableAnnotation',
+  )
   Future<void> hasExportableAnnotation(
     @exportable String value, {
     @exportable String named = 'named',
@@ -3057,6 +3450,10 @@ class CelestFunctionsMetadata {
   }
 
   @Exportable()
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasExportableConstructedAnnotation',
+  )
   Future<void> hasExportableConstructedAnnotation(
     @Exportable() String value, {
     @Exportable() String named = 'named',
@@ -3081,6 +3478,10 @@ class CelestFunctionsMetadata {
   }
 
   @notExportable
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasNotExportableAnnotation',
+  )
   Future<void> hasNotExportableAnnotation(
     @notExportable String value, {
     @notExportable String named = 'named',
@@ -3104,6 +3505,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'positionalDefaultValues',
+  )
   Future<void> positionalDefaultValues([
     String value = 'value',
     int intValue = 1,
@@ -3151,6 +3556,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullablePositionalDefaultValues',
+  )
   Future<void> nullablePositionalDefaultValues([
     String? value = 'value',
     int? intValue = 1,
@@ -3198,6 +3607,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'namedDefaultValues',
+  )
   Future<void> namedDefaultValues({
     String value = 'value',
     int intValue = 1,
@@ -3245,6 +3658,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullableNamedDefaultValues',
+  )
   Future<void> nullableNamedDefaultValues({
     String? value = 'value',
     int? intValue = 1,
@@ -3292,6 +3709,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'positionalDefaultValueVars',
+  )
   Future<void> positionalDefaultValueVars([
     int value = defaultInt,
     double doubleValue = defaultDouble,
@@ -3335,6 +3756,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullablePositionalDefaultValueVars',
+  )
   Future<void> nullablePositionalDefaultValueVars([
     int? value = defaultInt,
     double? doubleValue = defaultDouble,
@@ -3379,6 +3804,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'namedDefaultValueVars',
+  )
   Future<void> namedDefaultValueVars({
     int value = defaultInt,
     double doubleValue = defaultDouble,
@@ -3422,6 +3851,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullableNamedDefaultValueVars',
+  )
   Future<void> nullableNamedDefaultValueVars({
     int? value = defaultInt,
     double? doubleValue = defaultDouble,
@@ -3465,6 +3898,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'positionalDefaultValueVarsPrivate',
+  )
   Future<void> positionalDefaultValueVarsPrivate([
     int value = 42,
     double doubleValue = 42.0,
@@ -3512,6 +3949,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullablePositionalDefaultValueVarsPrivate',
+  )
   Future<void> nullablePositionalDefaultValueVarsPrivate([
     int? value = 42,
     double? doubleValue = 42.0,
@@ -3560,6 +4001,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'namedDefaultValueVarsPrivate',
+  )
   Future<void> namedDefaultValueVarsPrivate({
     int value = 42,
     double doubleValue = 42.0,
@@ -3607,6 +4052,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'nullableNamedDefaultValueVarsPrivate',
+  )
   Future<void> nullableNamedDefaultValueVarsPrivate({
     int? value = 42,
     double? doubleValue = 42.0,
@@ -3741,6 +4190,10 @@ class CelestFunctionsOverrides {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'commonNestedParent',
+  )
   Future<_$_common.NestedParent> commonNestedParent(
       _$_common.NestedParent parent) async {
     final $response = await celest.httpClient.post(
@@ -3763,6 +4216,10 @@ class CelestFunctionsOverrides {
         .deserialize<_$_common.NestedParent>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'commonNestedChild',
+  )
   Future<_$_common.NestedChild> commonNestedChild(
       _$_common.NestedChild child) async {
     final $response = await celest.httpClient.post(
@@ -3785,6 +4242,10 @@ class CelestFunctionsOverrides {
         .deserialize<_$_common.NestedChild>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedGrandparent',
+  )
   Future<NestedGrandparent> nestedGrandparent(
       NestedGrandparent grandparent) async {
     final $response = await celest.httpClient.post(
@@ -3807,6 +4268,10 @@ class CelestFunctionsOverrides {
         .deserialize<NestedGrandparent>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedParent',
+  )
   Future<NestedParent> nestedParent(NestedParent parent) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/nested-parent'),
@@ -3827,6 +4292,10 @@ class CelestFunctionsOverrides {
         .deserialize<NestedParent>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedChild',
+  )
   Future<NestedChild> nestedChild(NestedChild child) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/nested-child'),
@@ -3847,6 +4316,10 @@ class CelestFunctionsOverrides {
         .deserialize<NestedChild>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'callsThrowsCommonOverriddenException',
+  )
   Future<void> callsThrowsCommonOverriddenException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -3864,6 +4337,10 @@ class CelestFunctionsOverrides {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'throwsCommonOverriddenException',
+  )
   Future<void> throwsCommonOverriddenException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/throws-common-overridden-exception'),
@@ -3880,6 +4357,10 @@ class CelestFunctionsOverrides {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'throwsOverriddenException',
+  )
   Future<void> throwsOverriddenException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/throws-overridden-exception'),
@@ -3896,6 +4377,10 @@ class CelestFunctionsOverrides {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'callsThrowsOverriddenException',
+  )
   Future<void> callsThrowsOverriddenException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/calls-throws-overridden-exception'),
@@ -3987,6 +4472,10 @@ class CelestFunctionsParameterTypes {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'simple',
+  )
   Future<void> simple(
     String aString,
     int anInt,
@@ -4185,6 +4674,10 @@ class CelestFunctionsParameterTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'simpleOptional',
+  )
   Future<void> simpleOptional(
     String? aString,
     int? anInt,
@@ -4384,6 +4877,10 @@ class CelestFunctionsParameterTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'complex',
+  )
   Future<void> complex(
     SimpleStruct aSimpleStruct,
     ComplexStruct aComplexStruct,
@@ -4771,6 +5268,10 @@ class CelestFunctionsParameters {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'optionalPositional',
+  )
   Future<void> optionalPositional([
     String? optionalString,
     int? optionalInt,
@@ -4794,6 +5295,10 @@ class CelestFunctionsParameters {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'optionalNamed',
+  )
   Future<void> optionalNamed({
     String? namedString,
     int? namedInt,
@@ -4817,6 +5322,10 @@ class CelestFunctionsParameters {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'requiredPositional',
+  )
   Future<void> requiredPositional(
     String requiredString,
     int requiredInt,
@@ -4840,6 +5349,10 @@ class CelestFunctionsParameters {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'requiredNamed',
+  )
   Future<void> requiredNamed({
     required String requiredString,
     required int requiredInt,
@@ -4940,6 +5453,10 @@ class CelestFunctionsRecords {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nonAliasedNamedFields',
+  )
   Future<({String anotherField, String field})> nonAliasedNamedFields(
       {required ({String anotherField, String field}) value}) async {
     final $response = await celest.httpClient.post(
@@ -4962,6 +5479,10 @@ class CelestFunctionsRecords {
         .deserialize<({String anotherField, String field})>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNonAliasedNamedFields',
+  )
   Future<({String anotherField, String field})> asyncNonAliasedNamedFields(
       {required ({String anotherField, String field}) value}) async {
     final $response = await celest.httpClient.post(
@@ -4984,6 +5505,10 @@ class CelestFunctionsRecords {
         .deserialize<({String anotherField, String field})>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'aliasedNamedFields',
+  )
   Future<NamedFieldsRecord> aliasedNamedFields(
       {required NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
@@ -5006,6 +5531,10 @@ class CelestFunctionsRecords {
         .deserialize<NamedFieldsRecord>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncAliasedNamedFields',
+  )
   Future<NamedFieldsRecord> asyncAliasedNamedFields(
       {required NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
@@ -5028,6 +5557,10 @@ class CelestFunctionsRecords {
         .deserialize<NamedFieldsRecord>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'namedFields',
+  )
   Future<
       ({
         NamedFieldsRecord aliased,
@@ -5061,6 +5594,10 @@ class CelestFunctionsRecords {
         })>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNamedFields',
+  )
   Future<
       ({
         NamedFieldsRecord aliased,
@@ -5094,6 +5631,10 @@ class CelestFunctionsRecords {
         })>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nested',
+  )
   Future<Nested> nested(Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nested'),
@@ -5112,6 +5653,10 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<Nested>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNested',
+  )
   Future<Nested> asyncNested(Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nested'),
@@ -5130,6 +5675,10 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<Nested>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nullableNested',
+  )
   Future<NullableNested?> nullableNested(NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nullable-nested'),
@@ -5151,6 +5700,10 @@ class CelestFunctionsRecords {
         .deserialize<NullableNested?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNullableNested',
+  )
   Future<NullableNested?> asyncNullableNested(NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nullable-nested'),
@@ -5248,6 +5801,10 @@ class CelestFunctionsReturnTypes {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncVoidReturn',
+  )
   Future<void> asyncVoidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-void-return'),
@@ -5264,6 +5821,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncStringReturn',
+  )
   Future<String> asyncStringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-string-return'),
@@ -5280,6 +5841,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncIntReturn',
+  )
   Future<int> asyncIntReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-int-return'),
@@ -5296,6 +5861,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toInt();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncDoubleReturn',
+  )
   Future<double> asyncDoubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-double-return'),
@@ -5312,6 +5881,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncBoolReturn',
+  )
   Future<bool> asyncBoolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-bool-return'),
@@ -5328,6 +5901,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as bool);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncIterableReturn',
+  )
   Future<Iterable<String>> asyncIterableReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-iterable-return'),
@@ -5346,6 +5923,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncListReturn',
+  )
   Future<List<String>> asyncListReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-list-return'),
@@ -5364,6 +5945,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncMapReturn',
+  )
   Future<Map<String, String>> asyncMapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-map-return'),
@@ -5387,6 +5972,10 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncStructReturn',
+  )
   Future<SimpleStruct> asyncStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-struct-return'),
@@ -5404,6 +5993,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncStructReturnNullable',
+  )
   Future<SimpleStruct?> asyncStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-struct-return-nullable'),
@@ -5421,6 +6014,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncComplexStructReturn',
+  )
   Future<ComplexStruct> asyncComplexStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-complex-struct-return'),
@@ -5438,6 +6035,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncComplexStructReturnNullable',
+  )
   Future<ComplexStruct?> asyncComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -5456,6 +6057,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncComplexClassReturn',
+  )
   Future<ComplexClass> asyncComplexClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-complex-class-return'),
@@ -5473,6 +6078,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexClass>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncClassReturnNullable',
+  )
   Future<SimpleClass?> asyncClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-class-return-nullable'),
@@ -5490,6 +6099,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleClass?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrVoidReturn',
+  )
   Future<void> asyncOrVoidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-void-return'),
@@ -5506,6 +6119,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStringReturn',
+  )
   Future<String> asyncOrStringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-string-return'),
@@ -5522,6 +6139,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrIntReturn',
+  )
   Future<int> asyncOrIntReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-int-return'),
@@ -5538,6 +6159,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toInt();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrDoubleReturn',
+  )
   Future<double> asyncOrDoubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-double-return'),
@@ -5554,6 +6179,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrBoolReturn',
+  )
   Future<bool> asyncOrBoolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-bool-return'),
@@ -5570,6 +6199,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as bool);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrIterableReturn',
+  )
   Future<Iterable<String>> asyncOrIterableReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-iterable-return'),
@@ -5588,6 +6221,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrListReturn',
+  )
   Future<List<String>> asyncOrListReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-list-return'),
@@ -5606,6 +6243,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrMapReturn',
+  )
   Future<Map<String, String>> asyncOrMapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-map-return'),
@@ -5629,6 +6270,10 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStructReturn',
+  )
   Future<SimpleStruct> asyncOrStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-struct-return'),
@@ -5646,6 +6291,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrComplexStructReturn',
+  )
   Future<ComplexStruct> asyncOrComplexStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-complex-struct-return'),
@@ -5663,6 +6312,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrVoidReturnNullable',
+  )
   Future<void> asyncOrVoidReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-void-return-nullable'),
@@ -5679,6 +6332,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStringReturnNullable',
+  )
   Future<String?> asyncOrStringReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-string-return-nullable'),
@@ -5695,6 +6352,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as String?);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrIntReturnNullable',
+  )
   Future<int?> asyncOrIntReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-int-return-nullable'),
@@ -5711,6 +6372,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num?)?.toInt();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrDoubleReturnNullable',
+  )
   Future<double?> asyncOrDoubleReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-double-return-nullable'),
@@ -5727,6 +6392,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num?)?.toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrBoolReturnNullable',
+  )
   Future<bool?> asyncOrBoolReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-bool-return-nullable'),
@@ -5743,6 +6412,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as bool?);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrIterableReturnNullable',
+  )
   Future<Iterable<String>?> asyncOrIterableReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-iterable-return-nullable'),
@@ -5761,6 +6434,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrListReturnNullable',
+  )
   Future<List<String>?> asyncOrListReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-list-return-nullable'),
@@ -5779,6 +6456,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrMapReturnNullable',
+  )
   Future<Map<String, String>?> asyncOrMapReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-map-return-nullable'),
@@ -5802,6 +6483,10 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStructReturnNullable',
+  )
   Future<SimpleStruct?> asyncOrStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-struct-return-nullable'),
@@ -5819,6 +6504,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrComplexStructReturnNullable',
+  )
   Future<ComplexStruct?> asyncOrComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -5837,6 +6526,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrSimpleClassReturnNullable',
+  )
   Future<SimpleClass?> asyncOrSimpleClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -5855,6 +6548,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleClass?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrComplexClassReturnNullable',
+  )
   Future<ComplexClass?> asyncOrComplexClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri
@@ -5873,6 +6570,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexClass?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'voidReturn',
+  )
   Future<void> voidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/void-return'),
@@ -5889,6 +6590,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'stringReturn',
+  )
   Future<String> stringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/string-return'),
@@ -5905,6 +6610,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as String);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'intReturn',
+  )
   Future<int> intReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/int-return'),
@@ -5921,6 +6630,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toInt();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'doubleReturn',
+  )
   Future<double> doubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/double-return'),
@@ -5937,6 +6650,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num).toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'boolReturn',
+  )
   Future<bool> boolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/bool-return'),
@@ -5953,6 +6670,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as bool);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'iterableReturn',
+  )
   Future<Iterable<String>> iterableReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/iterable-return'),
@@ -5971,6 +6692,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'listReturn',
+  )
   Future<List<String>> listReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/list-return'),
@@ -5989,6 +6714,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'mapReturn',
+  )
   Future<Map<String, String>> mapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/map-return'),
@@ -6012,6 +6741,10 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'structReturn',
+  )
   Future<SimpleStruct> structReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return'),
@@ -6029,6 +6762,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexReturn',
+  )
   Future<ComplexStruct> complexReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-return'),
@@ -6046,6 +6783,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'simpleClassReturn',
+  )
   Future<SimpleClass> simpleClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/simple-class-return'),
@@ -6063,6 +6804,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleClass>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexClassReturn',
+  )
   Future<ComplexClass> complexClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-class-return'),
@@ -6080,6 +6825,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexClass>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'stringReturnNullable',
+  )
   Future<String?> stringReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/string-return-nullable'),
@@ -6096,6 +6845,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as String?);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'intReturnNullable',
+  )
   Future<int?> intReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/int-return-nullable'),
@@ -6112,6 +6865,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num?)?.toInt();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'doubleReturnNullable',
+  )
   Future<double?> doubleReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/double-return-nullable'),
@@ -6128,6 +6885,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as num?)?.toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'boolReturnNullable',
+  )
   Future<bool?> boolReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/bool-return-nullable'),
@@ -6144,6 +6905,10 @@ class CelestFunctionsReturnTypes {
     return ($body['response'] as bool?);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'iterableReturnNullable',
+  )
   Future<Iterable<String>?> iterableReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/iterable-return-nullable'),
@@ -6162,6 +6927,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'listReturnNullable',
+  )
   Future<List<String>?> listReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/list-return-nullable'),
@@ -6180,6 +6949,10 @@ class CelestFunctionsReturnTypes {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'mapReturnNullable',
+  )
   Future<Map<String, String>?> mapReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/map-return-nullable'),
@@ -6203,6 +6976,10 @@ class CelestFunctionsReturnTypes {
         ));
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'structReturnNullable',
+  )
   Future<SimpleStruct?> structReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return-nullable'),
@@ -6220,6 +6997,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexReturnNullable',
+  )
   Future<ComplexStruct?> complexReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-return-nullable'),
@@ -6237,6 +7018,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<ComplexStruct?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'simpleClassReturnNullable',
+  )
   Future<SimpleClass?> simpleClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/simple-class-return-nullable'),
@@ -6254,6 +7039,10 @@ class CelestFunctionsReturnTypes {
         .deserialize<SimpleClass?>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexClassReturnNullable',
+  )
   Future<ComplexClass?> complexClassReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-class-return-nullable'),
@@ -6360,6 +7149,10 @@ class CelestFunctionsSealedClasses {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'area',
+  )
   Future<double> area(Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/area'),
@@ -6378,6 +7171,10 @@ class CelestFunctionsSealedClasses {
     return ($body['response'] as num).toDouble();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'sealedClass',
+  )
   Future<List<Shape>> sealedClass({required List<Shape> shapes}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class'),
@@ -6401,6 +7198,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'rectangle',
+  )
   Future<Rectangle> rectangle(Rectangle rectangle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/rectangle'),
@@ -6422,6 +7223,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<Rectangle>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'circle',
+  )
   Future<Circle> circle(Circle circle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/circle'),
@@ -6440,6 +7245,10 @@ class CelestFunctionsSealedClasses {
     return _$celest.Serializers.instance.deserialize<Circle>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'sealedClassWithInheritedCustomJson',
+  )
   Future<List<ShapeWithInheritedCustomJson>> sealedClassWithInheritedCustomJson(
       {required List<ShapeWithInheritedCustomJson> shapes}) async {
     final $response = await celest.httpClient.post(
@@ -6467,6 +7276,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'sealedClassWithCustomJson',
+  )
   Future<List<ShapeWithCustomJson>> sealedClassWithCustomJson(
       {required List<ShapeWithCustomJson> shapes}) async {
     final $response = await celest.httpClient.post(
@@ -6493,6 +7306,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'sealedClassWithOverriddenCustomJson',
+  )
   Future<List<ShapeWithOverriddenCustomJson>>
       sealedClassWithOverriddenCustomJson({
     required CircleWithOverriddenCustomJson circle,
@@ -6528,6 +7345,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'rectangleWithOverriddenCustomJson',
+  )
   Future<ShapeWithOverriddenCustomJson> rectangleWithOverriddenCustomJson(
       RectangleWithOverriddenCustomJson rectangle) async {
     final $response = await celest.httpClient.post(
@@ -6551,6 +7372,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<ShapeWithOverriddenCustomJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'circleWithOverriddenCustomJson',
+  )
   Future<CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
       ShapeWithOverriddenCustomJson circle) async {
     final $response = await celest.httpClient.post(
@@ -6574,6 +7399,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<CircleWithOverriddenCustomJson>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'okShapeResults',
+  )
   Future<List<OkResult<Shape>>> okShapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-results'),
@@ -6598,6 +7427,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'errShapeResults',
+  )
   Future<List<ErrResult<String>>> errShapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/err-shape-results'),
@@ -6622,6 +7455,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'shapeResults',
+  )
   Future<List<Result<Shape, String>>> shapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/shape-results'),
@@ -6646,6 +7483,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'aliasedOkShapeResults',
+  )
   Future<List<Result<Shape, String>>> aliasedOkShapeResults(
       List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
@@ -6671,6 +7512,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'aliasedErrShapeResults',
+  )
   Future<List<Result<Shape, String>>> aliasedErrShapeResults(
       List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
@@ -6696,6 +7541,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'aliasedShapeResults',
+  )
   Future<List<Result<Shape, String>>> aliasedShapeResults(
       List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
@@ -6721,6 +7570,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'swappedResult',
+  )
   Future<SwappedResult<Shape, String>> swappedResult(
       Result<Shape, String> result) async {
     final $response = await celest.httpClient.post(
@@ -6743,6 +7596,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<SwappedResult<Shape, String>>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'genericResult',
+  )
   Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
     const $T = {
       Shape: r'Shape',
@@ -6769,6 +7626,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<OkResult<T>>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'multipleGenericResult',
+  )
   Future<List<Result<T, E>>>
       multipleGenericResult<T extends Shape, E extends ShapeException>(
     T data,
@@ -6807,6 +7668,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'okShapeResult',
+  )
   Future<OkShapeResult> okShapeResult(Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-result'),
@@ -6902,6 +7767,10 @@ class CelestFunctionsTypedefs {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'portfolio',
+  )
   Future<Portfolio> portfolio(Portfolio portfolio) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/portfolio'),
@@ -6923,6 +7792,10 @@ class CelestFunctionsTypedefs {
         .deserialize<Portfolio>($body['response']);
   }
 
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'json',
+  )
   Future<Map<String, dynamic>> json(Map<String, dynamic> json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/json'),
@@ -6940,6 +7813,10 @@ class CelestFunctionsTypedefs {
     return ($body['response'] as Map<String, Object?>);
   }
 
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'nullableJson',
+  )
   Future<Map<String, dynamic>?> nullableJson(Map<String, dynamic>? json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/nullable-json'),
@@ -6957,6 +7834,10 @@ class CelestFunctionsTypedefs {
     return ($body['response'] as Map<String, Object?>?);
   }
 
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'mixedJson',
+  )
   Future<Map<String, dynamic>?> mixedJson(Map<String, dynamic> json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/mixed-json'),

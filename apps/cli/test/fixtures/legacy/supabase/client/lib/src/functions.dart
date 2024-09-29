@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:convert' as _$convert;
 
+import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
@@ -114,6 +115,10 @@ class CelestFunctionsAuth {
     }
   }
 
+  @_$celest.CloudFunction(
+    api: 'auth',
+    function: 'currentUser',
+  )
   Future<_$auth_user.AuthUser> currentUser() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/auth/current-user'),
