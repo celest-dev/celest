@@ -1,7 +1,12 @@
 /// The Flutter cloud platform.
 library celest;
 
-export 'package:celest_core/celest_core.dart';
+export 'package:celest_core/src/auth/user.dart';
+export 'package:celest_core/src/exception/celest_exception.dart';
+export 'package:celest_core/src/exception/cloud_exception.dart';
+export 'package:celest_core/src/exception/serialization_exception.dart';
+export 'package:celest_core/src/serialization/json_value.dart';
+export 'package:celest_core/src/serialization/serializer.dart';
 export 'package:shelf/shelf.dart' show Request, Response;
 
 /// Auth

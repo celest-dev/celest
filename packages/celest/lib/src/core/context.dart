@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/auth/user.dart';
 import 'package:cloud_http/cloud_http.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart' as shelf;

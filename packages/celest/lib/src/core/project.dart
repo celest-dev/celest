@@ -1,4 +1,4 @@
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/cloud_widget.dart';
 
 /// {@template celest.core.project}
 /// A project which is deployed to the cloud.

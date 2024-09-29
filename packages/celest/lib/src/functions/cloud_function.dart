@@ -1,4 +1,4 @@
-import 'package:celest/celest.dart';
+import 'package:celest/src/functions/cloud_api.dart';
 
 /// {@template celest.functions.cloud_function}
 /// A serverless Dart function which is deployed to the cloud.
@@ -6,11 +6,11 @@ import 'package:celest/celest.dart';
 /// Cloud Functions are defined as top-level Dart functions in the `functions/`
 /// directory of your Celest project.
 /// {@endtemplate}
-final class CloudFunction<Input, Output> {
+final class CloudFunction {
   /// {@macro celest.functions.cloud_function}
   const CloudFunction({
     required this.api,
-    required this.functionName,
+    required this.function,
   });
 
   /// The name of the [CloudApi] to which this function belongs.
@@ -21,5 +21,5 @@ final class CloudFunction<Input, Output> {
   /// This is the name of the Dart function to which this [CloudFunction]
   /// points. The name is used as part of the functions' URLs when deployed and
   /// in the generated client library.
-  final String functionName;
+  final String function;
 }

@@ -1,0 +1,10 @@
+{
+  "dart.dapLogFile": ".vscode/logs/dap.log",
+  "dart.dartTestLogFile": ".vscode/logs/dart_test/${name}.log",
+  "dart.toolingDaemonLogFile": ".vscode/logs/dtd.log",
+  "dart.devToolsLogFile": ".vscode/logs/devtools.log",
+  "dart.analyzerLogFile": ".vscode/logs/analyzer.log",
+  "dart.vmServiceLogFile": ".vscode/logs/vm_service/${name}.log",
+  "dart.extensionLogFile": ".vscode/logs/dartcode_ext.log",
+  "dart.analyzerInstrumentationLogFile": ".vscode/logs/analyzer/instrumentation.log"
+}

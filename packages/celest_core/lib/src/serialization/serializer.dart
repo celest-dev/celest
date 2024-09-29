@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
 import 'package:celest_core/src/serialization/serializers/big_int_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/date_time_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/duration_serializer.dart';

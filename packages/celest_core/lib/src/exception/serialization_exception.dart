@@ -1,4 +1,6 @@
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/exception/cloud_exception.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
+import 'package:celest_core/src/serialization/serializer.dart';
 
 /// {@template celest_core.exceptions.serialization_exception}
 /// Thrown when a error occurs during serialization.
