@@ -1,5 +1,4 @@
-import 'package:celest_backend/client.dart';
-import 'package:celest_backend/models/person.dart';
+import 'package:example_client/example_client.dart';
 import 'package:flutter/material.dart';
 
 void main() {

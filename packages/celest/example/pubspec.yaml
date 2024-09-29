@@ -7,8 +7,8 @@ environment:
   sdk: '>=3.2.5 <4.0.0'
 
 dependencies:
-  celest_backend:
-    path: celest/
+  example_client:
+    path: celest/client/
   flutter:
     sdk: flutter
   logging: ^1.2.0

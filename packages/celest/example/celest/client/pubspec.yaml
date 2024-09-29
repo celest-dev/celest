@@ -1,0 +1,15 @@
+name: example_client
+description: The Celest client for example.
+publish_to: none
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  celest_backend:
+    path: ../
+  celest_core: ^0.5.0-0
+  http: ">=0.13.0 <2.0.0"
+
+dev_dependencies:
+  test:
