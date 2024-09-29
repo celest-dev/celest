@@ -207,10 +207,11 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     );
 
     String? projectName;
+    String? projectDisplayName;
+    ast.Region? projectRegion;
     String? variableName;
     FileSpan? projectDefineLocation;
 
-    search:
     for (final declaration in declarations) {
       if (declaration
           case VariableDeclaration(
@@ -221,15 +222,35 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
             )
           )) {
         for (final argument in argumentList.arguments) {
-          if (argument
-              case NamedExpression(
+          switch (argument) {
+            case NamedExpression(
                 name: Label(label: SimpleIdentifier(name: 'name')),
                 expression: SimpleStringLiteral(:final value),
-              )) {
-            projectName = value;
-            variableName = name;
-            projectDefineLocation = argument.sourceLocation(projectFileSource);
-            break search;
+              ):
+              projectName = value;
+              variableName = name;
+              projectDefineLocation =
+                  declaration.sourceLocation(projectFileSource);
+            case NamedExpression(
+                name: Label(label: SimpleIdentifier(name: 'displayName')),
+                expression: SimpleStringLiteral(:final value),
+              ):
+              projectDisplayName = value;
+            case NamedExpression(
+                name: Label(label: SimpleIdentifier(name: 'region')),
+                expression: PrefixedIdentifier(
+                  prefix: SimpleIdentifier(name: 'Region'),
+                  identifier: SimpleIdentifier(name: final region),
+                ),
+              ):
+              projectRegion = ast.Region.valueOf(region);
+            default:
+              performance.captureError(
+                FormatException(
+                  'Unknown argument to `Project`: $argument',
+                  projectFileSource,
+                ),
+              );
           }
         }
       }
@@ -255,6 +276,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
 
     return ast.Project(
       name: projectName,
+      displayName: projectDisplayName,
+      primaryRegion: projectRegion,
       reference: refer(
         variableName!,
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),

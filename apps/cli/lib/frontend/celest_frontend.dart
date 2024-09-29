@@ -371,6 +371,7 @@ final class CelestFrontend {
   /// Gets or creates a project with the given [projectName] in the authenticated
   /// user's organization.
   Future<String?> _createProject({
+    required ast.Project projectDefinition,
     required String projectName,
   }) async {
     var organization = await organizations.primary;
@@ -412,6 +413,13 @@ final class CelestFrontend {
     final operation = cloud.projects.create(
       parent: 'organizations/${organization.id}',
       projectId: projectName.paramCase,
+      displayName: projectDefinition.displayName,
+      regions: switch (projectDefinition.primaryRegion) {
+        ast.Region.northAmerica => const [pb.Region.NORTH_AMERICA],
+        ast.Region.europe => const [pb.Region.EUROPE],
+        ast.Region.asiaPacific => const [pb.Region.ASIA_PACIFIC],
+        _ => null,
+      },
     );
     final waiter = CloudCliOperation(
       operation,
@@ -465,6 +473,7 @@ final class CelestFrontend {
             await _nextChangeSet();
           case AnalysisSuccessResult(:final project):
             projectId ??= await _createProject(
+              projectDefinition: project,
               projectName: project.name,
             );
             if (projectId == null) {
