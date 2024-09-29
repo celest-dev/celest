@@ -18,7 +18,7 @@ final class PubspecUpdater extends ProjectMigration {
   static final _logger = Logger('PubspecUpdater');
 
   final ParentProject? parentProject;
-  final String? projectName;
+  final String projectName;
   late final String projectRoot;
 
   // TODO(dnys1): Update project names when we can update all Dart code which
@@ -32,14 +32,8 @@ final class PubspecUpdater extends ProjectMigration {
       _logger.fine('Project name is already in the correct format.');
       return;
     }
-    if (projectName == null) {
-      // TODO(dnys1): Test and find better strategy. `projectName` should be
-      // nonnull at this point.
-      _logger.fine('Project name unknown. Skipping until DB is current.');
-      return;
-    }
     final oldPubspecName = pubspec.name;
-    final pubspecName = 'api_${projectName!.snakeCase}';
+    final pubspecName = 'api_${projectName.snakeCase}';
     _logger.fine('Updating project name...');
     pubspec = pubspec.copyWith(name: pubspecName);
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
@@ -136,6 +130,37 @@ final class PubspecUpdater extends ProjectMigration {
     return true;
   }
 
+  /// Ensures app has dependency on celest project
+  Future<void> _updateAppPubspec() async {
+    final parentProject = this.parentProject;
+    if (parentProject == null) {
+      return;
+    }
+    final projectPubspecName = '${projectName.snakeCase}_client';
+    final pubspec = parentProject.pubspec;
+    final missingClient = !pubspec.dependencies.containsKey(projectPubspecName);
+    final legacyBackend = pubspec.dependencies.containsKey('celest_backend');
+    final needsMigration = missingClient || legacyBackend;
+    if (!needsMigration) {
+      return;
+    }
+    _logger.fine('Updating app pubspec...');
+    final editor = YamlEditor(parentProject.pubspecYaml);
+    if (legacyBackend) {
+      editor.remove(['dependencies', 'celest_backend']);
+    }
+    if (missingClient) {
+      editor.update(
+        ['dependencies', projectPubspecName],
+        {'path': 'celest/client/'},
+      );
+    }
+    await fileSystem
+        .directory(parentProject.path)
+        .childFile('pubspec.yaml')
+        .writeAsString(editor.toString());
+  }
+
   @override
   Future<bool> create(String projectRoot) async {
     _logger.fine('Updating project pubspec...');
@@ -189,6 +214,9 @@ final class PubspecUpdater extends ProjectMigration {
       }
       _logger.fine('Client pubspec updated');
     }
+
+    // Update app pubspec
+    await _updateAppPubspec();
 
     return needsMigration;
   }

@@ -162,6 +162,16 @@ base mixin Configure on CelestCommand {
     }
 
     await _pubUpgrade();
+    if (needsMigration && parentProject != null) {
+      await processManager.run(
+        <String>[
+          Sdk.current.dart,
+          'fix',
+          '--apply',
+        ],
+        workingDirectory: parentProject.path,
+      );
+    }
 
     return needsMigration;
   }
@@ -178,8 +188,7 @@ base mixin Configure on CelestCommand {
     if (celestProject.parentProject case final parentProject?) {
       await runPub(
         exe: parentProject.type.name,
-        // TODO(dnys1): Use `pub get` in 0.5.0
-        action: PubAction.upgrade,
+        action: PubAction.get,
         workingDirectory: parentProject.path,
       );
     }

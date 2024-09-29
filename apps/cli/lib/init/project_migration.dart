@@ -208,8 +208,11 @@ final class ProjectClient extends ProjectFile {
     final clientOutputsDir = fileSystem.directory(projectPaths.clientRoot);
     if (!clientOutputsDir.existsSync()) {
       await clientOutputsDir.create(recursive: true);
+    }
 
-      // pubspec.yaml
+    // pubspec.yaml
+    final pubspecFile = clientOutputsDir.childFile('pubspec.yaml');
+    if (!pubspecFile.existsSync()) {
       final pubspec = Pubspec(
         '${projectName.snakeCase}_client',
         publishTo: 'none',
@@ -223,7 +226,6 @@ final class ProjectClient extends ProjectFile {
           'http': ProjectDependency.http.pubDependency,
         },
       );
-      final pubspecFile = clientOutputsDir.childFile('pubspec.yaml');
       final pubspecYaml = pubspec.toYaml();
       _logger.finest('Writing pubspec.yaml to ${pubspecFile.path}...');
       _logger.finest(pubspecYaml);
@@ -235,15 +237,15 @@ final class ProjectClient extends ProjectFile {
           );
         }),
       );
-
-      // Create `lib/src` in the client folder.
-      _operations.add(
-        clientOutputsDir
-            .childDirectory('lib')
-            .childDirectory('src')
-            .create(recursive: true),
-      );
     }
+
+    // Create `lib/src` in the client folder.
+    _operations.add(
+      clientOutputsDir
+          .childDirectory('lib')
+          .childDirectory('src')
+          .create(recursive: true),
+    );
 
     await Future.wait(_operations);
   }

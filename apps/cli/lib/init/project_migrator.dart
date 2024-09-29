@@ -36,7 +36,7 @@ class ProjectMigrator {
           ))
         MacOsEntitlements(appRoot).create(projectRoot).then((_) => false),
       PubspecUpdater(parentProject, projectName).create(projectRoot),
-      V1FolderStructure(projectName).create(projectRoot),
+      V1FolderStructure(projectName, parentProject).create(projectRoot),
     ]);
     return results.any((needsMigration) => needsMigration);
   }

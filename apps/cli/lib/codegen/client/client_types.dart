@@ -4,8 +4,11 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 
 abstract final class ClientPaths {
-  static String get client =>
-      p.join(projectPaths.clientRoot, 'lib', 'celest_client.dart');
+  static String get client => p.join(
+        projectPaths.clientRoot,
+        'lib',
+        '${celestProject.projectName.snakeCase}_client.dart',
+      );
   static String get functions =>
       p.join(projectPaths.clientOutputsDir, 'functions.dart');
   static String get serializers =>
