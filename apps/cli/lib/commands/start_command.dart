@@ -9,7 +9,7 @@ final class StartCommand extends CelestCommand
   StartCommand();
 
   @override
-  String get description => 'Starts a local Celest development environment.';
+  String get description => 'Starts a local Celest environment.';
 
   @override
   String get name => 'start';
@@ -27,7 +27,7 @@ final class StartCommand extends CelestCommand
     await checkForLatestVersion();
     final needsMigration = await configure();
 
-    currentProgress ??= cliLogger.progress('Starting Celest');
+    currentProgress ??= cliLogger.progress('Starting local environment');
 
     // Start the Celest Frontend Loop
     return CelestFrontend().run(

@@ -330,12 +330,14 @@ final class CelestFrontend {
               performance.captureError(e, stackTrace: st);
               break;
             }
+
+            final localUri = Uri.http('localhost:${projectOutputs.port}');
             await _generateClientCode(
               project: project,
               projectUris: (
                 localUri: await isolatedSecureStorage.setLocalUri(
                   project.name,
-                  Uri.http('localhost:${projectOutputs.port}'),
+                  localUri,
                 ),
                 productionUri:
                     await isolatedSecureStorage.getProductionUri(project.name),
@@ -355,6 +357,7 @@ final class CelestFrontend {
             currentProgress.complete(
               'Celest is running and watching for updates',
             );
+            cliLogger.detail('Local API running at: $localUri');
         }
 
         await _nextChangeSet();

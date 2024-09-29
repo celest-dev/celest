@@ -9,10 +9,12 @@ import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 base mixin ProjectCreator on Configure {
   Future<String> createProject({
@@ -23,7 +25,6 @@ base mixin ProjectCreator on Configure {
       'Generating project for "$projectName" at '
       '"${projectPaths.projectRoot}"...',
     );
-    currentProgress = cliLogger.progress('Generating project');
     await performance.trace('ProjectCreator', 'createProject', () async {
       await ProjectGenerator(
         parentProject: parentProject,
@@ -32,16 +33,41 @@ base mixin ProjectCreator on Configure {
       ).generate();
       logger.fine('Project generated successfully');
     });
-    currentProgress!.complete('Project generated successfully');
     return projectName;
   }
 }
 
-base mixin Configure on CelestCommand {
-  // TODO(dnys1): Move to ProjectPaths. Rename to CelestProject.
-  late final Pubspec pubspec;
-  late final bool isExistingProject;
+sealed class ConfigureState {}
 
+final class Initializing implements ConfigureState {
+  const Initializing();
+}
+
+final class CreatingProject implements ConfigureState {
+  const CreatingProject();
+}
+
+final class CreatedProject implements ConfigureState {
+  const CreatedProject();
+}
+
+final class MigratingProject implements ConfigureState {
+  const MigratingProject();
+}
+
+final class MigratedProject implements ConfigureState {
+  const MigratedProject();
+}
+
+final class Initialized implements ConfigureState {
+  const Initialized({
+    required this.needsAnalyzerMigration,
+  });
+
+  final bool needsAnalyzerMigration;
+}
+
+base mixin Configure on CelestCommand {
   abstract Progress? currentProgress;
 
   static Never _throwNoProject() => throw const CelestException(
@@ -52,40 +78,104 @@ base mixin Configure on CelestCommand {
   String newProjectName({
     ParentProject? parentProject,
   }) {
-    if (parentProject != null && parentProject.name.startsWith('celest')) {
-      final parentType = parentProject.type.name.capitalized;
-      throw CelestException(
-        'Your $parentType project cannot be named "celest" or start with "celest". '
-        'Please change it in pubspec.yaml and run `celest start` again.',
-      );
+    var baseName = parentProject?.name;
+    if (baseName != null && baseName.startsWith('celest')) {
+      baseName = null;
     }
+    final defaultName = baseName ?? 'hello';
+    String? projectName;
+    while (projectName == null) {
+      final input = cliLogger
+          .prompt('Enter a name for your project', defaultValue: defaultName)
+          .snakeCase;
+      if (input.isEmpty) {
+        cliLogger.err('Project name cannot be empty.');
+        continue;
+      }
+      if (input.groupIntoWords().contains('celest')) {
+        cliLogger.err('Project name cannot contain "celest".');
+        continue;
+      }
+      projectName = input;
+    }
+    return projectName;
+  }
 
-    final defaultName = parentProject?.name ?? 'hello';
-    return cliLogger
-        .prompt(
-          'Enter a name for your project',
-          defaultValue: defaultName,
-        )
-        .snakeCase;
+  Future<bool> configure() async {
+    await for (final state in _configure()) {
+      switch (state) {
+        case Initializing():
+          currentProgress?.complete();
+          currentProgress = cliLogger.progress('Initializing Celest');
+        case CreatingProject():
+          currentProgress?.complete();
+          currentProgress = cliLogger.progress('Generating project');
+        case CreatedProject():
+          currentProgress?.complete('Project successfully generated');
+          currentProgress = null;
+        case MigratingProject():
+          currentProgress?.complete();
+          currentProgress = cliLogger.progress('Migrating project');
+        case MigratedProject():
+          currentProgress?.complete('Project successfully migrated');
+          currentProgress = null;
+        case Initialized(needsAnalyzerMigration: final needsMigration):
+          currentProgress?.complete();
+          currentProgress = null;
+          return needsMigration;
+      }
+    }
+    unreachable();
   }
 
   /// Returns true if the project needs to be migrated.
-  Future<bool> configure() async {
-    final currentDir = Directory.current;
-    final pubspecFile = fileSystem.file(
-      p.join(currentDir.path, 'pubspec.yaml'),
+  Stream<ConfigureState> _configure() async* {
+    final currentDir = fileSystem.currentDirectory;
+    final pubspecFile = currentDir.childFile('pubspec.yaml');
+    final projectFile = currentDir.childFile('project.dart');
+
+    final (celestDir, isExistingProject, parentProject) =
+        switch ((projectFile.existsSync(), pubspecFile.existsSync())) {
+      // We're inside the `celest` directory.
+      (true, _) => (
+          currentDir,
+          true,
+          await ParentProject.load(currentDir.parent.path),
+        ),
+
+      // We're inside a parent project.
+      (false, true) => await run(() async {
+          final celestDir = fileSystem.directory(
+            p.join(currentDir.path, 'celest'),
+          );
+          return (
+            celestDir,
+            celestDir.existsSync(),
+            await ParentProject.load(currentDir.path),
+          );
+        }),
+
+      // We're inside a folder which is neither a Dart/Flutter app nor a
+      // Celest project.
+      (false, false) => (null, false, null),
+    };
+
+    logger.finest(
+      'Project state: dir=$celestDir, existing=$isExistingProject, '
+      'parent=${parentProject?.type}',
     );
 
-    final String projectRoot;
+    String projectRoot;
     String? projectName;
-    ParentProject? parentProject;
-
-    if (!pubspecFile.existsSync()) {
+    if (isExistingProject) {
+      projectRoot = celestDir!.path;
+    } else {
       switch (this) {
         case StartCommand():
+          cliLogger.warn('No Celest project found in the current directory.');
           final createNew = cliLogger.confirm(
-            'No Celest project found in the current directory. '
-            'Would you like to create one?',
+            'Would you like to create a new one?',
+            defaultValue: true,
           );
           if (!createNew) {
             cliLogger.detail('Skipping project creation.');
@@ -96,84 +186,77 @@ base mixin Configure on CelestCommand {
         default:
           _throwNoProject();
       }
-      projectName = newProjectName(parentProject: null);
-      isExistingProject = false;
+
+      projectName = newProjectName(parentProject: parentProject);
 
       // Choose where to store the project based on the current directory.
-      if (await currentDir.list().isEmpty) {
-        projectRoot = currentDir.path;
-      } else {
-        projectRoot = p.join(currentDir.path, projectName);
-        final projectDir = fileSystem.directory(projectRoot);
-        if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
-          throw CelestException(
-            'A directory named "$projectName" already exists. '
-            'Please choose a different name, or run this command from a '
-            'different directory.',
-          );
-        }
-      }
-    } else {
-      final pubspecYaml = await pubspecFile.readAsString();
-      pubspec = Pubspec.parse(pubspecYaml);
+      projectRoot = switch (celestDir) {
+        final celestDir? => celestDir.path,
 
-      final (celestDir, isExistingProject) =
-          switch (pubspec.dependencies.containsKey('celest')) {
-        true => (currentDir, true),
-        false => run(() {
-            final dir = Directory(p.join(currentDir.path, 'celest'));
-            return (dir, dir.existsSync());
+        // We should create a new folder for the project which is unattached
+        // to any parent project, named after the project.
+        null => await run(() async {
+            final projectRoot = p.join(currentDir.path, projectName);
+            final projectDir = fileSystem.directory(projectRoot);
+            if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
+              throw CelestException(
+                'A directory named "$projectName" already exists. '
+                'Please choose a different name, or run this command from a '
+                'different directory.',
+              );
+            }
+            return projectRoot;
           }),
       };
-      projectRoot = celestDir.path;
-      parentProject = await ParentProject.load(p.dirname(projectRoot));
-      this.isExistingProject = isExistingProject;
     }
 
-    if (isExistingProject && this is StartCommand) {
-      currentProgress = cliLogger.progress('Starting Celest...');
-    }
+    await loadSqlite3(logger: logger);
 
+    yield const Initializing();
     await init(
       projectRoot: projectRoot,
       parentProject: parentProject,
     );
 
-    await loadSqlite3(logger: logger);
+    final cachedVersionInfo =
+        await celestProject.cacheDb.getVersionInfo().getSingle();
+    final needsMigration =
+        Version.parse(cachedVersionInfo.celest) < Version.parse(packageVersion);
 
-    var needsMigration = false;
+    var needsAnalyzerMigration = false;
+    Future<void>? upgradePackages;
     if (!isExistingProject) {
       if (this case final ProjectCreator projectCreator) {
-        projectName ??= newProjectName(parentProject: parentProject);
+        yield const CreatingProject();
         await projectCreator.createProject(
-          projectName: projectName,
+          projectName: projectName!,
           parentProject: parentProject,
         );
-        if (this is StartCommand) {
-          currentProgress = cliLogger.progress('Starting Celest...');
-        }
+        yield const CreatedProject();
       } else {
         _throwNoProject();
       }
-    } else if (this case final Migrate projectMigrator) {
-      needsMigration = await projectMigrator.migrateProject(
+    } else if (this case final Migrate projectMigrator when needsMigration) {
+      yield const MigratingProject();
+      needsAnalyzerMigration = await projectMigrator.migrateProject(
         parentProject: parentProject,
       );
+      await (upgradePackages = _pubUpgrade());
+      if (needsMigration && parentProject != null) {
+        await processManager.run(
+          <String>[
+            Sdk.current.dart,
+            'fix',
+            '--apply',
+          ],
+          workingDirectory: parentProject.path,
+        );
+      }
+      yield const MigratedProject();
     }
+    await (upgradePackages ??= _pubUpgrade());
 
-    await _pubUpgrade();
-    if (needsMigration && parentProject != null) {
-      await processManager.run(
-        <String>[
-          Sdk.current.dart,
-          'fix',
-          '--apply',
-        ],
-        workingDirectory: parentProject.path,
-      );
-    }
-
-    return needsMigration;
+    yield Initialized(needsAnalyzerMigration: needsAnalyzerMigration);
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
