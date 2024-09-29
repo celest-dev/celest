@@ -1,3 +1,4 @@
+import 'package:celest/celest.dart';
 import 'package:meta/meta_meta.dart';
 
 /// Marks a function or library as a cloud API.
@@ -41,3 +42,35 @@ const customOverride = _CustomOverride();
 final class _CustomOverride {
   const _CustomOverride();
 }
+
+/// {@template celest.core.principal}
+/// A contextual reference to the principal ([User]) invoking a [CloudFunction].
+///
+/// For more information, see [Authorizing your functions](https://celest.dev/docs/functions/authorizing-functions).
+///
+/// ## Example
+///
+/// To inject a user into an `@authenticated` function:
+///
+/// ```dart
+/// @authenticated
+/// Future<void> sayHello({
+///   @principal required User user,
+/// }) async {
+///  print('Hello, ${user.displayName}!');
+/// }
+/// ```
+///
+/// If a user is injected to a `@public` or private function, then the
+/// user parameter must be nullable:
+///
+/// ```dart
+/// @public
+/// Future<void> sayHello({
+///   @principal User? user,
+/// }) async {
+///   print('Hello, ${user?.displayName ?? 'stranger'}!');
+/// }
+/// ```
+/// {@endtemplate}
+const principal = ContextKey.principal;
