@@ -1,4 +1,7 @@
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
+import 'package:celest/src/functions/cloud_function.dart';
+// ignore: implementation_imports
+import 'package:celest_core/src/auth/user.dart';
 import 'package:meta/meta_meta.dart';
 
 /// Marks a function or library as a cloud API.

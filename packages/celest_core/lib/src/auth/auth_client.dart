@@ -1,7 +1,7 @@
 import 'package:celest_core/_internal.dart';
-import 'package:celest_core/celest_core.dart';
 import 'package:celest_core/src/auth/auth_protocol.dart';
 import 'package:celest_core/src/auth/otp/otp_types.dart';
+import 'package:celest_core/src/auth/user.dart';
 import 'package:celest_core/src/base/base_protocol.dart';
 
 final class AuthClient with BaseProtocol implements AuthProtocol {

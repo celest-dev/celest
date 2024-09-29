@@ -6,6 +6,7 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
+  celest: ^0.5.0-0
   celest_backend:
     path: ../
   celest_core: ^0.5.0-0

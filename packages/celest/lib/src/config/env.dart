@@ -1,4 +1,4 @@
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/cloud_widget.dart';
 
 /// {@template celest.config.environment_variable}
 /// A reference to an environment variable within a Celest backend.

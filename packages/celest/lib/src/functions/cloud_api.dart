@@ -1,4 +1,4 @@
-import 'package:celest/celest.dart';
+import 'package:celest/src/functions/cloud_function.dart';
 
 /// {@template celest.functions.cloud_api}
 /// A grouping of [CloudFunction]s under a common [name].

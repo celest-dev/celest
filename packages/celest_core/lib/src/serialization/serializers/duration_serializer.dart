@@ -1,4 +1,5 @@
-import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/exception/serialization_exception.dart';
+import 'package:celest_core/src/serialization/serializer.dart';
 
 /// A [Serializer] for [Duration] objects.
 final class DurationSerializer extends Serializer<Duration> {
