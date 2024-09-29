@@ -396,11 +396,11 @@ final class EntrypointGenerator {
                 isCloudException
                     ? literalMap({
                         'message': refer('e').property('message'),
-                        'code': dartExceptionType.exceptionUri(project.name),
+                        'code': dartExceptionType.externalUri(project.name),
                         'details': refer('e').property('details'),
                       })
                     : literalMap({
-                        'code': dartExceptionType.exceptionUri(project.name),
+                        'code': dartExceptionType.externalUri(project.name),
                         'details':
                             jsonGenerator.toJson(exceptionType, refer('e')),
                       }),

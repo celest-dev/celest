@@ -4,19 +4,18 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest_auth/celest_auth.dart' as _$celest_auth;
-import 'package:celest_auth/src/auth_impl.dart' as _$auth_impl;
-import 'package:celest_core/_internal.dart';
+import 'package:celest_auth/celest_auth.dart' as _$celest;
+import 'package:celest_auth/src/auth_impl.dart' as _$celest;
+import 'package:celest_core/_internal.dart' as _$celest;
 
-extension type CelestAuth._(_$auth_impl.AuthImpl _hub)
-    implements _$celest_auth.Auth {
+extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
   CelestAuth(
-    CelestBase celest, {
-    required NativeStorage storage,
-  }) : _hub = _$auth_impl.AuthImpl(
+    _$celest.CelestBase celest, {
+    required _$celest.NativeStorage storage,
+  }) : _hub = _$celest.AuthImpl(
           celest,
           storage: storage,
         );
 
-  _$auth_impl.Email get email => _$auth_impl.Email(_hub);
+  _$celest.Email get email => _$celest.Email(_hub);
 }

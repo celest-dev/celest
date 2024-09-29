@@ -9,38 +9,39 @@ import 'package:_common/src/models/errors_and_exceptions.dart'
 import 'package:_common/src/models/portfolio.dart' as _$portfolio;
 import 'package:_common/src/models/stock.dart' as _$stock;
 import 'package:_common/src/models/ui.dart' as _$ui;
-import 'package:celest/celest.dart';
-import 'package:celest_backend/exceptions/overrides.dart' as _$overrides;
-import 'package:celest_backend/models/overrides.dart' as _$overrides;
-import 'package:celest_core/src/exception/cloud_exception.dart';
-import 'package:celest_core/src/exception/serialization_exception.dart';
-import 'package:celest_core/src/serialization/json_value.dart';
+import 'package:celest_backend/exceptions/overrides.dart';
+import 'package:celest_backend/models/overrides.dart';
+import 'package:celest_core/celest_core.dart' as _$celest;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
+import 'package:celest_core/src/exception/serialization_exception.dart'
+    as _$celest;
+import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 
 void initSerializers() {
-  Serializers.instance.put(Serializer.define<_$available_stocks.AvailableStocks,
-      Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$available_stocks.AvailableStocks, Map<String, Object?>>(
     serialize: ($value) => {
-      r'list': Serializers.instance
+      r'list': _$celest.Serializers.instance
           .serialize<_$ilist.IList<_$available_stock.AvailableStock>>(
               $value.list)
     },
     deserialize: ($serialized) {
       return _$available_stocks.AvailableStocks(
           ($serialized[r'list'] as Iterable<Object?>)
-              .map((el) => Serializers.instance
+              .map((el) => _$celest.Serializers.instance
                   .deserialize<_$available_stock.AvailableStock>(el))
               .toList());
     },
   ));
-  Serializers.instance.put(Serializer.define<
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$errors_and_exceptions.UserException, Map<String, dynamic>>(
     serialize: ($value) => $value.toJson(),
     deserialize: ($serialized) {
       return _$errors_and_exceptions.UserException.fromJson($serialized);
     },
   ));
-  Serializers.instance.put(Serializer.define<
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$errors_and_exceptions.ValidateError, Map<String, Object?>>(
     serialize: ($value) => {r'msg': $value.msg},
     deserialize: ($serialized) {
@@ -48,77 +49,78 @@ void initSerializers() {
           ($serialized[r'msg'] as String));
     },
   ));
-  Serializers.instance.put(Serializer.define<_$ui.ScreenChoice, String>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<_$ui.ScreenChoice, String>(
     serialize: ($value) => $value.name,
     deserialize: ($serialized) {
       return _$ui.ScreenChoice.values.byName($serialized);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.AppError, Map<String, Object?>>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<AppError, Map<String, Object?>>(
     serialize: ($value) => $value.toJson(),
     deserialize: ($serialized) {
-      return _$overrides.AppError.fromJson($serialized);
+      return AppError.fromJson($serialized);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.AppException, Map<String, Object?>?>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<AppException, Map<String, Object?>?>(
     serialize: ($value) => {
-      r'error': Serializers.instance.serialize<JsonValue?>(
+      r'error': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.error,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
-      r'msg': Serializers.instance.serialize<JsonValue?>(
+      r'msg': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.msg,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
       return (_$errors_and_exceptions.AppException(
         $serialized?[r'msg'],
         $serialized?[r'error'],
-      ) as _$overrides.AppException);
+      ) as AppException);
     },
   ));
-  Serializers.instance.put(Serializer.define<_$overrides.NotYetImplementedError,
-      Map<String, Object?>?>(
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<NotYetImplementedError, Map<String, Object?>?>(
     serialize: ($value) => {
       r'msg': $value.msg,
-      r'message': Serializers.instance.serialize<JsonValue?>(
+      r'message': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.message,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return _$overrides.NotYetImplementedError(
-          Serializers.instance.deserialize<JsonValue?>(
+      return NotYetImplementedError(
+          _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
         $serialized?[r'message'],
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ));
     },
   ));
-  Serializers.instance.put(Serializer.define<
-      _$overrides.UserException_ShowInConsole, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      UserException_ShowInConsole, Map<String, Object?>>(
     serialize: ($value) => {
       r'msg': $value.msg,
       r'code': $value.code,
-      r'cause': Serializers.instance.serialize<JsonValue?>(
+      r'cause': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.cause,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return _$overrides.UserException_ShowInConsole(
+      return UserException_ShowInConsole(
         msg: ($serialized[r'msg'] as String),
-        cause: Serializers.instance.deserialize<JsonValue?>(
+        cause: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'cause'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.AvailableStock, Map<String, Object?>>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<AvailableStock, Map<String, Object?>>(
     serialize: ($value) => {
       r'ticker': $value.ticker,
       r'name': $value.name,
@@ -130,24 +132,23 @@ void initSerializers() {
         ($serialized[r'ticker'] as String),
         name: ($serialized[r'name'] as String),
         currentPrice: ($serialized[r'currentPrice'] as num).toDouble(),
-      ) as _$overrides.AvailableStock);
+      ) as AvailableStock);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.CashBalance, Map<String, Object?>>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<CashBalance, Map<String, Object?>>(
     serialize: ($value) => {r'amount': $value.amount},
     deserialize: ($serialized) {
       return (_$cash_balance.CashBalance(
-              ($serialized[r'amount'] as num).toDouble())
-          as _$overrides.CashBalance);
+          ($serialized[r'amount'] as num).toDouble()) as CashBalance);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.Portfolio, Map<String, Object?>?>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<Portfolio, Map<String, Object?>?>(
     serialize: ($value) => {
-      r'stocks': Serializers.instance
+      r'stocks': _$celest.Serializers.instance
           .serialize<_$ilist.IList<_$stock.Stock>>($value.stocks),
-      r'cashBalance': Serializers.instance
+      r'cashBalance': _$celest.Serializers.instance
           .serialize<_$cash_balance.CashBalance>($value.cashBalance),
       r'isEmpty': $value.isEmpty,
       r'totalCostBasis': $value.totalCostBasis,
@@ -155,17 +156,18 @@ void initSerializers() {
     deserialize: ($serialized) {
       return (_$portfolio.Portfolio(
         stocks: ($serialized?[r'stocks'] as Iterable<Object?>?)
-            ?.map((el) => Serializers.instance.deserialize<_$stock.Stock>(el))
+            ?.map((el) =>
+                _$celest.Serializers.instance.deserialize<_$stock.Stock>(el))
             .toList(),
-        cashBalance: (Serializers.instance
+        cashBalance: (_$celest.Serializers.instance
                 .deserialize<_$cash_balance.CashBalance?>(
                     $serialized?[r'cashBalance'])) ??
             _$cash_balance.CashBalance.ZERO,
-      ) as _$overrides.Portfolio);
+      ) as Portfolio);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.Stock, Map<String, Object?>>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<Stock, Map<String, Object?>>(
     serialize: ($value) => {
       r'ticker': $value.ticker,
       r'howManyShares': $value.howManyShares,
@@ -178,380 +180,384 @@ void initSerializers() {
         ($serialized[r'ticker'] as String),
         howManyShares: ($serialized[r'howManyShares'] as num).toInt(),
         averagePrice: ($serialized[r'averagePrice'] as num).toDouble(),
-      ) as _$overrides.Stock);
+      ) as Stock);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$overrides.Ui, Map<String, Object?>>(
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<Ui, Map<String, Object?>>(
     serialize: ($value) => {
       r'isDarkMode': $value.isDarkMode,
-      r'screenChoice': Serializers.instance
+      r'screenChoice': _$celest.Serializers.instance
           .serialize<_$ui.ScreenChoice>($value.screenChoice),
     },
     deserialize: ($serialized) {
       return (_$ui.Ui(
         isDarkMode: ($serialized[r'isDarkMode'] as bool),
-        screenChoice: (Serializers.instance.deserialize<_$ui.ScreenChoice?>(
-                $serialized[r'screenChoice'])) ??
+        screenChoice: (_$celest.Serializers.instance
+                .deserialize<_$ui.ScreenChoice?>(
+                    $serialized[r'screenChoice'])) ??
             _$ui.ScreenChoice.portfolioAndCashBalance,
-      ) as _$overrides.Ui);
+      ) as Ui);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<AbortedException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.AbortedException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return AbortedException(
+      return _$celest.AbortedException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<AlreadyExistsException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.AlreadyExistsException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return AlreadyExistsException(
+      return _$celest.AlreadyExistsException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<BadRequestException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.BadRequestException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return BadRequestException(
+      return _$celest.BadRequestException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<CancelledException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.CancelledException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return CancelledException(
+      return _$celest.CancelledException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<CloudException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<_$celest.CloudException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return CloudException.fromJson($serialized);
+      return _$celest.CloudException.fromJson($serialized);
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<DataLossError, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<_$celest.DataLossError, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return DataLossError(
+      return _$celest.DataLossError(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<DeadlineExceededError, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.DeadlineExceededError, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return DeadlineExceededError(
+      return _$celest.DeadlineExceededError(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<FailedPreconditionException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.FailedPreconditionException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return FailedPreconditionException(
+      return _$celest.FailedPreconditionException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<InternalServerError, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.InternalServerError, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return InternalServerError(
+      return _$celest.InternalServerError(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<NotFoundException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.NotFoundException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return NotFoundException(
+      return _$celest.NotFoundException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<OutOfRangeException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.OutOfRangeException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return OutOfRangeException(
+      return _$celest.OutOfRangeException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<PermissionDeniedException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.PermissionDeniedException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return PermissionDeniedException(
+      return _$celest.PermissionDeniedException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<ResourceExhaustedException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.ResourceExhaustedException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return ResourceExhaustedException(
+      return _$celest.ResourceExhaustedException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<UnauthorizedException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.UnauthorizedException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return UnauthorizedException(
+      return _$celest.UnauthorizedException(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<UnavailableError, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.UnavailableError, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return UnavailableError(
+      return _$celest.UnavailableError(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<UnimplementedError, Map<String, Object?>?>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.UnimplementedError, Map<String, Object?>?>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return UnimplementedError(($serialized?[r'message'] as String?));
+      return _$celest.UnimplementedError(($serialized?[r'message'] as String?));
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<UnknownError, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<_$celest.UnknownError, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return UnknownError(
+      return _$celest.UnknownError(
         ($serialized[r'message'] as String?),
-        details: Serializers.instance.deserialize<JsonValue?>(
+        details: _$celest.Serializers.instance.deserialize<_$celest.JsonValue?>(
           $serialized[r'details'],
-          const TypeToken<JsonValue?>('JsonValue'),
+          const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
         ),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<SerializationException, Map<String, Object?>>(
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$celest.SerializationException, Map<String, Object?>>(
     serialize: ($value) => {
       r'message': $value.message,
       r'offset': $value.offset,
       r'source': $value.source,
-      r'details': Serializers.instance.serialize<JsonValue?>(
+      r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
-        const TypeToken<JsonValue?>('JsonValue'),
+        const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       ),
     },
     deserialize: ($serialized) {
-      return SerializationException(($serialized[r'message'] as String));
+      return _$celest.SerializationException(
+          ($serialized[r'message'] as String));
     },
   ));
-  Serializers.instance.put(
-    Serializer.define<JsonValue, Object>(
+  _$celest.Serializers.instance.put(
+    _$celest.Serializer.define<_$celest.JsonValue, Object>(
       serialize: ($value) => $value.value,
       deserialize: ($serialized) {
-        return JsonValue($serialized);
+        return _$celest.JsonValue($serialized);
       },
     ),
-    const TypeToken<JsonValue?>('JsonValue'),
+    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
   );
-  Serializers.instance.put(Serializer.define<
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$ilist.IList<_$available_stock.AvailableStock>, dynamic>(
-    serialize: ($value) => $value.toJson((value) => Serializers.instance
+    serialize: ($value) => $value.toJson((value) => _$celest
+        .Serializers.instance
         .serialize<_$available_stock.AvailableStock>(value)),
     deserialize: ($serialized) {
       return _$ilist.IList<_$available_stock.AvailableStock>.fromJson(
         $serialized,
-        (value) => Serializers.instance
+        (value) => _$celest.Serializers.instance
             .deserialize<_$available_stock.AvailableStock>(value),
       );
     },
   ));
-  Serializers.instance
-      .put(Serializer.define<_$ilist.IList<_$stock.Stock>, dynamic>(
-    serialize: ($value) => $value.toJson(
-        (value) => Serializers.instance.serialize<_$stock.Stock>(value)),
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<_$ilist.IList<_$stock.Stock>, dynamic>(
+    serialize: ($value) => $value.toJson((value) =>
+        _$celest.Serializers.instance.serialize<_$stock.Stock>(value)),
     deserialize: ($serialized) {
       return _$ilist.IList<_$stock.Stock>.fromJson(
         $serialized,
-        (value) => Serializers.instance.deserialize<_$stock.Stock>(value),
+        (value) =>
+            _$celest.Serializers.instance.deserialize<_$stock.Stock>(value),
       );
     },
   ));

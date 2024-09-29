@@ -34,7 +34,10 @@ final class CelestAllocator implements Allocator {
     required this.pathStrategy,
   });
 
-  static const _doNotPrefix = ['dart:core'];
+  static const _doNotPrefix = [
+    'dart:core',
+    'package:meta/meta.dart',
+  ];
 
   final String forFile;
   final PrefixingStrategy prefixingStrategy;
@@ -89,17 +92,17 @@ final class CelestAllocator implements Allocator {
       default:
         unreachable('Unexpected reference URL: $url ($uri)');
     }
-    return _importFor(url, symbol);
+    return _importFor(url, uri, symbol);
   }
 
-  String _importFor(String url, String symbol) {
+  String _importFor(String url, Uri uri, String symbol) {
     switch (prefixingStrategy) {
       case PrefixingStrategy.indexed:
         return '${_imports.putIfAbsent(url, _nextKey)}.$symbol';
       case PrefixingStrategy.none:
         final import = _imports.putIfAbsent(
           url,
-          () => _prefixForUrl(url),
+          () => _prefixForUrl(uri),
         );
         return switch (import) {
           final import? => '$import.$symbol',
@@ -110,45 +113,31 @@ final class CelestAllocator implements Allocator {
     }
   }
 
-  String? _prefixForUrl(String url) {
-    final uri = Uri.parse(url);
-    if (uri
-        case Uri(
-          scheme: 'package',
-          // The only members we should not prefix are core libraries.
-          //
-          // We could choose to not prefix their backend library but the Celest types
-          // are so ubiquitous in clientgen, that this helps reduce the prefix
-          // clutter.
-          //
-          // This is also required so that, for example, clients can define
-          // their own types with the same name as core lib types.
-          pathSegments: ['celest' || 'celest_core' || 'meta' || 'libcoder', ...]
-        )) {
-      return null;
-    }
-    if (uri.scheme.isEmpty) {
-      return null;
-    }
+  String? _prefixForUrl(Uri uri) {
     final allocatedPrefixes = _imports.values.nonNulls.toSet();
-    if (url.indexOf(':') case final index && != -1) {
-      url = url.substring(index + 1);
-    }
-    final urlSegments = url
-        .split('/')
-        .map((s) => s.replaceFirst('.dart', ''))
-        .where((s) => s.isNotEmpty && !s.contains('.'))
-        .toList();
-    if (urlSegments.isEmpty) {
-      throw StateError('Could not allocate prefix for URL: $url');
-    }
-    var prefix = urlSegments.removeLast();
-    while (allocatedPrefixes.contains(prefix)) {
-      prefix = '${urlSegments.removeLast()}_$prefix';
+    String prefix;
+    switch (uri) {
+      case Uri(scheme: 'package', pathSegments: ['celest_backend', ...]):
+        return null;
+      case Uri(scheme: 'package', pathSegments: [final package, ...])
+          when package.startsWith('celest'):
+        return r'_$celest';
+      case Uri(scheme: '' || 'file'):
+        return null;
+      case Uri(:final path):
+        final segments = p.posix.split(path);
+        prefix =
+            segments.removeLast().replaceAll('.dart', '').replaceAll('.', '_');
+        while (allocatedPrefixes.contains(prefix)) {
+          if (segments.isEmpty) {
+            throw StateError('Could not allocate prefix for URL: $uri');
+          }
+          prefix = '${segments.removeLast().replaceAll('.', '_')}_$prefix';
+        }
     }
     if (!allocatedPrefixes.add(prefix)) {
       // TODO(dnys1): What to do here?
-      throw StateError('Could not allocate prefix for URL: $url');
+      throw StateError('Could not allocate prefix for URL: $uri');
     }
     return '_\$$prefix';
   }

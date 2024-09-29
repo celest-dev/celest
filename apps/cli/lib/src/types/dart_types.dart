@@ -579,7 +579,7 @@ class _Celest {
 
   /// Creates a [celest.CloudException] reference.
   DartTypeReference get cloudException =>
-      const DartTypeReference('CloudException', _url);
+      const DartTypeReference('CloudException', _coreUrl);
 
   /// Creates a [celest.CloudFunction] reference.
   Reference cloudFunction([Reference? input, Reference? output]) =>

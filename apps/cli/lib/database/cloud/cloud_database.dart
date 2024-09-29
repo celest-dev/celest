@@ -1,4 +1,5 @@
 import 'package:celest_cli/config/celest_config.dart';
+import 'package:celest_cli/database/cloud/cloud.migrations.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -21,7 +22,7 @@ final class CloudDatabase extends _$CloudDatabase {
         );
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 1;
 
   static final Pool _lock = Pool(1);
 
@@ -42,8 +43,7 @@ final class CloudDatabase extends _$CloudDatabase {
         await m.createAll();
       }),
       onUpgrade: (m, from, to) => _lock.withResource(() async {
-        await m.createTable(projectEnvironments);
-        await m.createTable(projectEnvironmentConfig);
+        await stepByStep()(m, from, to);
       }),
     );
   }
@@ -71,7 +71,9 @@ QueryExecutor _openConnection(
     final file = config.configDir.childFile('cloud.db');
     await file.create(recursive: true);
 
-    // Ensure the file is only readable by the current user
+    // Ensure the file is only readable by the current user.
+    //
+    // On windows, we just leverage the sandboxing to achieve the same.
     if (platform.isLinux || platform.isMacOS) {
       final chmodRes = await processManager.run(<String>[
         'chmod',

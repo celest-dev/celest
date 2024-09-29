@@ -2,23 +2,23 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/celest.dart';
+import 'package:celest/celest.dart' as _$celest;
 
 @Deprecated('Use `env` instead.')
 typedef Env = env;
 
 abstract final class env {
-  static const myName = EnvironmentVariable(name: r'MY_NAME');
+  static const myName = _$celest.EnvironmentVariable(name: r'MY_NAME');
 
-  static const myAge = EnvironmentVariable(name: r'MY_AGE');
+  static const myAge = _$celest.EnvironmentVariable(name: r'MY_AGE');
 
-  static const myHeight = EnvironmentVariable(name: r'MY_HEIGHT');
+  static const myHeight = _$celest.EnvironmentVariable(name: r'MY_HEIGHT');
 
-  static const myWeight = EnvironmentVariable(name: r'MY_WEIGHT');
+  static const myWeight = _$celest.EnvironmentVariable(name: r'MY_WEIGHT');
 
-  static const imCool = EnvironmentVariable(name: r'IM_COOL');
+  static const imCool = _$celest.EnvironmentVariable(name: r'IM_COOL');
 
-  static const myWebsite = EnvironmentVariable(name: r'MY_WEBSITE');
+  static const myWebsite = _$celest.EnvironmentVariable(name: r'MY_WEBSITE');
 }

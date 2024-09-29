@@ -9,3 +9,18 @@ CREATE TABLE IF NOT EXISTS analyzer_byte_store (
   -- The content of the entry.
   content BLOB
 );
+
+-- Stores verison information for the cache.
+CREATE TABLE IF NOT EXISTS version_info (
+  -- The version of the Celest CLI.
+  celest TEXT NOT NULL,
+
+  -- The version of the Dart SDK.
+  dart TEXT NOT NULL,
+
+  -- The version of the Flutter SDK.
+  flutter TEXT
+);
+
+getVersionInfo: SELECT * FROM version_info LIMIT 1;
+setVersionInfo: INSERT INTO version_info (celest, dart, flutter) VALUES (:celest, :dart, :flutter);

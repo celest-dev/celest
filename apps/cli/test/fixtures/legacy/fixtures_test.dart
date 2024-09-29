@@ -16,9 +16,9 @@ import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
-import 'package:recase/recase.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 
@@ -93,6 +93,14 @@ class TestRunner {
         ).timeout(const Duration(seconds: 10));
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
+        }
+        final cacheFile = fileSystem
+            .directory(projectRoot)
+            .childDirectory('.dart_tool')
+            .childDirectory('celest')
+            .childFile('cache.db');
+        if (cacheFile.existsSync()) {
+          cacheFile.deleteSync();
         }
         await init(
           projectRoot: projectRoot,
@@ -338,6 +346,7 @@ class TestRunner {
               ...testCase.headers,
             })
             ..body = jsonEncode(testCase.input);
+          print('${request.method} ${request.url}');
           final response = client.send(request);
           final result = await Result.capture(response);
           try {
@@ -1650,7 +1659,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'api.OverriddenException',
+                  'code': 'api.v1.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1665,7 +1674,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'api.OverriddenException',
+                  'code': 'api.v1.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1680,7 +1689,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'api.OverriddenException',
+                  'code': 'api.v1.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -1695,7 +1704,7 @@ final tests = <String, Test>{
               statusCode: 400,
               output: {
                 'error': {
-                  'code': 'api.OverriddenException',
+                  'code': 'api.v1.OverriddenException',
                   'details': {
                     'message': 'message',
                   },
@@ -2506,7 +2515,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'api.CustomException',
+                  'code': 'api.v1.CustomException',
                   'details': {
                     'message': 'This is a custom exception',
                     'additionalInfo': {
@@ -2524,7 +2533,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'api.CustomExceptionToFromJson',
+                  'code': 'api.v1.CustomExceptionToFromJson',
                   'details': {
                     'message': 'This is a custom exception',
                     'hello': 'world',
@@ -2541,7 +2550,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'api.CustomError',
+                  'code': 'api.v1.CustomError',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {
@@ -2559,7 +2568,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'api.CustomErrorToFromJson',
+                  'code': 'api.v1.CustomErrorToFromJson',
                   'details': {
                     'message': 'This is a custom error',
                     'hello': 'world',
@@ -2576,7 +2585,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'api.CustomErrorWithStackTrace',
+                  'code': 'api.v1.CustomErrorWithStackTrace',
                   'details': {
                     'message': 'This is a custom error',
                     'additionalInfo': {
@@ -3687,7 +3696,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.BaseError',
+                  'code': 'exceptions.v1.BaseError',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3702,7 +3711,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.CustomError',
+                  'code': 'exceptions.v1.CustomError',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3717,7 +3726,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.BaseException',
+                  'code': 'exceptions.v1.BaseException',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3732,7 +3741,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.CustomException',
+                  'code': 'exceptions.v1.CustomException',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3751,7 +3760,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.BaseError',
+                  'code': 'exceptions.v1.BaseError',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3766,7 +3775,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.CustomError',
+                  'code': 'exceptions.v1.CustomError',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3781,7 +3790,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.BaseException',
+                  'code': 'exceptions.v1.BaseException',
                   'details': {
                     'fault': 'base: message',
                   },
@@ -3796,7 +3805,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'exceptions.CustomException',
+                  'code': 'exceptions.v1.CustomException',
                   'details': {
                     'fault': 'base: custom: message',
                   },
@@ -3912,7 +3921,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'celest.core.BadRequestException',
+                  'code': 'celest.core.v1.BadRequestException',
                   'message': '',
                   'details': null,
                 },
@@ -3926,7 +3935,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'api.CustomBadRequestException',
+                  'code': 'api.v1.CustomBadRequestException',
                   'message': '',
                   'details': null,
                 },
@@ -3940,7 +3949,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'celest.core.UnauthorizedException',
+                  'code': 'celest.core.v1.UnauthorizedException',
                   'message': '',
                   'details': null,
                 },
@@ -3954,7 +3963,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'api.ForbiddenException',
+                  'code': 'api.v1.ForbiddenException',
                   'message': '',
                   'details': null,
                 },
@@ -3968,7 +3977,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'api.NotFoundException',
+                  'code': 'api.v1.NotFoundException',
                   'details': <String, Object?>{},
                 },
               },
@@ -3981,7 +3990,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'api.AnotherNotFoundException',
+                  'code': 'api.v1.AnotherNotFoundException',
                   'details': <String, Object?>{},
                 },
               },
@@ -3994,7 +4003,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'celest.core.InternalServerError',
+                  'code': 'celest.core.v1.InternalServerError',
                   'message': '',
                   'details': null,
                 },
@@ -4008,7 +4017,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'api.BadGatewayError',
+                  'code': 'api.v1.BadGatewayError',
                   'message': '',
                   'details': null,
                 },
@@ -4418,7 +4427,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'marcelo.AppError',
+                  'code': 'marcelo.v1.AppError',
                   'details': {
                     'msg': 'message',
                     'error': null,
@@ -4435,7 +4444,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'marcelo.AppError',
+                  'code': 'marcelo.v1.AppError',
                   'details': {
                     'msg': 'test',
                     'error': 123,
@@ -4451,7 +4460,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'marcelo.AppException',
+                  'code': 'marcelo.v1.AppException',
                   'details': {
                     'msg': 'message',
                     'error': 'error',
@@ -4467,7 +4476,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'marcelo.NotYetImplementedError',
+                  'code': 'marcelo.v1.NotYetImplementedError',
                   'details': {
                     'msg': 'message',
                     'message': null,
@@ -4498,7 +4507,7 @@ final tests = <String, Test>{
               input: {},
               output: {
                 'error': {
-                  'code': 'marcelo.UserException_ShowInConsole',
+                  'code': 'marcelo.v1.UserException_ShowInConsole',
                   'details': {
                     'msg': 'message',
                     'code': null,
@@ -4516,7 +4525,7 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'marcelo.UserException_ShowInConsole',
+                  'code': 'marcelo.v1.UserException_ShowInConsole',
                   'details': {
                     'msg': 'test',
                     'code': null,

@@ -24681,17 +24681,17 @@
   },
   "location": {
     "start": {
-      "offset": 62,
+      "offset": 44,
       "uri": "project.dart",
       "line": 2,
-      "column": 24
+      "column": 6
     },
     "end": {
-      "offset": 73,
+      "offset": 74,
       "uri": "project.dart",
       "line": 2,
-      "column": 35
+      "column": 36
     },
-    "text": "name: 'api'"
+    "text": "project = Project(name: 'api')"
   }
 }

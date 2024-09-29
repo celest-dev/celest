@@ -24,14 +24,8 @@ import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest => switch (source.uri) {
-        Uri(
-          scheme: 'package',
-          pathSegments: [
-            'celest' || 'celest_core' || 'celest_auth' || 'celest_cloud',
-            ...,
-          ]
-        ) =>
-          true,
+        Uri(scheme: 'package', pathSegments: [final packageName, ...]) =>
+          packageName.startsWith('celest') && packageName != 'celest_backend',
         _ => false,
       };
   bool get isWithinProject =>
@@ -380,7 +374,13 @@ extension DartTypeHelper on DartType {
         _ => null,
       };
 
-  String exceptionUri(String projectName) {
+  /// A unique, readable name for this type which can be used in generated code
+  /// and over the wire.
+  ///
+  /// We try to follow protobuf versioning guidelines and use the package name,
+  /// organization name, and the version to give types unique names which are
+  /// easy to interpret and do not expose implementation details.
+  String externalUri(String projectName) {
     final symbol = switch (this) {
       final RecordType type => type.symbol,
       _ => element?.name,
@@ -391,22 +391,21 @@ extension DartTypeHelper on DartType {
       RecordType(:final alias?) => alias.element.sourceLocation?.sourceUrl,
       _ => element?.sourceLocation?.sourceUrl,
     };
-    if (isPackageCelest) {
-      final prefix = switch (sourceUri!.pathSegments.first) {
-        'celest' => 'celest',
-        final package => package.split('_').join('.'),
-      };
-      return '$prefix.$symbol';
-    }
-    if (isDartSdk) {
-      return 'dart.${sourceUri!.pathSegments.first}.$symbol';
-    }
-    // TODO: Include organization name
-    var prefix = sourceUri?.pathSegments.first;
-    if (prefix case null || 'celest_backend') {
-      prefix = projectName;
-    }
-    return '$prefix.$symbol';
+    final externalPackageId = switch (sourceUri!) {
+      Uri(scheme: 'dart') => 'dart.${sourceUri.pathSegments.single}',
+      // TODO(dnys1): Include organization name
+      // TODO(dnys1): Include version tag
+      Uri(scheme: 'package', pathSegments: ['celest_backend', ...]) ||
+      Uri(pathSegments: []) =>
+        '$projectName.v1',
+      Uri(scheme: 'package', pathSegments: [final package, ...])
+          when isPackageCelest =>
+        '${package.split('_').join('.')}.v1',
+      // TODO(dnys1): Should this include the package's major version?
+      Uri(scheme: 'package', :final pathSegments) => pathSegments.first,
+      _ => unreachable('Unexpected source URI: $sourceUri'),
+    };
+    return '$externalPackageId.$symbol';
   }
 }
 

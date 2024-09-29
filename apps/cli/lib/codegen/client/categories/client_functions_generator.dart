@@ -434,7 +434,7 @@ if ($event.containsKey('error')) {
               );
               b.statements.addAll([
                 Code(
-                  "case r'${dartExceptionType.exceptionUri(project.name)}': ",
+                  "case r'${dartExceptionType.externalUri(project.name)}': ",
                 ),
                 deserializedException.thrown.statement,
               ]);

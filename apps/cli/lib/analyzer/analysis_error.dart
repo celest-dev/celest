@@ -26,22 +26,27 @@ final class CelestAnalysisError {
 
   @override
   String toString() {
-    if (location
-        case SourceSpan(:final start, :final sourceUrl?) && final location) {
-      // Better `SourceLocation.message` implementation which makes URIs
-      // clickable in VSCode terminal.
-      final uri = p.prettyUri(sourceUrl);
-      final line = start.line + 1;
-      final column = start.column + 1;
-      final buffer = StringBuffer()..write('$uri:$line:$column: $message');
-      final highlight = location.highlight();
-      if (highlight.isNotEmpty) {
-        buffer
-          ..writeln()
-          ..write(highlight);
-      }
-      return buffer.toString();
+    if (location case SourceSpan(sourceUrl: != null) && final location) {
+      return location.debugHighlight(message);
     }
     return message;
+  }
+}
+
+extension SourceSpanDump on SourceSpan {
+  String debugHighlight(String message) {
+    // Better `SourceLocation.message` implementation which makes URIs
+    // clickable in VSCode terminal.
+    final uri = p.prettyUri(sourceUrl);
+    final line = start.line + 1;
+    final column = start.column + 1;
+    final buffer = StringBuffer()..write('$uri:$line:$column: $message');
+    final highlight = this.highlight();
+    if (highlight.isNotEmpty) {
+      buffer
+        ..writeln()
+        ..write(highlight);
+    }
+    return buffer.toString();
   }
 }

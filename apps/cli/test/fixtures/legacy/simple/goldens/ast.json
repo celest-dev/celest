@@ -16,17 +16,17 @@
   },
   "location": {
     "start": {
-      "offset": 62,
+      "offset": 44,
       "uri": "project.dart",
       "line": 2,
-      "column": 24
+      "column": 6
     },
     "end": {
-      "offset": 76,
+      "offset": 77,
       "uri": "project.dart",
       "line": 2,
-      "column": 38
+      "column": 39
     },
-    "text": "name: 'simple'"
+    "text": "project = Project(name: 'simple')"
   }
 }

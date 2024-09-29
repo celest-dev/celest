@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:celest_cli/database/cache/cache.migrations.dart';
-import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli/src/utils/typeid.dart';
+import 'package:celest_cli/src/version.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:file/memory.dart';
 import 'package:logging/logging.dart';
 import 'package:pool/pool.dart';
+import 'package:pub_semver/pub_semver.dart' as semver;
 import 'package:sqlite3/sqlite3.dart';
 
 part 'cache_database.g.dart';
@@ -28,7 +31,7 @@ final class CacheDatabase extends _$CacheDatabase {
           ),
         );
 
-  static Future<CacheDatabase> start(
+  static Future<CacheDatabase> open(
     String projectRoot, {
     required bool verbose,
   }) async {
@@ -38,10 +41,28 @@ final class CacheDatabase extends _$CacheDatabase {
       verbose: verbose,
       rawDatabase: rawCompleter,
     );
-    await database.customSelect('SELECT 1').get();
+    final versionInfo = await database.getVersionInfo().getSingle();
+    if (versionInfo case VersionInfoData(:final dart, :final flutter)) {
+      final dartCacheVersion = semver.Version.parse(dart);
+      final flutterCacheVersion = flutter?.let(semver.Version.parse);
+      if (Sdk.current.version != dartCacheVersion ||
+          Sdk.current.flutterVersion != flutterCacheVersion) {
+        await database.clear();
+      }
+      await database.setVersionInfo(
+        celest: packageVersion,
+        dart: Sdk.current.version.toString(),
+        flutter: Sdk.current.flutterVersion?.toString(),
+      );
+    }
     final rawDb = await rawCompleter.future;
     database.byteStore = CachingByteStore(rawDb);
     return database;
+  }
+
+  Future<void> clear() async {
+    await delete(analyzerByteStore).go();
+    await delete(versionInfo).go();
   }
 
   @override

@@ -82,12 +82,13 @@ final class ClientGenerator {
       ..name = ''
       ..comments.addAll(kClientHeader)
       ..directives.addAll([
+        // TODO(dnys1): This may cause conflicts with other packages/types
         if (project.auth != null)
           Directive.export('package:celest_auth/celest_auth.dart'),
         ...referencedTypes.types.groupSetsBy((ref) => ref.url!).entries.map(
               (symbols) => Directive.export(
                 symbols.key,
-                show: symbols.value.map((s) => s.symbol!).toList(),
+                show: symbols.value.map((s) => s.symbol!).toSet().toList(),
               ),
             ),
       ])

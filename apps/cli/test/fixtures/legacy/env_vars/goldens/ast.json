@@ -569,17 +569,17 @@
   },
   "location": {
     "start": {
-      "offset": 65,
+      "offset": 44,
       "uri": "project.dart",
-      "line": 3,
-      "column": 2
+      "line": 2,
+      "column": 6
     },
     "end": {
-      "offset": 81,
+      "offset": 84,
       "uri": "project.dart",
-      "line": 3,
-      "column": 18
+      "line": 4,
+      "column": 1
     },
-    "text": "name: 'env_vars'"
+    "text": "project = Project(\n  name: 'env_vars',\n)"
   }
 }

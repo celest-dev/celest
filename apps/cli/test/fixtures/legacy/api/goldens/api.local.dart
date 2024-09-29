@@ -294,7 +294,7 @@ Future<void> start() async {
     '/extension-types/async-or-string': _i51.AsyncOrStringTarget(),
     '/extension-types/async-string': _i52.AsyncStringTarget(),
     '/extension-types/color': _i53.ColorTarget(),
-    '/extension-types/color-x': _i54.ColorxTarget(),
+    '/extension-types/color-x': _i54.ColorXTarget(),
     '/extension-types/color-x-from-json': _i55.ColorXFromJsonTarget(),
     '/extension-types/color-x-from-json-impl': _i56.ColorXFromJsonImplTarget(),
     '/extension-types/color-x-from-json-static':
@@ -327,7 +327,7 @@ Future<void> start() async {
     '/extension-types/string-to-json': _i80.StringToJsonTarget(),
     '/extension-types/string-to-json-impl': _i81.StringToJsonImplTarget(),
     '/extension-types/value': _i82.ValueTarget(),
-    '/extension-types/value-x': _i83.ValuexTarget(),
+    '/extension-types/value-x': _i83.ValueXTarget(),
     '/extension-types/value-x-from-json': _i84.ValueXFromJsonTarget(),
     '/extension-types/value-x-from-json-impl': _i85.ValueXFromJsonImplTarget(),
     '/extension-types/value-x-from-json-static':

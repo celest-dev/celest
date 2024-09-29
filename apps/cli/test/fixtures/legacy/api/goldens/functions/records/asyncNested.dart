@@ -1,10 +1,10 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:celest/celest.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/models/records.dart' as _i4;
 import 'package:celest_backend/src/functions/records.dart' as _i2;
+import 'package:celest_core/celest_core.dart' as _i3;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
 import 'package:celest_core/src/exception/serialization_exception.dart' as _i5;
 import 'package:celest_core/src/serialization/json_value.dart' as _i7;
@@ -36,7 +36,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.SerializationException',
+        'code': 'celest.core.v1.SerializationException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -45,7 +45,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.DeadlineExceededError',
+        'code': 'celest.core.v1.DeadlineExceededError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -54,7 +54,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.DataLossError',
+        'code': 'celest.core.v1.DataLossError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -63,7 +63,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.UnavailableError',
+        'code': 'celest.core.v1.UnavailableError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -72,7 +72,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.InternalServerError',
+        'code': 'celest.core.v1.InternalServerError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -81,7 +81,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.UnimplementedError',
+        'code': 'celest.core.v1.UnimplementedError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -90,7 +90,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.OutOfRangeException',
+        'code': 'celest.core.v1.OutOfRangeException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -99,7 +99,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.AbortedException',
+        'code': 'celest.core.v1.AbortedException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -108,7 +108,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.FailedPreconditionException',
+        'code': 'celest.core.v1.FailedPreconditionException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -117,7 +117,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.ResourceExhaustedException',
+        'code': 'celest.core.v1.ResourceExhaustedException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -126,7 +126,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.PermissionDeniedException',
+        'code': 'celest.core.v1.PermissionDeniedException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -135,7 +135,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.AlreadyExistsException',
+        'code': 'celest.core.v1.AlreadyExistsException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -144,7 +144,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.NotFoundException',
+        'code': 'celest.core.v1.NotFoundException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -153,7 +153,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.UnauthorizedException',
+        'code': 'celest.core.v1.UnauthorizedException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -162,7 +162,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.BadRequestException',
+        'code': 'celest.core.v1.BadRequestException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -171,7 +171,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.UnknownError',
+        'code': 'celest.core.v1.UnknownError',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -180,7 +180,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.CancelledException',
+        'code': 'celest.core.v1.CancelledException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});
@@ -189,7 +189,7 @@ final class AsyncNestedTarget extends _i1.CloudFunctionHttpTarget {
       print('$statusCode $e');
       final error = {
         'message': e.message,
-        'code': 'celest.core.CloudException',
+        'code': 'celest.core.v1.CloudException',
         'details': e.details,
       };
       return (statusCode: statusCode, body: {'error': error});

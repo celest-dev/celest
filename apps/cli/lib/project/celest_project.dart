@@ -106,7 +106,7 @@ final class CelestProject {
     await envManager.spawn();
     envManager.envVars.ignore();
     _logger.finest('Spawned env manager');
-    final database = await CacheDatabase.start(projectRoot, verbose: verbose);
+    final database = await CacheDatabase.open(projectRoot, verbose: verbose);
     final byteStore = MemoryCachingByteStore(
       database.byteStore,
       1 << 30, // 1 GB

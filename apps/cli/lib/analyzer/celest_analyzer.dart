@@ -47,7 +47,7 @@ final class CelestAnalyzer
   /// The results will be persisted to the byte store so that they can be
   /// reused in subsequent analyzer instances.
   static Future<void> warmUp(String projectRoot) async {
-    final database = await CacheDatabase.start(projectRoot, verbose: false);
+    final database = await CacheDatabase.open(projectRoot, verbose: false);
 
     var projectDir = fileSystem.directory(projectRoot);
     final Iterable<String> dependencies;
@@ -507,24 +507,6 @@ const project = Project(name: 'cache_warmup');
           edit.offset,
           edit.offset + edit.length,
           edit.replacement,
-        );
-      }
-
-      const celestImport = 'package:celest/celest.dart';
-      if (!source.contains(celestImport)) {
-        var offset = source.indexOf('import ');
-        if (offset == -1) {
-          final libraryOffset = source.indexOf('library');
-          if (libraryOffset != -1) {
-            offset = source.indexOf(';', libraryOffset) + 1;
-          } else {
-            offset = 0;
-          }
-        }
-        source = source.replaceRange(
-          offset,
-          offset,
-          "import '$celestImport';\n",
         );
       }
 

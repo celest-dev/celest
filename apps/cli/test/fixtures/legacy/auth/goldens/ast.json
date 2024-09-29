@@ -1272,18 +1272,18 @@
   },
   "location": {
     "start": {
-      "offset": 62,
+      "offset": 44,
       "uri": "project.dart",
       "line": 2,
-      "column": 24
+      "column": 6
     },
     "end": {
-      "offset": 74,
+      "offset": 75,
       "uri": "project.dart",
       "line": 2,
-      "column": 36
+      "column": 37
     },
-    "text": "name: 'auth'"
+    "text": "project = Project(name: 'auth')"
   },
   "auth": {
     "providers": [
