@@ -88,7 +88,7 @@ extension on Status {
 
 extension<T extends GeneratedMessage> on T {
   T unpack(Any any) {
-    return any.unpackInto(this);
+    return any.unpackInto(this.createEmptyInstance() as T);
   }
 }
 

@@ -1,10 +1,17 @@
 import 'dart:core' as core show UnimplementedError;
 import 'dart:core' hide UnimplementedError;
 
-import 'package:celest_core/_internal.dart';
-import 'package:celest_core/celest_core.dart';
-import 'package:grpc/grpc_or_grpcweb.dart';
-import 'package:http/http.dart' as http;
+// Do not import the barrel files since we need to resolve this
+// library early on in the CLI.
+//
+// Keep imports minimal in this file.
+import 'package:celest_core/src/exception/celest_exception.dart';
+import 'package:celest_core/src/http/http_error.dart';
+import 'package:celest_core/src/http/http_status.dart';
+import 'package:celest_core/src/serialization/json_value.dart';
+import 'package:celest_core/src/util/json.dart';
+import 'package:grpc/grpc_or_grpcweb.dart' show StatusCode, GrpcError;
+import 'package:http/http.dart' as http show Response;
 
 /// An exception thrown by a Cloud Widget.
 abstract mixin class CloudException implements CelestException {

@@ -466,6 +466,7 @@ const ResolvedAuthProvider_Type$json = {
     {'1': 'SMS_OTP', '2': 2},
     {'1': 'GOOGLE', '2': 3},
     {'1': 'GITHUB', '2': 4},
+    {'1': 'APPLE', '2': 5},
   ],
 };
 
@@ -478,9 +479,9 @@ final $typed_data.Uint8List resolvedAuthProviderDescriptor = $convert.base64Deco
     'UmVzb2x2ZWRTbXNPdHBQcm92aWRlckNvbmZpZ0gAUgZzbXNPdHASSgoGZ29vZ2xlGAUgASgLMj'
     'AuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEdvb2dsZU9BdXRoUHJvdmlkZXJDb25maWdIAFIGZ29v'
     'Z2xlEkoKBmdpdGh1YhgGIAEoCzIwLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRHaXRodWJPQXV0aF'
-    'Byb3ZpZGVyQ29uZmlnSABSBmdpdGh1YiJeCgRUeXBlEiIKHkFVVEhfUFJPVklERVJfVFlQRV9V'
+    'Byb3ZpZGVyQ29uZmlnSABSBmdpdGh1YiJpCgRUeXBlEiIKHkFVVEhfUFJPVklERVJfVFlQRV9V'
     'TlNQRUNJRklFRBAAEg0KCUVNQUlMX09UUBABEgsKB1NNU19PVFAQAhIKCgZHT09HTEUQAxIKCg'
-    'ZHSVRIVUIQBEIICgZjb25maWc=');
+    'ZHSVRIVUIQBBIJCgVBUFBMRRAFQggKBmNvbmZpZw==');
 
 @$core.Deprecated('Use resolvedEmailOtpProviderConfigDescriptor instead')
 const ResolvedEmailOtpProviderConfig$json = {

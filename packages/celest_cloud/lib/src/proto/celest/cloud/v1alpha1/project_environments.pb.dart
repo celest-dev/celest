@@ -1168,7 +1168,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
 /// Request message for the `DeployProjectEnvironment` operation.
 class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   factory DeployProjectEnvironmentRequest({
-    $core.String? parent,
+    $core.String? name,
     $core.String? requestId,
     $core.bool? validateOnly,
     $core.String? etag,
@@ -1176,8 +1176,8 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.Iterable<ProjectAsset>? assets,
   }) {
     final $result = create();
-    if (parent != null) {
-      $result.parent = parent;
+    if (name != null) {
+      $result.name = name;
     }
     if (requestId != null) {
       $result.requestId = requestId;
@@ -1209,7 +1209,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'parent')
+    ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'requestId')
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..aOS(4, _omitFieldNames ? '' : 'etag')
@@ -1249,16 +1249,16 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 
   /// Required. The name of the environment to deploy.
   @$pb.TagNumber(1)
-  $core.String get parent => $_getSZ(0);
+  $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set parent($core.String v) {
+  set name($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasParent() => $_has(0);
+  $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearName() => clearField(1);
 
   /// Optional. The request ID to use for the delete request. If provided, ensures this
   /// request is idempotent.
@@ -1324,7 +1324,19 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 
 /// Response message for the `DeployProjectEnvironment` operation.
 class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
-  factory DeployProjectEnvironmentResponse() => create();
+  factory DeployProjectEnvironmentResponse({
+    $core.String? uri,
+    ProjectEnvironmentDatabase? database,
+  }) {
+    final $result = create();
+    if (uri != null) {
+      $result.uri = uri;
+    }
+    if (database != null) {
+      $result.database = database;
+    }
+    return $result;
+  }
   DeployProjectEnvironmentResponse._() : super();
   factory DeployProjectEnvironmentResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
@@ -1338,6 +1350,9 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uri')
+    ..aOM<ProjectEnvironmentDatabase>(2, _omitFieldNames ? '' : 'database',
+        subBuilder: ProjectEnvironmentDatabase.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1367,6 +1382,137 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<DeployProjectEnvironmentResponse>(
           create);
   static DeployProjectEnvironmentResponse? _defaultInstance;
+
+  /// The URI of the deployed environment.
+  @$pb.TagNumber(1)
+  $core.String get uri => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uri($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasUri() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUri() => clearField(1);
+
+  /// The database of the deployed environment.
+  @$pb.TagNumber(2)
+  ProjectEnvironmentDatabase get database => $_getN(1);
+  @$pb.TagNumber(2)
+  set database(ProjectEnvironmentDatabase v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasDatabase() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDatabase() => clearField(2);
+  @$pb.TagNumber(2)
+  ProjectEnvironmentDatabase ensureDatabase() => $_ensure(1);
+}
+
+/// A project environment database.
+class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
+  factory ProjectEnvironmentDatabase({
+    $core.String? host,
+    $core.String? token,
+    $core.String? systemDatabaseId,
+  }) {
+    final $result = create();
+    if (host != null) {
+      $result.host = host;
+    }
+    if (token != null) {
+      $result.token = token;
+    }
+    if (systemDatabaseId != null) {
+      $result.systemDatabaseId = systemDatabaseId;
+    }
+    return $result;
+  }
+  ProjectEnvironmentDatabase._() : super();
+  factory ProjectEnvironmentDatabase.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ProjectEnvironmentDatabase.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ProjectEnvironmentDatabase',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'host')
+    ..aOS(2, _omitFieldNames ? '' : 'token')
+    ..aOS(3, _omitFieldNames ? '' : 'systemDatabaseId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ProjectEnvironmentDatabase clone() =>
+      ProjectEnvironmentDatabase()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ProjectEnvironmentDatabase copyWith(
+          void Function(ProjectEnvironmentDatabase) updates) =>
+      super.copyWith(
+              (message) => updates(message as ProjectEnvironmentDatabase))
+          as ProjectEnvironmentDatabase;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ProjectEnvironmentDatabase create() => ProjectEnvironmentDatabase._();
+  ProjectEnvironmentDatabase createEmptyInstance() => create();
+  static $pb.PbList<ProjectEnvironmentDatabase> createRepeated() =>
+      $pb.PbList<ProjectEnvironmentDatabase>();
+  @$core.pragma('dart2js:noInline')
+  static ProjectEnvironmentDatabase getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ProjectEnvironmentDatabase>(create);
+  static ProjectEnvironmentDatabase? _defaultInstance;
+
+  /// The hostname of the database.
+  @$pb.TagNumber(1)
+  $core.String get host => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set host($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasHost() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHost() => clearField(1);
+
+  /// The token of the database.
+  @$pb.TagNumber(2)
+  $core.String get token => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set token($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearToken() => clearField(2);
+
+  /// The system database ID, used for attaching.
+  @$pb.TagNumber(3)
+  $core.String get systemDatabaseId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set systemDatabaseId($core.String v) {
+    $_setString(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasSystemDatabaseId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSystemDatabaseId() => clearField(3);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

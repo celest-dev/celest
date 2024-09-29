@@ -363,7 +363,7 @@ final $typed_data.Uint8List projectAssetDescriptor = $convert.base64Decode(
 const DeployProjectEnvironmentRequest$json = {
   '1': 'DeployProjectEnvironmentRequest',
   '2': [
-    {'1': 'parent', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'parent'},
+    {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
     {'1': 'request_id', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'requestId'},
     {
       '1': 'validate_only',
@@ -397,23 +397,60 @@ const DeployProjectEnvironmentRequest$json = {
 
 /// Descriptor for `DeployProjectEnvironmentRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deployProjectEnvironmentRequestDescriptor = $convert.base64Decode(
-    'Ch9EZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXF1ZXN0EtMBCgZwYXJlbnQYASABKAlCugHgQQ'
-    'L6QSUKI2Nsb3VkLmNlbGVzdC5kZXYvUHJvamVjdEVudmlyb25tZW50ukiLAboBhwEKGXZhbGlk'
-    'X3Byb2plY3RfZW52aXJvbm1lbnQSNm5hbWUgbXVzdCBiZSBhIHZhbGlkIHByb2plY3QgZW52aX'
-    'Jvbm1lbnQgcmVzb3VyY2UgbmFtZRoydGhpcy5tYXRjaGVzKCdwcm9qZWN0cy9bXi9dKy9lbnZp'
-    'cm9ubWVudHMvW14vXSskJylSBnBhcmVudBIqCgpyZXF1ZXN0X2lkGAIgASgJQgvgQQHijM/XCA'
-    'IIAVIJcmVxdWVzdElkEigKDXZhbGlkYXRlX29ubHkYAyABKAhCA+BBAVIMdmFsaWRhdGVPbmx5'
-    'EhcKBGV0YWcYBCABKAlCA+BBAVIEZXRhZxJVChRyZXNvbHZlZF9wcm9qZWN0X2FzdBgFIAEoCz'
-    'IeLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRQcm9qZWN0QgPgQQJSEnJlc29sdmVkUHJvamVjdEFz'
-    'dBKdAQoGYXNzZXRzGAYgAygLMiMuY2VsZXN0LmNsb3VkLnYxYWxwaGExLlByb2plY3RBc3NldE'
-    'Jg4EECukhakgFXCAEQASJRugFOCgt2YWxpZF9hc3NldBIvb25seSBEYXJ0IGtlcm5lbCBhc3Nl'
-    'dHMgYXJlIHN1cHBvcnRlZCBjdXJyZW50bHkaDnRoaXMudHlwZSA9PSAxUgZhc3NldHM=');
+    'Ch9EZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXF1ZXN0Es8BCgRuYW1lGAEgASgJQroB4EEC+k'
+    'ElCiNjbG91ZC5jZWxlc3QuZGV2L1Byb2plY3RFbnZpcm9ubWVudLpIiwG6AYcBChl2YWxpZF9w'
+    'cm9qZWN0X2Vudmlyb25tZW50EjZuYW1lIG11c3QgYmUgYSB2YWxpZCBwcm9qZWN0IGVudmlyb2'
+    '5tZW50IHJlc291cmNlIG5hbWUaMnRoaXMubWF0Y2hlcygncHJvamVjdHMvW14vXSsvZW52aXJv'
+    'bm1lbnRzL1teL10rJCcpUgRuYW1lEioKCnJlcXVlc3RfaWQYAiABKAlCC+BBAeKMz9cIAggBUg'
+    'lyZXF1ZXN0SWQSKAoNdmFsaWRhdGVfb25seRgDIAEoCEID4EEBUgx2YWxpZGF0ZU9ubHkSFwoE'
+    'ZXRhZxgEIAEoCUID4EEBUgRldGFnElUKFHJlc29sdmVkX3Byb2plY3RfYXN0GAUgASgLMh4uY2'
+    'VsZXN0LmFzdC52MS5SZXNvbHZlZFByb2plY3RCA+BBAlIScmVzb2x2ZWRQcm9qZWN0QXN0Ep0B'
+    'CgZhc3NldHMYBiADKAsyIy5jZWxlc3QuY2xvdWQudjFhbHBoYTEuUHJvamVjdEFzc2V0QmDgQQ'
+    'K6SFqSAVcIARABIlG6AU4KC3ZhbGlkX2Fzc2V0Ei9vbmx5IERhcnQga2VybmVsIGFzc2V0cyBh'
+    'cmUgc3VwcG9ydGVkIGN1cnJlbnRseRoOdGhpcy50eXBlID09IDFSBmFzc2V0cw==');
 
 @$core.Deprecated('Use deployProjectEnvironmentResponseDescriptor instead')
 const DeployProjectEnvironmentResponse$json = {
   '1': 'DeployProjectEnvironmentResponse',
+  '2': [
+    {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
+    {
+      '1': 'database',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.ProjectEnvironmentDatabase',
+      '10': 'database'
+    },
+  ],
 };
 
 /// Descriptor for `DeployProjectEnvironmentResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deployProjectEnvironmentResponseDescriptor =
-    $convert.base64Decode('CiBEZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXNwb25zZQ==');
+    $convert.base64Decode(
+        'CiBEZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXNwb25zZRIQCgN1cmkYASABKAlSA3VyaRJNCg'
+        'hkYXRhYmFzZRgCIAEoCzIxLmNlbGVzdC5jbG91ZC52MWFscGhhMS5Qcm9qZWN0RW52aXJvbm1l'
+        'bnREYXRhYmFzZVIIZGF0YWJhc2U=');
+
+@$core.Deprecated('Use projectEnvironmentDatabaseDescriptor instead')
+const ProjectEnvironmentDatabase$json = {
+  '1': 'ProjectEnvironmentDatabase',
+  '2': [
+    {'1': 'host', '3': 1, '4': 1, '5': 9, '10': 'host'},
+    {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    {
+      '1': 'system_database_id',
+      '3': 3,
+      '4': 1,
+      '5': 9,
+      '10': 'systemDatabaseId'
+    },
+  ],
+};
+
+/// Descriptor for `ProjectEnvironmentDatabase`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List projectEnvironmentDatabaseDescriptor =
+    $convert.base64Decode(
+        'ChpQcm9qZWN0RW52aXJvbm1lbnREYXRhYmFzZRISCgRob3N0GAEgASgJUgRob3N0EhQKBXRva2'
+        'VuGAIgASgJUgV0b2tlbhIsChJzeXN0ZW1fZGF0YWJhc2VfaWQYAyABKAlSEHN5c3RlbURhdGFi'
+        'YXNlSWQ=');

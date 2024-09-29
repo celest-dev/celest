@@ -181,7 +181,7 @@ final class ProjectEnvironmentsProtocolHttp
 
   @override
   Future<Operation> deploy(DeployProjectEnvironmentRequest request) async {
-    final path = '/v1alpha1/${request.parent}:deploy';
+    final path = '/v1alpha1/${request.name}:deploy';
     final uri = _baseUri.replace(path: path);
     final req = http.Request('PATCH', uri)
       ..body = jsonEncode(

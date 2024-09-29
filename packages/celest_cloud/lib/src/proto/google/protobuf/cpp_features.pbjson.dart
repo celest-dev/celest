@@ -52,11 +52,11 @@ const CppFeatures_StringType$json = {
 /// Descriptor for `CppFeatures`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cppFeaturesDescriptor = $convert.base64Decode(
     'CgtDcHBGZWF0dXJlcxKNAgoSbGVnYWN5X2Nsb3NlZF9lbnVtGAEgASgIQt4BiAEBmAEEmAEBog'
-    'EJEgR0cnVlGOYHogEKEgVmYWxzZRjnB7IBuAEI6AcQ6AcarwFUaGUgbGVnYWN5IGNsb3NlZCBl'
+    'EJEgR0cnVlGIQHogEKEgVmYWxzZRjnB7IBuAEI6AcQ6AcarwFUaGUgbGVnYWN5IGNsb3NlZCBl'
     'bnVtIHRyZWF0bWVudCBpbiBDKysgaXMgZGVwcmVjYXRlZCBhbmQgaXMgc2NoZWR1bGVkIHRvIG'
     'JlIHJlbW92ZWQgaW4gZWRpdGlvbiAyMDI1LiAgTWFyayBlbnVtIHR5cGUgb24gdGhlIGVudW0g'
     'ZGVmaW5pdGlvbnMgdGhlbXNlbHZlcyByYXRoZXIgdGhhbiBvbiBmaWVsZHMuUhBsZWdhY3lDbG'
     '9zZWRFbnVtEmYKC3N0cmluZ190eXBlGAIgASgOMhoucGIuQ3BwRmVhdHVyZXMuU3RyaW5nVHlw'
-    'ZUIpiAEBmAEEmAEBogELEgZTVFJJTkcY5geiAQkSBFZJRVcY6QeyAQMI6AdSCnN0cmluZ1R5cG'
+    'ZUIpiAEBmAEEmAEBogELEgZTVFJJTkcYhAeiAQkSBFZJRVcY6QeyAQMI6AdSCnN0cmluZ1R5cG'
     'UiRQoKU3RyaW5nVHlwZRIXChNTVFJJTkdfVFlQRV9VTktOT1dOEAASCAoEVklFVxABEggKBENP'
     'UkQQAhIKCgZTVFJJTkcQAw==');
