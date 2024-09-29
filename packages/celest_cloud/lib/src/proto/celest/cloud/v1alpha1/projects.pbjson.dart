@@ -176,10 +176,9 @@ const GetProjectRequest$json = {
 
 /// Descriptor for `GetProjectRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getProjectRequestDescriptor = $convert.base64Decode(
-    'ChFHZXRQcm9qZWN0UmVxdWVzdBKjAQoEbmFtZRgBIAEoCUKOAeBBAvpBGgoYY2xvdWQuY2VsZX'
-    'N0LmRldi9Qcm9qZWN0ukhrugFoCg12YWxpZF9wcm9qZWN0EiFuYW1lIG11c3QgYmUgYSB2YWxp'
-    'ZCBwcm9qZWN0IG5hbWUaNHRoaXMubWF0Y2hlcygnXm9yZ2FuaXphdGlvbnMvW14vXSsvcHJvam'
-    'VjdHMvW14vXSskJylSBG5hbWU=');
+    'ChFHZXRQcm9qZWN0UmVxdWVzdBKNAQoEbmFtZRgBIAEoCUJ54EEC+kEaChhjbG91ZC5jZWxlc3'
+    'QuZGV2L1Byb2plY3S6SFa6AVMKDXZhbGlkX3Byb2plY3QSIW5hbWUgbXVzdCBiZSBhIHZhbGlk'
+    'IHByb2plY3QgbmFtZRofdGhpcy5tYXRjaGVzKCdwcm9qZWN0cy9bXi9dKyQnKVIEbmFtZQ==');
 
 @$core.Deprecated('Use listProjectsRequestDescriptor instead')
 const ListProjectsRequest$json = {

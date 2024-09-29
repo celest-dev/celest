@@ -340,12 +340,12 @@ const BuilderSubscriptionPlan$json = {
 
 /// Descriptor for `BuilderSubscriptionPlan`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List builderSubscriptionPlanDescriptor = $convert.base64Decode(
-    'ChdCdWlsZGVyU3Vic2NyaXB0aW9uUGxhbhJ+Cg1jdXJyZW5jeV9jb2RlGAEgASgJQlngQQK6SF'
-    'O6AVAKDnZhbGlkX2N1cnJlbmN5Eh1tdXN0IGJlIGEgdmFsaWQgY3VycmVuY3kgY29kZRofdGhp'
-    'cy5tYXRjaGVzKCdeW2EtekEtWl17Myw0fSQnKVIMY3VycmVuY3lDb2RlEo4BCg1pbnN0YW5jZV'
-    '90eXBlGAIgASgOMiMuY2VsZXN0LmNsb3VkLnYxYWxwaGExLkluc3RhbmNlVHlwZUJE4EECukg+'
-    'ugE7ChN2YWxpZF9pbnN0YW5jZV90eXBlEhltdXN0IHNldCBhbiBpbnN0YW5jZSB0eXBlGgl0aG'
-    'lzICE9IDBSDGluc3RhbmNlVHlwZQ==');
+    'ChdCdWlsZGVyU3Vic2NyaXB0aW9uUGxhbhKBAQoNY3VycmVuY3lfY29kZRgBIAEoCUJc4EEBuk'
+    'hWugFQCg52YWxpZF9jdXJyZW5jeRIdbXVzdCBiZSBhIHZhbGlkIGN1cnJlbmN5IGNvZGUaH3Ro'
+    'aXMubWF0Y2hlcygnXlthLXpBLVpdezMsNH0kJynQAQFSDGN1cnJlbmN5Q29kZRKOAQoNaW5zdG'
+    'FuY2VfdHlwZRgCIAEoDjIjLmNlbGVzdC5jbG91ZC52MWFscGhhMS5JbnN0YW5jZVR5cGVCROBB'
+    'ArpIProBOwoTdmFsaWRfaW5zdGFuY2VfdHlwZRIZbXVzdCBzZXQgYW4gaW5zdGFuY2UgdHlwZR'
+    'oJdGhpcyAhPSAwUgxpbnN0YW5jZVR5cGU=');
 
 @$core.Deprecated('Use enterpriseSubscriptionPlanDescriptor instead')
 const EnterpriseSubscriptionPlan$json = {

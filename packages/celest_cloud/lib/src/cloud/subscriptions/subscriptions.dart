@@ -93,11 +93,11 @@ final class CommunitySubscriptionPlan implements SubscriptionPlan {
 
 final class BuilderSubscriptionPlan implements SubscriptionPlan {
   const BuilderSubscriptionPlan({
-    required this.currencyCode,
+    this.currencyCode,
     required this.instanceType,
   });
 
-  final String currencyCode;
+  final String? currencyCode;
   final pb.InstanceType instanceType;
 
   @override

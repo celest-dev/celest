@@ -4,9 +4,9 @@ import 'dart:typed_data';
 final _rand = Random();
 
 class Uuid {
-  const Uuid._(this.value);
+  const Uuid(this.value);
 
-  factory Uuid.v7() => Uuid._(_uuidv7());
+  factory Uuid.v7() => Uuid(_uuidv7());
 
   factory Uuid.parse(String uuid) {
     final buffer = Uint8List(16);
@@ -17,7 +17,7 @@ class Uuid {
       }
       buffer[i++] = int.parse(uuid.substring(j, j + 2), radix: 16);
     }
-    return Uuid._(buffer);
+    return Uuid(buffer);
   }
 
   final Uint8List value;

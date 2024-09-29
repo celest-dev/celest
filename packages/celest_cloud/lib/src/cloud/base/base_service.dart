@@ -4,11 +4,14 @@ import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:protobuf/protobuf.dart';
 
 abstract mixin class BaseService {
+  @protected
   Logger? get logger;
 
+  @protected
   Future<Res> run<Req extends Object?, Res>(
     String name, {
     required Req request,
@@ -34,6 +37,7 @@ abstract mixin class BaseService {
     }
   }
 
+  @protected
   Stream<OperationState<Metadata, Response>> streamOperation<
       Metadata extends GeneratedMessage, Response extends GeneratedMessage>(
     String name, {
