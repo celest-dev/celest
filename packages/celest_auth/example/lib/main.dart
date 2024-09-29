@@ -1,4 +1,4 @@
-import 'package:celest_backend/client.dart';
+import 'package:celest_auth_example_client/celest_auth_example_client.dart';
 import 'package:flutter/material.dart';
 
 void main() {

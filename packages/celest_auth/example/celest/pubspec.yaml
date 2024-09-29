@@ -3,13 +3,12 @@ description: The Celest backend for celest_auth_example.
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.4.0
 
 dependencies:
   celest: ^0.5.0-0
   http: ">=0.13.0 <2.0.0"
 
-  celest_core: any
   celest_auth: any
 dependency_overrides:
   celest:

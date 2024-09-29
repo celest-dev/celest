@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:celest_core/_internal.dart';
+import 'package:native_storage/native_storage.dart';
 
 typedef OnRevoke = FutureOr<void> Function();
 

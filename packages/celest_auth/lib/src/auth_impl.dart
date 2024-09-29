@@ -11,6 +11,7 @@ import 'package:celest_cloud/celest_cloud.dart' as celest_cloud;
 import 'package:celest_core/_internal.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:native_authentication/native_authentication.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 export 'flows/email_flow.dart';

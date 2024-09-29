@@ -3,6 +3,7 @@ import 'package:celest_core/src/http/http_client.vm.dart'
     if (dart.library.js_interop) 'package:celest_core/src/http/http_client.web.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:native_storage/native_storage.dart';
 
 final class CelestHttpClient extends http.BaseClient {
   CelestHttpClient({

@@ -9,6 +9,7 @@ import 'dart:io' as _$io;
 import 'package:celest_core/_internal.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
 import 'package:http/http.dart' as _$http;
+import 'package:native_storage/native_storage.dart' as _$native_storage;
 
 import 'src/functions.dart';
 import 'src/serializers.dart';
@@ -24,8 +25,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !_$io.Platform.isAndroid
-            ? Uri.parse('http://localhost:52792')
-            : Uri.parse('http://10.0.2.2:52792'),
+            ? Uri.parse('http://localhost:52794')
+            : Uri.parse('http://10.0.2.2:52794'),
       };
 }
 
@@ -34,8 +35,8 @@ class Celest with _$celest.CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
-  late final _$celest.NativeStorage nativeStorage =
-      _$celest.NativeStorage(scope: 'celest');
+  late final _$native_storage.NativeStorage nativeStorage =
+      _$native_storage.NativeStorage(scope: 'celest');
 
   @override
   late _$http.Client httpClient =

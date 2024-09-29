@@ -7,8 +7,8 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
-  celest_backend:
-    path: celest/
+  celest_auth_example_client:
+    path: celest/client/
   flutter:
     sdk: flutter
   flutter_state_notifier: ^1.0.0

@@ -1,5 +1,3 @@
-export 'package:native_storage/native_storage.dart';
-
 export 'src/auth/authenticator.dart';
 export 'src/base/celest_base.dart';
 export 'src/events/sse/sse_client.dart';
