@@ -7,14 +7,12 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:convert' as _$convert;
 
 import 'package:celest/celest.dart' as _$celest;
-import 'package:celest_backend/exceptions/bad_name_exception.dart';
-import 'package:celest_backend/models/person.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 
-import '../example_client.dart';
+import '../celest_auth_example_client.dart';
 
 class CelestFunctions {
   final greeting = CelestFunctionsGreeting();
@@ -84,9 +82,6 @@ class CelestFunctionsGreeting {
       case r'celest.core.v1.SerializationException':
         throw _$celest.Serializers.instance
             .deserialize<_$celest.SerializationException>($details);
-      case r'example.v1.BadNameException':
-        throw _$celest.Serializers.instance
-            .deserialize<BadNameException>($details);
       default:
         throw _$celest.CloudException.http(
           statusCode: $statusCode,
@@ -97,17 +92,15 @@ class CelestFunctionsGreeting {
     }
   }
 
-  /// Says hello to a [person].
+  /// Says hello to the authenticated [user].
   @_$celest.CloudFunction(
     api: 'greeting',
     function: 'sayHello',
   )
-  Future<String> sayHello({required Person person}) async {
+  Future<String> sayHello() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/greeting/say-hello'),
       headers: {'Content-Type': 'application/json; charset=utf-8'},
-      body: _$convert.jsonEncode(
-          {r'person': _$celest.Serializers.instance.serialize<Person>(person)}),
     );
     final $body =
         (_$convert.jsonDecode($response.body) as Map<String, Object?>);
