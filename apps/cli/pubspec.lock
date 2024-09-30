@@ -473,6 +473,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.13"
+  git:
+    dependency: "direct main"
+    description:
+      name: git
+      sha256: daea03e7471607e7ed942bccd4814cfc7e4fa8ca5d3dd6ad4fb170e44423d1a0
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   glob:
     dependency: transitive
     description:
@@ -745,7 +753,7 @@ packages:
     source: hosted
     version: "0.1.0+2"
   native_storage:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: native_storage
       sha256: "28ba067a74c6e1b610737e06f86d397e7271b2a0e045dfb71ee25eebdec05832"

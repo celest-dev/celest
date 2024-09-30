@@ -4,6 +4,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
+import 'package:git/git.dart';
 import 'package:logging/logging.dart';
 
 /// Migrates the project folder structure to V1's layout.
@@ -93,6 +94,8 @@ final class V1FolderStructure extends ProjectMigration {
             .childDirectory('generated'),
       ),
     ];
+
+    final moveOperations = <Future<Link>>[];
     for (final (from, to) in symlinkdDirs) {
       if (!from.existsSync() || fileSystem.isLinkSync(from.path)) {
         continue;
@@ -103,7 +106,14 @@ final class V1FolderStructure extends ProjectMigration {
           'guide at https://celest.dev/docs/v1-migration before continuing.',
         );
       }
-      _operations.add(_move(from, to));
+      moveOperations.add(_move(from, to));
+    }
+    if (moveOperations.isNotEmpty) {
+      _operations.add(
+        Future.wait(moveOperations).then((links) {
+          return _stageChangesInGit(rootDir, links);
+        }),
+      );
     }
 
     final fixDataFile = fileSystem.file(
@@ -151,7 +161,9 @@ transforms:
   }
 
   /// Moves one directory to another.
-  Future<void> _move(Directory from, Directory to) async {
+  ///
+  /// Returns the new symlink.
+  Future<Link> _move(Directory from, Directory to) async {
     await for (final file in from.list(recursive: true, followLinks: false)) {
       final relativePath = p.relative(file.path, from: from.path);
       final destination = to.childFile(relativePath);
@@ -169,6 +181,38 @@ transforms:
       }
     }
     await from.delete(recursive: true);
-    await fileSystem.link(from.path).create(to.path);
+    return fileSystem.link(from.path).create(to.path);
+  }
+
+  /// The creation of symbolic links really throws git for a loop in VSCode.
+  ///
+  /// In projects with a `.git` directory, `git add .` seems to work fine so
+  /// we just do that for them.
+  Future<void> _stageChangesInGit(
+    Directory projectDir,
+    List<Link> symlinks,
+  ) async {
+    var gitRoot = projectDir;
+    while (gitRoot.parent != gitRoot) {
+      if (gitRoot.childDirectory('.git').existsSync()) {
+        break;
+      }
+      gitRoot = gitRoot.parent;
+    }
+    if (!await GitDir.isGitDir(gitRoot.path)) {
+      _logger.fine('No .git directory found. Skipping git operations.');
+      return;
+    }
+
+    final result = await processManager.run(
+      <String>['git', 'add', '.'],
+      workingDirectory: projectDir.path,
+    );
+    if (result.exitCode != 0) {
+      _logger.warning(
+        'Failed to stage changes in git. status=${result.exitCode}',
+        result.stderr,
+      );
+    }
   }
 }
