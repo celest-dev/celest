@@ -110,13 +110,15 @@ Future<void> main(List<String> args) async {
 Future<void> _build() async {
   print('Bundling CLI version $version for $osArch...');
 
+  await buildDir.create(recursive: true);
   await _runProcess(
     'dart',
     [
       if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
       '--define=version=$version',
-      'build',
-      '--output=$buildPath',
+      'compile',
+      'exe',
+      '--output=$buildPath/celest.exe',
       'bin/celest.dart',
     ],
     workingDirectory: platform.script.resolve('..').toFilePath(),
@@ -126,7 +128,7 @@ Future<void> _build() async {
   }
 
   if (!platform.isWindows) {
-    final exeUri = platform.script.resolve('../celest/celest.exe');
+    final exeUri = platform.script.resolve('../$buildPath/celest.exe');
     final exe = fileSystem.file(exeUri);
     final destExe = p.withoutExtension(p.absolute(exeUri.path));
     if (!exe.existsSync() && !fileSystem.file(destExe).existsSync()) {
