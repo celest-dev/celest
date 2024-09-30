@@ -4,6 +4,7 @@ import 'package:celest_cli/src/context.dart' as ctx;
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
+import 'package:native_storage/native_storage.dart';
 
 export 'package:celest_cli/src/context.dart' show cloud;
 

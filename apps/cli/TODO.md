@@ -7,3 +7,7 @@
 ## Functions
 
 - Allow returning `Response` from functions for raw response control.
+
+## Environment Variables
+
+- Overhaul environment variables to avoid intermediate `Env` generation

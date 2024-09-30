@@ -94,13 +94,12 @@ class TestRunner {
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
-        final cacheFile = fileSystem
+        final cacheDir = fileSystem
             .directory(projectRoot)
             .childDirectory('.dart_tool')
-            .childDirectory('celest')
-            .childFile('cache.db');
-        if (cacheFile.existsSync()) {
-          cacheFile.deleteSync();
+            .childDirectory('celest');
+        if (cacheDir.existsSync()) {
+          cacheDir.deleteSync(recursive: true);
         }
         await init(
           projectRoot: projectRoot,

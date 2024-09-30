@@ -48,6 +48,14 @@ final class ProjectDependency {
     ),
   );
 
+  static final ProjectDependency nativeStorage = ProjectDependency._(
+    'native_storage',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('0.2.2')),
+    ),
+  );
+
   static final ProjectDependency lints = ProjectDependency._(
     'lints',
     DependencyType.devDependency,

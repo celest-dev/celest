@@ -6,7 +6,8 @@ final class ProjectPaths {
     this.projectRoot, {
     this.parentAppRoot,
     String? outputsDir,
-  }) : outputsDir =
+  })  : clientRoot = p.join(outputsDir ?? projectRoot, 'client'),
+        outputsDir =
             outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
 
   final String projectRoot;
@@ -25,7 +26,7 @@ final class ProjectPaths {
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
   late final String legacyClientOutputsDir =
       p.join(projectRoot, 'lib', 'src', 'client');
-  late final String clientRoot = p.join(projectRoot, 'client');
+  final String clientRoot;
   late final String clientOutputsDir = p.join(clientRoot, 'lib', 'src');
   late final String projectCacheDir =
       p.join(projectRoot, '.dart_tool', 'celest');

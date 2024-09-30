@@ -14,7 +14,6 @@ import 'package:celest/celest.dart' as celest;
 import 'package:celest/src/runtime/serve.dart' as celest_runtime;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:celest_core/_internal.dart' as celest_core;
 import 'package:celest_core/celest_core.dart' as celest_core;
 import 'package:celest_core/src/util/globals.dart' as celest_globals;
 import 'package:code_builder/code_builder.dart';
@@ -24,6 +23,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as http_parser;
 import 'package:libcoder/libcoder.dart' as libcoder;
 import 'package:meta/meta.dart' as meta;
+import 'package:native_storage/native_storage.dart' as native_storage;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
 
@@ -139,6 +139,9 @@ abstract class DartTypes {
 
   /// `package:meta` types.
   static const meta = _Meta();
+
+  /// `package:native_storage` types.
+  static const nativeStorage = _NativeStorage();
 
   /// `package:path` types.
   static const path = _Path();
@@ -562,7 +565,6 @@ class _Celest {
 
   static const _url = 'package:celest/celest.dart';
   static const _coreUrl = 'package:celest_core/celest_core.dart';
-  static const _coreInternalUrl = 'package:celest_core/_internal.dart';
   static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
   static const _contextUrl = 'package:celest/src/core/context.dart';
 
@@ -598,10 +600,6 @@ class _Celest {
 
   /// Creates a [celest_core.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _coreUrl);
-
-  /// Creates a [celest_core.NativeStorage] reference.
-  DartTypeReference get nativeStorage =>
-      const DartTypeReference('NativeStorage', _coreInternalUrl);
 
   /// Creates a [celest_core.Serializer] reference.
   TypeReference serializer([Reference? dartType]) => TypeReference(
@@ -913,6 +911,17 @@ class _Meta {
 
   /// Creates a [meta.immutable] reference.
   DartTypeReference get immutable => const DartTypeReference('immutable', _url);
+}
+
+/// `package:native_storage` types
+class _NativeStorage {
+  const _NativeStorage();
+
+  static const _url = 'package:native_storage/native_storage.dart';
+
+  /// Creates a [native_storage.NativeStorage] reference.
+  DartTypeReference get nativeStorage =>
+      const DartTypeReference('NativeStorage', _url);
 }
 
 /// `package:path` types

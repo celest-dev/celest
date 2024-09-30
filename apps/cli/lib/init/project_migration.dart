@@ -223,6 +223,8 @@ final class ProjectClient extends ProjectFile {
         dependencies: {
           'celest_backend': PathDependency('../'),
           ...ProjectDependency.dependencies,
+          ProjectDependency.nativeStorage.name:
+              ProjectDependency.nativeStorage.pubDependency,
         },
       );
       final pubspecYaml = pubspec.toYaml();

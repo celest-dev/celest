@@ -238,15 +238,10 @@ final class ClientGenerator {
             // ..annotations.add(DartTypes.core.override)
             ..late = true
             ..modifier = FieldModifier.final$
-            ..type = refer(
-              'NativeStorage',
-              'package:celest_core/_internal.dart',
-            )
+            ..type = DartTypes.nativeStorage.nativeStorage
             ..name = 'nativeStorage'
-            ..assignment = refer(
-              'NativeStorage',
-              'package:celest_core/_internal.dart',
-            ).newInstance([], {
+            ..assignment =
+                DartTypes.nativeStorage.nativeStorage.newInstance([], {
               'scope': literalString('celest'),
             }).code,
         ),

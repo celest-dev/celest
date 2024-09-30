@@ -16,8 +16,8 @@ import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
-import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
+import 'package:native_storage/native_storage.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
